@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 from tests.test_company_assets import _write_report, write_company
-from tests.test_profile_workflow import _coverage, _seal_run_bound_stage_selection
+from tests.test_profile_workflow import _coverage, _package, _seal_run_bound_stage_selection
 
 RUN_ID = "2026-07-20-deep-completion-test"
 CYCLE_ID = "2026-07-20-deep-cycle"
@@ -36,6 +36,11 @@ def _environment(
     claim_task: bool = True,
 ) -> dict[str, object]:
     from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_stage_claims import (
+        claim_profile_stage_attempt,
+        seal_profile_stage_success,
+        verify_active_profile_stage_claim,
+    )
     from trading_os.research_assets.profile_workflow import claim_profile_task
     from trading_os.research_assets.sealing import seal_json, verify_sealed
 
@@ -75,6 +80,163 @@ def _environment(
         artifact_type="manager_screen_result",
         sealed_at=SELECTION_AT - dt.timedelta(hours=1),
     )
+    scoped_claimed_at = SELECTION_AT - dt.timedelta(minutes=50)
+    quick_selection_path = _seal_run_bound_stage_selection(
+        tmp_path,
+        cycle_id=CYCLE_ID,
+        manager_screen_run_id=RUN_ID,
+        evaluated_stage="quick_profile",
+        next_stage="scoped_research",
+        symbol=SYMBOL,
+        policy=policy_document["payload"],
+        sealed_at=SELECTION_AT - dt.timedelta(minutes=55),
+    )
+    quick_selection_seal = verify_sealed(quick_selection_path)
+    quick_selection_relative = quick_selection_path.relative_to(tmp_path).as_posix()
+
+    queue_path = coverage_root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "task_type": "scoped_research",
+            "status": "pending",
+            "reason": "sealed quick-profile selection funded scoped research",
+            "assigned_agent": None,
+            "started_at": None,
+            "finished_at": None,
+            "failure_reason": None,
+            "next_action": "complete scoped research",
+            "effort_budget_hours": float(
+                policy_document["payload"]["effort_budget_hours"]["scoped_research"]
+            ),
+            "preceding_stage": "quick_profile",
+            "stop_conditions": ["thesis disproven"],
+            "manager_screen_run_id": RUN_ID,
+            "manager_screen_batch_id": "batch-001",
+            "manager_screen_route": "send_to_analyst",
+            "manager_screen_result_path": manager_path.relative_to(tmp_path).as_posix(),
+            "manager_screen_result_sha256": manager_seal.sha256,
+            "decisive_question": decisive_question,
+            "evidence_ids": evidence_ids,
+            "profile_cycle_id": CYCLE_ID,
+            "profile_quick_selection_path": quick_selection_relative,
+            "profile_quick_selection_sha256": quick_selection_seal.sha256,
+            "stage_history": [],
+        }
+    )
+    scoped_running, _ = claim_profile_stage_attempt(
+        root=coverage_root,
+        queue_record=queue[0],
+        agent="/root/scoped-researcher",
+        claimed_at=scoped_claimed_at,
+    )
+    write_jsonl(queue_path, [scoped_running])
+    scoped_claim = verify_active_profile_stage_claim(
+        root=coverage_root,
+        queue_record=scoped_running,
+        stage="scoped_research",
+    )
+
+    # The run-bound deep selection requires a claim-authenticated scoped
+    # predecessor.  Seal the accepted package/evaluation and its success
+    # receipt before purchasing deep-research budget.
+    from trading_os.research_assets.profile_workflow import (
+        _adjust_profile_evaluation,
+        _validate_package,
+    )
+    from trading_os.research_assets.research_allocation import evaluate_quick_profile
+    from trading_os.research_assets.sealing import canonical_json_bytes
+
+    scoped_completed_at = SELECTION_AT - dt.timedelta(minutes=30)
+    scoped_package = _package(cycle_id=CYCLE_ID)
+    scoped_package["profile"].update(
+        {
+            "research_stage": "scoped_research",
+            "as_of": "2026-07-20",
+            "information_cutoff": "2026-07-20T08:15:00+08:00",
+        }
+    )
+    scoped_package["price_as_of"] = "2026-07-19T15:00:00+08:00"
+    scoped_package["provenance"].update(
+        {
+            "agent": "/root/scoped-researcher",
+            "generated_at": "2026-07-20T08:20:00+08:00",
+        }
+    )
+    for source in scoped_package["sources"]:
+        source["accessed_at"] = "2026-07-20T08:00:00+08:00"
+    scoped_package["manager_screen_binding"] = {
+        "result_path": manager_path.relative_to(tmp_path).as_posix(),
+        "result_sha256": manager_seal.sha256,
+        "decisive_question": decisive_question,
+        "evidence_ids": evidence_ids,
+    }
+    scoped_package["decisive_answer"] = {
+        "conclusion": "Primary filings support a normalized owner-earnings path.",
+        "source_ids": ["annual", "q1"],
+        "unresolved_reason": None,
+    }
+    scoped_package = _validate_package(
+        scoped_package,
+        recorded_at=scoped_completed_at,
+    )
+    scoped_dir = coverage_root / "profiles" / CYCLE_ID / "600519"
+    scoped_profile_path = scoped_dir / "20260720T083000+0800.profile.json"
+    scoped_evaluation_path = scoped_dir / "20260720T083000+0800.evaluation.json"
+    scoped_profile_relative = scoped_profile_path.relative_to(tmp_path).as_posix()
+    scoped_evaluation_relative = scoped_evaluation_path.relative_to(tmp_path).as_posix()
+    sealed_scoped_package = dict(scoped_package)
+    sealed_scoped_package["schema_version"] = 3
+    sealed_scoped_package["claim_attempt"] = dict(scoped_claim)
+    scoped_profile_seal = seal_json(
+        scoped_profile_path,
+        sealed_scoped_package,
+        artifact_type="quick_profile_package",
+        sealed_at=scoped_completed_at,
+    )
+    scoped_evaluation, scoped_next_stage = _adjust_profile_evaluation(
+        evaluate_quick_profile(
+            scoped_package["profile"],
+            policy=policy_document["payload"],
+        ),
+        queued_stage="scoped_research",
+    )
+    assert scoped_next_stage == "deep_candidate"
+    scoped_evaluation_seal = seal_json(
+        scoped_evaluation_path,
+        {
+            "schema_version": 3,
+            "cycle_id": CYCLE_ID,
+            "symbol": SYMBOL,
+            "company_name": scoped_package["company_name"],
+            "recorded_at": scoped_completed_at.isoformat(),
+            "profile_path": scoped_profile_relative,
+            "profile_sha256": scoped_profile_seal.sha256,
+            "policy_reference": "research-allocation.default@test",
+            "policy_payload_sha256": hashlib.sha256(
+                canonical_json_bytes(policy_document["payload"])
+            ).hexdigest(),
+            "allocation_sha256": "a" * 64,
+            "evaluation": scoped_evaluation,
+            "queue_status": "completed",
+            "capacity_wait": False,
+            "portfolio_action": None,
+            "claim_attempt": dict(scoped_claim),
+        },
+        artifact_type="quick_profile_evaluation",
+        sealed_at=scoped_completed_at,
+    )
+    scoped_success = seal_profile_stage_success(
+        root=coverage_root,
+        queue_record=scoped_running,
+        agent="/root/scoped-researcher",
+        profile_path=scoped_profile_relative,
+        profile_sha256=scoped_profile_seal.sha256,
+        evaluation_path=scoped_evaluation_relative,
+        evaluation_sha256=scoped_evaluation_seal.sha256,
+        succeeded_at=scoped_completed_at,
+    )
+
     selection_path = _seal_run_bound_stage_selection(
         tmp_path,
         cycle_id=CYCLE_ID,
@@ -167,10 +329,7 @@ def _environment(
             "assigned_agent": None,
             "started_at": None,
             "finished_at": None,
-            "result_path": (
-                "coverage/cn-a/profiles/2026-07-20-deep-cycle/"
-                "scoped-research-evaluation-600519.json"
-            ),
+            "result_path": scoped_evaluation_relative,
             "failure_reason": None,
             "next_action": "complete formal company research",
             "effort_budget_hours": 24.0,
@@ -190,18 +349,19 @@ def _environment(
                 {
                     "stage": "scoped_research",
                     "status": "completed",
-                    "started_at": "2026-07-20T08:00:00+08:00",
-                    "finished_at": "2026-07-20T08:30:00+08:00",
+                    "started_at": scoped_claimed_at.isoformat(),
+                    "finished_at": scoped_completed_at.isoformat(),
                     "agent": "/root/scoped-researcher",
-                    "result_path": (
-                        "coverage/cn-a/profiles/2026-07-20-deep-cycle/"
-                        "scoped-research-profile-600519.json"
-                    ),
-                    "evaluation_path": (
-                        "coverage/cn-a/profiles/2026-07-20-deep-cycle/"
-                        "scoped-research-evaluation-600519.json"
-                    ),
+                    "result_path": scoped_profile_relative,
+                    "result_sha256": scoped_profile_seal.sha256,
+                    "evaluation_path": scoped_evaluation_relative,
+                    "evaluation_sha256": scoped_evaluation_seal.sha256,
                     "next_stage": "deep_candidate",
+                    "claim_path": scoped_claim["path"],
+                    "claim_sha256": scoped_claim["sha256"],
+                    "claim_attempt_number": scoped_claim["attempt_number"],
+                    "success_path": scoped_success["path"],
+                    "success_sha256": scoped_success["sha256"],
                 }
             ],
         }
@@ -282,9 +442,24 @@ def _full_market_environment(
     from tests.test_manager_screen_full_market_allocation_v3 import (
         _record as record_full_market,
     )
+    from tests.test_profile_workflow import _manager_bound_package, _policy
     from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
-    from trading_os.research_assets.profile_workflow import claim_profile_task
-    from trading_os.research_assets.sealing import seal_json, verify_sealed
+    from trading_os.research_assets.profile_stage_claims import (
+        seal_profile_stage_success,
+        verify_active_profile_stage_claim,
+    )
+    from trading_os.research_assets.profile_workflow import (
+        _adjust_profile_evaluation,
+        _validate_package,
+        claim_profile_task,
+        record_profile_package,
+    )
+    from trading_os.research_assets.research_allocation import evaluate_quick_profile
+    from trading_os.research_assets.sealing import (
+        canonical_json_bytes,
+        seal_json,
+        verify_sealed,
+    )
 
     symbol = "CN:000001"
     ticker = symbol.split(":", 1)[1]
@@ -295,11 +470,251 @@ def _full_market_environment(
     policy_path = repository / "policies" / "research-allocation.json"
     policy_path.parent.mkdir(parents=True, exist_ok=True)
     policy_path.write_bytes((PROJECT_ROOT / "policies" / "research-allocation.json").read_bytes())
+    policy = _policy()
     cycle_id = str(allocation["profile_cycle_id"])
+    quick_claimed_at = FULL_MARKET_RECORDED_AT + dt.timedelta(minutes=1)
+    quick_completed_at = FULL_MARKET_RECORDED_AT + dt.timedelta(minutes=2)
+    quick_selection_at = FULL_MARKET_RECORDED_AT + dt.timedelta(minutes=3)
+    scoped_claimed_at = FULL_MARKET_RECORDED_AT + dt.timedelta(minutes=4)
+    scoped_completed_at = FULL_MARKET_RECORDED_AT + dt.timedelta(minutes=5)
     selection_at = FULL_MARKET_RECORDED_AT + dt.timedelta(minutes=10)
     started_at = selection_at + dt.timedelta(minutes=10)
     claims_at = started_at + dt.timedelta(minutes=10)
     completed_at = started_at + dt.timedelta(minutes=30)
+
+    quick_agent = "/root/full-market-quick-researcher"
+    claim_profile_task(
+        root=coverage_root,
+        agent=quick_agent,
+        symbol=symbol,
+        run_id=FULL_MARKET_RUN_ID,
+        stage="quick_profile",
+        claimed_at=quick_claimed_at,
+    )
+    queue_path = coverage_root / "research_queue.jsonl"
+    quick_queue = next(row for row in read_jsonl(queue_path) if row["symbol"] == symbol)
+    quick_package = _manager_bound_package(quick_queue)
+    quick_package["cycle_id"] = cycle_id
+    quick_package["company_name"] = quick_queue["name"]
+    quick_package["profile"].update(
+        {
+            "research_stage": "quick_profile",
+            "symbol": symbol,
+            "as_of": quick_completed_at.date().isoformat(),
+            "information_cutoff": quick_claimed_at.isoformat(),
+        }
+    )
+    quick_package["price_as_of"] = (
+        FULL_MARKET_RECORDED_AT - dt.timedelta(days=1)
+    ).isoformat()
+    quick_package["provenance"].update(
+        {
+            "agent": quick_agent,
+            "generated_at": quick_claimed_at.isoformat(),
+        }
+    )
+    quick_package["manager_screen_binding"] = {
+        "result_path": quick_queue["manager_screen_allocation_result_path"],
+        "result_sha256": quick_queue["manager_screen_allocation_result_sha256"],
+        "decisive_question": quick_queue["decisive_question"],
+        "evidence_ids": list(quick_queue["evidence_ids"]),
+    }
+    quick_result = record_profile_package(
+        quick_package,
+        root=coverage_root,
+        policy=policy,
+        policy_reference="research-allocation.default@test",
+        recorded_at=quick_completed_at,
+    )
+    assert quick_result["next_stage"] == "profile_candidate"
+
+    quick_selection_path = _seal_run_bound_stage_selection(
+        repository,
+        cycle_id=cycle_id,
+        manager_screen_run_id=FULL_MARKET_RUN_ID,
+        evaluated_stage="quick_profile",
+        next_stage="scoped_research",
+        symbol=symbol,
+        policy=policy,
+        sealed_at=quick_selection_at,
+    )
+    quick_selection_seal = verify_sealed(quick_selection_path)
+    quick_selection_relative = quick_selection_path.relative_to(repository).as_posix()
+    queue = read_jsonl(queue_path)
+    queued = next(row for row in queue if row["symbol"] == symbol)
+    queued.update(
+        {
+            "task_type": "scoped_research",
+            "status": "pending",
+            "reason": "sealed quick-profile selection funded scoped research",
+            "assigned_agent": None,
+            "started_at": None,
+            "finished_at": None,
+            "failure_reason": None,
+            "next_action": "complete scoped research",
+            "effort_budget_hours": float(
+                policy["effort_budget_hours"]["scoped_research"]
+            ),
+            "preceding_stage": "quick_profile",
+            "stop_conditions": ["thesis disproven"],
+            "profile_quick_selection_path": quick_selection_relative,
+            "profile_quick_selection_sha256": quick_selection_seal.sha256,
+        }
+    )
+    write_jsonl(queue_path, queue)
+    screening_path = coverage_root / "screening.jsonl"
+    screening = read_jsonl(screening_path)
+    screen = next(row for row in screening if row["symbol"] == symbol)
+    screen.update(
+        {
+            "decision": "scoped_research",
+            "reason": "sealed quick-profile selection funded scoped research",
+            "evidence": list(screen.get("evidence") or [])
+            + [
+                f"stage_selection:{quick_selection_relative}",
+                f"stage_selection_sha256:{quick_selection_seal.sha256}",
+            ],
+            "next_action": "complete scoped research",
+        }
+    )
+    write_jsonl(screening_path, screening)
+
+    scoped_agent = "/root/scoped-researcher"
+    claim_profile_task(
+        root=coverage_root,
+        agent=scoped_agent,
+        symbol=symbol,
+        run_id=FULL_MARKET_RUN_ID,
+        stage="scoped_research",
+        claimed_at=scoped_claimed_at,
+    )
+    scoped_queue = next(row for row in read_jsonl(queue_path) if row["symbol"] == symbol)
+    scoped_package = _manager_bound_package(scoped_queue)
+    scoped_package["cycle_id"] = cycle_id
+    scoped_package["company_name"] = scoped_queue["name"]
+    scoped_package["profile"].update(
+        {
+            "research_stage": "scoped_research",
+            "symbol": symbol,
+            "as_of": scoped_completed_at.date().isoformat(),
+            "information_cutoff": scoped_claimed_at.isoformat(),
+        }
+    )
+    scoped_package["price_as_of"] = (
+        FULL_MARKET_RECORDED_AT - dt.timedelta(days=1)
+    ).isoformat()
+    scoped_package["provenance"].update(
+        {
+            "agent": scoped_agent,
+            "generated_at": scoped_claimed_at.isoformat(),
+        }
+    )
+    scoped_package["manager_screen_binding"] = {
+        "result_path": scoped_queue["manager_screen_allocation_result_path"],
+        "result_sha256": scoped_queue["manager_screen_allocation_result_sha256"],
+        "decisive_question": scoped_queue["decisive_question"],
+        "evidence_ids": list(scoped_queue["evidence_ids"]),
+    }
+    scoped_package = _validate_package(
+        scoped_package,
+        recorded_at=scoped_completed_at,
+    )
+    claim_attempt = verify_active_profile_stage_claim(
+        root=coverage_root,
+        queue_record=scoped_queue,
+        stage="scoped_research",
+    )
+    timestamp = scoped_completed_at.strftime("%Y%m%dT%H%M%S%z")
+    scoped_dir = coverage_root / "profiles" / cycle_id / ticker
+    scoped_profile_path = scoped_dir / f"{timestamp}.profile.json"
+    scoped_evaluation_path = scoped_dir / f"{timestamp}.evaluation.json"
+    scoped_profile_relative = scoped_profile_path.relative_to(repository).as_posix()
+    scoped_evaluation_relative = scoped_evaluation_path.relative_to(repository).as_posix()
+    sealed_scoped_package = dict(scoped_package)
+    sealed_scoped_package["schema_version"] = 3
+    sealed_scoped_package["claim_attempt"] = dict(claim_attempt)
+    scoped_profile_seal = seal_json(
+        scoped_profile_path,
+        sealed_scoped_package,
+        artifact_type="quick_profile_package",
+        sealed_at=scoped_completed_at,
+    )
+    scoped_evaluation, scoped_next_stage = _adjust_profile_evaluation(
+        evaluate_quick_profile(scoped_package["profile"], policy=policy),
+        queued_stage="scoped_research",
+    )
+    assert scoped_next_stage == "deep_candidate"
+    scoped_evaluation_seal = seal_json(
+        scoped_evaluation_path,
+        {
+            "schema_version": 3,
+            "cycle_id": cycle_id,
+            "symbol": symbol,
+            "company_name": scoped_package["company_name"],
+            "recorded_at": scoped_completed_at.isoformat(),
+            "profile_path": scoped_profile_relative,
+            "profile_sha256": scoped_profile_seal.sha256,
+            "policy_reference": "research-allocation.default@test",
+            "policy_payload_sha256": hashlib.sha256(
+                canonical_json_bytes(policy)
+            ).hexdigest(),
+            "allocation_sha256": scoped_queue["allocation_sha256"],
+            "evaluation": scoped_evaluation,
+            "queue_status": "completed",
+            "capacity_wait": False,
+            "portfolio_action": None,
+            "claim_attempt": dict(claim_attempt),
+        },
+        artifact_type="quick_profile_evaluation",
+        sealed_at=scoped_completed_at,
+    )
+    scoped_success = seal_profile_stage_success(
+        root=coverage_root,
+        queue_record=scoped_queue,
+        agent=scoped_agent,
+        profile_path=scoped_profile_relative,
+        profile_sha256=scoped_profile_seal.sha256,
+        evaluation_path=scoped_evaluation_relative,
+        evaluation_sha256=scoped_evaluation_seal.sha256,
+        succeeded_at=scoped_completed_at,
+    )
+    scoped_history = list(scoped_queue.get("stage_history") or [])
+    scoped_history.append(
+        {
+            "stage": "scoped_research",
+            "status": "completed",
+            "started_at": scoped_queue["started_at"],
+            "finished_at": scoped_completed_at.isoformat(),
+            "agent": scoped_agent,
+            "result_path": scoped_profile_relative,
+            "result_sha256": scoped_profile_seal.sha256,
+            "evaluation_path": scoped_evaluation_relative,
+            "evaluation_sha256": scoped_evaluation_seal.sha256,
+            "next_stage": scoped_next_stage,
+            "claim_path": claim_attempt["path"],
+            "claim_sha256": claim_attempt["sha256"],
+            "claim_attempt_number": claim_attempt["attempt_number"],
+            "success_path": scoped_success["path"],
+            "success_sha256": scoped_success["sha256"],
+        }
+    )
+    scoped_queue.update(
+        {
+            "status": "completed",
+            "finished_at": scoped_completed_at.isoformat(),
+            "result_path": scoped_evaluation_relative,
+            "preceding_stage": "scoped_research",
+            "stage_history": scoped_history,
+            "profile_evaluation_path": scoped_evaluation_relative,
+            "profile_recorded_at": scoped_completed_at.isoformat(),
+        }
+    )
+    queue = read_jsonl(queue_path)
+    write_jsonl(
+        queue_path,
+        [scoped_queue if row["symbol"] == symbol else row for row in queue],
+    )
+
     selection_path = _seal_run_bound_stage_selection(
         repository,
         cycle_id=cycle_id,
@@ -307,6 +722,7 @@ def _full_market_environment(
         evaluated_stage="scoped_research",
         next_stage="deep_research",
         symbol=symbol,
+        policy=policy,
         sealed_at=selection_at,
     )
     selection_seal = verify_sealed(selection_path)
@@ -398,7 +814,6 @@ def _full_market_environment(
         encoding="utf-8",
     )
 
-    queue_path = coverage_root / "research_queue.jsonl"
     queue = read_jsonl(queue_path)
     queued = next(row for row in queue if row["symbol"] == symbol)
     queued.update(
@@ -418,25 +833,9 @@ def _full_market_environment(
             "profile_cycle_id": cycle_id,
             "profile_scoped_selection_path": selection_relative,
             "profile_scoped_selection_sha256": selection_seal.sha256,
-            "stage_history": list(queued.get("stage_history") or [])
-            + [
-                {
-                    "stage": "scoped_research",
-                    "status": "completed",
-                    "started_at": (selection_at - dt.timedelta(minutes=5)).isoformat(),
-                    "finished_at": selection_at.isoformat(),
-                    "agent": "/root/scoped-researcher",
-                    "result_path": f"coverage/cn-a/profiles/{cycle_id}/scoped-profile.json",
-                    "evaluation_path": (
-                        f"coverage/cn-a/profiles/{cycle_id}/scoped-evaluation.json"
-                    ),
-                    "next_stage": "deep_candidate",
-                }
-            ],
         }
     )
     write_jsonl(queue_path, queue)
-    screening_path = coverage_root / "screening.jsonl"
     screening = read_jsonl(screening_path)
     screen = next(row for row in screening if row["symbol"] == symbol)
     screen.update(

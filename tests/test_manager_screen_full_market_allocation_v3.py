@@ -2561,6 +2561,117 @@ def test_record_projects_selected_and_deferred_without_rewriting_original_bindin
     assert status["invalid_artifact_count"] == 0
 
 
+def test_profile_status_uses_sealed_full_market_authority_after_projection_drift(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from trading_os.research_assets import profile_workflow
+
+    root = _ready_full_market(tmp_path, monkeypatch)
+    _prepare(root)
+    recorded = _record(root, {"CN:000001", V3_SYMBOL})
+    queue_path = root / "research_queue.jsonl"
+    queue = _by_symbol(queue_path)
+    drifted = queue["CN:000001"]
+    for field in (
+        "profile_cycle_id",
+        "manager_screen_run_id",
+        "preceding_stage",
+        "manager_screen_allocation_result_path",
+        "manager_screen_allocation_result_sha256",
+        "manager_screen_allocation_candidate_sha256",
+        "manager_screen_allocation_decision",
+        "allocation_sha256",
+    ):
+        drifted.pop(field, None)
+    drifted["stage_history"] = [
+        event
+        for event in drifted.get("stage_history") or []
+        if not str(event.get("stage", "")).startswith("manager_screen")
+    ]
+    write_jsonl(queue_path, list(queue.values()))
+    screening_path = root / "screening.jsonl"
+    screens = _by_symbol(screening_path)
+    for field in (
+        "profile_cycle_id",
+        "manager_screen_allocation_result_path",
+        "manager_screen_allocation_result_sha256",
+        "manager_screen_allocation_candidate_sha256",
+        "manager_screen_allocation_decision",
+    ):
+        screens["CN:000001"].pop(field, None)
+    write_jsonl(screening_path, list(screens.values()))
+
+    assert profile_workflow._record_has_full_market_v3_profile_authority(drifted) is False
+    assert (
+        profile_workflow._record_has_canonical_full_market_v3_profile_authority(
+            drifted,
+            base=root,
+            cycle=recorded["profile_cycle_id"],
+        )
+        is True
+    )
+    status = profile_workflow.profile_cycle_status(
+        root=root,
+        cycle_id=recorded["profile_cycle_id"],
+    )
+
+    assert status["cohort_count"] == 2
+    assert status["recorded_count"] == 0
+    assert status["remaining_count"] == 2
+    assert status["invalid_artifact_count"] == 1
+    assert status["invalid_artifacts"][0]["symbol"] == "CN:000001"
+    assert status["invalid_artifacts"][0]["error"].startswith(
+        "full_market_v3_authority_drift:"
+    )
+    assert "screening.profile_cycle_id" in status["invalid_artifacts"][0]["error"]
+
+
+def test_profile_status_fails_closed_when_canonical_full_market_singleton_is_missing(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from trading_os.research_assets.profile_workflow import profile_cycle_status
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    root = _ready_full_market(tmp_path, monkeypatch)
+    _prepare(root)
+    recorded = _record(root, {"CN:000001", V3_SYMBOL})
+    result_path = (
+        root
+        / "manager-screen"
+        / RUN_ID
+        / "governance"
+        / "allocation-v3"
+        / "full-market"
+        / "result.json"
+    )
+    result_path.unlink()
+    result_path.with_name(f"{result_path.name}.seal.json").unlink()
+
+    with pytest.raises(ResearchAllocationError, match="authority singleton is missing"):
+        profile_cycle_status(root=root, cycle_id=recorded["profile_cycle_id"])
+
+
+def test_profile_status_accepts_a_sealed_full_market_cycle_with_no_new_funding(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from trading_os.research_assets.profile_workflow import profile_cycle_status
+
+    root = _ready_full_market(tmp_path, monkeypatch)
+    _prepare(root)
+    recorded = _record(root, set())
+
+    status = profile_cycle_status(root=root, cycle_id=recorded["profile_cycle_id"])
+
+    assert status["cohort_count"] == 0
+    assert status["recorded_count"] == 0
+    assert status["remaining_count"] == 0
+    assert status["comparison_ready"] is True
+    assert status["invalid_artifact_count"] == 0
+
+
 def test_apply_repairs_prior_projection_but_rejects_unrecognized_drift_atomically(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -2687,8 +2798,21 @@ def test_claim_and_cohort_use_common_full_market_predecessor_across_batches(
         ]
     write_jsonl(queue_path, list(queue.values()))
     queue_rows = read_jsonl(queue_path)
+    monkeypatch.setattr(
+        profile_workflow,
+        "_latest_cycle_stage_completion_with_legacy_decline_migration",
+        lambda record, *, base, stage, cycle, canonical_full_market_v3=None: next(
+            (
+                event
+                for event in reversed(record.get("stage_history") or [])
+                if event.get("stage") == stage and event.get("status") == "completed"
+            ),
+            None,
+        ),
+    )
     binding_field, binding, binding_sha, cohort = profile_workflow._complete_profile_cohort(
         queue_rows,
+        base=root,
         repository_root=root.parent.parent.resolve(),
         cycle=recorded["profile_cycle_id"],
         stage="quick_profile",
@@ -2708,6 +2832,7 @@ def test_claim_and_cohort_use_common_full_market_predecessor_across_batches(
     with pytest.raises(ResearchAllocationError, match="cannot drop"):
         profile_workflow._complete_profile_cohort(
             missing_run,
+            base=root,
             repository_root=root.parent.parent.resolve(),
             cycle=recorded["profile_cycle_id"],
             stage="quick_profile",
@@ -2717,6 +2842,7 @@ def test_claim_and_cohort_use_common_full_market_predecessor_across_batches(
     with pytest.raises(ResearchAllocationError, match="predecessor SHA binding"):
         profile_workflow._complete_profile_cohort(
             queue_rows,
+            base=root,
             repository_root=root.parent.parent.resolve(),
             cycle=recorded["profile_cycle_id"],
             stage="quick_profile",
@@ -3230,6 +3356,7 @@ def test_sealed_targeted_approval_does_not_block_another_full_market_claim(
     from trading_os.research_assets.profile_workflow import (
         approve_targeted_followup,
         claim_profile_task,
+        profile_cycle_status,
         record_profile_package,
     )
 
@@ -3283,6 +3410,13 @@ def test_sealed_targeted_approval_does_not_block_another_full_market_claim(
         recorded_at=RECORDED_AT + dt.timedelta(minutes=2),
     )
     assert recorded_profile["next_stage"] == "targeted_followup_candidate"
+    profile_status = profile_cycle_status(
+        root=root,
+        cycle_id=recorded["profile_cycle_id"],
+    )
+    assert profile_status["recorded_count"] == 1
+    assert profile_status["remaining_count"] == 1
+    assert profile_status["invalid_artifact_count"] == 0
     approved = approve_targeted_followup(
         root=root,
         symbol=symbol,

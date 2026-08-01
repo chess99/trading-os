@@ -1468,6 +1468,7 @@ def approve_targeted_followup(
     queued = _one_record(queue, symbol, "research queue")
     screen = _one_record(screening, symbol, "screening")
     repository_root = base.parent.parent
+    cycle = _text(queued.get("profile_cycle_id"), "profile_cycle_id")
     locked_remediation = _targeted_locked_calibration_remediation(
         queued,
         screen_record=screen,
@@ -1512,7 +1513,13 @@ def approve_targeted_followup(
         and screen.get("decision") == "targeted_followup"
         and not queued.get("targeted_followup_approval_path")
         and not queued.get("targeted_followup_approval_sha256")
-        and not _history_completed(queued, "targeted_followup")
+        and _latest_cycle_stage_completion(
+            queued,
+            base=base,
+            stage="targeted_followup",
+            cycle=cycle,
+        )
+        is None
     )
     legacy_profile_row: Mapping[str, Any] | None = None
     if legacy_pending_followup:
@@ -1522,6 +1529,7 @@ def approve_targeted_followup(
             ordinal=1,
             cycle=_text(queued.get("profile_cycle_id"), "profile_cycle_id"),
             stage=preceding_stage,
+            base=base,
             repository_root=repository_root,
         )
         if legacy_profile_row.get("current_next_stage") not in {
@@ -1545,7 +1553,6 @@ def approve_targeted_followup(
         queued,
         context="targeted-followup approval",
     )
-    cycle = _text(queued.get("profile_cycle_id"), "profile_cycle_id")
     if isinstance(manager_screen_run_id, str):
         if _requires_funded_full_market_grant(queued):
             _verify_funded_full_market_profile_grant(
@@ -1892,13 +1899,6 @@ def _validate_profile_claim_stage_authorization(
     preceding_stage = config["preceding_stage"]
     if queue_record.get("preceding_stage") != preceding_stage:
         raise ResearchAllocationError(f"{stage} claim does not follow {preceding_stage}: {symbol}")
-    if not _history_completed(queue_record, preceding_stage):
-        raise ResearchAllocationError(
-            f"{stage} claim lacks completed {preceding_stage} history: {symbol}"
-        )
-    if _history_completed(queue_record, str(stage)):
-        raise ResearchAllocationError(f"completed profile stage cannot be claimed again: {symbol}")
-
     binding_field = config["binding_field"]
     relative = queue_record.get(binding_field)
     if not isinstance(relative, str) or not relative:
@@ -1967,6 +1967,7 @@ def _validate_profile_claim_stage_authorization(
         and "manager_screen_run_id" not in payload
         and "research_policy" not in payload
     )
+    predecessor_requires_claim = not legacy_run_omission
     if selection_run_id != queue_run_id and not legacy_run_omission:
         raise ResearchAllocationError(
             f"{stage} selection belongs to a different manager-screen run: {symbol}"
@@ -1992,6 +1993,30 @@ def _validate_profile_claim_stage_authorization(
         raise ResearchAllocationError(
             f"{stage} effort budget does not match its sealed selection: {symbol}"
         )
+    if (
+        _latest_cycle_stage_authorization_completion(
+            queue_record,
+            base=base,
+            stage=preceding_stage,
+            cycle=cycle,
+            require_claim=predecessor_requires_claim,
+        )
+        is None
+    ):
+        raise ResearchAllocationError(
+            f"{stage} claim lacks completed {preceding_stage} history: {symbol}"
+        )
+    if (
+        _latest_cycle_stage_authorization_completion(
+            queue_record,
+            base=base,
+            stage=str(stage),
+            cycle=cycle,
+            require_claim=predecessor_requires_claim,
+        )
+        is not None
+    ):
+        raise ResearchAllocationError(f"completed profile stage cannot be claimed again: {symbol}")
 
 
 def _validate_profile_stage_selection_semantics(
@@ -2276,7 +2301,13 @@ def _materialize_targeted_followup_approval(
     )
     later_state = bool(
         queued.get("task_type") == "targeted_followup"
-        or _history_completed(queued, "targeted_followup")
+        or _latest_cycle_stage_completion(
+            queued,
+            base=base,
+            stage="targeted_followup",
+            cycle=_text(approval.get("profile_cycle_id"), "profile_cycle_id"),
+        )
+        is not None
     )
     if (
         isinstance(locked_remediation, Mapping)
@@ -2446,7 +2477,18 @@ def decline_targeted_followup(
         raise ResearchAllocationError(
             f"targeted followup already has an approval commitment: {symbol}"
         )
-    if _history_completed(queued, "targeted_followup"):
+    if (
+        queued.get("task_type") == "targeted_followup"
+        and queued.get("status") == "completed"
+    ) or (
+        _latest_cycle_stage_completion(
+            queued,
+            base=base,
+            stage="targeted_followup",
+            cycle=cycle,
+        )
+        is not None
+    ):
         raise ResearchAllocationError(f"completed targeted followup cannot be declined: {symbol}")
 
     decline_exists = (
@@ -2470,6 +2512,7 @@ def decline_targeted_followup(
             )
         recommendation = _targeted_followup_recommendation_binding(
             queued,
+            base=base,
             repository_root=repository_root,
             legacy_auto_materialized=decline["legacy_auto_materialized"],
         )
@@ -2499,8 +2542,20 @@ def decline_targeted_followup(
 
     state = _declinable_targeted_followup_state(queued, screen=screen)
     legacy_auto_materialized = state == "legacy_auto_materialized_pending"
+    if legacy_auto_materialized and (
+        _record_has_full_market_v3_profile_authority(queued)
+        or _record_has_canonical_full_market_v3_profile_authority(
+            queued,
+            base=base,
+            cycle=cycle,
+        )
+    ):
+        raise ResearchAllocationError(
+            "full-market-v3 profile work cannot use the legacy targeted-followup decline path"
+        )
     recommendation = _targeted_followup_recommendation_binding(
         queued,
+        base=base,
         repository_root=repository_root,
         legacy_auto_materialized=legacy_auto_materialized,
     )
@@ -2585,6 +2640,7 @@ def _declinable_targeted_followup_state(
 def _targeted_followup_recommendation_binding(
     queued: Mapping[str, Any],
     *,
+    base: Path,
     repository_root: Path,
     legacy_auto_materialized: bool,
 ) -> dict[str, Any]:
@@ -2613,11 +2669,20 @@ def _targeted_followup_recommendation_binding(
         )
     recommendation_record = dict(queued)
     recommendation_record["stage_history"] = [dict(matching_history[-1])]
+    if legacy_auto_materialized:
+        # The compatibility path describes analyst work completed before a
+        # manager-screen binding was grafted onto the pending evaluator task.
+        # Authenticate the sealed same-cycle package itself; do not pretend it
+        # had a claim contract that did not yet exist.
+        recommendation_record.pop("manager_screen_run_id", None)
+        for field in MANAGER_SCREEN_PROVENANCE_FIELDS:
+            recommendation_record.pop(field, None)
     row = _profile_comparison_row(
         recommendation_record,
         ordinal=1,
         cycle=_text(queued.get("profile_cycle_id"), "profile_cycle_id"),
         stage=preceding_stage,
+        base=base,
         repository_root=repository_root,
     )
     recommended_next_stage = row.get("current_next_stage")
@@ -3204,6 +3269,11 @@ def record_profile_package(
     screening_records = read_jsonl(screening_path)
     queue_record = _one_record(queue_records, symbol, "research queue")
     screening_record = _one_record(screening_records, symbol, "screening")
+    current_cycle = queue_record.get("profile_cycle_id")
+    if isinstance(current_cycle, str) and current_cycle != normalized["cycle_id"]:
+        raise ResearchAllocationError(
+            f"profile package cycle does not match the current queue: {symbol}"
+        )
     _manager_screen_run_id_for_record(
         queue_record,
         context="profile record",
@@ -3602,6 +3672,17 @@ def _verify_profile_record_replay(
             f"profile replay stage conflicts with completed history: "
             f"{normalized['profile']['symbol']}"
         )
+    if not _cycle_stage_completion_is_authenticated(
+        queue_record,
+        history,
+        base=root,
+        stage=recorded_stage,
+        cycle=str(normalized["cycle_id"]),
+    ):
+        raise ResearchAllocationError(
+            f"profile replay lacks an authenticated current-cycle completion: "
+            f"{normalized['profile']['symbol']}"
+        )
     adjusted_evaluation, next_stage = _adjust_profile_evaluation(
         raw_evaluation,
         queued_stage=recorded_stage,
@@ -3987,6 +4068,7 @@ def build_profile_comparison_packet(
     queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
     _, binding, binding_sha, cohort = _complete_profile_cohort(
         queue,
+        base=base,
         repository_root=repository_root,
         cycle=cycle,
         stage=stage,
@@ -3994,6 +4076,16 @@ def build_profile_comparison_packet(
     investment_manager_agent = _investment_manager_for_cohort(
         cohort,
         repository_root=repository_root,
+    )
+    full_market_authority = _full_market_v3_cycle_authority(
+        base=base,
+        repository_root=repository_root,
+        cycle=cycle,
+    )
+    full_market_symbols = (
+        set(full_market_authority["selected"])
+        if full_market_authority is not None
+        else set()
     )
     comparison_path = base / "profiles" / cycle / config["comparison_name"]
     relative = comparison_path.relative_to(repository_root).as_posix()
@@ -4024,7 +4116,9 @@ def build_profile_comparison_packet(
             ordinal=ordinal,
             cycle=cycle,
             stage=stage,
+            base=base,
             repository_root=repository_root,
+            canonical_full_market_v3=item.get("symbol") in full_market_symbols,
         )
         for ordinal, item in enumerate(cohort, 1)
     ]
@@ -4086,6 +4180,7 @@ def finalize_profile_stage_with_agent_decisions(
     screening = read_jsonl(screening_path)
     _, binding, binding_sha, cohort = _complete_profile_cohort(
         queue,
+        base=base,
         repository_root=repository_root,
         cycle=cycle,
         stage=stage,
@@ -4288,6 +4383,7 @@ def finalize_profile_stage_with_agent_decisions(
         materialization_payload = payload
     updated_screening, updated_queue, screening_changed, queue_changed = (
         _materialize_profile_selection(
+            base=base,
             screening=screening,
             queue=queue,
             payload=materialization_payload,
@@ -4339,6 +4435,7 @@ def finalize_profile_stage(
     screening = read_jsonl(screening_path)
     _reject_legacy_finalize_for_manager_screen(
         queue,
+        base=base,
         cycle=cycle,
         stage=stage,
     )
@@ -4373,6 +4470,7 @@ def finalize_profile_stage(
         )
         _reject_legacy_finalize_for_manager_screen(
             queue,
+            base=base,
             cycle=cycle,
             stage=stage,
             bound_symbols={
@@ -4384,6 +4482,7 @@ def finalize_profile_stage(
         bound_budget = payload.get("next_stage_effort_budget_hours")
         updated_screening, updated_queue, screening_changed, queue_changed = (
             _materialize_profile_selection(
+                base=base,
                 screening=screening,
                 queue=queue,
                 payload=payload,
@@ -4411,7 +4510,13 @@ def finalize_profile_stage(
         item
         for item in queue
         if item.get("profile_cycle_id") == cycle
-        and _history_completed(item, stage)
+        and _latest_cycle_stage_completion_for_legacy_materialization(
+            item,
+            base=base,
+            stage=stage,
+            cycle=cycle,
+        )
+        is not None
         and isinstance(item.get(binding_field), str)
     ]
     if not anchors:
@@ -4422,11 +4527,17 @@ def finalize_profile_stage(
     binding = next(iter(bindings))
     cohort = _bound_profile_cohort(
         queue,
+        base=base,
         repository_root=repository_root,
         binding_field=binding_field,
         binding=binding,
+        cycle=cycle,
         stage=stage,
     )
+    if any(item.get(binding_field) != binding for item in cohort):
+        raise ResearchAllocationError(
+            f"{stage} cohort mutable predecessor binding drifted from its sealed selection"
+        )
     _manager_screen_run_id_for_cohort(cohort)
     if _manager_screen_run_id_for_cohort(cohort) is not None:
         raise ResearchAllocationError(
@@ -4438,7 +4549,13 @@ def finalize_profile_stage(
         item["symbol"]
         for item in cohort
         if item.get("profile_cycle_id") != cycle
-        or not _history_completed(item, stage)
+        or _latest_cycle_stage_completion_for_legacy_materialization(
+            item,
+            base=base,
+            stage=stage,
+            cycle=cycle,
+        )
+        is None
         or (
             item.get("task_type") == "targeted_followup"
             and item.get("preceding_stage") == stage
@@ -4541,6 +4658,7 @@ def finalize_profile_stage(
     relative_selection = selection_path.relative_to(repository_root).as_posix()
     updated_screening, updated_queue, screening_changed, queue_changed = (
         _materialize_profile_selection(
+            base=base,
             screening=screening,
             queue=queue,
             payload=selection_payload,
@@ -4568,6 +4686,7 @@ def finalize_profile_stage(
 def _reject_legacy_finalize_for_manager_screen(
     queue: list[Mapping[str, Any]],
     *,
+    base: Path,
     cycle: str,
     stage: str,
     bound_symbols: set[str] | None = None,
@@ -4576,7 +4695,14 @@ def _reject_legacy_finalize_for_manager_screen(
         candidates = [
             item
             for item in queue
-            if item.get("profile_cycle_id") == cycle and _history_completed(item, stage)
+            if item.get("profile_cycle_id") == cycle
+            and _latest_cycle_stage_completion(
+                item,
+                base=base,
+                stage=stage,
+                cycle=cycle,
+            )
+            is not None
         ]
     else:
         candidates = [item for item in queue if item.get("symbol") in bound_symbols]
@@ -4673,6 +4799,7 @@ def _validate_profile_selection_payload(
 
 def _materialize_profile_selection(
     *,
+    base: Path,
     screening: list[dict[str, Any]],
     queue: list[dict[str, Any]],
     payload: Mapping[str, Any],
@@ -4714,15 +4841,21 @@ def _materialize_profile_selection(
         original_screen = screen_by_symbol[symbol]
         queued = dict(original_queue)
         screen = dict(original_screen)
-        completed_stage = _history_completed(queued, stage)
-        if not completed_stage:
-            raise ResearchAllocationError(
-                f"sealed {stage} selection lacks completed stage history: {symbol}"
-            )
         current_cycle = queued.get("profile_cycle_id")
         if isinstance(current_cycle, str) and current_cycle != cycle:
             # A later cycle owns the mutable queue and screening rows now.
             continue
+        completed_event = _latest_cycle_stage_completion_for_legacy_materialization(
+            queued,
+            base=base,
+            stage=stage,
+            cycle=cycle,
+        )
+        if completed_event is None:
+            raise ResearchAllocationError(
+                f"sealed {stage} selection lacks authenticated current-cycle completion: "
+                f"{symbol}"
+            )
 
         existing_binding = queued.get(next_binding_field)
         if existing_binding is not None and existing_binding != selection_path:
@@ -4743,28 +4876,44 @@ def _materialize_profile_selection(
             and queued.get("status") == "completed"
         )
         next_stage_state = queued.get("task_type") == next_stage
+        completed_followup_event = _latest_cycle_stage_completion_for_legacy_materialization(
+            queued,
+            base=base,
+            stage="targeted_followup",
+            cycle=cycle,
+        )
         completed_followup = bool(
             queued.get("task_type") == "targeted_followup"
             and queued.get("status") == "completed"
-            and _history_completed(queued, "targeted_followup")
+            and completed_followup_event is not None
         )
-        declined_followup = _history_completed(queued, "targeted_followup_decline")
-        candidate_outcome = "profile_candidate" if stage == "quick_profile" else "deep_candidate"
-        completed_outcome = _history_completed_outcome(
+        declined_followup_event = _latest_cycle_stage_completion_for_legacy_materialization(
             queued,
-            (
-                "targeted_followup_decline"
-                if declined_followup
-                else "targeted_followup"
-                if completed_followup
-                else stage
-            ),
+            base=base,
+            stage="targeted_followup_decline",
+            cycle=cycle,
         )
+        declined_followup = declined_followup_event is not None
+        candidate_outcome = "profile_candidate" if stage == "quick_profile" else "deep_candidate"
+        outcome_event = (
+            declined_followup_event
+            if declined_followup
+            else completed_followup_event
+            if completed_followup
+            else completed_event
+        )
+        completed_outcome = outcome_event.get("next_stage")
         preserve_outcome = bool(
             completed_outcome in TERMINAL_STAGES and completed_outcome != candidate_outcome
         )
+        completed_next_stage = _latest_cycle_stage_completion_for_legacy_materialization(
+            queued,
+            base=base,
+            stage=next_stage,
+            cycle=cycle,
+        )
         later_progress = bool(
-            _history_completed(queued, next_stage)
+            completed_next_stage is not None
             or (
                 queued.get("task_type") not in {stage, next_stage}
                 and queued.get("task_type") in RESEARCH_STAGES
@@ -4818,7 +4967,7 @@ def _materialize_profile_selection(
                     next_stage_state
                     and queued.get("status") == "pending"
                     and queued.get("assigned_agent") is None
-                    and not _history_completed(queued, next_stage)
+                    and completed_next_stage is None
                 )
                 if safe_pending_state and not screen_proves_selection:
                     screen.update(
@@ -4917,13 +5066,34 @@ def _profile_stage_config(stage: str) -> dict[str, str]:
 def _complete_profile_cohort(
     queue: list[dict[str, Any]],
     *,
+    base: Path,
     repository_root: Path,
     cycle: str,
     stage: str,
 ) -> tuple[str, str, str, list[dict[str, Any]]]:
+    full_market_authority = _full_market_v3_cycle_authority(
+        base=base,
+        repository_root=repository_root,
+        cycle=cycle,
+    )
+    full_market_symbols = (
+        set(full_market_authority["selected"])
+        if full_market_authority is not None
+        else set()
+    )
     anchors = []
     for item in queue:
-        if item.get("profile_cycle_id") != cycle or not _history_completed(item, stage):
+        if (
+            item.get("profile_cycle_id") != cycle
+            or _latest_cycle_stage_completion_with_legacy_decline_migration(
+                item,
+                base=base,
+                stage=stage,
+                cycle=cycle,
+                canonical_full_market_v3=item.get("symbol") in full_market_symbols,
+            )
+            is None
+        ):
             continue
         binding = _profile_predecessor_binding(item, stage=stage)
         if binding is not None:
@@ -4942,11 +5112,17 @@ def _complete_profile_cohort(
     sealed_binding = verify_sealed(binding_path)
     cohort = _bound_profile_cohort(
         queue,
+        base=base,
         repository_root=repository_root,
         binding_field=binding_field,
         binding=binding,
+        cycle=cycle,
         stage=stage,
     )
+    if any(item.get(binding_field) != binding for item in cohort):
+        raise ResearchAllocationError(
+            f"{stage} cohort mutable predecessor binding drifted from its sealed selection"
+        )
     predecessor_sha_field = {
         "manager_screen_allocation_result_path": ("manager_screen_allocation_result_sha256"),
         "manager_screen_result_path": "manager_screen_result_sha256",
@@ -4963,7 +5139,14 @@ def _complete_profile_cohort(
         item["symbol"]
         for item in cohort
         if item.get("profile_cycle_id") != cycle
-        or not _history_completed(item, stage)
+        or _latest_cycle_stage_completion_with_legacy_decline_migration(
+            item,
+            base=base,
+            stage=stage,
+            cycle=cycle,
+            canonical_full_market_v3=item.get("symbol") in full_market_symbols,
+        )
+        is None
         or (
             item.get("task_type") == "targeted_followup"
             and item.get("preceding_stage") == stage
@@ -5190,11 +5373,22 @@ def _profile_comparison_row(
     ordinal: int,
     cycle: str,
     stage: str,
+    base: Path,
     repository_root: Path,
+    canonical_full_market_v3: bool | None = None,
 ) -> dict[str, Any]:
     symbol = str(item["symbol"])
-    profile_relative = _latest_history_path(item, "result_path")
-    evaluation_relative = _latest_history_path(item, "evaluation_path")
+    completion = _latest_cycle_stage_completion_with_legacy_decline_migration(
+        item,
+        base=base,
+        stage=stage,
+        cycle=cycle,
+        canonical_full_market_v3=canonical_full_market_v3,
+    )
+    profile_relative = completion.get("result_path") if completion is not None else None
+    evaluation_relative = (
+        completion.get("evaluation_path") if completion is not None else None
+    )
     if not profile_relative or not evaluation_relative:
         raise ResearchAllocationError(f"profile stage artifacts are missing: {symbol}")
     profile_path = repository_root / profile_relative
@@ -5383,54 +5577,180 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     repository_root = base.parent.parent
     queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
     screening = read_jsonl(base / SCREENING_FILE)
-    cycle_rows = [item for item in queue if item.get("profile_cycle_id") == cycle]
-    recorded = [item for item in cycle_rows if _history_completed(item, "quick_profile")]
-    allocation_shas = {
-        item.get("allocation_sha256")
-        for item in cycle_rows
-        if item.get("allocation_sha256") is not None
-    }
-    if len(allocation_shas) > 1:
-        raise ResearchAllocationError("profile cycle spans multiple allocations")
-    allocation_sha = next(iter(allocation_shas), None)
-    quick_profile_bindings = {
-        binding
-        for item in cycle_rows
-        if (binding := _profile_predecessor_binding(item, stage="quick_profile")) is not None
-    }
-    if len(quick_profile_bindings) == 1:
-        binding_field, binding_path = next(iter(quick_profile_bindings))
-        cohort = _bound_profile_cohort(
-            queue,
-            repository_root=repository_root,
-            binding_field=binding_field,
-            binding=binding_path,
-            stage="quick_profile",
-        )
-    else:
-        cohort = (
-            [
-                item
-                for item in queue
-                if item.get("allocation_sha256") == allocation_sha and bool(item.get("selected_by"))
-            ]
-            if allocation_sha is not None
-            else cycle_rows
-        )
-    recorded_symbols = {item["symbol"] for item in recorded}
     screening_by_symbol = {item.get("symbol"): item for item in screening}
+    full_market_authority = _full_market_v3_cycle_authority(
+        base=base,
+        repository_root=repository_root,
+        cycle=cycle,
+    )
+    authority_errors: list[dict[str, str]] = []
+    if full_market_authority is not None:
+        selected = full_market_authority["selected"]
+        cohort = (
+            _bound_profile_cohort(
+                queue,
+                base=base,
+                repository_root=repository_root,
+                binding_field="manager_screen_allocation_result_path",
+                binding=full_market_authority["result_path"],
+                cycle=cycle,
+                stage="quick_profile",
+            )
+            if selected
+            else []
+        )
+        for item in cohort:
+            symbol = str(item.get("symbol"))
+            decision = selected[symbol]
+            expected_queue = {
+                "profile_cycle_id": cycle,
+                "manager_screen_run_id": full_market_authority["run_id"],
+                "manager_screen_allocation_result_path": full_market_authority[
+                    "result_path"
+                ],
+                "manager_screen_allocation_result_sha256": full_market_authority[
+                    "result_sha256"
+                ],
+                "manager_screen_allocation_candidate_sha256": selected[symbol][
+                    "candidate_sha256"
+                ],
+                "manager_screen_allocation_decision": "fund_quick_profile",
+                "research_budget_state": "funded_quick_profile",
+                "decisive_question": decision["decisive_question"],
+                "evidence_ids": list(decision["evidence_ids"]),
+            }
+            drifted = [
+                f"queue.{field}"
+                for field, value in expected_queue.items()
+                if item.get(field) != value
+            ]
+            screen = screening_by_symbol.get(symbol)
+            expected_screen = {
+                "profile_cycle_id": cycle,
+                "manager_screen_run_id": full_market_authority["run_id"],
+                "manager_screen_allocation_result_path": full_market_authority[
+                    "result_path"
+                ],
+                "manager_screen_allocation_result_sha256": full_market_authority[
+                    "result_sha256"
+                ],
+                "manager_screen_allocation_candidate_sha256": decision[
+                    "candidate_sha256"
+                ],
+                "manager_screen_allocation_decision": "fund_quick_profile",
+                "research_budget_state": "funded_quick_profile",
+                "decisive_question": decision["decisive_question"],
+            }
+            if not isinstance(screen, Mapping):
+                drifted.append("screening.missing")
+            else:
+                drifted.extend(
+                    f"screening.{field}"
+                    for field, value in expected_screen.items()
+                    if screen.get(field) != value
+                )
+            if drifted:
+                authority_errors.append(
+                    {
+                        "symbol": symbol,
+                        "error": "full_market_v3_authority_drift:" + ",".join(drifted),
+                    }
+                )
+        cycle_rows = cohort
+        allocation_sha = full_market_authority["result_sha256"]
+    else:
+        cycle_rows = [item for item in queue if item.get("profile_cycle_id") == cycle]
+        cohort = []
+        allocation_sha = None
+    authority_error_symbols = {item["symbol"] for item in authority_errors}
+    completion_by_symbol: dict[str, Mapping[str, Any]] = {}
+    invalid_completion_symbols: list[str] = []
+    for item in cycle_rows:
+        symbol = str(item.get("symbol"))
+        if symbol in authority_error_symbols:
+            continue
+        completion = _latest_cycle_stage_completion_with_legacy_decline_migration(
+            item,
+            base=base,
+            stage="quick_profile",
+            cycle=cycle,
+            canonical_full_market_v3=(
+                full_market_authority is not None and symbol in full_market_authority["selected"]
+            ),
+        )
+        if completion is not None:
+            completion_by_symbol[symbol] = completion
+        elif _record_claims_cycle_stage_completion(
+            item,
+            stage="quick_profile",
+            cycle=cycle,
+        ):
+            invalid_completion_symbols.append(symbol)
+    recorded = [
+        item for item in cycle_rows if str(item.get("symbol")) in completion_by_symbol
+    ]
+    if full_market_authority is None:
+        allocation_shas = {
+            item.get("allocation_sha256")
+            for item in cycle_rows
+            if item.get("allocation_sha256") is not None
+        }
+        if len(allocation_shas) > 1:
+            raise ResearchAllocationError("profile cycle spans multiple allocations")
+        allocation_sha = next(iter(allocation_shas), None)
+        quick_profile_bindings = {
+            binding
+            for item in cycle_rows
+            if (binding := _profile_predecessor_binding(item, stage="quick_profile")) is not None
+        }
+        if len(quick_profile_bindings) == 1:
+            binding_field, binding_path = next(iter(quick_profile_bindings))
+            cohort = _bound_profile_cohort(
+                queue,
+                base=base,
+                repository_root=repository_root,
+                binding_field=binding_field,
+                binding=binding_path,
+                cycle=cycle,
+                stage="quick_profile",
+            )
+        else:
+            cohort = (
+                [
+                    item
+                    for item in queue
+                    if item.get("allocation_sha256") == allocation_sha
+                    and bool(item.get("selected_by"))
+                ]
+                if allocation_sha is not None
+                else cycle_rows
+            )
+    recorded_symbols = {item["symbol"] for item in recorded}
     stage_counts: dict[str, int] = {}
     status_counts: dict[str, int] = {}
-    invalid: list[dict[str, str]] = []
+    invalid: list[dict[str, str]] = authority_errors + [
+        {
+            "symbol": symbol,
+            "error": "quick_profile_completion_authentication_failed",
+        }
+        for symbol in sorted(set(invalid_completion_symbols))
+    ]
     for item in recorded:
+        completion = completion_by_symbol[str(item["symbol"])]
         status = str(item.get("status"))
         status_counts[status] = status_counts.get(status, 0) + 1
         screen = screening_by_symbol.get(item["symbol"])
         stage = str(screen.get("decision")) if isinstance(screen, Mapping) else "missing"
         stage_counts[stage] = stage_counts.get(stage, 0) + 1
         for label, relative_path in (
-            ("profile", _latest_history_path(item, "result_path")),
-            ("evaluation", _latest_history_path(item, "evaluation_path")),
+            (
+                "profile",
+                completion.get("result_path"),
+            ),
+            (
+                "evaluation",
+                completion.get("evaluation_path"),
+            ),
         ):
             if not isinstance(relative_path, str) or not relative_path:
                 invalid.append({"symbol": item["symbol"], "error": f"{label}_path_missing"})
@@ -5493,35 +5813,136 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     }
 
 
+def _full_market_v3_cycle_authority(
+    *,
+    base: Path,
+    repository_root: Path,
+    cycle: str,
+) -> dict[str, Any] | None:
+    """Resolve a full-market profile cohort from its sealed singleton result.
+
+    Queue fields are a mutable projection and cannot decide whether a v3 cycle
+    still has v3 authority.  The canonical cycle name identifies the run; when
+    its singleton result exists, that sealed result defines membership and all
+    per-company bindings used by status authentication.
+    """
+
+    suffix = "-full-market-v3"
+    if not cycle.endswith(suffix):
+        return None
+    run_id = cycle[: -len(suffix)]
+    if not run_id or not CYCLE_RE.fullmatch(run_id):
+        return None
+    result_path = (
+        base
+        / "manager-screen"
+        / run_id
+        / "governance"
+        / "allocation-v3"
+        / "full-market"
+        / "result.json"
+    )
+    seal_path = result_path.with_name(f"{result_path.name}.seal.json")
+    if not result_path.exists() and not seal_path.exists():
+        raise ResearchAllocationError(
+            f"canonical full-market v3 profile authority singleton is missing: {cycle}"
+        )
+    try:
+        from .manager_screen_full_market_allocation_v3 import (
+            ManagerScreenFullMarketAllocationV3Error,
+            load_manager_screen_full_market_allocation_v3_queue_bindings,
+        )
+
+        bindings = load_manager_screen_full_market_allocation_v3_queue_bindings(
+            root=base,
+            run_id=run_id,
+        )
+        sealed = verify_sealed(result_path)
+    except (
+        ManagerScreenFullMarketAllocationV3Error,
+        OSError,
+        SealingError,
+        ValueError,
+    ) as exc:
+        raise ResearchAllocationError(
+            f"full-market v3 profile authority is invalid: {cycle}"
+        ) from exc
+    if sealed.artifact_type != "manager_screen_full_market_allocation_v3_result":
+        raise ResearchAllocationError(
+            f"full-market v3 profile authority type is invalid: {cycle}"
+        )
+    relative = result_path.resolve().relative_to(repository_root.resolve()).as_posix()
+    if any(
+        binding.get("result_path") != relative
+        or binding.get("result_sha256") != sealed.sha256
+        for binding in bindings.values()
+    ):
+        raise ResearchAllocationError(
+            f"full-market v3 profile bindings are inconsistent: {cycle}"
+        )
+    selected = {
+        symbol: dict(binding)
+        for symbol, binding in bindings.items()
+        if binding.get("decision") == "fund_quick_profile"
+    }
+    return {
+        "run_id": run_id,
+        "result_path": relative,
+        "result_sha256": sealed.sha256,
+        "selected": selected,
+    }
+
+
 def _bound_profile_cohort(
     queue: list[dict[str, Any]],
     *,
+    base: Path,
     repository_root: Path,
     binding_field: str,
     binding: str,
+    cycle: str,
     stage: str,
 ) -> list[dict[str, Any]]:
-    """Return only companies selected by the sealed predecessor decision.
+    """Return the full cohort selected by its immutable predecessor.
 
-    Historical stage records are useful for determining whether a selected
-    company has completed the current layer, but they must not pull a company
-    that lost the current predecessor comparison back into the cohort.
+    The sealed predecessor defines membership.  Mutable task/history fields
+    may report completion or drift, but must never silently shrink the cohort.
     """
 
-    cohort = [
-        item
-        for item in queue
-        if item.get(binding_field) == binding
-        and (item.get("task_type") == stage or _history_completed(item, stage))
-    ]
     selection_path = repository_root / binding
     if not selection_path.exists():
         # Backward compatibility for legacy queues whose predecessor selection
         # was not stored as a sealed repository asset.
-        return cohort
+        legacy_rows = [
+            item
+            for item in queue
+            if item.get(binding_field) == binding
+            and (
+                item.get("task_type") == stage
+                or _latest_cycle_stage_completion(
+                    item,
+                    base=base,
+                    stage=stage,
+                    cycle=cycle,
+                )
+                is not None
+            )
+        ]
+        if binding_field in {
+            "manager_screen_allocation_result_path",
+            "manager_screen_result_path",
+        } or any(
+            item.get("manager_screen_run_id") is not None
+            or _has_manager_screen_provenance(item)
+            for item in legacy_rows
+        ):
+            raise ResearchAllocationError(
+                f"manager-bound {stage} predecessor selection is missing: {binding}"
+            )
+        return legacy_rows
     sealed = verify_sealed(selection_path)
     payload = json.loads(selection_path.read_text(encoding="utf-8"))
-    selected_symbols = set(
+    selected_symbols = list(
         _profile_predecessor_order(
             payload,
             artifact_type=sealed.artifact_type,
@@ -5532,7 +5953,22 @@ def _bound_profile_cohort(
         raise ResearchAllocationError(
             f"predecessor selection has no selected companies for {stage}"
         )
-    return [item for item in cohort if item.get("symbol") in selected_symbols]
+    if len(selected_symbols) != len(set(selected_symbols)):
+        raise ResearchAllocationError(f"predecessor selection duplicates a {stage} symbol")
+    queue_by_symbol: dict[str, dict[str, Any]] = {}
+    for item in queue:
+        symbol = item.get("symbol")
+        if not isinstance(symbol, str):
+            continue
+        if symbol in queue_by_symbol:
+            raise ResearchAllocationError(f"research queue duplicates one symbol: {symbol}")
+        queue_by_symbol[symbol] = item
+    missing = [symbol for symbol in selected_symbols if symbol not in queue_by_symbol]
+    if missing:
+        raise ResearchAllocationError(
+            f"predecessor selection references missing queue symbols: {missing[:10]}"
+        )
+    return [queue_by_symbol[symbol] for symbol in selected_symbols]
 
 
 def _validate_package(package: Mapping[str, Any], *, recorded_at: dt.datetime) -> dict[str, Any]:
@@ -6077,6 +6513,38 @@ def _requires_funded_full_market_grant(record: Mapping[str, Any]) -> bool:
     )
 
 
+def _record_has_full_market_v3_profile_authority(record: Mapping[str, Any]) -> bool:
+    if _requires_funded_full_market_grant(record):
+        return True
+    history = record.get("stage_history")
+    return bool(
+        isinstance(history, list)
+        and any(
+            isinstance(event, Mapping)
+            and event.get("stage") == "manager_screen_allocation_v3"
+            and event.get("status") == "completed"
+            for event in history
+        )
+    )
+
+
+def _record_has_canonical_full_market_v3_profile_authority(
+    record: Mapping[str, Any],
+    *,
+    base: Path,
+    cycle: str,
+) -> bool:
+    symbol = record.get("symbol")
+    if not isinstance(symbol, str):
+        return False
+    authority = _full_market_v3_cycle_authority(
+        base=base,
+        repository_root=base.parent.parent,
+        cycle=cycle,
+    )
+    return bool(authority is not None and symbol in authority["selected"])
+
+
 def _load_full_market_profile_grant_context(
     *,
     root: Path,
@@ -6470,17 +6938,627 @@ def _one_record(records: list[dict[str, Any]], symbol: str, label: str) -> dict[
     return matches[0]
 
 
-def _latest_history_path(record: Mapping[str, Any], key: str) -> str | None:
+def _latest_cycle_stage_completion(
+    record: Mapping[str, Any],
+    *,
+    base: Path,
+    stage: str,
+    cycle: str,
+    require_claim: bool = False,
+) -> Mapping[str, Any] | None:
+    """Return the latest authenticated completion in one profile cycle.
+
+    ``stage_history`` is a mutable projection and is therefore only an index.
+    A path that happens to contain the cycle identifier is not completion
+    evidence.  Profile stages must resolve to their sealed package/evaluation
+    pair and, when a sealed stage authority exists, to the canonical
+    claim/success chain.  Manager declines and deep research use their own
+    sealed terminal receipts.
+    """
+
     history = record.get("stage_history")
     if not isinstance(history, list) or not history:
         return None
     for item in reversed(history):
-        if not isinstance(item, Mapping):
+        if (
+            not isinstance(item, Mapping)
+            or item.get("stage") != stage
+            or item.get("status") != "completed"
+        ):
             continue
-        value = item.get(key)
-        if isinstance(value, str):
-            return value
+        if not _completion_event_claims_cycle(item, stage=stage, cycle=cycle):
+            continue
+        if (
+            _completion_event_is_unique(record, item, stage=stage)
+            and _cycle_stage_completion_is_authenticated(
+                record,
+                item,
+                base=base,
+                stage=stage,
+                cycle=cycle,
+                require_claim=require_claim,
+            )
+        ):
+            return item
+        # A newest same-cycle completion claim that fails authentication is an
+        # integrity error.  Never fall back to an older event and hide it.
+        return None
     return None
+
+
+def _latest_cycle_stage_history_path(
+    record: Mapping[str, Any],
+    *,
+    base: Path,
+    stage: str,
+    cycle: str,
+    key: str,
+) -> str | None:
+    completion = _latest_cycle_stage_completion(
+        record,
+        base=base,
+        stage=stage,
+        cycle=cycle,
+    )
+    value = completion.get(key) if completion is not None else None
+    return value if isinstance(value, str) else None
+
+
+def _completion_event_claims_cycle(
+    event: Mapping[str, Any],
+    *,
+    stage: str,
+    cycle: str,
+) -> bool:
+    keys = (
+        ("decline_path",)
+        if stage == "targeted_followup_decline"
+        else ("completion_path", "claim_path")
+        if stage == "deep_research"
+        else ("result_path", "evaluation_path", "claim_path", "success_path")
+    )
+    cycle_segment = f"/profiles/{cycle}/"
+    return any(
+        isinstance(event.get(key), str)
+        and cycle_segment in ("/" + str(event[key]).replace("\\", "/"))
+        for key in keys
+    )
+
+
+def _record_claims_cycle_stage_completion(
+    record: Mapping[str, Any],
+    *,
+    stage: str,
+    cycle: str,
+) -> bool:
+    history = record.get("stage_history")
+    return bool(
+        isinstance(history, list)
+        and any(
+            isinstance(event, Mapping)
+            and event.get("stage") == stage
+            and event.get("status") == "completed"
+            and _completion_event_claims_cycle(event, stage=stage, cycle=cycle)
+            for event in history
+        )
+    )
+
+
+def _completion_event_is_unique(
+    record: Mapping[str, Any],
+    event: Mapping[str, Any],
+    *,
+    stage: str,
+) -> bool:
+    if isinstance(event.get("claim_path"), str):
+        identity_keys = ("claim_path", "claim_sha256")
+    elif stage == "targeted_followup_decline":
+        identity_keys = ("decline_path", "decline_sha256")
+    elif stage == "deep_research":
+        identity_keys = ("completion_path", "completion_sha256")
+    else:
+        identity_keys = ("result_path", "evaluation_path")
+    identity = tuple(event.get(key) for key in identity_keys)
+    if any(not isinstance(value, str) or not value for value in identity):
+        return False
+    matches = [
+        candidate
+        for candidate in (record.get("stage_history") or [])
+        if isinstance(candidate, Mapping)
+        and candidate.get("stage") == stage
+        and candidate.get("status") == "completed"
+        and tuple(candidate.get(key) for key in identity_keys) == identity
+    ]
+    return len(matches) == 1
+
+
+def _latest_cycle_stage_completion_for_legacy_materialization(
+    record: Mapping[str, Any],
+    *,
+    base: Path,
+    stage: str,
+    cycle: str,
+) -> Mapping[str, Any] | None:
+    """Preserve score-era replay fixtures without weakening manager workflows.
+
+    The legacy score-based finalizer predates sealed per-stage receipts.  It is
+    still retained for historical compatibility, but is forbidden as soon as
+    manager-screen provenance exists.  Modern comparison, status and claim
+    paths never use this fallback.
+    """
+
+    canonical_full_market_v3 = (
+        _record_has_canonical_full_market_v3_profile_authority(
+            record,
+            base=base,
+            cycle=cycle,
+        )
+    )
+    modern_authority = bool(
+        record.get("manager_screen_run_id") is not None
+        or _has_manager_screen_provenance(record)
+        or canonical_full_market_v3
+    )
+    authenticated = _latest_cycle_stage_completion(
+        record,
+        base=base,
+        stage=stage,
+        cycle=cycle,
+        require_claim=modern_authority,
+    )
+    if authenticated is not None:
+        return authenticated
+    if (
+        record.get("profile_cycle_id") != cycle
+        or modern_authority
+    ):
+        return None
+    history = record.get("stage_history")
+    if not isinstance(history, list):
+        return None
+    for event in reversed(history):
+        if (
+            isinstance(event, Mapping)
+            and event.get("stage") == stage
+            and event.get("status") == "completed"
+        ):
+            return event
+    return None
+
+
+def _latest_cycle_stage_completion_with_legacy_decline_migration(
+    record: Mapping[str, Any],
+    *,
+    base: Path,
+    stage: str,
+    cycle: str,
+    canonical_full_market_v3: bool | None = None,
+) -> Mapping[str, Any] | None:
+    """Accept one explicitly sealed migration of pre-claim analyst work."""
+
+    if canonical_full_market_v3 is None:
+        canonical_full_market_v3 = (
+            _record_has_canonical_full_market_v3_profile_authority(
+                record,
+                base=base,
+                cycle=cycle,
+            )
+        )
+    modern_full_market_v3 = bool(
+        _record_has_full_market_v3_profile_authority(record)
+        or canonical_full_market_v3
+    )
+    authenticated = _latest_cycle_stage_completion(
+        record,
+        base=base,
+        stage=stage,
+        cycle=cycle,
+        require_claim=modern_full_market_v3,
+    )
+    if authenticated is not None or stage not in {"quick_profile", "scoped_research"}:
+        return authenticated
+    if modern_full_market_v3:
+        # Full-market v3 explicitly requires an exact allocation-bound claim
+        # and success receipt.  Legacy evaluator migration can never downgrade
+        # that immutable authority.
+        return None
+    decline = _latest_cycle_stage_completion(
+        record,
+        base=base,
+        stage="targeted_followup_decline",
+        cycle=cycle,
+    )
+    if decline is None or decline.get("legacy_auto_materialized") is not True:
+        return None
+    migrated = dict(record)
+    migrated.pop("manager_screen_run_id", None)
+    for field in MANAGER_SCREEN_PROVENANCE_FIELDS:
+        migrated.pop(field, None)
+    if stage == "scoped_research":
+        migrated.pop("profile_quick_selection_path", None)
+        migrated.pop("profile_quick_selection_sha256", None)
+    return _latest_cycle_stage_completion(
+        migrated,
+        base=base,
+        stage=stage,
+        cycle=cycle,
+    )
+
+
+def _latest_cycle_stage_authorization_completion(
+    record: Mapping[str, Any],
+    *,
+    base: Path,
+    stage: str,
+    cycle: str,
+    require_claim: bool,
+) -> Mapping[str, Any] | None:
+    """Authenticate a predecessor completion for a sealed stage selection.
+
+    Modern completions use their claim/success chain.  A limited compatibility
+    path remains for score-era profile packages that were sealed before stage
+    claims existed and were subsequently selected by a sealed manager decision.
+    That path must still verify the package/evaluation pair; mutable history
+    paths that merely contain the current cycle are never completion evidence.
+    """
+
+    # A modern sealed selection is an authorization fact, not a read-only
+    # compatibility view.  It must therefore carry the formal claim/success
+    # receipt even when mutable manager provenance was stripped.  Only the
+    # score-era selection contract (no run and no policy snapshot) may consume
+    # an authenticated schema-v2 predecessor.
+    return _latest_cycle_stage_completion(
+        record,
+        base=base,
+        stage=stage,
+        cycle=cycle,
+        require_claim=require_claim,
+    )
+
+
+def _cycle_stage_completion_is_authenticated(
+    record: Mapping[str, Any],
+    event: Mapping[str, Any],
+    *,
+    base: Path,
+    stage: str,
+    cycle: str,
+    require_claim: bool = False,
+) -> bool:
+    if stage == "targeted_followup_decline":
+        return _targeted_followup_decline_completion_is_authenticated(
+            record,
+            event,
+            base=base,
+            cycle=cycle,
+        )
+    if stage == "deep_research":
+        return _deep_research_completion_is_authenticated(
+            record,
+            event,
+            base=base,
+            cycle=cycle,
+        )
+    return _profile_completion_is_authenticated(
+        record,
+        event,
+        base=base,
+        stage=stage,
+        cycle=cycle,
+        require_claim=require_claim,
+    )
+
+
+def _profile_completion_is_authenticated(
+    record: Mapping[str, Any],
+    event: Mapping[str, Any],
+    *,
+    base: Path,
+    stage: str,
+    cycle: str,
+    require_claim: bool = False,
+) -> bool:
+    repository_root = base.parent.parent.resolve()
+    symbol = record.get("symbol")
+    if not isinstance(symbol, str) or not re.fullmatch(r"CN:[0-9]{6}", symbol):
+        return False
+    ticker = symbol.split(":", 1)[1]
+    relative_profile = event.get("result_path")
+    relative_evaluation = event.get("evaluation_path")
+    if not isinstance(relative_profile, str) or not isinstance(relative_evaluation, str):
+        return False
+    try:
+        profile_path = (repository_root / relative_profile).resolve()
+        evaluation_path = (repository_root / relative_evaluation).resolve()
+        profile_path.relative_to(repository_root)
+        evaluation_path.relative_to(repository_root)
+        expected_dir = (base / "profiles" / cycle / ticker).resolve()
+        if profile_path.parent != expected_dir or evaluation_path.parent != expected_dir:
+            return False
+        if not profile_path.name.endswith(".profile.json"):
+            return False
+        expected_evaluation_name = (
+            f"{profile_path.name[:-len('.profile.json')]}.evaluation.json"
+        )
+        if evaluation_path.name != expected_evaluation_name:
+            return False
+
+        profile_seal = verify_sealed(profile_path)
+        evaluation_seal = verify_sealed(evaluation_path)
+        if (
+            profile_seal.artifact_type != "quick_profile_package"
+            or evaluation_seal.artifact_type != "quick_profile_evaluation"
+            or event.get("result_sha256") != profile_seal.sha256
+            or event.get("evaluation_sha256") != evaluation_seal.sha256
+        ):
+            return False
+        finished_at = _datetime(event.get("finished_at"), "profile completion finished_at")
+        if profile_seal.sealed_at != finished_at or evaluation_seal.sealed_at != finished_at:
+            return False
+        profile_payload = json.loads(profile_path.read_text(encoding="utf-8"))
+        evaluation_payload = json.loads(evaluation_path.read_text(encoding="utf-8"))
+    except (
+        OSError,
+        UnicodeDecodeError,
+        json.JSONDecodeError,
+        SealingError,
+        ValueError,
+        ResearchAllocationError,
+    ):
+        return False
+    if not isinstance(profile_payload, Mapping) or not isinstance(
+        evaluation_payload, Mapping
+    ):
+        return False
+    profile_claim = profile_payload.get("claim_attempt")
+    evaluation_claim = evaluation_payload.get("claim_attempt")
+    profile_contract = dict(profile_payload)
+    profile_contract.pop("claim_attempt", None)
+    sealed_profile_schema = profile_contract.get("schema_version")
+    if profile_claim is not None:
+        if sealed_profile_schema != 3:
+            return False
+        profile_contract["schema_version"] = 2
+    elif sealed_profile_schema != 2:
+        return False
+    try:
+        normalized_profile = _validate_package(
+            profile_contract,
+            recorded_at=finished_at,
+        )
+    except (ResearchAllocationError, ValueError):
+        return False
+    if normalized_profile != profile_contract:
+        return False
+
+    evaluation_fields = {
+        "schema_version",
+        "cycle_id",
+        "symbol",
+        "company_name",
+        "recorded_at",
+        "profile_path",
+        "profile_sha256",
+        "policy_reference",
+        "policy_payload_sha256",
+        "allocation_sha256",
+        "evaluation",
+        "queue_status",
+        "capacity_wait",
+        "portfolio_action",
+    }
+    if profile_claim is not None:
+        evaluation_fields.add("claim_attempt")
+    if set(evaluation_payload) != evaluation_fields:
+        return False
+    profile = normalized_profile.get("profile")
+    provenance = normalized_profile.get("provenance")
+    evaluated = evaluation_payload.get("evaluation")
+    if (
+        not isinstance(profile, Mapping)
+        or not isinstance(provenance, Mapping)
+        or not isinstance(evaluated, Mapping)
+    ):
+        return False
+    profile_stage = profile.get("research_stage")
+    accepted_profile_stages = (
+        {"quick_profile", "scoped_research"}
+        if stage == "targeted_followup"
+        else {stage}
+    )
+    if (
+        normalized_profile.get("cycle_id") != cycle
+        or profile.get("symbol") != symbol
+        or profile_stage not in accepted_profile_stages
+        or evaluation_payload.get("cycle_id") != cycle
+        or evaluation_payload.get("symbol") != symbol
+        or evaluation_payload.get("company_name") != normalized_profile.get("company_name")
+        or evaluation_payload.get("recorded_at") != event.get("finished_at")
+        or evaluation_payload.get("profile_path") != relative_profile
+        or evaluation_payload.get("profile_sha256") != profile_seal.sha256
+        or evaluated.get("evaluated_stage") != profile_stage
+        or evaluated.get("next_stage") != event.get("next_stage")
+        or provenance.get("agent") != event.get("agent")
+        or evaluation_payload.get("portfolio_action") is not None
+    ):
+        return False
+    next_stage = evaluated.get("next_stage")
+    queue_status = evaluation_payload.get("queue_status")
+    capacity_wait = evaluation_payload.get("capacity_wait")
+    if next_stage in RESEARCH_STAGES:
+        if queue_status not in {"pending", "requires_rebaseline"} or capacity_wait is not (
+            queue_status == "requires_rebaseline"
+        ):
+            return False
+    elif queue_status != "completed" or capacity_wait is not False:
+        return False
+    if profile_claim is None and evaluation_claim is None:
+        return bool(
+            profile_payload.get("schema_version") == 2
+            and evaluation_payload.get("schema_version") == 2
+            and not require_claim
+            and not _profile_completion_requires_claim(record, stage=stage)
+        )
+    if (
+        profile_payload.get("schema_version") != 3
+        or evaluation_payload.get("schema_version") != 3
+        or profile_claim != evaluation_claim
+    ):
+        return False
+    try:
+        claim_attempt = _normalize_profile_claim_attempt_binding(profile_claim)
+        verify_profile_stage_success(
+            root=base,
+            claim_attempt=claim_attempt,
+            history_event=event,
+        )
+    except (ProfileStageClaimError, ResearchAllocationError, ValueError):
+        return False
+    expected_authorization = _profile_completion_authorization_binding(
+        record,
+        stage=stage,
+    )
+    if expected_authorization is not None:
+        authorization = claim_attempt.get("stage_authorization")
+        if not isinstance(authorization, Mapping) or any(
+            authorization.get(key) != value
+            for key, value in expected_authorization.items()
+        ):
+            return False
+    return True
+
+
+def _profile_completion_authorization_binding(
+    record: Mapping[str, Any],
+    *,
+    stage: str,
+) -> dict[str, str] | None:
+    if stage == "quick_profile":
+        candidates = (
+            (
+                "manager_screen_allocation_result_path",
+                "manager_screen_allocation_result_sha256",
+            ),
+            ("manager_screen_result_path", "manager_screen_result_sha256"),
+        )
+    elif stage == "targeted_followup":
+        candidates = (
+            ("targeted_followup_approval_path", "targeted_followup_approval_sha256"),
+        )
+    elif stage == "scoped_research":
+        candidates = (("profile_quick_selection_path", "profile_quick_selection_sha256"),)
+    elif stage == "deep_research":
+        candidates = (("profile_scoped_selection_path", "profile_scoped_selection_sha256"),)
+    else:
+        return None
+    for path_field, sha_field in candidates:
+        path = record.get(path_field)
+        sha256 = record.get(sha_field)
+        if path is None and sha256 is None:
+            continue
+        if (
+            not isinstance(path, str)
+            or not path
+            or not isinstance(sha256, str)
+            or not re.fullmatch(r"[0-9a-f]{64}", sha256)
+        ):
+            return {"path": "__invalid__", "sha256": "__invalid__"}
+        return {"path": path, "sha256": sha256}
+    return None
+
+
+def _profile_completion_requires_claim(
+    record: Mapping[str, Any],
+    *,
+    stage: str,
+) -> bool:
+    return bool(
+        _has_manager_screen_provenance(record)
+        or _profile_completion_authorization_binding(record, stage=stage) is not None
+    )
+
+
+def _targeted_followup_decline_completion_is_authenticated(
+    record: Mapping[str, Any],
+    event: Mapping[str, Any],
+    *,
+    base: Path,
+    cycle: str,
+) -> bool:
+    symbol = record.get("symbol")
+    relative = event.get("decline_path")
+    expected_sha256 = event.get("decline_sha256")
+    if (
+        not isinstance(symbol, str)
+        or not re.fullmatch(r"CN:[0-9]{6}", symbol)
+        or not isinstance(relative, str)
+        or not isinstance(expected_sha256, str)
+    ):
+        return False
+    repository_root = base.parent.parent.resolve()
+    path = (repository_root / relative).resolve()
+    expected_path = (
+        base
+        / "profiles"
+        / cycle
+        / "targeted-followup-declines"
+        / f"{symbol.split(':', 1)[1]}.json"
+    ).resolve()
+    try:
+        path.relative_to(repository_root)
+        if path != expected_path:
+            return False
+        sealed = verify_sealed(path)
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        normalized = _validate_targeted_followup_decline_payload(payload)
+    except (
+        OSError,
+        UnicodeDecodeError,
+        json.JSONDecodeError,
+        SealingError,
+        ValueError,
+        ResearchAllocationError,
+    ):
+        return False
+    return bool(
+        sealed.artifact_type == "targeted_followup_decline"
+        and sealed.sha256 == expected_sha256
+        and normalized.get("profile_cycle_id") == cycle
+        and normalized.get("symbol") == symbol
+        and normalized.get("declined_at") == event.get("finished_at")
+        and normalized.get("outcome") == event.get("next_stage")
+        and normalized.get("legacy_auto_materialized")
+        == event.get("legacy_auto_materialized")
+    )
+
+
+def _deep_research_completion_is_authenticated(
+    record: Mapping[str, Any],
+    event: Mapping[str, Any],
+    *,
+    base: Path,
+    cycle: str,
+) -> bool:
+    symbol = record.get("symbol")
+    if not isinstance(symbol, str) or not re.fullmatch(r"CN:[0-9]{6}", symbol):
+        return False
+    try:
+        from .deep_research_completion import (
+            DeepResearchCompletionError,
+            deep_research_completion_status,
+        )
+
+        status = deep_research_completion_status(root=base, symbol=symbol)
+    except (DeepResearchCompletionError, OSError, ValueError, ResearchAllocationError):
+        return False
+    return bool(
+        status.get("finalized") is True
+        and status.get("profile_cycle_id") == cycle
+        and status.get("receipt_path") == event.get("completion_path")
+        and status.get("receipt_sha256") == event.get("completion_sha256")
+        and status.get("claim_attempt_path") == event.get("claim_path")
+        and status.get("claim_attempt_sha256") == event.get("claim_sha256")
+    )
 
 
 def _validate_local_sources(sources: list[dict[str, Any]], *, repository_root: Path) -> None:
