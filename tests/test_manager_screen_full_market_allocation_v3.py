@@ -1569,6 +1569,77 @@ def _by_symbol(path: Path) -> dict[str, dict]:
     return {row["symbol"]: row for row in read_jsonl(path)}
 
 
+def test_queue_binding_loader_verifies_final_briefs_without_recursive_status(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import trading_os.research_assets.manager_screen_full_market_allocation_v3 as full
+
+    root = _ready_full_market(tmp_path, monkeypatch)
+    _prepare(root)
+    recorded = _record(root, {"CN:000001"})
+
+    def fail_if_status_is_reentered(**_: object) -> dict:
+        raise AssertionError("queue binding verification must not re-enter live status")
+
+    monkeypatch.setattr(full, "manager_screen_status", fail_if_status_is_reentered)
+    bindings = full.load_manager_screen_full_market_allocation_v3_queue_bindings(
+        root=root,
+        run_id=RUN_ID,
+    )
+    result = json.loads(_result_path(root).read_text(encoding="utf-8"))
+    decision = next(
+        item for item in result["decisions"] if item["symbol"] == "CN:000001"
+    )
+    binding = bindings["CN:000001"]
+
+    assert binding == {
+        "result_path": recorded["result_path"],
+        "result_sha256": recorded["result_sha256"],
+        "candidate_sha256": decision["candidate_sha256"],
+        "decision": decision["decision"],
+        "decisive_question": decision["decisive_question"],
+        "evidence_ids": decision["evidence_ids"],
+    }
+
+
+def test_final_status_restores_the_sealed_full_scope_postcondition(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import trading_os.research_assets.manager_screen_full_market_allocation_v3 as full
+
+    root = _ready_full_market(tmp_path, monkeypatch)
+    _prepare(root)
+    _record(root, {"CN:000001"})
+    symbol_count = len(read_jsonl(root / "research_queue.jsonl"))
+    monkeypatch.setattr(
+        full,
+        "manager_screen_status",
+        lambda **_: {
+            "screenable_intake_count": symbol_count,
+            "completed_company_count": symbol_count - 1,
+            "deferred_current_state_count": 1,
+            "remaining_unbatched_count": 0,
+            "open_batches": 0,
+            "open_company_count": 0,
+            "control": {"state": "paused"},
+            "legacy_transition": {"state": "recorded"},
+            "calibration": {"status": "complete"},
+            "batches": [],
+        },
+    )
+
+    with pytest.raises(
+        full.ManagerScreenFullMarketAllocationV3Error,
+        match="packet governance binding is invalid",
+    ):
+        full.manager_screen_full_market_allocation_v3_final_status(
+            root=root,
+            run_id=RUN_ID,
+        )
+
+
 def test_calibration_funded_and_deferred_projection_uses_result_research_brief(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -2519,6 +2590,53 @@ def test_apply_repairs_prior_projection_but_rejects_unrecognized_drift_atomicall
     with pytest.raises(ManagerScreenFullMarketAllocationV3Error, match="refusing all writes"):
         apply_manager_screen_full_market_allocation_v3(root=root, run_id=RUN_ID)
     assert (root / "screening.jsonl").read_bytes() == before_screening
+
+
+def test_post_seal_projection_crash_recovers_through_apply_and_replay(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import trading_os.research_assets.manager_screen_full_market_allocation_v3 as full
+
+    root = _ready_full_market(tmp_path, monkeypatch)
+    _prepare(root)
+    submission = _submission(_packet(root), funded={"CN:000001", V3_SYMBOL})
+    original_materialize = full._materialize
+
+    def fail_after_result_seal(**_: object) -> dict:
+        raise OSError("simulated post-seal projection crash")
+
+    monkeypatch.setattr(full, "_materialize", fail_after_result_seal)
+    with pytest.raises(OSError, match="post-seal projection crash"):
+        full.record_manager_screen_full_market_allocation_v3(
+            root=root,
+            run_id=RUN_ID,
+            submission=submission,
+            recorded_at=RECORDED_AT,
+        )
+    monkeypatch.setattr(full, "_materialize", original_materialize)
+
+    assert _result_path(root).exists()
+    assert full.manager_screen_full_market_allocation_v3_final_status(
+        root=root,
+        run_id=RUN_ID,
+    )["finalized"] is False
+    applied = full.apply_manager_screen_full_market_allocation_v3(
+        root=root,
+        run_id=RUN_ID,
+    )
+    assert applied["materialization"]["fully_materialized"] is True
+    assert full.manager_screen_full_market_allocation_v3_final_status(
+        root=root,
+        run_id=RUN_ID,
+    )["finalized"] is True
+    replayed = full.record_manager_screen_full_market_allocation_v3(
+        root=root,
+        run_id=RUN_ID,
+        submission=submission,
+        recorded_at=RECORDED_AT,
+    )
+    assert replayed["idempotent"] is True
 
 
 def test_claim_and_cohort_use_common_full_market_predecessor_across_batches(

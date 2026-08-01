@@ -314,6 +314,7 @@ def record_manager_screen_full_market_allocation_v3(
         base=base,
         run_id=run,
         require_live_pool=not result_path.exists(),
+        require_scope_status=not result_path.exists(),
     )
     packet_path = base / "manager-screen" / run / PACKET_RELATIVE_PATH
     normalized = _normalize_submission(submission, packet=packet)
@@ -337,7 +338,11 @@ def record_manager_screen_full_market_allocation_v3(
         )
     _require_quote_fresh_at(packet["quote"], timestamp)
     if result_path.exists():
-        result, sealed = _verified_result(base=base, run_id=run)
+        result, sealed = _verified_result(
+            base=base,
+            run_id=run,
+            require_scope_status=False,
+        )
         if (
             result["recorded_at"] != timestamp.isoformat()
             or result["manager"] != normalized["manager"]
@@ -355,6 +360,11 @@ def record_manager_screen_full_market_allocation_v3(
             result=result,
             result_path=result_path,
             result_sha256=sealed.sha256,
+        )
+        _require_strict_materialized_result(
+            base=base,
+            run_id=run,
+            expected_result_sha256=sealed.sha256,
         )
         return _result_summary(
             result,
@@ -469,6 +479,11 @@ def record_manager_screen_full_market_allocation_v3(
         result_path=result_path,
         result_sha256=sealed.sha256,
     )
+    _require_strict_materialized_result(
+        base=base,
+        run_id=run,
+        expected_result_sha256=sealed.sha256,
+    )
     return _result_summary(
         result,
         result_path=result_path,
@@ -490,8 +505,16 @@ def apply_manager_screen_full_market_allocation_v3(
     base = Path(root)
     repository_root = base.parent.parent.resolve()
     run = _identifier(run_id, "run_id")
-    packet, _ = _verified_packet(base=base, run_id=run)
-    result, sealed = _verified_result(base=base, run_id=run)
+    packet, _ = _verified_packet(
+        base=base,
+        run_id=run,
+        require_scope_status=False,
+    )
+    result, sealed = _verified_result(
+        base=base,
+        run_id=run,
+        require_scope_status=False,
+    )
     result_path = base / "manager-screen" / run / RESULT_RELATIVE_PATH
     materialization = _materialize(
         base=base,
@@ -500,6 +523,11 @@ def apply_manager_screen_full_market_allocation_v3(
         result=result,
         result_path=result_path,
         result_sha256=sealed.sha256,
+    )
+    _require_strict_materialized_result(
+        base=base,
+        run_id=run,
+        expected_result_sha256=sealed.sha256,
     )
     return _result_summary(
         result,
@@ -521,8 +549,16 @@ def manager_screen_full_market_allocation_v3_final_status(
     base = Path(root)
     repository_root = base.parent.parent.resolve()
     run = _identifier(run_id, "run_id")
-    packet, packet_seal = _verified_packet(base=base, run_id=run)
-    result, result_seal = _verified_result(base=base, run_id=run)
+    packet, packet_seal = _verified_packet(
+        base=base,
+        run_id=run,
+        require_scope_status=False,
+    )
+    result, result_seal = _verified_result(
+        base=base,
+        run_id=run,
+        require_scope_status=False,
+    )
     result_path = base / "manager-screen" / run / RESULT_RELATIVE_PATH
     projection = _projection_status(
         base=base,
@@ -532,6 +568,12 @@ def manager_screen_full_market_allocation_v3_final_status(
         result_path=result_path,
         result_sha256=result_seal.sha256,
     )
+    if projection["fully_materialized"]:
+        _require_strict_materialized_result(
+            base=base,
+            run_id=run,
+            expected_result_sha256=result_seal.sha256,
+        )
     return {
         "schema_version": 1,
         "run_id": run,
@@ -559,6 +601,60 @@ def verify_manager_screen_full_market_allocation_v3_result(
 
     result, sealed = _verified_result(base=Path(root), run_id=_identifier(run_id, "run_id"))
     return {**result, "result_sha256": sealed.sha256}
+
+
+def load_manager_screen_full_market_allocation_v3_queue_bindings(
+    *,
+    root: str | Path,
+    run_id: str,
+) -> dict[str, dict[str, Any]]:
+    """Return the sealed final-allocation brief overrides used by queue validators.
+
+    This verifier intentionally skips the live manager-screen status dependency.  The
+    status validator calls this function while it is validating that same live state,
+    and requiring status here would recurse.  All immutable packet/result, policy,
+    suspension, candidate-source, and seal bindings are still verified.
+    """
+
+    base = Path(root)
+    run = _identifier(run_id, "run_id")
+    result_path = base / "manager-screen" / run / RESULT_RELATIVE_PATH
+    _require_pair_or_absent(result_path, "full-market allocation result")
+    if not result_path.exists():
+        return {}
+    result, sealed = _verified_result(
+        base=base,
+        run_id=run,
+        require_scope_status=False,
+    )
+    repository_root = base.parent.parent.resolve()
+    relative = _relative(result_path, repository_root)
+    return {
+        decision["symbol"]: {
+            "result_path": relative,
+            "result_sha256": sealed.sha256,
+            "candidate_sha256": decision["candidate_sha256"],
+            "decision": decision["decision"],
+            "decisive_question": decision["decisive_question"],
+            "evidence_ids": list(decision["evidence_ids"]),
+        }
+        for decision in result["decisions"]
+    }
+
+
+def _require_strict_materialized_result(
+    *,
+    base: Path,
+    run_id: str,
+    expected_result_sha256: str,
+) -> None:
+    """Restore the strict live-scope postcondition after projection completes."""
+
+    _, sealed = _verified_result(base=base, run_id=run_id)
+    if sealed.sha256 != expected_result_sha256:
+        raise ManagerScreenFullMarketAllocationV3Error(
+            "strict full-market allocation result verification changed its seal"
+        )
 
 
 def _verified_contract(
@@ -612,6 +708,7 @@ def _verified_packet(
     base: Path,
     run_id: str,
     require_live_pool: bool = False,
+    require_scope_status: bool = True,
 ) -> tuple[dict[str, Any], Any]:
     path = base / "manager-screen" / run_id / PACKET_RELATIVE_PATH
     payload, sealed = _sealed_object(path, artifact_type=PACKET_ARTIFACT_TYPE)
@@ -648,10 +745,14 @@ def _verified_packet(
         run_id=run_id,
         prepared_at=prepared_at,
     )
-    status = _require_full_scope_ready(
-        base=base,
-        run_id=run_id,
-        latest_quote=expected_quote,
+    status = (
+        _require_full_scope_ready(
+            base=base,
+            run_id=run_id,
+            latest_quote=expected_quote,
+        )
+        if require_scope_status
+        else None
     )
     expected_policy = _allocation_policy(
         contract=contract,
@@ -687,7 +788,10 @@ def _verified_packet(
         or payload["quote"] != expected_quote
         or payload["policy"] != expected_policy
         or payload["capacity"] != expected_capacity
-        or payload["full_scope_state"] != _full_scope_state(status)
+        or (
+            status is not None
+            and payload["full_scope_state"] != _full_scope_state(status)
+        )
         or payload["instructions"] != _packet_instructions()
     ):
         raise ManagerScreenFullMarketAllocationV3Error(
@@ -708,8 +812,13 @@ def _verified_result(
     *,
     base: Path,
     run_id: str,
+    require_scope_status: bool = True,
 ) -> tuple[dict[str, Any], Any]:
-    packet, packet_seal = _verified_packet(base=base, run_id=run_id)
+    packet, packet_seal = _verified_packet(
+        base=base,
+        run_id=run_id,
+        require_scope_status=require_scope_status,
+    )
     path = base / "manager-screen" / run_id / RESULT_RELATIVE_PATH
     payload, sealed = _sealed_object(path, artifact_type=RESULT_ARTIFACT_TYPE)
     _validate_result_payload(payload, packet=packet)

@@ -2518,6 +2518,110 @@ def test_status_rejects_batch_moved_outside_its_sealed_identity(tmp_path: Path):
         manager_screen_status(root=root, run_id=RUN_ID)
 
 
+def test_status_accepts_only_a_fully_bound_final_allocation_brief_override(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import trading_os.research_assets.manager_screening as manager_screening
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+
+    root, policy_path = _root(tmp_path)
+    manager_screening.freeze_manager_screen_batch(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-001",
+        batch_size=1,
+        frozen_at=CUTOFF + dt.timedelta(minutes=1),
+        policy_path=policy_path,
+    )
+    manager_screening.record_manager_screen_decisions(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-001",
+        submission=_send_submission(["CN:000001"]),
+        recorded_at=CUTOFF + dt.timedelta(minutes=2),
+    )
+
+    symbol = "CN:000001"
+    allocation_binding = {
+        "result_path": (
+            f"coverage/cn-a/manager-screen/{RUN_ID}/governance/"
+            "allocation-v3/full-market/result.json"
+        ),
+        "result_sha256": "a" * 64,
+        "candidate_sha256": "b" * 64,
+        "decision": "fund_quick_profile",
+        "decisive_question": "以校准裁决后的正确报告期重建可持续所有者收益是多少？",
+        "evidence_ids": ["snapshot:CN:000001", "calibration:CN:000001:primary"],
+    }
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queued = next(row for row in queue if row["symbol"] == symbol)
+    original_brief = {
+        "reason": queued["reason"],
+        "decisive_question": queued["decisive_question"],
+        "evidence_ids": list(queued["evidence_ids"]),
+        "revisit_triggers": list(queued.get("revisit_triggers") or []),
+    }
+    queued.update(
+        {
+            "manager_screen_allocation_result_path": allocation_binding["result_path"],
+            "manager_screen_allocation_result_sha256": allocation_binding[
+                "result_sha256"
+            ],
+            "manager_screen_allocation_candidate_sha256": allocation_binding[
+                "candidate_sha256"
+            ],
+            "manager_screen_allocation_decision": allocation_binding["decision"],
+            "decisive_question": allocation_binding["decisive_question"],
+            "evidence_ids": list(allocation_binding["evidence_ids"]),
+        }
+    )
+    write_jsonl(queue_path, queue)
+    monkeypatch.setattr(
+        manager_screening,
+        "_full_market_allocation_queue_bindings",
+        lambda **_: {symbol: allocation_binding},
+    )
+
+    status = manager_screening.manager_screen_status(root=root, run_id=RUN_ID)
+    assert status["analyst_budget"]["missing_queue_state_count"] == 0
+
+    queued["reason"] = "quick profile 完成后的合法状态摘要"
+    queued["revisit_triggers"] = [
+        {
+            "type": "filing",
+            "condition": "下一份正式定期报告披露",
+            "reason": "新证据可能改变研究结论。",
+        }
+    ]
+    write_jsonl(queue_path, queue)
+    assert manager_screening.manager_screen_status(root=root, run_id=RUN_ID)["ok"] is True
+
+    queued["manager_screen_allocation_result_sha256"] = "c" * 64
+    write_jsonl(queue_path, queue)
+    with pytest.raises(
+        manager_screening.ManagerScreeningError,
+        match="sealed full-market allocation binding",
+    ):
+        manager_screening.manager_screen_status(root=root, run_id=RUN_ID)
+
+    for field in (
+        "manager_screen_allocation_result_path",
+        "manager_screen_allocation_result_sha256",
+        "manager_screen_allocation_candidate_sha256",
+        "manager_screen_allocation_decision",
+    ):
+        queued.pop(field)
+    queued.update(original_brief)
+    write_jsonl(queue_path, queue)
+    with pytest.raises(
+        manager_screening.ManagerScreeningError,
+        match="sealed full-market allocation binding",
+    ):
+        manager_screening.manager_screen_status(root=root, run_id=RUN_ID)
+
+
 def test_manager_screen_cli_round_trip(tmp_path: Path, capsys):
     from trading_os.cli import main
 

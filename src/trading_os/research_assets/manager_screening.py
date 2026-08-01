@@ -1668,6 +1668,10 @@ def manager_screen_status(
         raise ManagerScreeningError(f"manager-screen batch not found: {requested_batch}")
 
     queue = _unique_by_symbol(read_jsonl(base / RESEARCH_QUEUE_FILE), "research queue")
+    allocation_queue_bindings = _full_market_allocation_queue_bindings(
+        base=base,
+        run_id=run,
+    )
     analyst_backlog_symbols = []
     analyst_state: Counter[str] = Counter()
     analyst_missing_queue_state = 0
@@ -1680,14 +1684,49 @@ def manager_screen_status(
             continue
         binding = effective_queue_bindings[symbol]
         decision = binding["decision"]
+        allocation_binding = allocation_queue_bindings.get(symbol)
+        allocation_fields = (
+            "manager_screen_allocation_result_path",
+            "manager_screen_allocation_result_sha256",
+            "manager_screen_allocation_candidate_sha256",
+            "manager_screen_allocation_decision",
+        )
+        has_allocation_projection = any(
+            queued.get(field) is not None for field in allocation_fields
+        )
+        if allocation_binding is not None:
+            if (
+                queued.get("manager_screen_allocation_result_path")
+                != allocation_binding["result_path"]
+                or queued.get("manager_screen_allocation_result_sha256")
+                != allocation_binding["result_sha256"]
+                or queued.get("manager_screen_allocation_candidate_sha256")
+                != allocation_binding["candidate_sha256"]
+                or queued.get("manager_screen_allocation_decision")
+                != allocation_binding["decision"]
+            ):
+                raise ManagerScreeningError(
+                    "research queue does not match the sealed full-market "
+                    f"allocation binding: {symbol}"
+                )
+            expected_question = allocation_binding["decisive_question"]
+            expected_evidence_ids = allocation_binding["evidence_ids"]
+        else:
+            if has_allocation_projection:
+                raise ManagerScreeningError(
+                    "research queue references an unrecognized full-market "
+                    f"allocation binding: {symbol}"
+                )
+            expected_question = decision["decisive_question"]
+            expected_evidence_ids = decision["evidence_ids"]
         if (
             queued.get("manager_screen_run_id") != binding["run_id"]
             or queued.get("manager_screen_batch_id") != binding["batch_id"]
             or queued.get("manager_screen_route") != decision["route"]
             or queued.get("manager_screen_result_path") != binding["result_path"]
             or queued.get("manager_screen_result_sha256") != binding["result_sha256"]
-            or queued.get("decisive_question") != decision["decisive_question"]
-            or list(queued.get("evidence_ids") or []) != list(decision["evidence_ids"])
+            or queued.get("decisive_question") != expected_question
+            or list(queued.get("evidence_ids") or []) != list(expected_evidence_ids)
         ):
             raise ManagerScreeningError(
                 "research queue does not match the effective sealed "
@@ -1956,6 +1995,29 @@ def manager_screen_status(
         "ok": True,
         "portfolio_action": None,
     }
+
+
+def _full_market_allocation_queue_bindings(
+    *,
+    base: Path,
+    run_id: str,
+) -> dict[str, dict[str, Any]]:
+    """Load a final-allocation overlay without recursively calling status."""
+
+    from .manager_screen_full_market_allocation_v3 import (
+        ManagerScreenFullMarketAllocationV3Error,
+        load_manager_screen_full_market_allocation_v3_queue_bindings,
+    )
+
+    try:
+        return load_manager_screen_full_market_allocation_v3_queue_bindings(
+            root=base,
+            run_id=run_id,
+        )
+    except ManagerScreenFullMarketAllocationV3Error as exc:
+        raise ManagerScreeningError(
+            "sealed full-market allocation v3 result is invalid"
+        ) from exc
 
 
 def verify_manager_screen_terminal(
