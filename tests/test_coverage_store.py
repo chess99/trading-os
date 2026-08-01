@@ -170,6 +170,240 @@ def test_set_screening_and_enqueue_write_agent_safe_jsonl(tmp_path: Path):
     }
 
 
+@pytest.mark.parametrize(
+    ("owned_file", "ownership"),
+    [
+        ("screening.jsonl", {"manager_screen_run_id": "manager-run"}),
+        (
+            "screening.jsonl",
+            {
+                "manager_screen_allocation_result_path": (
+                    "coverage/cn-a/manager-screen/manager-run/governance/"
+                    "allocation-v3/full-market/result.json"
+                )
+            },
+        ),
+        ("research_queue.jsonl", {"scope_run_id": "scope-run"}),
+        ("screening.jsonl", {"profile_cycle_id": "profile-cycle"}),
+    ],
+)
+def test_set_screening_rejects_formal_workflow_owned_symbol_without_mutation(
+    tmp_path: Path,
+    owned_file: str,
+    ownership: dict[str, str],
+) -> None:
+    from trading_os.research_assets.coverage_store import (
+        CoverageValidationError,
+        set_screening,
+        write_jsonl,
+    )
+
+    root = tmp_path / "coverage" / "cn-a"
+    screening_path = root / "screening.jsonl"
+    queue_path = root / "research_queue.jsonl"
+    screening = {
+        "symbol": "CN:300750",
+        "name": "宁德时代",
+        "decision": "watch_only",
+        "priority": 2,
+        "reason": "正式 workflow 已拥有该投影。",
+        "evidence": ["sealed:evidence"],
+        "next_action": "走正式 workflow。",
+    }
+    queue = {
+        "symbol": "CN:300750",
+        "name": "宁德时代",
+        "task_type": "initial_research",
+        "priority": 2,
+        "status": "completed",
+        "reason": "已有正式状态。",
+        "target_company_dir": "research/companies/CN/300750",
+        "result_path": "reports/legacy.md",
+    }
+    if owned_file == "screening.jsonl":
+        screening.update(ownership)
+    else:
+        queue.update(ownership)
+    write_jsonl(screening_path, [screening])
+    write_jsonl(queue_path, [queue])
+    before_screening = screening_path.read_bytes()
+    before_queue = queue_path.read_bytes()
+
+    with pytest.raises(
+        CoverageValidationError,
+        match="formal workflow-owned",
+    ):
+        set_screening(
+            root,
+            symbol="CN:300750",
+            name="宁德时代",
+            decision="catalog",
+            priority=None,
+            reason="通用 setter 不得覆盖正式投影。",
+            evidence=["generic:overwrite"],
+            next_action="不应写入。",
+        )
+
+    assert screening_path.read_bytes() == before_screening
+    assert queue_path.read_bytes() == before_queue
+
+
+def test_generic_setters_allow_plain_legacy_rows(tmp_path: Path) -> None:
+    from trading_os.research_assets.coverage_store import (
+        enqueue_research,
+        read_jsonl,
+        set_screening,
+        write_jsonl,
+    )
+
+    root = tmp_path / "coverage" / "cn-a"
+    write_jsonl(
+        root / "screening.jsonl",
+        [
+            {
+                "symbol": "CN:300750",
+                "name": "宁德时代",
+                "decision": "watch_only",
+                "priority": 2,
+                "reason": "纯 legacy 非受管行。",
+                "evidence": ["legacy:evidence"],
+                "next_action": "允许显式迁移前的通用更新。",
+            }
+        ],
+    )
+    write_jsonl(
+        root / "research_queue.jsonl",
+        [
+            {
+                "symbol": "CN:300750",
+                "name": "宁德时代",
+                "task_type": "initial_research",
+                "priority": 2,
+                "status": "completed",
+                "reason": "纯 legacy 非受管行。",
+                "target_company_dir": "research/companies/CN/300750",
+                "result_path": "reports/legacy.md",
+                "result_sha256": "1" * 64,
+            }
+        ],
+    )
+
+    set_screening(
+        root,
+        symbol="CN:300750",
+        name="宁德时代",
+        decision="catalog",
+        priority=None,
+        reason="通用更新仍允许。",
+        evidence=["legacy:updated"],
+        next_action="等待后续触发。",
+    )
+    enqueue_research(
+        root,
+        symbol="CN:300750",
+        name="宁德时代",
+        priority=3,
+        reason="通用 queue 更新仍允许。",
+    )
+
+    assert read_jsonl(root / "screening.jsonl")[0]["decision"] == "catalog"
+    assert read_jsonl(root / "research_queue.jsonl")[0]["status"] == "pending"
+
+
+def test_enqueue_rejects_formal_screening_ownership_without_mutation(
+    tmp_path: Path,
+) -> None:
+    from trading_os.research_assets.coverage_store import (
+        CoverageValidationError,
+        enqueue_research,
+        write_jsonl,
+    )
+
+    root = tmp_path / "coverage" / "cn-a"
+    screening_path = root / "screening.jsonl"
+    queue_path = root / "research_queue.jsonl"
+    write_jsonl(
+        screening_path,
+        [
+            {
+                "symbol": "CN:300750",
+                "name": "宁德时代",
+                "decision": "deep_research",
+                "priority": 1,
+                "reason": "深研完成 workflow 已拥有该公司。",
+                "evidence": ["deep:receipt"],
+                "next_action": "只走正式完成 workflow。",
+                "deep_research_completion_path": (
+                    "research/companies/CN/300750/evidence/deep-completion.json"
+                ),
+            }
+        ],
+    )
+    write_jsonl(
+        queue_path,
+        [
+            {
+                "symbol": "CN:300750",
+                "name": "宁德时代",
+                "task_type": "initial_research",
+                "priority": 1,
+                "status": "completed",
+                "reason": "旧投影。",
+                "target_company_dir": "research/companies/CN/300750",
+                "result_path": "reports/legacy.md",
+            }
+        ],
+    )
+    before_screening = screening_path.read_bytes()
+    before_queue = queue_path.read_bytes()
+
+    with pytest.raises(CoverageValidationError, match="formal workflow-owned"):
+        enqueue_research(
+            root,
+            symbol="CN:300750",
+            name="宁德时代",
+            priority=3,
+            reason="通用 queue setter 不得覆盖正式 ownership。",
+        )
+
+    assert screening_path.read_bytes() == before_screening
+    assert queue_path.read_bytes() == before_queue
+
+
+def test_generic_setters_use_shared_coverage_write_lock(tmp_path: Path) -> None:
+    from trading_os.research_assets.coverage_store import (
+        CoverageValidationError,
+        coverage_write_lock,
+        enqueue_research,
+        set_screening,
+    )
+
+    root = tmp_path / "coverage" / "cn-a"
+    with coverage_write_lock(root):
+        with pytest.raises(CoverageValidationError, match="coverage state is busy"):
+            set_screening(
+                root,
+                symbol="CN:300750",
+                name="宁德时代",
+                decision="catalog",
+                priority=None,
+                reason="锁内不得重入。",
+                evidence=["lock:test"],
+                next_action="不应写入。",
+            )
+        with pytest.raises(CoverageValidationError, match="coverage state is busy"):
+            enqueue_research(
+                root,
+                symbol="CN:300750",
+                name="宁德时代",
+                priority=3,
+                reason="锁内不得重入。",
+            )
+
+    assert not (root / "screening.jsonl").exists()
+    assert not (root / "research_queue.jsonl").exists()
+
+
 def test_budgeted_quick_profile_queue_requires_budget_and_stop_conditions(
     tmp_path: Path,
 ):

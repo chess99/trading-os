@@ -17,6 +17,11 @@ from .coverage_store import (
     serialized_coverage_write,
     write_jsonl,
 )
+from .manager_screen_terminal_governance import (
+    ManagerScreenTerminalGovernanceError,
+    manager_screen_terminal_governance_locked,
+    require_manager_screen_terminal_governance_open,
+)
 from .sealing import (
     SealedArtifact,
     SealingError,
@@ -64,6 +69,32 @@ class LegacyTransitionError(ValueError):
     """Raised when the one-time legacy transition cannot be verified or applied."""
 
 
+def _require_terminal_governance_open(
+    *,
+    base: Path,
+    run_id: str,
+    operation: str,
+) -> None:
+    try:
+        require_manager_screen_terminal_governance_open(
+            root=base,
+            run_id=run_id,
+            operation=operation,
+        )
+    except ManagerScreenTerminalGovernanceError as exc:
+        raise LegacyTransitionError(str(exc)) from exc
+
+
+def _terminal_governance_locked(*, base: Path, run_id: str) -> bool:
+    try:
+        return manager_screen_terminal_governance_locked(
+            root=base,
+            run_id=run_id,
+        )
+    except ManagerScreenTerminalGovernanceError as exc:
+        raise LegacyTransitionError(str(exc)) from exc
+
+
 @serialized_coverage_write
 def freeze_legacy_transition(
     *,
@@ -105,6 +136,12 @@ def freeze_legacy_transition(
             packet_seal=verified["packet_seal"],
             repository_root=repository_root,
         )
+
+    _require_terminal_governance_open(
+        base=base,
+        run_id=run,
+        operation="new legacy transition plan or packet",
+    )
 
     queue = _unique_by_symbol(read_jsonl(base / RESEARCH_QUEUE_FILE), "research queue")
     expected_terminal = {
@@ -324,20 +361,27 @@ def record_legacy_transition(
         if any(existing[key] != normalized[key] for key in ("manager", "decisions")):
             raise LegacyTransitionError("sealed legacy transition result is immutable")
         result_seal = complete["result_seal"]
-        _materialize(
-            base=base,
-            repository_root=repository_root,
-            plan=plan,
-            result=existing,
-            result_path=result_path,
-            result_sha256=result_seal.sha256,
-        )
+        if not _terminal_governance_locked(base=base, run_id=run):
+            _materialize(
+                base=base,
+                repository_root=repository_root,
+                plan=plan,
+                result=existing,
+                result_path=result_path,
+                result_sha256=result_seal.sha256,
+            )
         return _record_summary(
             result=existing,
             result_path=result_path,
             result_seal=result_seal,
             repository_root=repository_root,
         )
+
+    _require_terminal_governance_open(
+        base=base,
+        run_id=run,
+        operation="new legacy transition result",
+    )
 
     _preflight_materialization(base=base, plan=plan)
     result = {

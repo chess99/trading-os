@@ -8,12 +8,14 @@ import re
 from pathlib import Path
 from typing import Any, Mapping
 
-from .claims import ClaimPacketError, build_claim_packet
-from .company import REPORT_META_RE, AssetValidationError, validate_company_dir
 from .coverage_store import (
     RESEARCH_QUEUE_FILE,
     read_jsonl,
     serialized_coverage_write,
+)
+from .deep_research_completion import (
+    DeepResearchCompletionError,
+    deep_research_completion_status,
 )
 from .sealing import (
     SealingError,
@@ -80,10 +82,17 @@ _CANDIDATE_KEYS = {
 }
 _PATH_BINDING_KEYS = {"path", "sha256"}
 _CLAIMS_BINDING_KEYS = {"path", "sha256", "report_id", "source_ids"}
-_MANAGER_SCREEN_PREDECESSOR_TYPES = {
+_EFFECTIVE_MANAGER_AUTHORITY_KEYS = {
+    "agent",
+    "source_path",
+    "source_sha256",
+    "source_type",
+}
+_EFFECTIVE_MANAGER_AUTHORITY_SOURCE_TYPES = {
     "manager_screen_result",
     "manager_screen_quote_impact_result",
     "manager_screen_legacy_transition_result",
+    "manager_screen_full_market_allocation_v3_result",
 }
 
 _DOWNSTREAM_REQUEST_CONTRACTS = {
@@ -199,11 +208,11 @@ def freeze_underwriting_approval(
     normalized_candidates = _validate_candidates(
         candidates,
         queue=queue,
+        coverage_root=base,
         repository=repository,
         manager_screen_run_id=manager_run,
         approved_by=manager,
         approved_at=approved_at,
-        approval_id=approval,
     )
 
     approval_dir = base / APPROVAL_DIR / manager_run
@@ -365,11 +374,11 @@ def verify_underwriting_approval(
     normalized_candidates = _validate_candidates(
         candidate_inputs,
         queue=read_jsonl(base / RESEARCH_QUEUE_FILE),
+        coverage_root=base,
         repository=repository,
         manager_screen_run_id=manager_run,
         approved_by=str(payload["approved_by"]),
         approved_at=_parse_datetime(payload["approved_at"], "approved_at"),
-        approval_id=approval_id,
     )
     if normalized_candidates != payload["candidates"]:
         raise ReviewAllocationError("underwriting approval candidate bindings drifted")
@@ -899,11 +908,11 @@ def _validate_candidates(
     candidates: list[Mapping[str, Any]],
     *,
     queue: list[Mapping[str, Any]],
+    coverage_root: Path,
     repository: Path,
     manager_screen_run_id: str,
     approved_by: str,
     approved_at: dt.datetime,
-    approval_id: str,
 ) -> list[dict[str, Any]]:
     if not isinstance(candidates, list) or not candidates:
         raise ReviewAllocationError("underwriting approval candidates must not be empty")
@@ -917,8 +926,6 @@ def _validate_candidates(
 
     normalized: list[dict[str, Any]] = []
     seen: set[str] = set()
-    bound_manager: str | None = None
-    manager_cache: dict[tuple[str, str], str] = {}
     for raw in candidates:
         if not isinstance(raw, Mapping) or set(raw) != _CANDIDATE_INPUT_KEYS:
             raise ReviewAllocationError("underwriting candidate fields do not match contract")
@@ -935,121 +942,27 @@ def _validate_candidates(
             raise ReviewAllocationError(
                 f"underwriting candidate belongs to a different manager run: {symbol}"
             )
-        manager = _manager_identity_from_queue(
-            queued,
-            repository=repository,
-            manager_screen_run_id=manager_screen_run_id,
-            approved_at=approved_at,
-            cache=manager_cache,
-        )
-        if bound_manager is None:
-            bound_manager = manager
-        elif bound_manager != manager:
-            raise ReviewAllocationError(
-                "underwriting candidates bind different investment managers"
-            )
-        if approved_by != manager:
-            raise ReviewAllocationError(
-                "underwriting approved_by does not match sealed manager identity"
-            )
         normalized.append(
             _validate_candidate(
                 raw,
                 queued=queued,
+                coverage_root=coverage_root,
                 repository=repository,
                 approved_by=approved_by,
                 approved_at=approved_at,
-                approval_id=approval_id,
             )
         )
     return sorted(normalized, key=lambda item: item["symbol"])
-
-
-def _manager_identity_from_queue(
-    queued: Mapping[str, Any],
-    *,
-    repository: Path,
-    manager_screen_run_id: str,
-    approved_at: dt.datetime,
-    cache: dict[tuple[str, str], str],
-) -> str:
-    path_text = _text(
-        queued.get("manager_screen_result_path"),
-        "research queue manager_screen_result_path",
-    )
-    expected_sha256 = _sha256(
-        queued.get("manager_screen_result_sha256"),
-        "research queue manager_screen_result_sha256",
-    )
-    cache_key = (path_text, expected_sha256)
-    cached = cache.get(cache_key)
-    if cached is not None:
-        return cached
-    path = _resolve_path(repository, path_text, "manager-screen result")
-    try:
-        sealed = verify_sealed(path)
-    except (OSError, SealingError) as exc:
-        raise ReviewAllocationError("manager-screen result is not validly sealed") from exc
-    if (
-        sealed.artifact_type not in _MANAGER_SCREEN_PREDECESSOR_TYPES
-        or sealed.sha256 != expected_sha256
-    ):
-        raise ReviewAllocationError("manager-screen result seal binding is invalid")
-    if sealed.sealed_at > approved_at:
-        raise ReviewAllocationError("manager-screen result postdates approval")
-    result = _read_json(path, "manager-screen result")
-    if result.get("run_id") != manager_screen_run_id:
-        raise ReviewAllocationError("manager-screen result belongs to a different run")
-    manager = result.get("manager")
-    if not isinstance(manager, Mapping):
-        raise ReviewAllocationError("manager-screen result manager is invalid")
-    agent = _text(manager.get("agent"), "manager-screen manager.agent")
-    decisions = result.get("decisions")
-    matching = (
-        [
-            item
-            for item in decisions
-            if isinstance(item, Mapping) and item.get("symbol") == queued.get("symbol")
-        ]
-        if isinstance(decisions, list)
-        else []
-    )
-    if len(matching) != 1:
-        raise ReviewAllocationError(
-            "manager-screen result must contain exactly one decision for the queued symbol"
-        )
-    decision = matching[0]
-    sealed_route = _text(
-        decision.get("route"),
-        "manager-screen decision.route",
-    )
-    queue_route = _text(
-        queued.get("manager_screen_route"),
-        "research queue manager_screen_route",
-    )
-    if queue_route != sealed_route:
-        raise ReviewAllocationError(
-            "research queue manager-screen route does not match the sealed predecessor decision"
-        )
-    if queued.get("decisive_question") != decision.get("decisive_question") or list(
-        queued.get("evidence_ids") or []
-    ) != list(decision.get("evidence_ids") or []):
-        raise ReviewAllocationError(
-            "research queue manager-screen question/evidence does not match "
-            "the sealed predecessor decision"
-        )
-    cache[cache_key] = agent
-    return agent
 
 
 def _validate_candidate(
     raw: Mapping[str, Any],
     *,
     queued: Mapping[str, Any],
+    coverage_root: Path,
     repository: Path,
     approved_by: str,
     approved_at: dt.datetime,
-    approval_id: str,
 ) -> dict[str, Any]:
     symbol = str(raw["symbol"])
     selection = _binding(
@@ -1060,7 +973,10 @@ def _validate_candidate(
         label=f"{symbol} deep selection",
         require_sealed=True,
     )
-    if queued.get("profile_scoped_selection_path") != selection["path"]:
+    if (
+        queued.get("profile_scoped_selection_path") != selection["path"]
+        or queued.get("profile_scoped_selection_sha256") != selection["sha256"]
+    ):
         raise ReviewAllocationError(f"deep selection does not match research queue: {symbol}")
     selection_seal = verify_sealed(repository / selection["path"])
     if selection_seal.artifact_type != "scoped_research_cross_company_selection":
@@ -1083,27 +999,108 @@ def _validate_candidate(
         sha_key="deep_completion_sha256",
         repository=repository,
         label=f"{symbol} deep completion",
-        require_sealed=False,
+        require_sealed=True,
     )
+    try:
+        completion_status = deep_research_completion_status(
+            root=coverage_root,
+            symbol=symbol,
+        )
+    except (DeepResearchCompletionError, OSError, ValueError) as exc:
+        raise ReviewAllocationError(
+            f"deep research completion chain is invalid: {symbol}: {exc}"
+        ) from exc
+    if (
+        completion_status.get("finalized") is not True
+        or completion_status.get("receipt_path") != completion["path"]
+        or completion_status.get("receipt_sha256") != completion["sha256"]
+    ):
+        raise ReviewAllocationError(
+            f"deep research completion receipt does not match live terminal projection: {symbol}"
+        )
+
+    completion_path = repository / completion["path"]
+    completion_seal = verify_sealed(completion_path)
+    receipt = _read_json(completion_path, "deep-research completion receipt")
+    completed_at = _parse_datetime(receipt.get("completed_at"), "completion.completed_at")
+    if completed_at > approved_at or completion_seal.sealed_at > approved_at:
+        raise ReviewAllocationError(f"deep completion postdates approval: {symbol}")
+    if (
+        receipt.get("symbol") != symbol
+        or receipt.get("manager_screen_run_id") != queued.get("manager_screen_run_id")
+        or receipt.get("profile_cycle_id") != queued.get("profile_cycle_id")
+        or completion_status.get("manager_screen_run_id")
+        != queued.get("manager_screen_run_id")
+        or completion_status.get("profile_cycle_id") != queued.get("profile_cycle_id")
+    ):
+        raise ReviewAllocationError(f"deep completion identity does not match queue: {symbol}")
+
+    receipt_selection = receipt.get("selection")
+    report = receipt.get("report")
+    claims = receipt.get("research_claims")
+    if not all(isinstance(item, Mapping) for item in (receipt_selection, report, claims)):
+        raise ReviewAllocationError(f"deep completion receipt bindings are invalid: {symbol}")
+    assert isinstance(receipt_selection, Mapping)
+    assert isinstance(report, Mapping)
+    assert isinstance(claims, Mapping)
+    manager = _effective_manager_authority_from_completion(
+        receipt,
+        repository=repository,
+        manager_screen_run_id=str(queued["manager_screen_run_id"]),
+        approved_at=approved_at,
+    )
+    if approved_by != manager:
+        raise ReviewAllocationError(
+            "underwriting approved_by does not match sealed effective manager authority"
+        )
+    if (
+        receipt_selection.get("path") != selection["path"]
+        or receipt_selection.get("sha256") != selection["sha256"]
+    ):
+        raise ReviewAllocationError(f"deep completion selection binding drifted: {symbol}")
+
     completed_history = [
         item
         for item in (queued.get("stage_history") or [])
         if isinstance(item, Mapping)
         and item.get("stage") == "deep_research"
         and item.get("status") == "completed"
-        and item.get("result_path") == completion["path"]
     ]
     if len(completed_history) != 1:
         raise ReviewAllocationError(
             f"deep research completion is not recorded exactly once: {symbol}"
         )
-    history_sha256 = completed_history[0].get("result_sha256")
-    if history_sha256 is not None and history_sha256 != completion["sha256"]:
+    history = completed_history[0]
+    expected_history = {
+        "agent": receipt.get("research_agent"),
+        "result_path": report.get("path"),
+        "result_sha256": report.get("sha256"),
+        "claims_path": claims.get("path"),
+        "claims_sha256": claims.get("sha256"),
+        "selection_path": selection["path"],
+        "selection_sha256": selection["sha256"],
+        "completion_path": completion["path"],
+        "completion_sha256": completion["sha256"],
+        "manager_screen_run_id": receipt.get("manager_screen_run_id"),
+        "profile_cycle_id": receipt.get("profile_cycle_id"),
+    }
+    if any(history.get(key) != value for key, value in expected_history.items()):
         raise ReviewAllocationError(
-            f"deep research history SHA-256 does not match completion: {symbol}"
+            f"deep research queue history does not match sealed completion: {symbol}"
         )
-    research_agent = completed_history[0].get("agent")
-    if isinstance(research_agent, str) and research_agent == approved_by:
+    if (
+        queued.get("deep_research_completion_path") != completion["path"]
+        or queued.get("deep_research_completion_sha256") != completion["sha256"]
+        or queued.get("result_path") != report.get("path")
+        or queued.get("result_sha256") != report.get("sha256")
+        or queued.get("deep_research_claims_path") != claims.get("path")
+        or queued.get("deep_research_claims_sha256") != claims.get("sha256")
+    ):
+        raise ReviewAllocationError(
+            f"deep research live queue projection does not match receipt: {symbol}"
+        )
+    research_agent = _text(receipt.get("research_agent"), "completion.research_agent")
+    if research_agent == approved_by:
         raise ReviewAllocationError(
             f"underwriting approver must be independent of deep researcher: {symbol}"
         )
@@ -1112,117 +1109,97 @@ def _validate_candidate(
     company_dir = _resolve_path(repository, company_dir_text, f"{symbol} company dir")
     if not company_dir.is_dir():
         raise ReviewAllocationError(f"company directory is missing: {symbol}")
-    try:
-        meta = validate_company_dir(company_dir)
-    except AssetValidationError as exc:
-        raise ReviewAllocationError(f"company asset is invalid: {symbol}: {exc}") from exc
-    if meta["identity"]["symbol"] != symbol:
-        raise ReviewAllocationError(f"company identity does not match queue: {symbol}")
-    report_record = next(
-        (
-            item
-            for item in meta["reports"]["history"]
-            if _relative(company_dir / str(item["path"]), repository) == completion["path"]
-        ),
-        None,
-    )
-    if report_record is None or report_record.get("report_type") != "initial_research":
-        raise ReviewAllocationError(
-            f"deep completion must bind a formal initial_research report: {symbol}"
-        )
-    if report_record.get("sha256") != completion["sha256"]:
-        raise ReviewAllocationError(f"deep completion report SHA-256 mismatch: {symbol}")
-    report_as_of = dt.date.fromisoformat(str(report_record["as_of"]))
-    if report_as_of > approved_at.date():
-        raise ReviewAllocationError(f"deep completion postdates approval: {symbol}")
-
-    claims_binding = _validate_claims_binding(
-        company_dir=company_dir,
-        report_path=repository / completion["path"],
-        report_record=report_record,
-        repository=repository,
-        symbol=symbol,
-        approval_id=approval_id,
-        approved_at=approved_at,
-    )
+    source_ids = claims.get("source_ids")
+    if not isinstance(source_ids, list) or not source_ids or not all(
+        isinstance(item, str) and item for item in source_ids
+    ):
+        raise ReviewAllocationError(f"deep completion research sources are invalid: {symbol}")
     return {
         "symbol": symbol,
         "company_dir": _relative(company_dir, repository),
         "deep_selection": selection,
         "deep_completion": completion,
-        "research_claims": claims_binding,
+        "research_claims": {
+            "path": _text(claims.get("path"), "completion.research_claims.path"),
+            "sha256": _sha256(
+                claims.get("sha256"),
+                "completion.research_claims.sha256",
+            ),
+            "report_id": _text(
+                claims.get("report_id"),
+                "completion.research_claims.report_id",
+            ),
+            "source_ids": sorted(source_ids),
+        },
     }
 
 
-def _validate_claims_binding(
+def _effective_manager_authority_from_completion(
+    receipt: Mapping[str, Any],
     *,
-    company_dir: Path,
-    report_path: Path,
-    report_record: Mapping[str, Any],
     repository: Path,
-    symbol: str,
-    approval_id: str,
+    manager_screen_run_id: str,
     approved_at: dt.datetime,
-) -> dict[str, Any]:
-    text = report_path.read_text(encoding="utf-8-sig")
-    match = REPORT_META_RE.match(text)
-    if match is None:
-        raise ReviewAllocationError(f"deep report metadata is missing: {symbol}")
-    try:
-        front = json.loads(match.group("meta"))
-    except json.JSONDecodeError as exc:
-        raise ReviewAllocationError(f"deep report metadata is invalid: {symbol}") from exc
-    sealed_artifacts = front.get("sealed_artifacts")
-    if not isinstance(sealed_artifacts, list):
-        raise ReviewAllocationError(f"deep report sealed_artifacts is invalid: {symbol}")
-    claims: list[tuple[Path, Any]] = []
-    for relative in sealed_artifacts:
-        if not isinstance(relative, str):
-            raise ReviewAllocationError(f"deep report artifact path is invalid: {symbol}")
-        artifact_path = _resolve_path(company_dir, relative, f"{symbol} sealed report artifact")
-        try:
-            sealed = verify_sealed(artifact_path)
-        except (SealingError, ValueError) as exc:
-            raise ReviewAllocationError(
-                f"deep report artifact is not validly sealed: {symbol}"
-            ) from exc
-        if sealed.artifact_type == "research_claims":
-            claims.append((artifact_path, sealed))
-    if len(claims) != 1:
-        raise ReviewAllocationError(
-            f"deep report must bind exactly one sealed research_claims artifact: {symbol}"
-        )
-    claims_path, claims_seal = claims[0]
-    if claims_seal.sealed_at > approved_at:
-        raise ReviewAllocationError(f"research claims postdate approval: {symbol}")
-    payload = _read_json(claims_path, "research claims")
-    if payload.get("symbol") != symbol or payload.get("report_id") != report_record.get(
-        "report_id"
+) -> str:
+    """Revalidate the manager authority sealed by deep-research completion."""
+
+    authority = receipt.get("effective_manager_authority")
+    if not isinstance(authority, Mapping) or set(authority) != (
+        _EFFECTIVE_MANAGER_AUTHORITY_KEYS
     ):
         raise ReviewAllocationError(
-            f"research claims do not match deep completion report: {symbol}"
+            "deep completion effective manager authority is invalid"
         )
-    try:
-        packet = build_claim_packet(
-            payload,
-            review_id=approval_id,
-            packet_id=f"{approval_id}-{symbol.replace(':', '-')}",
-            source_report_sha256=str(report_record["sha256"]),
-            created_at=approved_at,
-        )
-    except (ClaimPacketError, ValueError) as exc:
+    agent = _text(
+        authority.get("agent"),
+        "completion.effective_manager_authority.agent",
+    )
+    source_type = _text(
+        authority.get("source_type"),
+        "completion.effective_manager_authority.source_type",
+    )
+    if source_type not in _EFFECTIVE_MANAGER_AUTHORITY_SOURCE_TYPES:
         raise ReviewAllocationError(
-            f"structured research claims/sources are invalid: {symbol}: {exc}"
+            "deep completion effective manager authority source type is invalid"
+        )
+    source_path_text = _text(
+        authority.get("source_path"),
+        "completion.effective_manager_authority.source_path",
+    )
+    source_sha256 = _sha256(
+        authority.get("source_sha256"),
+        "completion.effective_manager_authority.source_sha256",
+    )
+    source_path = _resolve_path(
+        repository,
+        source_path_text,
+        "completion effective manager authority source",
+    )
+    try:
+        sealed = verify_sealed(source_path)
+    except (OSError, SealingError, ValueError) as exc:
+        raise ReviewAllocationError(
+            "deep completion effective manager authority source is not validly sealed"
         ) from exc
-    sources = packet["allowed_sources"]
-    if not sources:
-        raise ReviewAllocationError(f"research claims contain no sources: {symbol}")
-    return {
-        "path": _relative(claims_path, repository),
-        "sha256": claims_seal.sha256,
-        "report_id": str(report_record["report_id"]),
-        "source_ids": sorted(str(item["source_id"]) for item in sources),
-    }
+    if sealed.artifact_type != source_type or sealed.sha256 != source_sha256:
+        raise ReviewAllocationError(
+            "deep completion effective manager authority source binding is invalid"
+        )
+    if sealed.sealed_at > approved_at:
+        raise ReviewAllocationError(
+            "deep completion effective manager authority postdates underwriting approval"
+        )
+    source = _read_json(source_path, "effective manager authority source")
+    manager = source.get("manager")
+    if (
+        source.get("run_id") != manager_screen_run_id
+        or not isinstance(manager, Mapping)
+        or manager.get("agent") != agent
+    ):
+        raise ReviewAllocationError(
+            "deep completion effective manager authority does not match its sealed source"
+        )
+    return agent
 
 
 def _ensure_run_policy_contract(

@@ -24,6 +24,11 @@ from .manager_screen_decision_quality import (
     validate_decision_support,
     validate_risk_acknowledgements,
 )
+from .manager_screen_terminal_governance import (
+    ManagerScreenTerminalGovernanceError,
+    manager_screen_terminal_governance_locked,
+    require_manager_screen_terminal_governance_open,
+)
 from .models import PolicyKind, load_policy
 from .sealing import (
     SealingError,
@@ -73,10 +78,31 @@ VALUATION_FIELDS = (
     "pe_ttm",
     "pb",
 )
+QUOTE_IMPACT_CHAIN_VERSION = 1
+PREDECESSOR_KEYS = {
+    "result_artifact_type",
+    "result_path",
+    "result_sha256",
+    "review_id",
+    "quote_artifact_type",
+    "quote_path",
+    "quote_sha256",
+}
+DECISION_SOURCE_KEYS = {"symbol", "artifact_type", "path", "sha256", "review_id"}
 
 
 class ManagerScreenQuoteImpactError(ValueError):
     """Raised when a completed-batch quote-impact review is invalid."""
+
+
+def _terminal_governance_locked(*, base: Path, run_id: str) -> bool:
+    try:
+        return manager_screen_terminal_governance_locked(
+            root=base,
+            run_id=run_id,
+        )
+    except ManagerScreenTerminalGovernanceError as exc:
+        raise ManagerScreenQuoteImpactError(str(exc)) from exc
 
 
 def _routes_for_version(version: int) -> set[str]:
@@ -112,13 +138,6 @@ def prepare_manager_screen_quote_impact(
         quote_amendment_path=quote_amendment_path,
         policy_path=policy_path,
     )
-    if inputs["decision_contract_version"] in {1, 2} and _allocation_v3_contract_active(
-        base=base,
-        run_id=run,
-    ):
-        raise ManagerScreenQuoteImpactError(
-            "pre-contract v1/v2 quote-impact workflow is read-only after allocation v3 activation"
-        )
     if prepared < _parse_datetime(
         inputs["amendment"]["effective_at"],
         "quote amendment effective_at",
@@ -132,15 +151,97 @@ def prepare_manager_screen_quote_impact(
     ):
         raise ManagerScreenQuoteImpactError("prepared_at cannot predate manager result")
 
+    chain = _load_quote_impact_chain(
+        base=base,
+        repository_root=repository_root,
+        run_id=run,
+        batch_id=batch,
+    )
+    amendment_relative = _relative(inputs["amendment_path"], repository_root)
+    existing_entry = next(
+        (entry for entry in chain["entries"] if entry["review_id"] == review),
+        None,
+    )
+    if existing_entry is not None:
+        existing_plan = existing_entry["verified"]["plan"]
+        if (
+            existing_plan.get("prepared_at") != prepared.isoformat()
+            or existing_plan.get("quote_amendment_path") != amendment_relative
+            or existing_plan.get("quote_amendment_sha256")
+            != inputs["amendment_seal"].sha256
+            or existing_plan.get("policy", {}).get("payload_sha256")
+            != inputs["policy_ref"]["payload_sha256"]
+        ):
+            raise ManagerScreenQuoteImpactError(
+                "sealed quote-impact plan conflicts with prepare request"
+            )
+        return _chain_entry_summary(
+            existing_entry,
+            repository_root=repository_root,
+        )
+    _require_full_market_allocation_open(
+        base=base,
+        run_id=run,
+        operation="new quote-impact review",
+    )
+    if chain["state"] == "prepared":
+        raise ManagerScreenQuoteImpactError(
+            "latest quote-impact review must be recorded before preparing its successor"
+        )
+    if chain["entries"] and prepared <= _parse_datetime(
+        chain["entries"][-1]["verified"]["result"]["recorded_at"],
+        "predecessor quote-impact recorded_at",
+    ):
+        raise ManagerScreenQuoteImpactError(
+            "prepared_at must be strictly later than the terminal predecessor"
+        )
+    predecessor = _predecessor_for_new_review(
+        inputs=inputs,
+        chain=chain,
+        repository_root=repository_root,
+    )
+    _require_new_amendment_after_chain(
+        inputs=inputs,
+        chain=chain,
+        predecessor=predecessor,
+    )
+    inputs = {
+        **inputs,
+        "predecessor": predecessor,
+        "predecessor_decisions": chain.get("effective_decisions")
+        or [dict(decision) for decision in inputs["result"]["decisions"]],
+        "predecessor_decision_sources": chain.get("decision_sources")
+        or _original_decision_sources(inputs, repository_root=repository_root),
+        "predecessor_quotes": chain.get("latest_quotes")
+        or _original_packet_quotes(inputs["packet"]),
+    }
     rows = _candidate_rows(inputs)
     review_dir = base / "manager-screen" / run / batch / "quote-impact-reviews" / review
     plan_path = review_dir / "plan.json"
     packet_path = review_dir / "packet.json"
+    result_path = review_dir / "result.json"
+    result_seal_path = result_path.with_name(f"{result_path.name}.seal.json")
+    if inputs["decision_contract_version"] in {1, 2} and _allocation_v3_contract_active(
+        base=base,
+        run_id=run,
+    ):
+        if result_path.exists() != result_seal_path.exists():
+            raise ManagerScreenQuoteImpactError(
+                "post-contract quote-impact result is only partially sealed"
+            )
+        _require_post_contract_quote_suspension(
+            base=base,
+            run_id=run,
+            require_fully_materialized=not result_path.exists(),
+        )
     plan = {
-        "schema_version": 1,
+        "schema_version": 2,
         "run_id": run,
         "batch_id": batch,
         "review_id": review,
+        "chain_version": QUOTE_IMPACT_CHAIN_VERSION,
+        "chain_sequence": len(chain["entries"]) + 1,
+        "predecessor": predecessor["binding"],
         "prepared_at": prepared.isoformat(),
         "batch_path": _relative(inputs["batch_path"], repository_root),
         "batch_sha256": inputs["batch_seal"].sha256,
@@ -199,7 +300,7 @@ def prepare_manager_screen_quote_impact(
         ),
     ]
     packet = {
-        "schema_version": 1,
+        "schema_version": 2,
         "run_id": run,
         "batch_id": batch,
         "review_id": review,
@@ -227,8 +328,47 @@ def prepare_manager_screen_quote_impact(
             artifact_type="manager_screen_quote_impact_packet",
             sealed_at=prepared,
         )
+    if not rows:
+        result = _build_quote_impact_result(
+            run_id=run,
+            batch_id=batch,
+            review_id=review,
+            recorded_at=prepared,
+            plan=plan,
+            plan_path=plan_path,
+            plan_sha256=plan_seal.sha256,
+            packet_path=packet_path,
+            packet_sha256=packet_seal.sha256,
+            manager=dict(inputs["result"]["manager"]),
+            reviews=[],
+            decisions=[],
+            predecessor_effective_decisions=inputs["predecessor_decisions"],
+            repository_root=repository_root,
+        )
+        result_seal = seal_json(
+            result_path,
+            result,
+            artifact_type="manager_screen_quote_impact_result",
+            sealed_at=prepared,
+        )
+        return {
+            "schema_version": 2,
+            "run_id": run,
+            "batch_id": batch,
+            "review_id": review,
+            "state": "recorded",
+            "candidate_count": 0,
+            "candidate_symbols": [],
+            "plan_path": _relative(plan_path, repository_root),
+            "plan_sha256": plan_seal.sha256,
+            "packet_path": _relative(packet_path, repository_root),
+            "packet_sha256": packet_seal.sha256,
+            "result_path": _relative(result_path, repository_root),
+            "result_sha256": result_seal.sha256,
+            "portfolio_action": None,
+        }
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "run_id": run,
         "batch_id": batch,
         "review_id": review,
@@ -272,10 +412,23 @@ def record_manager_screen_quote_impact(
     _validate_verified_review_semantics(verified)
     plan = verified["plan"]
     packet = verified["packet"]
-    precontract_quote_frozen = plan["policy"].get("decision_contract_version", 1) in {
+    chain = _load_quote_impact_chain(
+        base=base,
+        repository_root=repository_root,
+        run_id=run,
+        batch_id=batch,
+    )
+    chain_entry = next(
+        (entry for entry in chain["entries"] if entry["review_id"] == review),
+        None,
+    )
+    if chain_entry is None:
+        raise ManagerScreenQuoteImpactError("quote-impact review is outside the sealed chain")
+    post_contract_pre_v3 = plan["policy"].get("decision_contract_version", 1) in {
         1,
         2,
     } and _allocation_v3_contract_active(base=base, run_id=run)
+    suspension_binding = None
     if recorded < _parse_datetime(plan["prepared_at"], "plan prepared_at"):
         raise ManagerScreenQuoteImpactError("recorded_at cannot predate quote-impact preparation")
     normalized = _normalize_submission(
@@ -306,7 +459,38 @@ def record_manager_screen_quote_impact(
         existing = complete["result"]
         if any(existing[key] != normalized[key] for key in ("manager", "reviews", "decisions")):
             raise ManagerScreenQuoteImpactError("sealed quote-impact result is immutable")
-        if precontract_quote_frozen:
+        if _terminal_governance_locked(base=base, run_id=run):
+            return _record_summary(
+                existing,
+                result_path=result_path,
+                result_sha256=complete["result_seal"].sha256,
+                repository_root=repository_root,
+                idempotent=True,
+            )
+        if existing.get("automatic_noop") is True:
+            return _record_summary(
+                existing,
+                result_path=result_path,
+                result_sha256=complete["result_seal"].sha256,
+                repository_root=repository_root,
+                idempotent=True,
+            )
+        if chain["entries"][-1]["review_id"] != review:
+            return _record_summary(
+                existing,
+                result_path=result_path,
+                result_sha256=complete["result_seal"].sha256,
+                repository_root=repository_root,
+                idempotent=True,
+            )
+        if post_contract_pre_v3:
+            suspension_binding = _require_post_contract_quote_suspension(
+                base=base,
+                run_id=run,
+                require_fully_materialized=False,
+                allow_absent=True,
+            )
+        if post_contract_pre_v3 and suspension_binding is None:
             _require_frozen_quote_projection_binding(
                 base=base,
                 repository_root=repository_root,
@@ -337,6 +521,7 @@ def record_manager_screen_quote_impact(
             result=existing,
             result_path=result_path,
             result_sha256=complete["result_seal"].sha256,
+            suspension_binding=suspension_binding,
         )
         return _record_summary(
             existing,
@@ -346,10 +531,16 @@ def record_manager_screen_quote_impact(
             idempotent=True,
         )
 
-    if precontract_quote_frozen:
-        raise ManagerScreenQuoteImpactError(
-            "pre-contract v1/v2 quote-impact result cannot be recorded after "
-            "allocation v3 activation"
+    _require_full_market_allocation_open(
+        base=base,
+        run_id=run,
+        operation="new quote-impact result",
+    )
+    if post_contract_pre_v3:
+        suspension_binding = _require_post_contract_quote_suspension(
+            base=base,
+            run_id=run,
+            require_fully_materialized=True,
         )
     _enforce_capacity(
         base=base,
@@ -357,39 +548,23 @@ def record_manager_screen_quote_impact(
         plan=plan,
         reviews=normalized["reviews"],
     )
-    result = {
-        "schema_version": 1,
-        "run_id": run,
-        "batch_id": batch,
-        "review_id": review,
-        "recorded_at": recorded.isoformat(),
-        "plan_path": _relative(verified["plan_path"], repository_root),
-        "plan_sha256": verified["plan_seal"].sha256,
-        "packet_path": _relative(verified["packet_path"], repository_root),
-        "packet_sha256": verified["packet_seal"].sha256,
-        "original_result_path": plan["original_result_path"],
-        "original_result_sha256": plan["original_result_sha256"],
-        "quote_amendment_path": plan["quote_amendment_path"],
-        "quote_amendment_sha256": plan["quote_amendment_sha256"],
-        "policy_payload_sha256": plan["policy"]["payload_sha256"],
-        "manager": normalized["manager"],
-        "reviews": normalized["reviews"],
-        "decisions": normalized["decisions"],
-        "summary": {
-            "candidate_count": len(normalized["reviews"]),
-            "keep_count": sum(row["action"] == "keep" for row in normalized["reviews"]),
-            "replacement_count": sum(
-                row["action"] == "replacement" for row in normalized["reviews"]
-            ),
-            "new_send_to_analyst_count": sum(
-                row["action"] == "replacement"
-                and row["old_route"] != "send_to_analyst"
-                and row["effective_decision"]["route"] == "send_to_analyst"
-                for row in normalized["reviews"]
-            ),
-        },
-        "portfolio_action": None,
-    }
+    predecessor_effective = _effective_decisions_before_entry(chain, review_id=review)
+    result = _build_quote_impact_result(
+        run_id=run,
+        batch_id=batch,
+        review_id=review,
+        recorded_at=recorded,
+        plan=plan,
+        plan_path=verified["plan_path"],
+        plan_sha256=verified["plan_seal"].sha256,
+        packet_path=verified["packet_path"],
+        packet_sha256=verified["packet_seal"].sha256,
+        manager=normalized["manager"],
+        reviews=normalized["reviews"],
+        decisions=normalized["decisions"],
+        predecessor_effective_decisions=predecessor_effective,
+        repository_root=repository_root,
+    )
     result_seal = seal_json(
         result_path,
         result,
@@ -404,6 +579,7 @@ def record_manager_screen_quote_impact(
         result=result,
         result_path=result_path,
         result_sha256=result_seal.sha256,
+        suspension_binding=suspension_binding,
     )
     return _record_summary(
         result,
@@ -439,6 +615,263 @@ def _allocation_v3_contract_active(*, base: Path, run_id: str) -> bool:
             "manager-screen allocation v3 contract is invalid"
         ) from exc
     return True
+
+
+def _require_full_market_allocation_open(
+    *,
+    base: Path,
+    run_id: str,
+    operation: str,
+) -> None:
+    """Forbid new quote evolution once terminal governance is locked."""
+
+    try:
+        require_manager_screen_terminal_governance_open(
+            root=base,
+            run_id=run_id,
+            operation=operation,
+        )
+    except ManagerScreenTerminalGovernanceError as exc:
+        raise ManagerScreenQuoteImpactError(str(exc)) from exc
+
+
+def _require_post_contract_quote_suspension(
+    *,
+    base: Path,
+    run_id: str,
+    require_fully_materialized: bool,
+    allow_absent: bool = False,
+) -> dict[str, Any] | None:
+    """Load the sealed suspension that makes v1/v2 quote evolution budget-neutral."""
+
+    from .manager_screen_allocation_v3_suspension import (
+        SUSPENSION_ARTIFACT_TYPE,
+        SUSPENSION_RELATIVE_PATH,
+        ManagerScreenAllocationV3SuspensionError,
+        verify_manager_screen_allocation_v3_suspension,
+    )
+
+    path = base / "manager-screen" / run_id / SUSPENSION_RELATIVE_PATH
+    seal_path = path.with_name(f"{path.name}.seal.json")
+    if not path.exists() and not seal_path.exists():
+        if allow_absent:
+            return None
+        raise ManagerScreenQuoteImpactError(
+            "pre-contract v1/v2 quote-impact is read-only until every revocable "
+            "purchase has a sealed allocation-v3 suspension"
+        )
+    if path.exists() != seal_path.exists():
+        raise ManagerScreenQuoteImpactError(
+            "allocation-v3 suspension is only partially sealed during quote-impact review"
+        )
+    try:
+        status = verify_manager_screen_allocation_v3_suspension(
+            root=base,
+            run_id=run_id,
+        )
+        payload, sealed = _sealed_object(
+            path,
+            artifact_type=SUSPENSION_ARTIFACT_TYPE,
+        )
+    except (ManagerScreenAllocationV3SuspensionError, OSError, SealingError) as exc:
+        raise ManagerScreenQuoteImpactError(
+            "allocation-v3 suspension is invalid during quote-impact review"
+        ) from exc
+    materialization = status.get("materialization")
+    if (
+        payload.get("run_id") != run_id
+        or not isinstance(payload.get("members"), list)
+        or not isinstance(materialization, Mapping)
+    ):
+        raise ManagerScreenQuoteImpactError(
+            "allocation-v3 suspension binding is invalid during quote-impact review"
+        )
+    members = {
+        member.get("symbol"): dict(member)
+        for member in payload["members"]
+        if isinstance(member, Mapping) and isinstance(member.get("symbol"), str)
+    }
+    if len(members) != len(payload["members"]):
+        raise ManagerScreenQuoteImpactError(
+            "allocation-v3 suspension members are invalid during quote-impact review"
+        )
+    binding = {
+        "path": _relative(path, base.parent.parent.resolve()),
+        "sha256": sealed.sha256,
+        "payload": payload,
+        "members": members,
+        "materialization": dict(materialization),
+    }
+    if require_fully_materialized and materialization.get("fully_materialized") is not True:
+        _require_sealed_suspension_or_quote_evolution(
+            base=base,
+            repository_root=base.parent.parent.resolve(),
+            suspension_binding=binding,
+        )
+    return binding
+
+
+def _require_sealed_suspension_or_quote_evolution(
+    *,
+    base: Path,
+    repository_root: Path,
+    suspension_binding: Mapping[str, Any],
+) -> None:
+    """Allow each suspended member to advance once through its sealed batch overlay."""
+
+    from .manager_screen_allocation_v3_suspension import (
+        _suspended_queue_row,
+        _suspended_screening_row,
+    )
+
+    payload = suspension_binding["payload"]
+    queue = _quote_rows_by_symbol(base / RESEARCH_QUEUE_FILE, "research queue")
+    screening = _quote_rows_by_symbol(base / SCREENING_FILE, "screening")
+    errors: list[str] = []
+    for member in payload["members"]:
+        symbol = member["symbol"]
+        expected_queue = _suspended_queue_row(
+            member,
+            payload=payload,
+            suspension_path=suspension_binding["path"],
+            suspension_sha256=suspension_binding["sha256"],
+        )
+        expected_screen = _suspended_screening_row(
+            member,
+            payload=payload,
+            suspension_path=suspension_binding["path"],
+            suspension_sha256=suspension_binding["sha256"],
+        )
+        current_queue = queue.get(symbol)
+        current_screen = screening.get(symbol)
+        if current_queue == expected_queue and current_screen == expected_screen:
+            continue
+        try:
+            _require_one_sealed_quote_evolution(
+                queue=current_queue,
+                screen=current_screen,
+                member=member,
+                suspension_binding=suspension_binding,
+                repository_root=repository_root,
+                symbol=symbol,
+            )
+        except ManagerScreenQuoteImpactError as exc:
+            errors.append(f"{symbol}: {exc}")
+    if errors:
+        raise ManagerScreenQuoteImpactError(
+            "allocation-v3 suspension has drift outside sealed quote-impact evolution: "
+            + "; ".join(errors)
+        )
+
+
+def _require_one_sealed_quote_evolution(
+    *,
+    queue: Mapping[str, Any] | None,
+    screen: Mapping[str, Any] | None,
+    member: Mapping[str, Any],
+    suspension_binding: Mapping[str, Any],
+    repository_root: Path,
+    symbol: str,
+) -> None:
+    if not isinstance(queue, Mapping) or not isinstance(screen, Mapping):
+        raise ManagerScreenQuoteImpactError("quote-evolved suspension row is missing")
+    result_path = queue.get("manager_screen_result_path")
+    result_sha256 = queue.get("manager_screen_result_sha256")
+    if not isinstance(result_path, str) or not isinstance(result_sha256, str):
+        raise ManagerScreenQuoteImpactError("quote-evolved result binding is missing")
+    path = (repository_root / result_path).resolve()
+    try:
+        path.relative_to(repository_root.resolve())
+        sealed = verify_sealed(path)
+        result = json.loads(path.read_text(encoding="utf-8"))
+    except (ValueError, OSError, UnicodeDecodeError, json.JSONDecodeError, SealingError) as exc:
+        raise ManagerScreenQuoteImpactError(
+            "quote-evolved result is not a valid sealed repository artifact"
+        ) from exc
+    reviews = result.get("reviews") if isinstance(result, Mapping) else None
+    matches = [
+        review
+        for review in (reviews if isinstance(reviews, list) else [])
+        if isinstance(review, Mapping) and review.get("symbol") == symbol
+    ]
+    decision = matches[0].get("effective_decision") if len(matches) == 1 else None
+    prior_queue = member.get("prior_queue_row")
+    expected_batch_id = (
+        prior_queue.get("manager_screen_batch_id")
+        if isinstance(prior_queue, Mapping)
+        else None
+    )
+    if expected_batch_id is None:
+        expected_batch_id = result.get("batch_id") if isinstance(result, Mapping) else None
+    history = queue.get("stage_history")
+    if (
+        sealed.artifact_type != "manager_screen_quote_impact_result"
+        or sealed.sha256 != result_sha256
+        or result.get("run_id") != suspension_binding["payload"].get("run_id")
+        or not isinstance(expected_batch_id, str)
+        or result.get("batch_id") != expected_batch_id
+        or result.get("original_result_path") != member.get("manager_screen_result_path")
+        or result.get("original_result_sha256")
+        != member.get("manager_screen_result_sha256")
+        or len(matches) != 1
+        or matches[0].get("action") != "replacement"
+        or not isinstance(decision, Mapping)
+        or queue.get("manager_screen_batch_id") != expected_batch_id
+        or queue.get("manager_screen_route") != decision.get("route")
+        or queue.get("reason") != decision.get("one_line_reason")
+        or queue.get("decisive_question") != decision.get("decisive_question")
+        or list(queue.get("evidence_ids") or []) != list(decision.get("evidence_ids") or [])
+        or list(queue.get("revisit_triggers") or [])
+        != list(decision.get("revisit_triggers") or [])
+        or queue.get("task_type") != "manager_screen"
+        or queue.get("status") != "completed"
+        or queue.get("assigned_agent") is not None
+        or queue.get("started_at") is not None
+        or queue.get("result_path") != result_path
+        or queue.get("research_budget_state") != "candidate_unfunded"
+        or queue.get("research_budget_suspension_path") != suspension_binding["path"]
+        or queue.get("research_budget_suspension_sha256")
+        != suspension_binding["sha256"]
+        or not isinstance(history, list)
+        or not any(
+            isinstance(item, Mapping)
+            and item.get("stage") == "manager_screen_quote_impact"
+            and item.get("result_sha256") == result_sha256
+            for item in history
+        )
+        or screen.get("manager_screen_batch_id") != expected_batch_id
+        or screen.get("manager_screen_result_path") != result_path
+        or screen.get("manager_screen_result_sha256") != result_sha256
+        or screen.get("manager_screen_route") != decision.get("route")
+        or screen.get("reason") != decision.get("one_line_reason")
+        or screen.get("decisive_question") != decision.get("decisive_question")
+        or list(screen.get("evidence") or []) != list(decision.get("evidence_ids") or [])
+        or list(screen.get("revisit_triggers") or [])
+        != list(decision.get("revisit_triggers") or [])
+        or screen.get("confidence") != decision.get("confidence")
+        or screen.get("decision") != "candidate_unfunded"
+        or screen.get("state") != "candidate_unfunded"
+        or screen.get("research_budget_state") != "candidate_unfunded"
+        or screen.get("research_budget_suspension_path") != suspension_binding["path"]
+        or screen.get("research_budget_suspension_sha256")
+        != suspension_binding["sha256"]
+    ):
+        raise ManagerScreenQuoteImpactError(
+            "quote-evolved rows do not match their sealed replacement"
+        )
+
+
+def _quote_rows_by_symbol(path: Path, label: str) -> dict[str, dict[str, Any]]:
+    rows = read_jsonl(path)
+    result: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        symbol = row.get("symbol") if isinstance(row, Mapping) else None
+        if not isinstance(symbol, str) or symbol in result:
+            raise ManagerScreenQuoteImpactError(
+                f"{label} contains an invalid or duplicate symbol"
+            )
+        result[symbol] = dict(row)
+    return result
 
 
 def _require_frozen_quote_projection_binding(
@@ -512,8 +945,18 @@ def manager_screen_quote_impact_status(
         require_result=False,
     )
     _validate_verified_review_semantics(verified)
+    chain = _load_quote_impact_chain(
+        base=base,
+        repository_root=repository_root,
+        run_id=verified["plan"]["run_id"],
+        batch_id=verified["plan"]["batch_id"],
+    )
+    entry = next(
+        item for item in chain["entries"] if item["review_id"] == verified["plan"]["review_id"]
+    )
     result = verified.get("result")
     materialized = 0
+    was_materialized = 0
     if result is not None:
         queue = {
             row["symbol"]: row
@@ -530,8 +973,18 @@ def manager_screen_quote_impact_status(
             == result_sha256
             for row in result["reviews"]
         )
+        was_materialized = sum(
+            row["action"] == "replacement"
+            and any(
+                isinstance(receipt, Mapping)
+                and receipt.get("stage") == "manager_screen_quote_impact"
+                and receipt.get("result_sha256") == result_sha256
+                for receipt in (queue.get(row["symbol"]) or {}).get("stage_history", [])
+            )
+            for row in result["reviews"]
+        )
     return {
-        "schema_version": 1,
+        "schema_version": result.get("schema_version", 1),
         "run_id": verified["plan"]["run_id"],
         "batch_id": verified["plan"]["batch_id"],
         "review_id": verified["plan"]["review_id"],
@@ -539,6 +992,15 @@ def manager_screen_quote_impact_status(
         "candidate_count": verified["plan"]["candidate_count"],
         "replacement_count": (result["summary"]["replacement_count"] if result is not None else 0),
         "materialized_replacement_count": materialized,
+        "was_materialized_replacement_count": was_materialized,
+        "is_latest_effective": chain["entries"][-1]["review_id"] == entry["review_id"],
+        "chain_sequence": entry["sequence"],
+        "review_count": len(chain["entries"]),
+        "chain_sha256": chain["chain_sha256"],
+        "quote_amendment_path": verified["plan"]["quote_amendment_path"],
+        "quote_amendment_sha256": verified["plan"]["quote_amendment_sha256"],
+        "quote_amendment_effective_at": verified["amendment"]["effective_at"],
+        "automatic_noop": bool(result.get("automatic_noop")) if result is not None else False,
         "plan_path": _relative(verified["plan_path"], repository_root),
         "plan_sha256": verified["plan_seal"].sha256,
         "packet_path": _relative(verified["packet_path"], repository_root),
@@ -557,13 +1019,12 @@ def load_manager_screen_quote_impact_overlay(
     run_id: str,
     batch_id: str,
 ) -> dict[str, Any]:
-    """Discover and verify the single quote-impact overlay for a completed batch."""
+    """Verify the append-only review chain and return its latest cumulative overlay."""
 
     base = Path(root)
     repository_root = base.parent.parent.resolve()
     run = _identifier(run_id, "run_id")
     batch = _identifier(batch_id, "batch_id")
-    reviews_root = base / "manager-screen" / run / batch / "quote-impact-reviews"
     empty = {
         "state": "absent",
         "review_id": None,
@@ -581,32 +1042,32 @@ def load_manager_screen_quote_impact_overlay(
         "decisions": [],
         "reviews": [],
         "quick_profile_effort_budget_hours": None,
+        "chain_version": QUOTE_IMPACT_CHAIN_VERSION,
+        "chain_length": 0,
+        "review_count": 0,
+        "latest_sequence": None,
+        "chain_sha256": hashlib.sha256(canonical_json_bytes([])).hexdigest(),
+        "chain_entries": [],
+        "quote_amendment_path": None,
+        "quote_amendment_sha256": None,
+        "quote_amendment_effective_at": None,
+        "automatic_noop": False,
+        "effective_decisions": [],
+        "effective_decision_sources": [],
+        "purchase_reviews": [],
+        "historical_purchase_company_count": 0,
     }
-    if not reviews_root.exists():
-        return empty
-    if not reviews_root.is_dir():
-        raise ManagerScreenQuoteImpactError("quote-impact reviews path is not a directory")
-    entries = sorted(reviews_root.iterdir(), key=lambda path: path.name)
-    if any(not entry.is_dir() for entry in entries):
-        raise ManagerScreenQuoteImpactError(
-            "quote-impact reviews directory contains an unexpected file"
-        )
-    if not entries:
-        return empty
-    if len(entries) != 1:
-        raise ManagerScreenQuoteImpactError(
-            "manager-screen batch must have at most one quote-impact review"
-        )
-    review_id = _identifier(entries[0].name, "review_id")
-    verified = _verify_review(
+    chain = _load_quote_impact_chain(
         base=base,
         repository_root=repository_root,
         run_id=run,
         batch_id=batch,
-        review_id=review_id,
-        require_result=False,
     )
-    _validate_verified_review_semantics(verified)
+    if not chain["entries"]:
+        return empty
+    latest = chain["entries"][-1]
+    verified = latest["verified"]
+    review_id = latest["review_id"]
     plan = verified["plan"]
     result = verified["result"]
     effective_routes = _routes_for_version(plan["policy"].get("decision_contract_version", 1))
@@ -621,15 +1082,49 @@ def load_manager_screen_quote_impact_overlay(
         "packet_sha256": verified["packet_seal"].sha256,
         "quick_profile_effort_budget_hours": plan["policy"]["quick_profile_effort_budget_hours"],
         "effective_route_delta": {route: 0 for route in sorted(effective_routes)},
+        "chain_length": len(chain["entries"]),
+        "review_count": len(chain["entries"]),
+        "latest_sequence": latest["sequence"],
+        "chain_sha256": chain["chain_sha256"],
+        "chain_entries": chain["public_entries"],
+        "quote_amendment_path": plan["quote_amendment_path"],
+        "quote_amendment_sha256": plan["quote_amendment_sha256"],
+        "quote_amendment_effective_at": verified["amendment"]["effective_at"],
+        "automatic_noop": bool(result.get("automatic_noop")) if result is not None else False,
+        "effective_decisions": [dict(row) for row in chain["effective_decisions"]],
+        "effective_decision_sources": [
+            dict(chain["decision_sources"][row["symbol"]])
+            for row in chain["effective_decisions"]
+        ],
+        "purchase_reviews": [dict(row) for row in chain["purchase_reviews"]],
+        "historical_purchase_company_count": len(chain["purchase_reviews"]),
     }
     if result is None:
         return common
     route_delta: Counter[str] = Counter()
-    for review in result["reviews"]:
-        if review["action"] != "replacement":
+    original_by_symbol = {
+        row["symbol"]: row for row in chain["original_decisions"]
+    }
+    cumulative_reviews = []
+    for decision in chain["effective_decisions"]:
+        symbol = decision["symbol"]
+        source = chain["decision_sources"][symbol]
+        original = original_by_symbol[symbol]
+        if source["artifact_type"] == "manager_screen_result":
             continue
-        route_delta[review["old_route"]] -= 1
-        route_delta[review["effective_decision"]["route"]] += 1
+        route_delta[original["route"]] -= 1
+        route_delta[decision["route"]] += 1
+        cumulative_reviews.append(
+            {
+                "symbol": symbol,
+                "action": "replacement",
+                "old_route": original["route"],
+                "replacement": dict(decision),
+                "effective_decision": dict(decision),
+                "effective_decision_source_path": source["path"],
+                "effective_decision_source_sha256": source["sha256"],
+            }
+        )
     return {
         **common,
         "keep_count": result["summary"]["keep_count"],
@@ -638,27 +1133,664 @@ def load_manager_screen_quote_impact_overlay(
         "result_path": _relative(verified["result_path"], repository_root),
         "result_sha256": verified["result_seal"].sha256,
         "effective_route_delta": {route: route_delta[route] for route in sorted(effective_routes)},
-        "decisions": [dict(decision) for decision in result["decisions"]],
-        "reviews": [dict(review) for review in result["reviews"]],
+        "decisions": [dict(decision) for decision in chain["effective_decisions"]],
+        "reviews": cumulative_reviews,
     }
 
 
+def _load_quote_impact_chain(
+    *,
+    base: Path,
+    repository_root: Path,
+    run_id: str,
+    batch_id: str,
+) -> dict[str, Any]:
+    reviews_root = base / "manager-screen" / run_id / batch_id / "quote-impact-reviews"
+    if not reviews_root.exists():
+        return {
+            "state": "absent",
+            "entries": [],
+            "public_entries": [],
+            "chain_sha256": hashlib.sha256(canonical_json_bytes([])).hexdigest(),
+            "original_decisions": [],
+            "effective_decisions": [],
+            "decision_sources": {},
+            "latest_quotes": {},
+            "purchase_reviews": [],
+        }
+    if not reviews_root.is_dir():
+        raise ManagerScreenQuoteImpactError("quote-impact reviews path is not a directory")
+    directories = sorted(reviews_root.iterdir(), key=lambda path: path.name)
+    if any(not path.is_dir() for path in directories):
+        raise ManagerScreenQuoteImpactError(
+            "quote-impact reviews directory contains an unexpected file"
+        )
+    if not directories:
+        return {
+            "state": "absent",
+            "entries": [],
+            "public_entries": [],
+            "chain_sha256": hashlib.sha256(canonical_json_bytes([])).hexdigest(),
+            "original_decisions": [],
+            "effective_decisions": [],
+            "decision_sources": {},
+            "latest_quotes": {},
+            "purchase_reviews": [],
+        }
+
+    entries = []
+    legacy_count = 0
+    seen_sequences: set[int] = set()
+    for directory in directories:
+        review_id = _identifier(directory.name, "review_id")
+        result_presence = _sealed_artifact_presence(directory / "result.json")
+        if result_presence == "partial":
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact result is only partially sealed: {review_id}"
+            )
+        verified = _verify_review(
+            base=base,
+            repository_root=repository_root,
+            run_id=run_id,
+            batch_id=batch_id,
+            review_id=review_id,
+            require_result=False,
+        )
+        _validate_verified_review_semantics(verified)
+        plan = verified["plan"]
+        has_chain_fields = any(
+            key in plan for key in ("chain_version", "chain_sequence", "predecessor")
+        )
+        if not has_chain_fields:
+            legacy_count += 1
+            sequence = 1
+            legacy = True
+        else:
+            if (
+                plan.get("schema_version") != 2
+                or plan.get("chain_version") != QUOTE_IMPACT_CHAIN_VERSION
+                or isinstance(plan.get("chain_sequence"), bool)
+                or not isinstance(plan.get("chain_sequence"), int)
+                or plan["chain_sequence"] <= 0
+            ):
+                raise ManagerScreenQuoteImpactError(
+                    f"quote-impact chain metadata is invalid: {review_id}"
+                )
+            sequence = plan["chain_sequence"]
+            legacy = False
+        if sequence in seen_sequences:
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact chain sequence is duplicated: {sequence}"
+            )
+        seen_sequences.add(sequence)
+        entries.append(
+            {
+                "review_id": review_id,
+                "sequence": sequence,
+                "legacy": legacy,
+                "verified": verified,
+                "state": "recorded" if verified["result"] is not None else "prepared",
+            }
+        )
+    if legacy_count > 1:
+        raise ManagerScreenQuoteImpactError(
+            "multiple legacy quote-impact siblings cannot be ordered safely"
+        )
+    entries.sort(key=lambda entry: entry["sequence"])
+    if [entry["sequence"] for entry in entries] != list(range(1, len(entries) + 1)):
+        raise ManagerScreenQuoteImpactError("quote-impact chain contains a sequence gap")
+    if any(entry["state"] == "prepared" for entry in entries[:-1]):
+        raise ManagerScreenQuoteImpactError(
+            "quote-impact chain cannot continue after a prepared predecessor"
+        )
+
+    first = entries[0]["verified"]
+    original_result_path = first["plan"]["original_result_path"]
+    original_result_sha256 = first["plan"]["original_result_sha256"]
+    original_packet_path = first["plan"]["original_packet_path"]
+    original_packet_sha256 = first["plan"]["original_packet_sha256"]
+    original_decisions = [dict(row) for row in first["original_result"]["decisions"]]
+    order = [row["symbol"] for row in original_decisions]
+    effective = {row["symbol"]: dict(row) for row in original_decisions}
+    sources = {
+        symbol: {
+            "symbol": symbol,
+            "artifact_type": "manager_screen_result",
+            "path": original_result_path,
+            "sha256": original_result_sha256,
+            "review_id": None,
+        }
+        for symbol in order
+    }
+    ever_purchased = {
+        decision["symbol"]
+        for decision in original_decisions
+        if decision["route"] == "send_to_analyst"
+    }
+    purchase_reviews = []
+    latest_quotes = _original_packet_quotes(first["original_packet"])
+    previous_binding = {
+        "result_artifact_type": "manager_screen_result",
+        "result_path": original_result_path,
+        "result_sha256": original_result_sha256,
+        "review_id": None,
+        "quote_artifact_type": "manager_screen_packet",
+        "quote_path": original_packet_path,
+        "quote_sha256": original_packet_sha256,
+    }
+    seen_amendment_ids: set[str] = set()
+    seen_amendment_paths: set[str] = set()
+    seen_amendment_sha256: set[str] = set()
+    prior_amendment_effective: dt.datetime | None = None
+    public_entries = []
+    digest_entries = []
+    for index, entry in enumerate(entries, start=1):
+        verified = entry["verified"]
+        plan = verified["plan"]
+        if (
+            plan["original_result_path"] != original_result_path
+            or plan["original_result_sha256"] != original_result_sha256
+            or plan["original_packet_path"] != original_packet_path
+            or plan["original_packet_sha256"] != original_packet_sha256
+        ):
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact chain root binding drifted: {entry['review_id']}"
+            )
+        if not entry["legacy"]:
+            predecessor = _validated_predecessor(plan.get("predecessor"))
+            if predecessor != previous_binding:
+                raise ManagerScreenQuoteImpactError(
+                    f"quote-impact predecessor binding is not the unique latest terminal: "
+                    f"{entry['review_id']}"
+                )
+            prepared_at = _parse_datetime(
+                plan.get("prepared_at"),
+                f"{entry['review_id']} prepared_at",
+            )
+            if (
+                verified["plan_seal"].sealed_at != prepared_at
+                or verified["packet_seal"].sealed_at < verified["plan_seal"].sealed_at
+                or (
+                    verified["result_seal"] is not None
+                    and verified["result_seal"].sealed_at < verified["packet_seal"].sealed_at
+                )
+            ):
+                raise ManagerScreenQuoteImpactError(
+                    f"quote-impact chain seal chronology is invalid: {entry['review_id']}"
+                )
+        elif index != 1:
+            raise ManagerScreenQuoteImpactError(
+                "legacy quote-impact review may only be the first chain entry"
+            )
+        amendment = verified["amendment"]
+        amendment_id = _identifier(amendment.get("amendment_id"), "amendment_id")
+        amendment_path = plan["quote_amendment_path"]
+        amendment_sha256 = plan["quote_amendment_sha256"]
+        if (
+            amendment_id in seen_amendment_ids
+            or amendment_path in seen_amendment_paths
+            or amendment_sha256 in seen_amendment_sha256
+        ):
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact amendment is duplicated in the chain: {amendment_id}"
+            )
+        amendment_effective = _parse_datetime(
+            amendment.get("effective_at"),
+            f"{entry['review_id']} amendment effective_at",
+        )
+        if (
+            prior_amendment_effective is not None
+            and amendment_effective <= prior_amendment_effective
+        ):
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact amendment effective_at is not strictly increasing: "
+                f"{entry['review_id']}"
+            )
+        _require_quote_times_after_predecessor(
+            predecessor_quotes=latest_quotes,
+            amendment=amendment,
+            require_comparable=prior_amendment_effective is not None,
+        )
+        seen_amendment_ids.add(amendment_id)
+        seen_amendment_paths.add(amendment_path)
+        seen_amendment_sha256.add(amendment_sha256)
+        prior_amendment_effective = amendment_effective
+        entry["effective_decisions_before"] = [dict(effective[symbol]) for symbol in order]
+        result = verified["result"]
+        result_path = _relative(verified["result_path"], repository_root)
+        result_sha256 = verified["result_seal"].sha256 if result is not None else None
+        if result is not None:
+            for review in result["reviews"]:
+                symbol = review["symbol"]
+                effective[symbol] = dict(review["effective_decision"])
+                if review["action"] == "replacement":
+                    sources[symbol] = {
+                        "symbol": symbol,
+                        "artifact_type": "manager_screen_quote_impact_result",
+                        "path": result_path,
+                        "sha256": result_sha256,
+                        "review_id": entry["review_id"],
+                    }
+                    if (
+                        review["old_route"] != "send_to_analyst"
+                        and review["effective_decision"]["route"] == "send_to_analyst"
+                        and symbol not in ever_purchased
+                    ):
+                        ever_purchased.add(symbol)
+                        purchase_reviews.append(
+                            {
+                                "symbol": symbol,
+                                "sequence": entry["sequence"],
+                                "review_id": entry["review_id"],
+                                "purchased_at": result["recorded_at"],
+                                "effort_budget_hours": plan["policy"][
+                                    "quick_profile_effort_budget_hours"
+                                ],
+                                "result_path": result_path,
+                                "result_sha256": result_sha256,
+                            }
+                        )
+            cumulative = [dict(effective[symbol]) for symbol in order]
+            if result.get("schema_version") == 2 and (
+                result.get("effective_decisions") != cumulative
+                or result.get("effective_decisions_sha256") != _payload_sha256(cumulative)
+            ):
+                raise ManagerScreenQuoteImpactError(
+                    f"quote-impact cumulative effective decisions are invalid: "
+                    f"{entry['review_id']}"
+                )
+            latest_quotes = {
+                row["symbol"]: dict(row) for row in amendment["quotes"]
+            }
+            previous_binding = {
+                "result_artifact_type": "manager_screen_quote_impact_result",
+                "result_path": result_path,
+                "result_sha256": result_sha256,
+                "review_id": entry["review_id"],
+                "quote_artifact_type": "manager_screen_quote_amendment",
+                "quote_path": amendment_path,
+                "quote_sha256": amendment_sha256,
+            }
+        public = {
+            "sequence": entry["sequence"],
+            "review_id": entry["review_id"],
+            "state": entry["state"],
+            "legacy": entry["legacy"],
+            "plan_path": _relative(verified["plan_path"], repository_root),
+            "plan_sha256": verified["plan_seal"].sha256,
+            "packet_path": _relative(verified["packet_path"], repository_root),
+            "packet_sha256": verified["packet_seal"].sha256,
+            "result_path": result_path if result is not None else None,
+            "result_sha256": result_sha256,
+            "quote_amendment_path": amendment_path,
+            "quote_amendment_sha256": amendment_sha256,
+            "quote_amendment_effective_at": amendment_effective.isoformat(),
+            "candidate_count": plan["candidate_count"],
+            "automatic_noop": bool(result.get("automatic_noop")) if result is not None else False,
+        }
+        public_entries.append(public)
+        digest_entries.append(public)
+    return {
+        "state": entries[-1]["state"],
+        "entries": entries,
+        "public_entries": public_entries,
+        "chain_sha256": _payload_sha256(digest_entries),
+        "original_decisions": original_decisions,
+        "effective_decisions": [dict(effective[symbol]) for symbol in order],
+        "decision_sources": sources,
+        "latest_quotes": latest_quotes,
+        "purchase_reviews": purchase_reviews,
+    }
+
+
+def _predecessor_for_new_review(
+    *,
+    inputs: Mapping[str, Any],
+    chain: Mapping[str, Any],
+    repository_root: Path,
+) -> dict[str, Any]:
+    entries = chain["entries"]
+    if not entries:
+        binding = {
+            "result_artifact_type": "manager_screen_result",
+            "result_path": _relative(inputs["result_path"], repository_root),
+            "result_sha256": inputs["result_seal"].sha256,
+            "review_id": None,
+            "quote_artifact_type": "manager_screen_packet",
+            "quote_path": _relative(inputs["packet_path"], repository_root),
+            "quote_sha256": inputs["packet_seal"].sha256,
+        }
+    else:
+        latest = entries[-1]
+        verified = latest["verified"]
+        if verified["result"] is None:
+            raise ManagerScreenQuoteImpactError(
+                "latest quote-impact predecessor is not terminal"
+            )
+        binding = {
+            "result_artifact_type": "manager_screen_quote_impact_result",
+            "result_path": _relative(verified["result_path"], repository_root),
+            "result_sha256": verified["result_seal"].sha256,
+            "review_id": latest["review_id"],
+            "quote_artifact_type": "manager_screen_quote_amendment",
+            "quote_path": verified["plan"]["quote_amendment_path"],
+            "quote_sha256": verified["plan"]["quote_amendment_sha256"],
+        }
+    return {"binding": binding}
+
+
+def _require_new_amendment_after_chain(
+    *,
+    inputs: Mapping[str, Any],
+    chain: Mapping[str, Any],
+    predecessor: Mapping[str, Any],
+) -> None:
+    amendment = inputs["amendment"]
+    amendment_id = _identifier(amendment.get("amendment_id"), "amendment_id")
+    amendment_path = _relative(inputs["amendment_path"], inputs["repository_root"])
+    amendment_sha256 = inputs["amendment_seal"].sha256
+    for entry in chain["entries"]:
+        verified = entry["verified"]
+        if (
+            verified["amendment"].get("amendment_id") == amendment_id
+            or verified["plan"].get("quote_amendment_path") == amendment_path
+            or verified["plan"].get("quote_amendment_sha256") == amendment_sha256
+        ):
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact amendment was already reviewed: {amendment_id}"
+            )
+    if chain["entries"]:
+        previous = chain["entries"][-1]["verified"]["amendment"]
+        if _parse_datetime(amendment.get("effective_at"), "quote amendment effective_at") <= (
+            _parse_datetime(previous.get("effective_at"), "predecessor amendment effective_at")
+        ):
+            raise ManagerScreenQuoteImpactError(
+                "quote-impact amendment effective_at must be strictly later than its predecessor"
+            )
+    _require_quote_times_after_predecessor(
+        predecessor_quotes=(
+            chain["latest_quotes"]
+            if chain["entries"]
+            else _original_packet_quotes(inputs["packet"])
+        ),
+        amendment=amendment,
+        require_comparable=bool(chain["entries"]),
+    )
+    _validated_predecessor(predecessor["binding"])
+
+
+def _require_quote_times_after_predecessor(
+    *,
+    predecessor_quotes: Mapping[str, Mapping[str, Any]],
+    amendment: Mapping[str, Any],
+    require_comparable: bool,
+) -> None:
+    current = {
+        row.get("symbol"): row
+        for row in amendment.get("quotes", [])
+        if isinstance(row, Mapping) and isinstance(row.get("symbol"), str)
+    }
+    if not set(predecessor_quotes).issubset(current) or (
+        require_comparable and set(current) != set(predecessor_quotes)
+    ):
+        raise ManagerScreenQuoteImpactError(
+            "quote-impact amendment does not cover its predecessor quote set"
+        )
+    for symbol, old in predecessor_quotes.items():
+        old_time = _optional_quote_datetime(old)
+        new_time = _optional_quote_datetime(current[symbol])
+        if new_time is None or (require_comparable and old_time is None):
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact quote chronology is not comparable: {symbol}"
+            )
+        if old_time is not None and new_time <= old_time:
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact quote as_of is not strictly increasing: {symbol}"
+            )
+
+
+def _optional_quote_datetime(value: Mapping[str, Any]) -> dt.datetime | None:
+    candidates = [value.get("as_of")]
+    facts = value.get("manager_screen_facts")
+    if isinstance(facts, Mapping):
+        freshness = facts.get("quote_freshness")
+        if isinstance(freshness, Mapping):
+            candidates.insert(0, freshness.get("quote_as_of"))
+    for raw in candidates:
+        if not isinstance(raw, str):
+            continue
+        try:
+            parsed = dt.datetime.fromisoformat(raw)
+        except ValueError:
+            continue
+        if parsed.tzinfo is not None and parsed.utcoffset() is not None:
+            return parsed
+    return None
+
+
+def _original_packet_quotes(packet: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
+    dossiers = packet.get("dossiers")
+    if not isinstance(dossiers, list):
+        raise ManagerScreenQuoteImpactError("manager-screen packet dossiers are invalid")
+    result = {}
+    for dossier in dossiers:
+        symbol = dossier.get("symbol") if isinstance(dossier, Mapping) else None
+        quote = dossier.get("market_snapshot") if isinstance(dossier, Mapping) else None
+        if not isinstance(symbol, str) or symbol in result or not isinstance(quote, Mapping):
+            raise ManagerScreenQuoteImpactError(
+                "manager-screen packet quote projection is invalid"
+            )
+        result[symbol] = dict(quote)
+    return result
+
+
+def _original_decision_sources(
+    inputs: Mapping[str, Any],
+    *,
+    repository_root: Path,
+) -> dict[str, dict[str, Any]]:
+    path = _relative(inputs["result_path"], repository_root)
+    sha256 = inputs["result_seal"].sha256
+    return {
+        decision["symbol"]: {
+            "symbol": decision["symbol"],
+            "artifact_type": "manager_screen_result",
+            "path": path,
+            "sha256": sha256,
+            "review_id": None,
+        }
+        for decision in inputs["result"]["decisions"]
+    }
+
+
+def _validated_predecessor(value: Any) -> dict[str, Any]:
+    if not isinstance(value, Mapping) or set(value) != PREDECESSOR_KEYS:
+        raise ManagerScreenQuoteImpactError("quote-impact predecessor fields are invalid")
+    result = dict(value)
+    if result["result_artifact_type"] not in {
+        "manager_screen_result",
+        "manager_screen_quote_impact_result",
+    }:
+        raise ManagerScreenQuoteImpactError("quote-impact predecessor result type is invalid")
+    if result["quote_artifact_type"] not in {
+        "manager_screen_packet",
+        "manager_screen_quote_amendment",
+    }:
+        raise ManagerScreenQuoteImpactError("quote-impact predecessor quote type is invalid")
+    for field in ("result_path", "quote_path"):
+        if (
+            not isinstance(result[field], str)
+            or not result[field]
+            or Path(result[field]).is_absolute()
+        ):
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact predecessor {field} is invalid"
+            )
+    for field in ("result_sha256", "quote_sha256"):
+        digest = result[field]
+        if not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact predecessor {field} is invalid"
+            )
+    review_id = result["review_id"]
+    if result["result_artifact_type"] == "manager_screen_result":
+        if review_id is not None or result["quote_artifact_type"] != "manager_screen_packet":
+            raise ManagerScreenQuoteImpactError(
+                "root quote-impact predecessor semantics are invalid"
+            )
+    elif (
+        not isinstance(review_id, str)
+        or _identifier(review_id, "predecessor review_id") != review_id
+        or result["quote_artifact_type"] != "manager_screen_quote_amendment"
+    ):
+        raise ManagerScreenQuoteImpactError(
+            "chained quote-impact predecessor semantics are invalid"
+        )
+    return result
+
+
+def _effective_decisions_before_entry(
+    chain: Mapping[str, Any],
+    *,
+    review_id: str,
+) -> list[dict[str, Any]]:
+    for entry in chain["entries"]:
+        if entry["review_id"] == review_id:
+            return [dict(row) for row in entry["effective_decisions_before"]]
+    raise ManagerScreenQuoteImpactError("quote-impact review is missing from its chain")
+
+
+def _build_quote_impact_result(
+    *,
+    run_id: str,
+    batch_id: str,
+    review_id: str,
+    recorded_at: dt.datetime,
+    plan: Mapping[str, Any],
+    plan_path: Path,
+    plan_sha256: str,
+    packet_path: Path,
+    packet_sha256: str,
+    manager: Mapping[str, Any],
+    reviews: list[Mapping[str, Any]],
+    decisions: list[Mapping[str, Any]],
+    predecessor_effective_decisions: list[Mapping[str, Any]],
+    repository_root: Path,
+) -> dict[str, Any]:
+    effective = {
+        decision["symbol"]: dict(decision)
+        for decision in predecessor_effective_decisions
+    }
+    order = [decision["symbol"] for decision in predecessor_effective_decisions]
+    for review in reviews:
+        effective[review["symbol"]] = dict(review["effective_decision"])
+    cumulative = [effective[symbol] for symbol in order]
+    automatic_noop = not reviews and plan.get("candidate_count") == 0
+    return {
+        "schema_version": 2,
+        "run_id": run_id,
+        "batch_id": batch_id,
+        "review_id": review_id,
+        "chain_version": QUOTE_IMPACT_CHAIN_VERSION,
+        "chain_sequence": plan["chain_sequence"],
+        "predecessor": dict(plan["predecessor"]),
+        "recorded_at": recorded_at.isoformat(),
+        "plan_path": _relative(plan_path, repository_root),
+        "plan_sha256": plan_sha256,
+        "packet_path": _relative(packet_path, repository_root),
+        "packet_sha256": packet_sha256,
+        "original_result_path": plan["original_result_path"],
+        "original_result_sha256": plan["original_result_sha256"],
+        "quote_amendment_path": plan["quote_amendment_path"],
+        "quote_amendment_sha256": plan["quote_amendment_sha256"],
+        "policy_payload_sha256": plan["policy"]["payload_sha256"],
+        "manager": dict(manager),
+        "automatic_noop": automatic_noop,
+        "reviews": [dict(row) for row in reviews],
+        "decisions": [dict(row) for row in decisions],
+        "effective_decisions": cumulative,
+        "effective_decisions_sha256": _payload_sha256(cumulative),
+        "summary": {
+            "candidate_count": len(reviews),
+            "keep_count": sum(row["action"] == "keep" for row in reviews),
+            "replacement_count": sum(row["action"] == "replacement" for row in reviews),
+            "new_send_to_analyst_count": sum(
+                row["action"] == "replacement"
+                and row["old_route"] != "send_to_analyst"
+                and row["effective_decision"]["route"] == "send_to_analyst"
+                for row in reviews
+            ),
+        },
+        "portfolio_action": None,
+    }
+
+
+def _chain_entry_summary(
+    entry: Mapping[str, Any],
+    *,
+    repository_root: Path,
+) -> dict[str, Any]:
+    verified = entry["verified"]
+    result = verified["result"]
+    return {
+        "schema_version": verified["plan"].get("schema_version", 1),
+        "run_id": verified["plan"]["run_id"],
+        "batch_id": verified["plan"]["batch_id"],
+        "review_id": entry["review_id"],
+        "state": entry["state"],
+        "candidate_count": verified["plan"]["candidate_count"],
+        "candidate_symbols": list(verified["plan"]["candidate_symbols"]),
+        "plan_path": _relative(verified["plan_path"], repository_root),
+        "plan_sha256": verified["plan_seal"].sha256,
+        "packet_path": _relative(verified["packet_path"], repository_root),
+        "packet_sha256": verified["packet_seal"].sha256,
+        "result_path": (
+            _relative(verified["result_path"], repository_root) if result is not None else None
+        ),
+        "result_sha256": verified["result_seal"].sha256 if result is not None else None,
+        "portfolio_action": None,
+    }
+
+
+def _sealed_artifact_presence(path: Path) -> str:
+    seal = path.with_name(f"{path.name}.seal.json")
+    if path.exists() and seal.exists():
+        return "complete"
+    if path.exists() or seal.exists():
+        return "partial"
+    return "absent"
+
+
+def _payload_sha256(value: Any) -> str:
+    return hashlib.sha256(canonical_json_bytes(value)).hexdigest()
+
+
 def _candidate_rows(inputs: Mapping[str, Any]) -> list[dict[str, Any]]:
-    decisions = {row["symbol"]: row for row in inputs["result"]["decisions"]}
+    predecessor_decisions = inputs.get("predecessor_decisions") or inputs["result"]["decisions"]
+    decisions = {row["symbol"]: row for row in predecessor_decisions}
+    decision_sources = inputs.get("predecessor_decision_sources") or {}
     dossiers = {row["symbol"]: row for row in inputs["packet"]["dossiers"]}
     quotes = {row["symbol"]: row for row in inputs["amendment"]["quotes"]}
+    predecessor_quotes = inputs.get("predecessor_quotes") or {
+        symbol: dossier.get("market_snapshot")
+        for symbol, dossier in dossiers.items()
+    }
     threshold = inputs["policy_ref"]["absolute_price_change_pct"]
     rows = []
-    for decision in inputs["result"]["decisions"]:
-        symbol = decision["symbol"]
+    for original in inputs["result"]["decisions"]:
+        symbol = original["symbol"]
+        decision = decisions.get(symbol)
         dossier = dossiers.get(symbol)
         quote = quotes.get(symbol)
-        if not isinstance(dossier, Mapping) or not isinstance(quote, Mapping):
+        old_quote = predecessor_quotes.get(symbol)
+        if (
+            not isinstance(decision, Mapping)
+            or not isinstance(dossier, Mapping)
+            or not isinstance(quote, Mapping)
+            or not isinstance(old_quote, Mapping)
+        ):
             raise ManagerScreenQuoteImpactError(f"quote-impact inputs are missing symbol: {symbol}")
-        market = dossier.get("market_snapshot")
-        if not isinstance(market, Mapping):
-            raise ManagerScreenQuoteImpactError(f"original market snapshot is invalid: {symbol}")
-        old_price = _price_for_comparison(market.get("price"))
+        old_price = _price_for_comparison(old_quote.get("price"))
         new_price = _price_for_comparison(quote.get("price"))
         invalid_price_fields = [
             field
@@ -689,13 +1821,15 @@ def _candidate_rows(inputs: Mapping[str, Any]) -> list[dict[str, Any]]:
             "ordinal": len(rows) + 1,
             "symbol": symbol,
             "name": dossier.get("name"),
-            "old_price": (old_price if old_price is not None else market.get("price")),
+            "old_price": (old_price if old_price is not None else old_quote.get("price")),
             "new_price": (new_price if new_price is not None else quote.get("price")),
             "price_change_pct": delta,
             "absolute_price_change_pct": (abs(delta) if delta is not None else None),
             "old_decision": dict(decisions[symbol]),
+            "old_decision_source": dict(decision_sources.get(symbol) or {}),
+            "old_quote_source": dict(inputs.get("predecessor", {}).get("binding") or {}),
             "valuation": {
-                "old": {field: market.get(field) for field in VALUATION_FIELDS},
+                "old": {field: old_quote.get(field) for field in VALUATION_FIELDS},
                 "new": {field: quote.get(field) for field in VALUATION_FIELDS},
             },
             "quote": {
@@ -985,6 +2119,7 @@ def _load_completed_inputs(
         else {}
     )
     return {
+        "repository_root": repository_root,
         "batch_path": batch_path,
         "batch": batch,
         "batch_seal": batch_seal,
@@ -1215,10 +2350,12 @@ def _enforce_capacity(
     purchases_already_recorded: bool = False,
 ) -> None:
     capacity = plan["policy"]["send_to_analyst_capacity_per_run"]
+    already_purchased = _prior_purchased_symbols_for_plan(base=base, plan=plan)
     new_purchases = sum(
         review["action"] == "replacement"
         and review["old_route"] != "send_to_analyst"
         and review["effective_decision"]["route"] == "send_to_analyst"
+        and review["symbol"] not in already_purchased
         for review in reviews
     )
     if purchases_already_recorded:
@@ -1260,6 +2397,52 @@ def _enforce_capacity(
         )
 
 
+def _prior_purchased_symbols_for_plan(
+    *,
+    base: Path,
+    plan: Mapping[str, Any],
+) -> set[str]:
+    original_path = plan.get("original_result_path")
+    original_sha256 = plan.get("original_result_sha256")
+    run_id = plan.get("run_id")
+    batch_id = plan.get("batch_id")
+    if not all(isinstance(value, str) and value for value in (
+        original_path,
+        original_sha256,
+        run_id,
+        batch_id,
+    )):
+        return set()
+    repository_root = base.parent.parent.resolve()
+    payload, sealed = _sealed_object(
+        _repository_file(original_path, repository_root=repository_root),
+        artifact_type="manager_screen_result",
+    )
+    if sealed.sha256 != original_sha256:
+        raise ManagerScreenQuoteImpactError(
+            "quote-impact capacity original result binding is invalid"
+        )
+    decisions = payload.get("decisions")
+    if not isinstance(decisions, list):
+        raise ManagerScreenQuoteImpactError(
+            "quote-impact capacity original decisions are invalid"
+        )
+    purchased = {
+        decision["symbol"]
+        for decision in decisions
+        if isinstance(decision, Mapping)
+        and isinstance(decision.get("symbol"), str)
+        and decision.get("route") == "send_to_analyst"
+    }
+    overlay = load_manager_screen_quote_impact_overlay(
+        root=base,
+        run_id=run_id,
+        batch_id=batch_id,
+    )
+    purchased.update(row["symbol"] for row in overlay["purchase_reviews"])
+    return purchased
+
+
 def _reject_post_contract_direct_quote_purchases(
     *,
     base: Path,
@@ -1294,6 +2477,82 @@ def _reject_post_contract_direct_quote_purchases(
     )
 
 
+def _require_suspended_quote_projection(
+    *,
+    current: Mapping[str, Any],
+    screen: Mapping[str, Any] | None,
+    member: Mapping[str, Any],
+    suspension_binding: Mapping[str, Any],
+    plan: Mapping[str, Any],
+    result_path: str,
+    result_sha256: str,
+    symbol: str,
+    old_decision_source: Mapping[str, Any] | None = None,
+) -> None:
+    original_path = member.get("manager_screen_result_path")
+    original_sha256 = member.get("manager_screen_result_sha256")
+    prior_path = (
+        old_decision_source.get("path")
+        if isinstance(old_decision_source, Mapping)
+        else original_path
+    )
+    prior_sha256 = (
+        old_decision_source.get("sha256")
+        if isinstance(old_decision_source, Mapping)
+        else original_sha256
+    )
+    allowed_bindings = {(prior_path, prior_sha256), (result_path, result_sha256)}
+    history = current.get("stage_history")
+    suspension_receipt = isinstance(history, list) and any(
+        isinstance(item, Mapping)
+        and item.get("stage") == "manager_screen_allocation_v3_suspension"
+        and item.get("suspension_sha256") == suspension_binding.get("sha256")
+        for item in history
+    )
+    if (
+        member.get("symbol") != symbol
+        or original_path != plan.get("original_result_path")
+        or original_sha256 != plan.get("original_result_sha256")
+        or (
+            current.get("manager_screen_result_path"),
+            current.get("manager_screen_result_sha256"),
+        )
+        not in allowed_bindings
+        or current.get("manager_screen_run_id") != plan.get("run_id")
+        or current.get("manager_screen_batch_id") not in {None, plan.get("batch_id")}
+        or current.get("task_type") != "manager_screen"
+        or current.get("status") != "completed"
+        or current.get("assigned_agent") is not None
+        or current.get("started_at") is not None
+        or current.get("research_budget_state") != "candidate_unfunded"
+        or current.get("research_budget_suspension_path")
+        != suspension_binding.get("path")
+        or current.get("research_budget_suspension_sha256")
+        != suspension_binding.get("sha256")
+        or current.get("result_path") != current.get("manager_screen_result_path")
+        or not suspension_receipt
+        or not isinstance(screen, Mapping)
+        or (
+            screen.get("manager_screen_result_path"),
+            screen.get("manager_screen_result_sha256"),
+        )
+        not in allowed_bindings
+        or screen.get("manager_screen_run_id") != plan.get("run_id")
+        or screen.get("manager_screen_batch_id") not in {None, plan.get("batch_id")}
+        or screen.get("decision") != "candidate_unfunded"
+        or screen.get("state") != "candidate_unfunded"
+        or screen.get("research_budget_state") != "candidate_unfunded"
+        or screen.get("research_budget_suspension_path")
+        != suspension_binding.get("path")
+        or screen.get("research_budget_suspension_sha256")
+        != suspension_binding.get("sha256")
+    ):
+        raise ManagerScreenQuoteImpactError(
+            "sealed allocation-v3 suspension projection drifted before quote-impact "
+            f"evolution: {symbol}"
+        )
+
+
 def _materialize_replacements(
     *,
     base: Path,
@@ -1303,6 +2562,7 @@ def _materialize_replacements(
     result: Mapping[str, Any],
     result_path: Path,
     result_sha256: str,
+    suspension_binding: Mapping[str, Any] | None = None,
 ) -> None:
     queue_path = base / RESEARCH_QUEUE_FILE
     screening_path = base / SCREENING_FILE
@@ -1324,17 +2584,51 @@ def _materialize_replacements(
             raise ManagerScreenQuoteImpactError(
                 f"research queue is missing replacement candidate: {symbol}"
             )
-        binding = current.get("manager_screen_result_path")
+        suspended_member = None
+        if suspension_binding is not None:
+            members = suspension_binding.get("members")
+            if not isinstance(members, Mapping):
+                raise ManagerScreenQuoteImpactError(
+                    "allocation-v3 suspension member index is invalid"
+                )
+            suspended_member = members.get(symbol)
+        if suspended_member is not None:
+            _require_suspended_quote_projection(
+                current=current,
+                screen=screening.get(symbol),
+                member=suspended_member,
+                suspension_binding=suspension_binding,
+                plan=plan,
+                result_path=result_relative,
+                result_sha256=result_sha256,
+                symbol=symbol,
+                old_decision_source=packet_rows[symbol].get("old_decision_source"),
+            )
+        old_source = packet_rows[symbol].get("old_decision_source")
+        predecessor_path = (
+            old_source.get("path")
+            if isinstance(old_source, Mapping)
+            else plan["original_result_path"]
+        )
+        predecessor_sha256 = (
+            old_source.get("sha256")
+            if isinstance(old_source, Mapping)
+            else plan.get("original_result_sha256")
+            or current.get("manager_screen_result_sha256")
+        )
+        binding = (
+            current.get("manager_screen_result_path"),
+            current.get("manager_screen_result_sha256"),
+        )
         if binding not in {
-            plan["original_result_path"],
-            result_relative,
+            (predecessor_path, predecessor_sha256),
+            (result_relative, result_sha256),
         }:
             raise ManagerScreenQuoteImpactError(
                 f"coverage has a different manager result binding: {symbol}"
             )
         already_bound = (
-            binding == result_relative
-            and current.get("manager_screen_result_sha256") == result_sha256
+            binding == (result_relative, result_sha256)
         )
         later_progress = _has_later_progress(current)
         updated = dict(current)
@@ -1357,6 +2651,9 @@ def _materialize_replacements(
                     "route": decision["route"],
                     "result_path": result_relative,
                     "result_sha256": result_sha256,
+                    "predecessor_result_path": predecessor_path,
+                    "predecessor_result_sha256": predecessor_sha256,
+                    "chain_sequence": plan.get("chain_sequence", 1),
                 }
             )
         updated.update(
@@ -1382,7 +2679,27 @@ def _materialize_replacements(
                     "failure_reason": None,
                 }
             )
-            if decision["route"] == "send_to_analyst":
+            if suspended_member is not None:
+                updated.update(
+                    {
+                        "task_type": "manager_screen",
+                        "status": "completed",
+                        "finished_at": result["recorded_at"],
+                        "result_path": result_relative,
+                        "next_action": (
+                            "Keep as an unfunded candidate until the complete-scope "
+                            "sealed allocation partitions the full market."
+                        ),
+                        "research_budget_state": "candidate_unfunded",
+                    }
+                )
+                for field in (
+                    "effort_budget_hours",
+                    "preceding_stage",
+                    "stop_conditions",
+                ):
+                    updated.pop(field, None)
+            elif decision["route"] == "send_to_analyst":
                 updated.update(
                     {
                         "task_type": "quick_profile",
@@ -1425,7 +2742,9 @@ def _materialize_replacements(
                     "stop_conditions",
                 ):
                     updated.pop(field, None)
-            if decision["route"] == "research_candidate":
+            if suspended_member is not None:
+                updated["research_budget_state"] = "candidate_unfunded"
+            elif decision["route"] == "research_candidate":
                 updated["research_budget_state"] = "candidate_unfunded"
             else:
                 updated.pop("research_budget_state", None)
@@ -1440,12 +2759,16 @@ def _materialize_replacements(
                 {
                     "symbol": symbol,
                     "name": packet_rows[symbol]["name"],
-                    "decision": {
-                        "pass": "catalog",
-                        "watch": "watch_only",
-                        "send_to_analyst": "quick_profile",
-                        "research_candidate": "candidate_unfunded",
-                    }[decision["route"]],
+                    "decision": (
+                        "candidate_unfunded"
+                        if suspended_member is not None
+                        else {
+                            "pass": "catalog",
+                            "watch": "watch_only",
+                            "send_to_analyst": "quick_profile",
+                            "research_candidate": "candidate_unfunded",
+                        }[decision["route"]]
+                    ),
                     "priority": None,
                     "reason": decision["one_line_reason"],
                     "evidence": decision["evidence_ids"],
@@ -1460,7 +2783,16 @@ def _materialize_replacements(
                     "revisit_triggers": decision["revisit_triggers"],
                 }
             )
-            if decision["route"] == "research_candidate":
+            if suspended_member is not None:
+                screen.update(
+                    {
+                        "state": "candidate_unfunded",
+                        "research_budget_state": "candidate_unfunded",
+                        "research_budget_suspension_path": suspension_binding["path"],
+                        "research_budget_suspension_sha256": suspension_binding["sha256"],
+                    }
+                )
+            elif decision["route"] == "research_candidate":
                 screen["research_budget_state"] = "candidate_unfunded"
             else:
                 screen.pop("research_budget_state", None)
@@ -1508,6 +2840,11 @@ def _verify_review(
         packet_path,
         artifact_type="manager_screen_quote_impact_packet",
     )
+    plan_schema = plan.get("schema_version")
+    if plan_schema not in {1, 2} or packet.get("schema_version") != plan_schema:
+        raise ManagerScreenQuoteImpactError(
+            "quote-impact plan and packet schema versions are invalid"
+        )
     if (
         plan.get("run_id") != run_id
         or plan.get("batch_id") != batch_id
@@ -1521,6 +2858,39 @@ def _verify_review(
         or [row.get("symbol") for row in packet.get("rows", [])] != plan.get("candidate_symbols")
     ):
         raise ManagerScreenQuoteImpactError("quote-impact plan and packet bindings are invalid")
+    predecessor = None
+    if plan_schema == 2:
+        if (
+            plan.get("chain_version") != QUOTE_IMPACT_CHAIN_VERSION
+            or isinstance(plan.get("chain_sequence"), bool)
+            or not isinstance(plan.get("chain_sequence"), int)
+            or plan["chain_sequence"] <= 0
+        ):
+            raise ManagerScreenQuoteImpactError("quote-impact chain metadata is invalid")
+        predecessor = _validated_predecessor(plan.get("predecessor"))
+        predecessor_result_path = _repository_file(
+            predecessor["result_path"],
+            repository_root=repository_root,
+        )
+        _, predecessor_result_seal = _sealed_object(
+            predecessor_result_path,
+            artifact_type=predecessor["result_artifact_type"],
+        )
+        predecessor_quote_path = _repository_file(
+            predecessor["quote_path"],
+            repository_root=repository_root,
+        )
+        _, predecessor_quote_seal = _sealed_object(
+            predecessor_quote_path,
+            artifact_type=predecessor["quote_artifact_type"],
+        )
+        if (
+            predecessor_result_seal.sha256 != predecessor["result_sha256"]
+            or predecessor_quote_seal.sha256 != predecessor["quote_sha256"]
+        ):
+            raise ManagerScreenQuoteImpactError(
+                "quote-impact predecessor sealed binding is invalid"
+            )
     original_result_path = _repository_file(
         plan.get("original_result_path"),
         repository_root=repository_root,
@@ -1577,7 +2947,10 @@ def _verify_review(
     result_path = review_dir / "result.json"
     result = None
     result_seal = None
-    if result_path.exists():
+    result_presence = _sealed_artifact_presence(result_path)
+    if result_presence == "partial":
+        raise ManagerScreenQuoteImpactError("quote-impact result is only partially sealed")
+    if result_presence == "complete":
         result, result_seal = _sealed_object(
             result_path,
             artifact_type="manager_screen_quote_impact_result",
@@ -1592,11 +2965,21 @@ def _verify_review(
             or result.get("packet_sha256") != packet_seal.sha256
             or result.get("original_result_sha256") != plan["original_result_sha256"]
             or result.get("quote_amendment_sha256") != plan["quote_amendment_sha256"]
+            or (
+                plan_schema == 2
+                and (
+                    result.get("schema_version") != 2
+                    or result.get("chain_version") != plan.get("chain_version")
+                    or result.get("chain_sequence") != plan.get("chain_sequence")
+                    or result.get("predecessor") != predecessor
+                )
+            )
         ):
             raise ManagerScreenQuoteImpactError("quote-impact result bindings are invalid")
     elif require_result:
         raise ManagerScreenQuoteImpactError("quote-impact result is missing")
     return {
+        "repository_root": repository_root,
         "review_dir": review_dir,
         "plan_path": plan_path,
         "plan": plan,
@@ -1729,6 +3112,143 @@ def _verify_policy_binding(
         )
 
 
+def _verified_predecessor_projection(
+    verified: Mapping[str, Any],
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]]]:
+    plan = verified["plan"]
+    predecessor = _validated_predecessor(plan.get("predecessor"))
+    if predecessor["result_artifact_type"] == "manager_screen_result":
+        decisions = [dict(row) for row in verified["original_result"]["decisions"]]
+    else:
+        path = _repository_file(
+            predecessor["result_path"],
+            repository_root=verified["repository_root"],
+        )
+        payload, sealed = _sealed_object(
+            path,
+            artifact_type="manager_screen_quote_impact_result",
+        )
+        if (
+            sealed.sha256 != predecessor["result_sha256"]
+            or payload.get("run_id") != plan["run_id"]
+            or payload.get("batch_id") != plan["batch_id"]
+            or payload.get("review_id") != predecessor["review_id"]
+        ):
+            raise ManagerScreenQuoteImpactError(
+                "quote-impact predecessor result projection is invalid"
+            )
+        if payload.get("schema_version") == 2:
+            rows = payload.get("effective_decisions")
+            if not isinstance(rows, list):
+                raise ManagerScreenQuoteImpactError(
+                    "quote-impact predecessor effective decisions are missing"
+                )
+            decisions = [dict(row) for row in rows if isinstance(row, Mapping)]
+            if len(decisions) != len(rows):
+                raise ManagerScreenQuoteImpactError(
+                    "quote-impact predecessor effective decisions are invalid"
+                )
+        else:
+            decisions_by_symbol = {
+                row["symbol"]: dict(row) for row in verified["original_result"]["decisions"]
+            }
+            for review in payload.get("reviews") or []:
+                if not isinstance(review, Mapping):
+                    raise ManagerScreenQuoteImpactError(
+                        "legacy quote-impact predecessor reviews are invalid"
+                    )
+                decisions_by_symbol[review["symbol"]] = dict(review["effective_decision"])
+            decisions = [
+                decisions_by_symbol[row["symbol"]]
+                for row in verified["original_result"]["decisions"]
+            ]
+    if predecessor["quote_artifact_type"] == "manager_screen_packet":
+        quotes = _original_packet_quotes(verified["original_packet"])
+    else:
+        path = _repository_file(
+            predecessor["quote_path"],
+            repository_root=verified["repository_root"],
+        )
+        payload, sealed = _sealed_object(
+            path,
+            artifact_type="manager_screen_quote_amendment",
+        )
+        rows = payload.get("quotes")
+        if sealed.sha256 != predecessor["quote_sha256"] or not isinstance(rows, list):
+            raise ManagerScreenQuoteImpactError(
+                "quote-impact predecessor quote projection is invalid"
+            )
+        quotes = {
+            row["symbol"]: dict(row)
+            for row in rows
+            if isinstance(row, Mapping) and isinstance(row.get("symbol"), str)
+        }
+        if len(quotes) != len(rows):
+            raise ManagerScreenQuoteImpactError(
+                "quote-impact predecessor quote symbols are invalid"
+            )
+    return decisions, quotes
+
+
+def _decision_from_bound_source(
+    value: Any,
+    *,
+    repository_root: Path,
+    symbol: str,
+) -> dict[str, Any]:
+    if not isinstance(value, Mapping) or set(value) != DECISION_SOURCE_KEYS:
+        raise ManagerScreenQuoteImpactError(
+            f"quote-impact old-decision source is invalid: {symbol}"
+        )
+    if value.get("symbol") != symbol:
+        raise ManagerScreenQuoteImpactError(
+            f"quote-impact old-decision source symbol is invalid: {symbol}"
+        )
+    artifact_type = value.get("artifact_type")
+    if artifact_type not in {
+        "manager_screen_result",
+        "manager_screen_quote_impact_result",
+    }:
+        raise ManagerScreenQuoteImpactError(
+            f"quote-impact old-decision source type is invalid: {symbol}"
+        )
+    path = _repository_file(value.get("path"), repository_root=repository_root)
+    payload, sealed = _sealed_object(path, artifact_type=artifact_type)
+    if sealed.sha256 != value.get("sha256"):
+        raise ManagerScreenQuoteImpactError(
+            f"quote-impact old-decision source SHA is invalid: {symbol}"
+        )
+    if artifact_type == "manager_screen_result":
+        if value.get("review_id") is not None:
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact original decision source review is invalid: {symbol}"
+            )
+        rows = payload.get("decisions") or []
+    else:
+        if payload.get("review_id") != value.get("review_id"):
+            raise ManagerScreenQuoteImpactError(
+                f"quote-impact decision source review is invalid: {symbol}"
+            )
+        if isinstance(payload.get("effective_decisions"), list):
+            rows = payload["effective_decisions"]
+        else:
+            rows = [
+                review.get("effective_decision")
+                for review in payload.get("reviews") or []
+                if isinstance(review, Mapping)
+            ]
+    matches = [
+        dict(row)
+        for row in rows
+        if isinstance(row, Mapping) and row.get("symbol") == symbol
+    ]
+    if len(matches) != 1:
+        raise ManagerScreenQuoteImpactError(
+            f"quote-impact old-decision source is ambiguous: {symbol}"
+        )
+    return matches[0]
+
+
 def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
     plan = verified["plan"]
     packet = verified["packet"]
@@ -1791,16 +3311,54 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
         for quote in verified["amendment"].get("quotes", [])
         if isinstance(quote, Mapping)
     }
+    if plan.get("schema_version") == 2:
+        predecessor_decisions, predecessor_quotes = _verified_predecessor_projection(
+            verified,
+        )
+        expected_old_by_symbol = {
+            decision["symbol"]: decision for decision in predecessor_decisions
+        }
+    else:
+        predecessor_quotes = {
+            symbol: dossier.get("market_snapshot")
+            for symbol, dossier in original_dossiers.items()
+        }
+        expected_old_by_symbol = original_by_symbol
     for symbol, row in zip(candidate_symbols, rows, strict=True):
         if (
             not isinstance(row, Mapping)
             or row.get("symbol") != symbol
             or not isinstance(row.get("old_decision"), Mapping)
-            or dict(row["old_decision"]) != dict(original_by_symbol.get(symbol) or {})
+            or dict(row["old_decision"]) != dict(expected_old_by_symbol.get(symbol) or {})
         ):
             raise ManagerScreenQuoteImpactError(
-                f"quote-impact packet does not bind the original decision: {symbol}"
+                f"quote-impact packet does not bind the predecessor decision: {symbol}"
             )
+        if plan.get("schema_version") == 2:
+            source_decision = _decision_from_bound_source(
+                row.get("old_decision_source"),
+                repository_root=verified["repository_root"],
+                symbol=symbol,
+            )
+            old_quote = predecessor_quotes.get(symbol)
+            valuation = row.get("valuation")
+            if (
+                source_decision != dict(row["old_decision"])
+                or row.get("old_quote_source") != plan.get("predecessor")
+                or not isinstance(old_quote, Mapping)
+                or row.get("old_price")
+                != (
+                    _price_for_comparison(old_quote.get("price"))
+                    if _price_for_comparison(old_quote.get("price")) is not None
+                    else old_quote.get("price")
+                )
+                or not isinstance(valuation, Mapping)
+                or valuation.get("old")
+                != {field: old_quote.get(field) for field in VALUATION_FIELDS}
+            ):
+                raise ManagerScreenQuoteImpactError(
+                    f"quote-impact packet predecessor projection is invalid: {symbol}"
+                )
         if plan_decision_version == 1:
             if "decision_support" in row:
                 raise ManagerScreenQuoteImpactError(
@@ -1857,8 +3415,9 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
         return
     reviews = result.get("reviews")
     decisions = result.get("decisions")
+    expected_schema = plan.get("schema_version", 1)
     if (
-        result.get("schema_version") != 1
+        result.get("schema_version") != expected_schema
         or result.get("original_result_path") != plan.get("original_result_path")
         or result.get("quote_amendment_path") != plan.get("quote_amendment_path")
         or result.get("policy_payload_sha256") != plan.get("policy", {}).get("payload_sha256")
@@ -1868,6 +3427,16 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
         or not isinstance(decisions, list)
         or len(reviews) != len(candidate_symbols)
         or len(decisions) != len(candidate_symbols)
+        or (
+            expected_schema == 2
+            and (
+                result.get("automatic_noop")
+                is not (len(candidate_symbols) == 0)
+                or not isinstance(result.get("effective_decisions"), list)
+                or result.get("effective_decisions_sha256")
+                != _payload_sha256(result["effective_decisions"])
+            )
+        )
     ):
         raise ManagerScreenQuoteImpactError("quote-impact result content is invalid")
     if _parse_datetime(result.get("recorded_at"), "result recorded_at") < _parse_datetime(
@@ -1946,6 +3515,19 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
         normalized_decisions.append(effective)
     if reviews != normalized_reviews or decisions != normalized_decisions:
         raise ManagerScreenQuoteImpactError("quote-impact result is not canonically normalized")
+    if expected_schema == 2:
+        cumulative = {
+            decision["symbol"]: dict(decision)
+            for decision in predecessor_decisions
+        }
+        cumulative_order = [decision["symbol"] for decision in predecessor_decisions]
+        for review in normalized_reviews:
+            cumulative[review["symbol"]] = dict(review["effective_decision"])
+        expected_effective = [cumulative[symbol] for symbol in cumulative_order]
+        if result["effective_decisions"] != expected_effective:
+            raise ManagerScreenQuoteImpactError(
+                "quote-impact cumulative effective decisions do not match predecessor"
+            )
     expected_summary = {
         "candidate_count": len(reviews),
         "keep_count": sum(row["action"] == "keep" for row in reviews),
@@ -1979,6 +3561,7 @@ def _record_summary(
         "result_path": _relative(result_path, repository_root),
         "result_sha256": result_sha256,
         "idempotent": idempotent,
+        "automatic_noop": bool(result.get("automatic_noop")),
         "portfolio_action": None,
     }
 

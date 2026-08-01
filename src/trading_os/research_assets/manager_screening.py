@@ -34,6 +34,11 @@ from .manager_screen_governance import (
     ManagerScreenGovernanceError,
     load_manager_screen_supersession,
 )
+from .manager_screen_terminal_governance import (
+    ManagerScreenTerminalGovernanceError,
+    manager_screen_terminal_governance_locked,
+    require_manager_screen_terminal_governance_open,
+)
 from .models import PolicyKind, load_policy
 from .sealing import SealingError, canonical_json_bytes, seal_json, verify_sealed
 
@@ -318,6 +323,32 @@ class ManagerScreeningError(ValueError):
     """Raised when a manager-screen batch is malformed or cannot advance."""
 
 
+def _require_terminal_governance_open(
+    *,
+    base: Path,
+    run_id: str,
+    operation: str,
+) -> None:
+    try:
+        require_manager_screen_terminal_governance_open(
+            root=base,
+            run_id=run_id,
+            operation=operation,
+        )
+    except ManagerScreenTerminalGovernanceError as exc:
+        raise ManagerScreeningError(str(exc)) from exc
+
+
+def _terminal_governance_locked(*, base: Path, run_id: str) -> bool:
+    try:
+        return manager_screen_terminal_governance_locked(
+            root=base,
+            run_id=run_id,
+        )
+    except ManagerScreenTerminalGovernanceError as exc:
+        raise ManagerScreeningError(str(exc)) from exc
+
+
 def _routes_for_policy(policy: Mapping[str, Any]) -> set[str]:
     if policy.get("decision_contract_version") == 3:
         return DEFERRED_ALLOCATION_ROUTES
@@ -391,10 +422,29 @@ def freeze_manager_screen_batch(
         journal_path.exists() or journal_path.with_name(f"{journal_path.name}.seal.json").exists()
     )
     if artifact_exists or journal_exists:
+        terminal_locked = _terminal_governance_locked(base=base, run_id=run)
         if artifacts_complete:
             verified = _verify_batch_dir(batch_dir, repository_root=repository_root)
-            _discard_freeze_journal(batch_dir)
+            if journal_exists:
+                if terminal_locked:
+                    journal, _ = _load_freeze_journal(
+                        batch_dir,
+                        repository_root=repository_root,
+                    )
+                    if (
+                        journal["batch"] != verified["batch"]
+                        or journal["packet"] != verified["packet"]
+                    ):
+                        raise ManagerScreeningError(
+                            "sealed freeze journal conflicts with the completed batch"
+                        )
+                else:
+                    _discard_freeze_journal(batch_dir)
         elif journal_exists:
+            if terminal_locked:
+                raise ManagerScreeningError(
+                    "sealed full-market allocation packet forbids freeze-journal repair"
+                )
             verified = _repair_manager_screen_freeze(
                 batch_dir,
                 repository_root=repository_root,
@@ -424,6 +474,12 @@ def freeze_manager_screen_batch(
                 f"sealed manager-screen batch conflicts with freeze request: {batch_name}"
             )
         return _freeze_summary(verified, repository_root=repository_root)
+
+    _require_terminal_governance_open(
+        base=base,
+        run_id=run,
+        operation="new manager-screen batch",
+    )
 
     _enforce_run_capacity_policy_monotonic(
         run_dir=run_dir,
@@ -713,20 +769,27 @@ def record_manager_screen_decisions(
         if any(existing[key] != normalized[key] for key in replay_keys):
             raise ManagerScreeningError(f"sealed manager-screen result is immutable: {batch_name}")
         result_seal = complete["result_seal"]
-        _materialize_decisions(
-            base=base,
-            repository_root=repository_root,
-            batch=batch,
-            result=existing,
-            result_path=result_path,
-            result_sha256=result_seal.sha256,
-        )
+        if not _terminal_governance_locked(base=base, run_id=run):
+            _materialize_decisions(
+                base=base,
+                repository_root=repository_root,
+                batch=batch,
+                result=existing,
+                result_path=result_path,
+                result_sha256=result_seal.sha256,
+            )
         return _record_summary(
             existing,
             result_path=result_path,
             result_sha256=result_seal.sha256,
             repository_root=repository_root,
         )
+
+    _require_terminal_governance_open(
+        base=base,
+        run_id=run,
+        operation="new manager-screen result",
+    )
 
     try:
         require_manager_screen_first_record_allowed(
@@ -1206,11 +1269,6 @@ def prepare_manager_screen_calibration(
         if calibration_root.is_dir()
         else []
     )
-    if existing_ids and existing_ids != [calibration_name]:
-        raise ManagerScreeningError(
-            "manager-screen calibration is single-shot; a calibration already exists "
-            f"for {batch_name}: {', '.join(existing_ids)}"
-        )
     policy = (
         dict(batch["policy"])
         if _has_calibration_policy(batch["policy"])
@@ -1245,6 +1303,16 @@ def prepare_manager_screen_calibration(
         return _calibration_prepare_summary(
             calibration,
             repository_root=repository_root,
+        )
+    _require_terminal_governance_open(
+        base=base,
+        run_id=run,
+        operation="new manager-screen calibration packet",
+    )
+    if existing_ids and existing_ids != [calibration_name]:
+        raise ManagerScreeningError(
+            "manager-screen calibration is single-shot; a calibration already exists "
+            f"for {batch_name}: {', '.join(existing_ids)}"
         )
     dossier_by_symbol = {item["symbol"]: item for item in verified["packet"]["dossiers"]}
     decision_by_symbol = {item["symbol"]: item for item in manager_result["decisions"]}
@@ -1367,6 +1435,11 @@ def record_manager_screen_calibration(
             complete,
             repository_root=repository_root,
         )
+    _require_terminal_governance_open(
+        base=base,
+        run_id=run,
+        operation="new manager-screen calibration result",
+    )
     normalized = _normalize_calibration_submission(
         submission,
         packet=packet,
@@ -1558,8 +1631,8 @@ def manager_screen_status(
                         effective_decisions[symbol] = review["effective_decision"]
                         if review["action"] == "replacement":
                             effective_predecessors[symbol] = (
-                                quote_impact["result_path"],
-                                quote_impact["result_sha256"],
+                                review["effective_decision_source_path"],
+                                review["effective_decision_source_sha256"],
                             )
                 original_effort = float(
                     verified["batch"]["policy"]["quick_profile_effort_budget_hours"]
@@ -1568,14 +1641,10 @@ def manager_screen_status(
                     if decision["route"] == "send_to_analyst":
                         purchased_analyst_budget[decision["symbol"]] = original_effort
                 if quote_impact["state"] == "recorded":
-                    quote_effort = float(quote_impact["quick_profile_effort_budget_hours"])
-                    for review in quote_impact["reviews"]:
-                        if (
-                            review["action"] == "replacement"
-                            and review["old_route"] != "send_to_analyst"
-                            and review["effective_decision"]["route"] == "send_to_analyst"
-                        ):
-                            purchased_analyst_budget[review["symbol"]] = quote_effort
+                    for purchase in quote_impact["purchase_reviews"]:
+                        purchased_analyst_budget[purchase["symbol"]] = float(
+                            purchase["effort_budget_hours"]
+                        )
                 for decision in effective_decisions.values():
                     completed_symbols.add(decision["symbol"])
                     by_route[decision["route"]] += 1
@@ -1716,6 +1785,14 @@ def manager_screen_status(
                         "result_path",
                         "result_sha256",
                         "effective_route_delta",
+                        "review_count",
+                        "latest_sequence",
+                        "chain_sha256",
+                        "quote_amendment_path",
+                        "quote_amendment_sha256",
+                        "quote_amendment_effective_at",
+                        "automatic_noop",
+                        "historical_purchase_company_count",
                     )
                 },
                 "supersession": supersession,
@@ -1742,10 +1819,24 @@ def manager_screen_status(
     calibration_material_errors = sum(
         item.get("material_error_count", 0) for item in calibration_rows
     )
+    calibration_material_error_symbols = sorted(
+        {
+            symbol
+            for item in calibration_rows
+            for symbol in item.get("material_error_symbols", [])
+        }
+    )
     calibration_route_disagreements = sum(
         item.get("route_disagreement_count", 0) for item in calibration_rows
     )
     calibration_adjudications = sum(item.get("adjudication_count", 0) for item in calibration_rows)
+    calibration_adjudicated_symbols = sorted(
+        {
+            symbol
+            for item in calibration_rows
+            for symbol in item.get("adjudicated_symbols", [])
+        }
+    )
     calibration_planned_batches = sum(1 for item in calibration_rows if item["status"] == "planned")
     try:
         control = manager_screen_control_status(
@@ -1827,8 +1918,12 @@ def manager_screen_status(
             "reviewed_sample_count": calibration_reviewed,
             "missing_sample_count": calibration_missing,
             "material_error_count": calibration_material_errors,
+            "material_error_symbol_count": len(calibration_material_error_symbols),
+            "material_error_symbols": calibration_material_error_symbols,
             "route_disagreement_count": calibration_route_disagreements,
             "adjudication_count": calibration_adjudications,
+            "adjudicated_symbol_count": len(calibration_adjudicated_symbols),
+            "adjudicated_symbols": calibration_adjudicated_symbols,
             "coverage_rate": (
                 calibration_reviewed / calibration_planned if calibration_planned else None
             ),
@@ -2552,8 +2647,10 @@ def _batch_calibration_status(
                 "reviewed_sample_count": 0,
                 "missing_sample_count": packet["plan"]["planned_sample_count"],
                 "material_error_count": 0,
+                "material_error_symbols": [],
                 "route_disagreement_count": 0,
                 "adjudication_count": 0,
+                "adjudicated_symbols": [],
                 "sample_symbols": packet["plan"]["sample_symbols"],
                 "packet_sha256": calibration["packet_seal"].sha256,
                 "result_sha256": None,
@@ -2566,8 +2663,10 @@ def _batch_calibration_status(
             "reviewed_sample_count": summary["reviewed_sample_count"],
             "missing_sample_count": summary["missing_sample_count"],
             "material_error_count": summary["material_error_count"],
+            "material_error_symbols": list(summary["material_error_symbols"]),
             "route_disagreement_count": summary["route_disagreement_count"],
             "adjudication_count": summary["adjudication_count"],
+            "adjudicated_symbols": list(summary["adjudicated_symbols"]),
             "sample_symbols": packet["plan"]["sample_symbols"],
             "packet_sha256": calibration["packet_seal"].sha256,
             "result_sha256": calibration["result_seal"].sha256,
@@ -2578,6 +2677,11 @@ def _batch_calibration_status(
             "planned_sample_count": 0,
             "reviewed_sample_count": 0,
             "missing_sample_count": 0,
+            "material_error_count": 0,
+            "material_error_symbols": [],
+            "route_disagreement_count": 0,
+            "adjudication_count": 0,
+            "adjudicated_symbols": [],
             "sample_symbols": [],
         }
     expected = _calibration_plan(batch)
@@ -2589,8 +2693,10 @@ def _batch_calibration_status(
             "reviewed_sample_count": 0,
             "missing_sample_count": 0,
             "material_error_count": 0,
+            "material_error_symbols": [],
             "route_disagreement_count": 0,
             "adjudication_count": 0,
+            "adjudicated_symbols": [],
             "sample_symbols": expected["sample_symbols"],
         }
     observed = result["quality_state"].get("calibration")
@@ -2604,8 +2710,10 @@ def _batch_calibration_status(
         "reviewed_sample_count": expected["reviewed_symbol_count"],
         "missing_sample_count": expected["missing_sample_count"],
         "material_error_count": 0,
+        "material_error_symbols": [],
         "route_disagreement_count": 0,
         "adjudication_count": 0,
+        "adjudicated_symbols": [],
         "sample_symbols": expected["sample_symbols"],
     }
 
@@ -2617,8 +2725,10 @@ def _superseded_calibration_status() -> dict[str, Any]:
         "reviewed_sample_count": 0,
         "missing_sample_count": 0,
         "material_error_count": 0,
+        "material_error_symbols": [],
         "route_disagreement_count": 0,
         "adjudication_count": 0,
+        "adjudicated_symbols": [],
         "sample_symbols": [],
     }
 

@@ -12,7 +12,9 @@
 → 程序生成每批 100—200 家压缩 dossier
 → 同一投资经理 Agent 完整浏览一批
 → pass / watch / research_candidate（未购预算）
-→ 完整 scope 后由主 Agent 一次性横向配置 quick-profile 预算
+→ 完整 scope 后 prepare 全市场候选 packet
+→ 主 Agent 一次性完整二分并封存 quick-profile allocation result
+→ 投影 queue/screening 并以 final-status 验收
 → 被选中的少数候选由单公司研究员解决决定性问题
 → scoped research → deep research
 → 独立承保 / challenger
@@ -70,6 +72,32 @@ v3 只约束未来新冻结的 batch，不追溯改写任何 sealed v1/v2 batch�
 - v2/v3 quote-impact 不是 delta patch。每个受影响 symbol 都必须提交完整 replacement decision，用新 amendment 对应的 canonical 市值事实刷新 reason 精确前缀，并完整重交 risk acknowledgements、决定性问题、trigger、证据与置信度；route 可以保持不变。replacement 只追加封存，不覆盖原决策，也不启动 correction 链。
 - v3 的第三条路由是 `research_candidate`。它只表示“值得进入全市场候选池”，不得生成 `quick_profile,pending`、不得占用研究预算。完整 scope 结束后，主 Agent 对全部候选执行一次 sealed allocation；已完成或 running 的旧预算锁定，尚未 claim 的旧 v2 pending 可以显式撤回或被更高价值候选替换，但有效总预算不得超过原 run 上限。
 
+## 全市场 sealed allocation v3
+
+每个 run 的最终 allocation 是 singleton，资产固定在：
+
+```text
+coverage/cn-a/manager-screen/{RUN_ID}/governance/allocation-v3/full-market/
+  packet.json + seal
+  result.json + seal
+```
+
+只有 scope 守恒完成、run 为 `paused`、remaining/open 均为 0、旧预算 suspension 已完成基线投影或仅发生带 receipt 的 sealed quote-impact 合法演进、已冻结的 legacy transition 已记录、calibration/QA 与所有 quote-impact review 均终态，并且存在 sealed 全市场 quote amendment 时，才允许 `prepare`。suspension 之后，同一 batch 可随更新的全市场 amendment 形成 append-only quote-impact 链：新节点必须绑定唯一的前驱 result 和前驱行情 path/SHA，候选按相邻两次行情计算，禁止重复 amendment、分叉、跳号或跨过 prepared 前驱；0 个候选由 `prepare` 自动封存 `automatic_noop` terminal result，不产生任何 route 判断。演进后的公司仍是 `candidate_unfunded`，不能借 replacement 重新购买预算；无 seal 或只写一半的演进会阻断下一节点和最终 allocation。最终 amendment 若不同于某 active completed batch 自身冻结的 amendment，该 batch 必须有精确绑定最终 amendment 的 terminal 链节点，即使价格候选为 0 也不能缺席。已封存且按公司完成一次裁决的历史 material error 属于终态，不因汇总状态仍为 `material_error` 而永久阻断；缺失样本、未完成结果或未终结裁决仍会阻断。同一公司多条错误只需要一次终态裁决，不能拿错误条数与裁决公司数比较。该 amendment 在 `prepare` 与 `record` 时都必须仍处于新鲜度窗口内。
+
+`prepare` 封存 singleton packet 的同时关闭该 run 的候选治理面。此后不得新增 control event、manager-screen batch/result、calibration、supersession、legacy transition、allocation-v3 contract/suspension、quote amendment 或 quote-impact 节点；已有 artifact 的 exact replay/幂等投影修复仍允许，且 packet 自身仍可按唯一流程执行 `record/apply/final-status`。任何新候选或新依赖都必须在 `prepare` 前完成。
+
+packet 的 `terminal_governance_manifest` 逐项绑定 prepare 前全部 sealed 上游治理资产：control，batch 顶层的 batch/packet/result/supersession/freeze journal，calibration packet/result，quote-impact 与 quote-impact evolution 的 plan/packet/result，legacy transition plan/packet/result，以及 allocation-v3 contract/suspension。每项 seal 必须严格早于 `prepared_at`；封存后替换、删除或新增任一上游资产都会令 packet 重验失败。manifest 不扫描 downstream full-market/activation 子树，也排除 `research-policy*.json`，因为这些资产各自绑定并重验自己的 sealed authority，不属于候选治理的终态输入。
+
+生产 CLI 的 `manager-screen-allocation-v3-prepare` 与 `manager-screen-allocation-v3-record` 禁止回填或预填时间：不传 `--at` 时直接使用真实当前 aware time；显式传入时必须处于真实墙钟前后 5 分钟以内（边界含 5 分钟），否则在进入 singleton workflow 前拒绝。该墙钟限制只适用于这两个不可逆命令，不改变其他命令的时间参数语义。
+
+packet 先按各候选所属 active batch 中封存的 `(scope_ordinal, symbol)` 稳定排序；ordinal 可重复。若 sealed legacy transition adoption 中存在合法 suspended commitment，则严格绑定 transition plan/packet/result，并在 active batch 最大 ordinal 之后按 transition plan 原始顺序追加，不能从可变 queue 或全 universe manifest 猜顺序。候选全集包括未被锁定的 suspended v2/legacy commitment、最终有效路由为 `research_candidate` 的 v3 公司，以及 calibration 裁决为 `material_error_confirmed` 且尚无 irreversible commitment 的公司；后者即使原 route 是 pass/watch 也进入候选池。已存在的候选只合并 calibration context，不重复；`manager_upheld` 不新增候选。superseded 批次、已锁定 completed/running 预算和重复证券不得进入候选池。packet 同时绑定 contract、suspension、scope、policy、行情、每个有效决策及其来源 SHA、allocation 前的 queue/screening 行，以及 confirmed error 的 calibration result/review/adjudication 内容与 SHA。
+
+若 confirmed error 命中 irreversible commitment，packet 将其放入独立 `locked_calibration_cases`，不占 candidate capacity，也不重复购买 quick-profile 或回退 live task；result 物化只追加校准/处置 binding，不改既有 running/completed 状态和预算。result 必须按 packet 顺序逐项选择：`resolved_by_existing_sealed_work` 绑定晚于 calibration 的具体 sealed 正式进展及全部错误证据；`targeted_remediation_candidate` 仅在已有 terminal targeted-followup candidate 可由原 manager 显式批准时允许，approval 自动消费修订问题和全部错误/裁决证据并绑定 result/case SHA；`defer_remediation` 则封存修订问题、证据和可执行重启条件。
+
+主 Agent 必须按 packet 原顺序和 `candidate_sha256` 提交完整 partition；每项只能是 `fund_quick_profile` 或 `defer_full_market`。两者都要写可读理由、最终决定性问题和非空证据 ID，defer 还必须给出至少一个结构化 `revisit_trigger`。证据只能来自 sealed candidate/context；confirmed error 必须纳入 material-error 与 adjudication 的全部证据，并提交一个不同于原问题的修订问题。选中数不得超过 packet 的 `selection_capacity`，锁定预算与新选中预算之和不得突破 run 的绝对 200 家/300 小时上限；没有使用的容量随本次 singleton result 永久放弃，不能靠新 batch/cycle 再购买。
+
+`record` 先封存 result，再把选中者投影为共享 `profile_cycle_id` 下的 `quick_profile,pending`，把未选者投影为 `deferred_full_market`。原 manager-screen result/path 继续作为历史来源，但 queue/screening 的决定性问题与证据改为本次 allocation result 中的最终 research brief；confirmed error 还显式投影 calibration result/review/adjudication SHA。若封存后投影中断，只能用 `apply` 恢复：它只接受 packet 中封存的 prior 行或 sealed result 的精确 expected 行，发现其他漂移则整批拒写。`final-status` 不写文件；仅当两个 seal 和 queue/screening 全部一致时才返回 `finalized=true`，首个 claim 以 sealed activation gate 锁存该完成证明，后续 claim 只接受已有合法 receipt 造成的投影变化。
+
 本轮 manager-screen 保持 `paused`。calibration 结束后先只受控续跑约 300 家（默认约两个 batch），然后再次暂停审计；只有 calibration 与受控续跑样本中的身份错误、期间错误、强风险遗漏都为 0，主 Agent 才能考虑全面恢复。该门槛不是自动恢复开关；任何一项非 0 都继续暂停，并在未来 contract、正式研究或至多一次显式裁决中处理，不为旧决策制造递归 correction。
 
 暂停、受控续跑和全面激活必须分别追加 sealed `paused`、`controlled`、`active` control event，事件包含 manager provenance、原因和时间。`controlled` 在事件中冻结当时的 completed baseline 与 `company_limit`；workflow 按 baseline 之后的 completed + open 原子扣减额度。新 policy 声明 `run_control_required=true` 后，control 目录缺失或无有效事件必须 fail closed；只有缺少该 policy 字段的 legacy run 才兼容为 `active_unmanaged`。
@@ -80,6 +108,7 @@ v3 只约束未来新冻结的 batch，不追溯改写任何 sealed v1/v2 batch�
 - 新 batch 自动排除已冻结成员、已完成初筛、正在运行和已进入更深层的公司。
 - superseded 批次保留审计历史但不占 active/open/重复证券集合，成员回到 remaining；使用新 batch ID 重冻，已记录批次不可 supersede。
 - 同一 result 重放只修复 coverage 物化，不重写 seal，也不把已进入更深层的公司降级。
+- full-market allocation 的 result 先于 coverage 投影封存；`apply` 只修复该 sealed result 的 queue/screening 投影，不重新决策。无法归类为 sealed prior 或 expected projection 的行会使整批 fail closed。
 - `paused` 阻止新冻批和首次 result record，但允许同一已封存 batch/result 的幂等重放与 coverage 修复。
 - `research_queue.jsonl` 是可恢复物化状态，不取代 scope、batch 或 result。
 - v1 与 v2 按各自 sealed contract 重放；不得借恢复、quote-impact 或 calibration 把旧 v1 result 原地升级成 v2。
@@ -103,7 +132,11 @@ Material error 只包括：
 
 研究员一次只处理一家公司。package 必须绑定原 manager-screen result 的路径、SHA-256、决定性问题和证据 ID，并用自身 source ID 提交 `decisive_answer`；绑定不一致不得记录。研究员结果仍需真实来源、反证、正常化盈利/现金桥接和 provenance。
 
-quick-profile allocation 与 targeted/scoped/deep/underwriting 容量均按同一 manager-screen run 记账，不能靠新 cycle/batch 扩容；超限应原子拒绝，不机械改路由。只有完成 deep research、结构化主张和来源封存的公司才能由主 Agent 显式购买独立承保。重大风险、重大分歧或潜在前五大仓位才考虑 challenger，但 challenger 与 portfolio 必须分别获得新的主 Agent 批准；上游 approval 不授权下游。研究层不给组合操作。
+所有 manager-bound 的 `quick_profile/targeted_followup/scoped_research/deep_research` 领取都使用 append-only sealed attempt 链。workflow 先封存 claim receipt，再把同一 receipt 的 path/SHA、agent 和时间投影到 queue；receipt-only 崩溃只能由原 agent 幂等恢复，其他 agent 必须等待原 agent 先封存 release。失败释放同样先封存 release receipt，再恢复 pending；下一次领取必须创建严格晚于前一 release 的新 attempt。生产 `profile-claim/profile-release` 不允许任意回填时间。queue 的 `assigned_agent/started_at` 只是投影，不能作为所有权事实源；同一 agent 的活动任务必须从 claim/release 以及与 claim 精确绑定的 sealed completion 重建。
+
+quick/targeted/scoped 的 profile evaluation 与 deep completion receipt 都必须内嵌当前 claim attempt path/SHA，并在提交、重放和容量审计时重验；删除 queue 中的 manager 来源字段不能把现代任务降级为 legacy 或绕过 claim。deep completion receipt 还要封存 effective manager authority：full-market 路径只认 sealed full-market allocation result 中的 manager，legacy 路径只认对应 sealed predecessor。underwriting 必须重新验证该 authority 的 source path/SHA/type、run identity 和 manager agent，不能回退到早期 batch manager 或 mutable queue。
+
+quick-profile allocation 与 targeted/scoped/deep/underwriting 容量均按同一 manager-screen run 记账，不能靠新 cycle/batch 扩容；超限应原子拒绝，不机械改路由。targeted/scoped/deep 的已购预算只从现代 sealed approval/selection、已记录的 sealed legacy transition 和 allocation-v3 irreversible sealed progress 重建，按 `(stage, symbol)` 去重，不把 mutable queue 当账本；targeted 与 deep 必须有本阶段精确证据，scoped 可由 scoped 或 deep 高水位证明。只有 completion receipt 已封存并通过终态重验的 deep research 才能由主 Agent 显式购买独立承保，裸 Markdown 报告不能冒充 receipt。重大风险、重大分歧或潜在前五大仓位才考虑 challenger，但 challenger 与 portfolio 必须分别获得新的主 Agent 批准；上游 approval 不授权下游。研究层不给组合操作。
 
 ## Legacy transition 与 GC
 
@@ -158,6 +191,12 @@ python -m trading_os coverage manager-screen-calibration-status <run-id>
 python -m trading_os coverage manager-screen-transition-freeze <run-id> --input <classification.json>
 python -m trading_os coverage manager-screen-transition-record <run-id> --input <decisions.json>
 python -m trading_os coverage manager-screen-transition-status <run-id>
+
+python -m trading_os coverage manager-screen-allocation-v3-prepare <run-id> --at <timestamp>
+python -m trading_os coverage manager-screen-allocation-v3-record <run-id> \
+  --input <full-market-allocation.json> --at <timestamp>
+python -m trading_os coverage manager-screen-allocation-v3-apply <run-id>
+python -m trading_os coverage manager-screen-allocation-v3-final-status <run-id>
 
 python -m trading_os assets gc --plan \
   --output research/archives/gc-plans/<plan-id>.json

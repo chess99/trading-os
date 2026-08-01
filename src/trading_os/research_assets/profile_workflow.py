@@ -16,6 +16,17 @@ from .coverage_store import (
     write_jsonl,
 )
 from .models import PolicyKind, canonical_company_name, load_policy
+from .profile_stage_claims import (
+    ProfileStageClaimError,
+    assert_agent_profile_stage_claim_capacity,
+    claim_profile_stage_attempt,
+    profile_stage_claim_reservation_agent,
+    release_profile_stage_attempt,
+    seal_profile_stage_success,
+    sealed_profile_stage_claim_authority_exists,
+    verify_active_profile_stage_claim,
+    verify_profile_stage_success,
+)
 from .research_allocation import (
     ResearchAllocationError,
     evaluate_quick_profile,
@@ -37,12 +48,67 @@ MANAGER_BOUND_PACKAGE_KEYS = PACKAGE_KEYS | {
     "manager_screen_binding",
     "decisive_answer",
 }
+PROFILE_CLAIM_ATTEMPT_KEYS = {
+    "path",
+    "sha256",
+    "sealed_at",
+    "attempt_number",
+    "agent",
+    "stage_authorization",
+}
+PROFILE_CLAIM_AUTHORIZATION_KEYS = {
+    "path",
+    "sha256",
+    "artifact_type",
+    "sealed_at",
+}
 MANAGER_SCREEN_BINDING_KEYS = {
     "result_path",
     "result_sha256",
     "decisive_question",
     "evidence_ids",
 }
+FULL_MARKET_ALLOCATION_BINDING_FIELDS = (
+    "manager_screen_allocation_result_path",
+    "manager_screen_allocation_result_sha256",
+    "manager_screen_allocation_candidate_sha256",
+    "manager_screen_allocation_decision",
+)
+FULL_MARKET_CALIBRATION_BINDING_FIELDS = (
+    "manager_screen_calibration_result_path",
+    "manager_screen_calibration_result_sha256",
+    "manager_screen_calibration_review_sha256",
+    "manager_screen_calibration_adjudication_sha256",
+)
+LOCKED_CALIBRATION_REMEDIATION_FIELD = "manager_screen_locked_calibration_remediation"
+LOCKED_CALIBRATION_REMEDIATION_KEYS = {
+    "schema_version",
+    "workflow",
+    "run_id",
+    "recorded_at",
+    "allocation_result_path",
+    "allocation_result_sha256",
+    "locked_calibration_case_sha256",
+    "remediation",
+    "reason",
+    "resolved_work_sha256",
+    "decisive_question",
+    "evidence_ids",
+    "revisit_triggers",
+    "calibration_result_path",
+    "calibration_result_sha256",
+    "calibration_result_sealed_at",
+    "calibration_review_sha256",
+    "calibration_adjudication_sha256",
+}
+MANAGER_SCREEN_PROVENANCE_FIELDS = (
+    "manager_screen_batch_id",
+    "manager_screen_route",
+    "manager_screen_result_path",
+    "manager_screen_result_sha256",
+    *FULL_MARKET_ALLOCATION_BINDING_FIELDS,
+    *FULL_MARKET_CALIBRATION_BINDING_FIELDS,
+)
 RESEARCH_POLICY_BINDING_KEYS = {
     "policy_id",
     "version",
@@ -143,6 +209,17 @@ def claim_profile_task(
     repository_root = base.parent.parent
     queue_path = base / RESEARCH_QUEUE_FILE
     queue = read_jsonl(queue_path)
+    if symbol is not None and not re.fullmatch(r"CN:[0-9]{6}", symbol):
+        raise ResearchAllocationError("claim symbol is invalid")
+    try:
+        sealed_active_symbol = assert_agent_profile_stage_claim_capacity(
+            root=base,
+            queue_records=queue,
+            agent=agent_name,
+            requested_symbol=symbol,
+        )
+    except ProfileStageClaimError as exc:
+        raise ResearchAllocationError(str(exc)) from exc
     running = [
         item
         for item in queue
@@ -156,6 +233,34 @@ def claim_profile_task(
             raise ResearchAllocationError(
                 f"agent already has a different running task: {current.get('symbol')}"
             )
+        _validate_profile_claim_stage_authorization(
+            current,
+            base=base,
+            repository_root=repository_root,
+        )
+        if not _allocation_v3_claimable_candidates([current], base=base):
+            raise ResearchAllocationError(
+                "running profile task is no longer authorized by its allocation contract"
+            )
+        _require_full_market_profile_claim_activation(
+            current,
+            base=base,
+            repository_root=repository_root,
+            claimed_at=claimed_at,
+        )
+        if _requires_authenticated_profile_stage_claim(
+            current,
+            base=base,
+            repository_root=repository_root,
+        ):
+            try:
+                verify_active_profile_stage_claim(
+                    root=base,
+                    queue_record=current,
+                    stage=str(current.get("task_type")),
+                )
+            except ProfileStageClaimError as exc:
+                raise ResearchAllocationError(str(exc)) from exc
         return _claimed_task_payload(current, idempotent=True)
 
     candidates = [
@@ -166,6 +271,15 @@ def claim_profile_task(
         and item.get("status") == "pending"
         and item.get("assigned_agent") is None
     ]
+    if symbol is not None:
+        for item in candidates:
+            if item.get("symbol") == symbol:
+                _manager_screen_run_id_for_record(
+                    item,
+                    context="profile claim",
+                )
+    if sealed_active_symbol is not None:
+        candidates = [item for item in candidates if item.get("symbol") == sealed_active_symbol]
     candidates = [
         item
         for item in candidates
@@ -200,8 +314,6 @@ def claim_profile_task(
             item for item in candidates if item.get("manager_screen_run_id") == requested_run
         ]
     if symbol is not None:
-        if not re.fullmatch(r"CN:[0-9]{6}", symbol):
-            raise ResearchAllocationError("claim symbol is invalid")
         candidates = [item for item in candidates if item.get("symbol") == symbol]
     if lens is not None:
         lens_name = _text(lens, "lens")
@@ -210,6 +322,25 @@ def claim_profile_task(
         candidates,
         base=base,
     )
+    claimable_candidates = []
+    for item in candidates:
+        if not _requires_authenticated_profile_stage_claim(
+            item,
+            base=base,
+            repository_root=repository_root,
+        ):
+            claimable_candidates.append(item)
+            continue
+        try:
+            reserved_agent = profile_stage_claim_reservation_agent(
+                root=base,
+                queue_record=item,
+            )
+        except ProfileStageClaimError as exc:
+            raise ResearchAllocationError(str(exc)) from exc
+        if reserved_agent in {None, agent_name}:
+            claimable_candidates.append(item)
+    candidates = claimable_candidates
     if not candidates:
         raise ResearchAllocationError("no eligible profile task is available")
     if symbol is None:
@@ -228,15 +359,41 @@ def claim_profile_task(
             )
         )
     selected = dict(candidates[0])
-    selected.update(
-        {
-            "status": "running",
-            "assigned_agent": agent_name,
-            "started_at": claimed_at.isoformat(),
-            "finished_at": None,
-            "failure_reason": None,
-        }
+    _validate_profile_claim_stage_authorization(
+        selected,
+        base=base,
+        repository_root=repository_root,
     )
+    _require_full_market_profile_claim_activation(
+        selected,
+        base=base,
+        repository_root=repository_root,
+        claimed_at=claimed_at,
+    )
+    if _requires_authenticated_profile_stage_claim(
+        selected,
+        base=base,
+        repository_root=repository_root,
+    ):
+        try:
+            selected, _ = claim_profile_stage_attempt(
+                root=base,
+                queue_record=selected,
+                agent=agent_name,
+                claimed_at=claimed_at,
+            )
+        except ProfileStageClaimError as exc:
+            raise ResearchAllocationError(str(exc)) from exc
+    else:
+        selected.update(
+            {
+                "status": "running",
+                "assigned_agent": agent_name,
+                "started_at": claimed_at.isoformat(),
+                "finished_at": None,
+                "failure_reason": None,
+            }
+        )
     write_jsonl(
         queue_path,
         [selected if item.get("symbol") == selected["symbol"] else item for item in queue],
@@ -254,7 +411,10 @@ def _allocation_v3_claimable_candidates(
     by_run: dict[str, list[Mapping[str, Any]]] = {}
     passthrough: list[Mapping[str, Any]] = []
     for item in candidates:
-        run_id = item.get("manager_screen_run_id")
+        run_id = _manager_screen_run_id_for_record(
+            item,
+            context="profile claim",
+        )
         if item.get("task_type") != "quick_profile" or not isinstance(run_id, str):
             passthrough.append(item)
             continue
@@ -267,8 +427,15 @@ def _allocation_v3_claimable_candidates(
         contract_seal_path = contract_path.with_name(f"{contract_path.name}.seal.json")
         suspension_path = governance_dir / "suspension.json"
         suspension_seal_path = suspension_path.with_name(f"{suspension_path.name}.seal.json")
+        full_market_dir = governance_dir / "full-market"
+        full_packet_path = full_market_dir / "packet.json"
+        full_packet_seal_path = full_packet_path.with_name(f"{full_packet_path.name}.seal.json")
+        full_result_path = full_market_dir / "result.json"
+        full_result_seal_path = full_result_path.with_name(f"{full_result_path.name}.seal.json")
         contract_presence = (contract_path.exists(), contract_seal_path.exists())
         suspension_presence = (suspension_path.exists(), suspension_seal_path.exists())
+        full_packet_presence = (full_packet_path.exists(), full_packet_seal_path.exists())
+        full_result_presence = (full_result_path.exists(), full_result_seal_path.exists())
         if contract_presence == (False, False):
             if suspension_presence != (False, False):
                 raise ResearchAllocationError(
@@ -283,6 +450,18 @@ def _allocation_v3_claimable_candidates(
         if suspension_presence[0] != suspension_presence[1]:
             raise ResearchAllocationError(
                 f"allocation v3 suspension is only partially sealed: {run_id}"
+            )
+        if full_packet_presence[0] != full_packet_presence[1]:
+            raise ResearchAllocationError(
+                f"allocation v3 full-market packet is only partially sealed: {run_id}"
+            )
+        if full_result_presence[0] != full_result_presence[1]:
+            raise ResearchAllocationError(
+                f"allocation v3 full-market result is only partially sealed: {run_id}"
+            )
+        if full_result_presence == (True, True) and full_packet_presence != (True, True):
+            raise ResearchAllocationError(
+                f"allocation v3 full-market result exists without its packet: {run_id}"
             )
 
         from .manager_screen_allocation_v3 import (
@@ -318,11 +497,66 @@ def _allocation_v3_claimable_candidates(
             item["symbol"]: item["commitment_class"]
             for item in contract["commitment_classification"]
         }
+        final_result = None
+        full_market_grant_context: Mapping[str, Any] | None = None
+        final_decisions: dict[str, Mapping[str, Any]] = {}
+        screening_by_symbol: dict[str, Mapping[str, Any]] = {}
+        if full_result_presence == (True, True):
+            from .manager_screen_full_market_allocation_v3 import (
+                ManagerScreenFullMarketAllocationV3Error,
+                verify_manager_screen_full_market_allocation_v3_result,
+            )
+
+            try:
+                final_result = verify_manager_screen_full_market_allocation_v3_result(
+                    root=base,
+                    run_id=run_id,
+                )
+            except ManagerScreenFullMarketAllocationV3Error as exc:
+                raise ResearchAllocationError(
+                    f"allocation v3 full-market result is invalid during profile claim: {run_id}"
+                ) from exc
+            full_market_grant_context = _load_full_market_profile_grant_context(
+                root=base,
+                repository_root=base.parent.parent.resolve(),
+                run_id=run_id,
+                verified_result=final_result,
+            )
+            final_decisions = {
+                item["symbol"]: item
+                for item in final_result["decisions"]
+                if isinstance(item, Mapping)
+            }
+            screening_by_symbol = {
+                item["symbol"]: item
+                for item in read_jsonl(base / SCREENING_FILE)
+                if isinstance(item.get("symbol"), str)
+            }
         for item in rows:
             symbol = str(item.get("symbol"))
             commitment_class = classifications.get(symbol)
             if commitment_class == "irreversible":
                 allowed.append(item)
+            elif final_result is not None:
+                decision = final_decisions.get(symbol)
+                screen = screening_by_symbol.get(symbol)
+                if (
+                    isinstance(decision, Mapping)
+                    and decision.get("decision") == "fund_quick_profile"
+                    and _full_market_profile_binding_is_claimable(
+                        item,
+                        screen=screen,
+                        grant_context=full_market_grant_context,
+                        root=base,
+                        repository_root=base.parent.parent.resolve(),
+                    )
+                ):
+                    allowed.append(item)
+                else:
+                    raise ResearchAllocationError(
+                        "quick-profile task is not authorized by the sealed full-market "
+                        f"allocation: {run_id}/{symbol}"
+                    )
             elif commitment_class == "revocable":
                 # A sealed suspension may not yet have projected its JSONL row
                 # after a crash.  The contract classification alone is enough
@@ -334,6 +568,595 @@ def _allocation_v3_claimable_candidates(
                     f"inherited ledger: {run_id}/{symbol}"
                 )
     return allowed
+
+
+def _requires_sealed_profile_stage_claim(record: Mapping[str, Any]) -> bool:
+    if record.get("task_type") not in {
+        "quick_profile",
+        "targeted_followup",
+        "scoped_research",
+        "deep_research",
+    }:
+        return False
+    return bool(
+        record.get("manager_screen_run_id") is not None
+        or _has_manager_screen_provenance(record)
+        or any(
+            record.get(field) is not None
+            for field in (
+                "profile_stage_claim_attempt_path",
+                "profile_stage_claim_attempt_sha256",
+            )
+        )
+    )
+
+
+def _requires_authenticated_profile_stage_claim(
+    record: Mapping[str, Any],
+    *,
+    base: Path,
+    repository_root: Path,
+) -> bool:
+    """Require receipts when either the queue or immutable authority is modern.
+
+    Mutable queue provenance can be incomplete after a projection crash or
+    deliberate tampering.  Claim/release and record must therefore make the
+    same decision from the sealed authority ledger; otherwise a targeted or
+    scoped task could be claimed through the legacy mutable path and then be
+    impossible to complete under the stricter record contract.
+    """
+
+    if _requires_sealed_profile_stage_claim(record):
+        return True
+    symbol = record.get("symbol")
+    stage = record.get("task_type")
+    if not isinstance(symbol, str) or not isinstance(stage, str):
+        return False
+    return _sealed_modern_profile_authority_exists(
+        base=base,
+        repository_root=repository_root,
+        queue_record=record,
+        symbol=symbol,
+        stage=stage,
+    )
+
+
+def _full_market_profile_binding_is_claimable(
+    row: Mapping[str, Any],
+    *,
+    screen: Mapping[str, Any] | None,
+    grant_context: Mapping[str, Any] | None,
+    root: Path,
+    repository_root: Path,
+) -> bool:
+    if screen is None or grant_context is None:
+        return False
+    try:
+        _verify_funded_full_market_profile_grant(
+            queue_record=row,
+            screen_record=screen,
+            root=root,
+            repository_root=repository_root,
+            symbol=_text(row.get("symbol"), "research_queue.symbol"),
+            expected_cycle_id=row.get("profile_cycle_id"),
+            required=True,
+            context="profile claim",
+            grant_context=grant_context,
+            require_screen_research_brief=True,
+        )
+    except ResearchAllocationError:
+        return False
+    return True
+
+
+def _require_full_market_profile_claim_activation(
+    queue_record: Mapping[str, Any],
+    *,
+    base: Path,
+    repository_root: Path,
+    claimed_at: dt.datetime,
+) -> None:
+    """Latch a globally finalized allocation before its first company claim.
+
+    ``final-status`` compares JSONL rows with their pre-work projection, so the
+    first legitimate ``pending -> running`` claim makes the live status false.
+    The singleton gate proves that the whole projection was finalized before
+    work began.  Per-symbol receipts then distinguish legitimate later work
+    from drift in a company that was never activated.
+    """
+
+    if queue_record.get("task_type") != "quick_profile" or not (
+        _requires_funded_full_market_grant(queue_record)
+    ):
+        return
+    run_id = _text(queue_record.get("manager_screen_run_id"), "manager_screen_run_id")
+    cycle = _text(queue_record.get("profile_cycle_id"), "profile_cycle_id")
+    symbol = _text(queue_record.get("symbol"), "research_queue.symbol")
+    from .manager_screen_full_market_allocation_v3 import (
+        ManagerScreenFullMarketAllocationV3Error,
+        manager_screen_full_market_allocation_v3_final_status,
+        verify_manager_screen_full_market_allocation_v3_result,
+    )
+
+    try:
+        result = verify_manager_screen_full_market_allocation_v3_result(
+            root=base,
+            run_id=run_id,
+        )
+        status = manager_screen_full_market_allocation_v3_final_status(
+            root=base,
+            run_id=run_id,
+        )
+    except ManagerScreenFullMarketAllocationV3Error as exc:
+        raise ResearchAllocationError(
+            f"full-market final-status is invalid during profile claim: {run_id}"
+        ) from exc
+    if result.get("profile_cycle_id") != cycle:
+        raise ResearchAllocationError(
+            f"full-market profile claim cycle does not match its result: {symbol}"
+        )
+
+    gate, gate_sha256, gate_relative = _load_or_create_full_market_claim_gate(
+        base=base,
+        repository_root=repository_root,
+        queue_record=queue_record,
+        result=result,
+        status=status,
+        claimed_at=claimed_at,
+    )
+    _validate_full_market_claim_status_binding(
+        status,
+        gate=gate,
+        result=result,
+    )
+    if status.get("finalized") is not True:
+        _validate_full_market_claim_drift_receipts(
+            base=base,
+            repository_root=repository_root,
+            result=result,
+            status=status,
+            gate=gate,
+            gate_sha256=gate_sha256,
+            gate_relative=gate_relative,
+        )
+    _load_or_create_full_market_claim_receipt(
+        base=base,
+        repository_root=repository_root,
+        result=result,
+        symbol=symbol,
+        gate=gate,
+        gate_sha256=gate_sha256,
+        gate_relative=gate_relative,
+        activated_at=claimed_at,
+        allow_create=queue_record.get("status") == "pending",
+    )
+
+
+def _full_market_claim_activation_dir(base: Path, cycle: str) -> Path:
+    return base / "profiles" / cycle / "full-market-claim-activation"
+
+
+def _seal_sidecar(path: Path) -> Path:
+    return path.with_name(f"{path.name}.seal.json")
+
+
+def _load_or_create_full_market_claim_gate(
+    *,
+    base: Path,
+    repository_root: Path,
+    queue_record: Mapping[str, Any],
+    result: Mapping[str, Any],
+    status: Mapping[str, Any],
+    claimed_at: dt.datetime,
+) -> tuple[dict[str, Any], str, str]:
+    cycle = _text(result.get("profile_cycle_id"), "full_market_result.profile_cycle_id")
+    gate_path = _full_market_claim_activation_dir(base, cycle) / "gate.json"
+    gate_relative = gate_path.resolve().relative_to(repository_root.resolve()).as_posix()
+    pair = (gate_path.exists(), _seal_sidecar(gate_path).exists())
+    if pair[0] != pair[1]:
+        raise ResearchAllocationError("full-market profile claim gate is only partially sealed")
+    if pair == (False, False):
+        if status.get("finalized") is not True:
+            raise ResearchAllocationError(
+                "full-market allocation final-status must be finalized before the first "
+                "profile claim"
+            )
+        expected_status = {
+            "run_id": result.get("run_id"),
+            "result_path": queue_record.get("manager_screen_allocation_result_path"),
+            "result_sha256": result.get("result_sha256"),
+            "profile_cycle_id": cycle,
+            "finalized": True,
+        }
+        if any(status.get(key) != value for key, value in expected_status.items()):
+            raise ResearchAllocationError(
+                "full-market final-status does not match the profile claim binding"
+            )
+        payload = {
+            "schema_version": 1,
+            "run_id": result["run_id"],
+            "profile_cycle_id": cycle,
+            "stage": "quick_profile",
+            "allocation_packet_path": status["packet_path"],
+            "allocation_packet_sha256": status["packet_sha256"],
+            "allocation_result_path": status["result_path"],
+            "allocation_result_sha256": status["result_sha256"],
+            "final_status_sha256": _canonical_full_market_final_status_sha256(
+                status=status,
+                result=result,
+            ),
+            "finalized": True,
+            "activated_at": claimed_at.isoformat(),
+            "portfolio_action": None,
+        }
+        try:
+            sealed = seal_json(
+                gate_path,
+                payload,
+                artifact_type="full_market_profile_claim_activation_gate",
+                sealed_at=claimed_at,
+            )
+        except (OSError, SealingError) as exc:
+            raise ResearchAllocationError(
+                "full-market profile claim gate could not be sealed"
+            ) from exc
+        return payload, sealed.sha256, gate_relative
+
+    payload, sha256 = _verify_full_market_claim_gate(
+        gate_path,
+        result=result,
+        status=status,
+        claimed_at=claimed_at,
+    )
+    return payload, sha256, gate_relative
+
+
+def _verify_full_market_claim_gate(
+    gate_path: Path,
+    *,
+    result: Mapping[str, Any],
+    status: Mapping[str, Any],
+    claimed_at: dt.datetime,
+) -> tuple[dict[str, Any], str]:
+    try:
+        sealed = verify_sealed(gate_path)
+        payload = json.loads(gate_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, SealingError) as exc:
+        raise ResearchAllocationError("full-market profile claim gate is invalid") from exc
+    expected_keys = {
+        "schema_version",
+        "run_id",
+        "profile_cycle_id",
+        "stage",
+        "allocation_packet_path",
+        "allocation_packet_sha256",
+        "allocation_result_path",
+        "allocation_result_sha256",
+        "final_status_sha256",
+        "finalized",
+        "activated_at",
+        "portfolio_action",
+    }
+    if (
+        sealed.artifact_type != "full_market_profile_claim_activation_gate"
+        or not isinstance(payload, dict)
+        or set(payload) != expected_keys
+        or payload.get("schema_version") != 1
+        or payload.get("run_id") != result.get("run_id")
+        or payload.get("profile_cycle_id") != result.get("profile_cycle_id")
+        or payload.get("stage") != "quick_profile"
+        or payload.get("allocation_packet_path") != status.get("packet_path")
+        or payload.get("allocation_packet_sha256") != status.get("packet_sha256")
+        or payload.get("allocation_result_path") != status.get("result_path")
+        or payload.get("allocation_result_sha256") != result.get("result_sha256")
+        or payload.get("final_status_sha256")
+        != _canonical_full_market_final_status_sha256(
+            status=status,
+            result=result,
+        )
+        or payload.get("finalized") is not True
+        or payload.get("portfolio_action") is not None
+    ):
+        raise ResearchAllocationError(
+            "full-market profile claim gate does not match its allocation"
+        )
+    activated_at = _datetime(payload.get("activated_at"), "claim_gate.activated_at")
+    if activated_at > claimed_at:
+        raise ResearchAllocationError("full-market profile claim gate is from the future")
+    return payload, sealed.sha256
+
+
+def _canonical_full_market_final_status_sha256(
+    *,
+    status: Mapping[str, Any],
+    result: Mapping[str, Any],
+) -> str:
+    """Rebuild the only finalized status the sealed allocation can have.
+
+    Live ``final-status`` necessarily drifts once work starts.  A gate must
+    therefore bind the canonical *pre-work* projection, not merely contain a
+    digest-looking string and not hash the later mutable projection.  The
+    verified result is a complete partition of the packet, so every decision
+    had one queue and one screening projection when the gate was created.
+    """
+
+    decisions = result.get("decisions")
+    if not isinstance(decisions, list) or not decisions:
+        raise ResearchAllocationError(
+            "full-market claim gate cannot rebuild its finalized projection"
+        )
+    candidate_count = len(decisions)
+    locked_remediations = result.get("locked_calibration_remediations", [])
+    if not isinstance(locked_remediations, list):
+        raise ResearchAllocationError(
+            "full-market claim gate locked remediation projection is invalid"
+        )
+    locked_count = len(locked_remediations)
+    canonical = dict(status)
+    materialization = {
+        "queue_materialized_count": candidate_count,
+        "screening_materialized_count": candidate_count,
+        "queue_repaired_count": 0,
+        "screening_repaired_count": 0,
+        "fully_materialized": True,
+        "drift": [],
+    }
+    if (
+        "locked_calibration_remediations" in result
+        or "locked_remediation_queue_materialized_count" in (status.get("materialization") or {})
+    ):
+        materialization.update(
+            {
+                "locked_remediation_queue_materialized_count": locked_count,
+                "locked_remediation_screening_materialized_count": locked_count,
+            }
+        )
+    canonical["materialization"] = materialization
+    canonical["finalized"] = True
+    return hashlib.sha256(canonical_json_bytes(canonical)).hexdigest()
+
+
+def _validate_full_market_claim_status_binding(
+    status: Mapping[str, Any],
+    *,
+    gate: Mapping[str, Any],
+    result: Mapping[str, Any],
+) -> None:
+    expected = {
+        "run_id": gate.get("run_id"),
+        "packet_path": gate.get("allocation_packet_path"),
+        "packet_sha256": gate.get("allocation_packet_sha256"),
+        "result_path": gate.get("allocation_result_path"),
+        "result_sha256": gate.get("allocation_result_sha256"),
+        "profile_cycle_id": gate.get("profile_cycle_id"),
+    }
+    if any(status.get(key) != value for key, value in expected.items()) or result.get(
+        "result_sha256"
+    ) != gate.get("allocation_result_sha256"):
+        raise ResearchAllocationError(
+            "full-market claim gate does not match the current final-status"
+        )
+
+
+def _validate_full_market_claim_drift_receipts(
+    *,
+    base: Path,
+    repository_root: Path,
+    result: Mapping[str, Any],
+    status: Mapping[str, Any],
+    gate: Mapping[str, Any],
+    gate_sha256: str,
+    gate_relative: str,
+) -> None:
+    materialization = status.get("materialization")
+    drift = materialization.get("drift") if isinstance(materialization, Mapping) else None
+    if not isinstance(drift, list) or not drift:
+        raise ResearchAllocationError(
+            "full-market final-status is not finalized without explicit projection drift"
+        )
+    drift_symbols: set[str] = set()
+    for item in drift:
+        if (
+            not isinstance(item, Mapping)
+            or not isinstance(item.get("symbol"), str)
+            or item.get("projection") not in {"research_queue", "screening"}
+        ):
+            raise ResearchAllocationError("full-market final-status drift payload is invalid")
+        drift_symbols.add(str(item["symbol"]))
+    queue = {
+        item["symbol"]: item
+        for item in read_jsonl(base / RESEARCH_QUEUE_FILE)
+        if isinstance(item.get("symbol"), str)
+    }
+    screening = {
+        item["symbol"]: item
+        for item in read_jsonl(base / SCREENING_FILE)
+        if isinstance(item.get("symbol"), str)
+    }
+    grant_context = _load_full_market_profile_grant_context(
+        root=base,
+        repository_root=repository_root,
+        run_id=_text(result.get("run_id"), "full_market_result.run_id"),
+        verified_result=result,
+    )
+    for symbol in sorted(drift_symbols):
+        _load_or_create_full_market_claim_receipt(
+            base=base,
+            repository_root=repository_root,
+            result=result,
+            symbol=symbol,
+            gate=gate,
+            gate_sha256=gate_sha256,
+            gate_relative=gate_relative,
+            activated_at=None,
+            allow_create=False,
+        )
+        queue_record = queue.get(symbol)
+        screen_record = screening.get(symbol)
+        if not isinstance(queue_record, Mapping) or not isinstance(screen_record, Mapping):
+            raise ResearchAllocationError(
+                f"full-market activated projection row is missing: {symbol}"
+            )
+        _validate_full_market_activated_allocation_identity(
+            symbol=symbol,
+            queue_record=queue_record,
+            screen_record=screen_record,
+            grant_context=grant_context,
+        )
+
+
+def _validate_full_market_activated_allocation_identity(
+    *,
+    symbol: str,
+    queue_record: Mapping[str, Any],
+    screen_record: Mapping[str, Any],
+    grant_context: Mapping[str, Any],
+) -> None:
+    """Keep activation identity immutable while later workflows own live state.
+
+    The receipt proves that the symbol passed the global pre-work gate.  Queue
+    status, rationale, attempt history, and downstream stage fields are mutable
+    workflow projections and are deliberately outside this check.  Each later
+    stage must validate its own sealed approval/selection when it is used.
+    """
+
+    candidate = grant_context["candidates"].get(symbol)
+    decision = grant_context["decisions"].get(symbol)
+    result = grant_context["result"]
+    if not isinstance(candidate, Mapping) or not isinstance(decision, Mapping):
+        raise ResearchAllocationError(
+            f"full-market activated symbol is absent from its sealed allocation: {symbol}"
+        )
+    prior_queue = candidate.get("prior_queue_row")
+    expected = {
+        "manager_screen_run_id": result.get("run_id"),
+        "manager_screen_batch_id": (
+            prior_queue.get("manager_screen_batch_id") if isinstance(prior_queue, Mapping) else None
+        ),
+        "manager_screen_route": candidate.get("original_route"),
+        "manager_screen_result_path": candidate.get("effective_decision_source_path"),
+        "manager_screen_result_sha256": candidate.get("effective_decision_source_sha256"),
+        "manager_screen_allocation_result_path": grant_context.get("result_path"),
+        "manager_screen_allocation_result_sha256": grant_context.get("result_sha256"),
+        "manager_screen_allocation_candidate_sha256": candidate.get("candidate_sha256"),
+        "manager_screen_allocation_decision": "fund_quick_profile",
+        "profile_cycle_id": result.get("profile_cycle_id"),
+    }
+    if (
+        decision.get("decision") != "fund_quick_profile"
+        or decision.get("candidate_sha256") != candidate.get("candidate_sha256")
+        or any(queue_record.get(field) != value for field, value in expected.items())
+        or any(screen_record.get(field) != value for field, value in expected.items())
+        or queue_record.get("allocation_sha256") != grant_context.get("result_sha256")
+    ):
+        raise ResearchAllocationError(
+            f"full-market activated immutable allocation binding drifted: {symbol}"
+        )
+    expected_calibration = _full_market_calibration_projection(candidate)
+    _validate_full_market_calibration_projection(
+        queue_record,
+        expected=expected_calibration,
+        context="activated full-market queue",
+    )
+    _validate_full_market_calibration_projection(
+        screen_record,
+        expected=expected_calibration,
+        context="activated full-market screening",
+    )
+
+
+def _load_or_create_full_market_claim_receipt(
+    *,
+    base: Path,
+    repository_root: Path,
+    result: Mapping[str, Any],
+    symbol: str,
+    gate: Mapping[str, Any],
+    gate_sha256: str,
+    gate_relative: str,
+    activated_at: dt.datetime | None,
+    allow_create: bool,
+) -> tuple[dict[str, Any], str]:
+    decisions = [
+        item
+        for item in result.get("decisions") or []
+        if isinstance(item, Mapping) and item.get("symbol") == symbol
+    ]
+    decision = decisions[0] if len(decisions) == 1 else None
+    if not isinstance(decision, Mapping) or decision.get("decision") != "fund_quick_profile":
+        raise ResearchAllocationError(
+            f"full-market projection drift is not an activated quick-profile claim: {symbol}"
+        )
+    cycle = _text(result.get("profile_cycle_id"), "full_market_result.profile_cycle_id")
+    filename = f"{symbol.replace(':', '-')}.json"
+    receipt_path = _full_market_claim_activation_dir(base, cycle) / "receipts" / filename
+    pair = (receipt_path.exists(), _seal_sidecar(receipt_path).exists())
+    if pair[0] != pair[1]:
+        raise ResearchAllocationError(
+            f"full-market profile claim receipt is only partially sealed: {symbol}"
+        )
+    expected = {
+        "schema_version": 1,
+        "run_id": result["run_id"],
+        "profile_cycle_id": cycle,
+        "stage": "quick_profile",
+        "symbol": symbol,
+        "allocation_result_path": gate["allocation_result_path"],
+        "allocation_result_sha256": result["result_sha256"],
+        "allocation_candidate_sha256": decision["candidate_sha256"],
+        "activation_gate_path": gate_relative,
+        "activation_gate_sha256": gate_sha256,
+        "portfolio_action": None,
+    }
+    if pair == (False, False):
+        if not allow_create or activated_at is None:
+            raise ResearchAllocationError(
+                f"full-market projection drift lacks a sealed claim activation receipt: {symbol}"
+            )
+        payload = {**expected, "activated_at": activated_at.isoformat()}
+        try:
+            sealed = seal_json(
+                receipt_path,
+                payload,
+                artifact_type="full_market_profile_claim_activation_receipt",
+                sealed_at=activated_at,
+            )
+        except (OSError, SealingError) as exc:
+            raise ResearchAllocationError(
+                f"full-market profile claim receipt could not be sealed: {symbol}"
+            ) from exc
+        return payload, sealed.sha256
+    try:
+        sealed = verify_sealed(receipt_path)
+        payload = json.loads(receipt_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, SealingError) as exc:
+        raise ResearchAllocationError(
+            f"full-market profile claim receipt is invalid: {symbol}"
+        ) from exc
+    if (
+        sealed.artifact_type != "full_market_profile_claim_activation_receipt"
+        or not isinstance(payload, dict)
+        or set(payload) != set(expected) | {"activated_at"}
+        or any(payload.get(key) != value for key, value in expected.items())
+    ):
+        raise ResearchAllocationError(
+            f"full-market profile claim receipt does not match its allocation: {symbol}"
+        )
+    receipt_at = _datetime(payload.get("activated_at"), "claim_receipt.activated_at")
+    gate_at = _datetime(gate.get("activated_at"), "claim_gate.activated_at")
+    if receipt_at < gate_at:
+        raise ResearchAllocationError(
+            f"full-market profile claim receipt predates its gate: {symbol}"
+        )
+    # ``activated_at`` is the first durable authorization event.  A crash may
+    # happen before the queue's ``started_at`` projection, so a later retry
+    # deliberately keeps this receipt timestamp while recording its real,
+    # later task start time.
+    if activated_at is not None and receipt_at > activated_at:
+        raise ResearchAllocationError(
+            f"full-market profile claim receipt is from the future: {symbol}"
+        )
+    return payload, sealed.sha256
 
 
 @serialized_coverage_write
@@ -369,6 +1192,27 @@ def release_profile_task(
         raise ResearchAllocationError(
             f"task type cannot be released by profile workflow: {record.get('task_type')}"
         )
+
+    if _requires_authenticated_profile_stage_claim(
+        record,
+        base=base,
+        repository_root=base.parent.parent,
+    ):
+        try:
+            released, _ = release_profile_stage_attempt(
+                root=base,
+                queue_record=record,
+                agent=agent_name,
+                failure_reason=reason,
+                released_at=released_at,
+            )
+        except ProfileStageClaimError as exc:
+            raise ResearchAllocationError(str(exc)) from exc
+        write_jsonl(
+            queue_path,
+            [released if item.get("symbol") == symbol else item for item in queue],
+        )
+        return released
 
     attempts = list(record.get("attempt_history") or [])
     attempts.append(
@@ -407,6 +1251,195 @@ def release_profile_task(
     }
 
 
+def _targeted_locked_calibration_remediation(
+    queue_record: Mapping[str, Any],
+    *,
+    screen_record: Mapping[str, Any],
+    repository_root: Path,
+    symbol: str,
+) -> dict[str, Any] | None:
+    queue_binding = queue_record.get(LOCKED_CALIBRATION_REMEDIATION_FIELD)
+    screen_binding = screen_record.get(LOCKED_CALIBRATION_REMEDIATION_FIELD)
+    if queue_binding is None and screen_binding is None:
+        return None
+    if queue_binding != screen_binding:
+        raise ResearchAllocationError(
+            f"locked calibration remediation projection is inconsistent: {symbol}"
+        )
+    return _validate_locked_calibration_remediation_binding(
+        queue_binding,
+        repository_root=repository_root,
+        symbol=symbol,
+    )
+
+
+def _validate_locked_calibration_remediation_binding(
+    value: Any,
+    *,
+    repository_root: Path,
+    symbol: str,
+) -> dict[str, Any]:
+    if not isinstance(value, Mapping) or set(value) != LOCKED_CALIBRATION_REMEDIATION_KEYS:
+        raise ResearchAllocationError(
+            f"locked calibration remediation binding fields are invalid: {symbol}"
+        )
+    binding = dict(value)
+    evidence_ids = _text_array(
+        binding.get("evidence_ids"),
+        "locked_calibration.evidence_ids",
+        allow_empty=False,
+    )
+    if (
+        binding.get("schema_version") != 1
+        or binding.get("workflow") != "manager_screen_full_market_allocation_v3"
+        or binding.get("remediation") != "targeted_remediation_candidate"
+        or binding.get("resolved_work_sha256") is not None
+        or binding.get("revisit_triggers") != []
+        or not isinstance(binding.get("run_id"), str)
+        or not isinstance(binding.get("decisive_question"), str)
+        or not binding["decisive_question"].strip()
+        or binding.get("evidence_ids") != evidence_ids
+    ):
+        raise ResearchAllocationError(
+            f"locked calibration targeted remediation is invalid: {symbol}"
+        )
+    for field in (
+        "allocation_result_sha256",
+        "locked_calibration_case_sha256",
+        "calibration_result_sha256",
+        "calibration_review_sha256",
+        "calibration_adjudication_sha256",
+    ):
+        if not isinstance(binding.get(field), str) or not re.fullmatch(
+            r"[0-9a-f]{64}", str(binding.get(field))
+        ):
+            raise ResearchAllocationError(
+                f"locked calibration remediation {field} is invalid: {symbol}"
+            )
+    relative = _text(
+        binding.get("allocation_result_path"),
+        "locked_calibration.allocation_result_path",
+    )
+    result_path = (repository_root / relative).resolve()
+    try:
+        result_path.relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            f"locked calibration allocation result escapes repository: {symbol}"
+        ) from exc
+    relative_parts = Path(relative).parts
+    try:
+        manager_screen_index = relative_parts.index("manager-screen")
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            f"locked calibration allocation result path is invalid: {symbol}"
+        ) from exc
+    coverage_root = repository_root.joinpath(*relative_parts[:manager_screen_index])
+    from .manager_screen_full_market_allocation_v3 import (
+        ManagerScreenFullMarketAllocationV3Error,
+        verify_manager_screen_full_market_allocation_v3_result,
+    )
+
+    try:
+        verified = verify_manager_screen_full_market_allocation_v3_result(
+            root=coverage_root,
+            run_id=str(binding["run_id"]),
+        )
+        result_seal = verify_sealed(result_path)
+        result = json.loads(result_path.read_text(encoding="utf-8"))
+    except (
+        ManagerScreenFullMarketAllocationV3Error,
+        OSError,
+        json.JSONDecodeError,
+        SealingError,
+    ) as exc:
+        raise ResearchAllocationError(
+            f"locked calibration allocation result is invalid: {symbol}"
+        ) from exc
+    if (
+        result_seal.artifact_type != "manager_screen_full_market_allocation_v3_result"
+        or result_seal.sha256 != binding["allocation_result_sha256"]
+        or verified.get("result_sha256") != result_seal.sha256
+        or result.get("run_id") != binding["run_id"]
+        or result.get("recorded_at") != binding["recorded_at"]
+    ):
+        raise ResearchAllocationError(
+            f"locked calibration allocation result binding is invalid: {symbol}"
+        )
+    remediations = [
+        item
+        for item in result.get("locked_calibration_remediations") or []
+        if isinstance(item, Mapping) and item.get("symbol") == symbol
+    ]
+    if len(remediations) != 1:
+        raise ResearchAllocationError(
+            f"locked calibration allocation result lacks one remediation: {symbol}"
+        )
+    remediation = remediations[0]
+    expected_remediation = {
+        "locked_calibration_case_sha256": binding["locked_calibration_case_sha256"],
+        "remediation": binding["remediation"],
+        "reason": binding["reason"],
+        "resolved_work_sha256": binding["resolved_work_sha256"],
+        "decisive_question": binding["decisive_question"],
+        "evidence_ids": binding["evidence_ids"],
+        "revisit_triggers": binding["revisit_triggers"],
+    }
+    if any(remediation.get(key) != expected for key, expected in expected_remediation.items()):
+        raise ResearchAllocationError(
+            f"locked calibration remediation drifted from allocation result: {symbol}"
+        )
+    packet_path = (repository_root / _text(result.get("packet_path"), "packet_path")).resolve()
+    try:
+        packet_seal = verify_sealed(packet_path)
+        packet = json.loads(packet_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, SealingError) as exc:
+        raise ResearchAllocationError(
+            f"locked calibration allocation packet is invalid: {symbol}"
+        ) from exc
+    if (
+        packet_seal.artifact_type != "manager_screen_full_market_allocation_v3_packet"
+        or packet_seal.sha256 != result.get("packet_sha256")
+    ):
+        raise ResearchAllocationError(
+            f"locked calibration allocation packet binding is invalid: {symbol}"
+        )
+    cases = [
+        item
+        for item in packet.get("locked_calibration_cases") or []
+        if isinstance(item, Mapping) and item.get("symbol") == symbol
+    ]
+    if (
+        len(cases) != 1
+        or cases[0].get("locked_calibration_case_sha256")
+        != binding["locked_calibration_case_sha256"]
+    ):
+        raise ResearchAllocationError(
+            f"locked calibration allocation packet lacks the bound case: {symbol}"
+        )
+    calibration = cases[0].get("calibration_material_error")
+    expected_calibration = {
+        "calibration_result_path": binding["calibration_result_path"],
+        "calibration_result_sha256": binding["calibration_result_sha256"],
+        "calibration_result_sealed_at": binding["calibration_result_sealed_at"],
+        "review_sha256": binding["calibration_review_sha256"],
+        "adjudication_sha256": binding["calibration_adjudication_sha256"],
+    }
+    if not isinstance(calibration, Mapping) or any(
+        calibration.get(key) != expected for key, expected in expected_calibration.items()
+    ):
+        raise ResearchAllocationError(f"locked calibration evidence binding is invalid: {symbol}")
+    manager = result.get("manager")
+    if not isinstance(manager, Mapping):
+        raise ResearchAllocationError(f"locked calibration allocation manager is missing: {symbol}")
+    return {
+        "binding": binding,
+        "manager_agent": _text(manager.get("agent"), "locked_calibration.manager"),
+        "decisive_question": binding["decisive_question"].strip(),
+        "evidence_ids": evidence_ids,
+    }
+
+
 @serialized_coverage_write
 def approve_targeted_followup(
     *,
@@ -417,6 +1450,8 @@ def approve_targeted_followup(
     policy: Mapping[str, Any],
     approved_at: dt.datetime,
     policy_path: str | Path = "policies/research-allocation.json",
+    decisive_question: str | None = None,
+    evidence_ids: list[str] | None = None,
 ) -> dict[str, Any]:
     """Explicitly purchase one targeted-followup budget after analyst work."""
 
@@ -433,6 +1468,43 @@ def approve_targeted_followup(
     queued = _one_record(queue, symbol, "research queue")
     screen = _one_record(screening, symbol, "screening")
     repository_root = base.parent.parent
+    locked_remediation = _targeted_locked_calibration_remediation(
+        queued,
+        screen_record=screen,
+        repository_root=repository_root,
+        symbol=symbol,
+    )
+    if locked_remediation is not None:
+        submitted_question = (
+            locked_remediation["decisive_question"]
+            if decisive_question is None
+            else _text(
+                decisive_question,
+                "locked_calibration.decisive_question",
+            )
+        )
+        submitted_evidence = (
+            locked_remediation["evidence_ids"]
+            if evidence_ids is None
+            else _text_array(
+                evidence_ids,
+                "locked_calibration.evidence_ids",
+                allow_empty=False,
+            )
+        )
+        if (
+            submitted_question != locked_remediation["decisive_question"]
+            or submitted_evidence != locked_remediation["evidence_ids"]
+        ):
+            raise ResearchAllocationError(
+                "targeted-followup approval must submit the sealed locked-calibration "
+                f"research brief: {symbol}"
+            )
+    elif decisive_question is not None or evidence_ids is not None:
+        raise ResearchAllocationError(
+            "targeted-followup research brief is only accepted for locked calibration "
+            f"remediation: {symbol}"
+        )
     legacy_pending_followup = bool(
         queued.get("task_type") == "targeted_followup"
         and queued.get("status") == "pending"
@@ -469,18 +1541,36 @@ def approve_targeted_followup(
         raise ResearchAllocationError(
             "targeted-followup manager must be independent of the research agent"
         )
-    manager_screen_run_id = queued.get("manager_screen_run_id")
+    manager_screen_run_id = _manager_screen_run_id_for_record(
+        queued,
+        context="targeted-followup approval",
+    )
+    cycle = _text(queued.get("profile_cycle_id"), "profile_cycle_id")
     if isinstance(manager_screen_run_id, str):
-        expected_manager = _investment_manager_for_cohort(
-            [queued],
-            repository_root=repository_root,
+        if _requires_funded_full_market_grant(queued):
+            _verify_funded_full_market_profile_grant(
+                queue_record=queued,
+                screen_record=screen,
+                root=base,
+                repository_root=repository_root,
+                symbol=symbol,
+                expected_cycle_id=cycle,
+                required=True,
+                context="targeted-followup approval",
+            )
+        expected_manager = (
+            locked_remediation["manager_agent"]
+            if locked_remediation is not None
+            else _investment_manager_for_cohort(
+                [queued],
+                repository_root=repository_root,
+            )
         )
         if expected_manager is None or manager_name != expected_manager:
             raise ResearchAllocationError(
                 "targeted-followup approval must come from the original "
                 f"investment manager: expected {expected_manager}"
             )
-    cycle = _text(queued.get("profile_cycle_id"), "profile_cycle_id")
     approval_path = (
         base
         / "profiles"
@@ -510,6 +1600,8 @@ def approve_targeted_followup(
             approval["symbol"] != symbol
             or approval["manager"] != manager_name
             or approval["reason"] != approval_reason
+            or approval.get("locked_calibration_remediation")
+            != (locked_remediation["binding"] if locked_remediation is not None else None)
         ):
             if (
                 queued.get("status") != "completed"
@@ -577,7 +1669,7 @@ def approve_targeted_followup(
             bound_at=approved_at,
         )
     approval = {
-        "schema_version": 1,
+        "schema_version": 2 if locked_remediation is not None else 1,
         "symbol": symbol,
         "profile_cycle_id": cycle,
         "manager_screen_run_id": manager_screen_run_id,
@@ -593,6 +1685,8 @@ def approve_targeted_followup(
         "research_policy": policy_binding,
         "portfolio_action": None,
     }
+    if locked_remediation is not None:
+        approval["locked_calibration_remediation"] = locked_remediation["binding"]
     approval_seal = seal_json(
         approval_path,
         approval,
@@ -625,7 +1719,7 @@ def _load_targeted_followup_approval(
         ) from exc
     if sealed.artifact_type != "targeted_followup_approval":
         raise ResearchAllocationError("targeted-followup approval has the wrong artifact type")
-    expected_keys = {
+    base_keys = {
         "schema_version",
         "symbol",
         "profile_cycle_id",
@@ -640,14 +1734,28 @@ def _load_targeted_followup_approval(
         "research_policy",
         "portfolio_action",
     }
+    schema_version = approval.get("schema_version") if isinstance(approval, dict) else None
+    expected_keys = (
+        base_keys | {"locked_calibration_remediation"} if schema_version == 2 else base_keys
+    )
     if (
         not isinstance(approval, dict)
         or set(approval) != expected_keys
-        or approval.get("schema_version") != 1
+        or schema_version not in {1, 2}
         or approval.get("next_stage") != "targeted_followup"
         or approval.get("portfolio_action") is not None
     ):
-        raise ResearchAllocationError("targeted-followup approval fields do not match v1")
+        raise ResearchAllocationError("targeted-followup approval fields do not match its schema")
+    if schema_version == 2:
+        locked = _validate_locked_calibration_remediation_binding(
+            approval.get("locked_calibration_remediation"),
+            repository_root=repository_root,
+            symbol=_text(approval.get("symbol"), "targeted_followup.symbol"),
+        )
+        if approval.get("manager") != locked["manager_agent"]:
+            raise ResearchAllocationError(
+                "targeted-followup approval manager does not match locked remediation"
+            )
     _normalize_research_policy_binding(approval.get("research_policy"))
     try:
         approval_path.resolve().relative_to(repository_root.resolve())
@@ -703,6 +1811,17 @@ def _validate_targeted_followup_task_approval(
         approval_path,
         repository_root=repository_root,
     )
+    locked_remediation = approval.get("locked_calibration_remediation")
+    if isinstance(locked_remediation, Mapping):
+        if (
+            queue_record.get(LOCKED_CALIBRATION_REMEDIATION_FIELD) != locked_remediation
+            or queue_record.get("decisive_question") != locked_remediation.get("decisive_question")
+            or list(queue_record.get("evidence_ids") or [])
+            != list(locked_remediation.get("evidence_ids") or [])
+        ):
+            raise ResearchAllocationError(
+                f"targeted-followup task lost its locked calibration brief: {symbol}"
+            )
     policy = approval["research_policy"]
     history = queue_record.get("stage_history")
     if (
@@ -729,6 +1848,258 @@ def _validate_targeted_followup_task_approval(
         raise ResearchAllocationError(
             f"targeted-followup task does not match its sealed approval: {symbol}"
         )
+
+
+def _validate_profile_claim_stage_authorization(
+    queue_record: Mapping[str, Any],
+    *,
+    base: Path,
+    repository_root: Path,
+) -> None:
+    """Require the immutable authorization that purchased the queued stage."""
+
+    stage = queue_record.get("task_type")
+    if stage == "targeted_followup":
+        _validate_targeted_followup_task_approval(
+            queue_record,
+            repository_root=repository_root,
+        )
+        return
+    configs = {
+        "scoped_research": {
+            "preceding_stage": "quick_profile",
+            "binding_field": "profile_quick_selection_path",
+            "binding_sha_field": "profile_quick_selection_sha256",
+            "selection_name": "quick-profile-selection.json",
+            "comparison_name": "quick-profile-comparison.json",
+        },
+        "deep_research": {
+            "preceding_stage": "scoped_research",
+            "binding_field": "profile_scoped_selection_path",
+            "binding_sha_field": "profile_scoped_selection_sha256",
+            "selection_name": "scoped-research-selection.json",
+            "comparison_name": "scoped-research-comparison.json",
+        },
+    }
+    config = configs.get(stage)
+    if config is None:
+        return
+
+    symbol = _text(queue_record.get("symbol"), "research_queue.symbol")
+    cycle = _text(queue_record.get("profile_cycle_id"), "profile_cycle_id")
+    if not CYCLE_RE.fullmatch(cycle):
+        raise ResearchAllocationError(f"profile stage claim has an invalid cycle: {symbol}")
+    preceding_stage = config["preceding_stage"]
+    if queue_record.get("preceding_stage") != preceding_stage:
+        raise ResearchAllocationError(f"{stage} claim does not follow {preceding_stage}: {symbol}")
+    if not _history_completed(queue_record, preceding_stage):
+        raise ResearchAllocationError(
+            f"{stage} claim lacks completed {preceding_stage} history: {symbol}"
+        )
+    if _history_completed(queue_record, str(stage)):
+        raise ResearchAllocationError(f"completed profile stage cannot be claimed again: {symbol}")
+
+    binding_field = config["binding_field"]
+    relative = queue_record.get(binding_field)
+    if not isinstance(relative, str) or not relative:
+        raise ResearchAllocationError(
+            f"{stage} claim is missing its sealed {preceding_stage} selection: {symbol}"
+        )
+    selection_path = (repository_root / relative).resolve()
+    expected_path = (base / "profiles" / cycle / config["selection_name"]).resolve()
+    try:
+        selection_path.relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            f"{stage} selection escapes repository root: {symbol}"
+        ) from exc
+    if selection_path != expected_path:
+        raise ResearchAllocationError(
+            f"{stage} claim does not bind its canonical sealed selection: {symbol}"
+        )
+    try:
+        sealed = verify_sealed(selection_path)
+        payload = json.loads(selection_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, SealingError) as exc:
+        raise ResearchAllocationError(
+            f"{stage} claim references an invalid sealed selection: {symbol}"
+        ) from exc
+    _validate_profile_selection_payload(
+        payload,
+        artifact_type=sealed.artifact_type,
+        cycle=cycle,
+        stage=preceding_stage,
+        next_stage=str(stage),
+    )
+    _validate_profile_stage_selection_semantics(
+        payload,
+        base=base,
+        repository_root=repository_root,
+        cycle=cycle,
+        stage=preceding_stage,
+        next_stage=str(stage),
+        comparison_name=config["comparison_name"],
+    )
+
+    screen = _one_record(read_jsonl(base / SCREENING_FILE), symbol, "screening")
+    expected_evidence = {
+        f"stage_selection:{relative}",
+        f"stage_selection_sha256:{sealed.sha256}",
+    }
+    screen_evidence = screen.get("evidence")
+    screen_proves_sha = bool(
+        isinstance(screen_evidence, list) and expected_evidence.issubset(set(screen_evidence))
+    )
+    bound_sha256 = queue_record.get(config["binding_sha_field"])
+    legacy_sha_binding = bound_sha256 is None and screen_proves_sha
+    if not (
+        legacy_sha_binding
+        or (isinstance(bound_sha256, str) and bound_sha256 == sealed.sha256 and screen_proves_sha)
+    ):
+        raise ResearchAllocationError(
+            f"{stage} claim does not match its immutable selection SHA binding: {symbol}"
+        )
+
+    queue_run_id = queue_record.get("manager_screen_run_id")
+    selection_run_id = payload.get("manager_screen_run_id")
+    legacy_run_omission = bool(
+        selection_run_id is None
+        and "manager_screen_run_id" not in payload
+        and "research_policy" not in payload
+    )
+    if selection_run_id != queue_run_id and not legacy_run_omission:
+        raise ResearchAllocationError(
+            f"{stage} selection belongs to a different manager-screen run: {symbol}"
+        )
+    matching = [
+        row
+        for row in payload["ranking"]
+        if isinstance(row, Mapping) and row.get("symbol") == symbol
+    ]
+    if len(matching) != 1 or matching[0].get("selected") is not True:
+        raise ResearchAllocationError(
+            f"sealed {preceding_stage} selection did not purchase {stage}: {symbol}"
+        )
+    sealed_budget = payload.get("next_stage_effort_budget_hours")
+    queue_budget = queue_record.get("effort_budget_hours")
+    if (
+        isinstance(sealed_budget, bool)
+        or not isinstance(sealed_budget, (int, float))
+        or isinstance(queue_budget, bool)
+        or not isinstance(queue_budget, (int, float))
+        or float(queue_budget) != float(sealed_budget)
+    ):
+        raise ResearchAllocationError(
+            f"{stage} effort budget does not match its sealed selection: {symbol}"
+        )
+
+
+def _validate_profile_stage_selection_semantics(
+    payload: Mapping[str, Any],
+    *,
+    base: Path,
+    repository_root: Path,
+    cycle: str,
+    stage: str,
+    next_stage: str,
+    comparison_name: str,
+) -> None:
+    """Verify modern comparison/policy bindings while accepting old score selections."""
+
+    modern_fields = {
+        "comparison_path",
+        "comparison_sha256",
+        "predecessor_selection_sha256",
+        "agent_decision",
+        "research_policy",
+    }
+    present = modern_fields & set(payload)
+    run_bound = isinstance(payload.get("manager_screen_run_id"), str)
+    if not present and not run_bound:
+        return
+    required = {
+        "comparison_path",
+        "comparison_sha256",
+        "predecessor_selection_path",
+        "predecessor_selection_sha256",
+        "agent_decision",
+        "research_policy",
+    }
+    if not required.issubset(payload):
+        raise ResearchAllocationError(
+            f"sealed {stage} selection has an incomplete modern authorization chain"
+        )
+    comparison_relative = _text(payload.get("comparison_path"), "comparison_path")
+    comparison_sha256 = _text(payload.get("comparison_sha256"), "comparison_sha256")
+    if not re.fullmatch(r"[0-9a-f]{64}", comparison_sha256):
+        raise ResearchAllocationError(f"sealed {stage} selection comparison SHA is invalid")
+    comparison_path = (repository_root / comparison_relative).resolve()
+    canonical_comparison = (base / "profiles" / cycle / comparison_name).resolve()
+    try:
+        comparison_path.relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            f"sealed {stage} selection comparison escapes repository root"
+        ) from exc
+    if comparison_path != canonical_comparison:
+        raise ResearchAllocationError(f"sealed {stage} selection comparison path is not canonical")
+    try:
+        comparison_seal = verify_sealed(comparison_path)
+        comparison = json.loads(comparison_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, SealingError) as exc:
+        raise ResearchAllocationError(f"sealed {stage} selection comparison is invalid") from exc
+    agent_decision = payload.get("agent_decision")
+    if (
+        comparison_seal.artifact_type != f"{stage}_comparison_packet"
+        or comparison_seal.sha256 != comparison_sha256
+        or not isinstance(comparison, Mapping)
+        or comparison.get("cycle_id") != cycle
+        or comparison.get("evaluated_stage") != stage
+        or comparison.get("next_stage") != next_stage
+        or comparison.get("predecessor_selection_path") != payload.get("predecessor_selection_path")
+        or comparison.get("predecessor_selection_sha256")
+        != payload.get("predecessor_selection_sha256")
+        or not isinstance(agent_decision, Mapping)
+        or agent_decision.get("cycle_id") != cycle
+        or agent_decision.get("evaluated_stage") != stage
+        or agent_decision.get("comparison_sha256") != comparison_sha256
+    ):
+        raise ResearchAllocationError(
+            f"sealed {stage} selection does not match its comparison chain"
+        )
+
+    policy = _normalize_research_policy_binding(payload.get("research_policy"))
+    run_id = payload.get("manager_screen_run_id")
+    if isinstance(run_id, str):
+        _verify_run_research_policy_snapshot(
+            base=base,
+            run_id=run_id,
+            expected_policy=policy,
+            context=f"sealed {stage} selection",
+        )
+        return
+
+    # A modern selection without manager-run provenance predates the run-level
+    # snapshot contract.  Keep its legacy live-file validation, but never use
+    # this mutable fallback for a run-bound authorization.
+    policy_path = (repository_root / policy["path"]).resolve()
+    try:
+        policy_path.relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            f"sealed {stage} selection policy escapes repository root"
+        ) from exc
+    if not policy_path.is_file():
+        raise ResearchAllocationError(f"sealed {stage} selection policy is missing")
+    loaded_policy = load_policy(policy_path)
+    if (
+        loaded_policy.policy_id != policy["policy_id"]
+        or loaded_policy.version != policy["version"]
+        or hashlib.sha256(policy_path.read_bytes()).hexdigest() != policy["file_sha256"]
+        or hashlib.sha256(canonical_json_bytes(dict(loaded_policy.payload))).hexdigest()
+        != policy["payload_sha256"]
+    ):
+        raise ResearchAllocationError(f"sealed {stage} selection policy binding is invalid")
 
 
 def _enforce_targeted_followup_approval_capacity(
@@ -780,10 +2151,11 @@ def _targeted_followup_approval_ledger(
     manager_screen_run_id: str,
 ) -> dict[str, dict[str, Any]]:
     profiles_root = base / "profiles"
-    if not profiles_root.is_dir():
-        return {}
     ledger: dict[str, dict[str, Any]] = {}
-    for approval_dir in sorted(profiles_root.rglob("targeted-followup-approvals")):
+    approval_dirs = (
+        sorted(profiles_root.rglob("targeted-followup-approvals")) if profiles_root.is_dir() else []
+    )
+    for approval_dir in approval_dirs:
         if not approval_dir.is_dir():
             continue
         payload_paths = {
@@ -837,6 +2209,20 @@ def _targeted_followup_approval_ledger(
                 "path": approval_path,
                 "sha256": sealed.sha256,
             }
+    inherited = _sealed_inherited_stage_commitment_ledger(
+        base=base,
+        repository_root=repository_root,
+        manager_screen_run_id=manager_screen_run_id,
+        stage="targeted_followup",
+    )
+    for symbol, commitment in inherited.items():
+        ledger.setdefault(
+            symbol,
+            {
+                "path": (repository_root / commitment["selection_path"]).resolve(),
+                "sha256": commitment["selection_sha256"],
+            },
+        )
     return ledger
 
 
@@ -854,6 +2240,7 @@ def _materialize_targeted_followup_approval(
     symbol = str(approval["symbol"])
     queued = dict(_one_record(queue, symbol, "research queue"))
     screen = dict(_one_record(screening, symbol, "screening"))
+    locked_remediation = approval.get("locked_calibration_remediation")
     relative = approval_path.relative_to(repository_root).as_posix()
     history = list(queued.get("stage_history") or [])
     if not any(
@@ -872,6 +2259,15 @@ def _materialize_targeted_followup_approval(
                 "next_stage": "targeted_followup",
                 "approval_path": relative,
                 "approval_sha256": approval_sha256,
+                **(
+                    {
+                        "locked_calibration_case_sha256": locked_remediation[
+                            "locked_calibration_case_sha256"
+                        ]
+                    }
+                    if isinstance(locked_remediation, Mapping)
+                    else {}
+                ),
             }
         )
     base_state = bool(
@@ -882,6 +2278,19 @@ def _materialize_targeted_followup_approval(
         queued.get("task_type") == "targeted_followup"
         or _history_completed(queued, "targeted_followup")
     )
+    if (
+        isinstance(locked_remediation, Mapping)
+        and later_state
+        and (
+            queued.get(LOCKED_CALIBRATION_REMEDIATION_FIELD) != locked_remediation
+            or queued.get("decisive_question") != locked_remediation.get("decisive_question")
+            or list(queued.get("evidence_ids") or [])
+            != list(locked_remediation.get("evidence_ids") or [])
+        )
+    ):
+        raise ResearchAllocationError(
+            f"sealed targeted-followup approval cannot repair a drifted locked brief: {symbol}"
+        )
     if base_state:
         queued.update(
             {
@@ -896,6 +2305,14 @@ def _materialize_targeted_followup_approval(
                 "preceding_stage": approval["preceding_stage"],
                 "effort_budget_hours": approval["effort_budget_hours"],
                 "stop_conditions": list(approval["stop_conditions"]),
+                **(
+                    {
+                        "decisive_question": locked_remediation["decisive_question"],
+                        "evidence_ids": list(locked_remediation["evidence_ids"]),
+                    }
+                    if isinstance(locked_remediation, Mapping)
+                    else {}
+                ),
             }
         )
     elif not later_state:
@@ -930,7 +2347,11 @@ def _materialize_targeted_followup_approval(
             "stage_history": history,
         }
     )
-    evidence = list(screen.get("evidence") or [])
+    evidence = (
+        list(locked_remediation["evidence_ids"])
+        if isinstance(locked_remediation, Mapping)
+        else list(screen.get("evidence") or [])
+    )
     approval_evidence = [
         f"targeted_followup_approval:{relative}",
         f"targeted_followup_approval_sha256:{approval_sha256}",
@@ -941,6 +2362,14 @@ def _materialize_targeted_followup_approval(
                 "decision": "targeted_followup",
                 "reason": approval["reason"],
                 "next_action": _next_action("targeted_followup", False),
+                **(
+                    {
+                        "decisive_question": locked_remediation["decisive_question"],
+                        "evidence": list(locked_remediation["evidence_ids"]),
+                    }
+                    if isinstance(locked_remediation, Mapping)
+                    else {}
+                ),
             }
         )
     elif screen.get("decision") == "targeted_followup" and queued.get("status") == "pending":
@@ -1046,8 +2475,10 @@ def decline_targeted_followup(
         )
         manager_binding = _targeted_followup_manager_binding(
             queued,
+            screen=screen,
             symbol=symbol,
             manager=manager_name,
+            root=base,
             repository_root=repository_root,
         )
         _validate_targeted_followup_decline_bindings(
@@ -1075,8 +2506,10 @@ def decline_targeted_followup(
     )
     manager_binding = _targeted_followup_manager_binding(
         queued,
+        screen=screen,
         symbol=symbol,
         manager=manager_name,
+        root=base,
         repository_root=repository_root,
     )
     if recommendation["research_agent"] == manager_name:
@@ -1212,9 +2645,18 @@ def _targeted_followup_recommendation_binding(
     ):
         raise ResearchAllocationError("sealed analyst evaluation does not bind its profile package")
     package_binding = package.get("manager_screen_binding")
+    full_market_binding = _requires_funded_full_market_grant(queued)
     expected_package_binding = {
-        "result_path": queued.get("manager_screen_result_path"),
-        "result_sha256": queued.get("manager_screen_result_sha256"),
+        "result_path": queued.get(
+            "manager_screen_allocation_result_path"
+            if full_market_binding
+            else "manager_screen_result_path"
+        ),
+        "result_sha256": queued.get(
+            "manager_screen_allocation_result_sha256"
+            if full_market_binding
+            else "manager_screen_result_sha256"
+        ),
         "decisive_question": queued.get("decisive_question"),
         "evidence_ids": list(queued.get("evidence_ids") or []),
     }
@@ -1252,8 +2694,10 @@ def _targeted_followup_recommendation_binding(
 def _targeted_followup_manager_binding(
     queued: Mapping[str, Any],
     *,
+    screen: Mapping[str, Any],
     symbol: str,
     manager: str,
+    root: Path,
     repository_root: Path,
 ) -> dict[str, Any]:
     run_id = _text(queued.get("manager_screen_run_id"), "manager_screen_run_id")
@@ -1266,6 +2710,29 @@ def _targeted_followup_manager_binding(
             "targeted-followup decline must come from the original investment "
             f"manager: expected {expected_manager}"
         )
+    if _requires_funded_full_market_grant(queued):
+        grant = _verify_funded_full_market_profile_grant(
+            queue_record=queued,
+            screen_record=screen,
+            root=root,
+            repository_root=repository_root,
+            symbol=symbol,
+            expected_cycle_id=_text(queued.get("profile_cycle_id"), "profile_cycle_id"),
+            required=True,
+            context="targeted-followup decline",
+        )
+        if grant is None:  # pragma: no cover - required=True is fail closed
+            raise ResearchAllocationError("targeted-followup decline lacks its full-market grant")
+        candidate = grant["candidate"]
+        return {
+            "run_id": run_id,
+            "batch_id": queued.get("manager_screen_batch_id"),
+            "result_path": candidate["effective_decision_source_path"],
+            "result_sha256": candidate["effective_decision_source_sha256"],
+            "decision_sha256": candidate["effective_decision_sha256"],
+            "route": candidate["original_route"],
+            "manager": manager,
+        }
     relative = _text(
         queued.get("manager_screen_result_path"),
         "manager_screen_result_path",
@@ -1285,7 +2752,7 @@ def _targeted_followup_manager_binding(
     ]
     if len(matches) != 1 or matches[0].get("route") != "send_to_analyst":
         raise ResearchAllocationError(
-            "manager-screen result does not contain one send_to_analyst decision"
+            "manager-screen result does not contain one eligible analyst-candidate decision"
         )
     decision = matches[0]
     if (
@@ -1309,7 +2776,7 @@ def _targeted_followup_manager_binding(
         "result_path": relative,
         "result_sha256": expected_sha256,
         "decision_sha256": hashlib.sha256(canonical_json_bytes(dict(decision))).hexdigest(),
-        "route": "send_to_analyst",
+        "route": decision["route"],
         "manager": manager,
     }
 
@@ -1468,7 +2935,7 @@ def _validate_targeted_followup_decline_payload(value: Any) -> dict[str, Any]:
         ),
     }
     if (
-        normalized_manager_binding["route"] != "send_to_analyst"
+        normalized_manager_binding["route"] not in {"send_to_analyst", "research_candidate"}
         or normalized_manager_binding["manager"] != value.get("manager")
         or normalized_recommendation["preceding_stage"] not in {"quick_profile", "scoped_research"}
         or normalized_recommendation["recommended_next_stage"]
@@ -1728,7 +3195,6 @@ def record_profile_package(
     _require_aware_datetime(recorded_at, "recorded_at")
     normalized = _validate_package(package, recorded_at=recorded_at)
     profile = normalized["profile"]
-    evaluation = evaluate_quick_profile(profile, policy=policy)
     symbol = profile["symbol"]
     ticker = symbol.split(":", 1)[1]
     base = Path(root)
@@ -1738,6 +3204,11 @@ def record_profile_package(
     screening_records = read_jsonl(screening_path)
     queue_record = _one_record(queue_records, symbol, "research queue")
     screening_record = _one_record(screening_records, symbol, "screening")
+    _manager_screen_run_id_for_record(
+        queue_record,
+        context="profile record",
+    )
+    evaluation = evaluate_quick_profile(profile, policy=policy)
 
     timestamp = recorded_at.strftime("%Y%m%dT%H%M%S%z")
     artifact_dir = base / "profiles" / normalized["cycle_id"] / ticker
@@ -1748,6 +3219,7 @@ def record_profile_package(
     relative_evaluation = evaluation_path.relative_to(repository_root).as_posix()
     policy_sha = hashlib.sha256(canonical_json_bytes(dict(policy))).hexdigest()
     replayed = _verify_profile_record_replay(
+        root=base,
         normalized=normalized,
         raw_evaluation=evaluation,
         queue_record=queue_record,
@@ -1778,17 +3250,43 @@ def record_profile_package(
             recorded_at=recorded_at,
         )
         return replayed["result"]
-    if str(queue_record.get("task_type")) == "targeted_followup":
-        _validate_targeted_followup_task_approval(
-            queue_record,
-            repository_root=repository_root,
+    if queue_record.get("task_type") == "deep_research":
+        raise ResearchAllocationError(
+            "deep_research completion must use the formal company research/claims workflow, "
+            "not record_profile_package"
         )
-    _validate_manager_bound_submission(
+    _validate_profile_claim_stage_authorization(
+        queue_record,
+        base=base,
+        repository_root=repository_root,
+    )
+    full_market_grant = _validate_full_market_profile_binding(
         normalized,
         queue_record=queue_record,
+        screen_record=screening_record,
+        root=base,
         repository_root=repository_root,
         symbol=symbol,
     )
+    claim_attempt = _validate_manager_bound_submission(
+        normalized,
+        queue_record=queue_record,
+        base=base,
+        repository_root=repository_root,
+        symbol=symbol,
+        full_market_grant=full_market_grant,
+    )
+    if claim_attempt is not None:
+        claim_attempt = _normalize_profile_claim_attempt_binding(claim_attempt)
+        claim_at = _datetime(claim_attempt["sealed_at"], "claim_attempt.sealed_at")
+        generated_at = _datetime(
+            normalized["provenance"]["generated_at"],
+            "provenance.generated_at",
+        )
+        if recorded_at <= claim_at:
+            raise ResearchAllocationError("profile recorded_at must be later than the sealed claim")
+        if generated_at < claim_at:
+            raise ResearchAllocationError("profile generated_at cannot predate the sealed claim")
     _validate_local_sources(normalized["sources"], repository_root=repository_root)
     _validate_industry_evidence(
         normalized,
@@ -1837,9 +3335,13 @@ def record_profile_package(
                 f"allocation is already bound to another profile cycle: {sorted(bound_cycles)}"
             )
 
+    sealed_package = dict(normalized)
+    if claim_attempt is not None:
+        sealed_package["schema_version"] = 3
+        sealed_package["claim_attempt"] = dict(claim_attempt)
     sealed_profile = seal_json(
         profile_path,
-        normalized,
+        sealed_package,
         artifact_type="quick_profile_package",
         sealed_at=recorded_at,
     )
@@ -1875,7 +3377,7 @@ def record_profile_package(
                 capacity_wait = True
 
     evaluation_payload = {
-        "schema_version": 2,
+        "schema_version": 3 if claim_attempt is not None else 2,
         "cycle_id": normalized["cycle_id"],
         "symbol": symbol,
         "company_name": normalized["company_name"],
@@ -1890,12 +3392,29 @@ def record_profile_package(
         "capacity_wait": capacity_wait,
         "portfolio_action": None,
     }
+    if claim_attempt is not None:
+        evaluation_payload["claim_attempt"] = dict(claim_attempt)
     sealed_evaluation = seal_json(
         evaluation_path,
         evaluation_payload,
         artifact_type="quick_profile_evaluation",
         sealed_at=recorded_at,
     )
+    success_receipt = None
+    if claim_attempt is not None:
+        try:
+            success_receipt = seal_profile_stage_success(
+                root=base,
+                queue_record=queue_record,
+                agent=normalized["provenance"]["agent"],
+                profile_path=relative_profile,
+                profile_sha256=sealed_profile.sha256,
+                evaluation_path=relative_evaluation,
+                evaluation_sha256=sealed_evaluation.sha256,
+                succeeded_at=recorded_at,
+            )
+        except ProfileStageClaimError as exc:
+            raise ResearchAllocationError(str(exc)) from exc
 
     updated_screening = dict(screening_record)
     updated_screening.update(
@@ -1919,18 +3438,30 @@ def record_profile_package(
     )
 
     history = list(queue_record.get("stage_history") or [])
-    history.append(
-        {
-            "stage": queued_stage,
-            "status": "completed",
-            "started_at": queue_record.get("started_at"),
-            "finished_at": recorded_at.isoformat(),
-            "agent": normalized["provenance"]["agent"],
-            "result_path": relative_profile,
-            "evaluation_path": relative_evaluation,
-            "next_stage": next_stage,
-        }
-    )
+    completed_history = {
+        "stage": queued_stage,
+        "status": "completed",
+        "started_at": queue_record.get("started_at"),
+        "finished_at": recorded_at.isoformat(),
+        "agent": normalized["provenance"]["agent"],
+        "result_path": relative_profile,
+        "result_sha256": sealed_profile.sha256,
+        "evaluation_path": relative_evaluation,
+        "evaluation_sha256": sealed_evaluation.sha256,
+        "next_stage": next_stage,
+    }
+    if claim_attempt is not None:
+        assert success_receipt is not None
+        completed_history.update(
+            {
+                "claim_path": claim_attempt["path"],
+                "claim_sha256": claim_attempt["sha256"],
+                "claim_attempt_number": claim_attempt["attempt_number"],
+                "success_path": success_receipt["path"],
+                "success_sha256": success_receipt["sha256"],
+            }
+        )
+    history.append(completed_history)
     updated_queue = dict(queue_record)
     if manager_screen_binding:
         for stale in (
@@ -1989,7 +3520,7 @@ def record_profile_package(
         profile_sha256=sealed_profile.sha256,
         evaluation_path=relative_evaluation,
         evaluation_sha256=sealed_evaluation.sha256,
-        idempotent=False,
+        idempotent=bool(success_receipt and success_receipt["idempotent"]),
     )
 
 
@@ -2035,6 +3566,7 @@ def _adjust_profile_evaluation(
 
 def _verify_profile_record_replay(
     *,
+    root: Path,
     normalized: Mapping[str, Any],
     raw_evaluation: Mapping[str, Any],
     queue_record: Mapping[str, Any],
@@ -2112,10 +3644,37 @@ def _verify_profile_record_replay(
         raise ResearchAllocationError(
             f"completed profile package cannot be read: {normalized['profile']['symbol']}"
         ) from exc
+    if not isinstance(existing_profile, dict):
+        raise ResearchAllocationError(
+            f"completed profile package must be an object: {normalized['profile']['symbol']}"
+        )
+    existing_profile = dict(existing_profile)
+    claim_attempt = existing_profile.pop("claim_attempt", None)
+    sealed_profile_schema = existing_profile.get("schema_version")
+    if claim_attempt is not None:
+        if sealed_profile_schema != 3:
+            raise ResearchAllocationError("claim-bound profile package must use schema_version 3")
+        existing_profile["schema_version"] = 2
+    elif sealed_profile_schema != 2:
+        raise ResearchAllocationError("legacy profile package must use schema_version 2")
     if existing_profile != normalized:
         raise ResearchAllocationError(
             f"profile replay conflicts with the sealed package: {normalized['profile']['symbol']}"
         )
+    if claim_attempt is not None:
+        claim_attempt = _normalize_profile_claim_attempt_binding(claim_attempt)
+        expected_claim_history = {
+            "claim_path": claim_attempt["path"],
+            "claim_sha256": claim_attempt["sha256"],
+            "claim_attempt_number": claim_attempt["attempt_number"],
+        }
+        if any(
+            history.get(field) != expected for field, expected in expected_claim_history.items()
+        ):
+            raise ResearchAllocationError(
+                "profile replay claim attempt does not match completed history: "
+                f"{normalized['profile']['symbol']}"
+            )
 
     try:
         sealed_evaluation = verify_sealed(evaluation_path)
@@ -2155,13 +3714,15 @@ def _verify_profile_record_replay(
         "capacity_wait",
         "portfolio_action",
     }
+    if claim_attempt is not None:
+        expected_fields.add("claim_attempt")
     if not isinstance(evaluation_payload, dict) or set(evaluation_payload) != expected_fields:
         raise ResearchAllocationError(
             f"completed profile evaluation fields do not match contract: "
             f"{normalized['profile']['symbol']}"
         )
     expected_values = {
-        "schema_version": 2,
+        "schema_version": 3 if claim_attempt is not None else 2,
         "cycle_id": normalized["cycle_id"],
         "symbol": normalized["profile"]["symbol"],
         "company_name": normalized["company_name"],
@@ -2173,6 +3734,8 @@ def _verify_profile_record_replay(
         "evaluation": adjusted_evaluation,
         "portfolio_action": None,
     }
+    if claim_attempt is not None:
+        expected_values["claim_attempt"] = claim_attempt
     mismatched_evaluation = [
         field
         for field, expected in expected_values.items()
@@ -2193,6 +3756,23 @@ def _verify_profile_record_replay(
             f"({', '.join(sorted(set(mismatched_evaluation)))}): "
             f"{normalized['profile']['symbol']}"
         )
+    if claim_attempt is not None and (
+        history.get("result_sha256") != sealed_profile.sha256
+        or history.get("evaluation_sha256") != sealed_evaluation.sha256
+    ):
+        raise ResearchAllocationError(
+            "profile replay artifact SHA bindings do not match completed history: "
+            f"{normalized['profile']['symbol']}"
+        )
+    if claim_attempt is not None:
+        try:
+            verify_profile_stage_success(
+                root=root,
+                claim_attempt=claim_attempt,
+                history_event=history,
+            )
+        except ProfileStageClaimError as exc:
+            raise ResearchAllocationError(str(exc)) from exc
     return {
         "result": _profile_record_result(
             evaluation_payload,
@@ -2580,16 +4160,29 @@ def finalize_profile_stage_with_agent_decisions(
     if capacity is None:
         raise ResearchAllocationError(f"stage capacity is invalid: {next_stage}")
     manager_screen_run_id = _manager_screen_run_id_for_cohort(cohort)
-    committed_count = (
-        _committed_stage_count_for_run(
-            queue,
+    selection_path = base / "profiles" / cycle / config["selection_name"]
+    relative_selection = selection_path.relative_to(repository_root).as_posix()
+    committed_count = 0
+    if manager_screen_run_id is not None:
+        ledger = _sealed_stage_commitment_ledger(
+            base=base,
+            repository_root=repository_root,
             manager_screen_run_id=manager_screen_run_id,
-            stage=next_stage,
-            exclude_symbols={str(item["symbol"]) for item in cohort},
+            next_stage=next_stage,
         )
-        if manager_screen_run_id is not None
-        else 0
-    )
+        duplicates = sorted(
+            symbol
+            for symbol in selected_symbols
+            if symbol in ledger and ledger[symbol]["selection_path"] != relative_selection
+        )
+        if duplicates:
+            raise ResearchAllocationError(
+                f"{next_stage} budget was already purchased in another sealed profile cycle: "
+                f"{duplicates}"
+            )
+        committed_count = sum(
+            1 for item in ledger.values() if item["selection_path"] != relative_selection
+        )
     if committed_count + len(selected_symbols) > capacity:
         raise ResearchAllocationError(
             f"Agent decisions exceed {next_stage} run capacity: "
@@ -2631,8 +4224,6 @@ def finalize_profile_stage_with_agent_decisions(
         }
         for row in comparison_rows
     ]
-    selection_path = base / "profiles" / cycle / config["selection_name"]
-    relative_selection = selection_path.relative_to(repository_root).as_posix()
     payload = {
         "schema_version": 1,
         "cycle_id": cycle,
@@ -2836,6 +4427,7 @@ def finalize_profile_stage(
         binding=binding,
         stage=stage,
     )
+    _manager_screen_run_id_for_cohort(cohort)
     if _manager_screen_run_id_for_cohort(cohort) is not None:
         raise ResearchAllocationError(
             "legacy score-based profile-finalize is forbidden for "
@@ -3094,6 +4686,14 @@ def _materialize_profile_selection(
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], bool, bool]:
     """Repair only absent selection materialization without regressing later work."""
 
+    selection_sha_field = {
+        "profile_quick_selection_path": "profile_quick_selection_sha256",
+        "profile_scoped_selection_path": "profile_scoped_selection_sha256",
+    }.get(next_binding_field)
+    if selection_sha_field is None:
+        raise ResearchAllocationError(
+            f"unsupported profile selection binding field: {next_binding_field}"
+        )
     screen_by_symbol = {item.get("symbol"): dict(item) for item in screening}
     queue_by_symbol = {item.get("symbol"): dict(item) for item in queue}
     screening_changed = False
@@ -3128,6 +4728,11 @@ def _materialize_profile_selection(
         if existing_binding is not None and existing_binding != selection_path:
             raise ResearchAllocationError(
                 f"sealed {stage} selection conflicts at {next_binding_field}: {symbol}"
+            )
+        existing_sha256 = queued.get(selection_sha_field)
+        if existing_sha256 is not None and existing_sha256 != selection_sha256:
+            raise ResearchAllocationError(
+                f"sealed {stage} selection conflicts at {selection_sha_field}: {symbol}"
             )
         screen_evidence = screen.get("evidence")
         evidence = list(screen_evidence) if isinstance(screen_evidence, list) else []
@@ -3192,6 +4797,7 @@ def _materialize_profile_selection(
                         "preceding_stage": stage,
                         "stop_conditions": _stop_conditions(next_stage),
                         next_binding_field: selection_path,
+                        selection_sha_field: selection_sha256,
                     }
                 )
                 if not screen_proves_selection:
@@ -3207,6 +4813,7 @@ def _materialize_profile_selection(
                 # Only add the immutable selection binding. Claim, completion,
                 # or deeper-stage fields and conclusions belong to later work.
                 queued[next_binding_field] = selection_path
+                queued[selection_sha_field] = selection_sha256
                 safe_pending_state = bool(
                     next_stage_state
                     and queued.get("status") == "pending"
@@ -3233,6 +4840,7 @@ def _materialize_profile_selection(
             or existing_binding == selection_path
         ):
             queued[next_binding_field] = selection_path
+            queued[selection_sha_field] = selection_sha256
             if preserve_outcome:
                 # A profile or follow-up may already have produced a stronger
                 # terminal conclusion such as price_watch or conditional_stop.
@@ -3339,6 +4947,18 @@ def _complete_profile_cohort(
         binding=binding,
         stage=stage,
     )
+    predecessor_sha_field = {
+        "manager_screen_allocation_result_path": ("manager_screen_allocation_result_sha256"),
+        "manager_screen_result_path": "manager_screen_result_sha256",
+        "triage_selection_path": "triage_selection_sha256",
+    }.get(binding_field)
+    requires_predecessor_sha = binding_field == "manager_screen_allocation_result_path"
+    if predecessor_sha_field is not None and any(
+        (requires_predecessor_sha or predecessor_sha_field in item)
+        and item.get(predecessor_sha_field) != sealed_binding.sha256
+        for item in cohort
+    ):
+        raise ResearchAllocationError(f"{stage} cohort predecessor SHA binding is inconsistent")
     incomplete = [
         item["symbol"]
         for item in cohort
@@ -3364,17 +4984,44 @@ def _complete_profile_cohort(
     by_symbol = {item["symbol"]: item for item in cohort}
     if len(order) != len(set(order)) or set(order) != set(by_symbol):
         raise ResearchAllocationError(f"{stage} cohort does not match sealed predecessor selection")
+    ordered = [by_symbol[str(symbol)] for symbol in order]
+    cohort_run_id = _manager_screen_run_id_for_cohort(ordered)
+    sealed_run_id = predecessor.get("manager_screen_run_id")
+    if sealed_run_id is None and sealed_binding.artifact_type in {
+        "manager_screen_full_market_allocation_v3_result",
+        "manager_screen_result",
+        "manager_screen_legacy_transition_result",
+        "manager_screen_quote_impact_result",
+    }:
+        sealed_run_id = predecessor.get("run_id")
+    if sealed_run_id is not None:
+        if not isinstance(sealed_run_id, str) or not sealed_run_id:
+            raise ResearchAllocationError(
+                f"sealed {stage} predecessor manager-screen run_id is invalid"
+            )
+        if cohort_run_id is None:
+            raise ResearchAllocationError(
+                f"manager-bound {stage} cohort cannot drop its manager-screen run binding"
+            )
+        if cohort_run_id != sealed_run_id:
+            raise ResearchAllocationError(
+                f"{stage} cohort manager-screen run does not match its sealed predecessor"
+            )
     return (
         binding_field,
         binding,
         sealed_binding.sha256,
-        [by_symbol[str(symbol)] for symbol in order],
+        ordered,
     )
 
 
 def _profile_predecessor_binding(item: Mapping[str, Any], *, stage: str) -> tuple[str, str] | None:
     fields = (
-        ("manager_screen_result_path", "triage_selection_path")
+        (
+            "manager_screen_allocation_result_path",
+            "manager_screen_result_path",
+            "triage_selection_path",
+        )
         if stage == "quick_profile"
         else ("profile_quick_selection_path",)
     )
@@ -3388,6 +5035,20 @@ def _profile_predecessor_binding(item: Mapping[str, Any], *, stage: str) -> tupl
 def _profile_predecessor_order(
     payload: Mapping[str, Any], *, artifact_type: str, stage: str
 ) -> list[str]:
+    if (
+        stage == "quick_profile"
+        and artifact_type == "manager_screen_full_market_allocation_v3_result"
+    ):
+        decisions = payload.get("decisions")
+        if not isinstance(decisions, list):
+            raise ResearchAllocationError("full-market allocation decisions are invalid")
+        return [
+            str(row["symbol"])
+            for row in decisions
+            if isinstance(row, Mapping)
+            and row.get("decision") == "fund_quick_profile"
+            and isinstance(row.get("symbol"), str)
+        ]
     if stage == "quick_profile" and artifact_type in {
         "manager_screen_result",
         "manager_screen_legacy_transition_result",
@@ -3427,6 +5088,57 @@ def _investment_manager_for_cohort(
     run_id = _manager_screen_run_id_for_cohort(cohort)
     if run_id is None:
         return None
+    allocation_bindings = {
+        (
+            item.get("manager_screen_allocation_result_path"),
+            item.get("manager_screen_allocation_result_sha256"),
+        )
+        for item in cohort
+        if item.get("manager_screen_allocation_result_path") is not None
+        or item.get("manager_screen_allocation_result_sha256") is not None
+    }
+    if allocation_bindings:
+        if len(allocation_bindings) != 1 or len(allocation_bindings) != len(
+            {
+                (
+                    item.get("manager_screen_allocation_result_path"),
+                    item.get("manager_screen_allocation_result_sha256"),
+                )
+                for item in cohort
+            }
+        ):
+            raise ResearchAllocationError(
+                "manager-bound profile cohort has inconsistent full-market bindings"
+            )
+        relative, expected_sha256 = next(iter(allocation_bindings))
+        if not isinstance(relative, str) or not isinstance(expected_sha256, str):
+            raise ResearchAllocationError("full-market allocation binding is incomplete")
+        path = (repository_root / relative).resolve()
+        try:
+            path.relative_to(repository_root.resolve())
+        except ValueError as exc:
+            raise ResearchAllocationError(
+                "full-market allocation binding escapes repository root"
+            ) from exc
+        sealed = verify_sealed(path)
+        if (
+            sealed.artifact_type != "manager_screen_full_market_allocation_v3_result"
+            or sealed.sha256 != expected_sha256
+        ):
+            raise ResearchAllocationError(
+                "full-market allocation seal does not match the profile cohort"
+            )
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if payload.get("run_id") != run_id:
+            raise ResearchAllocationError(
+                "full-market allocation run does not match the profile cohort"
+            )
+        manager = payload.get("manager")
+        if not isinstance(manager, Mapping):
+            raise ResearchAllocationError(
+                "full-market allocation is missing investment-manager provenance"
+            )
+        return _text(manager.get("agent"), "full_market_allocation.manager.agent")
     bindings = {
         (
             item.get("manager_screen_result_path"),
@@ -3671,10 +5383,11 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     repository_root = base.parent.parent
     queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
     screening = read_jsonl(base / SCREENING_FILE)
-    recorded = [item for item in queue if item.get("profile_cycle_id") == cycle]
+    cycle_rows = [item for item in queue if item.get("profile_cycle_id") == cycle]
+    recorded = [item for item in cycle_rows if _history_completed(item, "quick_profile")]
     allocation_shas = {
         item.get("allocation_sha256")
-        for item in recorded
+        for item in cycle_rows
         if item.get("allocation_sha256") is not None
     }
     if len(allocation_shas) > 1:
@@ -3682,7 +5395,7 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     allocation_sha = next(iter(allocation_shas), None)
     quick_profile_bindings = {
         binding
-        for item in recorded
+        for item in cycle_rows
         if (binding := _profile_predecessor_binding(item, stage="quick_profile")) is not None
     }
     if len(quick_profile_bindings) == 1:
@@ -3702,7 +5415,7 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
                 if item.get("allocation_sha256") == allocation_sha and bool(item.get("selected_by"))
             ]
             if allocation_sha is not None
-            else recorded
+            else cycle_rows
         )
     recorded_symbols = {item["symbol"] for item in recorded}
     screening_by_symbol = {item.get("symbol"): item for item in screening}
@@ -3961,6 +5674,62 @@ def _normalize_manager_screen_binding(value: Any) -> dict[str, Any]:
     }
 
 
+def _normalize_profile_claim_attempt_binding(value: Any) -> dict[str, Any]:
+    if not isinstance(value, Mapping) or set(value) != PROFILE_CLAIM_ATTEMPT_KEYS:
+        raise ResearchAllocationError("profile claim_attempt fields do not match contract")
+    sha256 = _text(value.get("sha256"), "claim_attempt.sha256")
+    if not re.fullmatch(r"[0-9a-f]{64}", sha256):
+        raise ResearchAllocationError("claim_attempt.sha256 must be lowercase SHA-256")
+    attempt_number = value.get("attempt_number")
+    if (
+        not isinstance(attempt_number, int)
+        or isinstance(attempt_number, bool)
+        or attempt_number < 1
+    ):
+        raise ResearchAllocationError("claim_attempt.attempt_number is invalid")
+    authorization = value.get("stage_authorization")
+    if (
+        not isinstance(authorization, Mapping)
+        or set(authorization) != PROFILE_CLAIM_AUTHORIZATION_KEYS
+    ):
+        raise ResearchAllocationError(
+            "claim_attempt.stage_authorization fields do not match contract"
+        )
+    authorization_sha256 = _text(
+        authorization.get("sha256"),
+        "claim_attempt.stage_authorization.sha256",
+    )
+    if not re.fullmatch(r"[0-9a-f]{64}", authorization_sha256):
+        raise ResearchAllocationError(
+            "claim_attempt.stage_authorization.sha256 must be lowercase SHA-256"
+        )
+    return {
+        "path": _text(value.get("path"), "claim_attempt.path"),
+        "sha256": sha256,
+        "sealed_at": _datetime(
+            value.get("sealed_at"),
+            "claim_attempt.sealed_at",
+        ).isoformat(),
+        "attempt_number": attempt_number,
+        "agent": _text(value.get("agent"), "claim_attempt.agent"),
+        "stage_authorization": {
+            "path": _text(
+                authorization.get("path"),
+                "claim_attempt.stage_authorization.path",
+            ),
+            "sha256": authorization_sha256,
+            "artifact_type": _text(
+                authorization.get("artifact_type"),
+                "claim_attempt.stage_authorization.artifact_type",
+            ),
+            "sealed_at": _datetime(
+                authorization.get("sealed_at"),
+                "claim_attempt.stage_authorization.sealed_at",
+            ).isoformat(),
+        },
+    }
+
+
 def _normalize_decisive_answer(value: Any, *, source_ids: set[str]) -> dict[str, Any]:
     if not isinstance(value, Mapping) or set(value) != DECISIVE_ANSWER_KEYS:
         raise ResearchAllocationError("decisive_answer fields do not match contract")
@@ -3986,28 +5755,99 @@ def _validate_manager_bound_submission(
     package: Mapping[str, Any],
     *,
     queue_record: Mapping[str, Any],
+    base: Path,
     repository_root: Path,
     symbol: str,
-) -> None:
+    full_market_grant: Mapping[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    claim_attempt = None
+    sealed_authority_exists = _sealed_modern_profile_authority_exists(
+        base=base,
+        repository_root=repository_root,
+        queue_record=queue_record,
+        symbol=symbol,
+        stage=str(queue_record.get("task_type")),
+    )
+    if _requires_sealed_profile_stage_claim(queue_record) or sealed_authority_exists:
+        try:
+            claim_attempt = verify_active_profile_stage_claim(
+                root=base,
+                queue_record=queue_record,
+                stage=str(queue_record.get("task_type")),
+            )
+        except ProfileStageClaimError as exc:
+            raise ResearchAllocationError(str(exc)) from exc
+        if claim_attempt.get("agent") != package["provenance"]["agent"]:
+            raise ResearchAllocationError(
+                "profile provenance agent does not match the sealed active claim"
+            )
     result_path = queue_record.get("manager_screen_result_path")
-    if not isinstance(result_path, str) or not result_path:
-        return
+    if (not isinstance(result_path, str) or not result_path) and full_market_grant is None:
+        return claim_attempt
     binding = package.get("manager_screen_binding")
     answer = package.get("decisive_answer")
     if not isinstance(binding, Mapping) or not isinstance(answer, Mapping):
         raise ResearchAllocationError(
             "manager-bound profile requires manager_screen_binding and decisive_answer"
         )
-    expected = {
-        "result_path": result_path,
-        "result_sha256": queue_record.get("manager_screen_result_sha256"),
-        "decisive_question": queue_record.get("decisive_question"),
-        "evidence_ids": list(queue_record.get("evidence_ids") or []),
-    }
+    locked_remediation = queue_record.get(LOCKED_CALIBRATION_REMEDIATION_FIELD)
+    if (
+        queue_record.get("task_type") == "targeted_followup"
+        and isinstance(locked_remediation, Mapping)
+        and locked_remediation.get("remediation") == "targeted_remediation_candidate"
+    ):
+        _validate_targeted_followup_task_approval(
+            queue_record,
+            repository_root=repository_root,
+        )
+        expected = {
+            "result_path": locked_remediation.get("allocation_result_path"),
+            "result_sha256": locked_remediation.get("allocation_result_sha256"),
+            "decisive_question": locked_remediation.get("decisive_question"),
+            "evidence_ids": list(locked_remediation.get("evidence_ids") or []),
+        }
+        if dict(binding) != expected:
+            raise ResearchAllocationError(
+                "profile manager_screen_binding does not match the locked calibration brief"
+            )
+        if queue_record.get("status") != "running":
+            raise ResearchAllocationError(
+                "manager-bound profile must be claimed before it can be recorded"
+            )
+        if queue_record.get("assigned_agent") != package["provenance"]["agent"]:
+            raise ResearchAllocationError(
+                "manager-bound profile provenance must match the claimed agent"
+            )
+        return claim_attempt
+    if full_market_grant is None:
+        expected = {
+            "result_path": result_path,
+            "result_sha256": queue_record.get("manager_screen_result_sha256"),
+            "decisive_question": queue_record.get("decisive_question"),
+            "evidence_ids": list(queue_record.get("evidence_ids") or []),
+        }
+    else:
+        decision = full_market_grant["decision"]
+        expected = {
+            "result_path": full_market_grant["result_path"],
+            "result_sha256": full_market_grant["result_sha256"],
+            "decisive_question": decision["decisive_question"],
+            "evidence_ids": list(decision["evidence_ids"]),
+        }
     if dict(binding) != expected:
         raise ResearchAllocationError(
             "profile manager_screen_binding does not match the claimed manager decision"
         )
+    if full_market_grant is not None:
+        if queue_record.get("status") != "running":
+            raise ResearchAllocationError(
+                "manager-bound profile must be claimed before it can be recorded"
+            )
+        if queue_record.get("assigned_agent") != package["provenance"]["agent"]:
+            raise ResearchAllocationError(
+                "manager-bound profile provenance must match the claimed agent"
+            )
+        return claim_attempt
     sealed_result_path = (repository_root / result_path).resolve()
     try:
         sealed_result_path.relative_to(repository_root.resolve())
@@ -4081,6 +5921,408 @@ def _validate_manager_bound_submission(
         raise ResearchAllocationError(
             "manager-bound profile provenance must match the claimed agent"
         )
+    return claim_attempt
+
+
+def _sealed_modern_profile_authority_exists(
+    *,
+    base: Path,
+    repository_root: Path,
+    queue_record: Mapping[str, Any],
+    symbol: str,
+    stage: str,
+) -> bool:
+    """Rebuild modern authority from seals when mutable provenance was stripped."""
+
+    if stage not in {"quick_profile", "targeted_followup", "scoped_research", "deep_research"}:
+        return False
+    try:
+        if sealed_profile_stage_claim_authority_exists(
+            root=base,
+            symbol=symbol,
+            stage=stage,
+        ):
+            return True
+    except ProfileStageClaimError as exc:
+        raise ResearchAllocationError(str(exc)) from exc
+
+    relevant_types = {
+        "quick_profile": {
+            "manager_screen_result",
+            "manager_screen_quote_impact_result",
+            "manager_screen_legacy_transition_result",
+            "manager_screen_full_market_allocation_v3_result",
+        },
+        "targeted_followup": {"targeted_followup_approval"},
+        "scoped_research": {"quick_profile_cross_company_selection"},
+        "deep_research": {"scoped_research_cross_company_selection"},
+    }[stage]
+    roots = [base / "manager-screen"] if stage == "quick_profile" else [base / "profiles"]
+    expected_run = queue_record.get("manager_screen_run_id")
+    expected_cycle = queue_record.get("profile_cycle_id")
+    for root in roots:
+        if not root.is_dir():
+            continue
+        for payload_path in sorted(root.rglob("*.json")):
+            if payload_path.name.endswith(".seal.json"):
+                continue
+            seal_path = payload_path.with_name(f"{payload_path.name}.seal.json")
+            if not seal_path.is_file():
+                raise ResearchAllocationError(
+                    "modern profile authority ledger contains a payload without seal"
+                )
+        for seal_path in sorted(root.rglob("*.seal.json")):
+            payload_path = seal_path.with_name(seal_path.name[: -len(".seal.json")])
+            if not payload_path.is_file():
+                raise ResearchAllocationError(
+                    "modern profile authority ledger contains a seal without payload"
+                )
+            try:
+                sealed = verify_sealed(payload_path)
+            except (OSError, SealingError, ValueError) as exc:
+                raise ResearchAllocationError(
+                    "modern profile authority ledger contains an invalid seal"
+                ) from exc
+            if sealed.artifact_type not in relevant_types:
+                continue
+            try:
+                payload = json.loads(payload_path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError) as exc:
+                raise ResearchAllocationError(
+                    "modern profile authority payload is invalid"
+                ) from exc
+            if not isinstance(payload, Mapping):
+                raise ResearchAllocationError("modern profile authority payload must be an object")
+            payload_run = payload.get("manager_screen_run_id", payload.get("run_id"))
+            payload_cycle = payload.get("cycle_id", payload.get("profile_cycle_id"))
+            if isinstance(expected_run, str) and payload_run not in {None, expected_run}:
+                continue
+            if isinstance(expected_cycle, str) and payload_cycle not in {None, expected_cycle}:
+                continue
+            if _sealed_authority_selects_symbol(
+                payload,
+                artifact_type=sealed.artifact_type,
+                symbol=symbol,
+            ):
+                try:
+                    payload_path.resolve().relative_to(repository_root.resolve())
+                except ValueError as exc:
+                    raise ResearchAllocationError(
+                        "modern profile authority path escapes repository root"
+                    ) from exc
+                return True
+    return False
+
+
+def _sealed_authority_selects_symbol(
+    payload: Mapping[str, Any],
+    *,
+    artifact_type: str,
+    symbol: str,
+) -> bool:
+    if artifact_type == "targeted_followup_approval":
+        return payload.get("symbol") == symbol
+    decisions = payload.get("decisions")
+    if isinstance(decisions, list):
+        matching = [
+            row for row in decisions if isinstance(row, Mapping) and row.get("symbol") == symbol
+        ]
+        if len(matching) > 1:
+            raise ResearchAllocationError("modern profile authority duplicates one symbol")
+        if matching:
+            decision = matching[0]
+            return bool(
+                decision.get("decision") == "fund_quick_profile"
+                or decision.get("route") in {"send_to_analyst", "research_candidate"}
+            )
+    ranking = payload.get("ranking")
+    if isinstance(ranking, list):
+        matching = [
+            row for row in ranking if isinstance(row, Mapping) and row.get("symbol") == symbol
+        ]
+        if len(matching) > 1:
+            raise ResearchAllocationError("modern profile stage selection duplicates one symbol")
+        return bool(matching and matching[0].get("selected") is True)
+    return False
+
+
+def _validate_full_market_profile_binding(
+    package: Mapping[str, Any],
+    *,
+    queue_record: Mapping[str, Any],
+    screen_record: Mapping[str, Any],
+    root: Path,
+    repository_root: Path,
+    symbol: str,
+) -> Mapping[str, Any] | None:
+    required = _requires_funded_full_market_grant(queue_record)
+    return _verify_funded_full_market_profile_grant(
+        queue_record=queue_record,
+        screen_record=screen_record,
+        root=root,
+        repository_root=repository_root,
+        symbol=symbol,
+        expected_cycle_id=package.get("cycle_id"),
+        required=required,
+        context="profile record",
+        require_screen_research_brief=True,
+    )
+
+
+def _requires_funded_full_market_grant(record: Mapping[str, Any]) -> bool:
+    return bool(
+        record.get("manager_screen_route") == "research_candidate"
+        or record.get("preceding_stage") == "manager_screen_allocation_v3"
+        or any(record.get(field) is not None for field in FULL_MARKET_ALLOCATION_BINDING_FIELDS)
+    )
+
+
+def _load_full_market_profile_grant_context(
+    *,
+    root: Path,
+    repository_root: Path,
+    run_id: str,
+    verified_result: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Load one verified result/packet pair for semantic profile checks.
+
+    The public full-market verifier authenticates the complete packet and all
+    of its source dependencies.  This loader then keeps the exact packet
+    candidate beside the result decision so claim, record, and follow-up paths
+    cannot validate only the mutable JSONL projection.
+    """
+
+    from .manager_screen_full_market_allocation_v3 import (
+        ManagerScreenFullMarketAllocationV3Error,
+        verify_manager_screen_full_market_allocation_v3_result,
+    )
+
+    try:
+        result = (
+            dict(verified_result)
+            if verified_result is not None
+            else verify_manager_screen_full_market_allocation_v3_result(
+                root=root,
+                run_id=run_id,
+            )
+        )
+    except ManagerScreenFullMarketAllocationV3Error as exc:
+        raise ResearchAllocationError("sealed full-market allocation result is invalid") from exc
+    result_path = (
+        root
+        / "manager-screen"
+        / run_id
+        / "governance"
+        / "allocation-v3"
+        / "full-market"
+        / "result.json"
+    ).resolve()
+    packet_path = result_path.with_name("packet.json")
+    try:
+        result_relative = result_path.relative_to(repository_root.resolve()).as_posix()
+        packet_relative = packet_path.relative_to(repository_root.resolve()).as_posix()
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            "full-market allocation path escapes repository root"
+        ) from exc
+    try:
+        packet_seal = verify_sealed(packet_path)
+        packet = json.loads(packet_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, SealingError) as exc:
+        raise ResearchAllocationError("sealed full-market allocation packet is invalid") from exc
+    if (
+        packet_seal.artifact_type != "manager_screen_full_market_allocation_v3_packet"
+        or not isinstance(packet, Mapping)
+        or packet.get("run_id") != run_id
+        or result.get("run_id") != run_id
+        or result.get("packet_path") != packet_relative
+        or result.get("packet_sha256") != packet_seal.sha256
+        or not re.fullmatch(r"[0-9a-f]{64}", str(result.get("result_sha256")))
+    ):
+        raise ResearchAllocationError("full-market allocation result and packet binding is invalid")
+    raw_decisions = result.get("decisions")
+    raw_candidates = packet.get("candidates")
+    if not isinstance(raw_decisions, list) or not isinstance(raw_candidates, list):
+        raise ResearchAllocationError("full-market allocation grant arrays are invalid")
+    decisions = {
+        item.get("symbol"): item
+        for item in raw_decisions
+        if isinstance(item, Mapping) and isinstance(item.get("symbol"), str)
+    }
+    candidates = {
+        item.get("symbol"): item
+        for item in raw_candidates
+        if isinstance(item, Mapping) and isinstance(item.get("symbol"), str)
+    }
+    if len(decisions) != len(raw_decisions) or len(candidates) != len(raw_candidates):
+        raise ResearchAllocationError(
+            "full-market allocation grant symbols are missing or duplicated"
+        )
+    return {
+        "run_id": run_id,
+        "result": result,
+        "result_path": result_relative,
+        "result_sha256": result["result_sha256"],
+        "packet": packet,
+        "decisions": decisions,
+        "candidates": candidates,
+    }
+
+
+def _full_market_calibration_projection(
+    candidate: Mapping[str, Any],
+) -> dict[str, Any]:
+    calibration = candidate.get("calibration_material_error")
+    if not isinstance(calibration, Mapping):
+        return {}
+    return {
+        "manager_screen_calibration_result_path": calibration.get("calibration_result_path"),
+        "manager_screen_calibration_result_sha256": calibration.get("calibration_result_sha256"),
+        "manager_screen_calibration_review_sha256": calibration.get("review_sha256"),
+        "manager_screen_calibration_adjudication_sha256": calibration.get("adjudication_sha256"),
+    }
+
+
+def _validate_full_market_calibration_projection(
+    record: Mapping[str, Any],
+    *,
+    expected: Mapping[str, Any],
+    context: str,
+) -> None:
+    for field in FULL_MARKET_CALIBRATION_BINDING_FIELDS:
+        if field in expected:
+            if record.get(field) != expected[field]:
+                raise ResearchAllocationError(
+                    f"{context} calibration binding does not match the sealed candidate"
+                )
+        elif field in record:
+            raise ResearchAllocationError(
+                f"{context} has a calibration binding absent from the sealed candidate"
+            )
+
+
+def _verify_funded_full_market_profile_grant(
+    *,
+    queue_record: Mapping[str, Any],
+    screen_record: Mapping[str, Any] | None,
+    root: Path,
+    repository_root: Path,
+    symbol: str,
+    expected_cycle_id: Any,
+    required: bool,
+    context: str,
+    grant_context: Mapping[str, Any] | None = None,
+    require_screen_research_brief: bool = False,
+) -> Mapping[str, Any] | None:
+    """Verify one funded grant against its result, packet, and live projection."""
+
+    result_relative = queue_record.get("manager_screen_allocation_result_path")
+    if result_relative is None:
+        if required:
+            raise ResearchAllocationError(
+                f"{context} is not backed by a funded full-market allocation"
+            )
+        return None
+    if not isinstance(result_relative, str) or not result_relative:
+        raise ResearchAllocationError("full-market allocation result path is invalid")
+    run_id = queue_record.get("manager_screen_run_id")
+    if not isinstance(run_id, str) or not run_id:
+        raise ResearchAllocationError("full-market allocation run binding is missing")
+    loaded = (
+        dict(grant_context)
+        if grant_context is not None
+        else _load_full_market_profile_grant_context(
+            root=root,
+            repository_root=repository_root,
+            run_id=run_id,
+        )
+    )
+    if loaded.get("run_id") != run_id:
+        raise ResearchAllocationError(f"{context} full-market grant context belongs to another run")
+    result = loaded["result"]
+    decision = loaded["decisions"].get(symbol)
+    candidate = loaded["candidates"].get(symbol)
+    expected_relative = loaded["result_path"]
+    common_projection = {
+        "manager_screen_allocation_result_path": expected_relative,
+        "manager_screen_allocation_result_sha256": loaded["result_sha256"],
+        "manager_screen_allocation_candidate_sha256": (
+            decision.get("candidate_sha256") if isinstance(decision, Mapping) else None
+        ),
+        "manager_screen_allocation_decision": "fund_quick_profile",
+    }
+    source_projection = {
+        "manager_screen_run_id": run_id,
+        "manager_screen_batch_id": (
+            candidate.get("prior_queue_row", {}).get("manager_screen_batch_id")
+            if isinstance(candidate, Mapping)
+            and isinstance(candidate.get("prior_queue_row"), Mapping)
+            else None
+        ),
+        "manager_screen_route": (
+            candidate.get("original_route") if isinstance(candidate, Mapping) else None
+        ),
+        "manager_screen_result_path": (
+            candidate.get("effective_decision_source_path")
+            if isinstance(candidate, Mapping)
+            else None
+        ),
+        "manager_screen_result_sha256": (
+            candidate.get("effective_decision_source_sha256")
+            if isinstance(candidate, Mapping)
+            else None
+        ),
+    }
+    if (
+        result.get("run_id") != run_id
+        or not isinstance(decision, Mapping)
+        or not isinstance(candidate, Mapping)
+        or decision.get("decision") != "fund_quick_profile"
+        or decision.get("candidate_sha256") != candidate.get("candidate_sha256")
+        or any(queue_record.get(key) != value for key, value in common_projection.items())
+        or any(queue_record.get(key) != value for key, value in source_projection.items())
+        or queue_record.get("decisive_question") != decision.get("decisive_question")
+        or list(queue_record.get("evidence_ids") or []) != list(decision.get("evidence_ids") or [])
+        or queue_record.get("allocation_sha256") != loaded["result_sha256"]
+        or queue_record.get("profile_cycle_id") != result.get("profile_cycle_id")
+        or expected_cycle_id != result.get("profile_cycle_id")
+        or queue_record.get("research_budget_state") != "funded_quick_profile"
+        or (
+            screen_record is not None
+            and (
+                any(screen_record.get(key) != value for key, value in common_projection.items())
+                or any(screen_record.get(key) != value for key, value in source_projection.items())
+                or screen_record.get("profile_cycle_id") != result.get("profile_cycle_id")
+                or screen_record.get("research_budget_state") != "funded_quick_profile"
+                or screen_record.get("decisive_question") != decision.get("decisive_question")
+                or (
+                    require_screen_research_brief
+                    and list(screen_record.get("evidence") or [])
+                    != list(decision.get("evidence_ids") or [])
+                )
+            )
+        )
+    ):
+        raise ResearchAllocationError(
+            f"{context} does not match its sealed full-market allocation grant"
+        )
+    expected_calibration = _full_market_calibration_projection(candidate)
+    _validate_full_market_calibration_projection(
+        queue_record,
+        expected=expected_calibration,
+        context=f"{context} queue",
+    )
+    if screen_record is not None:
+        _validate_full_market_calibration_projection(
+            screen_record,
+            expected=expected_calibration,
+            context=f"{context} screening",
+        )
+    return {
+        **loaded,
+        "decision": decision,
+        "candidate": candidate,
+    }
 
 
 def _reject_probable_gbk_mojibake(value: Any, *, path: str = "package") -> None:
@@ -4128,6 +6370,29 @@ def _claimed_task_payload(record: Mapping[str, Any], *, idempotent: bool) -> dic
         "manager_screen_batch_id": record.get("manager_screen_batch_id"),
         "manager_screen_result_path": record.get("manager_screen_result_path"),
         "manager_screen_result_sha256": record.get("manager_screen_result_sha256"),
+        "manager_screen_allocation_result_path": record.get(
+            "manager_screen_allocation_result_path"
+        ),
+        "manager_screen_allocation_result_sha256": record.get(
+            "manager_screen_allocation_result_sha256"
+        ),
+        "manager_screen_allocation_candidate_sha256": record.get(
+            "manager_screen_allocation_candidate_sha256"
+        ),
+        "manager_screen_allocation_decision": record.get("manager_screen_allocation_decision"),
+        "manager_screen_calibration_result_path": record.get(
+            "manager_screen_calibration_result_path"
+        ),
+        "manager_screen_calibration_result_sha256": record.get(
+            "manager_screen_calibration_result_sha256"
+        ),
+        "manager_screen_calibration_review_sha256": record.get(
+            "manager_screen_calibration_review_sha256"
+        ),
+        "manager_screen_calibration_adjudication_sha256": record.get(
+            "manager_screen_calibration_adjudication_sha256"
+        ),
+        "profile_cycle_id": record.get("profile_cycle_id"),
         "decisive_question": record.get("decisive_question"),
         "evidence_ids": record.get("evidence_ids") or [],
         "idempotent": idempotent,
@@ -4267,7 +6532,16 @@ def _stage_capacity(policy: Mapping[str, Any], stage: str) -> int | None:
 def _manager_screen_run_id_for_cohort(
     cohort: list[Mapping[str, Any]],
 ) -> str | None:
-    run_ids = {item.get("manager_screen_run_id") for item in cohort}
+    bound = [_has_manager_screen_provenance(item) for item in cohort]
+    if any(bound) and not all(bound):
+        raise ResearchAllocationError("profile cohort mixes manager-bound and legacy predecessors")
+    run_ids = {
+        _manager_screen_run_id_for_record(
+            item,
+            context="manager-bound profile cohort",
+        )
+        for item in cohort
+    }
     if run_ids == {None}:
         return None
     if len(run_ids) != 1 or not all(isinstance(run_id, str) for run_id in run_ids):
@@ -4275,6 +6549,41 @@ def _manager_screen_run_id_for_cohort(
             "manager-bound profile cohort spans multiple manager-screen runs"
         )
     return str(next(iter(run_ids)))
+
+
+def _has_manager_screen_provenance(record: Mapping[str, Any]) -> bool:
+    if any(record.get(field) is not None for field in MANAGER_SCREEN_PROVENANCE_FIELDS):
+        return True
+    history = record.get("stage_history")
+    return bool(
+        isinstance(history, list)
+        and any(
+            isinstance(item, Mapping)
+            and isinstance(item.get("stage"), str)
+            and (
+                str(item["stage"]).startswith("manager_screen")
+                or item.get("stage") == "legacy_transition"
+            )
+            for item in history
+        )
+    )
+
+
+def _manager_screen_run_id_for_record(
+    record: Mapping[str, Any],
+    *,
+    context: str,
+) -> str | None:
+    value = record.get("manager_screen_run_id")
+    if not _has_manager_screen_provenance(record):
+        if value is None:
+            return None
+        if not isinstance(value, str) or not value:
+            raise ResearchAllocationError(f"{context} manager-screen run_id is invalid")
+        return value
+    if not isinstance(value, str) or not value:
+        raise ResearchAllocationError(f"{context} cannot drop its manager-screen run binding")
+    return value
 
 
 def _research_policy_binding(
@@ -4328,6 +6637,85 @@ def _normalize_research_policy_binding(value: Any) -> dict[str, Any]:
     return normalized
 
 
+def _research_policy_document_for_binding(
+    *,
+    repository_root: Path,
+    policy_binding: Mapping[str, Any],
+) -> dict[str, Any]:
+    normalized = _normalize_research_policy_binding(policy_binding)
+    policy_path = (repository_root / normalized["path"]).resolve()
+    try:
+        policy_path.relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError("research-allocation policy escapes repository root") from exc
+    try:
+        document = json.loads(policy_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ResearchAllocationError("research-allocation policy is invalid") from exc
+    if not isinstance(document, Mapping) or not isinstance(document.get("payload"), Mapping):
+        raise ResearchAllocationError("research-allocation policy document is invalid")
+    actual = _research_policy_binding(
+        repository_root=repository_root,
+        policy=document["payload"],
+        policy_path=policy_path,
+    )
+    if actual != normalized:
+        raise ResearchAllocationError(
+            "research-allocation policy differs from its requested run binding"
+        )
+    return dict(document)
+
+
+def _verify_run_research_policy_snapshot(
+    *,
+    base: Path,
+    run_id: str,
+    expected_policy: Mapping[str, Any],
+    context: str,
+) -> dict[str, Any]:
+    """Authenticate a run policy without consulting the mutable live file."""
+
+    normalized = _normalize_research_policy_binding(expected_policy)
+    run_dir = base / "manager-screen" / run_id
+    contract_path = run_dir / "research-policy.json"
+    snapshot_path = run_dir / "research-policy.snapshot.json"
+    try:
+        contract_seal = verify_sealed(contract_path)
+        snapshot_seal = verify_sealed(snapshot_path)
+        contract = json.loads(contract_path.read_text(encoding="utf-8"))
+        snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, SealingError, ValueError) as exc:
+        raise ResearchAllocationError(f"{context} run policy contract/snapshot is invalid") from exc
+    contract_keys = {
+        "schema_version",
+        "run_id",
+        "bound_at",
+        "policy",
+        "portfolio_action",
+    }
+    snapshot_payload = snapshot.get("payload") if isinstance(snapshot, Mapping) else None
+    if (
+        contract_seal.artifact_type != "manager_screen_research_policy_contract"
+        or snapshot_seal.artifact_type != "manager_screen_research_policy_snapshot"
+        or not isinstance(contract, Mapping)
+        or set(contract) != contract_keys
+        or contract.get("schema_version") != 1
+        or contract.get("run_id") != run_id
+        or contract.get("portfolio_action") is not None
+        or _normalize_research_policy_binding(contract.get("policy")) != normalized
+        or not isinstance(snapshot, Mapping)
+        or snapshot.get("kind") != PolicyKind.RESEARCH_ALLOCATION.value
+        or snapshot.get("policy_id") != normalized["policy_id"]
+        or snapshot.get("version") != normalized["version"]
+        or not isinstance(snapshot_payload, Mapping)
+        or hashlib.sha256(canonical_json_bytes(dict(snapshot_payload))).hexdigest()
+        != normalized["payload_sha256"]
+    ):
+        raise ResearchAllocationError(f"{context} run policy contract/snapshot does not match")
+    _datetime(contract.get("bound_at"), "research_policy.bound_at")
+    return dict(snapshot)
+
+
 def _bind_research_policy_for_run(
     *,
     base: Path,
@@ -4342,6 +6730,8 @@ def _bind_research_policy_for_run(
             f"manager-screen research budget must use the canonical {canonical_path} policy"
         )
     contract_path = base / "manager-screen" / run_id / "research-policy.json"
+    snapshot_path = contract_path.with_name("research-policy.snapshot.json")
+    repository_root = base.parent.parent.resolve()
     contract = {
         "schema_version": 1,
         "run_id": run_id,
@@ -4375,14 +6765,320 @@ def _bind_research_policy_for_run(
             raise ResearchAllocationError(
                 f"research-allocation policy is already bound for manager-screen run {run_id}"
             )
+        snapshot_pair = (
+            snapshot_path.exists(),
+            snapshot_path.with_name(f"{snapshot_path.name}.seal.json").exists(),
+        )
+        if snapshot_pair[0] != snapshot_pair[1]:
+            raise ResearchAllocationError(
+                f"manager-screen research policy snapshot is only partially sealed: {run_id}"
+            )
+        if snapshot_pair == (False, False):
+            policy_document = _research_policy_document_for_binding(
+                repository_root=repository_root,
+                policy_binding=normalized,
+            )
+            seal_json(
+                snapshot_path,
+                policy_document,
+                artifact_type="manager_screen_research_policy_snapshot",
+                sealed_at=bound_at,
+            )
+        _verify_run_research_policy_snapshot(
+            base=base,
+            run_id=run_id,
+            expected_policy=normalized,
+            context="manager-screen research policy",
+        )
         return dict(existing)
+    policy_document = _research_policy_document_for_binding(
+        repository_root=repository_root,
+        policy_binding=normalized,
+    )
     seal_json(
         contract_path,
         contract,
         artifact_type="manager_screen_research_policy_contract",
         sealed_at=bound_at,
     )
+    seal_json(
+        snapshot_path,
+        policy_document,
+        artifact_type="manager_screen_research_policy_snapshot",
+        sealed_at=bound_at,
+    )
+    _verify_run_research_policy_snapshot(
+        base=base,
+        run_id=run_id,
+        expected_policy=normalized,
+        context="manager-screen research policy",
+    )
     return contract
+
+
+def _sealed_stage_evidence_proves(
+    evidence_stages: set[str],
+    *,
+    stage: str,
+) -> bool:
+    """Apply the conservative inherited-stage high-watermark rules."""
+
+    if stage == "targeted_followup":
+        return stage in evidence_stages
+    if stage == "scoped_research":
+        return bool(evidence_stages & {"scoped_research", "deep_research"})
+    if stage == "deep_research":
+        return stage in evidence_stages
+    raise ResearchAllocationError(f"unsupported sealed inherited stage: {stage}")
+
+
+def _sealed_inherited_stage_commitment_ledger(
+    *,
+    base: Path,
+    repository_root: Path,
+    manager_screen_run_id: str,
+    stage: str,
+) -> dict[str, dict[str, Any]]:
+    """Rebuild inherited stage purchases without consulting the mutable queue.
+
+    A recorded legacy transition freezes both the formal artifact bound for an
+    adoption and the queue-derived stage high-watermark in its sealed plan.
+    The allocation-v3 migration contract independently freezes any formal
+    progress that made a historical quick-profile commitment irreversible.
+    Both sources can describe the same purchase, so this ledger conserves one
+    budget per ``(stage, symbol)`` while preferring the legacy transition as
+    the older canonical source.
+    """
+
+    _sealed_stage_evidence_proves(set(), stage=stage)
+    repository = repository_root.resolve()
+    ledger: dict[str, dict[str, Any]] = {}
+
+    transition_dir = base / "manager-screen" / manager_screen_run_id / "legacy-transition-001"
+    if transition_dir.exists():
+        from .legacy_transition import LegacyTransitionError, _verify_transition_dir
+
+        try:
+            plan_path = transition_dir / "plan.json"
+            plan_seal = verify_sealed(plan_path)
+            plan_preview = json.loads(plan_path.read_text(encoding="utf-8"))
+            preview_members = plan_preview.get("members")
+            if plan_seal.artifact_type != "manager_screen_legacy_transition_plan" or not isinstance(
+                preview_members, list
+            ):
+                raise ResearchAllocationError("legacy transition stage-evidence preview is invalid")
+            has_stage_evidence = any(
+                isinstance(member, Mapping)
+                and (
+                    "research_stage_high_watermark" in member
+                    or isinstance(member.get("formal_source"), Mapping)
+                )
+                for member in preview_members
+            )
+            if not has_stage_evidence:
+                transition = None
+            else:
+                transition = _verify_transition_dir(
+                    transition_dir,
+                    repository_root=repository,
+                    require_packet=True,
+                    require_result=True,
+                )
+        except (
+            json.JSONDecodeError,
+            LegacyTransitionError,
+            OSError,
+            SealingError,
+            ValueError,
+        ) as exc:
+            raise ResearchAllocationError(
+                "sealed inherited stage ledger has an invalid legacy transition: "
+                f"{manager_screen_run_id}"
+            ) from exc
+        if transition is None:
+            transition_members: list[Mapping[str, Any]] = []
+            result_relative = ""
+            result_sha256 = ""
+        else:
+            result_path = transition["result_path"].resolve()
+            result_relative = result_path.relative_to(repository).as_posix()
+            result_sha256 = transition["result_seal"].sha256
+            transition_members = transition["plan"]["members"]
+        for member in transition_members:
+            evidence_stages = {
+                value
+                for value in (
+                    member.get("research_stage_high_watermark"),
+                    (member.get("formal_source") or {}).get("stage"),
+                )
+                if isinstance(value, str)
+            }
+            if not _sealed_stage_evidence_proves(evidence_stages, stage=stage):
+                continue
+            symbol = str(member["symbol"])
+            ledger[symbol] = {
+                "manager_screen_run_id": manager_screen_run_id,
+                "stage": stage,
+                "symbol": symbol,
+                "profile_cycle_id": "legacy-transition-001",
+                "selection_path": result_relative,
+                "selection_sha256": result_sha256,
+            }
+
+    contract_path = (
+        base
+        / "manager-screen"
+        / manager_screen_run_id
+        / "governance"
+        / "allocation-v3"
+        / "contract.json"
+    )
+    contract_pair = (contract_path.exists(), _seal_sidecar(contract_path).exists())
+    if contract_pair != (False, False):
+        from .manager_screen_allocation_v3 import (
+            ManagerScreenAllocationV3Error,
+            verify_manager_screen_allocation_v3_contract,
+        )
+
+        try:
+            contract = verify_manager_screen_allocation_v3_contract(
+                root=base,
+                run_id=manager_screen_run_id,
+            )
+            contract_seal = verify_sealed(contract_path)
+        except (
+            ManagerScreenAllocationV3Error,
+            OSError,
+            SealingError,
+            ValueError,
+        ) as exc:
+            raise ResearchAllocationError(
+                "sealed inherited stage ledger has an invalid allocation-v3 contract: "
+                f"{manager_screen_run_id}"
+            ) from exc
+        contract_relative = contract_path.resolve().relative_to(repository).as_posix()
+        for classification in contract["commitment_classification"]:
+            if classification["commitment_class"] != "irreversible":
+                continue
+            evidence_stages = {
+                str(reference["research_stage"]) for reference in classification["sealed_progress"]
+            }
+            if not _sealed_stage_evidence_proves(evidence_stages, stage=stage):
+                continue
+            symbol = str(classification["symbol"])
+            ledger.setdefault(
+                symbol,
+                {
+                    "manager_screen_run_id": manager_screen_run_id,
+                    "stage": stage,
+                    "symbol": symbol,
+                    "profile_cycle_id": "allocation-v3-migration",
+                    "selection_path": contract_relative,
+                    "selection_sha256": contract_seal.sha256,
+                },
+            )
+    return ledger
+
+
+def _sealed_stage_commitment_ledger(
+    *,
+    base: Path,
+    repository_root: Path,
+    manager_screen_run_id: str,
+    next_stage: str,
+) -> dict[str, dict[str, Any]]:
+    """Rebuild one run's L3/L4 purchases from sealed canonical selections."""
+
+    configs = {
+        "scoped_research": {
+            "evaluated_stage": "quick_profile",
+            "selection_name": "quick-profile-selection.json",
+            "comparison_name": "quick-profile-comparison.json",
+        },
+        "deep_research": {
+            "evaluated_stage": "scoped_research",
+            "selection_name": "scoped-research-selection.json",
+            "comparison_name": "scoped-research-comparison.json",
+        },
+    }
+    config = configs.get(next_stage)
+    if config is None:
+        raise ResearchAllocationError(f"unsupported sealed stage ledger: {next_stage}")
+    ledger: dict[str, dict[str, Any]] = {}
+    profiles_root = base / "profiles"
+    cycle_dirs = (
+        sorted(path for path in profiles_root.iterdir() if path.is_dir())
+        if profiles_root.is_dir()
+        else []
+    )
+    for cycle_dir in cycle_dirs:
+        selection_path = cycle_dir / config["selection_name"]
+        pair = (selection_path.exists(), _seal_sidecar(selection_path).exists())
+        if pair == (False, False):
+            continue
+        if pair[0] != pair[1]:
+            raise ResearchAllocationError(
+                f"sealed {next_stage} commitment is only partially present: {cycle_dir.name}"
+            )
+        try:
+            sealed = verify_sealed(selection_path)
+            payload = json.loads(selection_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError, SealingError) as exc:
+            raise ResearchAllocationError(
+                f"sealed {next_stage} commitment is invalid: {cycle_dir.name}"
+            ) from exc
+        cycle = _text(payload.get("cycle_id"), "selection.cycle_id")
+        if cycle != cycle_dir.name:
+            raise ResearchAllocationError(
+                f"sealed {next_stage} commitment cycle path is not canonical: {cycle_dir.name}"
+            )
+        evaluated_stage = config["evaluated_stage"]
+        _validate_profile_selection_payload(
+            payload,
+            artifact_type=sealed.artifact_type,
+            cycle=cycle,
+            stage=evaluated_stage,
+            next_stage=next_stage,
+        )
+        if payload.get("manager_screen_run_id") != manager_screen_run_id:
+            continue
+        _validate_profile_stage_selection_semantics(
+            payload,
+            base=base,
+            repository_root=repository_root,
+            cycle=cycle,
+            stage=evaluated_stage,
+            next_stage=next_stage,
+            comparison_name=config["comparison_name"],
+        )
+        relative = selection_path.relative_to(repository_root).as_posix()
+        for row in payload["ranking"]:
+            if row["selected"] is not True:
+                continue
+            symbol = str(row["symbol"])
+            prior = ledger.get(symbol)
+            if prior is not None:
+                raise ResearchAllocationError(
+                    f"duplicate sealed {next_stage} budget across profile cycles: "
+                    f"{symbol} in {prior['selection_path']} and {relative}"
+                )
+            ledger[symbol] = {
+                "manager_screen_run_id": manager_screen_run_id,
+                "stage": next_stage,
+                "symbol": symbol,
+                "profile_cycle_id": cycle,
+                "selection_path": relative,
+                "selection_sha256": sealed.sha256,
+            }
+    inherited = _sealed_inherited_stage_commitment_ledger(
+        base=base,
+        repository_root=repository_root,
+        manager_screen_run_id=manager_screen_run_id,
+        stage=next_stage,
+    )
+    for symbol, commitment in inherited.items():
+        ledger.setdefault(symbol, commitment)
+    return ledger
 
 
 def _committed_stage_count_for_run(

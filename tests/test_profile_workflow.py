@@ -122,6 +122,9 @@ def _package(**changes) -> dict:
 
 def _manager_bound_package(queue_record: dict, **changes) -> dict:
     package = _package()
+    package["provenance"]["generated_at"] = (
+        RECORDED_AT - dt.timedelta(minutes=1)
+    ).isoformat()
     package.update(
         {
             "manager_screen_binding": {
@@ -188,6 +191,100 @@ def _coverage(root: Path, *, extra_queue: list[dict] | None = None) -> None:
     write_jsonl(coverage_root / "runs.jsonl", [], sort_key="run_id")
 
 
+def _seal_run_bound_stage_selection(
+    root: Path,
+    *,
+    cycle_id: str,
+    manager_screen_run_id: str,
+    evaluated_stage: str,
+    next_stage: str,
+    symbol: str,
+    policy: dict | None = None,
+    sealed_at: dt.datetime = RECORDED_AT,
+) -> Path:
+    """Seal the minimum modern chain used by the run-level stage ledger."""
+
+    import trading_os.research_assets.profile_workflow as workflow
+    from trading_os.research_assets.sealing import seal_json
+
+    policy_payload = policy or _policy()
+    coverage_root = root / "coverage" / "cn-a"
+    policy_binding = workflow._research_policy_binding(
+        repository_root=root,
+        policy=policy_payload,
+        policy_path="policies/research-allocation.json",
+    )
+    workflow._bind_research_policy_for_run(
+        base=coverage_root,
+        run_id=manager_screen_run_id,
+        policy_binding=policy_binding,
+        bound_at=sealed_at - dt.timedelta(minutes=2),
+    )
+    names = {
+        "quick_profile": (
+            "quick-profile-comparison.json",
+            "quick-profile-selection.json",
+        ),
+        "scoped_research": (
+            "scoped-research-comparison.json",
+            "scoped-research-selection.json",
+        ),
+    }
+    comparison_name, selection_name = names[evaluated_stage]
+    cycle_dir = coverage_root / "profiles" / cycle_id
+    comparison_path = cycle_dir / comparison_name
+    predecessor_path = "coverage/cn-a/profiles/predecessor/selection.json"
+    predecessor_sha256 = "a" * 64
+    comparison_seal = seal_json(
+        comparison_path,
+        {
+            "schema_version": 1,
+            "cycle_id": cycle_id,
+            "evaluated_stage": evaluated_stage,
+            "next_stage": next_stage,
+            "predecessor_selection_path": predecessor_path,
+            "predecessor_selection_sha256": predecessor_sha256,
+            "portfolio_action": None,
+        },
+        artifact_type=f"{evaluated_stage}_comparison_packet",
+        sealed_at=sealed_at - dt.timedelta(minutes=1),
+    )
+    selection_path = cycle_dir / selection_name
+    seal_json(
+        selection_path,
+        {
+            "schema_version": 1,
+            "cycle_id": cycle_id,
+            "manager_screen_run_id": manager_screen_run_id,
+            "evaluated_stage": evaluated_stage,
+            "next_stage": next_stage,
+            "predecessor_selection_path": predecessor_path,
+            "predecessor_selection_sha256": predecessor_sha256,
+            "comparison_path": comparison_path.relative_to(root).as_posix(),
+            "comparison_sha256": comparison_seal.sha256,
+            "cohort_count": 1,
+            "eligible_count": 1,
+            "selected_count": 1,
+            "next_stage_effort_budget_hours": float(
+                policy_payload["effort_budget_hours"][next_stage]
+            ),
+            "research_policy": policy_binding,
+            "agent_decision": {
+                "schema_version": 1,
+                "cycle_id": cycle_id,
+                "evaluated_stage": evaluated_stage,
+                "comparison_sha256": comparison_seal.sha256,
+                "decisions": [],
+            },
+            "ranking": [{"symbol": symbol, "selected": True}],
+            "portfolio_action": None,
+        },
+        artifact_type=f"{evaluated_stage}_cross_company_selection",
+        sealed_at=sealed_at,
+    )
+    return selection_path
+
+
 def _manager_bound_followup_candidate(
     root: Path,
     *,
@@ -235,6 +332,7 @@ def _manager_bound_followup_candidate(
     queue[0].update(
         {
             "preceding_stage": "manager_screen",
+            "profile_cycle_id": "2026-07-26-test-cycle",
             "manager_screen_run_id": "manager-run",
             "manager_screen_batch_id": "batch-001",
             "manager_screen_result_path": result_path.relative_to(root).as_posix(),
@@ -257,6 +355,9 @@ def _manager_bound_followup_candidate(
     package["profile"]["valuation"]["base_expected_annual_return"] = 0.06
     package["profile"]["valuation"]["bull_expected_annual_return"] = 0.12
     package["provenance"]["agent"] = research_agent
+    package["provenance"]["generated_at"] = (
+        RECORDED_AT - dt.timedelta(minutes=1)
+    ).isoformat()
     result = record_profile_package(
         package,
         root=coverage_root,
@@ -265,6 +366,71 @@ def _manager_bound_followup_candidate(
         recorded_at=RECORDED_AT,
     )
     assert result["next_stage"] == "targeted_followup_candidate"
+    return coverage_root
+
+
+def _manager_bound_running_quick_profile(
+    root: Path,
+    *,
+    agent: str = "/root/manager-bound-researcher",
+) -> Path:
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import claim_profile_task
+    from trading_os.research_assets.sealing import seal_json
+
+    _coverage(root)
+    coverage_root = root / "coverage" / "cn-a"
+    result_path = (
+        coverage_root / "manager-screen" / "manager-run" / "batch-001" / "result.json"
+    )
+    question = "Can sealed evidence answer the decisive question?"
+    evidence_ids = ["snapshot:CN:600519"]
+    sealed = seal_json(
+        result_path,
+        {
+            "schema_version": 1,
+            "run_id": "manager-run",
+            "batch_id": "batch-001",
+            "manager": {
+                "agent": "/root/investment-manager",
+                "model": "test-model",
+                "tools": ["sealed fixture"],
+            },
+            "decisions": [
+                {
+                    "symbol": "CN:600519",
+                    "route": "send_to_analyst",
+                    "decisive_question": question,
+                    "evidence_ids": evidence_ids,
+                }
+            ],
+            "portfolio_action": None,
+        },
+        artifact_type="manager_screen_result",
+        sealed_at=RECORDED_AT - dt.timedelta(minutes=2),
+    )
+    queue_path = coverage_root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "preceding_stage": "manager_screen",
+            "profile_cycle_id": "2026-07-26-test-cycle",
+            "manager_screen_run_id": "manager-run",
+            "manager_screen_batch_id": "batch-001",
+            "manager_screen_result_path": result_path.relative_to(root).as_posix(),
+            "manager_screen_result_sha256": sealed.sha256,
+            "manager_screen_route": "send_to_analyst",
+            "decisive_question": question,
+            "evidence_ids": evidence_ids,
+        }
+    )
+    write_jsonl(queue_path, queue)
+    claim_profile_task(
+        root=coverage_root,
+        agent=agent,
+        claimed_at=RECORDED_AT - dt.timedelta(minutes=1),
+        symbol="CN:600519",
+    )
     return coverage_root
 
 
@@ -475,6 +641,7 @@ def test_manager_screen_profile_cohort_supersedes_legacy_allocation(
     from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
     from trading_os.research_assets.profile_workflow import (
         build_profile_comparison_packet,
+        claim_profile_task,
         finalize_profile_stage_with_agent_decisions,
         record_profile_package,
     )
@@ -515,9 +682,7 @@ def test_manager_screen_profile_cohort_supersedes_legacy_allocation(
     queue[0].update(
         {
             "preceding_stage": "manager_screen",
-            "status": "running",
-            "assigned_agent": "/root/test-company",
-            "started_at": (RECORDED_AT - dt.timedelta(minutes=1)).isoformat(),
+            "profile_cycle_id": "2026-07-26-test-cycle",
             "manager_screen_result_path": predecessor_path.relative_to(tmp_path).as_posix(),
             "manager_screen_result_sha256": sealed.sha256,
             "manager_screen_run_id": "current",
@@ -539,9 +704,24 @@ def test_manager_screen_profile_cohort_supersedes_legacy_allocation(
     )
     write_jsonl(queue_path, queue)
 
-    bound_queue = next(item for item in queue if item["symbol"] == "CN:600519")
+    claim_profile_task(
+        root=coverage_root,
+        agent="/root/test-company",
+        claimed_at=RECORDED_AT - dt.timedelta(minutes=1),
+        symbol="CN:600519",
+    )
+
+    bound_queue = next(
+        item
+        for item in read_jsonl(queue_path)
+        if item["symbol"] == "CN:600519"
+    )
+    manager_bound_package = _manager_bound_package(bound_queue)
+    manager_bound_package["provenance"]["generated_at"] = (
+        RECORDED_AT - dt.timedelta(minutes=1)
+    ).isoformat()
     recorded = record_profile_package(
-        _manager_bound_package(bound_queue),
+        manager_bound_package,
         root=coverage_root,
         policy=_policy(),
         policy_reference="research-allocation.default@1.0.0",
@@ -568,25 +748,28 @@ def test_manager_screen_profile_cohort_supersedes_legacy_allocation(
     packet = json.loads((tmp_path / comparison["comparison_path"]).read_text(encoding="utf-8"))
     assert [row["symbol"] for row in packet["rows"]] == ["CN:600519"]
 
-    queue = read_jsonl(queue_path)
-    queue.append(
-        {
-            "symbol": "CN:000002",
-            "name": "prior-cycle-selection",
-            "task_type": "scoped_research",
-            "status": "completed",
-            "manager_screen_run_id": "current",
-            "manager_screen_batch_id": "batch-000",
-            "manager_screen_result_path": (
-                "coverage/cn-a/manager-screen/current/batch-000/result.json"
-            ),
-            "profile_cycle_id": "2026-07-25-prior-cycle",
-        }
+    policy_path = tmp_path / "policies" / "research-allocation.json"
+    policy_document = json.loads(policy_path.read_text(encoding="utf-8"))
+    policy_document["payload"]["stage_capacity_per_cycle"]["scoped_research"] = 1
+    policy_document["payload"]["stage_capacity_per_run"]["scoped_research"] = 1
+    policy_path.write_text(
+        json.dumps(policy_document, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
     )
-    write_jsonl(queue_path, queue)
-    policy = copy.deepcopy(_policy())
-    policy["stage_capacity_per_cycle"]["scoped_research"] = 1
-    policy["stage_capacity_per_run"]["scoped_research"] = 1
+    policy = policy_document["payload"]
+    _seal_run_bound_stage_selection(
+        tmp_path,
+        cycle_id="2026-07-25-prior-cycle",
+        manager_screen_run_id="current",
+        evaluated_stage="quick_profile",
+        next_stage="scoped_research",
+        symbol="CN:000002",
+        policy=policy,
+        sealed_at=RECORDED_AT - dt.timedelta(hours=1),
+    )
+    # The mutable queue deliberately contains no trace of the prior purchase.
+    # Run capacity must be rebuilt from the canonical sealed selection instead.
+    assert all(item["symbol"] != "CN:000002" for item in read_jsonl(queue_path))
     decisions = {
         "schema_version": 1,
         "cycle_id": "2026-07-26-test-cycle",
@@ -628,6 +811,210 @@ def test_manager_screen_profile_cohort_supersedes_legacy_allocation(
             decisions=decisions,
             finalized_at=RECORDED_AT + dt.timedelta(minutes=3),
         )
+
+
+@pytest.mark.parametrize(
+    ("evaluated_stage", "next_stage"),
+    [
+        ("quick_profile", "scoped_research"),
+        ("scoped_research", "deep_research"),
+    ],
+)
+@pytest.mark.parametrize("queue_tamper", ["deleted", "downgraded"])
+def test_sealed_stage_ledger_survives_queue_tamper(
+    tmp_path: Path,
+    evaluated_stage: str,
+    next_stage: str,
+    queue_tamper: str,
+):
+    import trading_os.research_assets.profile_workflow as workflow
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    selection_path = _seal_run_bound_stage_selection(
+        tmp_path,
+        cycle_id="prior-cycle",
+        manager_screen_run_id="manager-run",
+        evaluated_stage=evaluated_stage,
+        next_stage=next_stage,
+        symbol="CN:000001",
+    )
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue.append(
+        {
+            "symbol": "CN:000001",
+            "name": "prior purchase",
+            "task_type": next_stage,
+            "status": "completed",
+            "manager_screen_run_id": "manager-run",
+            "profile_cycle_id": "prior-cycle",
+        }
+    )
+    if queue_tamper == "deleted":
+        queue = [item for item in queue if item["symbol"] != "CN:000001"]
+    else:
+        prior = next(item for item in queue if item["symbol"] == "CN:000001")
+        prior.update(
+            {
+                "task_type": "manager_screen",
+                "status": "pending",
+                "manager_screen_run_id": None,
+            }
+        )
+    write_jsonl(queue_path, queue)
+
+    ledger = workflow._sealed_stage_commitment_ledger(
+        base=root,
+        repository_root=tmp_path,
+        manager_screen_run_id="manager-run",
+        next_stage=next_stage,
+    )
+    assert list(ledger) == ["CN:000001"]
+    assert ledger["CN:000001"]["selection_path"] == (
+        selection_path.relative_to(tmp_path).as_posix()
+    )
+
+
+@pytest.mark.parametrize(
+    ("evaluated_stage", "next_stage"),
+    [
+        ("quick_profile", "scoped_research"),
+        ("scoped_research", "deep_research"),
+    ],
+)
+def test_sealed_stage_ledger_rejects_duplicate_symbol_across_cycles(
+    tmp_path: Path,
+    evaluated_stage: str,
+    next_stage: str,
+):
+    import trading_os.research_assets.profile_workflow as workflow
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    for offset, cycle_id in enumerate(("prior-cycle-a", "prior-cycle-b")):
+        _seal_run_bound_stage_selection(
+            tmp_path,
+            cycle_id=cycle_id,
+            manager_screen_run_id="manager-run",
+            evaluated_stage=evaluated_stage,
+            next_stage=next_stage,
+            symbol="CN:000001",
+            sealed_at=RECORDED_AT + dt.timedelta(minutes=offset),
+        )
+
+    with pytest.raises(
+        ResearchAllocationError,
+        match=f"duplicate sealed {next_stage} budget across profile cycles",
+    ):
+        workflow._sealed_stage_commitment_ledger(
+            base=root,
+            repository_root=tmp_path,
+            manager_screen_run_id="manager-run",
+            next_stage=next_stage,
+        )
+
+
+@pytest.mark.parametrize(
+    ("evaluated_stage", "next_stage", "selection_name"),
+    [
+        ("quick_profile", "scoped_research", "quick-profile-selection.json"),
+        (
+            "scoped_research",
+            "deep_research",
+            "scoped-research-selection.json",
+        ),
+    ],
+)
+def test_sealed_stage_ledger_rejects_run_bound_selection_without_modern_chain(
+    tmp_path: Path,
+    evaluated_stage: str,
+    next_stage: str,
+    selection_name: str,
+):
+    import trading_os.research_assets.profile_workflow as workflow
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+    from trading_os.research_assets.sealing import seal_json
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    selection_path = root / "profiles" / "incomplete-cycle" / selection_name
+    seal_json(
+        selection_path,
+        {
+            "schema_version": 1,
+            "cycle_id": "incomplete-cycle",
+            "manager_screen_run_id": "manager-run",
+            "evaluated_stage": evaluated_stage,
+            "next_stage": next_stage,
+            "cohort_count": 1,
+            "eligible_count": 1,
+            "selected_count": 1,
+            "next_stage_effort_budget_hours": 4.0,
+            "ranking": [{"symbol": "CN:000001", "selected": True}],
+            "portfolio_action": None,
+        },
+        artifact_type=f"{evaluated_stage}_cross_company_selection",
+        sealed_at=RECORDED_AT,
+    )
+
+    with pytest.raises(
+        ResearchAllocationError,
+        match=f"sealed {evaluated_stage} selection has an incomplete modern authorization chain",
+    ):
+        workflow._sealed_stage_commitment_ledger(
+            base=root,
+            repository_root=tmp_path,
+            manager_screen_run_id="manager-run",
+            next_stage=next_stage,
+        )
+
+
+def test_sealed_stage_ledger_grandfathers_unbound_partial_modern_selection(
+    tmp_path: Path,
+):
+    import trading_os.research_assets.profile_workflow as workflow
+    from trading_os.research_assets.sealing import seal_json
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    selection_path = root / "profiles" / "legacy-cycle" / "quick-profile-selection.json"
+    seal_json(
+        selection_path,
+        {
+            "schema_version": 1,
+            "cycle_id": "legacy-cycle",
+            "evaluated_stage": "quick_profile",
+            "next_stage": "scoped_research",
+            "comparison_path": (
+                "coverage/cn-a/profiles/legacy-cycle/quick-profile-comparison.json"
+            ),
+            "comparison_sha256": "b" * 64,
+            "predecessor_selection_path": "coverage/cn-a/triage/legacy/selection.json",
+            "predecessor_selection_sha256": "c" * 64,
+            "agent_decision": {},
+            "cohort_count": 1,
+            "eligible_count": 1,
+            "selected_count": 1,
+            "next_stage_effort_budget_hours": 4.0,
+            "ranking": [{"symbol": "CN:000001", "selected": True}],
+            "portfolio_action": None,
+        },
+        artifact_type="quick_profile_cross_company_selection",
+        sealed_at=RECORDED_AT,
+    )
+
+    assert (
+        workflow._sealed_stage_commitment_ledger(
+            base=root,
+            repository_root=tmp_path,
+            manager_screen_run_id="manager-run",
+            next_stage="scoped_research",
+        )
+        == {}
+    )
 
 
 def test_manager_screen_profile_finalize_rejects_sealed_legacy_selection_replay(
@@ -840,6 +1227,7 @@ def test_scoped_research_also_waits_for_peer_comparison_before_deep_research(
 ):
     from trading_os.research_assets.coverage_store import read_jsonl
     from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
         finalize_profile_stage,
         record_profile_package,
     )
@@ -860,6 +1248,12 @@ def test_scoped_research_also_waits_for_peer_comparison_before_deep_research(
         stage="quick_profile",
         policy=policy,
         finalized_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    claim_profile_task(
+        root=root,
+        agent="/root/test-company",
+        claimed_at=RECORDED_AT + dt.timedelta(minutes=2),
+        symbol="CN:600519",
     )
 
     scoped_package = _package()
@@ -1107,21 +1501,48 @@ def test_claim_profile_task_blocks_revocable_v3_commitments(
     from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
     from trading_os.research_assets.profile_workflow import claim_profile_task
     from trading_os.research_assets.research_allocation import ResearchAllocationError
+    from trading_os.research_assets.sealing import seal_json
 
     _coverage(tmp_path)
     root = tmp_path / "coverage" / "cn-a"
     run_id = "2026-07-31-run"
     queue_path = root / "research_queue.jsonl"
     queue = read_jsonl(queue_path)
+    result_path = root / "manager-screen" / run_id / "batch-001" / "result.json"
+    result_seal = seal_json(
+        result_path,
+        {
+            "schema_version": 1,
+            "run_id": run_id,
+            "batch_id": "batch-001",
+            "manager": {
+                "agent": "/root/investment-manager",
+                "model": "test-model",
+                "tools": ["sealed fixture"],
+            },
+            "decisions": [
+                {
+                    "symbol": "CN:600519",
+                    "route": "send_to_analyst",
+                    "decisive_question": "鏄惁鍊煎緱璐拱涓嬩竴灏忔椂鐮旂┒锛?",
+                    "evidence_ids": ["snapshot:CN:600519"],
+                }
+            ],
+            "portfolio_action": None,
+        },
+        artifact_type="manager_screen_result",
+        sealed_at=RECORDED_AT - dt.timedelta(minutes=1),
+    )
     queue[0].update(
         {
             "preceding_stage": "manager_screen",
+            "profile_cycle_id": "2026-07-26-test-cycle",
             "manager_screen_run_id": run_id,
             "manager_screen_batch_id": "batch-001",
             "manager_screen_result_path": (
                 f"coverage/cn-a/manager-screen/{run_id}/batch-001/result.json"
             ),
-            "manager_screen_result_sha256": "b" * 64,
+            "manager_screen_result_sha256": result_seal.sha256,
             "manager_screen_route": "send_to_analyst",
             "decisive_question": "是否值得购买下一小时研究？",
             "evidence_ids": ["snapshot:CN:600519"],
@@ -1172,6 +1593,7 @@ def test_symbol_less_claim_isolated_to_latest_manager_run_and_stage(tmp_path: Pa
     from trading_os.research_assets.coverage_store import write_jsonl
     from trading_os.research_assets.profile_workflow import claim_profile_task
     from trading_os.research_assets.research_allocation import ResearchAllocationError
+    from trading_os.research_assets.sealing import seal_json
 
     root = tmp_path / "coverage" / "cn-a"
 
@@ -1185,6 +1607,7 @@ def test_symbol_less_claim_isolated_to_latest_manager_run_and_stage(tmp_path: Pa
             "assigned_agent": None,
             "target_company_dir": f"research/companies/CN/{symbol[-6:]}",
             "effort_budget_hours": 1.5,
+            "profile_cycle_id": f"cycle-{symbol[-6:]}",
             "stop_conditions": ["预算耗尽"],
         }
         if run is not None:
@@ -1202,19 +1625,47 @@ def test_symbol_less_claim_isolated_to_latest_manager_run_and_stage(tmp_path: Pa
             )
         return value
 
-    write_jsonl(
-        root / "research_queue.jsonl",
-        [
-            record("CN:000001", run=None),
-            record("CN:000002", run="2026-07-30-run"),
-            record("CN:000003", run="2026-07-31-run"),
-            record(
-                "CN:000004",
-                run="2026-07-31-run",
-                stage="targeted_followup",
-            ),
-        ],
-    )
+    records = [
+        record("CN:000001", run=None),
+        record("CN:000002", run="2026-07-30-run"),
+        record("CN:000003", run="2026-07-31-run"),
+        record(
+            "CN:000004",
+            run="2026-07-31-run",
+            stage="targeted_followup",
+        ),
+    ]
+    for run in ("2026-07-30-run", "2026-07-31-run"):
+        run_records = [item for item in records if item.get("manager_screen_run_id") == run]
+        result_path = root / "manager-screen" / run / "batch-001" / "result.json"
+        result_seal = seal_json(
+            result_path,
+            {
+                "schema_version": 1,
+                "run_id": run,
+                "batch_id": "batch-001",
+                "manager": {
+                    "agent": "/root/investment-manager",
+                    "model": "test-model",
+                    "tools": ["sealed fixture"],
+                },
+                "decisions": [
+                    {
+                        "symbol": item["symbol"],
+                        "route": "send_to_analyst",
+                        "decisive_question": item["decisive_question"],
+                        "evidence_ids": item["evidence_ids"],
+                    }
+                    for item in run_records
+                ],
+                "portfolio_action": None,
+            },
+            artifact_type="manager_screen_result",
+            sealed_at=RECORDED_AT - dt.timedelta(minutes=1),
+        )
+        for item in run_records:
+            item["manager_screen_result_sha256"] = result_seal.sha256
+    write_jsonl(root / "research_queue.jsonl", records)
     claimed = claim_profile_task(
         root=root,
         agent="/root/current-quick",
@@ -1239,12 +1690,15 @@ def test_manager_bound_record_requires_claim_binding_and_decisive_answer(
     tmp_path: Path,
 ):
     from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_stage_claims import (
+        assert_agent_profile_stage_claim_capacity,
+    )
     from trading_os.research_assets.profile_workflow import (
         claim_profile_task,
         record_profile_package,
     )
     from trading_os.research_assets.research_allocation import ResearchAllocationError
-    from trading_os.research_assets.sealing import seal_json
+    from trading_os.research_assets.sealing import seal_json, verify_sealed
 
     _coverage(tmp_path)
     root = tmp_path / "coverage" / "cn-a"
@@ -1253,6 +1707,7 @@ def test_manager_bound_record_requires_claim_binding_and_decisive_answer(
     queue[0].update(
         {
             "preceding_stage": "manager_screen",
+            "profile_cycle_id": "2026-07-26-test-cycle",
             "manager_screen_run_id": "2026-07-31-run",
             "manager_screen_batch_id": "batch-001",
             "manager_screen_result_path": (
@@ -1326,7 +1781,7 @@ def test_manager_bound_record_requires_claim_binding_and_decisive_answer(
     write_jsonl(queue_path, tampered_queue)
     with pytest.raises(
         ResearchAllocationError,
-        match="sealed manager decision",
+        match="active sealed claim|sealed manager decision",
     ):
         record_profile_package(
             _manager_bound_package(tampered_queue[0]),
@@ -1351,32 +1806,592 @@ def test_manager_bound_record_requires_claim_binding_and_decisive_answer(
         stored["stage_history"][-1]["started_at"]
         == (RECORDED_AT - dt.timedelta(minutes=1)).isoformat()
     )
+    completed = stored["stage_history"][-1]
+    success_path = tmp_path / completed["success_path"]
+    success_seal = verify_sealed(success_path)
+    success = json.loads(success_path.read_text(encoding="utf-8"))
+    assert success_seal.artifact_type == "profile_stage_claim_success"
+    assert success_seal.sha256 == completed["success_sha256"]
+    assert success["claim_path"] == completed["claim_path"]
+    assert success["claim_sha256"] == completed["claim_sha256"]
+    assert success["profile_path"] == completed["result_path"]
+    assert success["profile_sha256"] == completed["result_sha256"]
+    assert success["evaluation_path"] == completed["evaluation_path"]
+    assert success["evaluation_sha256"] == completed["evaluation_sha256"]
+    assert (
+        assert_agent_profile_stage_claim_capacity(
+            root=root,
+            queue_records=[stored],
+            agent="/root/test-company",
+            requested_symbol=None,
+        )
+        is None
+    )
+
+
+def test_stripped_modern_queue_cannot_downgrade_to_legacy_record(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import record_profile_package
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    root = _manager_bound_running_quick_profile(tmp_path)
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    for field in (
+        "profile_cycle_id",
+        "manager_screen_run_id",
+        "manager_screen_batch_id",
+        "manager_screen_result_path",
+        "manager_screen_result_sha256",
+        "manager_screen_route",
+        "decisive_question",
+        "evidence_ids",
+        "profile_stage_claim_attempt_path",
+        "profile_stage_claim_attempt_sha256",
+    ):
+        queue[0].pop(field, None)
+    write_jsonl(queue_path, queue)
+    package = _package()
+    package["provenance"]["agent"] = "/root/manager-bound-researcher"
+
+    with pytest.raises(ResearchAllocationError, match="profile_cycle_id|active sealed claim"):
+        record_profile_package(
+            package,
+            root=root,
+            policy=_policy(),
+            policy_reference="research-allocation.default@5.0.0",
+            recorded_at=RECORDED_AT,
+        )
+
+
+def test_half_sealed_modern_authority_fails_closed(tmp_path: Path):
+    from trading_os.research_assets.profile_workflow import record_profile_package
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    payload_path = root / "manager-screen" / "orphan-run" / "batch-001" / "result.json"
+    payload_path.parent.mkdir(parents=True, exist_ok=True)
+    payload_path.write_text("{}\n", encoding="utf-8")
+
+    with pytest.raises(ResearchAllocationError, match="payload without seal"):
+        record_profile_package(
+            _package(),
+            root=root,
+            policy=_policy(),
+            policy_reference="research-allocation.default@5.0.0",
+            recorded_at=RECORDED_AT,
+        )
+
+
+def test_stage_claim_receipt_only_crashes_replay_without_changing_release_time(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    import trading_os.research_assets.profile_workflow as workflow
+    from trading_os.research_assets.coverage_store import read_jsonl
+
+    root = _manager_bound_running_quick_profile(tmp_path)
+    queue_path = root / "research_queue.jsonl"
+    running = read_jsonl(queue_path)[0]
+    original_write = workflow.write_jsonl
+
+    # Rewind only the mutable projection to simulate a claim receipt-only crash.
+    claim_payload = json.loads(
+        (tmp_path / running["profile_stage_claim_attempt_path"]).read_text(
+            encoding="utf-8"
+        )
+    )
+    original_write(queue_path, [claim_payload["prior_queue_row"]])
+    replayed = workflow.claim_profile_task(
+        root=root,
+        agent="/root/manager-bound-researcher",
+        claimed_at=RECORDED_AT,
+        symbol="CN:600519",
+    )
+    assert replayed["assigned_agent"] == "/root/manager-bound-researcher"
+
+    def fail_projection(*_args, **_kwargs):
+        raise OSError("simulated release projection crash")
+
+    monkeypatch.setattr(workflow, "write_jsonl", fail_projection)
+    sealed_release_at = RECORDED_AT + dt.timedelta(minutes=1)
+    with pytest.raises(OSError, match="release projection crash"):
+        workflow.release_profile_task(
+            root=root,
+            agent="/root/manager-bound-researcher",
+            symbol="CN:600519",
+            failure_reason="source unavailable",
+            released_at=sealed_release_at,
+        )
+    monkeypatch.setattr(workflow, "write_jsonl", original_write)
+    repaired = workflow.release_profile_task(
+        root=root,
+        agent="/root/manager-bound-researcher",
+        symbol="CN:600519",
+        failure_reason="source unavailable",
+        released_at=sealed_release_at + dt.timedelta(minutes=1),
+    )
+    assert repaired["attempt_history"][-1]["finished_at"] == sealed_release_at.isoformat()
+
+
+def test_stage_claim_allows_display_drift_but_rejects_immutable_drift(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import claim_profile_task
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    root = _manager_bound_running_quick_profile(tmp_path)
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0]["reason"] = "display-only wording changed"
+    write_jsonl(queue_path, queue)
+    replayed = claim_profile_task(
+        root=root,
+        agent="/root/manager-bound-researcher",
+        claimed_at=RECORDED_AT,
+        symbol="CN:600519",
+    )
+    assert replayed["idempotent"] is True
+
+    queue = read_jsonl(queue_path)
+    queue[0]["priority"] = 99
+    write_jsonl(queue_path, queue)
+    with pytest.raises(ResearchAllocationError, match="projection|drift"):
+        claim_profile_task(
+            root=root,
+            agent="/root/manager-bound-researcher",
+            claimed_at=RECORDED_AT,
+            symbol="CN:600519",
+        )
+
+
+def test_forged_legacy_profile_history_cannot_close_sealed_claim(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import claim_profile_task
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+    from trading_os.research_assets.sealing import seal_json
+
+    root = _manager_bound_running_quick_profile(tmp_path)
+    repository = root.parent.parent
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    running = queue[0]
+    claim_path = running["profile_stage_claim_attempt_path"]
+    claim_sha256 = running["profile_stage_claim_attempt_sha256"]
+    profile_path = root / "profiles" / "forged" / "legacy.profile.json"
+    profile_payload = _package()
+    profile_seal = seal_json(
+        profile_path,
+        profile_payload,
+        artifact_type="quick_profile_package",
+        sealed_at=RECORDED_AT,
+    )
+    profile_relative = profile_path.relative_to(repository).as_posix()
+    evaluation_path = profile_path.with_name("legacy.evaluation.json")
+    evaluation_seal = seal_json(
+        evaluation_path,
+        {
+            "schema_version": 2,
+            "cycle_id": "2026-07-26-test-cycle",
+            "symbol": "CN:600519",
+            "recorded_at": RECORDED_AT.isoformat(),
+            "profile_path": profile_relative,
+            "profile_sha256": profile_seal.sha256,
+        },
+        artifact_type="quick_profile_evaluation",
+        sealed_at=RECORDED_AT,
+    )
+    running.update(
+        {
+            "status": "completed",
+            "finished_at": RECORDED_AT.isoformat(),
+            "stage_history": [
+                {
+                    "stage": "quick_profile",
+                    "status": "completed",
+                    "agent": "/root/manager-bound-researcher",
+                    "started_at": (RECORDED_AT - dt.timedelta(minutes=1)).isoformat(),
+                    "finished_at": RECORDED_AT.isoformat(),
+                    "result_path": profile_relative,
+                    "result_sha256": profile_seal.sha256,
+                    "evaluation_path": evaluation_path.relative_to(repository).as_posix(),
+                    "evaluation_sha256": evaluation_seal.sha256,
+                    "claim_path": claim_path,
+                    "claim_sha256": claim_sha256,
+                    "claim_attempt_number": 1,
+                }
+            ],
+        }
+    )
+    write_jsonl(queue_path, [running])
+
+    with pytest.raises(ResearchAllocationError, match="unrecognized queue drift"):
+        claim_profile_task(
+            root=root,
+            agent="/root/manager-bound-researcher",
+            claimed_at=RECORDED_AT + dt.timedelta(minutes=1),
+            symbol="CN:600519",
+        )
+
+
+def test_forged_claim_bound_history_without_success_receipt_cannot_close_claim(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_stage_claims import (
+        ProfileStageClaimError,
+        assert_agent_profile_stage_claim_capacity,
+    )
+    from trading_os.research_assets.sealing import seal_json
+
+    root = _manager_bound_running_quick_profile(tmp_path)
+    repository = root.parent.parent
+    queue_path = root / "research_queue.jsonl"
+    running = read_jsonl(queue_path)[0]
+    claim_path = running["profile_stage_claim_attempt_path"]
+    claim_sha256 = running["profile_stage_claim_attempt_sha256"]
+    claim = json.loads((repository / claim_path).read_text(encoding="utf-8"))
+    claim_binding = {
+        "path": claim_path,
+        "sha256": claim_sha256,
+        "sealed_at": claim["claimed_at"],
+        "attempt_number": claim["attempt_number"],
+        "agent": claim["agent"],
+        "stage_authorization": claim["stage_authorization"],
+    }
+    artifact_dir = root / "profiles" / "forged-no-success" / "600519"
+    profile_path = artifact_dir / "minimal.profile.json"
+    profile_seal = seal_json(
+        profile_path,
+        {"schema_version": 3, "claim_attempt": claim_binding},
+        artifact_type="quick_profile_package",
+        sealed_at=RECORDED_AT,
+    )
+    evaluation_path = artifact_dir / "minimal.evaluation.json"
+    evaluation_seal = seal_json(
+        evaluation_path,
+        {"schema_version": 3, "claim_attempt": claim_binding},
+        artifact_type="quick_profile_evaluation",
+        sealed_at=RECORDED_AT,
+    )
+    running.update(
+        {
+            "status": "completed",
+            "finished_at": RECORDED_AT.isoformat(),
+            "stage_history": [
+                {
+                    "stage": "quick_profile",
+                    "status": "completed",
+                    "agent": claim["agent"],
+                    "started_at": claim["claimed_at"],
+                    "finished_at": RECORDED_AT.isoformat(),
+                    "result_path": profile_path.relative_to(repository).as_posix(),
+                    "result_sha256": profile_seal.sha256,
+                    "evaluation_path": evaluation_path.relative_to(repository).as_posix(),
+                    "evaluation_sha256": evaluation_seal.sha256,
+                    "claim_path": claim_path,
+                    "claim_sha256": claim_sha256,
+                    "claim_attempt_number": claim["attempt_number"],
+                }
+            ],
+        }
+    )
+    write_jsonl(queue_path, [running])
+
+    with pytest.raises(ProfileStageClaimError, match="unrecognized queue drift"):
+        assert_agent_profile_stage_claim_capacity(
+            root=root,
+            queue_records=[running],
+            agent=claim["agent"],
+            requested_symbol=None,
+        )
+
+
+@pytest.mark.parametrize(
+    "tamper",
+    [
+        "invalid_evaluation_contract",
+        "evaluation_profile_binding",
+        "receipt_profile_binding",
+        "history_receipt_binding",
+    ],
+)
+def test_forged_profile_success_receipt_or_binding_drift_cannot_close_claim(
+    tmp_path: Path,
+    tamper: str,
+):
+    import trading_os.research_assets.profile_workflow as workflow
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_stage_claims import (
+        ProfileStageClaimError,
+        assert_agent_profile_stage_claim_capacity,
+    )
+    from trading_os.research_assets.research_allocation import evaluate_quick_profile
+    from trading_os.research_assets.sealing import seal_json
+
+    root = _manager_bound_running_quick_profile(tmp_path)
+    repository = root.parent.parent
+    queue_path = root / "research_queue.jsonl"
+    running = read_jsonl(queue_path)[0]
+    claim_path = running["profile_stage_claim_attempt_path"]
+    claim_sha256 = running["profile_stage_claim_attempt_sha256"]
+    claim = json.loads((repository / claim_path).read_text(encoding="utf-8"))
+    claim_binding = {
+        "path": claim_path,
+        "sha256": claim_sha256,
+        "sealed_at": claim["claimed_at"],
+        "attempt_number": claim["attempt_number"],
+        "agent": claim["agent"],
+        "stage_authorization": claim["stage_authorization"],
+    }
+    artifact_dir = root / "profiles" / "forged-success" / "600519"
+    profile_path = artifact_dir / "forged.profile.json"
+    profile = _package()
+    profile["schema_version"] = 3
+    profile["claim_attempt"] = claim_binding
+    profile["provenance"]["agent"] = claim["agent"]
+    profile["provenance"]["generated_at"] = RECORDED_AT.isoformat()
+    profile_seal = seal_json(
+        profile_path,
+        profile,
+        artifact_type="quick_profile_package",
+        sealed_at=RECORDED_AT,
+    )
+    profile_relative = profile_path.relative_to(repository).as_posix()
+    evaluated, next_stage = workflow._adjust_profile_evaluation(
+        evaluate_quick_profile(profile["profile"], policy=_policy()),
+        queued_stage="quick_profile",
+    )
+    if tamper == "invalid_evaluation_contract":
+        evaluated["evaluated_stage"] = "deep_research"
+    evaluation = {
+        "schema_version": 3,
+        "cycle_id": claim["profile_cycle_id"],
+        "symbol": claim["symbol"],
+        "company_name": profile["company_name"],
+        "recorded_at": RECORDED_AT.isoformat(),
+        "profile_path": profile_relative,
+        "profile_sha256": profile_seal.sha256,
+        "policy_reference": "research-allocation.default@test",
+        "policy_payload_sha256": "a" * 64,
+        "allocation_sha256": None,
+        "evaluation": evaluated,
+        "queue_status": "completed",
+        "capacity_wait": False,
+        "portfolio_action": None,
+        "claim_attempt": claim_binding,
+    }
+    if tamper == "evaluation_profile_binding":
+        evaluation["profile_sha256"] = "b" * 64
+    evaluation_path = artifact_dir / "forged.evaluation.json"
+    evaluation_seal = seal_json(
+        evaluation_path,
+        evaluation,
+        artifact_type="quick_profile_evaluation",
+        sealed_at=RECORDED_AT,
+    )
+    evaluation_relative = evaluation_path.relative_to(repository).as_posix()
+    success = {
+        "schema_version": 1,
+        "workflow": "profile_stage_claim_attempts",
+        "workflow_version": 1,
+        "stage": claim["stage"],
+        "manager_screen_run_id": claim["manager_screen_run_id"],
+        "profile_cycle_id": claim["profile_cycle_id"],
+        "symbol": claim["symbol"],
+        "attempt_number": claim["attempt_number"],
+        "agent": claim["agent"],
+        "succeeded_at": RECORDED_AT.isoformat(),
+        "claim_path": claim_path,
+        "claim_sha256": claim_sha256,
+        "profile_path": profile_relative,
+        "profile_sha256": profile_seal.sha256,
+        "evaluation_path": evaluation_relative,
+        "evaluation_sha256": evaluation_seal.sha256,
+        "portfolio_action": None,
+    }
+    if tamper == "receipt_profile_binding":
+        success["profile_sha256"] = "c" * 64
+    success_path = (repository / claim_path).with_name("success.json")
+    success_seal = seal_json(
+        success_path,
+        success,
+        artifact_type="profile_stage_claim_success",
+        sealed_at=RECORDED_AT,
+    )
+    history_success_sha = success_seal.sha256
+    if tamper == "history_receipt_binding":
+        history_success_sha = "d" * 64
+    running.update(
+        {
+            "status": "completed",
+            "finished_at": RECORDED_AT.isoformat(),
+            "stage_history": [
+                {
+                    "stage": "quick_profile",
+                    "status": "completed",
+                    "agent": claim["agent"],
+                    "started_at": claim["claimed_at"],
+                    "finished_at": RECORDED_AT.isoformat(),
+                    "result_path": profile_relative,
+                    "result_sha256": profile_seal.sha256,
+                    "evaluation_path": evaluation_relative,
+                    "evaluation_sha256": evaluation_seal.sha256,
+                    "claim_path": claim_path,
+                    "claim_sha256": claim_sha256,
+                    "claim_attempt_number": claim["attempt_number"],
+                    "success_path": success_path.relative_to(repository).as_posix(),
+                    "success_sha256": history_success_sha,
+                    "next_stage": next_stage,
+                }
+            ],
+        }
+    )
+    write_jsonl(queue_path, [running])
+
+    with pytest.raises(ProfileStageClaimError, match="unrecognized queue drift"):
+        assert_agent_profile_stage_claim_capacity(
+            root=root,
+            queue_records=[running],
+            agent=claim["agent"],
+            requested_symbol=None,
+        )
+
+
+def test_profile_success_receipt_only_crash_replays_and_repairs_projection(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    import trading_os.research_assets.profile_workflow as workflow
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_stage_claims import (
+        assert_agent_profile_stage_claim_capacity,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+    from trading_os.research_assets.sealing import verify_sealed
+
+    root = _manager_bound_running_quick_profile(tmp_path)
+    repository = root.parent.parent
+    queue_path = root / "research_queue.jsonl"
+    running = read_jsonl(queue_path)[0]
+    package = _manager_bound_package(running)
+    package["provenance"]["agent"] = running["assigned_agent"]
+    package["provenance"]["generated_at"] = RECORDED_AT.isoformat()
+    claim_path = repository / running["profile_stage_claim_attempt_path"]
+    success_path = claim_path.with_name("success.json")
+    original_write = workflow.write_jsonl
+
+    def fail_projection(*_args, **_kwargs):
+        raise OSError("simulated success receipt projection crash")
+
+    monkeypatch.setattr(workflow, "write_jsonl", fail_projection)
+    with pytest.raises(OSError, match="success receipt projection crash"):
+        workflow.record_profile_package(
+            package,
+            root=root,
+            policy=_policy(),
+            policy_reference="research-allocation.default@test",
+            recorded_at=RECORDED_AT,
+        )
+    receipt_sha = verify_sealed(success_path).sha256
+    still_running = read_jsonl(queue_path)[0]
+    assert still_running["status"] == "running"
+    assert not any(
+        item.get("status") == "completed"
+        for item in still_running.get("stage_history") or []
+    )
+    with pytest.raises(ResearchAllocationError, match="success must be replayed"):
+        workflow.release_profile_task(
+            root=root,
+            agent=running["assigned_agent"],
+            symbol=running["symbol"],
+            failure_reason="must not overwrite sealed success",
+            released_at=RECORDED_AT + dt.timedelta(minutes=1),
+        )
+
+    monkeypatch.setattr(workflow, "write_jsonl", original_write)
+    replayed = workflow.record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@test",
+        recorded_at=RECORDED_AT,
+    )
+    assert replayed["idempotent"] is True
+    completed = read_jsonl(queue_path)[0]
+    history = completed["stage_history"][-1]
+    assert completed["status"] == "completed"
+    assert history["success_path"] == success_path.relative_to(repository).as_posix()
+    assert history["success_sha256"] == receipt_sha
+    assert verify_sealed(success_path).sha256 == receipt_sha
+    assert (
+        assert_agent_profile_stage_claim_capacity(
+            root=root,
+            queue_records=[completed],
+            agent=running["assigned_agent"],
+            requested_symbol=None,
+        )
+        is None
+    )
 
 
 def test_deep_research_task_can_be_claimed_and_released(tmp_path: Path):
-    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.coverage_store import read_jsonl
     from trading_os.research_assets.profile_workflow import (
         claim_profile_task,
+        finalize_profile_stage,
+        record_profile_package,
         release_profile_task,
     )
 
     _coverage(tmp_path)
     coverage_root = tmp_path / "coverage" / "cn-a"
     queue_path = coverage_root / "research_queue.jsonl"
-    queue = read_jsonl(queue_path)
-    queue[0].update(
-        {
-            "task_type": "deep_research",
-            "preceding_stage": "scoped_research",
-            "effort_budget_hours": 24.0,
-        }
+    policy = _policy()
+    record_profile_package(
+        _package(),
+        root=coverage_root,
+        policy=policy,
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
     )
-    write_jsonl(queue_path, queue)
+    finalize_profile_stage(
+        root=coverage_root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    claim_profile_task(
+        root=coverage_root,
+        agent="/root/test-company",
+        claimed_at=RECORDED_AT + dt.timedelta(minutes=2),
+        symbol="CN:600519",
+    )
+    scoped_package = _package()
+    scoped_package["profile"]["research_stage"] = "scoped_research"
+    scoped_package["provenance"]["generated_at"] = (
+        RECORDED_AT + dt.timedelta(minutes=2)
+    ).isoformat()
+    record_profile_package(
+        scoped_package,
+        root=coverage_root,
+        policy=policy,
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT + dt.timedelta(minutes=3),
+    )
+    finalize_profile_stage(
+        root=coverage_root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="scoped_research",
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=4),
+    )
 
     claimed = claim_profile_task(
         root=coverage_root,
         agent="/root/deep_600519",
-        claimed_at=RECORDED_AT,
+        claimed_at=RECORDED_AT + dt.timedelta(minutes=5),
         symbol="CN:600519",
     )
     assert claimed["task_type"] == "deep_research"
@@ -1387,13 +2402,383 @@ def test_deep_research_task_can_be_claimed_and_released(tmp_path: Path):
         agent="/root/deep_600519",
         symbol="CN:600519",
         failure_reason="issuer filing unavailable",
-        released_at=RECORDED_AT + dt.timedelta(minutes=5),
+        released_at=RECORDED_AT + dt.timedelta(minutes=10),
     )
     assert released["status"] == "pending"
     queue = read_jsonl(queue_path)[0]
     assert queue["task_type"] == "deep_research"
     assert queue["assigned_agent"] is None
     assert queue["attempt_history"][0]["status"] == "failed"
+
+
+@pytest.mark.parametrize(
+    ("task_type", "preceding_stage", "binding_field", "effort_budget_hours"),
+    [
+        ("scoped_research", "quick_profile", "profile_quick_selection_path", 4.0),
+        ("deep_research", "scoped_research", "profile_scoped_selection_path", 24.0),
+    ],
+)
+def test_profile_claim_rejects_mutable_stage_without_sealed_selection(
+    tmp_path: Path,
+    task_type: str,
+    preceding_stage: str,
+    binding_field: str,
+    effort_budget_hours: float,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import claim_profile_task
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "task_type": task_type,
+            "preceding_stage": preceding_stage,
+            "profile_cycle_id": "forged-stage-cycle",
+            "effort_budget_hours": effort_budget_hours,
+            "stage_history": [
+                {
+                    "stage": preceding_stage,
+                    "status": "completed",
+                }
+            ],
+        }
+    )
+    queue[0].pop(binding_field, None)
+    write_jsonl(queue_path, queue)
+
+    with pytest.raises(ResearchAllocationError, match="missing its sealed"):
+        claim_profile_task(
+            root=root,
+            agent="/root/forged-stage",
+            claimed_at=RECORDED_AT,
+            symbol="CN:600519",
+        )
+
+
+@pytest.mark.parametrize(
+    ("task_type", "preceding_stage", "binding_field", "effort_budget_hours"),
+    [
+        ("scoped_research", "quick_profile", "profile_quick_selection_path", 4.0),
+    ],
+)
+def test_profile_record_rejects_mutable_stage_without_sealed_selection(
+    tmp_path: Path,
+    task_type: str,
+    preceding_stage: str,
+    binding_field: str,
+    effort_budget_hours: float,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import record_profile_package
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "task_type": task_type,
+            "preceding_stage": preceding_stage,
+            "profile_cycle_id": "forged-stage-cycle",
+            "effort_budget_hours": effort_budget_hours,
+            "stage_history": [{"stage": preceding_stage, "status": "completed"}],
+        }
+    )
+    queue[0].pop(binding_field, None)
+    write_jsonl(queue_path, queue)
+    package = _package(cycle_id="forged-stage-cycle")
+    package["profile"]["research_stage"] = task_type
+
+    with pytest.raises(ResearchAllocationError, match="missing its sealed"):
+        record_profile_package(
+            package,
+            root=root,
+            policy=_policy(),
+            policy_reference="research-allocation.default@1.0.0",
+            recorded_at=RECORDED_AT,
+        )
+
+
+def test_deep_research_completion_rejects_profile_record_entrypoint(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import record_profile_package
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "task_type": "deep_research",
+            "preceding_stage": "scoped_research",
+            "profile_cycle_id": "2026-07-26-test-cycle",
+            "effort_budget_hours": 24.0,
+            "stage_history": [{"stage": "scoped_research", "status": "completed"}],
+        }
+    )
+    write_jsonl(queue_path, queue)
+    package = _package()
+    package["profile"]["research_stage"] = "scoped_research"
+
+    with pytest.raises(ResearchAllocationError, match="formal company research/claims"):
+        record_profile_package(
+            package,
+            root=root,
+            policy=_policy(),
+            policy_reference="research-allocation.default@1.0.0",
+            recorded_at=RECORDED_AT,
+        )
+
+
+@pytest.mark.parametrize("tamper", ["wrong_sha", "selected_false", "wrong_run"])
+def test_profile_record_rechecks_sealed_stage_authorization(
+    tmp_path: Path,
+    tamper: str,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import record_profile_package
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+    from trading_os.research_assets.sealing import seal_json, verify_sealed
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    policy = _policy()
+    selection_path = _seal_run_bound_stage_selection(
+        tmp_path,
+        cycle_id="2026-07-26-test-cycle",
+        manager_screen_run_id="sealed-run",
+        evaluated_stage="quick_profile",
+        next_stage="scoped_research",
+        symbol="CN:600519",
+        policy=policy,
+        sealed_at=RECORDED_AT,
+    )
+    queue_path = root / "research_queue.jsonl"
+    screening_path = root / "screening.jsonl"
+    queue = read_jsonl(queue_path)
+    screening = read_jsonl(screening_path)
+    original_sha = verify_sealed(selection_path).sha256
+    selection_relative = selection_path.relative_to(tmp_path).as_posix()
+    queue[0].update(
+        {
+            "task_type": "scoped_research",
+            "preceding_stage": "quick_profile",
+            "profile_cycle_id": "2026-07-26-test-cycle",
+            "manager_screen_run_id": "sealed-run",
+            "effort_budget_hours": 4.0,
+            "profile_quick_selection_path": selection_relative,
+            "profile_quick_selection_sha256": original_sha,
+            "stage_history": [{"stage": "quick_profile", "status": "completed"}],
+        }
+    )
+    screening[0]["evidence"] = [
+        f"stage_selection:{selection_relative}",
+        f"stage_selection_sha256:{original_sha}",
+    ]
+    if tamper == "wrong_sha":
+        queue[0]["profile_quick_selection_sha256"] = "f" * 64
+        expected = "selection SHA binding"
+    else:
+        payload = json.loads(selection_path.read_text(encoding="utf-8"))
+        if tamper == "selected_false":
+            payload["ranking"][0]["selected"] = False
+            payload["selected_count"] = 0
+            expected = "did not purchase"
+        else:
+            queue[0]["manager_screen_run_id"] = "different-run"
+            expected = "different manager-screen run"
+        selection_path.unlink()
+        selection_path.with_name(f"{selection_path.name}.seal.json").unlink()
+        resealed = seal_json(
+            selection_path,
+            payload,
+            artifact_type="quick_profile_cross_company_selection",
+            sealed_at=RECORDED_AT,
+        )
+        queue[0]["profile_quick_selection_sha256"] = resealed.sha256
+        screening[0]["evidence"] = [
+            (
+                f"stage_selection_sha256:{resealed.sha256}"
+                if item == f"stage_selection_sha256:{original_sha}"
+                else item
+            )
+            for item in screening[0]["evidence"]
+        ]
+    write_jsonl(queue_path, queue)
+    write_jsonl(screening_path, screening)
+    package = _package()
+    package["profile"]["research_stage"] = "scoped_research"
+
+    with pytest.raises(ResearchAllocationError, match=expected):
+        record_profile_package(
+            package,
+            root=root,
+            policy=policy,
+            policy_reference="research-allocation.default@1.0.0",
+            recorded_at=RECORDED_AT + dt.timedelta(minutes=1),
+        )
+
+
+def test_run_bound_stage_authorization_survives_live_policy_upgrade(
+    tmp_path: Path,
+) -> None:
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import claim_profile_task
+    from trading_os.research_assets.sealing import verify_sealed
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    cycle = "2026-07-26-test-cycle"
+    run_id = "sealed-run"
+    selection_path = _seal_run_bound_stage_selection(
+        tmp_path,
+        cycle_id=cycle,
+        manager_screen_run_id=run_id,
+        evaluated_stage="quick_profile",
+        next_stage="scoped_research",
+        symbol="CN:600519",
+        policy=_policy(),
+        sealed_at=RECORDED_AT,
+    )
+    selection_sha256 = verify_sealed(selection_path).sha256
+    selection_relative = selection_path.relative_to(tmp_path).as_posix()
+    queue_path = root / "research_queue.jsonl"
+    screening_path = root / "screening.jsonl"
+    queue = read_jsonl(queue_path)
+    screening = read_jsonl(screening_path)
+    queue[0].update(
+        {
+            "task_type": "scoped_research",
+            "status": "pending",
+            "assigned_agent": None,
+            "preceding_stage": "quick_profile",
+            "profile_cycle_id": cycle,
+            "manager_screen_run_id": run_id,
+            "effort_budget_hours": 4.0,
+            "profile_quick_selection_path": selection_relative,
+            "profile_quick_selection_sha256": selection_sha256,
+            "stage_history": [{"stage": "quick_profile", "status": "completed"}],
+        }
+    )
+    screening[0]["evidence"] = [
+        f"stage_selection:{selection_relative}",
+        f"stage_selection_sha256:{selection_sha256}",
+    ]
+    write_jsonl(queue_path, queue)
+    write_jsonl(screening_path, screening)
+
+    live_policy_path = tmp_path / "policies" / "research-allocation.json"
+    upgraded = json.loads(live_policy_path.read_text(encoding="utf-8"))
+    upgraded["version"] = "999.0.0"
+    upgraded["payload"]["comparison_principle"] = "new policy for a future manager run"
+    live_policy_path.write_text(
+        json.dumps(upgraded, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    claimed = claim_profile_task(
+        root=root,
+        agent="/root/scoped-after-policy-upgrade",
+        claimed_at=RECORDED_AT + dt.timedelta(minutes=1),
+        symbol="CN:600519",
+        run_id=run_id,
+        stage="scoped_research",
+    )
+    assert claimed["task_type"] == "scoped_research"
+
+
+def test_scoped_research_claim_rejects_resealed_selection_without_bound_sha(tmp_path: Path):
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        finalize_profile_stage,
+        record_profile_package,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+    from trading_os.research_assets.sealing import seal_json
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    policy = _policy()
+    record_profile_package(
+        _package(),
+        root=root,
+        policy=policy,
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    selected = finalize_profile_stage(
+        root=root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    selection_path = tmp_path / selected["selection_path"]
+    payload = json.loads(selection_path.read_text(encoding="utf-8"))
+    payload["principle"] = "re-sealed without updating the immutable projection binding"
+    selection_path.unlink()
+    selection_path.with_name(f"{selection_path.name}.seal.json").unlink()
+    seal_json(
+        selection_path,
+        payload,
+        artifact_type="quick_profile_cross_company_selection",
+        sealed_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+
+    with pytest.raises(ResearchAllocationError, match="selection SHA binding"):
+        claim_profile_task(
+            root=root,
+            agent="/root/scoped-agent",
+            claimed_at=RECORDED_AT + dt.timedelta(minutes=2),
+            symbol="CN:600519",
+        )
+
+
+def test_scoped_research_claim_accepts_legacy_screen_evidence_sha_binding(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        finalize_profile_stage,
+        record_profile_package,
+    )
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    policy = _policy()
+    record_profile_package(
+        _package(),
+        root=root,
+        policy=policy,
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    finalize_profile_stage(
+        root=root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].pop("profile_quick_selection_sha256")
+    write_jsonl(queue_path, queue)
+
+    claimed = claim_profile_task(
+        root=root,
+        agent="/root/legacy-scoped-agent",
+        claimed_at=RECORDED_AT + dt.timedelta(minutes=2),
+        symbol="CN:600519",
+    )
+    assert claimed["task_type"] == "scoped_research"
 
 
 def test_release_profile_task_preserves_failure_and_allows_reassignment(

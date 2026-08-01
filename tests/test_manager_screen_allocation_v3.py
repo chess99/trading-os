@@ -189,6 +189,8 @@ def _batch(
             {
                 "symbol": symbol,
                 "route": "send_to_analyst" if symbol in send_symbols else "watch",
+                "decisive_question": f"What sealed evidence resolves the thesis for {symbol}?",
+                "evidence_ids": [f"snapshot:{symbol}"],
             }
             for symbol in symbols
         ],
@@ -201,6 +203,8 @@ def _batch(
     )
     return {
         "batch_dir": batch_dir,
+        "packet_path": packet_path,
+        "packet_sha256": packet_seal.sha256,
         "result_path": result_path,
         "result_sha256": result_seal.sha256,
     }
@@ -214,69 +218,102 @@ def _quote_overlay(
 ) -> None:
     batch_dir = batch["batch_dir"]
     assert isinstance(batch_dir, Path)
-    review_id = "quote-review-001"
-    review_dir = batch_dir / "quote-impact-reviews" / review_id
-    plan_path = review_dir / "plan.json"
-    plan_seal = seal_json(
-        plan_path,
-        {
-            "schema_version": 1,
-            "run_id": RUN_ID,
-            "batch_id": batch_dir.name,
-            "review_id": review_id,
-            "original_result_path": _relative(batch["result_path"], repository_root),
-            "original_result_sha256": batch["result_sha256"],
-            "policy": {"quick_profile_effort_budget_hours": 1.5},
-        },
-        artifact_type="manager_screen_quote_impact_plan",
-        sealed_at=OVERLAY_AT - dt.timedelta(minutes=2),
-    )
-    packet_path = review_dir / "packet.json"
-    packet_seal = seal_json(
-        packet_path,
-        {
-            "schema_version": 1,
-            "run_id": RUN_ID,
-            "batch_id": batch_dir.name,
-            "review_id": review_id,
-            "plan_path": _relative(plan_path, repository_root),
-            "plan_sha256": plan_seal.sha256,
-        },
-        artifact_type="manager_screen_quote_impact_packet",
-        sealed_at=OVERLAY_AT - dt.timedelta(minutes=1),
-    )
-    reviews = [
-        {
-            "symbol": symbol,
-            "action": "replacement",
-            "old_route": "watch",
-            "effective_decision": {
-                "symbol": symbol,
-                "route": "send_to_analyst",
+    previous = {
+        "result_artifact_type": "manager_screen_result",
+        "result_path": _relative(batch["result_path"], repository_root),
+        "result_sha256": batch["result_sha256"],
+        "review_id": None,
+        "quote_artifact_type": "manager_screen_packet",
+        "quote_path": _relative(batch["packet_path"], repository_root),
+        "quote_sha256": batch["packet_sha256"],
+    }
+    for index, symbol in enumerate(symbols, start=1):
+        review_id = f"quote-review-{index:03d}"
+        review_dir = batch_dir / "quote-impact-reviews" / review_id
+        amendment_path = _relative(
+            batch_dir / f"quote-amendment-{index:03d}.json",
+            repository_root,
+        )
+        amendment_sha256 = f"{index + 2:x}" * 64
+        plan_path = review_dir / "plan.json"
+        plan_seal = seal_json(
+            plan_path,
+            {
+                "schema_version": 2,
+                "run_id": RUN_ID,
+                "batch_id": batch_dir.name,
+                "review_id": review_id,
+                "chain_version": 1,
+                "chain_sequence": index,
+                "predecessor": previous,
+                "original_result_path": _relative(batch["result_path"], repository_root),
+                "original_result_sha256": batch["result_sha256"],
+                "quote_amendment_path": amendment_path,
+                "quote_amendment_sha256": amendment_sha256,
+                "policy": {
+                    "decision_contract_version": 2,
+                    "quick_profile_effort_budget_hours": 1.5,
+                },
             },
-        }
-        for symbol in symbols
-    ]
-    seal_json(
-        review_dir / "result.json",
-        {
-            "schema_version": 1,
-            "run_id": RUN_ID,
-            "batch_id": batch_dir.name,
+            artifact_type="manager_screen_quote_impact_plan",
+            sealed_at=OVERLAY_AT + dt.timedelta(minutes=index * 3 - 3),
+        )
+        packet_path = review_dir / "packet.json"
+        packet_seal = seal_json(
+            packet_path,
+            {
+                "schema_version": 2,
+                "run_id": RUN_ID,
+                "batch_id": batch_dir.name,
+                "review_id": review_id,
+                "plan_path": _relative(plan_path, repository_root),
+                "plan_sha256": plan_seal.sha256,
+            },
+            artifact_type="manager_screen_quote_impact_packet",
+            sealed_at=OVERLAY_AT + dt.timedelta(minutes=index * 3 - 2),
+        )
+        result_path = review_dir / "result.json"
+        result_seal = seal_json(
+            result_path,
+            {
+                "schema_version": 2,
+                "run_id": RUN_ID,
+                "batch_id": batch_dir.name,
+                "review_id": review_id,
+                "recorded_at": (
+                    OVERLAY_AT + dt.timedelta(minutes=index * 3 - 1)
+                ).isoformat(),
+                "original_result_path": _relative(batch["result_path"], repository_root),
+                "original_result_sha256": batch["result_sha256"],
+                "plan_path": _relative(plan_path, repository_root),
+                "plan_sha256": plan_seal.sha256,
+                "packet_path": _relative(packet_path, repository_root),
+                "packet_sha256": packet_seal.sha256,
+                "reviews": [
+                    {
+                        "symbol": symbol,
+                        "action": "replacement",
+                        "old_route": "watch",
+                        "effective_decision": {
+                            "symbol": symbol,
+                            "route": "send_to_analyst",
+                        },
+                    }
+                ],
+                "summary": {"new_send_to_analyst_count": 1},
+            },
+            artifact_type="manager_screen_quote_impact_result",
+            sealed_at=OVERLAY_AT + dt.timedelta(minutes=index * 3 - 1),
+        )
+        previous = {
+            "result_artifact_type": "manager_screen_quote_impact_result",
+            "result_path": _relative(result_path, repository_root),
+            "result_sha256": result_seal.sha256,
             "review_id": review_id,
-            "recorded_at": OVERLAY_AT.isoformat(),
-            "original_result_path": _relative(batch["result_path"], repository_root),
-            "original_result_sha256": batch["result_sha256"],
-            "plan_path": _relative(plan_path, repository_root),
-            "plan_sha256": plan_seal.sha256,
-            "packet_path": _relative(packet_path, repository_root),
-            "packet_sha256": packet_seal.sha256,
-            "reviews": reviews,
-            "summary": {"new_send_to_analyst_count": len(reviews)},
-        },
-        artifact_type="manager_screen_quote_impact_result",
-        sealed_at=OVERLAY_AT,
-    )
+            "quote_artifact_type": "manager_screen_quote_amendment",
+            "quote_path": amendment_path,
+            "quote_sha256": amendment_sha256,
+        }
 
 
 def _legacy_adoption(root: Path, repository_root: Path, *, symbol: str) -> None:
@@ -538,6 +575,11 @@ def test_contract_rebuilds_v1_v2_quote_and_legacy_without_expanding_cap(
         "manager_screen_quote_impact_result": 2,
         "manager_screen_legacy_transition_result": 1,
     }
+    assert {
+        item["source_id"]
+        for item in ledger["ledger"]
+        if item["source_kind"] == "manager_screen_quote_impact_result"
+    } == {"batch-v2/quote-review-001", "batch-v2/quote-review-002"}
 
     frozen = _freeze(root)
     payload = verify_manager_screen_allocation_v3_contract(
@@ -569,6 +611,79 @@ def test_contract_rebuilds_v1_v2_quote_and_legacy_without_expanding_cap(
         "manager_screen_quote_impact_result": 2,
         "manager_screen_legacy_transition_result": 1,
     }
+
+
+@pytest.mark.parametrize(
+    ("tamper", "message"),
+    [
+        ("gap", "sequence gap"),
+        ("prepared_predecessor", "prepared predecessor"),
+        ("partial", "partially sealed"),
+    ],
+)
+def test_inherited_ledger_rejects_invalid_quote_chain(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    tamper: str,
+    message: str,
+) -> None:
+    from trading_os.research_assets.manager_screen_allocation_v3 import (
+        ManagerScreenAllocationV3Error,
+        rebuild_manager_screen_inherited_purchase_ledger,
+    )
+    from trading_os.research_assets.sealing import canonical_json_bytes
+
+    root, _ = _repository(tmp_path, monkeypatch)
+    reviews = root / "manager-screen" / RUN_ID / "batch-v2" / "quote-impact-reviews"
+    first_result = reviews / "quote-review-001" / "result.json"
+    second = reviews / "quote-review-002"
+    if tamper == "gap":
+        plan_path = second / "plan.json"
+        plan = json.loads(plan_path.read_text(encoding="utf-8"))
+        plan["chain_sequence"] = 3
+        plan_path.with_name("plan.json.seal.json").unlink()
+        plan_path.write_bytes(canonical_json_bytes(plan))
+        plan_seal = seal_json(
+            plan_path,
+            plan,
+            artifact_type="manager_screen_quote_impact_plan",
+            sealed_at=OVERLAY_AT + dt.timedelta(minutes=3),
+        )
+        packet_path = second / "packet.json"
+        packet = json.loads(packet_path.read_text(encoding="utf-8"))
+        packet["plan_sha256"] = plan_seal.sha256
+        packet_path.with_name("packet.json.seal.json").unlink()
+        packet_path.write_bytes(canonical_json_bytes(packet))
+        packet_seal = seal_json(
+            packet_path,
+            packet,
+            artifact_type="manager_screen_quote_impact_packet",
+            sealed_at=OVERLAY_AT + dt.timedelta(minutes=4),
+        )
+        result_path = second / "result.json"
+        result = json.loads(result_path.read_text(encoding="utf-8"))
+        result["plan_sha256"] = plan_seal.sha256
+        result["packet_sha256"] = packet_seal.sha256
+        result_path.with_name("result.json.seal.json").unlink()
+        result_path.write_bytes(canonical_json_bytes(result))
+        seal_json(
+            result_path,
+            result,
+            artifact_type="manager_screen_quote_impact_result",
+            sealed_at=OVERLAY_AT + dt.timedelta(minutes=5),
+        )
+    elif tamper == "prepared_predecessor":
+        first_result.unlink()
+        first_result.with_name("result.json.seal.json").unlink()
+    else:
+        (second / "result.json").unlink()
+
+    with pytest.raises(ManagerScreenAllocationV3Error, match=message):
+        rebuild_manager_screen_inherited_purchase_ledger(
+            root=root,
+            run_id=RUN_ID,
+            cutoff=FROZEN_AT,
+        )
 
 
 def test_only_pending_never_claimed_without_attempt_or_sealed_progress_is_revocable(

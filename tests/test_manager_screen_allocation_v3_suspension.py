@@ -14,6 +14,7 @@ from tests.test_manager_screen_allocation_v3 import (
     _repository,
 )
 from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+from trading_os.research_assets.sealing import seal_json
 
 SUSPENDED_AT = FROZEN_AT + dt.timedelta(minutes=10)
 
@@ -47,7 +48,9 @@ def _ready_repository(
                 "reason": f"保留 {symbol} 的原始研究理由。",
                 "target_company_dir": f"research/companies/CN/{ticker}",
                 "next_action": "交给研究员回答决定性问题。",
-                "decisive_question": f"{symbol} 的决定性问题是什么？",
+                "decisive_question": (
+                    f"What sealed evidence resolves the thesis for {symbol}?"
+                ),
                 "evidence_ids": [f"snapshot:{symbol}"],
                 "effort_budget_hours": 1.5,
                 "stop_conditions": ["公开证据无法回答决定性问题"],
@@ -94,6 +97,71 @@ def _suspend(root: Path, **changes):
 
 def _by_symbol(path: Path) -> dict[str, dict]:
     return {row["symbol"]: row for row in read_jsonl(path)}
+
+
+def test_all_irreversible_contract_seals_a_verifiable_empty_suspension(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import trading_os.research_assets.manager_screen_allocation_v3_suspension as suspension
+
+    root = tmp_path / "coverage" / "cn-a"
+    contract = {
+        "run_id": RUN_ID,
+        "frozen_at": FROZEN_AT.isoformat(),
+        "manager": _manager(),
+        "commitment_classification": [
+            {
+                "symbol": "CN:000001",
+                "commitment_class": "irreversible",
+            }
+        ],
+        "activation_queue": {"purchased_states": []},
+    }
+    contract_path = (
+        root
+        / "manager-screen"
+        / RUN_ID
+        / "governance"
+        / "allocation-v3"
+        / "contract.json"
+    )
+    seal_json(
+        contract_path,
+        contract,
+        artifact_type="manager_screen_allocation_v3_contract",
+        sealed_at=FROZEN_AT,
+    )
+    write_jsonl(root / "research_queue.jsonl", [])
+    write_jsonl(root / "screening.jsonl", [])
+    monkeypatch.setattr(
+        suspension,
+        "verify_manager_screen_allocation_v3_contract",
+        lambda **_: contract,
+    )
+
+    recorded = _suspend(root)
+    verified = suspension.verify_manager_screen_allocation_v3_suspension(
+        root=root,
+        run_id=RUN_ID,
+    )
+
+    assert recorded["suspended_commitment_count"] == 0
+    assert recorded["materialization"]["fully_materialized"] is True
+    assert verified["materialization"]["queue_materialized_count"] == 0
+    assert verified["materialization"]["screening_materialized_count"] == 0
+    payload = json.loads(
+        (
+            root
+            / "manager-screen"
+            / RUN_ID
+            / "governance"
+            / "allocation-v3"
+            / "suspension.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert payload["members"] == []
+    assert payload["member_count"] == 0
 
 
 def test_suspension_seals_all_revocable_rows_then_materializes_candidate_state(

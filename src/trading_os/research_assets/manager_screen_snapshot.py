@@ -12,7 +12,16 @@ from collections.abc import Callable, Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
-from .coverage_store import COMPANIES_FILE, read_jsonl, write_jsonl
+from .coverage_store import (
+    COMPANIES_FILE,
+    read_jsonl,
+    serialized_coverage_write,
+    write_jsonl,
+)
+from .manager_screen_terminal_governance import (
+    ManagerScreenTerminalGovernanceError,
+    require_manager_screen_terminal_governance_open,
+)
 from .sealing import SealingError, seal_json, verify_sealed
 
 DEFAULT_ENDPOINT = "https://datacenter.eastmoney.com/securities/api/data/v1/get"
@@ -297,6 +306,7 @@ def prepare_manager_screen_snapshot(
     }
 
 
+@serialized_coverage_write
 def prepare_manager_screen_quote_amendment(
     *,
     root: str | Path,
@@ -357,6 +367,12 @@ def prepare_manager_screen_quote_amendment(
         raise ManagerScreenSnapshotError(
             "manager-screen quote amendment must be stored inside the repository"
         ) from exc
+    target_seal = target.with_name(f"{target.name}.seal.json")
+    if not target.exists() and not target_seal.exists():
+        _require_full_market_allocation_open(
+            base=base,
+            run_id=run,
+        )
     payload = {
         "schema_version": 1,
         "run_id": run,
@@ -403,6 +419,19 @@ def prepare_manager_screen_quote_amendment(
         "quote_freshness_policy": payload["quote_freshness_policy"],
         "portfolio_action": None,
     }
+
+
+def _require_full_market_allocation_open(*, base: Path, run_id: str) -> None:
+    """Forbid a new quote amendment after the allocation singleton is frozen."""
+
+    try:
+        require_manager_screen_terminal_governance_open(
+            root=base,
+            run_id=run_id,
+            operation="new quote amendment",
+        )
+    except ManagerScreenTerminalGovernanceError as exc:
+        raise ManagerScreenSnapshotError(str(exc)) from exc
 
 
 def fetch_eastmoney_previous_close_quotes(

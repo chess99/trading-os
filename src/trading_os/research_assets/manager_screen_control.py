@@ -12,6 +12,10 @@ from .manager_screen_governance import (
     ManagerScreenGovernanceError,
     load_manager_screen_supersession,
 )
+from .manager_screen_terminal_governance import (
+    ManagerScreenTerminalGovernanceError,
+    require_manager_screen_terminal_governance_open,
+)
 from .sealing import SealingError, seal_json, verify_sealed
 
 
@@ -98,6 +102,15 @@ def record_manager_screen_control(
             open_company_count=counts["open_company_count"],
             repository_root=repository_root,
         )
+
+    try:
+        require_manager_screen_terminal_governance_open(
+            root=base,
+            run_id=run,
+            operation="new manager-screen control event",
+        )
+    except ManagerScreenTerminalGovernanceError as exc:
+        raise ManagerScreenControlError(str(exc)) from exc
 
     latest = existing_events[-1] if existing_events else None
     if latest is not None and timestamp <= latest["recorded_at"]:

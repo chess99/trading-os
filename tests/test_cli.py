@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import datetime as dt
 import hashlib
 import json
 from pathlib import Path
@@ -459,6 +460,203 @@ def test_cli_coverage_set_screening_and_validate(tmp_path: Path, capsys):
 
     assert main(["coverage", "validate", "--root", str(root)]) == 0
     assert json.loads(capsys.readouterr().out)["ok"] is True
+
+
+def test_cli_coverage_set_screening_rejects_formal_projection_without_mutation(
+    tmp_path: Path,
+    capsys,
+) -> None:
+    from trading_os.cli import main
+    from trading_os.research_assets.coverage_store import write_jsonl
+
+    root = tmp_path / "coverage" / "cn-a"
+    screening_path = root / "screening.jsonl"
+    write_jsonl(
+        screening_path,
+        [
+            {
+                "symbol": "CN:300750",
+                "name": "宁德时代",
+                "decision": "candidate_unfunded",
+                "priority": 1,
+                "reason": "full-market allocation 前的正式投影。",
+                "evidence": ["manager-screen:sealed"],
+                "next_action": "等待正式 allocation。",
+                "manager_screen_run_id": "manager-run",
+                "manager_screen_allocation_result_path": (
+                    "coverage/cn-a/manager-screen/manager-run/governance/"
+                    "allocation-v3/full-market/result.json"
+                ),
+            }
+        ],
+    )
+    before = screening_path.read_bytes()
+
+    code = main(
+        [
+            "coverage",
+            "set-screening",
+            "CN:300750",
+            "--root",
+            str(root),
+            "--name",
+            "宁德时代",
+            "--decision",
+            "catalog",
+            "--reason",
+            "通用 CLI 不得覆盖正式投影。",
+            "--evidence",
+            "generic:overwrite",
+            "--next-action",
+            "不应写入。",
+        ]
+    )
+
+    assert code == 1
+    error = json.loads(capsys.readouterr().err)
+    assert error["error_code"] == "coverage_validation_failed"
+    assert "formal workflow-owned" in error["error"]
+    assert screening_path.read_bytes() == before
+
+
+@pytest.mark.parametrize(
+    ("command", "attribute", "arguments"),
+    [
+        (
+            "profile-claim",
+            "claim_profile_task",
+            ["--agent", "analyst-1", "--symbol", "CN:000001"],
+        ),
+        (
+            "profile-release",
+            "release_profile_task",
+            [
+                "--agent",
+                "analyst-1",
+                "--symbol",
+                "CN:000001",
+                "--failure-reason",
+                "source unavailable",
+            ],
+        ),
+    ],
+)
+@pytest.mark.parametrize(
+    "offset",
+    [
+        -dt.timedelta(minutes=5, microseconds=1),
+        dt.timedelta(minutes=5, microseconds=1),
+    ],
+    ids=["stale", "future"],
+)
+def test_profile_stage_event_cli_rejects_time_outside_wall_clock_tolerance(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+    command: str,
+    attribute: str,
+    arguments: list[str],
+    offset: dt.timedelta,
+) -> None:
+    import trading_os.cli as cli
+
+    wall_clock = dt.datetime(2026, 8, 1, 12, tzinfo=dt.timezone.utc)
+    called = False
+
+    def fake_command(**_kwargs):
+        nonlocal called
+        called = True
+        return {"state": "must-not-run"}
+
+    monkeypatch.setattr(cli, "_wall_clock_now", lambda: wall_clock)
+    monkeypatch.setattr(cli, attribute, fake_command)
+
+    code = cli.main(
+        [
+            "coverage",
+            command,
+            "--root",
+            str(tmp_path / "coverage" / "cn-a"),
+            *arguments,
+            "--at",
+            (wall_clock + offset).isoformat(),
+        ]
+    )
+
+    assert code == 1
+    error = json.loads(capsys.readouterr().err)
+    assert error["error_code"] == "review_workflow_error"
+    assert "within 5 minutes of the current wall clock" in error["error"]
+    assert called is False
+
+
+@pytest.mark.parametrize(
+    ("command", "attribute", "timestamp_field", "arguments"),
+    [
+        (
+            "profile-claim",
+            "claim_profile_task",
+            "claimed_at",
+            ["--agent", "analyst-1", "--symbol", "CN:000001"],
+        ),
+        (
+            "profile-release",
+            "release_profile_task",
+            "released_at",
+            [
+                "--agent",
+                "analyst-1",
+                "--symbol",
+                "CN:000001",
+                "--failure-reason",
+                "source unavailable",
+            ],
+        ),
+    ],
+)
+@pytest.mark.parametrize(
+    "offset",
+    [-dt.timedelta(minutes=5), dt.timedelta(minutes=5)],
+    ids=["past-boundary", "future-boundary"],
+)
+def test_profile_stage_event_cli_accepts_wall_clock_tolerance_boundary(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+    command: str,
+    attribute: str,
+    timestamp_field: str,
+    arguments: list[str],
+    offset: dt.timedelta,
+) -> None:
+    import trading_os.cli as cli
+
+    wall_clock = dt.datetime(2026, 8, 1, 12, tzinfo=dt.timezone.utc)
+    captured: dict[str, object] = {}
+
+    def fake_command(**kwargs):
+        captured.update(kwargs)
+        return {"state": "accepted"}
+
+    monkeypatch.setattr(cli, "_wall_clock_now", lambda: wall_clock)
+    monkeypatch.setattr(cli, attribute, fake_command)
+    requested_at = wall_clock + offset
+
+    code = cli.main(
+        [
+            "coverage",
+            command,
+            "--root",
+            str(tmp_path / "coverage" / "cn-a"),
+            *arguments,
+            "--at",
+            requested_at.isoformat(),
+        ]
+    )
+
+    assert code == 0
+    assert json.loads(capsys.readouterr().out)["state"] == "accepted"
+    assert captured[timestamp_field] == requested_at
 
 
 def test_cli_allocates_research_capacity_and_evaluates_profile(

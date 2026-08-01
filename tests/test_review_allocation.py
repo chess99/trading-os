@@ -8,10 +8,8 @@ from pathlib import Path
 
 import pytest
 
-from tests.test_company_assets import write_company
-
 APPROVED_AT = dt.datetime.fromisoformat("2026-07-31T18:00:00+08:00")
-RUN_ID = "2026-07-31-all-a-continuous-001"
+RUN_ID = "2026-07-20-deep-completion-test"
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -19,204 +17,83 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _attach_claims(company_dir: Path) -> None:
-    from trading_os.research_assets.sealing import seal_json
-
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    record = meta["reports"]["history"][-1]
-    symbol = meta["identity"]["symbol"]
-    claims_path = company_dir / "evidence" / "deep-research-claims.json"
-    seal_json(
-        claims_path,
-        {
-            "schema_version": 2,
-            "report_id": record["report_id"],
-            "symbol": symbol,
-            "claims": [
-                {
-                    "claim_id": "claim-business-quality",
-                    "category": "business",
-                    "claim": "Normalized owner earnings are supported by filings.",
-                    "verification_metrics": ["cash conversion"],
-                    "falsifiers": ["persistent cash conversion collapse"],
-                    "source_ids": ["annual-report"],
-                }
-            ],
-            "sources": [
-                {
-                    "source_id": "annual-report",
-                    "tier": "S1",
-                    "uri_or_path": "sources/annual-report.pdf",
-                }
-            ],
-            "decision": {
-                "rating": "watch",
-                "fair_value_range": [100.0, 120.0],
-                "buy_zone": [80.0, 90.0],
-                "reduce_zone": [130.0, 140.0],
-                "conclusion": "Wait for a sufficient margin of safety.",
-            },
-        },
-        artifact_type="research_claims",
-        sealed_at=APPROVED_AT - dt.timedelta(hours=2),
-    )
-    report_path = company_dir / record["path"]
-    text = report_path.read_text(encoding="utf-8")
-    text = text.replace(
-        '"sealed_artifacts": []',
-        '"sealed_artifacts": ["evidence/deep-research-claims.json"]',
-    )
-    report_path.write_text(text, encoding="utf-8")
-    record["sha256"] = _sha256(report_path)
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-
-
 def _environment(
     tmp_path: Path,
     *,
     capacity: int = 3,
-    manager_predecessor_type: str = "manager_screen_result",
-    duplicate_manager_decision: bool = False,
 ) -> dict[str, object]:
-    from trading_os.research_assets.coverage_store import write_jsonl
-    from trading_os.research_assets.sealing import seal_json
+    from tests.test_deep_research_completion import (
+        _environment as _deep_environment,
+    )
+    from tests.test_deep_research_completion import _record as _record_completion
 
-    repository = tmp_path
-    coverage_root = repository / "coverage" / "cn-a"
-    company_dir = write_company(repository)
-    _attach_claims(company_dir)
-    report = json.loads((company_dir / "meta.json").read_text(encoding="utf-8"))["reports"][
-        "history"
-    ][-1]
-    completion_path = company_dir / report["path"]
-
-    selection_path = (
-        coverage_root / "profiles" / "deep-selection-cycle" / "scoped-research-selection.json"
+    deep = _deep_environment(
+        tmp_path,
+        underwriting_capacity=capacity,
     )
-    selection_seal = seal_json(
-        selection_path,
-        {
-            "schema_version": 1,
-            "cycle_id": "deep-selection-cycle",
-            "evaluated_stage": "scoped_research",
-            "next_stage": "deep_research",
-            "ranking": [
-                {
-                    "symbol": "CN:600519",
-                    "selected": True,
-                }
-            ],
-            "portfolio_action": None,
-        },
-        artifact_type="scoped_research_cross_company_selection",
-        sealed_at=APPROVED_AT - dt.timedelta(days=1),
-    )
-    selection_relative = selection_path.relative_to(repository).as_posix()
-    completion_relative = completion_path.relative_to(repository).as_posix()
-    if manager_predecessor_type == "manager_screen_quote_impact_result":
-        manager_result_path = (
-            coverage_root
-            / "manager-screen"
-            / RUN_ID
-            / "batch-001"
-            / "quote-impact-reviews"
-            / "review-001"
-            / "result.json"
-        )
-    elif manager_predecessor_type == "manager_screen_legacy_transition_result":
-        manager_result_path = (
-            coverage_root / "manager-screen" / RUN_ID / "legacy-transition-001" / "result.json"
-        )
-    else:
-        manager_result_path = (
-            coverage_root / "manager-screen" / RUN_ID / "batch-001" / "result.json"
-        )
-    manager_decisions = [
-        {
-            "symbol": "CN:600519",
-            "route": "send_to_analyst",
-            "decisive_question": "Can normalized owner earnings support valuation?",
-            "evidence_ids": ["manager-screen:CN:600519"],
-        }
-    ]
-    if duplicate_manager_decision:
-        manager_decisions.append(dict(manager_decisions[0]))
-    manager_result_seal = seal_json(
-        manager_result_path,
-        {
-            "schema_version": 1,
-            "run_id": RUN_ID,
-            "manager": {
-                "agent": "/root/investment-manager",
-                "model": "test-manager",
-                "tools": ["manager-screen"],
-            },
-            "decisions": manager_decisions,
-        },
-        artifact_type=manager_predecessor_type,
-        sealed_at=APPROVED_AT - dt.timedelta(days=2),
-    )
-    write_jsonl(
-        coverage_root / "research_queue.jsonl",
-        [
-            {
-                "symbol": "CN:600519",
-                "name": "贵州茅台",
-                "task_type": "deep_research",
-                "priority": 1,
-                "status": "completed",
-                "reason": "deep research completed",
-                "target_company_dir": company_dir.relative_to(repository).as_posix(),
-                "effort_budget_hours": 24.0,
-                "preceding_stage": "scoped_research",
-                "stop_conditions": ["thesis disproven"],
-                "manager_screen_run_id": RUN_ID,
-                "manager_screen_route": "send_to_analyst",
-                "decisive_question": "Can normalized owner earnings support valuation?",
-                "evidence_ids": ["manager-screen:CN:600519"],
-                "manager_screen_result_path": manager_result_path.relative_to(
-                    repository
-                ).as_posix(),
-                "manager_screen_result_sha256": manager_result_seal.sha256,
-                "profile_scoped_selection_path": selection_relative,
-                "stage_history": [
-                    {
-                        "stage": "deep_research",
-                        "status": "completed",
-                        "agent": "/root/deep-researcher",
-                        "result_path": completion_relative,
-                    }
-                ],
-            }
-        ],
-    )
-
-    policy_root = repository / "policies"
-    shutil.copytree(ROOT / "policies", policy_root)
-    policy_path = policy_root / "research-allocation.json"
-    policy = json.loads(policy_path.read_text(encoding="utf-8"))
-    policy["payload"]["stage_capacity_per_run"]["underwriting"] = capacity
-    policy_path.write_text(
-        json.dumps(policy, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    completion = _record_completion(deep)
+    submission = deep["submission"]
+    assert isinstance(submission, dict)
+    policy_path = tmp_path / "policies" / "research-allocation.json"
+    research_policy_bytes = policy_path.read_bytes()
+    shutil.copytree(ROOT / "policies", policy_path.parent, dirs_exist_ok=True)
+    policy_path.write_bytes(research_policy_bytes)
+    selection_path = tmp_path / str(submission["scoped_selection_path"])
+    completion_path = tmp_path / str(completion["receipt_path"])
     return {
-        "repository": repository,
-        "coverage_root": coverage_root,
+        "repository": tmp_path,
+        "coverage_root": deep["coverage_root"],
         "policy_path": policy_path,
         "selection_path": selection_path,
-        "selection_sha256": selection_seal.sha256,
+        "selection_sha256": submission["scoped_selection_sha256"],
         "completion_path": completion_path,
         "candidate": {
             "symbol": "CN:600519",
-            "deep_selection_path": selection_relative,
-            "deep_selection_sha256": selection_seal.sha256,
-            "deep_completion_path": completion_relative,
-            "deep_completion_sha256": _sha256(completion_path),
+            "deep_selection_path": submission["scoped_selection_path"],
+            "deep_selection_sha256": submission["scoped_selection_sha256"],
+            "deep_completion_path": completion["receipt_path"],
+            "deep_completion_sha256": completion["receipt_sha256"],
+        },
+    }
+
+
+def _full_market_underwriting_environment(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> dict[str, object]:
+    from tests.test_deep_research_completion import _full_market_environment
+    from trading_os.research_assets.deep_research_completion import (
+        record_deep_research_completion,
+    )
+
+    deep = _full_market_environment(tmp_path, monkeypatch)
+    completion = record_deep_research_completion(
+        root=deep["coverage_root"],
+        symbol=str(deep["symbol"]),
+        submission=deep["submission"],
+        completed_at=deep["completed_at"],
+    )
+    submission = deep["submission"]
+    assert isinstance(submission, dict)
+    completed_at = deep["completed_at"]
+    assert isinstance(completed_at, dt.datetime)
+    receipt_path = tmp_path / str(completion["receipt_path"])
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    policy_path = tmp_path / "policies" / "research-allocation.json"
+    return {
+        "repository": tmp_path,
+        "coverage_root": deep["coverage_root"],
+        "policy_path": policy_path,
+        "approved_at": completed_at + dt.timedelta(hours=1),
+        "manager_screen_run_id": receipt["manager_screen_run_id"],
+        "allocator": receipt["effective_manager_authority"]["agent"],
+        "authority": receipt["effective_manager_authority"],
+        "candidate": {
+            "symbol": deep["symbol"],
+            "deep_selection_path": submission["scoped_selection_path"],
+            "deep_selection_sha256": submission["scoped_selection_sha256"],
+            "deep_completion_path": completion["receipt_path"],
+            "deep_completion_sha256": completion["receipt_sha256"],
         },
     }
 
@@ -423,145 +300,18 @@ def test_new_approval_after_live_upgrade_uses_existing_run_contract(
 def test_underwriting_reuses_profile_style_run_policy_contract(
     tmp_path: Path,
 ):
-    from trading_os.research_assets.review_allocation import (
-        _policy_ref_from_document,
-    )
-    from trading_os.research_assets.sealing import seal_json, verify_sealed
+    from trading_os.research_assets.sealing import verify_sealed
 
     env = _environment(tmp_path)
-    policy_path = Path(env["policy_path"])
-    document = json.loads(policy_path.read_text(encoding="utf-8"))
     contract_path = Path(env["coverage_root"]) / "manager-screen" / RUN_ID / "research-policy.json"
-    contract = {
-        "schema_version": 1,
-        "run_id": RUN_ID,
-        "bound_at": (APPROVED_AT - dt.timedelta(minutes=1)).isoformat(),
-        "policy": _policy_ref_from_document(
-            document,
-            file_sha256=_sha256(policy_path),
-        ),
-        "portfolio_action": None,
-    }
-    contract_seal = seal_json(
-        contract_path,
-        contract,
-        artifact_type="manager_screen_research_policy_contract",
-        sealed_at=APPROVED_AT - dt.timedelta(minutes=1),
-    )
+    contract_sha256 = verify_sealed(contract_path).sha256
 
     created = _freeze(env)
     snapshot_path = contract_path.with_name("research-policy.snapshot.json")
 
-    assert verify_sealed(contract_path).sha256 == contract_seal.sha256
+    assert verify_sealed(contract_path).sha256 == contract_sha256
     assert verify_sealed(snapshot_path).artifact_type == ("manager_screen_research_policy_snapshot")
     assert created["capacity"]["limit"] == 3
-
-
-@pytest.mark.parametrize(
-    "artifact_type",
-    [
-        "manager_screen_quote_impact_result",
-        "manager_screen_legacy_transition_result",
-    ],
-)
-def test_underwriting_accepts_current_manager_predecessor_types(
-    tmp_path: Path,
-    artifact_type: str,
-):
-    env = _environment(
-        tmp_path,
-        manager_predecessor_type=artifact_type,
-    )
-
-    created = _freeze(env)
-
-    assert created["approved_symbols"] == ["CN:600519"]
-
-
-@pytest.mark.parametrize(
-    "artifact_type",
-    [
-        "manager_screen_quote_impact_result",
-        "manager_screen_legacy_transition_result",
-    ],
-)
-def test_underwriting_rejects_queue_route_drift_from_sealed_predecessor(
-    tmp_path: Path,
-    artifact_type: str,
-):
-    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
-    from trading_os.research_assets.review_allocation import ReviewAllocationError
-
-    env = _environment(
-        tmp_path,
-        manager_predecessor_type=artifact_type,
-    )
-    queue_path = Path(env["coverage_root"]) / "research_queue.jsonl"
-    queue = read_jsonl(queue_path)
-    queue[0]["manager_screen_route"] = "pass"
-    write_jsonl(queue_path, queue)
-
-    with pytest.raises(ReviewAllocationError, match="sealed predecessor decision"):
-        _freeze(env)
-
-
-@pytest.mark.parametrize(
-    "artifact_type",
-    [
-        "manager_screen_quote_impact_result",
-        "manager_screen_legacy_transition_result",
-    ],
-)
-@pytest.mark.parametrize(
-    ("field", "value"),
-    [
-        ("decisive_question", "drifted question"),
-        ("evidence_ids", ["drifted-evidence"]),
-    ],
-)
-def test_underwriting_rejects_queue_decision_field_drift(
-    tmp_path: Path,
-    artifact_type: str,
-    field: str,
-    value: object,
-):
-    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
-    from trading_os.research_assets.review_allocation import ReviewAllocationError
-
-    env = _environment(
-        tmp_path,
-        manager_predecessor_type=artifact_type,
-    )
-    queue_path = Path(env["coverage_root"]) / "research_queue.jsonl"
-    queue = read_jsonl(queue_path)
-    queue[0][field] = value
-    write_jsonl(queue_path, queue)
-
-    with pytest.raises(ReviewAllocationError, match="question/evidence"):
-        _freeze(env)
-
-
-@pytest.mark.parametrize(
-    "artifact_type",
-    [
-        "manager_screen_quote_impact_result",
-        "manager_screen_legacy_transition_result",
-    ],
-)
-def test_underwriting_requires_exactly_one_predecessor_decision(
-    tmp_path: Path,
-    artifact_type: str,
-):
-    from trading_os.research_assets.review_allocation import ReviewAllocationError
-
-    env = _environment(
-        tmp_path,
-        manager_predecessor_type=artifact_type,
-        duplicate_manager_decision=True,
-    )
-
-    with pytest.raises(ReviewAllocationError, match="exactly one decision"):
-        _freeze(env)
 
 
 def test_underwriting_approval_requires_same_run_and_completed_deep_history(
@@ -581,7 +331,91 @@ def test_underwriting_approval_requires_same_run_and_completed_deep_history(
     queue[0]["manager_screen_run_id"] = RUN_ID
     queue[0]["stage_history"] = []
     write_jsonl(queue_path, queue)
-    with pytest.raises(ReviewAllocationError, match="completion is not recorded"):
+    with pytest.raises(ReviewAllocationError, match="completion chain is invalid"):
+        _freeze(env)
+
+
+def test_underwriting_rejects_formal_report_in_place_of_completion_receipt(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.review_allocation import ReviewAllocationError
+
+    env = _environment(tmp_path)
+    receipt = json.loads(Path(env["completion_path"]).read_text(encoding="utf-8"))
+    report_path = tmp_path / receipt["report"]["path"]
+    candidate = dict(env["candidate"])
+    candidate["deep_completion_path"] = receipt["report"]["path"]
+    candidate["deep_completion_sha256"] = _sha256(report_path)
+
+    with pytest.raises(ReviewAllocationError, match="not validly sealed"):
+        _freeze(env, candidates=[candidate])
+
+
+@pytest.mark.parametrize("tamper", ["candidate_sha", "receipt_bytes"])
+def test_underwriting_rejects_completion_receipt_tampering(
+    tmp_path: Path,
+    tamper: str,
+):
+    from trading_os.research_assets.review_allocation import ReviewAllocationError
+
+    env = _environment(tmp_path)
+    candidate = dict(env["candidate"])
+    if tamper == "candidate_sha":
+        candidate["deep_completion_sha256"] = "a" * 64
+    else:
+        receipt_path = Path(env["completion_path"])
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        receipt["report"]["sha256"] = "a" * 64
+        receipt_path.write_text(
+            json.dumps(receipt, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+    with pytest.raises(ReviewAllocationError, match="SHA-256 mismatch|not validly sealed"):
+        _freeze(env, candidates=[candidate])
+
+
+@pytest.mark.parametrize(
+    "field",
+    [
+        "deep_research_completion_path",
+        "deep_research_completion_sha256",
+        "deep_research_claims_sha256",
+    ],
+)
+def test_underwriting_rejects_deep_completion_queue_projection_drift(
+    tmp_path: Path,
+    field: str,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.review_allocation import ReviewAllocationError
+
+    env = _environment(tmp_path)
+    queue_path = Path(env["coverage_root"]) / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0][field] = "a" * 64 if field.endswith("sha256") else "drifted.json"
+    write_jsonl(queue_path, queue)
+
+    with pytest.raises(ReviewAllocationError, match="completion chain is invalid"):
+        _freeze(env)
+
+
+def test_underwriting_requires_terminal_deep_completion_projection(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.review_allocation import ReviewAllocationError
+
+    env = _environment(tmp_path)
+    receipt = json.loads(Path(env["completion_path"]).read_text(encoding="utf-8"))
+    queue_path = Path(env["coverage_root"]) / "research_queue.jsonl"
+    screening_path = Path(env["coverage_root"]) / "screening.jsonl"
+    queue = read_jsonl(queue_path)
+    screening = read_jsonl(screening_path)
+    queue[0] = receipt["projection_base"]["research_queue"]
+    screening[0] = receipt["projection_base"]["screening"]
+    write_jsonl(queue_path, queue)
+    write_jsonl(screening_path, screening)
+
+    with pytest.raises(ReviewAllocationError, match="terminal projection"):
         _freeze(env)
 
 
@@ -604,13 +438,13 @@ def test_underwriting_approval_rejects_unsealed_claims(tmp_path: Path):
         _freeze(env)
 
 
-def test_underwriting_approval_binds_sealed_manager_identity(tmp_path: Path):
+def test_underwriting_approval_binds_effective_manager_authority(tmp_path: Path):
     from trading_os.research_assets.review_allocation import ReviewAllocationError
 
     env = _environment(tmp_path)
     with pytest.raises(
         ReviewAllocationError,
-        match="approved_by does not match sealed manager identity",
+        match="approved_by does not match sealed effective manager authority",
     ):
         _freeze(env, approved_by="/root/not-the-manager")
 
@@ -622,9 +456,73 @@ def test_underwriting_approval_binds_sealed_manager_identity(tmp_path: Path):
     manager_result.write_text(json.dumps(payload), encoding="utf-8")
     with pytest.raises(
         ReviewAllocationError,
-        match="manager-screen result is not validly sealed",
+        match="deep research completion chain is invalid",
     ):
         _freeze(env)
+
+
+def test_full_market_underwriting_accepts_effective_allocator_authority(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from trading_os.research_assets.review_allocation import (
+        freeze_underwriting_approval,
+    )
+
+    env = _full_market_underwriting_environment(tmp_path, monkeypatch)
+    authority = env["authority"]
+    assert isinstance(authority, dict)
+    assert authority["source_type"] == (
+        "manager_screen_full_market_allocation_v3_result"
+    )
+
+    created = freeze_underwriting_approval(
+        root=env["coverage_root"],
+        repository_root=env["repository"],
+        approval_id="uw-full-market-allocator",
+        manager_screen_run_id=str(env["manager_screen_run_id"]),
+        policy_path=Path(env["policy_path"])
+        .relative_to(Path(env["repository"]))
+        .as_posix(),
+        policy_sha256=_sha256(Path(env["policy_path"])),
+        approved_by=str(env["allocator"]),
+        reason="The full-market allocator explicitly purchases underwriting.",
+        approved_at=env["approved_at"],
+        candidates=[env["candidate"]],
+    )
+
+    assert created["approved_symbols"] == ["CN:000001"]
+
+
+def test_full_market_underwriting_rejects_non_allocator_manager(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from trading_os.research_assets.review_allocation import (
+        ReviewAllocationError,
+        freeze_underwriting_approval,
+    )
+
+    env = _full_market_underwriting_environment(tmp_path, monkeypatch)
+
+    with pytest.raises(
+        ReviewAllocationError,
+        match="approved_by does not match sealed effective manager authority",
+    ):
+        freeze_underwriting_approval(
+            root=env["coverage_root"],
+            repository_root=env["repository"],
+            approval_id="uw-full-market-non-allocator",
+            manager_screen_run_id=str(env["manager_screen_run_id"]),
+            policy_path=Path(env["policy_path"])
+            .relative_to(Path(env["repository"]))
+            .as_posix(),
+            policy_sha256=_sha256(Path(env["policy_path"])),
+            approved_by="/root/early-batch-manager",
+            reason="A non-allocator must not purchase underwriting.",
+            approved_at=env["approved_at"],
+            candidates=[env["candidate"]],
+        )
 
 
 def test_underwriting_approval_enforces_cross_artifact_run_capacity(

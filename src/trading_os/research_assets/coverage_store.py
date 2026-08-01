@@ -21,6 +21,7 @@ DECISIONS = {
     "quick_profile",
     "profile_candidate",
     "candidate_unfunded",
+    "deferred_full_market",
     "scoped_research",
     "deep_candidate",
     "targeted_followup",
@@ -75,7 +76,24 @@ COMPANIES_FILE = "companies.jsonl"
 SCREENING_FILE = "screening.jsonl"
 RESEARCH_QUEUE_FILE = "research_queue.jsonl"
 RUNS_FILE = "runs.jsonl"
-NEW_PROTOCOL_BINDING_PREFIXES = ("manager_screen_", "legacy_transition_")
+FORMAL_WORKFLOW_OWNERSHIP_PREFIXES = (
+    "allocation_",
+    "baseline_intake_",
+    "cohort_",
+    "deep_research_",
+    "legacy_transition_",
+    "manager_screen_",
+    "profile_",
+    "quality_",
+    "research_budget_",
+    "research_policy_",
+    "scope_",
+    "targeted_followup_",
+    "triage_",
+    "underwriting_",
+)
+FORMAL_WORKFLOW_OWNERSHIP_SUFFIXES = ("_cycle_id", "_run_id", "_sha256")
+GENERIC_MUTABLE_PROVENANCE_FIELDS = {"result_path", "result_sha256"}
 
 
 class CoverageValidationError(ValueError):
@@ -217,6 +235,26 @@ def reconcile_research_queue(
 
     for record in records:
         updated = dict(record)
+        if _requires_sealed_deep_research_completion(record):
+            # A valid deep completion must bind the scoped selection, the
+            # claimed researcher, a new formal report, and sealed claims.  The
+            # generic reconciler only sees a mutable latest-report pointer and
+            # therefore must never infer completion for deep research.  Queue
+            # provenance is mutable, so missing bindings cannot safely prove a
+            # record predates the sealed completion protocol.
+            if record.get("status") in eligible_statuses:
+                blocked.append(
+                    {
+                        "symbol": str(record.get("symbol", "")),
+                        "company_dir": str(_resolve_company_dir(record, research_base)),
+                        "error": (
+                            "deep_research requires the formal sealed "
+                            "deep-research completion workflow"
+                        ),
+                    }
+                )
+            reconciled.append(updated)
+            continue
         if record.get("task_type") in PRE_REPORT_TASK_TYPES:
             # Quick profiles and scoped research deliberately precede a full
             # company report. Company-level rebaseline state must not erase
@@ -412,6 +450,7 @@ def set_screening(
     evidence: list[str],
     next_action: str,
 ) -> Path:
+    assert_legacy_unbound_symbols(root, [symbol], operation="coverage set-screening")
     record = {
         "symbol": symbol,
         "name": name,
@@ -494,7 +533,7 @@ def assert_legacy_unbound_symbols(
     *,
     operation: str,
 ) -> None:
-    """Reject legacy writes for symbols owned by the manager-screen protocol."""
+    """Reject generic writes for symbols owned by a formal coverage workflow."""
 
     base = Path(root)
     normalized = sorted(set(symbols))
@@ -510,20 +549,39 @@ def assert_legacy_unbound_symbols(
             symbol = record.get("symbol")
             if symbol not in requested:
                 continue
-            if any(
-                key.startswith(NEW_PROTOCOL_BINDING_PREFIXES) and value is not None
-                for key, value in record.items()
-            ):
+            if _has_formal_workflow_ownership(record):
                 bound.add(str(symbol))
 
     scoped = requested & _sealed_scope_symbols(base)
     protected = sorted(bound | scoped)
     if protected:
         raise CoverageValidationError(
-            f"{operation} cannot write manager-screen/new-protocol symbol(s): "
+            f"{operation} cannot write manager-screen/new-protocol or other "
+            "formal workflow-owned symbol(s): "
             + ", ".join(protected)
-            + "; use the formal manager-screen and underwriting workflows"
+            + "; use the corresponding formal coverage workflow"
         )
+
+
+def _has_formal_workflow_ownership(record: dict[str, Any]) -> bool:
+    """Recognize immutable workflow provenance without trusting row validity.
+
+    Generic setters replace an entire row.  The mere presence of a non-null
+    ownership marker therefore closes that escape hatch, even if the marker is
+    incomplete or malformed.  The generic legacy ``result_path`` pointer and
+    its optional hash are not, by themselves, workflow ownership.
+    """
+
+    return any(
+        value is not None
+        and key not in GENERIC_MUTABLE_PROVENANCE_FIELDS
+        and (
+            key.startswith(FORMAL_WORKFLOW_OWNERSHIP_PREFIXES)
+            or key.endswith(FORMAL_WORKFLOW_OWNERSHIP_SUFFIXES)
+            or key.endswith("_path")
+        )
+        for key, value in record.items()
+    )
 
 
 def _sealed_scope_symbols(root: Path) -> set[str]:
@@ -687,6 +745,15 @@ def _resolve_company_dir(record: dict[str, Any], research_root: Path) -> Path:
     if target.parts and target.parts[0] == "companies":
         return research_root / target
     return research_root.parent / target
+
+
+def _requires_sealed_deep_research_completion(record: dict[str, Any]) -> bool:
+    # Do not infer protocol generation from mutable queue provenance.  In
+    # particular, changing preceding_stage to a legacy-looking value and
+    # deleting bindings/history must not restore the old latest-report
+    # reconciler.  A future legacy exception must bind an independently
+    # authenticated migration artifact; no such contract exists today.
+    return record.get("task_type") == "deep_research"
 
 
 def _sorted_counts(values: Any) -> dict[str, int]:

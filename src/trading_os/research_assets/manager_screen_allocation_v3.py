@@ -10,6 +10,10 @@ from pathlib import Path
 from typing import Any
 
 from .coverage_store import serialized_coverage_write
+from .manager_screen_terminal_governance import (
+    ManagerScreenTerminalGovernanceError,
+    require_manager_screen_terminal_governance_open,
+)
 from .manager_screening import ManagerScreeningError, manager_screen_status
 from .models import PolicyKind, PolicyValidationError, load_policy
 from .sealing import SealingError, canonical_json_bytes, seal_json, verify_sealed
@@ -230,6 +234,15 @@ def freeze_manager_screen_allocation_v3_contract(
             repository_root=repository_root,
             idempotent=True,
         )
+
+    try:
+        require_manager_screen_terminal_governance_open(
+            root=base,
+            run_id=run,
+            operation="new manager-screen allocation v3 contract",
+        )
+    except ManagerScreenTerminalGovernanceError as exc:
+        raise ManagerScreenAllocationV3Error(str(exc)) from exc
 
     scope = _scope_binding(
         base=base,
@@ -1223,116 +1236,264 @@ def _quote_impact_purchases(
         return {"ledger": [], "pending_precontract_count": 0}
     if not reviews_root.is_dir():
         raise ManagerScreenAllocationV3Error("quote-impact reviews path is not a directory")
-    entries = sorted(reviews_root.iterdir(), key=lambda path: path.name)
-    if any(not entry.is_dir() for entry in entries) or len(entries) > 1:
+    directories = sorted(reviews_root.iterdir(), key=lambda path: path.name)
+    if any(not entry.is_dir() for entry in directories):
         raise ManagerScreenAllocationV3Error(
-            "each manager-screen batch may have at most one quote-impact review"
+            "quote-impact reviews directory contains an unexpected file"
         )
-    if not entries:
+    if not directories:
         return {"ledger": [], "pending_precontract_count": 0}
-    review_dir = entries[0]
-    plan, plan_seal = _sealed_object(
-        review_dir / "plan.json",
-        artifact_type="manager_screen_quote_impact_plan",
+    original_result, _ = _sealed_object(
+        original_result_path,
+        artifact_type="manager_screen_result",
     )
-    plan_before = cutoff is None or plan_seal.sealed_at <= cutoff
-    result_presence = _artifact_presence(review_dir / "result.json")
-    if result_presence == "partial":
-        raise ManagerScreenAllocationV3Error("quote-impact result is only partially sealed")
-    if result_presence == "absent":
-        return {
-            "ledger": [],
-            "pending_precontract_count": int(plan_before),
-        }
-    packet, packet_seal = _sealed_object(
-        review_dir / "packet.json",
-        artifact_type="manager_screen_quote_impact_packet",
-    )
-    result, result_seal = _sealed_object(
-        review_dir / "result.json",
-        artifact_type="manager_screen_quote_impact_result",
-    )
-    common = (run_id, batch_id, review_dir.name)
-    if (
-        (plan.get("run_id"), plan.get("batch_id"), plan.get("review_id")) != common
-        or (packet.get("run_id"), packet.get("batch_id"), packet.get("review_id")) != common
-        or (result.get("run_id"), result.get("batch_id"), result.get("review_id")) != common
-        or plan.get("original_result_path") != _relative(original_result_path, repository_root)
-        or plan.get("original_result_sha256") != original_result_sha256
-        or result.get("original_result_path") != _relative(original_result_path, repository_root)
-        or result.get("original_result_sha256") != original_result_sha256
-        or packet.get("plan_path") != _relative(review_dir / "plan.json", repository_root)
-        or packet.get("plan_sha256") != plan_seal.sha256
-        or result.get("plan_path") != _relative(review_dir / "plan.json", repository_root)
-        or result.get("plan_sha256") != plan_seal.sha256
-        or result.get("packet_path") != _relative(review_dir / "packet.json", repository_root)
-        or result.get("packet_sha256") != packet_seal.sha256
-    ):
-        raise ManagerScreenAllocationV3Error(
-            f"quote-impact result binding is invalid: {batch_id}/{review_dir.name}"
+    original_decisions = original_result.get("decisions")
+    if not isinstance(original_decisions, list):
+        raise ManagerScreenAllocationV3Error("manager-screen result decisions are invalid")
+    ever_purchased = {
+        _symbol(decision.get("symbol"))
+        for decision in original_decisions
+        if isinstance(decision, Mapping) and decision.get("route") == "send_to_analyst"
+    }
+    parsed = []
+    seen_sequences: set[int] = set()
+    legacy_count = 0
+    root_path = _relative(original_result_path, repository_root)
+    for review_dir in directories:
+        plan, plan_seal = _sealed_object(
+            review_dir / "plan.json",
+            artifact_type="manager_screen_quote_impact_plan",
         )
-    effort = _positive_hours(
-        (plan.get("policy") or {}).get("quick_profile_effort_budget_hours")
-        if isinstance(plan.get("policy"), Mapping)
-        else None,
-        "quote-impact quick_profile_effort_budget_hours",
-    )
-    if not _hours_equal(effort, PRIOR_PURCHASE_EFFORT_HOURS):
-        raise ManagerScreenAllocationV3Error(
-            "inherited quote-impact purchase effort must be exactly 1.5 hours"
+        packet, packet_seal = _sealed_object(
+            review_dir / "packet.json",
+            artifact_type="manager_screen_quote_impact_packet",
         )
-    purchased_at = _parse_datetime(result.get("recorded_at"), "quote result.recorded_at")
-    reviews = result.get("reviews")
-    if not isinstance(reviews, list):
-        raise ManagerScreenAllocationV3Error("quote-impact reviews are invalid")
+        has_chain = any(
+            key in plan for key in ("chain_version", "chain_sequence", "predecessor")
+        )
+        if has_chain:
+            sequence = plan.get("chain_sequence")
+            if (
+                plan.get("schema_version") != 2
+                or plan.get("chain_version") != 1
+                or isinstance(sequence, bool)
+                or not isinstance(sequence, int)
+                or sequence <= 0
+                or not isinstance(plan.get("predecessor"), Mapping)
+            ):
+                raise ManagerScreenAllocationV3Error(
+                    f"quote-impact chain metadata is invalid: {batch_id}/{review_dir.name}"
+                )
+            legacy = False
+        else:
+            sequence = 1
+            legacy = True
+            legacy_count += 1
+        if sequence in seen_sequences:
+            raise ManagerScreenAllocationV3Error("quote-impact chain sequence is duplicated")
+        seen_sequences.add(sequence)
+        result_presence = _artifact_presence(review_dir / "result.json")
+        if result_presence == "partial":
+            raise ManagerScreenAllocationV3Error("quote-impact result is only partially sealed")
+        result = None
+        result_seal = None
+        if result_presence == "complete":
+            result, result_seal = _sealed_object(
+                review_dir / "result.json",
+                artifact_type="manager_screen_quote_impact_result",
+            )
+        common = (run_id, batch_id, review_dir.name)
+        if (
+            (plan.get("run_id"), plan.get("batch_id"), plan.get("review_id")) != common
+            or (packet.get("run_id"), packet.get("batch_id"), packet.get("review_id")) != common
+            or plan.get("original_result_path") != root_path
+            or plan.get("original_result_sha256") != original_result_sha256
+            or packet.get("plan_path") != _relative(review_dir / "plan.json", repository_root)
+            or packet.get("plan_sha256") != plan_seal.sha256
+            or (
+                result is not None
+                and (
+                    (result.get("run_id"), result.get("batch_id"), result.get("review_id"))
+                    != common
+                    or result.get("original_result_path") != root_path
+                    or result.get("original_result_sha256") != original_result_sha256
+                    or result.get("plan_path")
+                    != _relative(review_dir / "plan.json", repository_root)
+                    or result.get("plan_sha256") != plan_seal.sha256
+                    or result.get("packet_path")
+                    != _relative(review_dir / "packet.json", repository_root)
+                    or result.get("packet_sha256") != packet_seal.sha256
+                )
+            )
+        ):
+            raise ManagerScreenAllocationV3Error(
+                f"quote-impact result binding is invalid: {batch_id}/{review_dir.name}"
+            )
+        parsed.append(
+            {
+                "sequence": sequence,
+                "legacy": legacy,
+                "review_dir": review_dir,
+                "plan": plan,
+                "plan_seal": plan_seal,
+                "result": result,
+                "result_seal": result_seal,
+            }
+        )
+    if legacy_count > 1:
+        raise ManagerScreenAllocationV3Error(
+            "multiple legacy quote-impact siblings cannot be ordered safely"
+        )
+    parsed.sort(key=lambda item: item["sequence"])
+    if [item["sequence"] for item in parsed] != list(range(1, len(parsed) + 1)):
+        raise ManagerScreenAllocationV3Error("quote-impact chain contains a sequence gap")
+
+    previous_result_path = root_path
+    previous_result_sha256 = original_result_sha256
+    previous_review_id = None
+    previous_quote_path = None
+    previous_quote_sha256 = None
     ledger = []
-    seen: set[str] = set()
-    for review in reviews:
-        if not isinstance(review, Mapping):
-            raise ManagerScreenAllocationV3Error("quote-impact review must be an object")
-        symbol = _symbol(review.get("symbol"))
-        if symbol in seen:
-            raise ManagerScreenAllocationV3Error("quote-impact review symbols are duplicated")
-        seen.add(symbol)
-        action = review.get("action")
-        if action not in {"keep", "replacement"}:
-            raise ManagerScreenAllocationV3Error("quote-impact review action is invalid")
-        if action != "replacement":
+    pending = 0
+    seen_amendments: set[tuple[Any, Any]] = set()
+    for index, item in enumerate(parsed):
+        plan = item["plan"]
+        result = item["result"]
+        result_seal = item["result_seal"]
+        if item["legacy"]:
+            if index != 0:
+                raise ManagerScreenAllocationV3Error(
+                    "legacy quote-impact review may only be the first chain entry"
+                )
+        else:
+            predecessor = plan["predecessor"]
+            if (
+                predecessor.get("result_path") != previous_result_path
+                or predecessor.get("result_sha256") != previous_result_sha256
+                or predecessor.get("review_id") != previous_review_id
+                or (
+                    index == 0
+                    and predecessor.get("result_artifact_type") != "manager_screen_result"
+                )
+                or (
+                    index > 0
+                    and (
+                        predecessor.get("result_artifact_type")
+                        != "manager_screen_quote_impact_result"
+                        or predecessor.get("quote_path") != previous_quote_path
+                        or predecessor.get("quote_sha256") != previous_quote_sha256
+                    )
+                )
+            ):
+                raise ManagerScreenAllocationV3Error(
+                    "quote-impact predecessor chain binding is invalid"
+                )
+        amendment_binding = (
+            plan.get("quote_amendment_path"),
+            plan.get("quote_amendment_sha256"),
+        )
+        if all(amendment_binding) and amendment_binding in seen_amendments:
+            raise ManagerScreenAllocationV3Error("quote-impact amendment is duplicated")
+        if all(amendment_binding):
+            seen_amendments.add(amendment_binding)
+        if result is None:
+            if index != len(parsed) - 1:
+                raise ManagerScreenAllocationV3Error(
+                    "quote-impact chain continues after a prepared predecessor"
+                )
+            if cutoff is not None and item["plan_seal"].sealed_at <= cutoff:
+                pending += 1
             continue
-        effective = review.get("effective_decision")
-        if not isinstance(effective, Mapping) or effective.get("symbol") != symbol:
-            raise ManagerScreenAllocationV3Error("quote-impact replacement decision is invalid")
-        old_route = review.get("old_route")
-        new_route = effective.get("route")
-        if old_route not in _ROUTES or new_route not in _ROUTES:
-            raise ManagerScreenAllocationV3Error("quote-impact replacement route is invalid")
-        if old_route != "send_to_analyst" and new_route == "send_to_analyst":
-            if cutoff is not None and result_seal.sealed_at > cutoff:
+        effort = _positive_hours(
+            (plan.get("policy") or {}).get("quick_profile_effort_budget_hours")
+            if isinstance(plan.get("policy"), Mapping)
+            else None,
+            "quote-impact quick_profile_effort_budget_hours",
+        )
+        if not _hours_equal(effort, PRIOR_PURCHASE_EFFORT_HOURS):
+            raise ManagerScreenAllocationV3Error(
+                "inherited quote-impact purchase effort must be exactly 1.5 hours"
+            )
+        purchased_at = _parse_datetime(result.get("recorded_at"), "quote result.recorded_at")
+        reviews = result.get("reviews")
+        if not isinstance(reviews, list):
+            raise ManagerScreenAllocationV3Error("quote-impact reviews are invalid")
+        seen: set[str] = set()
+        raw_new_send_count = 0
+        result_before_cutoff = cutoff is None or result_seal.sealed_at <= cutoff
+        for review in reviews:
+            if not isinstance(review, Mapping):
+                raise ManagerScreenAllocationV3Error("quote-impact review must be an object")
+            symbol = _symbol(review.get("symbol"))
+            if symbol in seen:
+                raise ManagerScreenAllocationV3Error(
+                    "quote-impact review symbols are duplicated"
+                )
+            seen.add(symbol)
+            action = review.get("action")
+            if action not in {"keep", "replacement"}:
+                raise ManagerScreenAllocationV3Error("quote-impact review action is invalid")
+            if action != "replacement":
+                continue
+            effective = review.get("effective_decision")
+            if not isinstance(effective, Mapping) or effective.get("symbol") != symbol:
+                raise ManagerScreenAllocationV3Error(
+                    "quote-impact replacement decision is invalid"
+                )
+            old_route = review.get("old_route")
+            new_route = effective.get("route")
+            if old_route not in _ROUTES or new_route not in _ROUTES:
+                raise ManagerScreenAllocationV3Error(
+                    "quote-impact replacement route is invalid"
+                )
+            creates_send = old_route != "send_to_analyst" and new_route == "send_to_analyst"
+            raw_new_send_count += int(creates_send)
+            if not creates_send or symbol in ever_purchased:
+                continue
+            if not result_before_cutoff:
                 raise ManagerScreenAllocationV3Error(
                     "post-contract quote-impact review cannot purchase analyst budget directly"
                 )
+            ever_purchased.add(symbol)
+            decision_version = (
+                plan.get("policy", {}).get("decision_contract_version", 2)
+                if isinstance(plan.get("policy"), Mapping)
+                else 2
+            )
             ledger.append(
                 _ledger_entry(
                     symbol=symbol,
                     effort_budget_hours=effort,
                     source_kind="manager_screen_quote_impact_result",
-                    source_path=_relative(review_dir / "result.json", repository_root),
+                    source_path=_relative(item["review_dir"] / "result.json", repository_root),
                     source_sha256=result_seal.sha256,
-                    source_id=f"{batch_id}/{review_dir.name}",
-                    decision_contract_version=2,
+                    source_id=f"{batch_id}/{item['review_dir'].name}",
+                    decision_contract_version=decision_version,
                     purchased_at=purchased_at.isoformat(),
                 )
             )
-    summary = result.get("summary")
-    if not isinstance(summary, Mapping) or summary.get("new_send_to_analyst_count") != len(ledger):
-        raise ManagerScreenAllocationV3Error(
-            "quote-impact new-send count does not match its sealed reviews"
+        summary = result.get("summary")
+        if (
+            not isinstance(summary, Mapping)
+            or summary.get("new_send_to_analyst_count") != raw_new_send_count
+        ):
+            raise ManagerScreenAllocationV3Error(
+                "quote-impact new-send count does not match its sealed reviews"
+            )
+        if cutoff is not None and result_seal.sealed_at > cutoff:
+            if item["plan_seal"].sealed_at <= cutoff:
+                pending += 1
+        previous_result_path = _relative(
+            item["review_dir"] / "result.json",
+            repository_root,
         )
+        previous_result_sha256 = result_seal.sha256
+        previous_review_id = item["review_dir"].name
+        previous_quote_path = plan.get("quote_amendment_path")
+        previous_quote_sha256 = plan.get("quote_amendment_sha256")
     return {
         "ledger": ledger,
-        "pending_precontract_count": int(plan_before and result_seal.sealed_at > cutoff)
-        if cutoff is not None
-        else 0,
+        "pending_precontract_count": pending,
     }
 
 

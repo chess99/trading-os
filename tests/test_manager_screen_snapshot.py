@@ -379,6 +379,52 @@ def test_manager_screen_quote_amendment_cli_seals_overlay(
     assert (tmp_path / payload["path"]).is_file()
 
 
+def test_quote_amendment_is_closed_after_full_market_singleton_packet(
+    tmp_path: Path,
+) -> None:
+    from tests.test_manager_screen_terminal_governance import _seal_terminal_packet
+    from trading_os.research_assets.manager_screen_snapshot import (
+        ManagerScreenSnapshotError,
+        prepare_manager_screen_quote_amendment,
+    )
+
+    root = tmp_path / "coverage" / "cn-a"
+    run_id = "2026-07-31-full-market-frozen"
+    _write_frozen_quote_universe(root, run_id, ["CN:000001"])
+    _seal_terminal_packet(
+        root,
+        run_id=run_id,
+        sealed_at=dt.datetime.fromisoformat("2026-07-31T15:30:00+08:00"),
+    )
+
+    with pytest.raises(
+        ManagerScreenSnapshotError,
+        match="singleton packet is already sealed",
+    ):
+        prepare_manager_screen_quote_amendment(
+            root=root,
+            run_id=run_id,
+            amendment_id="forbidden-after-full-market",
+            effective_at=dt.datetime.fromisoformat("2026-07-31T16:00:00+08:00"),
+            quote_snapshot=[
+                {
+                    "symbol": "CN:000001",
+                    "price": 21.0,
+                    "as_of": "2026-07-31T15:00:00+08:00",
+                    "source": "fixture close",
+                }
+            ],
+        )
+
+    assert not (
+        root
+        / "snapshots"
+        / run_id
+        / "quote-amendments"
+        / "forbidden-after-full-market.json"
+    ).exists()
+
+
 def test_manager_screen_quote_amendment_cli_fetches_tencent_exact_universe(
     tmp_path: Path,
     capsys,

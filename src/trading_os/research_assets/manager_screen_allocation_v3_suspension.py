@@ -21,11 +21,26 @@ from .manager_screen_allocation_v3 import (
     ManagerScreenAllocationV3Error,
     verify_manager_screen_allocation_v3_contract,
 )
+from .manager_screen_terminal_governance import (
+    ManagerScreenTerminalGovernanceError,
+    manager_screen_terminal_governance_locked,
+    require_manager_screen_terminal_governance_open,
+)
 from .sealing import SealingError, canonical_json_bytes, seal_json, verify_sealed
 
 
 class ManagerScreenAllocationV3SuspensionError(ValueError):
     """Raised when revocable v3 commitments cannot be suspended safely."""
+
+
+def _terminal_governance_locked(*, base: Path, run_id: str) -> bool:
+    try:
+        return manager_screen_terminal_governance_locked(
+            root=base,
+            run_id=run_id,
+        )
+    except ManagerScreenTerminalGovernanceError as exc:
+        raise ManagerScreenAllocationV3SuspensionError(str(exc)) from exc
 
 
 SUSPENSION_ARTIFACT_TYPE = "manager_screen_allocation_v3_suspension"
@@ -110,6 +125,15 @@ def suspend_manager_screen_allocation_v3_revocable_commitments(
         raise ManagerScreenAllocationV3SuspensionError(
             "manager-screen allocation v3 suspension is only partially sealed"
         )
+    if presence == (False, False):
+        try:
+            require_manager_screen_terminal_governance_open(
+                root=base,
+                run_id=run,
+                operation="new manager-screen allocation v3 suspension",
+            )
+        except ManagerScreenTerminalGovernanceError as exc:
+            raise ManagerScreenAllocationV3SuspensionError(str(exc)) from exc
 
     contract, contract_path, contract_sha256 = _verified_contract(
         base=base,
@@ -142,13 +166,22 @@ def suspend_manager_screen_allocation_v3_revocable_commitments(
             raise ManagerScreenAllocationV3SuspensionError(
                 "sealed allocation v3 suspension conflicts with request"
             )
-        materialization = _materialize(
-            base=base,
-            repository_root=repository_root,
-            payload=payload,
-            suspension_path=suspension_path,
-            suspension_sha256=suspension_sha256,
-        )
+        if _terminal_governance_locked(base=base, run_id=run):
+            materialization = _projection_status(
+                base=base,
+                repository_root=repository_root,
+                payload=payload,
+                suspension_path=suspension_path,
+                suspension_sha256=suspension_sha256,
+            )
+        else:
+            materialization = _materialize(
+                base=base,
+                repository_root=repository_root,
+                payload=payload,
+                suspension_path=suspension_path,
+                suspension_sha256=suspension_sha256,
+            )
         return _summary(
             payload=payload,
             repository_root=repository_root,
@@ -293,10 +326,6 @@ def _preflight_new_suspension(
     revocable = {
         item["symbol"]: item for item in classifications if item["commitment_class"] == "revocable"
     }
-    if not revocable:
-        raise ManagerScreenAllocationV3SuspensionError(
-            "allocation v3 contract has no revocable commitments to suspend"
-        )
     activation_states = {
         item["symbol"]: item for item in contract["activation_queue"]["purchased_states"]
     }
@@ -768,9 +797,9 @@ def _validate_payload(value: Any) -> None:
     _manager(value.get("manager"))
     _text(value.get("reason"), "reason")
     members = value.get("members")
-    if not isinstance(members, list) or not members:
+    if not isinstance(members, list):
         raise ManagerScreenAllocationV3SuspensionError(
-            "allocation v3 suspension members must be a non-empty array"
+            "allocation v3 suspension members must be an array"
         )
     normalized = []
     for member in members:

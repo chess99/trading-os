@@ -33,6 +33,11 @@ from .research_assets.coverage_store import (
     set_screening,
     validate_coverage_root,
 )
+from .research_assets.deep_research_completion import (
+    DeepResearchCompletionError,
+    deep_research_completion_status,
+    record_deep_research_completion,
+)
 from .research_assets.index import write_index
 from .research_assets.lane_arbitration import (
     LaneArbitrationError,
@@ -59,6 +64,13 @@ from .research_assets.manager_screen_control import (
     ManagerScreenControlError,
     manager_screen_control_status,
     record_manager_screen_control,
+)
+from .research_assets.manager_screen_full_market_allocation_v3 import (
+    ManagerScreenFullMarketAllocationV3Error,
+    apply_manager_screen_full_market_allocation_v3,
+    manager_screen_full_market_allocation_v3_final_status,
+    prepare_manager_screen_full_market_allocation_v3,
+    record_manager_screen_full_market_allocation_v3,
 )
 from .research_assets.manager_screen_governance import (
     ManagerScreenGovernanceError,
@@ -178,6 +190,8 @@ from .research_assets.trigger_hits import (
     rebuild_trigger_hit_state,
     verify_trigger_hit_ledger,
 )
+
+FULL_MARKET_SINGLETON_CLOCK_TOLERANCE = dt.timedelta(minutes=5)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -636,6 +650,49 @@ def build_parser() -> argparse.ArgumentParser:
     manager_screen_allocation_v3_suspension_status.add_argument("run_id")
     manager_screen_allocation_v3_suspension_status.set_defaults(
         func=cmd_coverage_manager_screen_allocation_v3_suspension_status
+    )
+
+    manager_screen_allocation_v3_prepare = coverage_sub.add_parser(
+        "manager-screen-allocation-v3-prepare",
+        help="Seal the complete full-market quick-profile candidate packet",
+    )
+    _add_coverage_root(manager_screen_allocation_v3_prepare)
+    manager_screen_allocation_v3_prepare.add_argument("run_id")
+    _add_timestamp(manager_screen_allocation_v3_prepare)
+    manager_screen_allocation_v3_prepare.set_defaults(
+        func=cmd_coverage_manager_screen_allocation_v3_prepare
+    )
+
+    manager_screen_allocation_v3_record = coverage_sub.add_parser(
+        "manager-screen-allocation-v3-record",
+        help="Seal the full candidate partition and project quick-profile grants",
+    )
+    _add_coverage_root(manager_screen_allocation_v3_record)
+    manager_screen_allocation_v3_record.add_argument("run_id")
+    manager_screen_allocation_v3_record.add_argument("--input", required=True)
+    _add_timestamp(manager_screen_allocation_v3_record)
+    manager_screen_allocation_v3_record.set_defaults(
+        func=cmd_coverage_manager_screen_allocation_v3_record
+    )
+
+    manager_screen_allocation_v3_apply = coverage_sub.add_parser(
+        "manager-screen-allocation-v3-apply",
+        help="Recover the coverage projection of a sealed full-market allocation",
+    )
+    _add_coverage_root(manager_screen_allocation_v3_apply)
+    manager_screen_allocation_v3_apply.add_argument("run_id")
+    manager_screen_allocation_v3_apply.set_defaults(
+        func=cmd_coverage_manager_screen_allocation_v3_apply
+    )
+
+    manager_screen_allocation_v3_final_status = coverage_sub.add_parser(
+        "manager-screen-allocation-v3-final-status",
+        help="Verify the final allocation seals and projection without writing",
+    )
+    _add_coverage_root(manager_screen_allocation_v3_final_status)
+    manager_screen_allocation_v3_final_status.add_argument("run_id")
+    manager_screen_allocation_v3_final_status.set_defaults(
+        func=cmd_coverage_manager_screen_allocation_v3_final_status
     )
 
     manager_screen_quote_impact_prepare = coverage_sub.add_parser(
@@ -1212,6 +1269,26 @@ def build_parser() -> argparse.ArgumentParser:
     _add_timestamp(profile_finalize)
     profile_finalize.set_defaults(func=cmd_coverage_profile_finalize)
 
+    deep_research_complete = coverage_sub.add_parser(
+        "deep-research-complete",
+        help="Seal one claimed formal deep-research report and its structured claims",
+    )
+    _add_coverage_root(deep_research_complete)
+    deep_research_complete.add_argument("symbol")
+    deep_research_complete.add_argument("--input", required=True)
+    _add_timestamp(deep_research_complete)
+    deep_research_complete.set_defaults(func=cmd_coverage_deep_research_complete)
+
+    deep_research_completion_status_cmd = coverage_sub.add_parser(
+        "deep-research-completion-status",
+        help="Revalidate one deep-research receipt, source chain, and projection",
+    )
+    _add_coverage_root(deep_research_completion_status_cmd)
+    deep_research_completion_status_cmd.add_argument("symbol")
+    deep_research_completion_status_cmd.set_defaults(
+        func=cmd_coverage_deep_research_completion_status
+    )
+
     set_cmd = coverage_sub.add_parser("set-screening", help="Upsert one screening result")
     set_cmd.add_argument("symbol")
     _add_coverage_root(set_cmd)
@@ -1782,6 +1859,53 @@ def cmd_coverage_manager_screen_allocation_v3_suspension_status(
     return 0
 
 
+def cmd_coverage_manager_screen_allocation_v3_prepare(
+    ns: argparse.Namespace,
+) -> int:
+    payload = prepare_manager_screen_full_market_allocation_v3(
+        root=ns.root,
+        run_id=ns.run_id,
+        prepared_at=_full_market_singleton_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_allocation_v3_record(
+    ns: argparse.Namespace,
+) -> int:
+    payload = record_manager_screen_full_market_allocation_v3(
+        root=ns.root,
+        run_id=ns.run_id,
+        submission=_load_json_object(ns.input, "full-market allocation submission"),
+        recorded_at=_full_market_singleton_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_allocation_v3_apply(
+    ns: argparse.Namespace,
+) -> int:
+    payload = apply_manager_screen_full_market_allocation_v3(
+        root=ns.root,
+        run_id=ns.run_id,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_allocation_v3_final_status(
+    ns: argparse.Namespace,
+) -> int:
+    payload = manager_screen_full_market_allocation_v3_final_status(
+        root=ns.root,
+        run_id=ns.run_id,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
 def cmd_coverage_manager_screen_quote_impact_prepare(
     ns: argparse.Namespace,
 ) -> int:
@@ -2288,7 +2412,7 @@ def cmd_coverage_profile_claim(ns: argparse.Namespace) -> int:
     payload = claim_profile_task(
         root=ns.root,
         agent=ns.agent,
-        claimed_at=_timestamp(ns.at),
+        claimed_at=_profile_stage_event_timestamp(ns.at),
         symbol=ns.symbol,
         lens=ns.lens,
         run_id=ns.run_id,
@@ -2304,7 +2428,7 @@ def cmd_coverage_profile_release(ns: argparse.Namespace) -> int:
         agent=ns.agent,
         symbol=ns.symbol,
         failure_reason=ns.failure_reason,
-        released_at=_timestamp(ns.at),
+        released_at=_profile_stage_event_timestamp(ns.at),
     )
     _write_success({"ok": True, **payload})
     return 0
@@ -2377,6 +2501,26 @@ def cmd_coverage_profile_finalize(ns: argparse.Namespace) -> int:
         stage=ns.stage,
         policy=policy.payload,
         finalized_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_deep_research_complete(ns: argparse.Namespace) -> int:
+    payload = record_deep_research_completion(
+        root=ns.root,
+        symbol=ns.symbol,
+        submission=_load_json_object(ns.input, "deep-research completion submission"),
+        completed_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_deep_research_completion_status(ns: argparse.Namespace) -> int:
+    payload = deep_research_completion_status(
+        root=ns.root,
+        symbol=ns.symbol,
     )
     _write_success({"ok": True, **payload})
     return 0
@@ -2457,6 +2601,7 @@ def _error_code(exc: Exception) -> str | None:
         (AssetGcError, "asset_gc_error"),
         (PriceAlertError, "price_alert_error"),
         (CoverageValidationError, "coverage_validation_failed"),
+        (DeepResearchCompletionError, "deep_research_completion_error"),
         (ScopeWorkflowError, "scope_workflow_error"),
         (TriggerHitError, "trigger_hit_error"),
         (LaneArbitrationError, "lane_arbitration_error"),
@@ -2466,6 +2611,10 @@ def _error_code(exc: Exception) -> str | None:
         (
             ManagerScreenAllocationV3SuspensionError,
             "manager_screen_allocation_v3_suspension_error",
+        ),
+        (
+            ManagerScreenFullMarketAllocationV3Error,
+            "manager_screen_full_market_allocation_v3_error",
         ),
         (ManagerScreenGovernanceError, "manager_screen_governance_error"),
         (ManagerScreenQuoteImpactError, "manager_screen_quote_impact_error"),
@@ -2555,6 +2704,45 @@ def _timestamp(value: str | None) -> dt.datetime:
     if parsed.tzinfo is None or parsed.utcoffset() is None:
         raise ReviewWorkflowError("--at must include a UTC offset")
     return parsed
+
+
+def _wall_clock_now() -> dt.datetime:
+    """Return the real current aware time behind irreversible CLI boundaries."""
+
+    return dt.datetime.now(tz=dt.timezone.utc).astimezone()
+
+
+def _full_market_singleton_timestamp(value: str | None) -> dt.datetime:
+    """Forbid backdating or future-dating irreversible singleton commands."""
+
+    wall_clock = _wall_clock_now()
+    if wall_clock.tzinfo is None or wall_clock.utcoffset() is None:
+        raise ReviewWorkflowError("wall clock must include a UTC offset")
+    if value is None:
+        return wall_clock
+    requested = _timestamp(value)
+    if abs(requested - wall_clock) > FULL_MARKET_SINGLETON_CLOCK_TOLERANCE:
+        raise ReviewWorkflowError(
+            "--at for full-market singleton prepare/record must be within "
+            "5 minutes of the current wall clock"
+        )
+    return requested
+
+
+def _profile_stage_event_timestamp(value: str | None) -> dt.datetime:
+    """Forbid backdating/future-dating irreversible profile claim ownership events."""
+
+    wall_clock = _wall_clock_now()
+    if wall_clock.tzinfo is None or wall_clock.utcoffset() is None:
+        raise ReviewWorkflowError("wall clock must include a UTC offset")
+    if value is None:
+        return wall_clock
+    requested = _timestamp(value)
+    if abs(requested - wall_clock) > FULL_MARKET_SINGLETON_CLOCK_TOLERANCE:
+        raise ReviewWorkflowError(
+            "--at for profile claim/release must be within 5 minutes of the current wall clock"
+        )
+    return requested
 
 
 if __name__ == "__main__":

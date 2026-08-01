@@ -8,6 +8,10 @@ from pathlib import Path
 from typing import Any
 
 from .coverage_store import serialized_coverage_write
+from .manager_screen_terminal_governance import (
+    ManagerScreenTerminalGovernanceError,
+    require_manager_screen_terminal_governance_open,
+)
 from .sealing import SealingError, seal_json, verify_sealed
 
 
@@ -112,6 +116,14 @@ def supersede_manager_screen_batch(
             )
         seal = verify_sealed(supersession_path)
     else:
+        try:
+            require_manager_screen_terminal_governance_open(
+                root=base,
+                run_id=run,
+                operation="new manager-screen batch supersession",
+            )
+        except ManagerScreenTerminalGovernanceError as exc:
+            raise ManagerScreenGovernanceError(str(exc)) from exc
         seal = seal_json(
             supersession_path,
             payload,

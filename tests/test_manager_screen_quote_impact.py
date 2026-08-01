@@ -339,7 +339,12 @@ def _replace_first_amendment_price(
     return updated
 
 
-def _prepare(context: dict, *, review_id: str = REVIEW_ID) -> dict:
+def _prepare(
+    context: dict,
+    *,
+    review_id: str = REVIEW_ID,
+    prepared_minutes: int = 4,
+) -> dict:
     from trading_os.research_assets.manager_screen_quote_impact import (
         prepare_manager_screen_quote_impact,
     )
@@ -350,8 +355,50 @@ def _prepare(context: dict, *, review_id: str = REVIEW_ID) -> dict:
         batch_id=BATCH_ID,
         review_id=review_id,
         quote_amendment_path=context["amendment"]["path"],
-        prepared_at=CUTOFF + dt.timedelta(minutes=4),
+        prepared_at=CUTOFF + dt.timedelta(minutes=prepared_minutes),
         policy_path=context["policy_path"],
+    )
+
+
+def _next_amendment(
+    context: dict,
+    *,
+    amendment_id: str,
+    effective_minutes: int,
+    prices: dict[str, float],
+) -> dict:
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.manager_screen_snapshot import (
+        prepare_manager_screen_quote_amendment,
+    )
+
+    companies = read_jsonl(
+        context["root"] / "snapshots" / RUN_ID / "companies.jsonl"
+    )
+    effective = CUTOFF + dt.timedelta(minutes=effective_minutes)
+    quotes = []
+    for company in companies:
+        symbol = company["symbol"]
+        price = prices.get(symbol, company["price"])
+        base_price = company["price"] or price
+        scale = price / base_price
+        quotes.append(
+            {
+                "symbol": symbol,
+                "price": price,
+                "market_cap_cny": company["market_cap_cny"] * scale,
+                "float_market_cap_cny": company["float_market_cap_cny"] * scale,
+                "as_of": effective.isoformat(),
+                "source": f"fixture {amendment_id}",
+            }
+        )
+    return prepare_manager_screen_quote_amendment(
+        root=context["root"],
+        run_id=RUN_ID,
+        amendment_id=amendment_id,
+        effective_at=effective,
+        quote_snapshot=quotes,
+        quote_max_age=dt.timedelta(hours=1),
     )
 
 
@@ -431,6 +478,81 @@ def _load_review_packet(tmp_path: Path, review_id: str = REVIEW_ID) -> dict:
         / "packet.json"
     )
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _downgrade_first_review_to_legacy(tmp_path: Path, context: dict) -> str:
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.sealing import canonical_json_bytes, seal_json
+
+    review_dir = (
+        context["root"]
+        / "manager-screen"
+        / RUN_ID
+        / BATCH_ID
+        / "quote-impact-reviews"
+        / REVIEW_ID
+    )
+    plan_path = review_dir / "plan.json"
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    plan["schema_version"] = 1
+    for key in ("chain_version", "chain_sequence", "predecessor"):
+        plan.pop(key)
+    plan_path.with_name("plan.json.seal.json").unlink()
+    plan_path.write_bytes(canonical_json_bytes(plan))
+    plan_seal = seal_json(
+        plan_path,
+        plan,
+        artifact_type="manager_screen_quote_impact_plan",
+        sealed_at=CUTOFF + dt.timedelta(minutes=4),
+    )
+    packet_path = review_dir / "packet.json"
+    packet = json.loads(packet_path.read_text(encoding="utf-8"))
+    packet.update({"schema_version": 1, "plan_sha256": plan_seal.sha256})
+    packet_path.with_name("packet.json.seal.json").unlink()
+    packet_path.write_bytes(canonical_json_bytes(packet))
+    packet_seal = seal_json(
+        packet_path,
+        packet,
+        artifact_type="manager_screen_quote_impact_packet",
+        sealed_at=CUTOFF + dt.timedelta(minutes=4),
+    )
+    result_path = review_dir / "result.json"
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    result.update(
+        {
+            "schema_version": 1,
+            "plan_sha256": plan_seal.sha256,
+            "packet_sha256": packet_seal.sha256,
+        }
+    )
+    for key in (
+        "chain_version",
+        "chain_sequence",
+        "predecessor",
+        "automatic_noop",
+        "effective_decisions",
+        "effective_decisions_sha256",
+    ):
+        result.pop(key)
+    result_path.with_name("result.json.seal.json").unlink()
+    result_path.write_bytes(canonical_json_bytes(result))
+    result_seal = seal_json(
+        result_path,
+        result,
+        artifact_type="manager_screen_quote_impact_result",
+        sealed_at=CUTOFF + dt.timedelta(minutes=5),
+    )
+    for path, evidence_field in (
+        (context["root"] / "research_queue.jsonl", "stage_history"),
+        (context["root"] / "screening.jsonl", None),
+    ):
+        rows = read_jsonl(path)
+        target = next(row for row in rows if row["symbol"] == "CN:000001")
+        target["manager_screen_result_sha256"] = result_seal.sha256
+        if evidence_field is not None:
+            target[evidence_field][-1]["result_sha256"] = result_seal.sha256
+        write_jsonl(path, rows)
+    return result_seal.sha256
 
 
 def test_prepare_selects_only_threshold_candidates_and_is_idempotent(
@@ -530,6 +652,136 @@ def test_post_contract_v2_quote_replay_never_rematerializes_suspended_row(
     assert replayed["result_sha256"] == recorded["result_sha256"]
     assert replayed["idempotent"] is True
     assert queue_path.read_bytes() == queue_before
+
+
+@pytest.mark.parametrize("full_result_exists", [False, True])
+def test_v3_quote_prepare_is_closed_after_full_market_singleton_packet(
+    tmp_path: Path,
+    full_result_exists: bool,
+) -> None:
+    import trading_os.research_assets.manager_screen_quote_impact as quote_impact
+    from tests.test_manager_screen_terminal_governance import _seal_terminal_packet
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.sealing import seal_json
+
+    context = _fixture(
+        tmp_path,
+        decision_contract_version=3,
+        second_change_pct=25.0,
+    )
+    full_market_dir = (
+        context["root"]
+        / "manager-screen"
+        / RUN_ID
+        / "governance"
+        / "allocation-v3"
+        / "full-market"
+    )
+    _seal_terminal_packet(
+        context["root"],
+        run_id=RUN_ID,
+        sealed_at=CUTOFF + dt.timedelta(minutes=3, seconds=30),
+    )
+    queue_path = context["root"] / "research_queue.jsonl"
+    if full_result_exists:
+        seal_json(
+            full_market_dir / "result.json",
+            {
+                "schema_version": 1,
+                "workflow": "manager_screen_full_market_allocation_v3",
+                "workflow_version": 1,
+                "run_id": RUN_ID,
+            },
+            artifact_type="manager_screen_full_market_allocation_v3_result",
+            sealed_at=CUTOFF + dt.timedelta(minutes=3, seconds=45),
+        )
+        queue = read_jsonl(queue_path)
+        claimed = next(row for row in queue if row["symbol"] == "CN:000002")
+        claimed.update(
+            {
+                "task_type": "quick_profile",
+                "status": "running",
+                "assigned_agent": "/root/researcher",
+                "started_at": (CUTOFF + dt.timedelta(minutes=3, seconds=50)).isoformat(),
+                "research_budget_state": "funded_quick_profile",
+            }
+        )
+        write_jsonl(queue_path, queue)
+    queue_before = queue_path.read_bytes()
+
+    with pytest.raises(
+        quote_impact.ManagerScreenQuoteImpactError,
+        match="singleton packet is already sealed",
+    ):
+        _prepare(context)
+
+    assert queue_path.read_bytes() == queue_before
+    assert not (
+        context["root"]
+        / "manager-screen"
+        / RUN_ID
+        / BATCH_ID
+        / "quote-impact-reviews"
+        / REVIEW_ID
+    ).exists()
+
+
+def test_v3_quote_record_is_closed_if_terminal_packet_follows_prepare(
+    tmp_path: Path,
+) -> None:
+    from tests.test_manager_screen_terminal_governance import _seal_terminal_packet
+    from trading_os.research_assets.manager_screen_quote_impact import (
+        ManagerScreenQuoteImpactError,
+        record_manager_screen_quote_impact,
+    )
+
+    context = _fixture(
+        tmp_path,
+        decision_contract_version=3,
+        second_change_pct=25.0,
+    )
+    _prepare(context)
+    packet = _load_review_packet(tmp_path)
+    submission = _review_submission(
+        packet,
+        actions={"CN:000001": "pass", "CN:000002": "pass"},
+    )
+    _seal_terminal_packet(
+        context["root"],
+        run_id=RUN_ID,
+        sealed_at=CUTOFF + dt.timedelta(minutes=4),
+    )
+    queue_path = context["root"] / "research_queue.jsonl"
+    screening_path = context["root"] / "screening.jsonl"
+    queue_before = queue_path.read_bytes()
+    screening_before = screening_path.read_bytes()
+    result_path = (
+        context["root"]
+        / "manager-screen"
+        / RUN_ID
+        / BATCH_ID
+        / "quote-impact-reviews"
+        / REVIEW_ID
+        / "result.json"
+    )
+
+    with pytest.raises(
+        ManagerScreenQuoteImpactError,
+        match="singleton packet is already sealed; new quote-impact result is forbidden",
+    ):
+        record_manager_screen_quote_impact(
+            root=context["root"],
+            run_id=RUN_ID,
+            batch_id=BATCH_ID,
+            review_id=REVIEW_ID,
+            submission=submission,
+            recorded_at=CUTOFF + dt.timedelta(minutes=5),
+        )
+
+    assert not result_path.exists()
+    assert not result_path.with_name(f"{result_path.name}.seal.json").exists()
+    assert queue_path.read_bytes() == queue_before
+    assert screening_path.read_bytes() == screening_before
 
 
 @pytest.mark.parametrize("old_price", [None, 0.0, -1.0])
@@ -744,9 +996,84 @@ def test_replacement_materializes_and_profile_accepts_new_predecessor(
             "provenance": {"agent": "/root/analyst"},
         },
         queue_record=claimed,
+        base=context["root"],
         repository_root=tmp_path,
         symbol="CN:000001",
     )
+
+
+def test_terminal_packet_makes_quote_impact_result_replay_read_only(
+    tmp_path: Path,
+) -> None:
+    from tests.test_manager_screen_terminal_governance import (
+        _seal_terminal_packet,
+    )
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.manager_screen_quote_impact import (
+        record_manager_screen_quote_impact,
+    )
+
+    context = _fixture(tmp_path)
+    _prepare(context)
+    packet = _load_review_packet(tmp_path)
+    submission = _review_submission(
+        packet,
+        actions={"CN:000001": "watch"},
+    )
+    recorded = record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id=REVIEW_ID,
+        submission=submission,
+        recorded_at=CUTOFF + dt.timedelta(minutes=5),
+    )
+    _seal_terminal_packet(
+        context["root"],
+        run_id=RUN_ID,
+        sealed_at=CUTOFF + dt.timedelta(minutes=6),
+    )
+
+    queue_path = context["root"] / "research_queue.jsonl"
+    screening_path = context["root"] / "screening.jsonl"
+    queue = read_jsonl(queue_path)
+    screens = read_jsonl(screening_path)
+    queue_row = next(row for row in queue if row["symbol"] == "CN:000001")
+    screen_row = next(row for row in screens if row["symbol"] == "CN:000001")
+    queue_row.update(
+        {
+            "task_type": "quick_profile",
+            "status": "pending",
+            "research_budget_state": "funded_quick_profile",
+            "manager_screen_allocation_result_sha256": "f" * 64,
+        }
+    )
+    screen_row.update(
+        {
+            "decision": "quick_profile",
+            "state": "quick_profile",
+            "research_budget_state": "funded_quick_profile",
+            "manager_screen_allocation_result_sha256": "f" * 64,
+        }
+    )
+    write_jsonl(queue_path, queue)
+    write_jsonl(screening_path, screens)
+    queue_before = queue_path.read_bytes()
+    screening_before = screening_path.read_bytes()
+
+    replay = record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id=REVIEW_ID,
+        submission=submission,
+        recorded_at=CUTOFF + dt.timedelta(minutes=7),
+    )
+
+    assert replay["result_sha256"] == recorded["result_sha256"]
+    assert replay["idempotent"] is True
+    assert queue_path.read_bytes() == queue_before
+    assert screening_path.read_bytes() == screening_before
 
 
 def test_capacity_does_not_refund_historical_purchase_on_net_route_change(
@@ -1318,7 +1645,371 @@ def test_manager_status_tracks_watch_to_send_and_send_to_pass_later_progress(
     }
 
 
-def test_manager_status_fails_closed_on_multiple_quote_impact_reviews(
+def test_two_quote_amendments_form_one_predecessor_bound_chain(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.manager_screen_quote_impact import (
+        load_manager_screen_quote_impact_overlay,
+        record_manager_screen_quote_impact,
+    )
+    from trading_os.research_assets.manager_screening import manager_screen_status
+
+    context = _fixture(tmp_path)
+    _prepare(context)
+    first_packet = _load_review_packet(tmp_path)
+    first = record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id=REVIEW_ID,
+        submission=_review_submission(
+            first_packet,
+            actions={"CN:000001": "send_to_analyst"},
+        ),
+        recorded_at=CUTOFF + dt.timedelta(minutes=5),
+    )
+    second_context = {
+        **context,
+        "amendment": _next_amendment(
+            context,
+            amendment_id="quotes-003",
+            effective_minutes=6,
+            prices={"CN:000001": 8.0, "CN:000002": 20.0},
+        ),
+    }
+    second_prepared = _prepare(
+        second_context,
+        review_id="review-002",
+        prepared_minutes=7,
+    )
+    second_packet = _load_review_packet(tmp_path, "review-002")
+    assert second_packet["rows"][0]["old_price"] == 12.5
+    assert second_packet["rows"][0]["old_decision"]["route"] == "send_to_analyst"
+    assert second_packet["rows"][0]["old_decision_source"]["path"] == first["result_path"]
+    assert second_packet["rows"][0]["old_decision_source"]["sha256"] == first["result_sha256"]
+    assert second_prepared["state"] == "prepared"
+
+    second = record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id="review-002",
+        submission=_review_submission(
+            second_packet,
+            actions={"CN:000001": "pass"},
+        ),
+        recorded_at=CUTOFF + dt.timedelta(minutes=8),
+    )
+    overlay = load_manager_screen_quote_impact_overlay(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+    )
+    queue = {
+        row["symbol"]: row
+        for row in read_jsonl(context["root"] / "research_queue.jsonl")
+    }
+    status = manager_screen_status(root=context["root"], run_id=RUN_ID)
+
+    assert overlay["state"] == "recorded"
+    assert overlay["review_count"] == 2
+    assert overlay["latest_sequence"] == 2
+    assert overlay["review_id"] == "review-002"
+    assert overlay["quote_amendment_path"] == second_context["amendment"]["path"]
+    assert overlay["quote_amendment_sha256"] == second_context["amendment"]["sha256"]
+    assert overlay["effective_decisions"][0]["route"] == "pass"
+    assert overlay["effective_decision_sources"][0]["path"] == second["result_path"]
+    assert overlay["effective_decision_sources"][0]["sha256"] == second["result_sha256"]
+    assert [row["symbol"] for row in overlay["purchase_reviews"]] == ["CN:000001"]
+    assert overlay["historical_purchase_company_count"] == 1
+    assert queue["CN:000001"]["manager_screen_result_path"] == second["result_path"]
+    assert queue["CN:000001"]["stage_history"][-1]["predecessor_result_path"] == first[
+        "result_path"
+    ]
+    assert queue["CN:000001"]["stage_history"][-1]["predecessor_result_sha256"] == first[
+        "result_sha256"
+    ]
+    assert status["analyst_budget"]["historical_purchased_company_count"] == 2
+    assert status["analyst_budget"]["current_effective_send_company_count"] == 1
+
+    third_context = {
+        **context,
+        "amendment": _next_amendment(
+            context,
+            amendment_id="quotes-004",
+            effective_minutes=9,
+            prices={"CN:000001": 12.0, "CN:000002": 20.0},
+        ),
+    }
+    _prepare(third_context, review_id="review-003", prepared_minutes=10)
+    third_packet = _load_review_packet(tmp_path, "review-003")
+    record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id="review-003",
+        submission=_review_submission(
+            third_packet,
+            actions={"CN:000001": "send_to_analyst"},
+        ),
+        recorded_at=CUTOFF + dt.timedelta(minutes=11),
+    )
+    final_overlay = load_manager_screen_quote_impact_overlay(
+        root=context["root"], run_id=RUN_ID, batch_id=BATCH_ID
+    )
+    final_status = manager_screen_status(root=context["root"], run_id=RUN_ID)
+    assert final_overlay["review_count"] == 3
+    assert len(final_overlay["purchase_reviews"]) == 1
+    assert final_status["analyst_budget"]["historical_purchased_company_count"] == 2
+    assert final_status["analyst_budget"]["current_effective_send_company_count"] == 2
+
+
+def test_quote_chain_rejects_prepared_predecessor_duplicate_and_reverse_time(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.manager_screen_quote_impact import (
+        ManagerScreenQuoteImpactError,
+        record_manager_screen_quote_impact,
+    )
+
+    prepared_context = _fixture(tmp_path / "prepared")
+    _prepare(prepared_context)
+    successor = {
+        **prepared_context,
+        "amendment": _next_amendment(
+            prepared_context,
+            amendment_id="quotes-003",
+            effective_minutes=6,
+            prices={"CN:000001": 8.0},
+        ),
+    }
+    with pytest.raises(ManagerScreenQuoteImpactError, match="must be recorded"):
+        _prepare(successor, review_id="review-002", prepared_minutes=7)
+
+    context = _fixture(tmp_path / "terminal")
+    _prepare(context)
+    packet = _load_review_packet(tmp_path / "terminal")
+    record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id=REVIEW_ID,
+        submission=_review_submission(packet, actions={"CN:000001": "watch"}),
+        recorded_at=CUTOFF + dt.timedelta(minutes=5),
+    )
+    with pytest.raises(ManagerScreenQuoteImpactError, match="already reviewed"):
+        _prepare(context, review_id="review-002", prepared_minutes=6)
+
+    reversed_context = {
+        **context,
+        "amendment": _next_amendment(
+            context,
+            amendment_id="quotes-reversed",
+            effective_minutes=2,
+            prices={"CN:000001": 8.0},
+        ),
+    }
+    with pytest.raises(ManagerScreenQuoteImpactError, match="strictly later"):
+        _prepare(reversed_context, review_id="review-002", prepared_minutes=7)
+
+
+@pytest.mark.parametrize(
+    ("tamper", "message"),
+    [
+        ("gap", "sequence gap"),
+        ("branch", "predecessor"),
+        ("partial", "partially sealed"),
+    ],
+)
+def test_quote_chain_rejects_gap_branch_and_partial_result_pair(
+    tmp_path: Path,
+    tamper: str,
+    message: str,
+):
+    from trading_os.research_assets.manager_screen_quote_impact import (
+        ManagerScreenQuoteImpactError,
+        load_manager_screen_quote_impact_overlay,
+        record_manager_screen_quote_impact,
+    )
+    from trading_os.research_assets.sealing import canonical_json_bytes, seal_json
+
+    context = _fixture(tmp_path)
+    _prepare(context)
+    first_packet = _load_review_packet(tmp_path)
+    record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id=REVIEW_ID,
+        submission=_review_submission(first_packet, actions={"CN:000001": "watch"}),
+        recorded_at=CUTOFF + dt.timedelta(minutes=5),
+    )
+    second_context = {
+        **context,
+        "amendment": _next_amendment(
+            context,
+            amendment_id="quotes-003",
+            effective_minutes=6,
+            prices={"CN:000001": 8.0},
+        ),
+    }
+    _prepare(second_context, review_id="review-002", prepared_minutes=7)
+    review_dir = (
+        context["root"]
+        / "manager-screen"
+        / RUN_ID
+        / BATCH_ID
+        / "quote-impact-reviews"
+        / "review-002"
+    )
+    if tamper == "partial":
+        source_seal = review_dir.parent / REVIEW_ID / "result.json.seal.json"
+        (review_dir / "result.json.seal.json").write_bytes(source_seal.read_bytes())
+    else:
+        plan_path = review_dir / "plan.json"
+        plan = json.loads(plan_path.read_text(encoding="utf-8"))
+        if tamper == "gap":
+            plan["chain_sequence"] = 3
+        else:
+            plan["predecessor"]["result_sha256"] = plan["original_result_sha256"]
+        plan_path.with_name("plan.json.seal.json").unlink()
+        plan_path.write_bytes(canonical_json_bytes(plan))
+        plan_seal = seal_json(
+            plan_path,
+            plan,
+            artifact_type="manager_screen_quote_impact_plan",
+            sealed_at=CUTOFF + dt.timedelta(minutes=7),
+        )
+        packet_path = review_dir / "packet.json"
+        packet = json.loads(packet_path.read_text(encoding="utf-8"))
+        packet["plan_sha256"] = plan_seal.sha256
+        packet_path.with_name("packet.json.seal.json").unlink()
+        packet_path.write_bytes(canonical_json_bytes(packet))
+        seal_json(
+            packet_path,
+            packet,
+            artifact_type="manager_screen_quote_impact_packet",
+            sealed_at=CUTOFF + dt.timedelta(minutes=7),
+        )
+
+    with pytest.raises(ManagerScreenQuoteImpactError, match=message):
+        load_manager_screen_quote_impact_overlay(
+            root=context["root"],
+            run_id=RUN_ID,
+            batch_id=BATCH_ID,
+        )
+
+
+def test_zero_candidate_review_auto_seals_terminal_noop(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.manager_screen_quote_impact import (
+        load_manager_screen_quote_impact_overlay,
+        record_manager_screen_quote_impact,
+    )
+
+    context = _fixture(tmp_path)
+    context = {
+        **context,
+        "amendment": _next_amendment(
+            context,
+            amendment_id="quotes-noop",
+            effective_minutes=4,
+            prices={"CN:000001": 10.0, "CN:000002": 20.0},
+        ),
+    }
+    queue_before = read_jsonl(context["root"] / "research_queue.jsonl")
+    prepared = _prepare(context, prepared_minutes=5)
+    packet = _load_review_packet(tmp_path)
+    result = json.loads((tmp_path / prepared["result_path"]).read_text(encoding="utf-8"))
+    overlay = load_manager_screen_quote_impact_overlay(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+    )
+
+    assert prepared["state"] == "recorded"
+    assert packet["candidate_count"] == 0
+    assert packet["rows"] == []
+    assert result["automatic_noop"] is True
+    assert result["reviews"] == []
+    assert result["decisions"] == []
+    assert result["predecessor"] == json.loads(
+        (tmp_path / prepared["plan_path"]).read_text(encoding="utf-8")
+    )["predecessor"]
+    assert overlay["state"] == "recorded"
+    assert overlay["automatic_noop"] is True
+    assert overlay["candidate_count"] == 0
+    assert overlay["quote_amendment_sha256"] == context["amendment"]["sha256"]
+    assert read_jsonl(context["root"] / "research_queue.jsonl") == queue_before
+
+    replay = record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id=REVIEW_ID,
+        submission=_review_submission(packet, actions={}),
+        recorded_at=CUTOFF + dt.timedelta(minutes=6),
+    )
+    assert replay["idempotent"] is True
+    assert replay["automatic_noop"] is True
+    assert read_jsonl(context["root"] / "research_queue.jsonl") == queue_before
+
+
+def test_single_legacy_review_can_be_extended_by_explicit_chain(tmp_path: Path):
+    from trading_os.research_assets.manager_screen_quote_impact import (
+        load_manager_screen_quote_impact_overlay,
+        record_manager_screen_quote_impact,
+    )
+
+    context = _fixture(tmp_path)
+    _prepare(context)
+    packet = _load_review_packet(tmp_path)
+    record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id=REVIEW_ID,
+        submission=_review_submission(packet, actions={"CN:000001": "watch"}),
+        recorded_at=CUTOFF + dt.timedelta(minutes=5),
+    )
+    legacy_sha256 = _downgrade_first_review_to_legacy(tmp_path, context)
+    legacy = load_manager_screen_quote_impact_overlay(
+        root=context["root"], run_id=RUN_ID, batch_id=BATCH_ID
+    )
+    assert legacy["chain_entries"][0]["legacy"] is True
+
+    successor = {
+        **context,
+        "amendment": _next_amendment(
+            context,
+            amendment_id="quotes-003",
+            effective_minutes=6,
+            prices={"CN:000001": 8.0},
+        ),
+    }
+    _prepare(successor, review_id="review-002", prepared_minutes=7)
+    plan = json.loads(
+        (
+            context["root"]
+            / "manager-screen"
+            / RUN_ID
+            / BATCH_ID
+            / "quote-impact-reviews"
+            / "review-002"
+            / "plan.json"
+        ).read_text(encoding="utf-8")
+    )
+    packet = _load_review_packet(tmp_path, "review-002")
+    assert plan["chain_sequence"] == 2
+    assert plan["predecessor"]["review_id"] == REVIEW_ID
+    assert plan["predecessor"]["result_sha256"] == legacy_sha256
+    assert packet["rows"][0]["old_decision"]["route"] == "watch"
+
+
+def test_manager_status_fails_closed_on_malformed_quote_impact_sibling(
     tmp_path: Path,
 ):
     from trading_os.research_assets.manager_screening import (
