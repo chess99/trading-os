@@ -3905,6 +3905,48 @@ def test_targeted_followup_claim_fails_closed_without_manager_approval(
         )
 
 
+def test_targeted_followup_candidate_is_a_valid_unfunded_terminal_state(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import (
+        DECISIONS,
+        read_jsonl,
+        validate_coverage_root,
+    )
+    from trading_os.research_assets.profile_workflow import (
+        TERMINAL_STAGES,
+        record_profile_package,
+    )
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    package = _package()
+    package["profile"]["governance_status"] = "uncertain"
+    package["profile"]["normalized_earnings_status"] = "uncertain"
+    package["profile"]["valuation"]["base_expected_annual_return"] = 0.06
+    package["profile"]["valuation"]["bull_expected_annual_return"] = 0.12
+    result = record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+
+    assert TERMINAL_STAGES <= DECISIONS
+    assert result["next_stage"] == "targeted_followup_candidate"
+    assert validate_coverage_root(root)["screening"]["total"] == 1
+    queue = read_jsonl(root / "research_queue.jsonl")[0]
+    screening = read_jsonl(root / "screening.jsonl")[0]
+    assert queue["task_type"] == "quick_profile"
+    assert queue["status"] == "completed"
+    assert screening["decision"] == "targeted_followup_candidate"
+    evaluation = json.loads(
+        (tmp_path / result["evaluation_path"]).read_text(encoding="utf-8")
+    )["evaluation"]
+    assert evaluation["maximum_additional_effort_hours"] == 0.0
+
+
 def test_original_manager_can_seal_terminal_followup_decline_via_cli(
     tmp_path: Path,
     capsys: pytest.CaptureFixture[str],

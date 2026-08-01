@@ -20,6 +20,7 @@ DECISIONS = {
     "triage_candidate",
     "quick_profile",
     "profile_candidate",
+    "targeted_followup_candidate",
     "candidate_unfunded",
     "deferred_full_market",
     "scoped_research",
