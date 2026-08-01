@@ -555,6 +555,50 @@ def test_tencent_quote_amendment_cli_fails_closed_on_incomplete_universe(
     ).exists()
 
 
+def test_tencent_quote_amendment_cli_rejects_same_day_update_without_writing(
+    tmp_path: Path,
+    capsys,
+    monkeypatch,
+) -> None:
+    from trading_os import cli
+    from trading_os.research_assets import manager_screen_snapshot
+
+    root = tmp_path / "coverage" / "cn-a"
+    run_id = "2026-07-31-tencent-cli-same-day-update"
+    _write_frozen_quote_universe(root, run_id, ["CN:000001"])
+    monkeypatch.setattr(
+        manager_screen_snapshot,
+        "_fetch_tencent_quote_text",
+        lambda _: _tencent_line(
+            "sz000001",
+            updated_at="20260730150000",
+        ),
+    )
+
+    code = cli.main(
+        [
+            "coverage",
+            "manager-screen-quote-amend",
+            run_id,
+            "same-day-update",
+            "--root",
+            str(root),
+            "--tencent-previous-close-date",
+            "2026-07-30",
+            "--at",
+            "2026-07-31T08:00:00+08:00",
+        ]
+    )
+
+    assert code == 1
+    error = json.loads(capsys.readouterr().err)
+    assert error["error_code"] == "manager_screen_snapshot_error"
+    assert "does not postdate" in error["error"]
+    target = root / "snapshots" / run_id / "quote-amendments" / "same-day-update.json"
+    assert not target.exists()
+    assert not target.with_name(f"{target.name}.seal.json").exists()
+
+
 def test_tencent_quote_amendment_cli_does_not_relax_freshness(
     tmp_path: Path,
     capsys,
@@ -695,7 +739,7 @@ def test_fetch_previous_close_quotes_recomputes_from_frozen_fallback(
     run_id = "2026-07-31-previous-close-fallback"
     _write_frozen_quote_universe(root, run_id, ["CN:000001"])
     fetched_at = dt.datetime.fromisoformat("2026-07-31T08:00:00+08:00")
-    updated_at = dt.datetime.fromisoformat("2026-07-30T15:00:00+08:00")
+    updated_at = dt.datetime.fromisoformat("2026-07-31T07:55:00+08:00")
 
     quotes = fetch_eastmoney_previous_close_quotes(
         root=root,
@@ -743,7 +787,7 @@ def test_fetch_previous_close_quotes_rejects_in_universe_symbol_from_wrong_chunk
         ["CN:000001", "CN:000002", "CN:300001"],
     )
     fetched_at = dt.datetime.fromisoformat("2026-07-31T08:00:00+08:00")
-    updated_at = dt.datetime.fromisoformat("2026-07-30T15:00:00+08:00")
+    updated_at = dt.datetime.fromisoformat("2026-07-31T07:55:00+08:00")
 
     with pytest.raises(ManagerScreenSnapshotError, match="requested quote chunk"):
         fetch_eastmoney_previous_close_quotes(
@@ -793,7 +837,7 @@ def test_fetch_previous_close_quotes_fails_closed_on_response_contract(
     run_id = f"2026-07-31-contract-{case}"
     _write_frozen_quote_universe(root, run_id, ["CN:000001", "CN:000002"])
     fetched_at = dt.datetime.fromisoformat("2026-07-31T08:00:00+08:00")
-    updated_at = dt.datetime.fromisoformat("2026-07-30T15:00:00+08:00")
+    updated_at = dt.datetime.fromisoformat("2026-07-31T07:55:00+08:00")
     rows: list[Any] = [
         _eastmoney_row("000001", updated_at=updated_at),
         _eastmoney_row("000002", updated_at=updated_at),
@@ -836,7 +880,8 @@ def test_fetch_previous_close_quotes_fails_closed_on_response_contract(
     ("updated_at", "message"),
     [
         (None, "timestamp is invalid"),
-        ("2026-07-29T15:00:00+08:00", "predates"),
+        ("2026-07-29T15:00:00+08:00", "does not postdate"),
+        ("2026-07-30T15:00:00+08:00", "does not postdate"),
         ("2026-07-31T08:06:00+08:00", "after fetched_at"),
     ],
 )
@@ -1139,7 +1184,8 @@ def test_fetch_tencent_previous_close_quotes_rejects_in_universe_wrong_chunk(
     ("updated_at", "message"),
     [
         ("not-a-time", "timestamp is invalid"),
-        ("20260729150000", "predates"),
+        ("20260729150000", "does not postdate"),
+        ("20260730150000", "does not postdate"),
         ("20260731080600", "after fetched_at"),
     ],
 )

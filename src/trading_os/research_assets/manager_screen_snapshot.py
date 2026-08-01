@@ -1044,9 +1044,9 @@ def _eastmoney_quote_update_datetime(
         raise ManagerScreenSnapshotError(
             f"Eastmoney quote update timestamp is invalid: {symbol}.f124"
         ) from exc
-    if updated_at.date() < quote_date:
+    if updated_at.date() <= quote_date:
         raise ManagerScreenSnapshotError(
-            "Eastmoney quote update predates the declared previous-close date: "
+            "Eastmoney quote update does not postdate the declared previous-close date: "
             f"{symbol} updated_at={updated_at.isoformat()}, "
             f"quote_date={quote_date.isoformat()}"
         )
@@ -1075,9 +1075,9 @@ def _tencent_quote_update_datetime(
         raise ManagerScreenSnapshotError(
             f"Tencent quote update timestamp is invalid: {code}.field30"
         ) from exc
-    if updated_at.date() < quote_date:
+    if updated_at.date() <= quote_date:
         raise ManagerScreenSnapshotError(
-            "Tencent quote update predates the declared previous-close date: "
+            "Tencent quote update does not postdate the declared previous-close date: "
             f"{code} updated_at={updated_at.isoformat()}, "
             f"quote_date={quote_date.isoformat()}"
         )
