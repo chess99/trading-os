@@ -3744,3 +3744,982 @@ def test_claim_rejects_research_brief_and_calibration_projection_tampering(
     assert claimed["manager_screen_allocation_decision"] == "fund_quick_profile"
     for field in calibration_fields:
         assert claimed[field] == expected_queue[symbol][field]
+
+
+def _completed_full_market_price_watch(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    *,
+    researcher: str = "/root/profile-researcher",
+    targeted_followup_candidate: bool = False,
+) -> tuple[Path, dict, dict]:
+    """Create one authenticated terminal full-market quick profile."""
+
+    from tests.test_profile_workflow import ROOT, _manager_bound_package, _policy
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        record_profile_package,
+    )
+
+    symbol = "CN:000001"
+    root = _ready_full_market(tmp_path, monkeypatch)
+    policy_path = tmp_path / "policies" / "research-allocation.json"
+    policy_path.parent.mkdir(parents=True, exist_ok=True)
+    policy_path.write_bytes((ROOT / "policies" / "research-allocation.json").read_bytes())
+    _prepare(root)
+    allocation = _record(root, {symbol})
+    claim_profile_task(
+        root=root,
+        agent=researcher,
+        claimed_at=RECORDED_AT + dt.timedelta(minutes=1),
+        symbol=symbol,
+        run_id=RUN_ID,
+    )
+    queue = _by_symbol(root / "research_queue.jsonl")[symbol]
+    package = _manager_bound_package(queue)
+    package["cycle_id"] = allocation["profile_cycle_id"]
+    package["company_name"] = queue["name"]
+    package["profile"].update(
+        {
+            "symbol": symbol,
+            "as_of": RECORDED_AT.date().isoformat(),
+            "information_cutoff": (
+                RECORDED_AT + dt.timedelta(minutes=1)
+            ).isoformat(),
+            **(
+                {
+                    "governance_status": "uncertain",
+                    "normalized_earnings_status": "uncertain",
+                }
+                if targeted_followup_candidate
+                else {}
+            ),
+        }
+    )
+    package["profile"]["valuation"].update(
+        {
+            "base_expected_annual_return": 0.06,
+            "bull_expected_annual_return": (
+                0.12 if targeted_followup_candidate else 0.09
+            ),
+        }
+    )
+    package["price_as_of"] = (RECORDED_AT - dt.timedelta(days=1)).isoformat()
+    package["provenance"]["agent"] = researcher
+    package["provenance"]["generated_at"] = (
+        RECORDED_AT + dt.timedelta(minutes=1)
+    ).isoformat()
+    package["manager_screen_binding"] = {
+        "result_path": queue["manager_screen_allocation_result_path"],
+        "result_sha256": queue["manager_screen_allocation_result_sha256"],
+        "decisive_question": queue["decisive_question"],
+        "evidence_ids": list(queue["evidence_ids"]),
+    }
+    profile = record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@5.0.0",
+        recorded_at=RECORDED_AT + dt.timedelta(minutes=2),
+    )
+    assert profile["next_stage"] == (
+        "targeted_followup_candidate"
+        if targeted_followup_candidate
+        else "price_watch"
+    )
+    return root, allocation, profile
+
+
+def _profile_adjudication_submission(
+    root: Path,
+    allocation: dict,
+    profile: dict,
+    *,
+    outcome: str = "material_error_confirmed",
+    reviewer: str = "/root/profile-qa-reviewer",
+    manager: str | None = None,
+) -> dict:
+    symbol = "CN:000001"
+    queue = _by_symbol(root / "research_queue.jsonl")[symbol]
+    completion = next(
+        event
+        for event in reversed(queue["stage_history"])
+        if event.get("stage") == "quick_profile"
+        and event.get("status") == "completed"
+    )
+    return {
+        "schema_version": 1,
+        "profile_cycle_id": allocation["profile_cycle_id"],
+        "stage": "quick_profile",
+        "profile_path": profile["profile_path"],
+        "profile_sha256": profile["profile_sha256"],
+        "evaluation_path": profile["evaluation_path"],
+        "evaluation_sha256": profile["evaluation_sha256"],
+        "claim_path": completion["claim_path"],
+        "claim_sha256": completion["claim_sha256"],
+        "success_path": completion["success_path"],
+        "success_sha256": completion["success_sha256"],
+        "full_market_result_path": queue[
+            "manager_screen_allocation_result_path"
+        ],
+        "full_market_result_sha256": queue[
+            "manager_screen_allocation_result_sha256"
+        ],
+        "full_market_candidate_sha256": queue[
+            "manager_screen_allocation_candidate_sha256"
+        ],
+        "reviewer": reviewer,
+        "manager": manager or _manager()["agent"],
+        "outcome": outcome,
+        "reason": (
+            "现金归属和债务口径尚不能支持原定量结论，先隔离画像。"
+            if outcome == "material_error_confirmed"
+            else "终止追加预算方向仍成立，但定量桥降格为仅供方向性参考。"
+        ),
+        "material_errors": [
+            {
+                "error_id": "cash-attribution-bridge",
+                "error_type": "cash_bridge_error",
+                "finding": "原画像未完整扣除债务利息并混用了现金归属口径。",
+                "evidence_ids": ["qa-cash-bridge"],
+            }
+        ],
+        "evidence": [
+            {
+                "evidence_id": "qa-cash-bridge",
+                "description": "年报现金流量表和债务附注不能复算原现金区间。",
+                "source_ids": ["annual"],
+            }
+        ],
+        "qa_sources": [],
+        "corrected_decisive_question": (
+            "按普通股股东可归属现金并完整扣除债务成本后，当前估值是否仍支持目标回报？"
+        ),
+        "corrected_decisive_answer": {
+            "conclusion": (
+                "现有证据不足以确认原现金区间及其对应回报率。"
+                if outcome == "material_error_confirmed"
+                else "当前不追加研究预算仍合理，但现金归属、净杠杆和估值仅能作方向性判断。"
+            ),
+            "source_ids": ["annual"],
+            "unresolved_reason": "仍需同口径现金归属、利息、少数股东与债务桥。",
+        },
+        "restart_triggers": [
+            {
+                "type": "filing",
+                "condition": "下一份正式定期报告披露可复算的现金和债务附注",
+                "reason": "新证据可重建同口径桥接。",
+            }
+        ],
+        "additional_budget_hours": 0.0,
+        "portfolio_action": None,
+    }
+
+
+def test_confirmed_profile_adjudication_quarantines_without_reopening_budget(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from tests.test_profile_workflow import _policy
+    from trading_os.research_assets.profile_workflow import (
+        build_profile_comparison_packet,
+        finalize_profile_stage_with_agent_decisions,
+        profile_cycle_status,
+        record_profile_adjudication,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    root, allocation, profile = _completed_full_market_price_watch(
+        tmp_path,
+        monkeypatch,
+    )
+    submission = _profile_adjudication_submission(root, allocation, profile)
+    result = record_profile_adjudication(
+        root=root,
+        symbol="CN:000001",
+        submission=submission,
+        adjudicated_at=RECORDED_AT + dt.timedelta(minutes=3),
+    )
+
+    assert result["outcome"] == "material_error_confirmed"
+    assert result["effective_outcome"] == "needs_manual_review"
+    assert result["additional_budget_hours"] == 0.0
+    assert verify_sealed(tmp_path / result["adjudication_path"]).artifact_type == (
+        "profile_adjudication"
+    )
+    queue = _by_symbol(root / "research_queue.jsonl")["CN:000001"]
+    screen = _by_symbol(root / "screening.jsonl")["CN:000001"]
+    assert queue["task_type"] == "quick_profile"
+    assert queue["status"] == "completed"
+    assert queue["effort_budget_hours"] == 1.5
+    assert queue["profile_adjudication_sha256"] == result["adjudication_sha256"]
+    assert queue["stage_history"][-1]["stage"] == "profile_adjudication"
+    assert screen["decision"] == "needs_manual_review"
+    assert screen["profile_adjudication_sha256"] == result["adjudication_sha256"]
+
+    status = profile_cycle_status(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+    )
+    assert status["cohort_count"] == 1
+    assert status["recorded_count"] == 1
+    assert status["remaining_count"] == 0
+    assert status["quarantined_count"] == 1
+    assert status["quarantined_symbols"] == ["CN:000001"]
+    assert status["invalid_artifact_count"] == 0
+    comparison = build_profile_comparison_packet(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+        stage="quick_profile",
+        created_at=RECORDED_AT + dt.timedelta(minutes=4),
+    )
+    packet = json.loads((tmp_path / comparison["comparison_path"]).read_text(encoding="utf-8"))
+    row = packet["rows"][0]
+    assert row["current_next_stage"] == "needs_manual_review"
+    assert row["profile_adjudication"]["outcome"] == "material_error_confirmed"
+    decisions = {
+        "schema_version": 1,
+        "cycle_id": allocation["profile_cycle_id"],
+        "evaluated_stage": "quick_profile",
+        "comparison_sha256": comparison["comparison_sha256"],
+        "decisions": [
+            {
+                "symbol": "CN:000001",
+                "decision": "select_scoped_research",
+                "reason": "尝试绕过隔离。",
+                "decisive_question": "旧画像是否仍可直接升级？",
+                "counterevidence_considered": ["裁决已确认重大错误。"],
+            }
+        ],
+        "provenance": {
+            "agent": _manager()["agent"],
+            "model": "test-model",
+            "tools": ["sealed comparison packet"],
+            "generated_at": (RECORDED_AT + dt.timedelta(minutes=5)).isoformat(),
+        },
+    }
+    with pytest.raises(ResearchAllocationError, match="must be deferred"):
+        finalize_profile_stage_with_agent_decisions(
+            root=root,
+            cycle_id=allocation["profile_cycle_id"],
+            stage="quick_profile",
+            policy=_policy(),
+            decisions=decisions,
+            finalized_at=RECORDED_AT + dt.timedelta(minutes=6),
+        )
+    decisions["decisions"][0]["decision"] = "defer"
+    decisions["decisions"][0]["reason"] = "重大错误画像只保留审计，不追加预算。"
+    deferred = finalize_profile_stage_with_agent_decisions(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+        stage="quick_profile",
+        policy=_policy(),
+        decisions=decisions,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=6),
+    )
+    assert deferred["selected_count"] == 0
+    queue = _by_symbol(root / "research_queue.jsonl")["CN:000001"]
+    screen = _by_symbol(root / "screening.jsonl")["CN:000001"]
+    assert queue["task_type"] == "quick_profile"
+    assert queue["status"] == "completed"
+    assert screen["decision"] == "needs_manual_review"
+    assert profile_cycle_status(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+    )["invalid_artifact_count"] == 0
+
+
+def test_manager_upheld_profile_adjudication_keeps_route_but_qualifies_latest_reason(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    from tests.test_profile_workflow import _policy
+    from trading_os.cli import main
+    from trading_os.research_assets.profile_workflow import (
+        _claimed_task_payload,
+        _profile_adjudication_for_profile_row,
+        _require_profile_adjudication_package_binding,
+        build_profile_comparison_packet,
+        finalize_profile_stage_with_agent_decisions,
+        profile_adjudication_ledger_status,
+        profile_cycle_status,
+        record_profile_adjudication,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    root, allocation, profile = _completed_full_market_price_watch(
+        tmp_path,
+        monkeypatch,
+    )
+    submission = _profile_adjudication_submission(
+        root,
+        allocation,
+        profile,
+        outcome="manager_upheld",
+    )
+    input_path = tmp_path / "profile-adjudication.json"
+    input_path.write_text(json.dumps(submission, ensure_ascii=False), encoding="utf-8")
+    assert main(
+        [
+            "coverage",
+            "profile-adjudicate",
+            "--root",
+            str(root),
+            "--symbol",
+            "CN:000001",
+            "--input",
+            str(input_path),
+            "--at",
+            (RECORDED_AT + dt.timedelta(minutes=3)).isoformat(),
+        ]
+    ) == 0
+    output = json.loads(capsys.readouterr().out)
+    assert output["outcome"] == "manager_upheld"
+    assert output["effective_outcome"] == "price_watch"
+    queue = _by_symbol(root / "research_queue.jsonl")["CN:000001"]
+    screen = _by_symbol(root / "screening.jsonl")["CN:000001"]
+    assert queue["status"] == "completed"
+    assert queue["reason"] == submission["reason"]
+    assert queue["revisit_triggers"] == submission["restart_triggers"]
+    assert screen["decision"] == "price_watch"
+    assert screen["reason"] == submission["reason"]
+    assert screen["revisit_triggers"] == submission["restart_triggers"]
+    assert any(
+        item == f"profile_adjudication:{output['adjudication_path']}"
+        for item in screen["evidence"]
+    )
+    status = profile_cycle_status(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+    )
+    assert status["manager_upheld_count"] == 1
+    assert status["profile_adjudications"][0]["corrected_decisive_answer"] == (
+        submission["corrected_decisive_answer"]
+    )
+    claimed_view = _claimed_task_payload(queue, idempotent=True)
+    assert claimed_view["profile_adjudication_binding"] == {
+        "path": output["adjudication_path"],
+        "sha256": output["adjudication_sha256"],
+        "corrected_decisive_question": submission["corrected_decisive_question"],
+        "evidence_ids": ["qa-cash-bridge"],
+    }
+    recorded_package = json.loads(
+        (tmp_path / profile["profile_path"]).read_text(encoding="utf-8")
+    )
+    with pytest.raises(ResearchAllocationError, match="must bind"):
+        _require_profile_adjudication_package_binding(
+            recorded_package,
+            queue_record=queue,
+            symbol="CN:000001",
+            base=root,
+            repository_root=tmp_path,
+        )
+    recorded_package["profile_adjudication_binding"] = claimed_view[
+        "profile_adjudication_binding"
+    ]
+    assert _require_profile_adjudication_package_binding(
+        recorded_package,
+        queue_record=queue,
+        symbol="CN:000001",
+        base=root,
+        repository_root=tmp_path,
+    )["outcome"] == "manager_upheld"
+    comparison = build_profile_comparison_packet(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+        stage="quick_profile",
+        created_at=RECORDED_AT + dt.timedelta(minutes=4),
+    )
+    packet = json.loads((tmp_path / comparison["comparison_path"]).read_text(encoding="utf-8"))
+    assert packet["rows"][0]["current_next_stage"] == "price_watch"
+    assert packet["rows"][0]["profile_adjudication"][
+        "corrected_decisive_question"
+    ] == submission["corrected_decisive_question"]
+    decisions = {
+        "schema_version": 1,
+        "cycle_id": allocation["profile_cycle_id"],
+        "evaluated_stage": "quick_profile",
+        "comparison_sha256": comparison["comparison_sha256"],
+        "decisions": [
+            {
+                "symbol": "CN:000001",
+                "decision": "defer",
+                "reason": "维持价格观察，不追加研究预算。",
+                "decisive_question": submission["corrected_decisive_question"],
+                "counterevidence_considered": ["旧画像中的现金和杠杆点估计已降格。"],
+            }
+        ],
+        "provenance": {
+            "agent": _manager()["agent"],
+            "model": "test-model",
+            "tools": ["sealed comparison packet"],
+            "generated_at": (RECORDED_AT + dt.timedelta(minutes=5)).isoformat(),
+        },
+    }
+    finalized = finalize_profile_stage_with_agent_decisions(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+        stage="quick_profile",
+        policy=_policy(),
+        decisions=decisions,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=6),
+    )
+    assert finalized["selected_count"] == 0
+    queue = _by_symbol(root / "research_queue.jsonl")["CN:000001"]
+    screen = _by_symbol(root / "screening.jsonl")["CN:000001"]
+    assert queue["reason"] == submission["reason"]
+    assert screen["reason"] == submission["reason"]
+    assert screen["decision"] == "price_watch"
+    queues = _by_symbol(root / "research_queue.jsonl")
+    screens = _by_symbol(root / "screening.jsonl")
+    queues["CN:000001"]["profile_cycle_id"] = "future-trigger-cycle"
+    screens["CN:000001"]["profile_cycle_id"] = "future-trigger-cycle"
+    write_jsonl(root / "research_queue.jsonl", list(queues.values()))
+    write_jsonl(root / "screening.jsonl", list(screens.values()))
+    with pytest.raises(ResearchAllocationError, match="sealed adjudication successor"):
+        _profile_adjudication_for_profile_row(
+            queues["CN:000001"],
+            symbol="CN:000001",
+            repository_root=tmp_path,
+            base=root,
+        )
+    assert profile_adjudication_ledger_status(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+    )["invalid_artifact_count"] == 1
+    future_submission = dict(submission)
+    future_submission["profile_cycle_id"] = "future-trigger-cycle"
+    with pytest.raises(
+        ResearchAllocationError,
+        match="second profile adjudication requires a sealed successor",
+    ):
+        record_profile_adjudication(
+            root=root,
+            symbol="CN:000001",
+            submission=future_submission,
+            adjudicated_at=RECORDED_AT + dt.timedelta(minutes=7),
+        )
+    future_adjudication_path = (
+        root
+        / "profiles"
+        / "future-trigger-cycle"
+        / "profile-adjudications"
+        / "quick_profile"
+        / "000001"
+        / "adjudication.json"
+    )
+    assert not future_adjudication_path.exists()
+    queues["CN:000001"].pop("profile_adjudication_decisive_question")
+    write_jsonl(root / "research_queue.jsonl", list(queues.values()))
+    assert profile_adjudication_ledger_status(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+    )["invalid_artifact_count"] == 1
+
+
+def test_profile_adjudication_blocks_same_cycle_targeted_followup_budget(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from tests.test_profile_workflow import _policy
+    from trading_os.research_assets.profile_workflow import (
+        approve_targeted_followup,
+        claim_profile_task,
+        decline_targeted_followup,
+        record_profile_adjudication,
+        record_profile_package,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    root, allocation, profile = _completed_full_market_price_watch(
+        tmp_path,
+        monkeypatch,
+        targeted_followup_candidate=True,
+    )
+    submission = _profile_adjudication_submission(
+        root,
+        allocation,
+        profile,
+        outcome="manager_upheld",
+    )
+    adjudication = record_profile_adjudication(
+        root=root,
+        symbol="CN:000001",
+        submission=submission,
+        adjudicated_at=RECORDED_AT + dt.timedelta(minutes=3),
+    )
+    assert adjudication["effective_outcome"] == "targeted_followup_candidate"
+    queue = _by_symbol(root / "research_queue.jsonl")["CN:000001"]
+    screen = _by_symbol(root / "screening.jsonl")["CN:000001"]
+    assert queue["profile_adjudication_sha256"] == adjudication[
+        "adjudication_sha256"
+    ]
+
+    with pytest.raises(
+        ResearchAllocationError,
+        match="sealed profile adjudication forbids targeted-followup budget",
+    ):
+        approve_targeted_followup(
+            root=root,
+            symbol="CN:000001",
+            manager=_manager()["agent"],
+            reason="裁决后的当前 cycle 不得购买补证预算。",
+            policy=_policy(),
+            approved_at=RECORDED_AT + dt.timedelta(minutes=4),
+        )
+
+    adjudication_fields = (
+        "profile_adjudication_path",
+        "profile_adjudication_sha256",
+        "profile_adjudication_outcome",
+        "profile_adjudication_cycle_id",
+        "profile_adjudication_decisive_question",
+        "profile_adjudication_evidence_ids",
+    )
+    queues = _by_symbol(root / "research_queue.jsonl")
+    screens = _by_symbol(root / "screening.jsonl")
+    for field in adjudication_fields:
+        queues["CN:000001"].pop(field)
+        screens["CN:000001"].pop(field)
+    write_jsonl(root / "research_queue.jsonl", list(queues.values()))
+    write_jsonl(root / "screening.jsonl", list(screens.values()))
+
+    with pytest.raises(
+        ResearchAllocationError,
+        match="sealed profile adjudication forbids targeted-followup budget",
+    ):
+        approve_targeted_followup(
+            root=root,
+            symbol="CN:000001",
+            manager=_manager()["agent"],
+            reason="删除 mutable binding 仍不得购买补证预算。",
+            policy=_policy(),
+            approved_at=RECORDED_AT + dt.timedelta(minutes=5),
+        )
+    with pytest.raises(
+        ResearchAllocationError,
+        match="sealed profile adjudication forbids a targeted-followup decline",
+    ):
+        decline_targeted_followup(
+            root=root,
+            symbol="CN:000001",
+            manager=_manager()["agent"],
+            outcome="watch_only",
+            reason="删除 mutable binding 仍不得生成冲突终态。",
+            restart_triggers=[
+                {
+                    "type": "filing",
+                    "condition": "出现新的正式定期报告",
+                    "reason": "届时只能走未来 sealed successor workflow。",
+                }
+            ],
+            declined_at=RECORDED_AT + dt.timedelta(minutes=5),
+        )
+
+    approval_path = (
+        root
+        / "profiles"
+        / allocation["profile_cycle_id"]
+        / "targeted-followup-approvals"
+        / "000001.json"
+    )
+    assert not approval_path.exists()
+    assert not approval_path.with_name(f"{approval_path.name}.seal.json").exists()
+    decline_path = (
+        root
+        / "profiles"
+        / allocation["profile_cycle_id"]
+        / "targeted-followup-declines"
+        / "000001.json"
+    )
+    assert not decline_path.exists()
+    assert not decline_path.with_name(f"{decline_path.name}.seal.json").exists()
+    queue = _by_symbol(root / "research_queue.jsonl")["CN:000001"]
+    screen = _by_symbol(root / "screening.jsonl")["CN:000001"]
+    assert queue["task_type"] == "quick_profile"
+    assert queue["status"] == "completed"
+    assert screen["decision"] == "targeted_followup_candidate"
+    assert all(field not in queue for field in adjudication_fields)
+    assert all(field not in screen for field in adjudication_fields)
+
+    sealed_package = json.loads(
+        (tmp_path / profile["profile_path"]).read_text(encoding="utf-8")
+    )
+    sealed_package.pop("claim_attempt")
+    sealed_package["schema_version"] = 2
+    with pytest.raises(
+        ResearchAllocationError,
+        match="forbids profile package replay or recording",
+    ):
+        record_profile_package(
+            sealed_package,
+            root=root,
+            policy=_policy(),
+            policy_reference="research-allocation.default@5.0.0",
+            recorded_at=RECORDED_AT + dt.timedelta(minutes=2),
+        )
+
+    queues = _by_symbol(root / "research_queue.jsonl")
+    queues["CN:000001"].update(
+        {
+            "status": "pending",
+            "assigned_agent": None,
+            "started_at": None,
+            "finished_at": None,
+            "failure_reason": None,
+        }
+    )
+    write_jsonl(root / "research_queue.jsonl", list(queues.values()))
+    with pytest.raises(
+        ResearchAllocationError,
+        match="sealed profile adjudication forbids new profile claims",
+    ):
+        claim_profile_task(
+            root=root,
+            agent="/root/adjudication-tamper-claim",
+            claimed_at=RECORDED_AT + dt.timedelta(minutes=6),
+            symbol="CN:000001",
+            run_id=RUN_ID,
+        )
+    queue = _by_symbol(root / "research_queue.jsonl")["CN:000001"]
+    assert queue["status"] == "pending"
+    assert queue["assigned_agent"] is None
+
+
+def test_profile_adjudication_rejects_sealed_targeted_approval_crash(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import trading_os.research_assets.profile_workflow as profile_workflow
+    from tests.test_profile_workflow import _policy
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+    from trading_os.research_assets.sealing import verify_sealed
+
+    root, allocation, profile = _completed_full_market_price_watch(
+        tmp_path,
+        monkeypatch,
+        targeted_followup_candidate=True,
+    )
+    submission = _profile_adjudication_submission(
+        root,
+        allocation,
+        profile,
+        outcome="manager_upheld",
+    )
+    original_write_jsonl = profile_workflow.write_jsonl
+
+    def fail_projection(*_args: object, **_kwargs: object) -> None:
+        raise RuntimeError("simulated targeted approval projection crash")
+
+    monkeypatch.setattr(profile_workflow, "write_jsonl", fail_projection)
+    with pytest.raises(RuntimeError, match="projection crash"):
+        profile_workflow.approve_targeted_followup(
+            root=root,
+            symbol="CN:000001",
+            manager=_manager()["agent"],
+            reason="先封存 targeted approval，再模拟投影崩溃。",
+            policy=_policy(),
+            approved_at=RECORDED_AT + dt.timedelta(minutes=3),
+        )
+    monkeypatch.setattr(profile_workflow, "write_jsonl", original_write_jsonl)
+
+    approval_path = (
+        root
+        / "profiles"
+        / allocation["profile_cycle_id"]
+        / "targeted-followup-approvals"
+        / "000001.json"
+    )
+    assert verify_sealed(approval_path).artifact_type == "targeted_followup_approval"
+    assert _by_symbol(root / "research_queue.jsonl")["CN:000001"]["status"] == (
+        "completed"
+    )
+    with pytest.raises(
+        ResearchAllocationError,
+        match="conflicts with an existing targeted-followup decision artifact",
+    ):
+        profile_workflow.record_profile_adjudication(
+            root=root,
+            symbol="CN:000001",
+            submission=submission,
+            adjudicated_at=RECORDED_AT + dt.timedelta(minutes=4),
+        )
+    adjudication_path = (
+        root
+        / "profiles"
+        / allocation["profile_cycle_id"]
+        / "profile-adjudications"
+        / "quick_profile"
+        / "000001"
+        / "adjudication.json"
+    )
+    assert not adjudication_path.exists()
+    assert not adjudication_path.with_name(
+        f"{adjudication_path.name}.seal.json"
+    ).exists()
+
+
+@pytest.mark.parametrize(
+    ("decision_directory", "artifact_suffix"),
+    [
+        ("targeted-followup-approvals", ".json"),
+        ("targeted-followup-approvals", ".json.seal.json"),
+        ("targeted-followup-declines", ".json"),
+        ("targeted-followup-declines", ".json.seal.json"),
+    ],
+)
+def test_profile_adjudication_rejects_partial_targeted_decision_artifacts(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    decision_directory: str,
+    artifact_suffix: str,
+) -> None:
+    from trading_os.research_assets.profile_workflow import record_profile_adjudication
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    root, allocation, profile = _completed_full_market_price_watch(
+        tmp_path,
+        monkeypatch,
+        targeted_followup_candidate=True,
+    )
+    submission = _profile_adjudication_submission(
+        root,
+        allocation,
+        profile,
+        outcome="manager_upheld",
+    )
+    conflict_path = (
+        root
+        / "profiles"
+        / allocation["profile_cycle_id"]
+        / decision_directory
+        / f"000001{artifact_suffix}"
+    )
+    conflict_path.parent.mkdir(parents=True, exist_ok=True)
+    conflict_path.write_text("{}", encoding="utf-8")
+
+    with pytest.raises(
+        ResearchAllocationError,
+        match="conflicts with an existing targeted-followup decision artifact",
+    ):
+        record_profile_adjudication(
+            root=root,
+            symbol="CN:000001",
+            submission=submission,
+            adjudicated_at=RECORDED_AT + dt.timedelta(minutes=3),
+        )
+
+
+def test_profile_adjudication_replay_is_idempotent_and_second_decision_conflicts(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from trading_os.research_assets.profile_workflow import record_profile_adjudication
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    root, allocation, profile = _completed_full_market_price_watch(
+        tmp_path,
+        monkeypatch,
+    )
+    submission = _profile_adjudication_submission(root, allocation, profile)
+    first = record_profile_adjudication(
+        root=root,
+        symbol="CN:000001",
+        submission=submission,
+        adjudicated_at=RECORDED_AT + dt.timedelta(minutes=3),
+    )
+    replay = record_profile_adjudication(
+        root=root,
+        symbol="CN:000001",
+        submission=submission,
+        adjudicated_at=RECORDED_AT + dt.timedelta(minutes=4),
+    )
+    assert replay["idempotent"] is True
+    assert replay["adjudication_sha256"] == first["adjudication_sha256"]
+    queue = _by_symbol(root / "research_queue.jsonl")["CN:000001"]
+    assert sum(
+        event.get("stage") == "profile_adjudication"
+        for event in queue["stage_history"]
+    ) == 1
+
+    conflicting = json.loads(json.dumps(submission))
+    conflicting["outcome"] = "manager_upheld"
+    with pytest.raises(ResearchAllocationError, match="conflicts|second"):
+        record_profile_adjudication(
+            root=root,
+            symbol="CN:000001",
+            submission=conflicting,
+            adjudicated_at=RECORDED_AT + dt.timedelta(minutes=5),
+        )
+
+
+def test_profile_adjudication_binds_independent_qa_source_by_path_and_sha(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import hashlib
+
+    from trading_os.research_assets.profile_workflow import (
+        profile_cycle_status,
+        record_profile_adjudication,
+    )
+
+    root, allocation, profile = _completed_full_market_price_watch(
+        tmp_path,
+        monkeypatch,
+    )
+    qa_path = tmp_path / "research" / "qa" / "cash-bridge.txt"
+    qa_path.parent.mkdir(parents=True, exist_ok=True)
+    qa_path.write_text("independent cash and debt bridge", encoding="utf-8")
+    submission = _profile_adjudication_submission(root, allocation, profile)
+    submission["qa_sources"] = [
+        {
+            "source_id": "qa-independent",
+            "path": qa_path.relative_to(tmp_path).as_posix(),
+            "sha256": hashlib.sha256(qa_path.read_bytes()).hexdigest(),
+        }
+    ]
+    submission["evidence"][0]["source_ids"] = ["qa-independent"]
+    submission["corrected_decisive_answer"]["source_ids"] = ["qa-independent"]
+    record_profile_adjudication(
+        root=root,
+        symbol="CN:000001",
+        submission=submission,
+        adjudicated_at=RECORDED_AT + dt.timedelta(minutes=3),
+    )
+    assert profile_cycle_status(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+    )["invalid_artifact_count"] == 0
+
+    qa_path.write_text("tampered QA source", encoding="utf-8")
+    status = profile_cycle_status(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+    )
+    assert status["invalid_artifact_count"] == 1
+    assert "QA source SHA mismatch" in status["invalid_artifacts"][0]["error"]
+
+
+@pytest.mark.parametrize("actor", ["reviewer", "manager"])
+def test_profile_adjudication_requires_independence_from_researcher(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    actor: str,
+) -> None:
+    from trading_os.research_assets.profile_workflow import record_profile_adjudication
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    researcher = "/root/profile-researcher"
+    root, allocation, profile = _completed_full_market_price_watch(
+        tmp_path,
+        monkeypatch,
+        researcher=researcher,
+    )
+    kwargs = {actor: researcher}
+    submission = _profile_adjudication_submission(
+        root,
+        allocation,
+        profile,
+        **kwargs,
+    )
+    with pytest.raises(ResearchAllocationError, match="independent"):
+        record_profile_adjudication(
+            root=root,
+            symbol="CN:000001",
+            submission=submission,
+            adjudicated_at=RECORDED_AT + dt.timedelta(minutes=3),
+        )
+
+
+def test_profile_adjudication_projection_drift_fails_closed(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from trading_os.research_assets.profile_workflow import (
+        profile_cycle_status,
+        record_profile_adjudication,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    root, allocation, profile = _completed_full_market_price_watch(
+        tmp_path,
+        monkeypatch,
+    )
+    submission = _profile_adjudication_submission(root, allocation, profile)
+    record_profile_adjudication(
+        root=root,
+        symbol="CN:000001",
+        submission=submission,
+        adjudicated_at=RECORDED_AT + dt.timedelta(minutes=3),
+    )
+    screens = _by_symbol(root / "screening.jsonl")
+    screens["CN:000001"]["reason"] = "tampered projection"
+    write_jsonl(root / "screening.jsonl", list(screens.values()))
+    with pytest.raises(ResearchAllocationError, match="projection drift"):
+        record_profile_adjudication(
+            root=root,
+            symbol="CN:000001",
+            submission=submission,
+            adjudicated_at=RECORDED_AT + dt.timedelta(minutes=4),
+        )
+    status = profile_cycle_status(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+    )
+    assert status["invalid_artifact_count"] == 1
+
+
+@pytest.mark.parametrize("damage", ["payload", "seal"])
+def test_profile_adjudication_tamper_or_missing_seal_is_detected(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    damage: str,
+) -> None:
+    from trading_os.research_assets.coverage_store import (
+        CoverageValidationError,
+        validate_coverage_root,
+    )
+    from trading_os.research_assets.profile_workflow import (
+        profile_cycle_status,
+        record_profile_adjudication,
+    )
+
+    root, allocation, profile = _completed_full_market_price_watch(
+        tmp_path,
+        monkeypatch,
+    )
+    submission = _profile_adjudication_submission(root, allocation, profile)
+    result = record_profile_adjudication(
+        root=root,
+        symbol="CN:000001",
+        submission=submission,
+        adjudicated_at=RECORDED_AT + dt.timedelta(minutes=3),
+    )
+    path = tmp_path / result["adjudication_path"]
+    if damage == "seal":
+        path.with_name(f"{path.name}.seal.json").unlink()
+    else:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        payload["reason"] = "tampered payload"
+        path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+
+    status = profile_cycle_status(
+        root=root,
+        cycle_id=allocation["profile_cycle_id"],
+    )
+    assert status["invalid_artifact_count"] == 1
+    # This fixture intentionally carries a compact synthetic manager-screen
+    # batch that the full coverage validator rejects before reaching profile
+    # overlays.  Bypass that unrelated validator so this assertion exercises
+    # the coverage-level adjudication hook itself.
+    from trading_os.research_assets import manager_screening
+
+    monkeypatch.setattr(
+        manager_screening,
+        "manager_screen_status",
+        lambda **kwargs: {"run_id": kwargs["run_id"]},
+    )
+    with pytest.raises(CoverageValidationError, match="profile adjudication"):
+        validate_coverage_root(root)

@@ -40,6 +40,7 @@
    packet 一经封存即成为 terminal governance lock：不得再新增 control、manager-screen batch/result、calibration、supersession、legacy transition、allocation-v3 contract/suspension 或 quote/quote-impact 演进；只可 exact replay/修复既有 artifact，并继续该 packet 的 `record/apply/final-status`。packet 同时封存全部 sealed 上游治理 manifest（control、batch/supersession/freeze journal、calibration、quote-impact/evolution、legacy transition、contract/suspension），且每个依赖 seal 必须严格早于 `prepared_at`；downstream full-market/activation 子树和具有独立 sealed authority 的 `research-policy*.json` 不进入该 manifest。若 material error 命中 irreversible commitment，该公司不占 candidate capacity，而进入 `locked_calibration_cases`；处置投影只追加 binding，不改既有任务或预算。主 Agent 必须选择 `resolved_by_existing_sealed_work`、`targeted_remediation_candidate` 或 `defer_remediation`。resolved 绑定晚于 calibration 的具体 sealed 正式进展及全部错误证据；targeted 只在已有 terminal targeted-followup candidate 可由原 manager 显式批准时允许，approval 自动消费修订问题/证据并绑定 result/case SHA；defer 必须有重启条件。
 4. 研究员失败只重试该公司；已封存结果不得重写。
 5. 主 Agent比较同层结果，决定停止、补证或深研。
+   - post-profile QA 若确认画像存在事实、桥接、来源或重大风险问题，先由原 manager 使用 sealed `profile-adjudicate` 收口；reviewer、研究员、manager 必须三方独立。裁决必须早于 comparison，新增 QA 来源绑定 path/SHA。confirmed 隔离为 `needs_manual_review`，upheld 仅保留限定后的原 terminal route；两者均为 0 追加预算且本轮只能 defer，targeted approval/decline 也不能绕过。同 cycle 已有 targeted decision payload/seal 时裁决同样拒绝。当前没有 sealed successor authority，跨 cycle 重启、二次裁决和新 claim/package（含 replay）一律 fail closed，不能手改 mutable cycle ID。
    - 购买定向补证使用 sealed `profile-followup-approve`；不购买则使用 sealed `profile-followup-decline`，绑定可执行重启 triggers。decline 不占 targeted 容量，也不能撤销已批准、已开始或已完成的任务。
    - targeted/scoped/deep 的 run 级账本从现代 sealed approval/selection、sealed legacy transition 与 allocation-v3 irreversible progress 重建，按 `(stage, symbol)` 去重，不读取 mutable queue 计费；targeted/deep 只认精确阶段证据，scoped 可认 deep 高水位。
 6. 深研完成后，由主 Agent 显式批准 underwriting 预算并占用 run 级 ledger；没有 sealed approval 不得冻结承保候选或派 reviewer。
@@ -94,6 +95,7 @@ python -m trading_os coverage profile-release --agent <agent-id> --symbol CN:000
 python -m trading_os coverage profile-followup-approve --symbol CN:000000 --manager <manager-agent> --reason <reason>
 python -m trading_os coverage profile-followup-decline --symbol CN:000000 --manager <manager-agent> \
   --outcome <price_watch|watch_only|conditional_stop> --reason <reason> --triggers <triggers.json>
+python -m trading_os coverage profile-adjudicate --symbol CN:000000 --input <adjudication.json>
 python -m trading_os coverage profile-status <cycle-id>
 python -m trading_os coverage deep-research-complete <CN:000000> \
   --input <completion.json> --at <timestamp>

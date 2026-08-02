@@ -117,6 +117,7 @@ from .research_assets.profile_workflow import (
     finalize_profile_stage,
     finalize_profile_stage_with_agent_decisions,
     profile_cycle_status,
+    record_profile_adjudication,
     record_profile_package,
     release_profile_task,
 )
@@ -1213,6 +1214,16 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_timestamp(profile_followup_decline)
     profile_followup_decline.set_defaults(func=cmd_coverage_profile_followup_decline)
+
+    profile_adjudicate = coverage_sub.add_parser(
+        "profile-adjudicate",
+        help="Seal one post-profile QA adjudication without purchasing more budget",
+    )
+    _add_coverage_root(profile_adjudicate)
+    profile_adjudicate.add_argument("--symbol", required=True)
+    profile_adjudicate.add_argument("--input", required=True)
+    _add_timestamp(profile_adjudicate)
+    profile_adjudicate.set_defaults(func=cmd_coverage_profile_adjudicate)
 
     profile_compare = coverage_sub.add_parser(
         "profile-compare",
@@ -2461,6 +2472,17 @@ def cmd_coverage_profile_followup_decline(ns: argparse.Namespace) -> int:
             "targeted-followup restart triggers",
         ),
         declined_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_profile_adjudicate(ns: argparse.Namespace) -> int:
+    payload = record_profile_adjudication(
+        root=ns.root,
+        symbol=ns.symbol,
+        submission=_load_json_object(ns.input, "profile adjudication submission"),
+        adjudicated_at=_timestamp(ns.at),
     )
     _write_success({"ok": True, **payload})
     return 0

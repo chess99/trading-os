@@ -134,6 +134,10 @@ Material error 只包括：
 
 所有 manager-bound 的 `quick_profile/targeted_followup/scoped_research/deep_research` 领取都使用 append-only sealed attempt 链。workflow 先封存 claim receipt，再把同一 receipt 的 path/SHA、agent 和时间投影到 queue；receipt-only 崩溃只能由原 agent 幂等恢复，其他 agent 必须等待原 agent 先封存 release。失败释放同样先封存 release receipt，再恢复 pending；下一次领取必须创建严格晚于前一 release 的新 attempt。生产 `profile-claim/profile-release` 不允许任意回填时间。queue 的 `assigned_agent/started_at` 只是投影，不能作为所有权事实源；同一 agent 的活动任务必须从 claim/release 以及与 claim 精确绑定的 sealed completion 重建。
 
+quick profile 完成后的 QA 若发现可核验事实、现金/估值桥接、来源匹配、重大风险遗漏或 contract 问题，必须在同层 comparison 之前由原投资经理运行 sealed `profile-adjudicate`。原研究员、独立 QA reviewer 与经理三方必须相互独立；裁决绑定原 profile/evaluation、claim/success、full-market authority、修订后的决定性问题与答案、全部错误/证据，以及新增 QA 来源的仓库 path/SHA。`material_error_confirmed` 把 live screening 隔离为 `needs_manual_review`；`manager_upheld` 只保留原 terminal route 并采用限定后的理由。两种 outcome 都不购买新预算，在当前 selection 中强制 defer，也不能由同 cycle 的 `profile-followup-approve` 绕过。
+
+裁决链必须满足 `completion < adjudication < comparison < selection`，且只追加、不覆盖原画像。当前尚无 sealed successor/restart authority；因此裁决后不得仅靠修改 mutable cycle ID 重启，新的 claim、package（含 exact replay）、targeted decline、二次裁决和跨 cycle 决定性问题都 fail closed。未来只有实现并验证绑定 predecessor 裁决、重启 trigger 与新预算 authority 的 append-only successor 链后才能开放。canonical 裁决直接从磁盘重验，删除 queue/screening binding 不能绕过；反向地，只要同 cycle 已存在 targeted approval/decline 的 payload 或 seal（包括崩溃半写），也不得再封裁决。
+
 quick/targeted/scoped 的 profile evaluation 与 deep completion receipt 都必须内嵌当前 claim attempt path/SHA，并在提交、重放和容量审计时重验；删除 queue 中的 manager 来源字段不能把现代任务降级为 legacy 或绕过 claim。deep completion receipt 还要封存 effective manager authority：full-market 路径只认 sealed full-market allocation result 中的 manager，legacy 路径只认对应 sealed predecessor。underwriting 必须重新验证该 authority 的 source path/SHA/type、run identity 和 manager agent，不能回退到早期 batch manager 或 mutable queue。
 
 quick-profile allocation 与 targeted/scoped/deep/underwriting 容量均按同一 manager-screen run 记账，不能靠新 cycle/batch 扩容；超限应原子拒绝，不机械改路由。targeted/scoped/deep 的已购预算只从现代 sealed approval/selection、已记录的 sealed legacy transition 和 allocation-v3 irreversible sealed progress 重建，按 `(stage, symbol)` 去重，不把 mutable queue 当账本；targeted 与 deep 必须有本阶段精确证据，scoped 可由 scoped 或 deep 高水位证明。只有 completion receipt 已封存并通过终态重验的 deep research 才能由主 Agent 显式购买独立承保，裸 Markdown 报告不能冒充 receipt。重大风险、重大分歧或潜在前五大仓位才考虑 challenger，但 challenger 与 portfolio 必须分别获得新的主 Agent 批准；上游 approval 不授权下游。研究层不给组合操作。
@@ -201,6 +205,8 @@ python -m trading_os coverage manager-screen-allocation-v3-final-status <run-id>
 python -m trading_os assets gc --plan \
   --output research/archives/gc-plans/<plan-id>.json
 
+python -m trading_os coverage profile-adjudicate --symbol CN:000000 \
+  --input <adjudication.json> --at <timestamp>
 python -m trading_os coverage profile-status <cycle-id>
 python -m trading_os coverage profile-compare <cycle-id> --stage quick_profile|scoped_research
 python -m trading_os coverage profile-select <cycle-id> --stage quick_profile|scoped_research --decisions <decisions.json>

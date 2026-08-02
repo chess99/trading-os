@@ -144,6 +144,10 @@ workflow 重验 scoped-research selection 的 `selected=true`、canonical path/S
 
 可使用 `profile-compare/profile-select` 封存同层决策，但投资经理无需与最初 manager-screen 隔离；只需与提交单公司研究的研究员保持角色独立。targeted/scoped/deep 每次升级都必须是主 Agent 对同 run 可比 cohort 的显式决定，并占用对应 run 级容量。
 
+若 quick profile 完成后发现可核验事实、现金/估值桥接、来源匹配、重大风险遗漏或 contract 错误，必须在同层 comparison 之前运行 `profile-adjudicate`。裁决由原投资经理记录，QA reviewer、原研究员和经理三者必须独立；输入同时绑定原 profile/evaluation、claim/success、full-market authority、修订后的决定性问题与答案、错误/证据、重启 triggers，以及新增 QA 来源的仓库路径和 SHA-256。`material_error_confirmed` 将 live screening 隔离为 `needs_manual_review`；`manager_upheld` 只维持原 terminal route，并用限定后的理由替代旧定量解释。两种结果追加预算都固定为 0，在本轮 selection 中都只能 `defer`；同 cycle 的 `profile-followup-approve` 也必须拒绝，不能借旧 evaluation 升级研究阶段。
+
+裁决、comparison、selection 必须满足 `completion < adjudication < comparison < selection`，且都只追加、不覆盖原画像。当前尚未实现 sealed successor/restart authority；裁决后新的 claim、package（含 exact replay）、targeted decline、二次裁决和跨 cycle 决定性问题全部 fail closed，不能只改 mutable cycle ID 伪造重启。未来 successor workflow 必须 append-only 绑定 predecessor 裁决、命中的 restart trigger 和新预算 authority 后才可开放。approval/decline 直接扫描并重验 canonical 裁决，删除 queue/screening binding 不能绕过；同 cycle 任何 targeted approval/decline payload 或 seal，包括崩溃半写，也会反向阻断裁决。
+
 研究员建议 `targeted_followup` 后，原 manager 只有两种正式动作：用 `profile-followup-approve` 封存购买决定，或用 `profile-followup-decline` 封存不购买决定。decline 必须绑定原 manager-screen result、已封存的画像/evaluation、研究员身份和至少一个结构化重启 trigger；manager 必须与研究员独立。其终态只允许 `price_watch`、`watch_only`、`conditional_stop`，追加预算固定为 0，不进入 targeted approval ledger。
 
 修复前由 evaluator 自动生成、但没有 approval 的 `targeted_followup,status=pending`，只能在从未 claim、没有失败尝试且没有完成记录时由同一 decline 命令一次性收口为 `skipped`。原画像、evaluation 和 queue 历史全部保留；已 running、已 completed 或已经出现 sealed approval 的任务不得用 decline 回退。
@@ -160,6 +164,11 @@ workflow 重验 scoped-research selection 的 `selected=true`、canonical path/S
 除硬排除外，停止必须有可执行重启条件。亏损、负 PE、小市值、低流动性或行业冷门不能单独构成停止理由。
 
 `profile-followup-decline --triggers` 接受 JSON 数组，每项字段固定为 `type/condition/reason`；type 仅允许 `filing/price/date/ttl/event/thesis`。`price_watch` 至少包含一个 `price` trigger。命令先封存 decline，再物化 queue/screening；中途失败时用完全相同的 manager、outcome、reason 和 triggers 重放，禁止手改 JSONL。
+
+```bash
+python -m trading_os coverage profile-adjudicate --symbol CN:000000 \
+  --input profile-adjudication.json --at <timestamp>
+```
 
 ## 承保预算
 

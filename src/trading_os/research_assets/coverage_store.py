@@ -436,6 +436,21 @@ def validate_coverage_root(root: str | Path) -> dict[str, Any]:
                     f"manager-screen validation failed for {run_dir.name}: {exc}"
                 ) from exc
     status["manager_screen_runs"] = manager_screen_runs
+    from .profile_workflow import profile_adjudication_ledger_status
+
+    try:
+        profile_adjudications = profile_adjudication_ledger_status(root=base)
+    except (OSError, ValueError) as exc:
+        raise CoverageValidationError(
+            f"profile adjudication ledger validation failed: {exc}"
+        ) from exc
+    if profile_adjudications["invalid_artifact_count"]:
+        first = profile_adjudications["invalid_artifacts"][0]
+        raise CoverageValidationError(
+            "profile adjudication ledger validation failed: "
+            f"{first['symbol']}: {first['error']}"
+        )
+    status["profile_adjudications"] = profile_adjudications
     return status
 
 

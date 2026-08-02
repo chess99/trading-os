@@ -48,6 +48,9 @@ MANAGER_BOUND_PACKAGE_KEYS = PACKAGE_KEYS | {
     "manager_screen_binding",
     "decisive_answer",
 }
+ADJUDICATED_MANAGER_BOUND_PACKAGE_KEYS = MANAGER_BOUND_PACKAGE_KEYS | {
+    "profile_adjudication_binding",
+}
 PROFILE_CLAIM_ATTEMPT_KEYS = {
     "path",
     "sha256",
@@ -66,6 +69,12 @@ MANAGER_SCREEN_BINDING_KEYS = {
     "result_path",
     "result_sha256",
     "decisive_question",
+    "evidence_ids",
+}
+PROFILE_ADJUDICATION_RESEARCH_BINDING_KEYS = {
+    "path",
+    "sha256",
+    "corrected_decisive_question",
     "evidence_ids",
 }
 FULL_MARKET_ALLOCATION_BINDING_FIELDS = (
@@ -164,6 +173,7 @@ TERMINAL_STAGES = {
     "reassign_or_stop",
     "watch_only",
     "conditional_stop",
+    "needs_manual_review",
 }
 TARGETED_FOLLOWUP_DECLINE_OUTCOMES = {
     "price_watch",
@@ -179,6 +189,73 @@ REACTIVATION_TRIGGER_TYPES = {
     "thesis",
 }
 REACTIVATION_TRIGGER_KEYS = {"type", "condition", "reason"}
+PROFILE_ADJUDICATION_SUBMISSION_KEYS = {
+    "schema_version",
+    "profile_cycle_id",
+    "stage",
+    "profile_path",
+    "profile_sha256",
+    "evaluation_path",
+    "evaluation_sha256",
+    "claim_path",
+    "claim_sha256",
+    "success_path",
+    "success_sha256",
+    "full_market_result_path",
+    "full_market_result_sha256",
+    "full_market_candidate_sha256",
+    "reviewer",
+    "manager",
+    "outcome",
+    "reason",
+    "material_errors",
+    "evidence",
+    "qa_sources",
+    "corrected_decisive_question",
+    "corrected_decisive_answer",
+    "restart_triggers",
+    "additional_budget_hours",
+    "portfolio_action",
+}
+PROFILE_ADJUDICATION_PAYLOAD_KEYS = PROFILE_ADJUDICATION_SUBMISSION_KEYS | {
+    "workflow",
+    "adjudicated_at",
+    "research_agent",
+    "original_effective_outcome",
+    "prior_queue_row",
+    "prior_screening_row",
+}
+PROFILE_ADJUDICATION_ERROR_KEYS = {
+    "error_id",
+    "error_type",
+    "finding",
+    "evidence_ids",
+}
+PROFILE_ADJUDICATION_EVIDENCE_KEYS = {
+    "evidence_id",
+    "description",
+    "source_ids",
+}
+PROFILE_ADJUDICATION_SOURCE_KEYS = {"source_id", "path", "sha256"}
+PROFILE_ADJUDICATION_OUTCOMES = {"manager_upheld", "material_error_confirmed"}
+PROFILE_ADJUDICATION_ERROR_TYPES = {
+    "verifiable_factual_error",
+    "cash_bridge_error",
+    "valuation_bridge_error",
+    "source_mismatch",
+    "material_risk_omission",
+    "contract_violation",
+}
+PROFILE_ADJUDICATION_BINDING_FIELDS = (
+    "profile_adjudication_path",
+    "profile_adjudication_sha256",
+    "profile_adjudication_outcome",
+)
+PROFILE_ADJUDICATION_BRIEF_FIELDS = (
+    "profile_adjudication_cycle_id",
+    "profile_adjudication_decisive_question",
+    "profile_adjudication_evidence_ids",
+)
 CYCLE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 SOURCE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
 
@@ -211,6 +288,14 @@ def claim_profile_task(
     queue = read_jsonl(queue_path)
     if symbol is not None and not re.fullmatch(r"CN:[0-9]{6}", symbol):
         raise ResearchAllocationError("claim symbol is invalid")
+    if symbol is not None and _canonical_profile_adjudication_paths(
+        base=base,
+        symbol=symbol,
+    ):
+        raise ResearchAllocationError(
+            "a sealed profile adjudication forbids new profile claims until "
+            f"a sealed successor workflow exists: {symbol}"
+        )
     try:
         sealed_active_symbol = assert_agent_profile_stage_claim_capacity(
             root=base,
@@ -1468,6 +1553,11 @@ def approve_targeted_followup(
     queued = _one_record(queue, symbol, "research queue")
     screen = _one_record(screening, symbol, "screening")
     repository_root = base.parent.parent
+    if _canonical_profile_adjudication_paths(base=base, symbol=symbol):
+        raise ResearchAllocationError(
+            "a sealed profile adjudication forbids targeted-followup budget "
+            f"until a sealed successor workflow exists: {symbol}"
+        )
     cycle = _text(queued.get("profile_cycle_id"), "profile_cycle_id")
     locked_remediation = _targeted_locked_calibration_remediation(
         queued,
@@ -1866,6 +1956,18 @@ def _validate_profile_claim_stage_authorization(
     """Require the immutable authorization that purchased the queued stage."""
 
     stage = queue_record.get("task_type")
+    symbol = _text(queue_record.get("symbol"), "research_queue.symbol")
+    if _canonical_profile_adjudication_paths(base=base, symbol=symbol):
+        raise ResearchAllocationError(
+            "a sealed profile adjudication forbids new profile claims until "
+            f"a sealed successor workflow exists: {symbol}"
+        )
+    _profile_adjudication_for_profile_row(
+        queue_record,
+        symbol=symbol,
+        repository_root=repository_root,
+        base=base,
+    )
     if stage == "targeted_followup":
         _validate_targeted_followup_task_approval(
             queue_record,
@@ -1892,7 +1994,6 @@ def _validate_profile_claim_stage_authorization(
     if config is None:
         return
 
-    symbol = _text(queue_record.get("symbol"), "research_queue.symbol")
     cycle = _text(queue_record.get("profile_cycle_id"), "profile_cycle_id")
     if not CYCLE_RE.fullmatch(cycle):
         raise ResearchAllocationError(f"profile stage claim has an invalid cycle: {symbol}")
@@ -2464,6 +2565,11 @@ def decline_targeted_followup(
     screening = read_jsonl(base / SCREENING_FILE)
     queued = _one_record(queue, symbol, "research queue")
     screen = _one_record(screening, symbol, "screening")
+    if _canonical_profile_adjudication_paths(base=base, symbol=symbol):
+        raise ResearchAllocationError(
+            "a sealed profile adjudication forbids a targeted-followup decline "
+            f"until a sealed successor workflow exists: {symbol}"
+        )
     cycle = _text(queued.get("profile_cycle_id"), "profile_cycle_id")
     ticker = symbol.split(":", 1)[1]
     decline_path = base / "profiles" / cycle / "targeted-followup-declines" / f"{ticker}.json"
@@ -2906,7 +3012,8 @@ def _validate_targeted_followup_decline_payload(value: Any) -> dict[str, Any]:
         or set(value) != expected_keys
         or value.get("schema_version") != 1
         or value.get("budget_decision") != "declined"
-        or not isinstance(value.get("additional_budget_hours"), float)
+        or isinstance(value.get("additional_budget_hours"), bool)
+        or not isinstance(value.get("additional_budget_hours"), (int, float))
         or value.get("additional_budget_hours") != 0.0
         or not isinstance(value.get("legacy_auto_materialized"), bool)
         or value.get("portfolio_action") is not None
@@ -3263,6 +3370,11 @@ def record_profile_package(
     symbol = profile["symbol"]
     ticker = symbol.split(":", 1)[1]
     base = Path(root)
+    if _canonical_profile_adjudication_paths(base=base, symbol=symbol):
+        raise ResearchAllocationError(
+            "a sealed profile adjudication forbids profile package replay or "
+            f"recording until a sealed successor workflow exists: {symbol}"
+        )
     queue_path = base / RESEARCH_QUEUE_FILE
     screening_path = base / SCREENING_FILE
     queue_records = read_jsonl(queue_path)
@@ -4049,6 +4161,51 @@ def _profile_record_result(
     }
 
 
+def _validate_profile_adjudication_ledger_for_comparison(
+    *, base: Path, cycle: str
+) -> dict[str, Any]:
+    adjudications = profile_adjudication_ledger_status(root=base, cycle_id=cycle)
+    if adjudications["invalid_artifact_count"]:
+        first = adjudications["invalid_artifacts"][0]
+        raise ResearchAllocationError(
+            "profile comparison is blocked by an invalid adjudication ledger: "
+            f"{first['symbol']}: {first['error']}"
+        )
+    return adjudications
+
+
+def _validate_comparison_profile_adjudications(
+    rows: list[Mapping[str, Any]],
+    *,
+    adjudications: Mapping[str, Any],
+    compared_at: dt.datetime,
+) -> None:
+    symbols = {str(row.get("symbol")) for row in rows}
+    expected = {
+        str(item["symbol"]): item
+        for item in adjudications["profile_adjudications"]
+        if str(item["symbol"]) in symbols
+    }
+    actual = {
+        str(row["symbol"]): row["profile_adjudication"]
+        for row in rows
+        if isinstance(row.get("profile_adjudication"), Mapping)
+    }
+    if actual != expected:
+        raise ResearchAllocationError(
+            "profile comparison is stale relative to the adjudication ledger"
+        )
+    for row in rows:
+        adjudication = row.get("profile_adjudication")
+        if isinstance(adjudication, Mapping) and compared_at <= _datetime(
+            adjudication.get("adjudicated_at"),
+            "profile_adjudication.adjudicated_at",
+        ):
+            raise ResearchAllocationError(
+                "profile comparison must be later than every sealed adjudication"
+            )
+
+
 def build_profile_comparison_packet(
     *,
     root: str | Path,
@@ -4077,6 +4234,10 @@ def build_profile_comparison_packet(
         cohort,
         repository_root=repository_root,
     )
+    adjudications = _validate_profile_adjudication_ledger_for_comparison(
+        base=base,
+        cycle=cycle,
+    )
     full_market_authority = _full_market_v3_cycle_authority(
         base=base,
         repository_root=repository_root,
@@ -4094,6 +4255,16 @@ def build_profile_comparison_packet(
         if sealed.artifact_type != f"{stage}_comparison_packet":
             raise ResearchAllocationError(f"sealed {stage} comparison has the wrong artifact type")
         payload = json.loads(comparison_path.read_text(encoding="utf-8"))
+        comparison_rows = payload.get("rows")
+        if not isinstance(comparison_rows, list) or not all(
+            isinstance(row, Mapping) for row in comparison_rows
+        ):
+            raise ResearchAllocationError(f"sealed {stage} comparison rows are invalid")
+        _validate_comparison_profile_adjudications(
+            comparison_rows,
+            adjudications=adjudications,
+            compared_at=_datetime(payload.get("created_at"), "comparison.created_at"),
+        )
         expected = {
             "cycle_id": cycle,
             "evaluated_stage": stage,
@@ -4122,6 +4293,11 @@ def build_profile_comparison_packet(
         )
         for ordinal, item in enumerate(cohort, 1)
     ]
+    _validate_comparison_profile_adjudications(
+        rows,
+        adjudications=adjudications,
+        compared_at=created_at,
+    )
     payload = {
         "schema_version": 1,
         "cycle_id": cycle,
@@ -4213,6 +4389,15 @@ def finalize_profile_stage_with_agent_decisions(
         raise ResearchAllocationError(f"{stage} comparison rows are invalid")
     if len(comparison_rows) != len(cohort):
         raise ResearchAllocationError(f"{stage} comparison cohort count is invalid")
+    adjudications = _validate_profile_adjudication_ledger_for_comparison(
+        base=base,
+        cycle=cycle,
+    )
+    _validate_comparison_profile_adjudications(
+        comparison_rows,
+        adjudications=adjudications,
+        compared_at=_datetime(comparison.get("created_at"), "comparison.created_at"),
+    )
     normalized = _normalize_profile_decision_package(
         decisions,
         cycle=cycle,
@@ -4316,6 +4501,11 @@ def finalize_profile_stage_with_agent_decisions(
             "counterevidence_considered": decisions_by_symbol[row["symbol"]][
                 "counterevidence_considered"
             ],
+            **(
+                {"profile_adjudication": dict(row["profile_adjudication"])}
+                if isinstance(row.get("profile_adjudication"), Mapping)
+                else {}
+            ),
         }
         for row in comparison_rows
     ]
@@ -4781,6 +4971,29 @@ def _validate_profile_selection_payload(
             raise ResearchAllocationError(
                 f"sealed {stage} selection selected flag is invalid: {symbol}"
             )
+        adjudication = row.get("profile_adjudication")
+        if adjudication is not None:
+            if (
+                not isinstance(adjudication, Mapping)
+                or adjudication.get("symbol") != symbol
+                or adjudication.get("profile_cycle_id") != cycle
+                or adjudication.get("outcome") not in PROFILE_ADJUDICATION_OUTCOMES
+                or not isinstance(adjudication.get("adjudication_path"), str)
+                or not re.fullmatch(
+                    r"[0-9a-f]{64}",
+                    str(adjudication.get("adjudication_sha256")),
+                )
+                or adjudication.get("additional_budget_hours") != 0.0
+                or adjudication.get("portfolio_action") is not None
+            ):
+                raise ResearchAllocationError(
+                    f"sealed {stage} selection profile adjudication is invalid: {symbol}"
+                )
+            if row["selected"] is True:
+                raise ResearchAllocationError(
+                    "sealed selection cannot fund a terminal profile adjudication: "
+                    f"{symbol}"
+                )
         selected_count += int(row["selected"])
     if len(ranking) != payload["eligible_count"]:
         raise ResearchAllocationError(
@@ -4856,6 +5069,26 @@ def _materialize_profile_selection(
                 f"sealed {stage} selection lacks authenticated current-cycle completion: "
                 f"{symbol}"
             )
+        current_adjudication = _profile_adjudication_for_profile_row(
+            queued,
+            symbol=symbol,
+            repository_root=base.parent.parent,
+            base=base,
+        )
+        sealed_adjudication = row.get("profile_adjudication")
+        if (
+            (current_adjudication is None) != (sealed_adjudication is None)
+            or (
+                current_adjudication is not None
+                and (
+                    not isinstance(sealed_adjudication, Mapping)
+                    or current_adjudication != dict(sealed_adjudication)
+                )
+            )
+        ):
+            raise ResearchAllocationError(
+                f"sealed {stage} selection does not match the profile adjudication: {symbol}"
+            )
 
         existing_binding = queued.get(next_binding_field)
         if existing_binding is not None and existing_binding != selection_path:
@@ -4920,6 +5153,35 @@ def _materialize_profile_selection(
             )
         )
         selected = row["selected"] is True
+
+        if current_adjudication is not None:
+            if selected:
+                raise ResearchAllocationError(
+                    f"terminal profile adjudication cannot receive {next_stage} budget: "
+                    f"{symbol}"
+                )
+            if not base_state and existing_binding != selection_path:
+                raise ResearchAllocationError(
+                    f"quarantined profile selection cannot safely repair queue state: {symbol}"
+                )
+            queued[next_binding_field] = selection_path
+            queued[selection_sha_field] = selection_sha256
+            screen["evidence"] = list(dict.fromkeys(evidence + expected_evidence))
+            if (
+                screen.get("decision") != current_adjudication["effective_outcome"]
+                or queued.get("profile_adjudication_outcome")
+                != current_adjudication["outcome"]
+            ):
+                raise ResearchAllocationError(
+                    f"quarantined profile adjudication projection drift: {symbol}"
+                )
+            if queued != original_queue:
+                queue_by_symbol[symbol] = queued
+                queue_changed = True
+            if screen != original_screen:
+                screen_by_symbol[symbol] = screen
+                screening_changed = True
+            continue
 
         if selected:
             if declined_followup:
@@ -5417,12 +5679,25 @@ def _profile_comparison_row(
         raise ResearchAllocationError(f"profile comparison artifact identity is invalid: {symbol}")
     provenance = package.get("provenance")
     sources = package.get("sources")
-    return {
+    adjudication = _profile_adjudication_for_profile_row(
+        item,
+        symbol=symbol,
+        repository_root=repository_root,
+        base=base,
+    )
+    current_next_stage = evaluated.get("next_stage")
+    if (
+        adjudication is not None
+        and adjudication.get("profile_cycle_id") == cycle
+        and adjudication.get("stage") == stage
+    ):
+        current_next_stage = adjudication["effective_outcome"]
+    row = {
         "ordinal": ordinal,
         "symbol": symbol,
         "name": item.get("name"),
         "evaluated_stage": stage,
-        "current_next_stage": evaluated.get("next_stage"),
+        "current_next_stage": current_next_stage,
         "evaluation_reason_codes": evaluated.get("reason_codes") or [],
         "profile": dict(profile),
         "analysis": dict(analysis),
@@ -5433,6 +5708,9 @@ def _profile_comparison_row(
         "evaluation_sha256": sealed_evaluation.sha256,
         "research_agent": (provenance.get("agent") if isinstance(provenance, Mapping) else None),
     }
+    if adjudication is not None:
+        row["profile_adjudication"] = adjudication
+    return row
 
 
 def _normalize_profile_decision_package(
@@ -5504,6 +5782,18 @@ def _normalize_profile_decision_package(
             "profile allocation Agent decisions must cover every comparison row "
             f"exactly once; missing={missing}, extra={extra}"
         )
+    for row in comparison_rows:
+        symbol = str(row["symbol"])
+        adjudication = row.get("profile_adjudication")
+        adjudicated_terminal = bool(
+            isinstance(adjudication, Mapping)
+            or row.get("current_next_stage") == "needs_manual_review"
+        )
+        if adjudicated_terminal and by_symbol[symbol]["decision"] != "defer":
+            raise ResearchAllocationError(
+                "terminal profile adjudications must be deferred "
+                f"without additional budget: {symbol}"
+            )
     return {
         "schema_version": 1,
         "cycle_id": cycle,
@@ -5578,6 +5868,10 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
     screening = read_jsonl(base / SCREENING_FILE)
     screening_by_symbol = {item.get("symbol"): item for item in screening}
+    adjudication_status = profile_adjudication_ledger_status(
+        root=base,
+        cycle_id=cycle,
+    )
     full_market_authority = _full_market_v3_cycle_authority(
         base=base,
         repository_root=repository_root,
@@ -5728,13 +6022,17 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     recorded_symbols = {item["symbol"] for item in recorded}
     stage_counts: dict[str, int] = {}
     status_counts: dict[str, int] = {}
-    invalid: list[dict[str, str]] = authority_errors + [
+    invalid: list[dict[str, str]] = (
+        authority_errors
+        + list(adjudication_status["invalid_artifacts"])
+        + [
         {
             "symbol": symbol,
             "error": "quick_profile_completion_authentication_failed",
         }
         for symbol in sorted(set(invalid_completion_symbols))
-    ]
+        ]
+    )
     for item in recorded:
         completion = completion_by_symbol[str(item["symbol"])]
         status = str(item.get("status"))
@@ -5807,6 +6105,13 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
         "by_next_stage": dict(sorted(stage_counts.items())),
         "by_queue_status": dict(sorted(status_counts.items())),
         "comparison_ready": remaining_count == 0 and not invalid,
+        "profile_adjudications": list(adjudication_status["profile_adjudications"]),
+        "material_error_confirmed_count": adjudication_status[
+            "material_error_confirmed_count"
+        ],
+        "manager_upheld_count": adjudication_status["manager_upheld_count"],
+        "quarantined_count": adjudication_status["quarantined_count"],
+        "quarantined_symbols": list(adjudication_status["quarantined_symbols"]),
         "stage_gates": stage_gates,
         "invalid_artifact_count": len(invalid),
         "invalid_artifacts": invalid,
@@ -5976,6 +6281,7 @@ def _validate_package(package: Mapping[str, Any], *, recorded_at: dt.datetime) -
     if not isinstance(package, Mapping) or set(package) not in {
         frozenset(PACKAGE_KEYS),
         frozenset(MANAGER_BOUND_PACKAGE_KEYS),
+        frozenset(ADJUDICATED_MANAGER_BOUND_PACKAGE_KEYS),
     }:
         raise ResearchAllocationError("profile package fields do not match contract")
     if package.get("schema_version") != 2:
@@ -6015,6 +6321,7 @@ def _validate_package(package: Mapping[str, Any], *, recorded_at: dt.datetime) -
         source_ids.add(source_id)
         normalized_sources.append(source)
     manager_binding = None
+    adjudication_binding = None
     decisive_answer = None
     if "manager_screen_binding" in package:
         manager_binding = _normalize_manager_screen_binding(package.get("manager_screen_binding"))
@@ -6022,6 +6329,10 @@ def _validate_package(package: Mapping[str, Any], *, recorded_at: dt.datetime) -
             package.get("decisive_answer"),
             source_ids=source_ids,
         )
+        if "profile_adjudication_binding" in package:
+            adjudication_binding = _normalize_profile_adjudication_research_binding(
+                package.get("profile_adjudication_binding")
+            )
     s1_count = sum(1 for source in normalized_sources if source["tier"] == "S1")
     if profile.get("s1_source_count") != s1_count:
         raise ResearchAllocationError("profile s1_source_count does not match sources")
@@ -6084,6 +6395,8 @@ def _validate_package(package: Mapping[str, Any], *, recorded_at: dt.datetime) -
     if manager_binding is not None:
         normalized["manager_screen_binding"] = manager_binding
         normalized["decisive_answer"] = decisive_answer
+    if adjudication_binding is not None:
+        normalized["profile_adjudication_binding"] = adjudication_binding
     return normalized
 
 
@@ -6105,6 +6418,33 @@ def _normalize_manager_screen_binding(value: Any) -> dict[str, Any]:
         "evidence_ids": _text_array(
             value.get("evidence_ids"),
             "manager_screen_binding.evidence_ids",
+            allow_empty=False,
+        ),
+    }
+
+
+def _normalize_profile_adjudication_research_binding(value: Any) -> dict[str, Any]:
+    if (
+        not isinstance(value, Mapping)
+        or set(value) != PROFILE_ADJUDICATION_RESEARCH_BINDING_KEYS
+    ):
+        raise ResearchAllocationError(
+            "profile_adjudication_binding fields do not match contract"
+        )
+    sha256 = _profile_adjudication_sha256(
+        value.get("sha256"),
+        "profile_adjudication_binding.sha256",
+    )
+    return {
+        "path": _text(value.get("path"), "profile_adjudication_binding.path"),
+        "sha256": sha256,
+        "corrected_decisive_question": _text(
+            value.get("corrected_decisive_question"),
+            "profile_adjudication_binding.corrected_decisive_question",
+        ),
+        "evidence_ids": _text_array(
+            value.get("evidence_ids"),
+            "profile_adjudication_binding.evidence_ids",
             allow_empty=False,
         ),
     }
@@ -6217,6 +6557,13 @@ def _validate_manager_bound_submission(
             raise ResearchAllocationError(
                 "profile provenance agent does not match the sealed active claim"
             )
+    _require_profile_adjudication_package_binding(
+        package,
+        queue_record=queue_record,
+        symbol=symbol,
+        base=base,
+        repository_root=repository_root,
+    )
     result_path = queue_record.get("manager_screen_result_path")
     if (not isinstance(result_path, str) or not result_path) and full_market_grant is None:
         return claim_attempt
@@ -6822,7 +7169,7 @@ def _reject_probable_gbk_mojibake(value: Any, *, path: str = "package") -> None:
 
 
 def _claimed_task_payload(record: Mapping[str, Any], *, idempotent: bool) -> dict[str, Any]:
-    return {
+    payload = {
         "schema_version": 1,
         "symbol": record.get("symbol"),
         "name": record.get("name"),
@@ -6866,6 +7213,20 @@ def _claimed_task_payload(record: Mapping[str, Any], *, idempotent: bool) -> dic
         "idempotent": idempotent,
         "portfolio_action": None,
     }
+    if isinstance(record.get("profile_adjudication_path"), str):
+        evidence_ids = record.get("profile_adjudication_evidence_ids")
+        payload["profile_adjudication_binding"] = {
+            "path": record.get("profile_adjudication_path"),
+            "sha256": record.get("profile_adjudication_sha256"),
+            "corrected_decisive_question": record.get(
+                "profile_adjudication_decisive_question"
+            ),
+            "evidence_ids": list(evidence_ids) if isinstance(evidence_ids, list) else [],
+        }
+        payload["profile_adjudication_outcome"] = record.get(
+            "profile_adjudication_outcome"
+        )
+    return payload
 
 
 def _claim_stage(value: str | None, *, default_for_symbol_less: bool) -> str | None:
@@ -8390,3 +8751,1327 @@ def _date(value: Any, label: str) -> dt.date:
 def _require_aware_datetime(value: dt.datetime, label: str) -> None:
     if not isinstance(value, dt.datetime) or value.tzinfo is None or value.utcoffset() is None:
         raise ResearchAllocationError(f"{label} must include timezone information")
+
+def _normalize_profile_adjudication_submission(value: Any) -> dict[str, Any]:
+    if (
+        not isinstance(value, Mapping)
+        or set(value) != PROFILE_ADJUDICATION_SUBMISSION_KEYS
+        or value.get("schema_version") != 1
+        or value.get("stage") != "quick_profile"
+        or value.get("portfolio_action") is not None
+        or not isinstance(value.get("additional_budget_hours"), float)
+        or value.get("additional_budget_hours") != 0.0
+    ):
+        raise ResearchAllocationError(
+            "profile adjudication submission fields do not match the v1 contract"
+        )
+    cycle = _text(value.get("profile_cycle_id"), "profile_cycle_id")
+    if not CYCLE_RE.fullmatch(cycle):
+        raise ResearchAllocationError("profile adjudication cycle_id is invalid")
+    path_fields = (
+        "profile_path",
+        "evaluation_path",
+        "claim_path",
+        "success_path",
+        "full_market_result_path",
+    )
+    sha_fields = (
+        "profile_sha256",
+        "evaluation_sha256",
+        "claim_sha256",
+        "success_sha256",
+        "full_market_result_sha256",
+        "full_market_candidate_sha256",
+    )
+    paths = {field: _text(value.get(field), field) for field in path_fields}
+    hashes = {
+        field: _profile_adjudication_sha256(value.get(field), field)
+        for field in sha_fields
+    }
+    reviewer = _text(value.get("reviewer"), "reviewer")
+    manager = _text(value.get("manager"), "manager")
+    outcome = _text(value.get("outcome"), "outcome")
+    if outcome not in PROFILE_ADJUDICATION_OUTCOMES:
+        raise ResearchAllocationError(f"unsupported profile adjudication outcome: {outcome}")
+    evidence = _normalize_profile_adjudication_evidence(value.get("evidence"))
+    qa_sources = _normalize_profile_adjudication_sources(value.get("qa_sources"))
+    evidence_ids = {item["evidence_id"] for item in evidence}
+    material_errors = _normalize_profile_adjudication_errors(
+        value.get("material_errors"),
+        evidence_ids=evidence_ids,
+    )
+    source_ids = {
+        source_id
+        for item in evidence
+        for source_id in item["source_ids"]
+    }
+    corrected = value.get("corrected_decisive_answer")
+    if not isinstance(corrected, Mapping) or set(corrected) != DECISIVE_ANSWER_KEYS:
+        raise ResearchAllocationError(
+            "corrected_decisive_answer fields do not match contract"
+        )
+    corrected_source_ids = _text_array(
+        corrected.get("source_ids"),
+        "corrected_decisive_answer.source_ids",
+        allow_empty=False,
+    )
+    unknown_corrected_sources = sorted(set(corrected_source_ids) - source_ids)
+    if unknown_corrected_sources:
+        raise ResearchAllocationError(
+            "corrected_decisive_answer references evidence sources absent from the QA ledger: "
+            f"{unknown_corrected_sources}"
+        )
+    normalized_corrected = {
+        "conclusion": _text(
+            corrected.get("conclusion"),
+            "corrected_decisive_answer.conclusion",
+        ),
+        "source_ids": corrected_source_ids,
+        "unresolved_reason": _text(
+            corrected.get("unresolved_reason"),
+            "corrected_decisive_answer.unresolved_reason",
+        ),
+    }
+    return {
+        "schema_version": 1,
+        "profile_cycle_id": cycle,
+        "stage": "quick_profile",
+        **paths,
+        **hashes,
+        "reviewer": reviewer,
+        "manager": manager,
+        "outcome": outcome,
+        "reason": _text(value.get("reason"), "reason"),
+        "material_errors": material_errors,
+        "evidence": evidence,
+        "qa_sources": qa_sources,
+        "corrected_decisive_question": _text(
+            value.get("corrected_decisive_question"),
+            "corrected_decisive_question",
+        ),
+        "corrected_decisive_answer": normalized_corrected,
+        "restart_triggers": _normalize_reactivation_triggers(
+            value.get("restart_triggers"),
+            outcome="watch_only",
+        ),
+        "additional_budget_hours": 0.0,
+        "portfolio_action": None,
+    }
+
+
+def _normalize_profile_adjudication_errors(
+    value: Any,
+    *,
+    evidence_ids: set[str],
+) -> list[dict[str, Any]]:
+    if not isinstance(value, list) or not value:
+        raise ResearchAllocationError("profile adjudication requires material error findings")
+    normalized: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for raw in value:
+        if not isinstance(raw, Mapping) or set(raw) != PROFILE_ADJUDICATION_ERROR_KEYS:
+            raise ResearchAllocationError(
+                "profile adjudication material error fields do not match contract"
+            )
+        error_id = _text(raw.get("error_id"), "material_error.error_id")
+        if not SOURCE_ID_RE.fullmatch(error_id) or error_id in seen:
+            raise ResearchAllocationError(
+                "profile adjudication material error IDs must be valid and unique"
+            )
+        error_type = _text(raw.get("error_type"), "material_error.error_type")
+        if error_type not in PROFILE_ADJUDICATION_ERROR_TYPES:
+            raise ResearchAllocationError(
+                f"unsupported profile adjudication material error type: {error_type}"
+            )
+        refs = _text_array(
+            raw.get("evidence_ids"),
+            f"material_error.{error_id}.evidence_ids",
+            allow_empty=False,
+        )
+        unknown = sorted(set(refs) - evidence_ids)
+        if unknown:
+            raise ResearchAllocationError(
+                f"profile adjudication material error references unknown evidence: {unknown}"
+            )
+        seen.add(error_id)
+        normalized.append(
+            {
+                "error_id": error_id,
+                "error_type": error_type,
+                "finding": _text(raw.get("finding"), f"material_error.{error_id}.finding"),
+                "evidence_ids": refs,
+            }
+        )
+    return normalized
+
+
+def _normalize_profile_adjudication_evidence(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, list) or not value:
+        raise ResearchAllocationError("profile adjudication requires QA evidence")
+    normalized: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for raw in value:
+        if not isinstance(raw, Mapping) or set(raw) != PROFILE_ADJUDICATION_EVIDENCE_KEYS:
+            raise ResearchAllocationError(
+                "profile adjudication evidence fields do not match contract"
+            )
+        evidence_id = _text(raw.get("evidence_id"), "evidence.evidence_id")
+        if not SOURCE_ID_RE.fullmatch(evidence_id) or evidence_id in seen:
+            raise ResearchAllocationError(
+                "profile adjudication evidence IDs must be valid and unique"
+            )
+        seen.add(evidence_id)
+        normalized.append(
+            {
+                "evidence_id": evidence_id,
+                "description": _text(
+                    raw.get("description"),
+                    f"evidence.{evidence_id}.description",
+                ),
+                "source_ids": _text_array(
+                    raw.get("source_ids"),
+                    f"evidence.{evidence_id}.source_ids",
+                    allow_empty=False,
+                ),
+            }
+        )
+    return normalized
+
+
+def _normalize_profile_adjudication_sources(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, list):
+        raise ResearchAllocationError("profile adjudication qa_sources must be an array")
+    normalized: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for raw in value:
+        if not isinstance(raw, Mapping) or set(raw) != PROFILE_ADJUDICATION_SOURCE_KEYS:
+            raise ResearchAllocationError(
+                "profile adjudication QA source fields do not match contract"
+            )
+        source_id = _text(raw.get("source_id"), "qa_source.source_id")
+        if not SOURCE_ID_RE.fullmatch(source_id) or source_id in seen:
+            raise ResearchAllocationError(
+                "profile adjudication QA source IDs must be valid and unique"
+            )
+        seen.add(source_id)
+        normalized.append(
+            {
+                "source_id": source_id,
+                "path": _text(raw.get("path"), f"qa_source.{source_id}.path"),
+                "sha256": _profile_adjudication_sha256(
+                    raw.get("sha256"),
+                    f"qa_source.{source_id}.sha256",
+                ),
+            }
+        )
+    return normalized
+
+
+def _profile_adjudication_sha256(value: Any, field: str) -> str:
+    if not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value):
+        raise ResearchAllocationError(f"{field} must be lowercase SHA-256")
+    return value
+
+
+def _profile_adjudication_submission_from_payload(
+    payload: Mapping[str, Any],
+) -> dict[str, Any]:
+    return {field: payload.get(field) for field in PROFILE_ADJUDICATION_SUBMISSION_KEYS}
+
+
+def _profile_adjudication_path(
+    *,
+    base: Path,
+    cycle: str,
+    stage: str,
+    symbol: str,
+) -> Path:
+    # The full profile SHA remains sealed in the payload.  A fixed filename
+    # keeps atomic temp-file paths below the Windows MAX_PATH boundary while
+    # the ticker directory still enforces one decision per cycle/stage/symbol.
+    ticker = symbol.split(":", 1)[1]
+    return (
+        base
+        / "profiles"
+        / cycle
+        / "profile-adjudications"
+        / stage
+        / ticker
+        / "adjudication.json"
+    )
+
+
+def _canonical_profile_adjudication_paths(
+    *,
+    base: Path,
+    symbol: str,
+    allow_unsealed_path: Path | None = None,
+) -> list[Path]:
+    """Find and authenticate canonical adjudications without trusting live rows."""
+
+    ticker = symbol.split(":", 1)[1]
+    profiles_root = base / "profiles"
+    if not profiles_root.exists():
+        return []
+    payload_paths = {
+        path.resolve()
+        for path in profiles_root.glob(
+            f"*/profile-adjudications/*/{ticker}/adjudication.json"
+        )
+        if path.is_file()
+    }
+    seal_payload_paths = {
+        path.with_name("adjudication.json").resolve()
+        for path in profiles_root.glob(
+            f"*/profile-adjudications/*/{ticker}/adjudication.json.seal.json"
+        )
+        if path.is_file()
+    }
+    paths = sorted(payload_paths | seal_payload_paths, key=lambda path: path.as_posix())
+    allowed_unsealed = (
+        allow_unsealed_path.resolve() if allow_unsealed_path is not None else None
+    )
+    for path in paths:
+        seal_path = path.with_name(f"{path.name}.seal.json")
+        if not path.exists():
+            raise ResearchAllocationError(
+                f"profile adjudication seal exists without its payload: {symbol}"
+            )
+        if not seal_path.exists():
+            if allowed_unsealed == path:
+                continue
+            raise ResearchAllocationError(
+                f"profile adjudication payload exists without its seal: {symbol}"
+            )
+        payload, _sealed = _verify_profile_adjudication_artifact(path, base=base)
+        if payload["prior_queue_row"].get("symbol") != symbol:
+            raise ResearchAllocationError(
+                f"canonical profile adjudication targets another symbol: {symbol}"
+            )
+    return paths
+
+
+def _targeted_followup_decision_artifact_paths(
+    *,
+    base: Path,
+    cycle: str,
+    symbol: str,
+) -> list[Path]:
+    """Return any canonical targeted decision payload or seal, including half writes."""
+
+    ticker = symbol.split(":", 1)[1]
+    cycle_root = base / "profiles" / cycle
+    paths: set[Path] = set()
+    for directory in ("targeted-followup-approvals", "targeted-followup-declines"):
+        payload_path = cycle_root / directory / f"{ticker}.json"
+        seal_path = payload_path.with_name(f"{payload_path.name}.seal.json")
+        if payload_path.exists():
+            paths.add(payload_path.resolve())
+        if seal_path.exists():
+            paths.add(seal_path.resolve())
+    return sorted(paths, key=lambda path: path.as_posix())
+
+
+def _profile_adjudication_next_action(
+    *,
+    outcome: str,
+    triggers: list[Mapping[str, Any]],
+) -> str:
+    conditions = "；".join(f"{item['type']}：{item['condition']}" for item in triggers)
+    if outcome == "material_error_confirmed":
+        return f"画像因重大事实或桥接错误被隔离；仅在以下条件命中后重新评估：{conditions}"
+    return f"采用裁决后的限定结论，不使用被降格的旧定量值；按以下条件更新：{conditions}"
+
+
+@serialized_coverage_write
+def record_profile_adjudication(
+    *,
+    root: str | Path,
+    symbol: str,
+    submission: Mapping[str, Any],
+    adjudicated_at: dt.datetime,
+) -> dict[str, Any]:
+    """Seal one terminal quick-profile QA adjudication and project it safely."""
+
+    _require_aware_datetime(adjudicated_at, "adjudicated_at")
+    if not re.fullmatch(r"CN:[0-9]{6}", symbol):
+        raise ResearchAllocationError("profile adjudication symbol is invalid")
+    normalized = _normalize_profile_adjudication_submission(submission)
+    base = Path(root)
+    repository_root = base.parent.parent.resolve()
+    queue_path = base / RESEARCH_QUEUE_FILE
+    screening_path = base / SCREENING_FILE
+    queue = read_jsonl(queue_path)
+    screening = read_jsonl(screening_path)
+    queued = _one_record(queue, symbol, "research queue")
+    screen = _one_record(screening, symbol, "screening")
+    if normalized["profile_cycle_id"] != queued.get("profile_cycle_id"):
+        raise ResearchAllocationError("profile adjudication targets the wrong current cycle")
+    target = _profile_adjudication_path(
+        base=base,
+        cycle=normalized["profile_cycle_id"],
+        stage=normalized["stage"],
+        symbol=symbol,
+    )
+    if _targeted_followup_decision_artifact_paths(
+        base=base,
+        cycle=normalized["profile_cycle_id"],
+        symbol=symbol,
+    ):
+        raise ResearchAllocationError(
+            "profile adjudication conflicts with an existing targeted-followup "
+            f"decision artifact: {symbol}"
+        )
+    canonical_paths = _canonical_profile_adjudication_paths(
+        base=base,
+        symbol=symbol,
+        allow_unsealed_path=target,
+    )
+    if any(path != target.resolve() for path in canonical_paths):
+        raise ResearchAllocationError(
+            "a second profile adjudication requires a sealed successor workflow"
+        )
+    _reject_second_profile_adjudication(target)
+    payload_exists = target.exists()
+    seal_path = target.with_name(f"{target.name}.seal.json")
+    seal_exists = seal_path.exists()
+    if seal_exists and not payload_exists:
+        raise ResearchAllocationError("profile adjudication seal exists without its payload")
+    if payload_exists:
+        payload = _read_profile_adjudication_payload(target)
+        validated = _validate_profile_adjudication_payload(
+            payload,
+            base=base,
+            expected_path=target,
+        )
+        if _profile_adjudication_submission_from_payload(validated) != normalized:
+            raise ResearchAllocationError(
+                f"sealed profile adjudication conflicts with request: {symbol}"
+            )
+        if not seal_exists:
+            if queued != validated["prior_queue_row"] or screen != validated[
+                "prior_screening_row"
+            ]:
+                raise ResearchAllocationError(
+                    "unsealed profile adjudication cannot be recovered after projection drift"
+                )
+            sealed = seal_json(
+                target,
+                validated,
+                artifact_type="profile_adjudication",
+                sealed_at=_datetime(validated["adjudicated_at"], "adjudicated_at"),
+            )
+        else:
+            sealed = verify_sealed(target)
+            if (
+                sealed.artifact_type != "profile_adjudication"
+                or sealed.sealed_at
+                != _datetime(validated["adjudicated_at"], "adjudicated_at")
+            ):
+                raise ResearchAllocationError("profile adjudication seal is invalid")
+        return _materialize_profile_adjudication(
+            base=base,
+            queue=queue,
+            screening=screening,
+            payload=validated,
+            path=target,
+            sha256=sealed.sha256,
+            repository_root=repository_root,
+            idempotent=True,
+        )
+
+    if any(queued.get(field) is not None for field in PROFILE_ADJUDICATION_BINDING_FIELDS) or any(
+        screen.get(field) is not None for field in PROFILE_ADJUDICATION_BINDING_FIELDS
+    ):
+        raise ResearchAllocationError(
+            "profile adjudication projection exists without its canonical sealed artifact"
+        )
+    comparison_path = (
+        base
+        / "profiles"
+        / normalized["profile_cycle_id"]
+        / _profile_stage_config(normalized["stage"])["comparison_name"]
+    )
+    selection_path = comparison_path.with_name(
+        _profile_stage_config(normalized["stage"])["selection_name"]
+    )
+    if comparison_path.exists() or selection_path.exists():
+        raise ResearchAllocationError(
+            "profile adjudication must be sealed before the stage comparison/selection"
+        )
+    context = _validate_profile_adjudication_authority(
+        normalized,
+        base=base,
+        queue_record=queued,
+        screen_record=screen,
+        symbol=symbol,
+        adjudicated_at=adjudicated_at,
+    )
+    payload = {
+        **normalized,
+        "workflow": "profile_adjudication",
+        "adjudicated_at": adjudicated_at.isoformat(),
+        "research_agent": context["research_agent"],
+        "original_effective_outcome": context["original_effective_outcome"],
+        "prior_queue_row": dict(queued),
+        "prior_screening_row": dict(screen),
+    }
+    # ``seal_json`` writes atomically inside the destination directory, so the
+    # canonical directory must exist before the first seal.  Do this only after
+    # every authority and input check above has passed; rejected submissions
+    # must not leave misleading empty adjudication directories behind.
+    target.parent.mkdir(parents=True, exist_ok=True)
+    sealed = seal_json(
+        target,
+        payload,
+        artifact_type="profile_adjudication",
+        sealed_at=adjudicated_at,
+    )
+    return _materialize_profile_adjudication(
+        base=base,
+        queue=queue,
+        screening=screening,
+        payload=payload,
+        path=target,
+        sha256=sealed.sha256,
+        repository_root=repository_root,
+        idempotent=False,
+    )
+
+
+def _reject_second_profile_adjudication(target: Path) -> None:
+    directory = target.parent
+    if not directory.exists():
+        return
+    payloads = {
+        path.resolve()
+        for path in directory.iterdir()
+        if path.is_file() and path.name.endswith(".json") and not path.name.endswith(".seal.json")
+    }
+    sealed_payloads = {
+        path.with_name(path.name[: -len(".seal.json")]).resolve()
+        for path in directory.iterdir()
+        if path.is_file() and path.name.endswith(".seal.json")
+    }
+    unexpected = (payloads | sealed_payloads) - {target.resolve()}
+    if unexpected:
+        raise ResearchAllocationError(
+            "a second profile adjudication is forbidden for the same cycle/stage/symbol"
+        )
+
+
+def _read_profile_adjudication_payload(path: Path) -> dict[str, Any]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ResearchAllocationError("profile adjudication payload is invalid") from exc
+    if not isinstance(value, dict):
+        raise ResearchAllocationError("profile adjudication payload must be an object")
+    return value
+
+
+def _validate_profile_adjudication_payload(
+    value: Any,
+    *,
+    base: Path,
+    expected_path: Path | None = None,
+) -> dict[str, Any]:
+    if (
+        not isinstance(value, Mapping)
+        or set(value) != PROFILE_ADJUDICATION_PAYLOAD_KEYS
+        or value.get("workflow") != "profile_adjudication"
+    ):
+        raise ResearchAllocationError("profile adjudication payload fields do not match contract")
+    normalized_submission = _normalize_profile_adjudication_submission(
+        _profile_adjudication_submission_from_payload(value)
+    )
+    adjudicated_at = _datetime(value.get("adjudicated_at"), "adjudicated_at")
+    prior_queue = value.get("prior_queue_row")
+    prior_screen = value.get("prior_screening_row")
+    if not isinstance(prior_queue, Mapping) or not isinstance(prior_screen, Mapping):
+        raise ResearchAllocationError("profile adjudication prior projections are invalid")
+    symbol = prior_queue.get("symbol")
+    if symbol != prior_screen.get("symbol") or not isinstance(symbol, str):
+        raise ResearchAllocationError("profile adjudication prior projection symbols differ")
+    context = _validate_profile_adjudication_authority(
+        normalized_submission,
+        base=base,
+        queue_record=prior_queue,
+        screen_record=prior_screen,
+        symbol=symbol,
+        adjudicated_at=adjudicated_at,
+    )
+    if (
+        value.get("research_agent") != context["research_agent"]
+        or value.get("original_effective_outcome")
+        != context["original_effective_outcome"]
+    ):
+        raise ResearchAllocationError("profile adjudication derived authority fields drifted")
+    canonical_path = _profile_adjudication_path(
+        base=base,
+        cycle=normalized_submission["profile_cycle_id"],
+        stage=normalized_submission["stage"],
+        symbol=symbol,
+    ).resolve()
+    if expected_path is not None and canonical_path != expected_path.resolve():
+        raise ResearchAllocationError("profile adjudication path is not canonical")
+    normalized = {
+        **normalized_submission,
+        "workflow": "profile_adjudication",
+        "adjudicated_at": adjudicated_at.isoformat(),
+        "research_agent": context["research_agent"],
+        "original_effective_outcome": context["original_effective_outcome"],
+        "prior_queue_row": dict(prior_queue),
+        "prior_screening_row": dict(prior_screen),
+    }
+    if dict(value) != normalized:
+        raise ResearchAllocationError("profile adjudication payload is not canonical")
+    return normalized
+
+
+def _validate_profile_adjudication_authority(
+    submission: Mapping[str, Any],
+    *,
+    base: Path,
+    queue_record: Mapping[str, Any],
+    screen_record: Mapping[str, Any],
+    symbol: str,
+    adjudicated_at: dt.datetime,
+) -> dict[str, Any]:
+    cycle = str(submission["profile_cycle_id"])
+    stage = str(submission["stage"])
+    repository_root = base.parent.parent.resolve()
+    if (
+        queue_record.get("symbol") != symbol
+        or screen_record.get("symbol") != symbol
+        or queue_record.get("profile_cycle_id") != cycle
+        or queue_record.get("task_type") != stage
+        or queue_record.get("status") != "completed"
+    ):
+        raise ResearchAllocationError(
+            "profile adjudication requires the completed current quick-profile projection"
+        )
+    completion = _latest_cycle_stage_completion(
+        queue_record,
+        base=base,
+        stage=stage,
+        cycle=cycle,
+        require_claim=True,
+    )
+    if completion is None:
+        raise ResearchAllocationError(
+            "profile adjudication lacks an authenticated claim/success completion"
+        )
+    profile_path = (repository_root / str(completion.get("result_path"))).resolve()
+    evaluation_path = (repository_root / str(completion.get("evaluation_path"))).resolve()
+    try:
+        profile_path.relative_to(repository_root)
+        evaluation_path.relative_to(repository_root)
+        profile_seal = verify_sealed(profile_path)
+        evaluation_seal = verify_sealed(evaluation_path)
+        profile_payload = json.loads(profile_path.read_text(encoding="utf-8"))
+        evaluation_payload = json.loads(evaluation_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, SealingError, ValueError) as exc:
+        raise ResearchAllocationError(
+            "profile adjudication source profile/evaluation is invalid"
+        ) from exc
+    evaluated = evaluation_payload.get("evaluation")
+    sources = profile_payload.get("sources")
+    if not isinstance(evaluated, Mapping) or not isinstance(sources, list):
+        raise ResearchAllocationError("profile adjudication source payload is invalid")
+    original_outcome = _text(evaluated.get("next_stage"), "evaluation.next_stage")
+    if original_outcome not in TERMINAL_STAGES - {"needs_manual_review"}:
+        raise ResearchAllocationError(
+            "profile adjudication requires a terminal sealed profile evaluation"
+        )
+    source_ids = {
+        item.get("source_id")
+        for item in sources
+        if isinstance(item, Mapping) and isinstance(item.get("source_id"), str)
+    }
+    qa_source_ids: set[str] = set()
+    for qa_source in submission["qa_sources"]:
+        source_id = str(qa_source["source_id"])
+        if source_id in source_ids or source_id in qa_source_ids:
+            raise ResearchAllocationError(
+                f"profile adjudication QA source ID is not unique: {source_id}"
+            )
+        source_path = (repository_root / str(qa_source["path"])).resolve()
+        try:
+            source_path.relative_to(repository_root)
+            actual_sha256 = hashlib.sha256(source_path.read_bytes()).hexdigest()
+        except (OSError, ValueError) as exc:
+            raise ResearchAllocationError(
+                f"profile adjudication QA source is unavailable: {source_id}"
+            ) from exc
+        if actual_sha256 != qa_source["sha256"]:
+            raise ResearchAllocationError(
+                f"profile adjudication QA source SHA mismatch: {source_id}"
+            )
+        qa_source_ids.add(source_id)
+    adjudication_source_ids = {
+        source_id
+        for item in submission["evidence"]
+        for source_id in item["source_ids"]
+    }
+    if not adjudication_source_ids <= source_ids | qa_source_ids:
+        raise ResearchAllocationError(
+            "profile adjudication QA evidence references unknown sealed sources"
+        )
+    expected_bindings = {
+        "profile_path": completion.get("result_path"),
+        "profile_sha256": profile_seal.sha256,
+        "evaluation_path": completion.get("evaluation_path"),
+        "evaluation_sha256": evaluation_seal.sha256,
+        "claim_path": completion.get("claim_path"),
+        "claim_sha256": completion.get("claim_sha256"),
+        "success_path": completion.get("success_path"),
+        "success_sha256": completion.get("success_sha256"),
+    }
+    if any(submission.get(field) != expected for field, expected in expected_bindings.items()):
+        raise ResearchAllocationError(
+            "profile adjudication does not bind the authenticated profile completion"
+        )
+    if (
+        queue_record.get("result_path") != completion.get("evaluation_path")
+        or screen_record.get("profile_evaluation_path") != completion.get("evaluation_path")
+        or screen_record.get("decision") != original_outcome
+    ):
+        raise ResearchAllocationError(
+            "profile adjudication prior projection is not the canonical profile terminal state"
+        )
+    grant = _verify_funded_full_market_profile_grant(
+        queue_record=queue_record,
+        screen_record=screen_record,
+        root=base,
+        repository_root=repository_root,
+        symbol=symbol,
+        expected_cycle_id=cycle,
+        required=True,
+        context="profile adjudication",
+        require_screen_research_brief=False,
+    )
+    assert grant is not None
+    full_market_bindings = {
+        "full_market_result_path": grant["result_path"],
+        "full_market_result_sha256": grant["result_sha256"],
+        "full_market_candidate_sha256": grant["decision"]["candidate_sha256"],
+    }
+    if any(
+        submission.get(field) != expected
+        for field, expected in full_market_bindings.items()
+    ):
+        raise ResearchAllocationError(
+            "profile adjudication does not bind its funded full-market authority"
+        )
+    manager = _investment_manager_for_cohort(
+        [queue_record],
+        repository_root=repository_root,
+    )
+    research_agent = _text(completion.get("agent"), "profile completion agent")
+    reviewer = str(submission["reviewer"])
+    submitted_manager = str(submission["manager"])
+    if len({submitted_manager, reviewer, research_agent}) != 3:
+        raise ResearchAllocationError(
+            "profile adjudication manager and QA reviewer must be independent of the researcher"
+        )
+    if manager is None or submitted_manager != manager:
+        raise ResearchAllocationError(
+            f"profile adjudication must be recorded by the original manager: expected {manager}"
+        )
+    completed_at = _datetime(completion.get("finished_at"), "profile completion finished_at")
+    if adjudicated_at <= completed_at:
+        raise ResearchAllocationError(
+            "profile adjudication must be later than the sealed profile completion"
+        )
+    return {
+        "research_agent": research_agent,
+        "original_effective_outcome": original_outcome,
+    }
+
+
+def _expected_profile_adjudication_projection(
+    *,
+    payload: Mapping[str, Any],
+    relative_path: str,
+    sha256: str,
+) -> tuple[dict[str, Any], dict[str, Any], str]:
+    queue = dict(payload["prior_queue_row"])
+    screen = dict(payload["prior_screening_row"])
+    original_outcome = str(payload["original_effective_outcome"])
+    outcome = str(payload["outcome"])
+    effective_outcome = (
+        "needs_manual_review"
+        if outcome == "material_error_confirmed"
+        else original_outcome
+    )
+    history = list(queue.get("stage_history") or [])
+    if any(
+        isinstance(item, Mapping) and item.get("stage") == "profile_adjudication"
+        for item in history
+    ):
+        raise ResearchAllocationError("a second profile adjudication history event is forbidden")
+    history.append(
+        {
+            "stage": "profile_adjudication",
+            "status": "completed",
+            "started_at": None,
+            "finished_at": payload["adjudicated_at"],
+            "agent": payload["manager"],
+            "reviewer": payload["reviewer"],
+            "research_agent": payload["research_agent"],
+            "evaluated_stage": payload["stage"],
+            "outcome": outcome,
+            "next_stage": effective_outcome,
+            "profile_path": payload["profile_path"],
+            "profile_sha256": payload["profile_sha256"],
+            "evaluation_path": payload["evaluation_path"],
+            "evaluation_sha256": payload["evaluation_sha256"],
+            "adjudication_path": relative_path,
+            "adjudication_sha256": sha256,
+            "additional_budget_hours": 0.0,
+        }
+    )
+    next_action = _profile_adjudication_next_action(
+        outcome=outcome,
+        triggers=list(payload["restart_triggers"]),
+    )
+    common = {
+        "reason": payload["reason"],
+        "next_action": next_action,
+        "revisit_triggers": list(payload["restart_triggers"]),
+        "profile_adjudication_path": relative_path,
+        "profile_adjudication_sha256": sha256,
+        "profile_adjudication_outcome": outcome,
+        "profile_adjudication_cycle_id": payload["profile_cycle_id"],
+        "profile_adjudication_decisive_question": payload["corrected_decisive_question"],
+        "profile_adjudication_evidence_ids": [
+            item["evidence_id"] for item in payload["evidence"]
+        ],
+    }
+    queue.update(common)
+    queue["stage_history"] = history
+    evidence = list(screen.get("evidence") or [])
+    screen.update(common)
+    screen["decision"] = effective_outcome
+    screen["evidence"] = list(
+        dict.fromkeys(
+            evidence
+            + [
+                f"profile_adjudication:{relative_path}",
+                f"profile_adjudication_sha256:{sha256}",
+            ]
+        )
+    )
+    return queue, screen, effective_outcome
+
+
+def _verified_profile_adjudication_defer_selection(
+    *,
+    base: Path,
+    repository_root: Path,
+    payload: Mapping[str, Any],
+    relative_path: str,
+    sha256: str,
+    effective_outcome: str,
+) -> tuple[str, str]:
+    cycle = str(payload["profile_cycle_id"])
+    selection_path = (base / "profiles" / cycle / "quick-profile-selection.json").resolve()
+    try:
+        selection_path.relative_to(repository_root.resolve())
+        sealed = verify_sealed(selection_path)
+        selection = json.loads(selection_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, SealingError, ValueError) as exc:
+        raise ResearchAllocationError(
+            "profile adjudication projection drift: terminal defer selection is invalid"
+        ) from exc
+    _validate_profile_selection_payload(
+        selection,
+        artifact_type=sealed.artifact_type,
+        cycle=cycle,
+        stage="quick_profile",
+        next_stage="scoped_research",
+    )
+    _validate_profile_stage_selection_semantics(
+        selection,
+        base=base,
+        repository_root=repository_root,
+        cycle=cycle,
+        stage="quick_profile",
+        next_stage="scoped_research",
+        comparison_name="quick-profile-comparison.json",
+    )
+    symbol = str(payload["prior_queue_row"]["symbol"])
+    rows = [row for row in selection["ranking"] if row.get("symbol") == symbol]
+    expected_summary = _profile_adjudication_summary(
+        payload,
+        path=relative_path,
+        sha256=sha256,
+        effective_outcome=effective_outcome,
+    )
+    if (
+        len(rows) != 1
+        or rows[0].get("selected") is not False
+        or rows[0].get("profile_adjudication") != expected_summary
+        or _datetime(selection.get("finalized_at"), "selection.finalized_at")
+        <= _datetime(payload.get("adjudicated_at"), "adjudicated_at")
+    ):
+        raise ResearchAllocationError(
+            "profile adjudication is not terminally deferred by its sealed selection"
+        )
+    return selection_path.relative_to(repository_root).as_posix(), sealed.sha256
+
+
+def _validate_profile_adjudication_live_projection(
+    *,
+    base: Path,
+    repository_root: Path,
+    payload: Mapping[str, Any],
+    relative_path: str,
+    sha256: str,
+    current_queue: Mapping[str, Any] | None,
+    current_screen: Mapping[str, Any] | None,
+) -> str:
+    """Accept only the immediate overlay or its sealed defer; later cycles fail closed."""
+
+    expected_queue, expected_screen, effective_outcome = (
+        _expected_profile_adjudication_projection(
+            payload=payload,
+            relative_path=relative_path,
+            sha256=sha256,
+        )
+    )
+    if current_queue == expected_queue and current_screen == expected_screen:
+        return effective_outcome
+    if not isinstance(current_queue, Mapping) or not isinstance(current_screen, Mapping):
+        raise ResearchAllocationError("profile adjudication projection drift")
+    selection_relative, selection_sha256 = _verified_profile_adjudication_defer_selection(
+        base=base,
+        repository_root=repository_root,
+        payload=payload,
+        relative_path=relative_path,
+        sha256=sha256,
+        effective_outcome=effective_outcome,
+    )
+    expected_binding = (relative_path, sha256, payload["outcome"])
+    if current_queue.get("profile_cycle_id") != payload.get("profile_cycle_id"):
+        raise ResearchAllocationError(
+            "a later profile cycle requires a sealed adjudication successor workflow"
+        )
+    live_evidence = current_screen.get("evidence")
+    selection_evidence = {
+        f"stage_selection:{selection_relative}",
+        f"stage_selection_sha256:{selection_sha256}",
+    }
+    if (
+        tuple(current_queue.get(field) for field in PROFILE_ADJUDICATION_BINDING_FIELDS)
+        != expected_binding
+        or tuple(current_screen.get(field) for field in PROFILE_ADJUDICATION_BINDING_FIELDS)
+        != expected_binding
+        or current_queue.get("profile_quick_selection_path") != selection_relative
+        or current_queue.get("profile_quick_selection_sha256") != selection_sha256
+        or not isinstance(live_evidence, list)
+        or not selection_evidence.issubset(set(live_evidence))
+    ):
+        raise ResearchAllocationError("profile adjudication projection drift")
+    normalized_queue = dict(current_queue)
+    normalized_queue.pop("profile_quick_selection_path", None)
+    normalized_queue.pop("profile_quick_selection_sha256", None)
+    normalized_screen = dict(current_screen)
+    normalized_screen["evidence"] = [
+        item for item in live_evidence if item not in selection_evidence
+    ]
+    if normalized_queue != expected_queue or normalized_screen != expected_screen:
+        raise ResearchAllocationError("profile adjudication projection drift")
+    return effective_outcome
+
+
+def _materialize_profile_adjudication(
+    *,
+    base: Path,
+    queue: list[dict[str, Any]],
+    screening: list[dict[str, Any]],
+    payload: Mapping[str, Any],
+    path: Path,
+    sha256: str,
+    repository_root: Path,
+    idempotent: bool,
+) -> dict[str, Any]:
+    symbol = str(payload["prior_queue_row"]["symbol"])
+    relative = path.resolve().relative_to(repository_root).as_posix()
+    expected_queue, expected_screen, effective_outcome = (
+        _expected_profile_adjudication_projection(
+            payload=payload,
+            relative_path=relative,
+            sha256=sha256,
+        )
+    )
+    current_queue = _one_record(queue, symbol, "research queue")
+    current_screen = _one_record(screening, symbol, "screening")
+    prior_queue = dict(payload["prior_queue_row"])
+    prior_screen = dict(payload["prior_screening_row"])
+    queue_is_immediate = current_queue in (prior_queue, expected_queue)
+    screen_is_immediate = current_screen in (prior_screen, expected_screen)
+    if not queue_is_immediate or not screen_is_immediate:
+        effective_outcome = _validate_profile_adjudication_live_projection(
+            base=base,
+            repository_root=repository_root,
+            payload=payload,
+            relative_path=relative,
+            sha256=sha256,
+            current_queue=current_queue,
+            current_screen=current_screen,
+        )
+        return {
+            "schema_version": 1,
+            "symbol": symbol,
+            "profile_cycle_id": payload["profile_cycle_id"],
+            "stage": payload["stage"],
+            "outcome": payload["outcome"],
+            "effective_outcome": effective_outcome,
+            "additional_budget_hours": 0.0,
+            "adjudication_path": relative,
+            "adjudication_sha256": sha256,
+            "adjudicated_at": payload["adjudicated_at"],
+            "idempotent": True,
+            "portfolio_action": None,
+        }
+    if current_screen != expected_screen:
+        write_jsonl(
+            base / SCREENING_FILE,
+            [expected_screen if item.get("symbol") == symbol else item for item in screening],
+        )
+    if current_queue != expected_queue:
+        write_jsonl(
+            base / RESEARCH_QUEUE_FILE,
+            [expected_queue if item.get("symbol") == symbol else item for item in queue],
+        )
+    return {
+        "schema_version": 1,
+        "symbol": symbol,
+        "profile_cycle_id": payload["profile_cycle_id"],
+        "stage": payload["stage"],
+        "outcome": payload["outcome"],
+        "effective_outcome": effective_outcome,
+        "additional_budget_hours": 0.0,
+        "adjudication_path": relative,
+        "adjudication_sha256": sha256,
+        "adjudicated_at": payload["adjudicated_at"],
+        "idempotent": idempotent,
+        "portfolio_action": None,
+    }
+
+
+def profile_adjudication_ledger_status(
+    *,
+    root: str | Path,
+    cycle_id: str | None = None,
+) -> dict[str, Any]:
+    """Verify every sealed profile adjudication and its live projection."""
+
+    base = Path(root)
+    repository_root = base.parent.parent.resolve()
+    cycle_filter = None
+    if cycle_id is not None:
+        cycle_filter = _text(cycle_id, "cycle_id")
+        if not CYCLE_RE.fullmatch(cycle_filter):
+            raise ResearchAllocationError("profile adjudication status cycle_id is invalid")
+    queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
+    screening = read_jsonl(base / SCREENING_FILE)
+    queue_by_symbol = {str(item.get("symbol")): item for item in queue}
+    screen_by_symbol = {str(item.get("symbol")): item for item in screening}
+    errors: dict[str, set[str]] = {}
+    verified: list[dict[str, Any]] = []
+    verified_paths: set[str] = set()
+    identities: set[tuple[str, str, str, str]] = set()
+    adjudication_root = base / "profiles"
+    payload_paths: set[Path] = set()
+    seal_payload_paths: set[Path] = set()
+    if adjudication_root.is_dir():
+        cycle_dirs = [
+            path
+            for path in adjudication_root.iterdir()
+            if path.is_dir() and (cycle_filter is None or path.name == cycle_filter)
+        ]
+        for cycle_dir in cycle_dirs:
+            root_dir = cycle_dir / "profile-adjudications"
+            if not root_dir.exists():
+                continue
+            for path in root_dir.rglob("*.json"):
+                if path.name.endswith(".seal.json"):
+                    seal_payload_paths.add(
+                        path.with_name(path.name[: -len(".seal.json")]).resolve()
+                    )
+                else:
+                    payload_paths.add(path.resolve())
+    for path in sorted(payload_paths | seal_payload_paths):
+        symbol_hint = _profile_adjudication_symbol_hint(path)
+        if path not in payload_paths:
+            errors.setdefault(symbol_hint, set()).add("seal exists without payload")
+            continue
+        if path not in seal_payload_paths:
+            errors.setdefault(symbol_hint, set()).add("payload exists without seal")
+            continue
+        try:
+            payload, sealed = _verify_profile_adjudication_artifact(
+                path,
+                base=base,
+            )
+            symbol = str(payload["prior_queue_row"]["symbol"])
+            identity = (
+                str(payload["profile_cycle_id"]),
+                str(payload["stage"]),
+                symbol,
+                str(payload["profile_sha256"]),
+            )
+            if identity in identities:
+                raise ResearchAllocationError("duplicate profile adjudication identity")
+            identities.add(identity)
+            relative = path.relative_to(repository_root).as_posix()
+            current_queue = queue_by_symbol.get(symbol)
+            current_screen = screen_by_symbol.get(symbol)
+            effective = _validate_profile_adjudication_live_projection(
+                base=base,
+                repository_root=repository_root,
+                payload=payload,
+                relative_path=relative,
+                sha256=sealed.sha256,
+                current_queue=current_queue,
+                current_screen=current_screen,
+            )
+            verified_paths.add(relative)
+            verified.append(
+                _profile_adjudication_summary(
+                    payload,
+                    path=relative,
+                    sha256=sealed.sha256,
+                    effective_outcome=effective,
+                )
+            )
+        except (OSError, SealingError, ValueError, ResearchAllocationError) as exc:
+            errors.setdefault(symbol_hint, set()).add(str(exc))
+
+    relevant_symbols = {
+        str(item.get("symbol"))
+        for item in queue
+        if cycle_filter is None or item.get("profile_cycle_id") == cycle_filter
+    } | {
+        str(item.get("symbol"))
+        for item in screening
+        if cycle_filter is None or item.get("profile_cycle_id") == cycle_filter
+    }
+    for symbol in sorted(relevant_symbols):
+        queued = queue_by_symbol.get(symbol, {})
+        screen = screen_by_symbol.get(symbol, {})
+        queue_values = tuple(queued.get(field) for field in PROFILE_ADJUDICATION_BINDING_FIELDS)
+        screen_values = tuple(screen.get(field) for field in PROFILE_ADJUDICATION_BINDING_FIELDS)
+        queue_present = any(value is not None for value in queue_values)
+        screen_present = any(value is not None for value in screen_values)
+        if not queue_present and not screen_present:
+            continue
+        if (
+            not all(isinstance(value, str) and value for value in queue_values)
+            or queue_values != screen_values
+        ):
+            errors.setdefault(symbol, set()).add(
+                "profile adjudication queue/screen binding is incomplete or inconsistent"
+            )
+            continue
+        if str(queue_values[0]) not in verified_paths:
+            errors.setdefault(symbol, set()).add(
+                "profile adjudication projection does not bind a verified artifact"
+            )
+
+    invalid = [
+        {"symbol": symbol, "error": "; ".join(sorted(messages))}
+        for symbol, messages in sorted(errors.items())
+    ]
+    verified.sort(
+        key=lambda item: (
+            str(item["profile_cycle_id"]),
+            str(item["stage"]),
+            str(item["symbol"]),
+        )
+    )
+    quarantined = [
+        item["symbol"]
+        for item in verified
+        if item["outcome"] == "material_error_confirmed"
+    ]
+    return {
+        "schema_version": 1,
+        "cycle_id": cycle_filter,
+        "adjudication_count": len(verified),
+        "material_error_confirmed_count": sum(
+            item["outcome"] == "material_error_confirmed" for item in verified
+        ),
+        "manager_upheld_count": sum(
+            item["outcome"] == "manager_upheld" for item in verified
+        ),
+        "quarantined_count": len(quarantined),
+        "quarantined_symbols": sorted(quarantined),
+        "profile_adjudications": verified,
+        "invalid_artifact_count": len(invalid),
+        "invalid_artifacts": invalid,
+    }
+
+
+def _profile_adjudication_symbol_hint(path: Path) -> str:
+    try:
+        ticker = path.parent.name
+        if re.fullmatch(r"[0-9]{6}", ticker):
+            return f"CN:{ticker}"
+    except (AttributeError, ValueError):
+        pass
+    return "__profile_adjudication__"
+
+
+def _verify_profile_adjudication_artifact(
+    path: Path,
+    *,
+    base: Path,
+) -> tuple[dict[str, Any], Any]:
+    try:
+        sealed = verify_sealed(path)
+    except (OSError, SealingError, ValueError) as exc:
+        raise ResearchAllocationError("profile adjudication seal is invalid") from exc
+    if sealed.artifact_type != "profile_adjudication":
+        raise ResearchAllocationError("profile adjudication artifact type is invalid")
+    payload = _validate_profile_adjudication_payload(
+        _read_profile_adjudication_payload(path),
+        base=base,
+        expected_path=path,
+    )
+    if sealed.sealed_at != _datetime(payload["adjudicated_at"], "adjudicated_at"):
+        raise ResearchAllocationError("profile adjudication seal time does not match payload")
+    return payload, sealed
+
+
+def _profile_adjudication_summary(
+    payload: Mapping[str, Any],
+    *,
+    path: str,
+    sha256: str,
+    effective_outcome: str,
+) -> dict[str, Any]:
+    return {
+        "symbol": payload["prior_queue_row"]["symbol"],
+        "profile_cycle_id": payload["profile_cycle_id"],
+        "stage": payload["stage"],
+        "profile_path": payload["profile_path"],
+        "profile_sha256": payload["profile_sha256"],
+        "outcome": payload["outcome"],
+        "effective_outcome": effective_outcome,
+        "reason": payload["reason"],
+        "material_errors": list(payload["material_errors"]),
+        "evidence": list(payload["evidence"]),
+        "qa_sources": list(payload["qa_sources"]),
+        "corrected_decisive_question": payload["corrected_decisive_question"],
+        "corrected_decisive_answer": dict(payload["corrected_decisive_answer"]),
+        "restart_triggers": list(payload["restart_triggers"]),
+        "research_agent": payload["research_agent"],
+        "reviewer": payload["reviewer"],
+        "manager": payload["manager"],
+        "additional_budget_hours": 0.0,
+        "adjudicated_at": payload["adjudicated_at"],
+        "adjudication_path": path,
+        "adjudication_sha256": sha256,
+        "portfolio_action": None,
+    }
+
+
+def _profile_adjudication_for_profile_row(
+    item: Mapping[str, Any],
+    *,
+    symbol: str,
+    repository_root: Path,
+    base: Path,
+) -> dict[str, Any] | None:
+    """Return the authenticated latest QA view carried by a mutable row.
+
+    The profile/evaluation package remains immutable, so every downstream
+    consumer must explicitly prefer this append-only adjudication when the
+    binding is present.  A partial or forged binding fails closed.
+    """
+
+    values = tuple(item.get(field) for field in PROFILE_ADJUDICATION_BINDING_FIELDS)
+    if not any(value is not None for value in values):
+        return None
+    if not all(isinstance(value, str) and value for value in values):
+        raise ResearchAllocationError(
+            f"profile adjudication binding is incomplete: {symbol}"
+        )
+    relative_path, expected_sha256, expected_outcome = values
+    path = (repository_root / str(relative_path)).resolve()
+    try:
+        path.relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            f"profile adjudication binding escapes repository root: {symbol}"
+        ) from exc
+    payload, sealed = _verify_profile_adjudication_artifact(path, base=base)
+    bound_symbol = payload["prior_queue_row"].get("symbol")
+    expected_brief = (
+        payload["profile_cycle_id"],
+        payload["corrected_decisive_question"],
+        [entry["evidence_id"] for entry in payload["evidence"]],
+    )
+    if item.get("profile_cycle_id") != payload.get("profile_cycle_id"):
+        raise ResearchAllocationError(
+            "a later profile cycle requires a sealed adjudication successor workflow"
+        )
+    if (
+        sealed.sha256 != expected_sha256
+        or bound_symbol != symbol
+        or payload.get("outcome") != expected_outcome
+        or tuple(item.get(field) for field in PROFILE_ADJUDICATION_BRIEF_FIELDS)
+        != expected_brief
+    ):
+        raise ResearchAllocationError(
+            f"profile adjudication binding does not match its sealed artifact: {symbol}"
+        )
+    effective_outcome = (
+        "needs_manual_review"
+        if payload["outcome"] == "material_error_confirmed"
+        else str(payload["original_effective_outcome"])
+    )
+    return _profile_adjudication_summary(
+        payload,
+        path=str(relative_path),
+        sha256=sealed.sha256,
+        effective_outcome=effective_outcome,
+    )
+
+
+def _require_profile_adjudication_package_binding(
+    package: Mapping[str, Any],
+    *,
+    queue_record: Mapping[str, Any],
+    symbol: str,
+    base: Path,
+    repository_root: Path,
+) -> dict[str, Any] | None:
+    adjudication = _profile_adjudication_for_profile_row(
+        queue_record,
+        symbol=symbol,
+        repository_root=repository_root,
+        base=base,
+    )
+    submitted = package.get("profile_adjudication_binding")
+    if adjudication is None:
+        if submitted is not None:
+            raise ResearchAllocationError(
+                "profile package supplied an adjudication binding without sealed authority"
+            )
+        return None
+    expected = {
+        "path": adjudication["adjudication_path"],
+        "sha256": adjudication["adjudication_sha256"],
+        "corrected_decisive_question": adjudication["corrected_decisive_question"],
+        "evidence_ids": [item["evidence_id"] for item in adjudication["evidence"]],
+    }
+    if submitted != expected:
+        raise ResearchAllocationError(
+            "profile package must bind the sealed adjudication corrected research brief"
+        )
+    return adjudication
