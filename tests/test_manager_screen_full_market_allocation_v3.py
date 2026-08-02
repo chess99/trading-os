@@ -2849,6 +2849,50 @@ def test_claim_and_cohort_use_common_full_market_predecessor_across_batches(
         )
 
 
+def test_symbol_less_claim_skips_legacy_pending_without_profile_cycle(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from trading_os.research_assets import profile_workflow
+
+    root = _ready_full_market(tmp_path, monkeypatch)
+    _prepare(root)
+    _record(root, {V3_SYMBOL})
+    queue_path = root / "research_queue.jsonl"
+    queue = _by_symbol(queue_path)
+    queue["CN:000004"].update(
+        {
+            "task_type": "quick_profile",
+            "status": "pending",
+            "assigned_agent": None,
+            "started_at": None,
+            "finished_at": None,
+            "failure_reason": None,
+            "profile_cycle_id": None,
+        }
+    )
+    write_jsonl(queue_path, list(queue.values()))
+    monkeypatch.setattr(
+        profile_workflow,
+        "_require_full_market_profile_claim_activation",
+        lambda *args, **kwargs: None,
+    )
+
+    claimed = profile_workflow.claim_profile_task(
+        root=root,
+        agent="/root/symbol-less-current-cycle",
+        claimed_at=RECORDED_AT + dt.timedelta(minutes=1),
+        run_id=RUN_ID,
+        stage="quick_profile",
+    )
+
+    assert claimed["symbol"] == V3_SYMBOL
+    updated = _by_symbol(queue_path)
+    assert updated["CN:000004"]["status"] == "pending"
+    assert updated["CN:000004"]["profile_cycle_id"] is None
+    assert updated["CN:000004"]["assigned_agent"] is None
+
+
 def test_first_full_market_claim_requires_globally_finalized_projection(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,

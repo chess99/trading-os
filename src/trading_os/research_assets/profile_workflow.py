@@ -379,12 +379,17 @@ def claim_profile_task(
         candidates = [item for item in candidates if item.get("task_type") == requested_stage]
     requested_run = _optional_identifier(run_id, "run_id")
     if symbol is None:
+        # Production runners require a cycle-bound task.  Older irreversible
+        # commitments without one remain available for explicit migration,
+        # but cannot poison latest-run discovery or automatic ordering.
         candidates = [
             item
             for item in candidates
             if isinstance(item.get("manager_screen_run_id"), str)
             and isinstance(item.get("manager_screen_result_path"), str)
             and isinstance(item.get("manager_screen_result_sha256"), str)
+            and isinstance(item.get("profile_cycle_id"), str)
+            and CYCLE_RE.fullmatch(str(item["profile_cycle_id"]))
         ]
         eligible_runs = sorted({str(item["manager_screen_run_id"]) for item in candidates})
         if requested_run is None:

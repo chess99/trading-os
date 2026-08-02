@@ -1910,8 +1910,12 @@ def test_symbol_less_claim_isolated_to_latest_manager_run_and_stage(tmp_path: Pa
             run="2026-07-31-run",
             stage="targeted_followup",
         ),
+        {
+            **record("CN:000005", run="2026-08-01-run"),
+            "profile_cycle_id": None,
+        },
     ]
-    for run in ("2026-07-30-run", "2026-07-31-run"):
+    for run in ("2026-07-30-run", "2026-07-31-run", "2026-08-01-run"):
         run_records = [item for item in records if item.get("manager_screen_run_id") == run]
         result_path = root / "manager-screen" / run / "batch-001" / "result.json"
         result_seal = seal_json(
