@@ -149,3 +149,5 @@ superseded member 不重复计入等式；status 另列 superseded batch/company
 python -m trading_os coverage manager-screen-status <run-id>
 python -m trading_os coverage validate
 ```
+
+`manager-screen-status` 的 `analyst_budget` 同时保留兼容口径和最终资金口径：`purchased_*`、`historical_purchased_*` 与 `pre_full_market_purchased_*` 仅表示 singleton 全市场分配前的历史购买；`historical_total_purchased_*` 还包含 full-market v3 新购。`current_effective_send_*` 保持当前 sealed route 为 `send_to_analyst` 的旧语义，真正用于容量与执行监控的是 `current_effective_funded_*`；`current_backlog_*` 只统计其中处于 `pending` 或 `running` 的受保护研究任务，不把已完成、跳过或已 defer 的任务算作 backlog。

@@ -1652,7 +1652,7 @@ def manager_screen_status(
                         current_effective_send_budget[decision["symbol"]] = (
                             purchased_analyst_budget[decision["symbol"]]
                         )
-                for symbol in purchased_analyst_budget.keys() & effective_decisions.keys():
+                for symbol in effective_decisions:
                     predecessor_path, predecessor_sha256 = effective_predecessors[symbol]
                     effective_queue_bindings[symbol] = {
                         "run_id": run,
@@ -1672,11 +1672,21 @@ def manager_screen_status(
         base=base,
         run_id=run,
     )
+    (
+        current_effective_funded_budget,
+        historical_total_purchased_budget,
+        full_market_new_purchase_symbols,
+        full_market_replaced_purchase_symbols,
+    ) = _overlay_full_market_analyst_budget(
+        purchased_budget=purchased_analyst_budget,
+        current_effective_send_budget=current_effective_send_budget,
+        allocation_queue_bindings=allocation_queue_bindings,
+    )
     analyst_backlog_symbols = []
     analyst_state: Counter[str] = Counter()
     analyst_missing_queue_state = 0
     analyst_backlog_hours = 0.0
-    for symbol, purchased_hours in sorted(purchased_analyst_budget.items()):
+    for symbol, purchased_hours in sorted(historical_total_purchased_budget.items()):
         queued = queue.get(symbol)
         if queued is None:
             analyst_missing_queue_state += 1
@@ -1736,7 +1746,7 @@ def manager_screen_status(
         status = str(queued.get("status") or "unknown")
         analyst_state[f"{task_type}:{status}"] += 1
         if (
-            symbol in current_effective_send_budget
+            symbol in current_effective_funded_budget
             and task_type in PROTECTED_TASK_TYPES
             and status in {"pending", "running"}
         ):
@@ -1923,13 +1933,41 @@ def manager_screen_status(
         "screenable_conservation_satisfied": True,
         "by_route": dict(sorted(by_route.items())),
         "analyst_budget": {
+            # Backward-compatible fields for purchases made by manager-screen
+            # results/quote-impact before the singleton full-market allocation.
             "purchased_company_count": len(purchased_analyst_budget),
             "purchased_effort_budget_hours": sum(purchased_analyst_budget.values()),
             "historical_purchased_company_count": len(purchased_analyst_budget),
             "historical_purchased_effort_budget_hours": sum(purchased_analyst_budget.values()),
-            "current_effective_send_company_count": len(current_effective_send_budget),
+            "pre_full_market_purchased_company_count": len(
+                purchased_analyst_budget
+            ),
+            "pre_full_market_purchased_effort_budget_hours": sum(
+                purchased_analyst_budget.values()
+            ),
+            "historical_total_purchased_company_count": len(
+                historical_total_purchased_budget
+            ),
+            "historical_total_purchased_effort_budget_hours": sum(
+                historical_total_purchased_budget.values()
+            ),
+            "full_market_new_purchase_company_count": len(
+                full_market_new_purchase_symbols
+            ),
+            "full_market_replaced_purchase_company_count": len(
+                full_market_replaced_purchase_symbols
+            ),
+            "current_effective_send_company_count": len(
+                current_effective_send_budget
+            ),
             "current_effective_send_effort_budget_hours": sum(
                 current_effective_send_budget.values()
+            ),
+            "current_effective_funded_company_count": len(
+                current_effective_funded_budget
+            ),
+            "current_effective_funded_effort_budget_hours": sum(
+                current_effective_funded_budget.values()
             ),
             "current_backlog_company_count": len(analyst_backlog_symbols),
             "current_backlog_effort_budget_hours": analyst_backlog_hours,
@@ -1995,6 +2033,51 @@ def manager_screen_status(
         "ok": True,
         "portfolio_action": None,
     }
+
+
+def _overlay_full_market_analyst_budget(
+    *,
+    purchased_budget: Mapping[str, float],
+    current_effective_send_budget: Mapping[str, float],
+    allocation_queue_bindings: Mapping[str, Mapping[str, Any]],
+) -> tuple[dict[str, float], dict[str, float], set[str], set[str]]:
+    """Project sealed singleton selections onto historical manager-screen purchases."""
+
+    current_effective_funded_budget = dict(current_effective_send_budget)
+    historical_total_purchased_budget = dict(purchased_budget)
+    new_purchase_symbols: set[str] = set()
+    replaced_purchase_symbols: set[str] = set()
+    if not allocation_queue_bindings:
+        return (
+            current_effective_funded_budget,
+            historical_total_purchased_budget,
+            new_purchase_symbols,
+            replaced_purchase_symbols,
+        )
+
+    # The singleton allocation replaces the composition of the old direct-send
+    # ledger. Purchases omitted from its packet are locked irreversible work;
+    # packet candidates are effective only when explicitly selected.
+    current_effective_funded_budget = {
+        symbol: hours
+        for symbol, hours in current_effective_send_budget.items()
+        if symbol not in allocation_queue_bindings
+    }
+    for symbol, binding in allocation_queue_bindings.items():
+        if binding["decision"] == "fund_quick_profile":
+            hours = float(binding["effort_budget_hours"])
+            current_effective_funded_budget[symbol] = hours
+            if symbol not in purchased_budget:
+                new_purchase_symbols.add(symbol)
+                historical_total_purchased_budget[symbol] = hours
+        elif symbol in purchased_budget:
+            replaced_purchase_symbols.add(symbol)
+    return (
+        current_effective_funded_budget,
+        historical_total_purchased_budget,
+        new_purchase_symbols,
+        replaced_purchase_symbols,
+    )
 
 
 def _full_market_allocation_queue_bindings(

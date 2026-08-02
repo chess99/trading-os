@@ -2551,6 +2551,7 @@ def test_status_accepts_only_a_fully_bound_final_allocation_brief_override(
         "result_sha256": "a" * 64,
         "candidate_sha256": "b" * 64,
         "decision": "fund_quick_profile",
+        "effort_budget_hours": 1.5,
         "decisive_question": "以校准裁决后的正确报告期重建可持续所有者收益是多少？",
         "evidence_ids": ["snapshot:CN:000001", "calibration:CN:000001:primary"],
     }
@@ -2615,6 +2616,186 @@ def test_status_accepts_only_a_fully_bound_final_allocation_brief_override(
         queued.pop(field)
     queued.update(original_brief)
     write_jsonl(queue_path, queue)
+    with pytest.raises(
+        manager_screening.ManagerScreeningError,
+        match="sealed full-market allocation binding",
+    ):
+        manager_screening.manager_screen_status(root=root, run_id=RUN_ID)
+
+
+def test_status_overlays_full_market_budget_and_preserves_send_metric_semantics(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import trading_os.research_assets.manager_screening as manager_screening
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+
+    root, _ = _root(tmp_path)
+    v2_policy = _policy(
+        tmp_path / "policies" / "manager-screening-v2.json",
+        decision_contract_version=2,
+    )
+
+    manager_screening.freeze_manager_screen_batch(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-old-purchases",
+        batch_size=3,
+        frozen_at=CUTOFF + dt.timedelta(minutes=1),
+        policy_path=v2_policy,
+    )
+    old_batch_dir = root / "manager-screen" / RUN_ID / "batch-old-purchases"
+    old_packet = json.loads((old_batch_dir / "packet.json").read_text(encoding="utf-8"))
+    old_submission = _v2_submission(old_packet)
+    for index, decision in enumerate(old_submission["decisions"]):
+        if index < 2:
+            decision["route"] = "send_to_analyst"
+            decision["revisit_triggers"] = []
+        else:
+            decision["route"] = "watch"
+            decision["revisit_triggers"] = [
+                {
+                    "type": "filing",
+                    "condition": "A new audited filing becomes available.",
+                    "reason": "New primary evidence can change the research priority.",
+                }
+            ]
+    manager_screening.record_manager_screen_decisions(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-old-purchases",
+        submission=old_submission,
+        recorded_at=CUTOFF + dt.timedelta(minutes=2),
+    )
+
+    locked_symbol = "CN:000001"
+    deferred_old_purchase = "CN:000002"
+    funded_v3_candidate = "CN:000003"
+    allocation_path = (
+        f"coverage/cn-a/manager-screen/{RUN_ID}/governance/"
+        "allocation-v3/full-market/result.json"
+    )
+    bindings = {
+        deferred_old_purchase: {
+            "result_path": allocation_path,
+            "result_sha256": "a" * 64,
+            "candidate_sha256": "b" * 64,
+            "decision": "defer_full_market",
+            "effort_budget_hours": 1.5,
+            "decisive_question": "What would restart the deferred old purchase?",
+            "evidence_ids": [f"snapshot:{deferred_old_purchase}"],
+        },
+        funded_v3_candidate: {
+            "result_path": allocation_path,
+            "result_sha256": "a" * 64,
+            "candidate_sha256": "c" * 64,
+            "decision": "fund_quick_profile",
+            "effort_budget_hours": 1.5,
+            "decisive_question": "What evidence resolves the newly funded candidate?",
+            "evidence_ids": [f"snapshot:{funded_v3_candidate}"],
+        },
+    }
+    queue_path = root / "research_queue.jsonl"
+    queue = {row["symbol"]: row for row in read_jsonl(queue_path)}
+    deferred = queue[deferred_old_purchase]
+    deferred.update(
+        {
+            "task_type": "manager_screen",
+            "status": "completed",
+            "assigned_agent": None,
+            "started_at": None,
+            "finished_at": (CUTOFF + dt.timedelta(minutes=5)).isoformat(),
+            "failure_reason": None,
+            "manager_screen_allocation_result_path": allocation_path,
+            "manager_screen_allocation_result_sha256": "a" * 64,
+            "manager_screen_allocation_candidate_sha256": "b" * 64,
+            "manager_screen_allocation_decision": "defer_full_market",
+            "decisive_question": bindings[deferred_old_purchase]["decisive_question"],
+            "evidence_ids": bindings[deferred_old_purchase]["evidence_ids"],
+        }
+    )
+    funded = queue[funded_v3_candidate]
+    funded.update(
+        {
+            "task_type": "quick_profile",
+            "status": "running",
+            "assigned_agent": "/root/profile-new-funded",
+            "started_at": (CUTOFF + dt.timedelta(minutes=5)).isoformat(),
+            "finished_at": None,
+            "failure_reason": None,
+            "effort_budget_hours": 1.5,
+            "manager_screen_allocation_result_path": allocation_path,
+            "manager_screen_allocation_result_sha256": "a" * 64,
+            "manager_screen_allocation_candidate_sha256": "c" * 64,
+            "manager_screen_allocation_decision": "fund_quick_profile",
+            "decisive_question": bindings[funded_v3_candidate]["decisive_question"],
+            "evidence_ids": bindings[funded_v3_candidate]["evidence_ids"],
+        }
+    )
+    write_jsonl(queue_path, list(queue.values()))
+    monkeypatch.setattr(
+        manager_screening,
+        "_full_market_allocation_queue_bindings",
+        lambda **_: bindings,
+    )
+
+    status = manager_screening.manager_screen_status(root=root, run_id=RUN_ID)
+    budget = status["analyst_budget"]
+    assert queue[locked_symbol]["status"] == "pending"
+    assert budget["purchased_company_count"] == 2
+    assert budget["purchased_effort_budget_hours"] == 3.0
+    assert budget["historical_purchased_company_count"] == 2
+    assert budget["pre_full_market_purchased_company_count"] == 2
+    assert budget["pre_full_market_purchased_effort_budget_hours"] == 3.0
+    assert budget["historical_total_purchased_company_count"] == 3
+    assert budget["historical_total_purchased_effort_budget_hours"] == 4.5
+    assert budget["full_market_new_purchase_company_count"] == 1
+    assert budget["full_market_replaced_purchase_company_count"] == 1
+    assert budget["current_effective_send_company_count"] == 2
+    assert budget["current_effective_send_effort_budget_hours"] == 3.0
+    assert budget["current_effective_funded_company_count"] == 2
+    assert budget["current_effective_funded_effort_budget_hours"] == 3.0
+    assert budget["current_backlog_company_count"] == 2
+    assert budget["current_backlog_effort_budget_hours"] == 3.0
+    assert budget["current_state"] == {
+        "manager_screen:completed": 1,
+        "quick_profile:pending": 1,
+        "quick_profile:running": 1,
+    }
+
+    funded.update(
+        {
+            "status": "completed",
+            "finished_at": (CUTOFF + dt.timedelta(minutes=6)).isoformat(),
+        }
+    )
+    write_jsonl(queue_path, list(queue.values()))
+    completed_budget = manager_screening.manager_screen_status(
+        root=root,
+        run_id=RUN_ID,
+    )["analyst_budget"]
+    assert completed_budget["current_backlog_company_count"] == 1
+    assert completed_budget["current_state"] == {
+        "manager_screen:completed": 1,
+        "quick_profile:completed": 1,
+        "quick_profile:pending": 1,
+    }
+
+    funded["status"] = "skipped"
+    write_jsonl(queue_path, list(queue.values()))
+    skipped_budget = manager_screening.manager_screen_status(
+        root=root,
+        run_id=RUN_ID,
+    )["analyst_budget"]
+    assert skipped_budget["current_backlog_company_count"] == 1
+    assert skipped_budget["current_state"] == {
+        "manager_screen:completed": 1,
+        "quick_profile:pending": 1,
+        "quick_profile:skipped": 1,
+    }
+
+    funded["manager_screen_allocation_result_sha256"] = "d" * 64
+    write_jsonl(queue_path, list(queue.values()))
     with pytest.raises(
         manager_screening.ManagerScreeningError,
         match="sealed full-market allocation binding",

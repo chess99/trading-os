@@ -635,6 +635,7 @@ def load_manager_screen_full_market_allocation_v3_queue_bindings(
             "result_sha256": sealed.sha256,
             "candidate_sha256": decision["candidate_sha256"],
             "decision": decision["decision"],
+            "effort_budget_hours": float(result["purchase_effort_budget_hours"]),
             "decisive_question": decision["decisive_question"],
             "evidence_ids": list(decision["evidence_ids"]),
         }

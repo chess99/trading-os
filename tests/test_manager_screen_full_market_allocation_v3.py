@@ -1598,6 +1598,7 @@ def test_queue_binding_loader_verifies_final_briefs_without_recursive_status(
         "result_sha256": recorded["result_sha256"],
         "candidate_sha256": decision["candidate_sha256"],
         "decision": decision["decision"],
+        "effort_budget_hours": 1.5,
         "decisive_question": decision["decisive_question"],
         "evidence_ids": decision["evidence_ids"],
     }
@@ -1638,6 +1639,34 @@ def test_final_status_restores_the_sealed_full_scope_postcondition(
             root=root,
             run_id=RUN_ID,
         )
+
+
+def test_full_market_budget_overlay_replaces_old_purchase_with_v3_funding() -> None:
+    from trading_os.research_assets.manager_screening import (
+        _overlay_full_market_analyst_budget,
+    )
+
+    current, historical, new_symbols, replaced_symbols = (
+        _overlay_full_market_analyst_budget(
+            purchased_budget={"CN:000001": 1.5},
+            current_effective_send_budget={"CN:000001": 1.5},
+            allocation_queue_bindings={
+                "CN:000001": {
+                    "decision": "defer_full_market",
+                    "effort_budget_hours": 1.5,
+                },
+                V3_SYMBOL: {
+                    "decision": "fund_quick_profile",
+                    "effort_budget_hours": 1.5,
+                },
+            },
+        )
+    )
+
+    assert current == {V3_SYMBOL: 1.5}
+    assert historical == {"CN:000001": 1.5, V3_SYMBOL: 1.5}
+    assert new_symbols == {V3_SYMBOL}
+    assert replaced_symbols == {"CN:000001"}
 
 
 def test_calibration_funded_and_deferred_projection_uses_result_research_brief(
