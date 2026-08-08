@@ -19,11 +19,12 @@ Trading OS 是一套面向 A 股的轻量研究工作流。它不做自动交易
 ```text
 coverage/cn-a/research_state.jsonl       全市场当前状态，一家公司一行
 coverage/cn-a/research_queue.jsonl       当前待办与运行中的单公司任务
+coverage/cn-a/event_scan_state.json      财报与重大公告扫描的可变成功检查点
 research/watchlist.jsonl                 由全市场状态派生的自选池
 research/companies/CN/{代码}/current.md  真正完成过完整研究的公司当前报告
 ```
 
-收盘价格触发的去重与重新武装状态直接保存在对应公司的当前状态行中，不另造一套账本。
+收盘价格触发的去重与重新武装状态直接保存在对应公司的当前状态行中，不另造一套账本。公告检查点也只保存最后成功时间和近期稳定公告 ID；它不是公告历史账本。
 
 状态只有四种：
 
@@ -54,8 +55,31 @@ python -m trading_os research complete --input templates/research-result.json
 python -m trading_os watchlist build
 python -m trading_os validate
 
-# 每日收盘后扫描一次价格；只返回命中项，交给主 Agent 简短复看和排序
+# 查看完整报价但不改状态
+python -m trading_os watchlist fetch-close --date 2026-08-07 --at 2026-08-07T16:30:00+08:00
+
+# 每日收盘后完整取价并扫描；任一报价缺失时整批失败且不改状态
+python -m trading_os watchlist run-close --date 2026-08-07 --at 2026-08-07T16:30:00+08:00
+
+# 仍可用外部完整报价执行同一扫描
 python -m trading_os watchlist scan-close --input templates/close-quotes.json
+
+# 首次公告扫描显式给起点；以后从检查点继续，并自动回看上一自然日去重
+python -m trading_os events fetch --since 2026-08-09T00:00:00+08:00 \
+  --until 2026-08-09T07:30:00+08:00 --output tmp/event-packet.json
+
+# 主 Agent 判断 packet 中全部公告、先写入必要的 event 筛选，再推进检查点
+python -m trading_os events complete --packet tmp/event-packet.json \
+  --input templates/event-judgments.json
+
+# 查看公告检查点
+python -m trading_os events status
+
+# 从固定只读标签列出旧研报候选；只打捞核验后仍有决策价值的部分
+python -m trading_os legacy-salvage candidates --limit 100 --min-score 40
+python -m trading_os legacy-salvage apply --input templates/legacy-salvage-decisions.json
 ```
 
-输入输出契约和实际操作说明见 [精简研究流程](playbooks/simple-research.md)。迁移前的复杂机制仍可从 Git 标签 `pre-simplification-20260808` 或更早提交恢复；当前版本不再保留其运行资产。
+`events complete` 的成功 ID 必须与 packet 中待判断公告精确一致；遗漏、重复或额外 ID 都不会推进检查点。临时 packet 和判断文件放在已忽略的 `tmp/`，不要提交。
+
+输入输出契约和实际操作说明见 [精简研究流程](playbooks/simple-research.md)。迁移前的复杂机制仍可从 Git 标签 `pre-simplification-20260808` 或更早提交恢复；当前版本不再保留其运行资产。`current.md` 表示“当前有效版本”，研究日期写在正文和状态里，历史版本由 Git 保存，避免日期文件与当前状态再次分叉。

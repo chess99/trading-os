@@ -13,6 +13,7 @@
 ## 当前事实源
 
 - `coverage/cn-a/research_state.jsonl`：全市场公司当前状态，一家公司一行。
+- `coverage/cn-a/event_scan_state.json`：公告扫描最后成功时间和近期稳定公告 ID。
 - `research/watchlist.jsonl`：从当前状态派生的自选池和触发条件。
 - `research/companies/CN/{ticker}/current.md`：做过正式研究的公司只保留一份当前报告。
 - 运行队列：只保存尚未完成的当前任务，任务结束后不充当研究档案。
@@ -69,6 +70,8 @@
 
 报告不要求仓位建议、自动交易动作或精确到虚假程度的收益率结论。价格触发只代表“值得重新看”，不代表自动买入。本流程到复看和排序清单为止，后续投资决定由用户作出，不再追加跨公司审批步骤。
 
+正式报告统一叫 `current.md`，因为它表达的是“这家公司当前仍有效的判断”，不是另一条需要人工维护的日期时间线。信息截止时间和价格日期写在正文及公司状态中；每次更新的历史版本由 Git 保存。这样读取方永远只有一个明确入口，也不会出现日期最新但状态未同步的两套答案。
+
 ## 自选池
 
 自选池由公司当前状态派生，不另建一套相互冲突的人工账本。通常纳入带有效触发条件的 `watch` 和 `researched` 公司，排除 `ignore`。初筛形成的 `watch` 至少保留证券代码、名称、观察理由以及一个价格或事件触发条件；完成正式研究后，再补齐关键逻辑、关键风险、合理价值区间、买入触发价、事件条件、最近研究日期和价格日期。
@@ -87,6 +90,13 @@
 
 每日扫描的输入必须覆盖当前所有带价格监控的 `watch` 和 `researched` 公司；缺少任意一家报价时整批报错，不更新部分触发状态。扫描器只返回价格命中，不创建研究任务。若只是价格变化且原逻辑有效，主 Agent 复看和排序即可；若同时出现实质性新信息，再通过 `research_now` 进入公司更新任务。
 
+正式运行使用腾讯公开行情的一次完整、不复权收盘快照。`watchlist fetch-close` 只检查和展示报价；`watchlist run-close` 在全部证券身份、日期和收盘状态通过后才更新触发器。节假日或任一报价异常都按整批失败处理。
+
+```bash
+python -m trading_os watchlist fetch-close --date 2026-08-07 --at 2026-08-07T16:30:00+08:00
+python -m trading_os watchlist run-close --date 2026-08-07 --at 2026-08-07T16:30:00+08:00
+```
+
 ## 财报与重大事件闭环
 
 财报、业绩预告、重大合同、监管处罚、控制权变化、资本结构变化等事件先进入全市场批量变化筛选，范围包含自选池内外的公司：
@@ -101,6 +111,18 @@
 
 `event` 模式只提交需要改变当前状态或标记为 `research_now` 的公司。三种路由含义与基线一致：`ignore` 会移出自选池，`watch` 会更新为观察状态，`research_now` 才创建单公司任务；不要用 `ignore` 代表“没有变化”。
 
+公告采集使用巨潮官方证券目录解析当前全市场公司身份，再按自然日和公司块分页查询。单块超过官方 100 页上限、目录缺失、分页不完整、返回池外证券或 URL/稳定 ID 异常时，整批失败。
+
+第一次运行必须显式给出起点；以后从成功检查点继续，并额外回看上一自然日，用近期稳定公告 ID 去除迟到披露和重叠结果。`events fetch` 将完整待判断列表写入 `tmp/`；主 Agent 判断其中全部公告，先用 `screen record --mode event` 写入确有变化的公司，再用 `events complete` 推进检查点。成功 ID 必须与 packet 精确同集，遗漏、重复或额外 ID 都不会写检查点。
+
+```bash
+python -m trading_os events fetch --since 2026-08-09T00:00:00+08:00 \
+  --until 2026-08-09T07:30:00+08:00 --output tmp/event-packet.json
+python -m trading_os events complete --packet tmp/event-packet.json \
+  --input templates/event-judgments.json
+python -m trading_os events status
+```
+
 ## 运行与写入约束
 
 - 主 Agent 可以分多批完成基线，但每一批都使用同一判断口径，且必须覆盖被冻结范围。
@@ -112,6 +134,13 @@
 ## 当前版本清理
 
 机制迁移时，只清理当前工作树中的旧流程文件、重复报告和不再需要的本地来源副本。先提炼仍有用的最新结论，再删除当前版本中的旧资产。
+
+旧研报打捞固定读取只读标签 `pre-simplification-20260808`。候选必须绑定旧路径、Git blob 和当前证券身份；禁止整篇恢复、覆盖现有 `current.md` 或把身份错配的报告迁入。主 Agent先批量看候选，只把仍可能有价值的公司派给一个 Agent核验最新事实；垃圾、失效或错配资产直接放弃。
+
+```bash
+python -m trading_os legacy-salvage candidates --limit 100 --min-score 40
+python -m trading_os legacy-salvage apply --input templates/legacy-salvage-decisions.json
+```
 
 本阶段不重写 Git 历史，也不强推远端；被删除内容仍可从历史提交恢复。等新机制稳定后，再以独立任务评估历史重写、仓库压缩和远端强推，不能把两件事混在本次迁移中。
 

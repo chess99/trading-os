@@ -5,7 +5,9 @@ from pathlib import Path
 
 import pytest
 
+import trading_os.cli as cli_module
 from trading_os.cli import main
+from trading_os.research_assets.market_data import Announcement, DailyClose
 
 AT = "2026-08-08T17:00:00+08:00"
 ROOT = Path(__file__).resolve().parents[1]
@@ -86,7 +88,15 @@ def test_help_contains_only_the_compact_workflow(capsys: pytest.CaptureFixture[s
 
     assert exc.value.code == 0
     output = capsys.readouterr().out
-    for command in ("status", "validate", "universe", "screen", "research", "watchlist"):
+    for command in (
+        "status",
+        "validate",
+        "universe",
+        "screen",
+        "research",
+        "watchlist",
+        "events",
+    ):
         assert command in output
     for removed in ("underwriting", "challenger", "allocation", "calibration", "claim"):
         assert removed not in output.lower()
@@ -275,6 +285,226 @@ def test_watchlist_build_and_validate_detect_a_consistent_projection(tmp_path: P
     assert validated["status"]["researched"] == 1
 
 
+def test_watchlist_fetch_and_run_close_only_request_price_monitored_companies(
+    tmp_path: Path,
+    capsys,
+    monkeypatch,
+):
+    source = _write(
+        tmp_path / "watch.json",
+        {
+            "screen_id": "watch-close-fetch",
+            "mode": "baseline",
+            "at": AT,
+            "decisions": [
+                {
+                    "symbol": "CN:000001",
+                    "name": "平安银行",
+                    "route": "watch",
+                    "reason": "等待价格",
+                    "price_levels": [
+                        {"id": "attention", "label": "关注区", "threshold": 10}
+                    ],
+                },
+                {
+                    "symbol": "CN:000002",
+                    "name": "万科A",
+                    "route": "watch",
+                    "reason": "只等待事件",
+                    "event_triggers": ["下一份财报"],
+                },
+            ],
+        },
+    )
+    _call(tmp_path, capsys, "screen", "record", "--input", str(source))
+    requested: list[dict[str, str | None]] = []
+
+    def fake_fetch(companies, *, trading_date, fetched_at):
+        requested.append(dict(companies))
+        assert trading_date == "2026-08-07"
+        assert fetched_at == AT
+        return (
+            DailyClose(
+                symbol="CN:000001",
+                name="平安银行",
+                close=9.5,
+                trading_date="2026-08-07",
+                closed_at="2026-08-07T15:00:00+08:00",
+                source_url="https://qt.gtimg.cn/q=sz000001",
+            ),
+        )
+
+    monkeypatch.setattr(cli_module, "fetch_tencent_daily_closes", fake_fetch)
+    fetched = _call(
+        tmp_path,
+        capsys,
+        "watchlist",
+        "fetch-close",
+        "--date",
+        "2026-08-07",
+        "--at",
+        AT,
+    )
+    scanned = _call(
+        tmp_path,
+        capsys,
+        "watchlist",
+        "run-close",
+        "--date",
+        "2026-08-07",
+        "--at",
+        AT,
+    )
+
+    assert requested == [
+        {"CN:000001": "平安银行"},
+        {"CN:000001": "平安银行"},
+    ]
+    assert fetched["quote_count"] == 1
+    assert scanned["quote_count"] == 1
+    assert scanned["hit_count"] == 1
+
+
+def test_events_fetch_requires_explicit_bootstrap_and_only_advances_after_exact_judgment(
+    tmp_path: Path,
+    capsys,
+    monkeypatch,
+):
+    universe = _write(
+        tmp_path / "universe.json",
+        {
+            "companies": [
+                {"symbol": "CN:000001", "name": "平安银行"},
+                {"symbol": "CN:601138", "name": "工业富联"},
+            ]
+        },
+    )
+    _call(
+        tmp_path,
+        capsys,
+        "universe",
+        "register",
+        "--input",
+        str(universe),
+        "--at",
+        AT,
+    )
+
+    code = main(["--root", str(tmp_path), "events", "fetch"])
+    error = json.loads(capsys.readouterr().err)
+    assert code == 1
+    assert "--since" in error["error"]
+
+    announcement = Announcement(
+        announcement_id="1225000001",
+        symbol="CN:000001",
+        title="2026年半年度报告",
+        published_at="2026-08-08T08:00:00+08:00",
+        url="https://static.cninfo.com.cn/finalpage/2026-08-08/1225000001.PDF",
+    )
+    calls: list[tuple[tuple[str, ...], str, str]] = []
+
+    def fake_discover(companies, start, end):
+        calls.append((tuple(companies), start, end))
+        return (announcement,) if len(calls) == 1 else ()
+
+    monkeypatch.setattr(
+        cli_module,
+        "discover_cninfo_announcements_for_companies",
+        fake_discover,
+    )
+    packet = _call(
+        tmp_path,
+        capsys,
+        "events",
+        "fetch",
+        "--since",
+        "2026-08-08T00:00:00+08:00",
+        "--until",
+        "2026-08-09T00:00:00+08:00",
+    )
+    packet_path = _write(tmp_path / "event-packet.json", packet)
+    incomplete = _write(
+        tmp_path / "incomplete.json", {"successfully_judged_ids": []}
+    )
+
+    code = main(
+        [
+            "--root",
+            str(tmp_path),
+            "events",
+            "complete",
+            "--packet",
+            str(packet_path),
+            "--input",
+            str(incomplete),
+        ]
+    )
+    captured = capsys.readouterr()
+    assert code == 1
+    assert "missing" in json.loads(captured.err)["error"]
+    assert not (tmp_path / "coverage/cn-a/event_scan_state.json").exists()
+
+    complete = _write(
+        tmp_path / "complete.json",
+        {"successfully_judged_ids": ["1225000001"]},
+    )
+    advanced = _call(
+        tmp_path,
+        capsys,
+        "events",
+        "complete",
+        "--packet",
+        str(packet_path),
+        "--input",
+        str(complete),
+    )
+    assert advanced["advanced"] is True
+    assert advanced["last_successful_at"] == "2026-08-09T00:00:00+08:00"
+
+    next_packet = _call(
+        tmp_path,
+        capsys,
+        "events",
+        "fetch",
+        "--until",
+        "2026-08-10T00:00:00+08:00",
+    )
+    assert next_packet["announcement_count"] == 0
+    assert calls[0][0] == ("CN:000001", "CN:601138")
+    assert calls[1][1] == "2026-08-08T00:00:00+08:00"
+
+
+def test_events_fetch_can_write_a_utf8_packet_inside_the_repository(
+    tmp_path: Path,
+    capsys,
+    monkeypatch,
+):
+    monkeypatch.setattr(
+        cli_module,
+        "discover_cninfo_announcements_for_companies",
+        lambda _companies, _start, _end: (),
+    )
+    result = _call(
+        tmp_path,
+        capsys,
+        "events",
+        "fetch",
+        "--since",
+        "2026-08-08T00:00:00+08:00",
+        "--until",
+        "2026-08-09T00:00:00+08:00",
+        "--output",
+        "tmp/event-packet.json",
+    )
+
+    packet_path = tmp_path / result["packet_path"]
+    packet = json.loads(packet_path.read_text(encoding="utf-8"))
+    assert result["announcement_count"] == 0
+    assert packet["scan_start"] == "2026-08-08T00:00:00+08:00"
+    assert packet["announcements"] == []
+
+
 def test_research_complete_rejects_missing_task_id(tmp_path: Path, capsys):
     result = _write(tmp_path / "result.json", _full_result("CN:601138"))
 
@@ -366,6 +596,7 @@ def test_input_templates_are_valid_and_contain_only_the_compact_model():
         "screen-decisions.json",
         "research-result.json",
         "close-quotes.json",
+        "event-judgments.json",
     )
     combined = ""
     for name in names:

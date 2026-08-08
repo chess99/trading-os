@@ -4,11 +4,25 @@ import argparse
 import json
 import sys
 from dataclasses import asdict, is_dataclass
+from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
 from typing import Any, Mapping, Sequence, TextIO
 
 from .research_assets.legacy_salvage import LegacyReportSalvager
+from .research_assets.market_data import (
+    DEFAULT_EVENT_SCAN_STATE_PATH,
+    MARKET_TIMEZONE,
+    Announcement,
+    MarketDataError,
+    advance_event_scan_state,
+    discover_cninfo_announcements_for_companies,
+    event_scan_state_payload,
+    fetch_tencent_daily_closes,
+    read_event_scan_state,
+    unseen_event_announcements,
+    write_event_scan_state,
+)
 from .research_assets.research_flow import (
     CompanyRef,
     PriceLevel,
@@ -83,6 +97,36 @@ def build_parser() -> argparse.ArgumentParser:
     scan.add_argument("--date", help="覆盖输入文件中的 trading_date")
     _add_at(scan)
     scan.set_defaults(handler=_watchlist_scan_close)
+    fetch_close = watchlist_commands.add_parser(
+        "fetch-close", help="严格获取全部受监控公司的当日不复权收盘价"
+    )
+    fetch_close.add_argument("--date", required=True, help="交易日 YYYY-MM-DD")
+    _add_at(fetch_close)
+    fetch_close.set_defaults(handler=_watchlist_fetch_close)
+    run_close = watchlist_commands.add_parser(
+        "run-close", help="完整取价后原子执行一次每日收盘触发扫描"
+    )
+    run_close.add_argument("--date", required=True, help="交易日 YYYY-MM-DD")
+    _add_at(run_close)
+    run_close.set_defaults(handler=_watchlist_run_close)
+
+    events = commands.add_parser("events", help="获取全市场公告并维护成功检查点")
+    event_commands = events.add_subparsers(dest="events_command", required=True)
+    event_status = event_commands.add_parser("status", help="查看当前公告扫描检查点")
+    event_status.set_defaults(handler=_events_status)
+    event_fetch = event_commands.add_parser(
+        "fetch", help="获取检查点之后的公告；首次运行必须显式提供起点"
+    )
+    event_fetch.add_argument("--since", help="首次扫描起点（带时区 ISO 时间）")
+    event_fetch.add_argument("--until", help="半开窗口终点（默认当前上海时间）")
+    event_fetch.add_argument("--output", help="将完整待判断 packet 写入仓库内临时 JSON")
+    event_fetch.set_defaults(handler=_events_fetch)
+    event_complete = event_commands.add_parser(
+        "complete", help="全部公告判断成功后推进检查点"
+    )
+    event_complete.add_argument("--packet", required=True, help="events fetch 的原始 JSON")
+    _add_input(event_complete)
+    event_complete.set_defaults(handler=_events_complete)
 
     salvage = commands.add_parser("legacy-salvage", help="从固定恢复标签筛选并打捞旧研报")
     salvage_commands = salvage.add_subparsers(dest="salvage_command", required=True)
@@ -329,6 +373,213 @@ def _watchlist_scan_close(args: argparse.Namespace, stdin: TextIO) -> dict[str, 
     return {"trading_date": trading_date, "hit_count": len(hits), "hits": hits}
 
 
+def _monitored_companies(flow: ResearchFlow) -> dict[str, str | None]:
+    return {
+        row["symbol"]: row.get("name")
+        for row in flow.read_watchlist()
+        if row.get("price_levels")
+    }
+
+
+def _watchlist_fetch_close(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    flow = _flow(args)
+    companies = _monitored_companies(flow)
+    quotes = fetch_tencent_daily_closes(
+        companies,
+        trading_date=args.date,
+        fetched_at=args.at,
+    )
+    return {
+        "trading_date": args.date,
+        "quote_count": len(quotes),
+        "quotes": quotes,
+    }
+
+
+def _watchlist_run_close(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    flow = _flow(args)
+    companies = _monitored_companies(flow)
+    quotes = fetch_tencent_daily_closes(
+        companies,
+        trading_date=args.date,
+        fetched_at=args.at,
+    )
+    closes = {quote.symbol: quote.close for quote in quotes}
+    hits = flow.scan_daily_close(closes, trading_date=args.date, at=args.at)
+    return {
+        "trading_date": args.date,
+        "quote_count": len(quotes),
+        "hit_count": len(hits),
+        "hits": hits,
+    }
+
+
+def _aware_iso(value: object, label: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{label} 必须是带时区的 ISO 时间")
+    try:
+        parsed = datetime.fromisoformat(value.strip())
+    except ValueError as exc:
+        raise ValueError(f"{label} 必须是带时区的 ISO 时间") from exc
+    if parsed.utcoffset() is None:
+        raise ValueError(f"{label} 必须包含 UTC offset")
+    return parsed.astimezone(MARKET_TIMEZONE).isoformat()
+
+
+def _event_state_path(flow: ResearchFlow) -> Path:
+    return flow.root / DEFAULT_EVENT_SCAN_STATE_PATH
+
+
+def _events_status(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    flow = _flow(args)
+    state = read_event_scan_state(_event_state_path(flow))
+    return event_scan_state_payload(state)
+
+
+def _events_fetch(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    flow = _flow(args)
+    state = read_event_scan_state(_event_state_path(flow))
+    if state.last_successful_at is None:
+        if args.since is None:
+            raise ValueError("首次公告扫描必须用 --since 显式设置起点")
+        scan_start = _aware_iso(args.since, "since")
+        fetch_start = scan_start
+    else:
+        if args.since is not None:
+            supplied = _aware_iso(args.since, "since")
+            if supplied != state.last_successful_at:
+                raise ValueError("--since 必须与当前 last_successful_at 完全一致")
+        scan_start = state.last_successful_at
+        previous_time = datetime.fromisoformat(scan_start).astimezone(MARKET_TIMEZONE)
+        fetch_start = (previous_time - timedelta(days=1)).replace(
+            hour=0,
+            minute=0,
+            second=0,
+            microsecond=0,
+        ).isoformat()
+    scan_end = (
+        _aware_iso(args.until, "until")
+        if args.until is not None
+        else datetime.now(MARKET_TIMEZONE).isoformat()
+    )
+    companies = tuple(row["symbol"] for row in flow.read_states())
+    discovered = discover_cninfo_announcements_for_companies(
+        companies,
+        fetch_start,
+        scan_end,
+    )
+    pending = unseen_event_announcements(state, discovered)
+    packet = {
+        "schema_version": 1,
+        "scan_start": scan_start,
+        "fetch_start": fetch_start,
+        "scan_end": scan_end,
+        "universe_count": len(companies),
+        "announcement_count": len(pending),
+        "already_seen_count": len(discovered) - len(pending),
+        "announcements": pending,
+    }
+    if args.output is None:
+        return packet
+    root = flow.root.resolve()
+    output = Path(args.output)
+    output = (flow.root / output).resolve() if not output.is_absolute() else output.resolve()
+    try:
+        output.relative_to(root)
+    except ValueError as exc:
+        raise ValueError("events fetch --output 必须位于仓库根目录内") from exc
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(
+        json.dumps(_jsonable(packet), ensure_ascii=False, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return {
+        "packet_path": output.relative_to(root).as_posix(),
+        "scan_start": scan_start,
+        "fetch_start": fetch_start,
+        "scan_end": scan_end,
+        "universe_count": len(companies),
+        "announcement_count": len(pending),
+        "already_seen_count": len(discovered) - len(pending),
+    }
+
+
+def _announcement_from_payload(value: object) -> Announcement:
+    if not isinstance(value, Mapping):
+        raise ValueError("announcements 必须只包含对象")
+    return Announcement(
+        announcement_id=value["announcement_id"],
+        symbol=value["symbol"],
+        title=value["title"],
+        published_at=value["published_at"],
+        url=value["url"],
+    )
+
+
+def _events_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    packet, _ = _load(args.packet, stdin)
+    judgments, _ = _load(args.input, stdin)
+    if not isinstance(packet, dict):
+        raise ValueError("events fetch packet 必须是 JSON 对象")
+    if not isinstance(judgments, dict):
+        raise ValueError("公告判断结果必须是 JSON 对象")
+    if packet.get("schema_version") != 1:
+        raise ValueError("不支持的 events fetch packet 版本")
+    raw_announcements = packet.get("announcements")
+    if not isinstance(raw_announcements, list):
+        raise ValueError("packet announcements 必须是数组")
+    if packet.get("announcement_count") != len(raw_announcements):
+        raise ValueError("packet announcement_count 与 announcements 不一致")
+    judged_ids = judgments.get("successfully_judged_ids")
+    if not isinstance(judged_ids, list):
+        raise ValueError("successfully_judged_ids 必须是数组")
+
+    flow = _flow(args)
+    path = _event_state_path(flow)
+    previous = read_event_scan_state(path)
+    scan_start = _aware_iso(packet.get("scan_start"), "packet scan_start")
+    fetch_start = _aware_iso(packet.get("fetch_start"), "packet fetch_start")
+    scan_end = _aware_iso(packet.get("scan_end"), "packet scan_end")
+    if datetime.fromisoformat(fetch_start) > datetime.fromisoformat(scan_start):
+        raise ValueError("packet fetch_start 不得晚于 scan_start")
+    if datetime.fromisoformat(scan_end) <= datetime.fromisoformat(scan_start):
+        raise ValueError("packet scan_end 必须晚于 scan_start")
+    if (
+        previous.last_successful_at is not None
+        and scan_start != previous.last_successful_at
+    ):
+        raise ValueError("packet scan_start 已落后于当前公告检查点")
+    announcements = tuple(_announcement_from_payload(item) for item in raw_announcements)
+    start_time = datetime.fromisoformat(fetch_start)
+    for announcement in announcements:
+        published_at = datetime.fromisoformat(
+            _aware_iso(
+                announcement.published_at,
+                f"公告 {announcement.announcement_id} published_at",
+            )
+        )
+        if published_at < start_time:
+            raise ValueError(
+                f"公告 {announcement.announcement_id} 早于 packet scan_start"
+            )
+    next_state = advance_event_scan_state(
+        previous,
+        scanned_through=scan_end,
+        announcements=announcements,
+        successfully_judged_ids=judged_ids,
+    )
+    write_event_scan_state(next_state, path)
+    return {
+        "advanced": True,
+        "judged_count": len(judged_ids),
+        **event_scan_state_payload(next_state),
+    }
+
+
 def _legacy_salvage_candidates(args: argparse.Namespace, stdin: TextIO) -> Any:
     del stdin
     return LegacyReportSalvager(Path(args.root)).list_candidates(
@@ -357,7 +608,14 @@ def main(
     args = build_parser().parse_args(argv)
     try:
         result = args.handler(args, input_stream)
-    except (ResearchFlowError, OSError, ValueError, KeyError, TypeError) as exc:
+    except (
+        MarketDataError,
+        ResearchFlowError,
+        OSError,
+        ValueError,
+        KeyError,
+        TypeError,
+    ) as exc:
         _emit({"ok": False, "error": str(exc)}, error_stream)
         return 1
     _emit(result, output_stream)
