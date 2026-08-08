@@ -1,62 +1,61 @@
 # Trading OS
 
-Trading OS 是一个 Agent 驱动的公司研究、证据管理、独立承保与投资组合决策系统。这里的 “OS” 指投资研究工作流及其事实源，而不是交易执行或回测平台。
+Trading OS 是一套面向 A 股的轻量研究工作流。它不做自动交易，也不要求把每家公司都写成长篇研报；目标是让主 Agent 快速覆盖全市场，只把真正值得投入的公司交给单公司 Agent，并把研究结论转化为可持续维护的自选池和价格触发器。
 
-通过证据、主张、反证、情景估值和组合约束，把公司研究转化为可审计的投资判断。方法吸收价值投资、成长投资、逆向投资和概率思维，但不从属于任何单一流派。
+## 核心流程
 
-## 项目边界
+1. 主 Agent 批量浏览压缩后的公司事实，判断 `ignore`、`watch` 或 `research_now`。
+2. `ignore` 和 `watch` 都不会派单公司 Agent；只有 `research_now` 入研究队列。
+3. 不同公司可以并行研究，通常同时处理 3—6 家；并行数由运行方配置。一家公司始终由一个 Agent 从快速浏览到最终结论端到端完成。
+4. Agent 自己决定研究深度。明显不值得看的公司可以很快结束；值得看的公司继续展开。没有按分钟计费的阶段，也没有 `quick / targeted / scoped / deep` 逐级审批。
+5. 结果只保留有决策价值的内容：`discard` 只需一句非空结论；`watch` 至少写清观察理由和一个价格或事件触发条件；正式研究再保留关键逻辑、关键风险、合理价值区间、买入触发价、后续触发条件和来源 URL。
+6. 研究结果形成自选池。价格只在每日收盘后扫描；命中触发价时进入一次简短复核和排序，不直接产生交易动作。
+7. 池外公司遇到财报或重大公告时，先进入批量变化筛选；只有出现值得单独研究的变化才派 Agent。
 
-- `quant-strategies` 负责因子计算、量化排名、交易策略和回测；它可以提供研究线索，但不是公司获得研究资格的入口闸门。
-- 本项目负责全覆盖接入、投资经理批量初筛、研究预算分配、研究队列、公司深研、封存验证、独立承保和跨公司组合综合。
-- 每家纳入范围的公司都必须由主 Agent 在 manager-screen 批次中看一眼。机器只负责材料准备、触发检测、行政分批、调度和验证，不根据因子、PE、市值或流动性替 Agent 作投资判断。
+这里没有独立承保、challenger、calibration、多 Agent 共识、收益率硬门槛、仓位审批或组合层闸门。Git 已经提供历史版本，因此仓库只保存每家公司当前仍有用的一份报告。
 
-## 资产分层
+## 事实源
 
 ```text
-coverage/                         候选导入、全市场覆盖和可恢复研究队列
-research/companies/{市场}/{代码}/ 单公司报告、证据和承保封存产物
-research/batches/{批次}/          跨公司模型组合、排除记录和综合报告
-automation/runs/{批次}/           可恢复状态、事件日志和 agent 租约
-policies/                         版本化研究配置、承保、行业和组合政策
+coverage/cn-a/research_state.jsonl       全市场当前状态，一家公司一行
+coverage/cn-a/research_queue.jsonl       当前待办与运行中的单公司任务
+research/watchlist.jsonl                 由全市场状态派生的自选池
+research/companies/CN/{代码}/current.md  真正完成过完整研究的公司当前报告
 ```
 
-公司 `meta.json` 只保存身份、覆盖、报告时间线、承保状态、价值快照和复核触发器。最终操作和仓位只存在于批次模型组合中。
+收盘价格触发的去重与重新武装状态直接保存在对应公司的当前状态行中，不另造一套账本。
 
-## 研究机制
+状态只有四种：
 
-1. 冻结全覆盖或真实触发的 scope，按稳定行政顺序生成每批默认 150 家的压缩 dossier。
-2. 同一个主 Agent 作为投资经理完整浏览一批，并逐项提交 `pass`、`watch` 或 `send_to_analyst`；程序只校验守恒、证据和 contract。
-3. 大多数公司在留下理由和重启触发器后停止购买更多研究信息；只有 `send_to_analyst` 的少数公司获得单公司研究员预算。
-4. 完整初研生成不可变中文报告、来源清单和结构化主张。
-5. 独立 Agent 在半盲状态下重建证据、三张桥和三情景价值；结果先封存，再揭示差异。重大分歧触发完全独立的 challenger 和仲裁。
-6. 单公司只能给承保状态；跨公司组合层才决定 `buy_now`、其他操作和仓位。
+- `unseen`：尚未完成本轮初筛；
+- `ignore`：当前不值得持续占用注意力，等待重大变化；
+- `watch`：值得跟踪，但暂时不需要完整研究或重做研究；
+- `researched`：已有可用的完整研究，按价格、财报或事件复核。
 
-## 命令
+`baseline` 只能写入当前仍为 `unseen` 且尚未做过 baseline 判断的公司；同一批中只要包含一家已经判断过的公司，整批拒绝且不产生部分更新。财报和事件使用 `event` 模式做局部更新。
+
+## 日常使用
 
 ```bash
-python -m trading_os assets validate
-python -m trading_os review create <run-id> --scope-type industry --market CN --description "行业" --candidates <candidates.json>
-python -m trading_os review prepare <run-id>
-python -m trading_os review status <run-id>
-python -m trading_os review validate <run-id> --strict
-python -m trading_os review synthesize <run-id> --quotes <quotes.json>
-python -m trading_os review report <run-id>
-python -m trading_os coverage validate
-python -m trading_os coverage manager-screen-snapshot <run-id> --information-cutoff <timestamp>
-python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp> \
-  --universe-file coverage/cn-a/snapshots/<run-id>/companies.jsonl
-python -m trading_os coverage scope-status <run-id>
-python -m trading_os coverage manager-screen-freeze <run-id> <batch-id> --batch-size 150
-python -m trading_os coverage manager-screen-record <run-id> <batch-id> --input <decisions.json>
-python -m trading_os coverage manager-screen-status <run-id>
-python -m trading_os coverage evaluate-profile --input <quick-profile.json>
-python -m trading_os coverage record-profile --input <quick-profile-package.json>
-python -m trading_os coverage profile-status <cycle-id>
-python -m trading_os coverage profile-claim --agent <agent-id> [--symbol CN:000000]
-python -m trading_os coverage reconcile --check
-python -m trading_os index rebuild
-python -m trading_os schedule build
-python -m trading_os alerts build
+# 查看状态与待办
+python -m trading_os status
+
+# 首次登记或增量补充全市场证券清单
+python -m trading_os universe register --input templates/universe.json
+
+# 记录一批主 Agent 初筛判断；research_now 会自动入队
+python -m trading_os screen record --input templates/screen-decisions.json
+
+# 调用者决定本次并行公司数；每家公司仍只交给一个 Agent 端到端完成
+python -m trading_os research next --limit 4
+python -m trading_os research complete --input templates/research-result.json
+
+# 重建自选池，并校验状态、队列、自选池与当前报告
+python -m trading_os watchlist build
+python -m trading_os validate
+
+# 每日收盘后扫描一次价格；只返回命中项，交给主 Agent 简短复看和排序
+python -m trading_os watchlist scan-close --input templates/close-quotes.json
 ```
 
-旧 `triage-*` 与 `quality-triage-*` 命令仅为已封存历史资产兼容保留，不用于新 Goal。详细流程见 `playbooks/`。价格提醒是复核触发器，不是自动交易指令。
+输入输出契约和实际操作说明见 [精简研究流程](playbooks/simple-research.md)。迁移前的复杂机制仍可从 Git 标签 `pre-simplification-20260808` 或更早提交恢复；当前版本不再保留其运行资产。

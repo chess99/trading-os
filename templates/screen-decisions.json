@@ -1,0 +1,36 @@
+{
+  "screen_id": "baseline-YYYY-MM-DD",
+  "mode": "baseline",
+  "at": "2026-08-07T15:30:00+08:00",
+  "decisions": [
+    {
+      "symbol": "CN:000001",
+      "route": "ignore",
+      "reason": "当前不值得投入单公司研究",
+      "event_triggers": [
+        "下一份年报显示主营业务发生实质变化"
+      ]
+    },
+    {
+      "symbol": "CN:000002",
+      "route": "watch",
+      "reason": "基本面尚可，等待更有吸引力的价格",
+      "price_levels": [
+        {
+          "id": "attention",
+          "label": "关注区",
+          "threshold": 10.0,
+          "rearm_above": 10.5
+        }
+      ],
+      "event_triggers": [
+        "下一期财报发布"
+      ]
+    },
+    {
+      "symbol": "CN:601138",
+      "route": "research_now",
+      "reason": "核心业务和估值值得完整研究"
+    }
+  ]
+}
