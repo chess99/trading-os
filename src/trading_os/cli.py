@@ -8,6 +8,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Mapping, Sequence, TextIO
 
+from .research_assets.legacy_salvage import LegacyReportSalvager
 from .research_assets.research_flow import (
     CompanyRef,
     PriceLevel,
@@ -82,6 +83,21 @@ def build_parser() -> argparse.ArgumentParser:
     scan.add_argument("--date", help="覆盖输入文件中的 trading_date")
     _add_at(scan)
     scan.set_defaults(handler=_watchlist_scan_close)
+
+    salvage = commands.add_parser("legacy-salvage", help="从固定恢复标签筛选并打捞旧研报")
+    salvage_commands = salvage.add_subparsers(dest="salvage_command", required=True)
+    candidates = salvage_commands.add_parser(
+        "candidates", help="批量列出高信号候选；不会创建单公司任务"
+    )
+    candidates.add_argument("--limit", type=int, default=200)
+    candidates.add_argument("--min-score", type=int, default=40)
+    candidates.set_defaults(handler=_legacy_salvage_candidates)
+    apply_salvage = salvage_commands.add_parser(
+        "apply", help="按显式决策写入重新核验、压缩后的 current.md"
+    )
+    _add_input(apply_salvage)
+    _add_at(apply_salvage)
+    apply_salvage.set_defaults(handler=_legacy_salvage_apply)
     return parser
 
 
@@ -311,6 +327,21 @@ def _watchlist_scan_close(args: argparse.Namespace, stdin: TextIO) -> dict[str, 
         at=args.at or payload.get("at"),
     )
     return {"trading_date": trading_date, "hit_count": len(hits), "hits": hits}
+
+
+def _legacy_salvage_candidates(args: argparse.Namespace, stdin: TextIO) -> Any:
+    del stdin
+    return LegacyReportSalvager(Path(args.root)).list_candidates(
+        limit=args.limit,
+        min_score=args.min_score,
+    )
+
+
+def _legacy_salvage_apply(args: argparse.Namespace, stdin: TextIO) -> Any:
+    payload, _ = _load(args.input, stdin)
+    if not isinstance(payload, dict):
+        raise ValueError("旧研报打捞决策必须是 JSON 对象")
+    return LegacyReportSalvager(Path(args.root)).apply_decisions(payload, at=args.at)
 
 
 def main(
