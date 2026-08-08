@@ -142,6 +142,19 @@ def test_tencent_empty_set_does_not_fetch():
     )
 
 
+@pytest.mark.parametrize("temporary_name", ["XD上汽集", "XR上汽集", "DR上汽集"])
+def test_tencent_accepts_exchange_corporate_action_name_prefix(temporary_name: str):
+    closes = fetch_tencent_daily_closes(
+        {"CN:600104": "上汽集团"},
+        trading_date="2026-08-07",
+        fetched_at="2026-08-07T15:10:00+08:00",
+        fetcher=lambda _: _tencent_row("sh600104", name=temporary_name),
+    )
+
+    assert closes[0].symbol == "CN:600104"
+    assert closes[0].name == temporary_name
+
+
 @pytest.mark.parametrize(
     ("response", "message"),
     [

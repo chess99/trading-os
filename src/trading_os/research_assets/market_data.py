@@ -161,7 +161,9 @@ def fetch_tencent_daily_closes(
                 raise MarketDataError(f"Tencent ticker does not match requested code: {code}")
             returned_name = _name(fields[1], f"Tencent name for {code}")
             expected_name = expected[code][1]
-            if expected_name is not None and _name_key(returned_name) != _name_key(expected_name):
+            if expected_name is not None and not _quote_name_matches(
+                expected_name, returned_name
+            ):
                 raise MarketDataError(
                     f"Tencent name does not match requested security: {code} "
                     f"expected={expected_name!r}, returned={returned_name!r}"
@@ -859,6 +861,18 @@ def _name(value: object, label: str) -> str:
 
 def _name_key(value: str) -> str:
     return "".join(unicodedata.normalize("NFKC", value).split())
+
+
+def _quote_name_matches(expected: str, returned: str) -> bool:
+    expected_key = _name_key(expected)
+    returned_key = _name_key(returned)
+    if returned_key == expected_key:
+        return True
+    for marker in ("XD", "XR", "DR"):
+        if returned_key.startswith(marker):
+            quoted_core = returned_key[len(marker) :]
+            return len(quoted_core) >= 2 and expected_key.startswith(quoted_core)
+    return False
 
 
 def _tencent_code(ticker: str) -> str:
