@@ -1,32 +1,27 @@
 {
   "permissions": {
     "allow": [
-      "Read(.env.example)",
-      "Edit(.env.example)",
-      "Write(.env.example)",
       "Bash(python -m trading_os:*)",
       "Bash(python -m pytest:*)",
-      "Bash(python scripts/*)",
+      "Bash(python -m ruff:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git status:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
-      "Bash(git rm:*)",
       "Bash(git show:*)",
+      "Read(AGENTS.md)",
+      "Read(README.md)",
+      "Read(playbooks/**)",
+      "Read(prompts/**)",
       "Read(src/**)",
-      "Read(docs/**)",
       "Read(tests/**)",
-      "Read(artifacts/**)",
-      "Read(data/**)",
-      "Read(vendor/**)",
+      "Read(coverage/**)",
+      "Read(research/**)",
       "Edit(src/**)",
       "Edit(tests/**)",
-      "Edit(docs/**)",
-      "Write(artifacts/**)",
-      "Write(docs/**)",
-      "Write(src/**)",
-      "Write(tests/**)"
+      "Edit(playbooks/**)",
+      "Edit(prompts/**)"
     ],
     "ask": [
       "Bash(pip install:*)",
@@ -43,9 +38,5 @@
   },
   "env": {
     "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
-  },
-  "attribution": {
-    "commit": "🤖 基金管理AI决策\n\nCo-Authored-By: Claude Fund Manager <fund-manager@trading-os.ai>",
-    "pr": "🤖 由基金管理AI系统生成"
   }
 }

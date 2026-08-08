@@ -5,415 +5,603 @@ from pathlib import Path
 
 import pytest
 
-from tests.test_company_assets import write_company, write_strict_company
+import trading_os.cli as cli_module
+from trading_os.cli import main
+from trading_os.research_assets.market_data import Announcement, DailyClose
+
+AT = "2026-08-08T17:00:00+08:00"
+ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_cli_company_validate_success(tmp_path: Path, capsys):
-    from trading_os.cli import main
-
-    company_dir = write_company(tmp_path)
-
-    code = main(["company", "validate", str(company_dir)])
-
-    assert code == 0
-    assert "CN:600519" in capsys.readouterr().out
+def _write(path: Path, payload: object) -> Path:
+    path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    return path
 
 
-def test_cli_company_validate_strict_success(tmp_path: Path, capsys):
-    from trading_os.cli import main
-
-    company_dir = write_strict_company(tmp_path)
-
-    code = main(["company", "validate", str(company_dir), "--strict"])
-
-    assert code == 0
-    payload = json.loads(capsys.readouterr().out)
-    assert payload == {"ok": True, "symbol": "CN:600519"}
-
-
-def test_cli_company_validate_strict_failure_writes_json_error(
-    tmp_path: Path, capsys
-):
-    from trading_os.cli import main
-
-    company_dir = write_company(tmp_path)
-
-    code = main(["company", "validate", str(company_dir), "--strict"])
-
+def _call(tmp_path: Path, capsys: pytest.CaptureFixture[str], *args: str) -> dict:
+    code = main(["--root", str(tmp_path), *args])
     captured = capsys.readouterr()
-    assert code == 1
-    assert captured.out == ""
-    payload = json.loads(captured.err)
-    assert payload["ok"] is False
-    assert "report date" in payload["error"]
+    assert code == 0, captured.err
+    assert captured.err == ""
+    return json.loads(captured.out)
 
 
-def test_cli_company_audit_summarizes_report_and_meta_drift(tmp_path: Path, capsys):
-    from trading_os.cli import main
+def _full_result(symbol: str, task_id: str | None = None) -> dict:
+    payload = {
+        "symbol": symbol,
+        "name": "示例公司",
+        "outcome": "researched",
+        "summary": "需求成立，现金流仍需验证。",
+        "key_logic": ["需求增长", "现金流转化决定估值"],
+        "risks": ["客户集中", "资本开支回报不及预期"],
+        "value_range": {"low": 58, "high": 82, "currency": "CNY"},
+        "price_levels": [
+            {"id": "attention", "label": "关注区", "threshold": 55, "rearm_above": 57},
+            {"id": "attractive", "label": "高吸引力区", "threshold": 50, "rearm_above": 52},
+        ],
+        "event_triggers": ["下一期财报发布"],
+        "source_urls": ["https://example.com/report"],
+        "report_markdown": "# 示例公司\n\n需求成立，但现金流转化仍需验证。",
+    }
+    return {"task_id": task_id, "at": AT, "result": payload} if task_id else payload
 
-    strict_dir = write_strict_company(tmp_path)
-    legacy_dir = tmp_path / "research" / "companies" / "CN" / "000001"
-    (legacy_dir / "reports").mkdir(parents=True)
-    (legacy_dir / "reports" / "2026-07-06-initial.md").write_text(
-        "# 公司研究：平安银行（CN:000001）\n"
-        "日期：2026-07-06\n"
-        "研究类型：initial\n"
-        "分析师：agent\n\n"
-        "## 结论版\n\n"
-        "缺少大量标准章节。\n",
-        encoding="utf-8",
-    )
-    legacy_meta = json.loads((strict_dir / "meta.json").read_text(encoding="utf-8"))
-    legacy_meta.update(
+
+def _screen_and_dispatch(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+    symbol: str,
+    *,
+    trigger_id: str,
+) -> str:
+    source = _write(
+        tmp_path / f"screen-{trigger_id}.json",
         {
-            "symbol": "CN:000001",
-            "ticker": "000001",
-            "name": "平安银行",
-            "latest_report": "reports/2026-07-06-initial.md",
-            "report_history": ["reports/2026-07-06-initial.md"],
-            "current_price": 10.5,
-        }
+            "screen_id": trigger_id,
+            "mode": "event",
+            "at": AT,
+            "decisions": [
+                {
+                    "symbol": symbol,
+                    "route": "research_now",
+                    "reason": "值得完整研究",
+                }
+            ],
+        },
     )
-    (legacy_dir / "meta.json").write_text(
-        json.dumps(legacy_meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
+    queued = _call(
+        tmp_path,
+        capsys,
+        "screen",
+        "record",
+        "--input",
+        str(source),
     )
-
-    code = main(["company", "audit", "--research-root", str(tmp_path / "research")])
-
-    assert code == 0
-    payload = json.loads(capsys.readouterr().out)
-    assert payload["company_count"] == 2
-    assert payload["analyst_counts"]["codex"] == 1
-    assert payload["analyst_counts"]["generic_or_unknown"] == 1
-    assert payload["extra_meta_keys"][0] == {"key": "current_price", "count": 1}
-    assert payload["price_like_meta_keys"][0] == {"key": "current_price", "count": 1}
-    assert payload["strict_issue_count"] > 0
-    assert payload["warning_count"] > 0
-    assert any("extra meta" in item["error"] for item in payload["warnings"])
+    dispatched = _call(tmp_path, capsys, "research", "next", "--limit", "1", "--at", AT)
+    assert dispatched["count"] == 1
+    assert dispatched["tasks"][0]["task_id"] == queued["enqueued"][0]["task_id"]
+    return dispatched["tasks"][0]["task_id"]
 
 
-def test_cli_help_lists_coverage_command(capsys):
-    from trading_os.cli import main
-
+def test_help_contains_only_the_compact_workflow(capsys: pytest.CaptureFixture[str]):
     with pytest.raises(SystemExit) as exc:
         main(["--help"])
 
     assert exc.value.code == 0
-    assert "coverage" in capsys.readouterr().out
+    output = capsys.readouterr().out
+    for command in (
+        "status",
+        "validate",
+        "universe",
+        "screen",
+        "research",
+        "watchlist",
+        "events",
+    ):
+        assert command in output
+    for removed in ("underwriting", "challenger", "allocation", "calibration", "claim"):
+        assert removed not in output.lower()
+
+    with pytest.raises(SystemExit) as research_exc:
+        main(["research", "--help"])
+    assert research_exc.value.code == 0
+    assert "enqueue" not in capsys.readouterr().out
 
 
-def test_cli_index_rebuild_writes_index(tmp_path: Path):
-    from trading_os.cli import main
+def test_research_assets_package_exports_only_the_compact_flow():
+    import trading_os.research_assets as assets
 
-    write_company(tmp_path)
+    assert assets.ResearchFlow
+    assert assets.PriceLevel
+    assert assets.ResearchResult
+    for removed in (
+        "AssetValidationError",
+        "CompanyTimelineError",
+        "DetailLevel",
+        "publish_rapid_triage_to_company_timeline",
+        "write_index",
+    ):
+        assert not hasattr(assets, removed)
 
-    code = main(["index", "rebuild", "--research-root", str(tmp_path / "research")])
 
-    assert code == 0
-    payload = json.loads((tmp_path / "research" / "index.json").read_text(encoding="utf-8"))
-    assert payload["company_count"] == 1
+def test_empty_status_and_validate_are_readable(tmp_path: Path, capsys):
+    status = _call(tmp_path, capsys, "status")
+    assert status == {
+        "companies": 0,
+        "dispatched": 0,
+        "ignored": 0,
+        "queued": 0,
+        "researched": 0,
+        "unseen": 0,
+        "watched": 0,
+        "watchlist": 0,
+    }
+    validated = _call(tmp_path, capsys, "validate")
+    assert validated["ok"] is True
 
 
-def test_cli_alerts_check_uses_quote_snapshot(tmp_path: Path, capsys):
-    from trading_os.cli import main
+@pytest.mark.parametrize("jsonl", [False, True])
+def test_universe_register_accepts_wrapper_json_and_jsonl(tmp_path: Path, capsys, jsonl: bool):
+    companies = [
+        {"symbol": "CN:000001", "name": "甲公司"},
+        {"symbol": "CN:000002", "name": "乙公司"},
+    ]
+    source = tmp_path / ("universe.jsonl" if jsonl else "universe.json")
+    if jsonl:
+        source.write_text(
+            "\n".join(json.dumps(item, ensure_ascii=False) for item in companies) + "\n",
+            encoding="utf-8",
+        )
+    else:
+        _write(source, {"companies": companies})
 
-    alerts_path = tmp_path / "alerts.json"
-    quotes_path = tmp_path / "quotes.json"
-    alerts_path.write_text(
-        json.dumps(
-            {
-                "schema_version": 1,
-                "items": [
-                    {
-                        "symbol": "CN:600519",
-                        "name": "贵州茅台",
-                        "type": "price_below",
-                        "price": 1100,
-                        "reason": "Enter buy zone.",
-                        "latest_report": "companies/CN/600519/reports/2026-07-06-initial.md",
-                    }
-                ],
-            },
-            ensure_ascii=False,
-        ),
-        encoding="utf-8",
+    output = _call(tmp_path, capsys, "universe", "register", "--input", str(source), "--at", AT)
+
+    assert output == {"added": 2, "companies": 2}
+
+
+def test_screen_record_only_enqueues_research_now(tmp_path: Path, capsys):
+    source = _write(
+        tmp_path / "screen.json",
+        {
+            "screen_id": "baseline-2026-08-08",
+            "mode": "baseline",
+            "at": AT,
+            "decisions": [
+                {
+                    "symbol": "CN:000001",
+                    "route": "ignore",
+                    "reason": "暂不值得研究",
+                    "event_triggers": ["下一份年报出现业务转型"],
+                },
+                {
+                    "symbol": "CN:000002",
+                    "route": "watch",
+                    "reason": "等待价格",
+                    "price_levels": [{"id": "buy", "label": "关注区", "threshold": 10}],
+                },
+                {"symbol": "CN:000003", "route": "research_now", "reason": "出现拐点"},
+            ],
+        },
     )
-    quotes_path.write_text(
-        json.dumps([{"symbol": "CN:600519", "price": 1090}], ensure_ascii=False),
-        encoding="utf-8",
+
+    output = _call(tmp_path, capsys, "screen", "record", "--input", str(source))
+
+    assert (output["ignore"], output["watch"], output["research_now"]) == (1, 1, 1)
+    assert [task["symbol"] for task in output["enqueued"]] == ["CN:000003"]
+
+
+def test_screen_next_and_explicit_requeue_have_no_fixed_concurrency(tmp_path: Path, capsys):
+    source = _write(
+        tmp_path / "three-research-tasks.json",
+        {
+            "screen_id": "2026-h1",
+            "mode": "event",
+            "at": AT,
+            "decisions": [
+                {"symbol": symbol, "route": "research_now", "reason": "半年报变化"}
+                for symbol in ("CN:000001", "CN:000002", "CN:000003")
+            ],
+        },
+    )
+    screened = _call(tmp_path, capsys, "screen", "record", "--input", str(source))
+    assert len(screened["enqueued"]) == 3
+
+    dispatched = _call(tmp_path, capsys, "research", "next", "--limit", "2", "--at", AT)
+    assert dispatched["count"] == 2
+    task_id = dispatched["tasks"][0]["task_id"]
+    restored = _call(tmp_path, capsys, "research", "requeue", task_id)
+    assert restored["task"]["status"] == "queued"
+
+
+def test_research_complete_writes_current_report_and_full_watchlist(tmp_path: Path, capsys):
+    task_id = _screen_and_dispatch(
+        tmp_path,
+        capsys,
+        "CN:601138",
+        trigger_id="initial",
+    )
+    result = _write(tmp_path / "result.json", _full_result("CN:601138", task_id))
+
+    completed = _call(tmp_path, capsys, "research", "complete", "--input", str(result))
+    listed = _call(tmp_path, capsys, "watchlist", "list")
+
+    assert completed["status"] == "researched"
+    assert completed["report_path"] == "research/companies/CN/601138/current.md"
+    assert (tmp_path / completed["report_path"]).is_file()
+    company = listed["companies"][0]
+    assert company["key_logic"] == ["需求增长", "现金流转化决定估值"]
+    assert [level["id"] for level in company["price_levels"]] == [
+        "attention",
+        "attractive",
+    ]
+
+
+def test_watchlist_close_scan_emits_independent_price_levels(tmp_path: Path, capsys):
+    task_id = _screen_and_dispatch(
+        tmp_path,
+        capsys,
+        "CN:601138",
+        trigger_id="price-scan-fixture",
+    )
+    result = _write(tmp_path / "result.json", _full_result("CN:601138", task_id))
+    _call(tmp_path, capsys, "research", "complete", "--input", str(result), "--at", AT)
+    quotes = _write(
+        tmp_path / "quotes.json",
+        {"trading_date": "2026-08-11", "quotes": [{"symbol": "CN:601138", "close": 49}]},
     )
 
-    code = main(["alerts", "check", "--alerts", str(alerts_path), "--quotes", str(quotes_path)])
-
-    assert code == 0
-    assert "triggered_count" in capsys.readouterr().out
-
-
-def test_cli_alerts_check_accepts_utf8_bom_json(tmp_path: Path, capsys):
-    from trading_os.cli import main
-
-    alerts_path = tmp_path / "alerts.json"
-    quotes_path = tmp_path / "quotes.json"
-    alerts_path.write_text(
-        "\ufeff"
-        + json.dumps(
-            {
-                "schema_version": 1,
-                "items": [
-                    {
-                        "symbol": "CN:600519",
-                        "name": "璐靛窞鑼呭彴",
-                        "type": "price_below",
-                        "price": 1100,
-                        "reason": "Enter buy zone.",
-                        "latest_report": "companies/CN/600519/reports/2026-07-06-initial.md",
-                    }
-                ],
-            },
-            ensure_ascii=False,
-        ),
-        encoding="utf-8",
-    )
-    quotes_path.write_text(
-        "\ufeff" + json.dumps([{"symbol": "CN:600519", "price": 1090}], ensure_ascii=False),
-        encoding="utf-8",
+    scanned = _call(
+        tmp_path,
+        capsys,
+        "watchlist",
+        "scan-close",
+        "--input",
+        str(quotes),
+        "--at",
+        AT,
     )
 
-    code = main(["alerts", "check", "--alerts", str(alerts_path), "--quotes", str(quotes_path)])
+    assert scanned["hit_count"] == 2
+    assert [hit["level_id"] for hit in scanned["hits"]] == ["attention", "attractive"]
+    assert all("enqueued" not in hit and "task_id" not in hit for hit in scanned["hits"])
+    pending = _call(tmp_path, capsys, "research", "next", "--limit", "1", "--at", AT)
+    assert pending == {"count": 0, "tasks": []}
 
-    assert code == 0
-    assert '"triggered_count": 1' in capsys.readouterr().out
 
-
-def test_cli_alerts_check_rejects_non_object_alerts(tmp_path: Path, capsys):
-    from trading_os.cli import main
-
-    alerts_path = tmp_path / "alerts.json"
-    quotes_path = tmp_path / "quotes.json"
-    alerts_path.write_text(json.dumps([], ensure_ascii=False), encoding="utf-8")
-    quotes_path.write_text(
-        json.dumps([{"symbol": "CN:600519", "price": 1090}], ensure_ascii=False),
-        encoding="utf-8",
+def test_watchlist_build_and_validate_detect_a_consistent_projection(tmp_path: Path, capsys):
+    task_id = _screen_and_dispatch(
+        tmp_path,
+        capsys,
+        "CN:601138",
+        trigger_id="watchlist-fixture",
     )
+    result = _write(tmp_path / "result.json", _full_result("CN:601138", task_id))
+    _call(tmp_path, capsys, "research", "complete", "--input", str(result), "--at", AT)
 
-    code = main(["alerts", "check", "--alerts", str(alerts_path), "--quotes", str(quotes_path)])
+    built = _call(tmp_path, capsys, "watchlist", "build")
+    validated = _call(tmp_path, capsys, "validate")
 
-    captured = capsys.readouterr()
-    assert code == 1
-    assert captured.out == ""
-    payload = json.loads(captured.err)
-    assert payload["ok"] is False
-    assert "alert" in payload["error"]
-    assert "Traceback" not in captured.err
+    assert built == {"count": 1, "path": "research/watchlist.jsonl"}
+    assert validated["status"]["researched"] == 1
 
 
-def test_cli_company_validate_missing_dir_writes_json_error_to_stderr(
-    tmp_path: Path, capsys
+def test_watchlist_fetch_and_run_close_only_request_price_monitored_companies(
+    tmp_path: Path,
+    capsys,
+    monkeypatch,
 ):
-    from trading_os.cli import main
-
-    code = main(["company", "validate", str(tmp_path / "missing-company")])
-
-    captured = capsys.readouterr()
-    assert code == 1
-    assert captured.out == ""
-    payload = json.loads(captured.err)
-    assert payload["ok"] is False
-    assert "company directory does not exist" in payload["error"]
-
-
-def test_cli_index_rebuild_invalid_metadata_writes_json_error_to_stderr(
-    tmp_path: Path, capsys
-):
-    from trading_os.cli import main
-
-    company_dir = write_company(tmp_path)
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["latest_report"] = "reports/missing.md"
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
+    source = _write(
+        tmp_path / "watch.json",
+        {
+            "screen_id": "watch-close-fetch",
+            "mode": "baseline",
+            "at": AT,
+            "decisions": [
+                {
+                    "symbol": "CN:000001",
+                    "name": "平安银行",
+                    "route": "watch",
+                    "reason": "等待价格",
+                    "price_levels": [
+                        {"id": "attention", "label": "关注区", "threshold": 10}
+                    ],
+                },
+                {
+                    "symbol": "CN:000002",
+                    "name": "万科A",
+                    "route": "watch",
+                    "reason": "只等待事件",
+                    "event_triggers": ["下一份财报"],
+                },
+            ],
+        },
     )
+    _call(tmp_path, capsys, "screen", "record", "--input", str(source))
+    requested: list[dict[str, str | None]] = []
 
-    code = main(["index", "rebuild", "--research-root", str(tmp_path / "research")])
-
-    captured = capsys.readouterr()
-    assert code == 1
-    assert captured.out == ""
-    payload = json.loads(captured.err)
-    assert payload["ok"] is False
-    assert any("latest_report" in error for error in payload["errors"])
-
-
-def test_cli_coverage_set_screening_get_list_and_status(tmp_path: Path, capsys):
-    from trading_os.cli import main
-
-    root = tmp_path / "coverage" / "cn-a"
-
-    code = main(
-        [
-            "coverage",
-            "set-screening",
-            "CN:300750",
-            "--root",
-            str(root),
-            "--name",
-            "宁德时代",
-            "--decision",
-            "deep_research",
-            "--priority",
-            "1",
-            "--reason",
-            "动力电池龙头，值得完整研究。",
-            "--evidence",
-            "行业龙头",
-            "--next-action",
-            "加入研究队列。",
-        ]
-    )
-    assert code == 0
-
-    code = main(["coverage", "get", "CN:300750", "--root", str(root)])
-    assert code == 0
-    assert "宁德时代" in capsys.readouterr().out
-
-    code = main(["coverage", "list", "--root", str(root), "--decision", "deep_research"])
-    assert code == 0
-    assert "CN:300750" in capsys.readouterr().out
-
-    code = main(["coverage", "status", "--root", str(root)])
-    assert code == 0
-    assert '"deep_research": 1' in capsys.readouterr().out
-
-
-def test_cli_coverage_enqueue_and_validate(tmp_path: Path, capsys):
-    from trading_os.cli import main
-
-    root = tmp_path / "coverage" / "cn-a"
-
-    code = main(
-        [
-            "coverage",
-            "enqueue",
-            "CN:300750",
-            "--root",
-            str(root),
-            "--name",
-            "宁德时代",
-            "--priority",
-            "1",
-            "--reason",
-            "筛选结果为 deep_research。",
-        ]
-    )
-    assert code == 0
-
-    code = main(["coverage", "validate", "--root", str(root)])
-    assert code == 0
-    assert '"ok": true' in capsys.readouterr().out
-
-
-def _write_reconcile_queue(tmp_path: Path) -> tuple[Path, Path]:
-    from trading_os.research_assets.coverage_store import write_jsonl
-
-    company_dir = write_company(tmp_path)
-    root = tmp_path / "coverage" / "cn-a"
-    write_jsonl(
-        root / "research_queue.jsonl",
-        [
-            {
-                "symbol": "CN:600519",
-                "name": "贵州茅台",
-                "task_type": "initial_research",
-                "priority": 1,
-                "status": "pending",
-                "reason": "进入研究队列。",
-                "target_company_dir": str(company_dir),
-                "assigned_agent": None,
-                "started_at": None,
-                "finished_at": None,
-                "result_path": None,
-                "failure_reason": None,
-                "next_action": "完成初始研究。",
-            }
-        ],
-    )
-    return root, tmp_path / "research"
-
-
-def test_cli_coverage_reconcile_check_reports_drift_without_writing(
-    tmp_path: Path, capsys
-):
-    from trading_os.cli import main
-    from trading_os.research_assets.coverage_store import read_jsonl
-
-    root, research_root = _write_reconcile_queue(tmp_path)
-
-    code = main(
-        [
-            "coverage",
-            "reconcile",
-            "--check",
-            "--root",
-            str(root),
-            "--research-root",
-            str(research_root),
-        ]
-    )
-
-    payload = json.loads(capsys.readouterr().out)
-    assert code == 1
-    assert payload["change_count"] == 1
-    assert payload["applied"] is False
-    assert read_jsonl(root / "research_queue.jsonl")[0]["status"] == "pending"
-
-
-def test_cli_coverage_reconcile_apply_updates_queue(tmp_path: Path, capsys):
-    from trading_os.cli import main
-    from trading_os.research_assets.coverage_store import read_jsonl
-
-    root, research_root = _write_reconcile_queue(tmp_path)
-
-    code = main(
-        [
-            "coverage",
-            "reconcile",
-            "--apply",
-            "--root",
-            str(root),
-            "--research-root",
-            str(research_root),
-        ]
-    )
-
-    payload = json.loads(capsys.readouterr().out)
-    assert code == 0
-    assert payload["change_count"] == 1
-    assert payload["applied"] is True
-    assert read_jsonl(root / "research_queue.jsonl")[0]["status"] == "completed"
-
-
-@pytest.mark.parametrize("modes", [[], ["--check", "--apply"]])
-def test_cli_coverage_reconcile_requires_exactly_one_mode(
-    tmp_path: Path, modes: list[str]
-):
-    from trading_os.cli import main
-
-    root, research_root = _write_reconcile_queue(tmp_path)
-
-    with pytest.raises(SystemExit) as exc:
-        main(
-            [
-                "coverage",
-                "reconcile",
-                *modes,
-                "--root",
-                str(root),
-                "--research-root",
-                str(research_root),
-            ]
+    def fake_fetch(companies, *, trading_date, fetched_at):
+        requested.append(dict(companies))
+        assert trading_date == "2026-08-07"
+        assert fetched_at == AT
+        return (
+            DailyClose(
+                symbol="CN:000001",
+                name="平安银行",
+                close=9.5,
+                trading_date="2026-08-07",
+                closed_at="2026-08-07T15:00:00+08:00",
+                source_url="https://qt.gtimg.cn/q=sz000001",
+            ),
         )
 
-    assert exc.value.code == 2
+    monkeypatch.setattr(cli_module, "fetch_tencent_daily_closes", fake_fetch)
+    fetched = _call(
+        tmp_path,
+        capsys,
+        "watchlist",
+        "fetch-close",
+        "--date",
+        "2026-08-07",
+        "--at",
+        AT,
+    )
+    scanned = _call(
+        tmp_path,
+        capsys,
+        "watchlist",
+        "run-close",
+        "--date",
+        "2026-08-07",
+        "--at",
+        AT,
+    )
+
+    assert requested == [
+        {"CN:000001": "平安银行"},
+        {"CN:000001": "平安银行"},
+    ]
+    assert fetched["quote_count"] == 1
+    assert scanned["quote_count"] == 1
+    assert scanned["hit_count"] == 1
+
+
+def test_events_fetch_requires_explicit_bootstrap_and_only_advances_after_exact_judgment(
+    tmp_path: Path,
+    capsys,
+    monkeypatch,
+):
+    universe = _write(
+        tmp_path / "universe.json",
+        {
+            "companies": [
+                {"symbol": "CN:000001", "name": "平安银行"},
+                {"symbol": "CN:601138", "name": "工业富联"},
+            ]
+        },
+    )
+    _call(
+        tmp_path,
+        capsys,
+        "universe",
+        "register",
+        "--input",
+        str(universe),
+        "--at",
+        AT,
+    )
+
+    code = main(["--root", str(tmp_path), "events", "fetch"])
+    error = json.loads(capsys.readouterr().err)
+    assert code == 1
+    assert "--since" in error["error"]
+
+    announcement = Announcement(
+        announcement_id="1225000001",
+        symbol="CN:000001",
+        title="2026年半年度报告",
+        published_at="2026-08-08T08:00:00+08:00",
+        url="https://static.cninfo.com.cn/finalpage/2026-08-08/1225000001.PDF",
+    )
+    calls: list[tuple[tuple[str, ...], str, str]] = []
+
+    def fake_discover(companies, start, end):
+        calls.append((tuple(companies), start, end))
+        return (announcement,) if len(calls) == 1 else ()
+
+    monkeypatch.setattr(
+        cli_module,
+        "discover_cninfo_announcements_for_companies",
+        fake_discover,
+    )
+    packet = _call(
+        tmp_path,
+        capsys,
+        "events",
+        "fetch",
+        "--since",
+        "2026-08-08T00:00:00+08:00",
+        "--until",
+        "2026-08-09T00:00:00+08:00",
+    )
+    packet_path = _write(tmp_path / "event-packet.json", packet)
+    incomplete = _write(
+        tmp_path / "incomplete.json", {"successfully_judged_ids": []}
+    )
+
+    code = main(
+        [
+            "--root",
+            str(tmp_path),
+            "events",
+            "complete",
+            "--packet",
+            str(packet_path),
+            "--input",
+            str(incomplete),
+        ]
+    )
+    captured = capsys.readouterr()
+    assert code == 1
+    assert "missing" in json.loads(captured.err)["error"]
+    assert not (tmp_path / "coverage/cn-a/event_scan_state.json").exists()
+
+    complete = _write(
+        tmp_path / "complete.json",
+        {"successfully_judged_ids": ["1225000001"]},
+    )
+    advanced = _call(
+        tmp_path,
+        capsys,
+        "events",
+        "complete",
+        "--packet",
+        str(packet_path),
+        "--input",
+        str(complete),
+    )
+    assert advanced["advanced"] is True
+    assert advanced["last_successful_at"] == "2026-08-09T00:00:00+08:00"
+
+    next_packet = _call(
+        tmp_path,
+        capsys,
+        "events",
+        "fetch",
+        "--until",
+        "2026-08-10T00:00:00+08:00",
+    )
+    assert next_packet["announcement_count"] == 0
+    assert calls[0][0] == ("CN:000001", "CN:601138")
+    assert calls[1][1] == "2026-08-08T00:00:00+08:00"
+
+
+def test_events_fetch_can_write_a_utf8_packet_inside_the_repository(
+    tmp_path: Path,
+    capsys,
+    monkeypatch,
+):
+    monkeypatch.setattr(
+        cli_module,
+        "discover_cninfo_announcements_for_companies",
+        lambda _companies, _start, _end: (),
+    )
+    result = _call(
+        tmp_path,
+        capsys,
+        "events",
+        "fetch",
+        "--since",
+        "2026-08-08T00:00:00+08:00",
+        "--until",
+        "2026-08-09T00:00:00+08:00",
+        "--output",
+        "tmp/event-packet.json",
+    )
+
+    packet_path = tmp_path / result["packet_path"]
+    packet = json.loads(packet_path.read_text(encoding="utf-8"))
+    assert result["announcement_count"] == 0
+    assert packet["scan_start"] == "2026-08-08T00:00:00+08:00"
+    assert packet["announcements"] == []
+
+
+def test_research_complete_rejects_missing_task_id(tmp_path: Path, capsys):
+    result = _write(tmp_path / "result.json", _full_result("CN:601138"))
+
+    code = main(
+        [
+            "--root",
+            str(tmp_path),
+            "research",
+            "complete",
+            "--input",
+            str(result),
+            "--at",
+            AT,
+        ]
+    )
+
+    captured = capsys.readouterr()
+    assert code == 1
+    assert captured.out == ""
+    assert "task_id" in json.loads(captured.err)["error"]
+    assert not (tmp_path / "coverage/cn-a/research_state.jsonl").exists()
+
+
+def test_research_complete_rejects_a_task_that_was_not_dispatched(tmp_path: Path, capsys):
+    source = _write(
+        tmp_path / "queued-screen.json",
+        {
+            "screen_id": "not-dispatched",
+            "mode": "event",
+            "at": AT,
+            "decisions": [
+                {
+                    "symbol": "CN:601138",
+                    "route": "research_now",
+                    "reason": "值得完整研究",
+                }
+            ],
+        },
+    )
+    queued = _call(
+        tmp_path,
+        capsys,
+        "screen",
+        "record",
+        "--input",
+        str(source),
+    )
+    task_id = queued["enqueued"][0]["task_id"]
+    result = _write(tmp_path / "result.json", _full_result("CN:601138", task_id))
+
+    code = main(
+        [
+            "--root",
+            str(tmp_path),
+            "research",
+            "complete",
+            "--input",
+            str(result),
+            "--at",
+            AT,
+        ]
+    )
+
+    captured = capsys.readouterr()
+    assert code == 1
+    assert captured.out == ""
+    assert "must be dispatched" in json.loads(captured.err)["error"]
+    dispatched = _call(tmp_path, capsys, "research", "next", "--limit", "1", "--at", AT)
+    assert dispatched["tasks"][0]["task_id"] == task_id
+
+
+def test_invalid_input_returns_one_compact_json_error(tmp_path: Path, capsys):
+    bad = tmp_path / "bad.json"
+    bad.write_text("{not json", encoding="utf-8")
+
+    code = main(["--root", str(tmp_path), "universe", "register", "--input", str(bad)])
+
+    captured = capsys.readouterr()
+    assert code == 1
+    assert captured.out == ""
+    error = json.loads(captured.err)
+    assert error["ok"] is False
+    assert error["error"]
+
+
+def test_input_templates_are_valid_and_contain_only_the_compact_model():
+    names = (
+        "universe.json",
+        "screen-decisions.json",
+        "research-result.json",
+        "close-quotes.json",
+        "event-judgments.json",
+    )
+    combined = ""
+    for name in names:
+        text = (ROOT / "templates" / name).read_text(encoding="utf-8")
+        assert json.loads(text)
+        combined += text.lower()
+    for removed in ("underwriting", "challenger", "allocation", "calibration", "claim"):
+        assert removed not in combined

@@ -1,14 +1,5 @@
 # Claude Guide
 
-Read `AGENTS.md` first. It is the source of truth for this repository.
+先读根目录 `AGENTS.md`，它是本仓库唯一的 Agent 说明。
 
-Important routing:
-
-- Use `coverage/` and `playbooks/screening.md` before broad A-share research.
-  Screening is for priority, risk labels, and resumable queue state; the default
-  A-share policy is research-as-much-as-practical, not aggressive exclusion.
-- Prefer `python -m trading_os coverage ...` for JSONL coverage updates instead of
-  hand-editing large files.
-- Use `research/companies/` only for accepted company research assets.
-- Write company research reports in Chinese unless the user explicitly asks otherwise.
-- Do not revive legacy trading, backtest, recipe, CANSLIM, DataHub, or paper-trading workflows.
+本仓库使用一套轻量流程：主 Agent 批量初筛，只有 `research_now` 才派单公司 Agent；一家公司由一个 Agent 端到端完成，不做多角色复核或阶段审批。全市场状态、自选池、当前报告和每日收盘价格扫描的详细约定见 `playbooks/simple-research.md`。
