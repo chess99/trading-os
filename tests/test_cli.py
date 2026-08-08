@@ -30,7 +30,7 @@ def _full_result(symbol: str, task_id: str | None = None) -> dict:
     payload = {
         "symbol": symbol,
         "name": "示例公司",
-        "outcome": "researched",
+        "outcome": "covered",
         "summary": "需求成立，现金流仍需验证。",
         "key_logic": ["需求增长", "现金流转化决定估值"],
         "risks": ["客户集中", "资本开支回报不及预期"],
@@ -41,6 +41,7 @@ def _full_result(symbol: str, task_id: str | None = None) -> dict:
         ],
         "event_triggers": ["下一期财报发布"],
         "source_urls": ["https://example.com/report"],
+        "information_cutoff": AT,
         "report_markdown": "# 示例公司\n\n需求成立，但现金流转化仍需验证。",
     }
     return {"task_id": task_id, "at": AT, "result": payload} if task_id else payload
@@ -127,12 +128,15 @@ def test_empty_status_and_validate_are_readable(tmp_path: Path, capsys):
     status = _call(tmp_path, capsys, "status")
     assert status == {
         "companies": 0,
-        "dispatched": 0,
+        "active": 0,
+        "candidates": 0,
+        "covered": 0,
         "ignored": 0,
         "queued": 0,
-        "researched": 0,
+        "inactive": 0,
+        "running": 0,
+        "stale": 0,
         "unseen": 0,
-        "watched": 0,
         "watchlist": 0,
     }
     validated = _call(tmp_path, capsys, "validate")
@@ -159,6 +163,31 @@ def test_universe_register_accepts_wrapper_json_and_jsonl(tmp_path: Path, capsys
     assert output == {"added": 2, "companies": 2}
 
 
+def test_universe_sync_uses_a_complete_active_snapshot(tmp_path: Path, capsys):
+    first = _write(
+        tmp_path / "first.json",
+        {"companies": [{"symbol": "CN:000001"}, {"symbol": "CN:000002"}]},
+    )
+    second = _write(
+        tmp_path / "second.json",
+        {"companies": [{"symbol": "CN:000002"}, {"symbol": "CN:000003"}]},
+    )
+    _call(tmp_path, capsys, "universe", "register", "--input", str(first), "--at", AT)
+
+    synced = _call(tmp_path, capsys, "universe", "sync", "--input", str(second), "--at", AT)
+    status = _call(tmp_path, capsys, "status")
+
+    assert synced == {
+        "added": 1,
+        "enqueued_tasks": [],
+        "inactivated": 1,
+        "reactivated": 0,
+        "renamed": 0,
+        "total": 2,
+    }
+    assert (status["companies"], status["active"], status["inactive"]) == (3, 2, 1)
+
+
 def test_screen_record_only_enqueues_research_now(tmp_path: Path, capsys):
     source = _write(
         tmp_path / "screen.json",
@@ -175,7 +204,7 @@ def test_screen_record_only_enqueues_research_now(tmp_path: Path, capsys):
                 },
                 {
                     "symbol": "CN:000002",
-                    "route": "watch",
+                    "route": "ignore",
                     "reason": "等待价格",
                     "price_levels": [{"id": "buy", "label": "关注区", "threshold": 10}],
                 },
@@ -186,7 +215,7 @@ def test_screen_record_only_enqueues_research_now(tmp_path: Path, capsys):
 
     output = _call(tmp_path, capsys, "screen", "record", "--input", str(source))
 
-    assert (output["ignore"], output["watch"], output["research_now"]) == (1, 1, 1)
+    assert (output["ignore"], output["research_now"]) == (2, 1)
     assert [task["symbol"] for task in output["enqueued"]] == ["CN:000003"]
 
 
@@ -225,7 +254,7 @@ def test_research_complete_writes_current_report_and_full_watchlist(tmp_path: Pa
     completed = _call(tmp_path, capsys, "research", "complete", "--input", str(result))
     listed = _call(tmp_path, capsys, "watchlist", "list")
 
-    assert completed["status"] == "researched"
+    assert completed["status"] == "covered"
     assert completed["report_path"] == "research/companies/CN/601138/current.md"
     assert (tmp_path / completed["report_path"]).is_file()
     company = listed["companies"][0]
@@ -282,7 +311,7 @@ def test_watchlist_build_and_validate_detect_a_consistent_projection(tmp_path: P
     validated = _call(tmp_path, capsys, "validate")
 
     assert built == {"count": 1, "path": "research/watchlist.jsonl"}
-    assert validated["status"]["researched"] == 1
+    assert validated["status"]["covered"] == 1
 
 
 def test_watchlist_fetch_and_run_close_only_request_price_monitored_companies(
@@ -300,7 +329,7 @@ def test_watchlist_fetch_and_run_close_only_request_price_monitored_companies(
                 {
                     "symbol": "CN:000001",
                     "name": "平安银行",
-                    "route": "watch",
+                    "route": "research_now",
                     "reason": "等待价格",
                     "price_levels": [
                         {"id": "attention", "label": "关注区", "threshold": 10}
@@ -309,14 +338,23 @@ def test_watchlist_fetch_and_run_close_only_request_price_monitored_companies(
                 {
                     "symbol": "CN:000002",
                     "name": "万科A",
-                    "route": "watch",
+                    "route": "research_now",
                     "reason": "只等待事件",
                     "event_triggers": ["下一份财报"],
                 },
             ],
         },
     )
-    _call(tmp_path, capsys, "screen", "record", "--input", str(source))
+    screened = _call(tmp_path, capsys, "screen", "record", "--input", str(source))
+    assert len(screened["enqueued"]) == 2
+    started = _call(tmp_path, capsys, "research", "next", "--limit", "2", "--at", AT)
+    for task in started["tasks"]:
+        payload = _full_result(task["symbol"], task["task_id"])
+        payload["result"].pop("name")
+        if task["symbol"] == "CN:000002":
+            payload["result"]["price_levels"] = []
+        result_path = _write(tmp_path / f"{task['task_id']}.json", payload)
+        _call(tmp_path, capsys, "research", "complete", "--input", str(result_path))
     requested: list[dict[str, str | None]] = []
 
     def fake_fetch(companies, *, trading_date, fetched_at):
@@ -362,7 +400,7 @@ def test_watchlist_fetch_and_run_close_only_request_price_monitored_companies(
     ]
     assert fetched["quote_count"] == 1
     assert scanned["quote_count"] == 1
-    assert scanned["hit_count"] == 1
+    assert scanned["hit_count"] == 2
 
 
 def test_events_fetch_requires_explicit_bootstrap_and_only_advances_after_exact_judgment(
@@ -571,7 +609,7 @@ def test_research_complete_rejects_a_task_that_was_not_dispatched(tmp_path: Path
     captured = capsys.readouterr()
     assert code == 1
     assert captured.out == ""
-    assert "must be dispatched" in json.loads(captured.err)["error"]
+    assert "must be running" in json.loads(captured.err)["error"]
     dispatched = _call(tmp_path, capsys, "research", "next", "--limit", "1", "--at", AT)
     assert dispatched["tasks"][0]["task_id"] == task_id
 

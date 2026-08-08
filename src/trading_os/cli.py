@@ -55,16 +55,33 @@ def build_parser() -> argparse.ArgumentParser:
     validate = commands.add_parser("validate", help="只读校验状态、队列、观察池和当前报告")
     validate.set_defaults(handler=_validate)
 
+    state = commands.add_parser("state", help="维护公司状态模型和全市场基线")
+    state_commands = state.add_subparsers(dest="state_command", required=True)
+    migrate_v2 = state_commands.add_parser("migrate-v2", help="迁移到候选/覆盖/失效状态模型")
+    _add_at(migrate_v2)
+    migrate_v2.set_defaults(handler=_state_migrate_v2)
+    rebaseline = state_commands.add_parser(
+        "prepare-rebaseline", help="保留有效覆盖，重置其余公司供全市场重筛"
+    )
+    _add_at(rebaseline)
+    rebaseline.set_defaults(handler=_state_prepare_rebaseline)
+
     universe = commands.add_parser("universe", help="维护全市场证券清单")
     universe_commands = universe.add_subparsers(dest="universe_command", required=True)
     register = universe_commands.add_parser("register", help="登记证券，已有判断不会被覆盖")
     _add_input(register)
     _add_at(register)
     register.set_defaults(handler=_universe_register)
+    sync = universe_commands.add_parser(
+        "sync", help="用完整证券快照同步 active/inactive，保留已有研究历史"
+    )
+    _add_input(sync)
+    _add_at(sync)
+    sync.set_defaults(handler=_universe_sync)
 
     screen = commands.add_parser("screen", help="记录主 Agent 的批量初筛")
     screen_commands = screen.add_subparsers(dest="screen_command", required=True)
-    record = screen_commands.add_parser("record", help="记录 ignore/watch/research_now")
+    record = screen_commands.add_parser("record", help="记录 ignore/research_now")
     _add_input(record)
     record.add_argument("--screen-id", help="覆盖输入文件中的 screen_id")
     record.add_argument("--mode", choices=("baseline", "event"), help="覆盖输入中的筛选模式")
@@ -200,9 +217,6 @@ def _screen_decision(payload: Mapping[str, Any]) -> ScreenDecision:
         name=payload.get("name"),
         route=payload["route"],
         reason=payload["reason"],
-        price_levels=_levels(payload),
-        buy_below=payload.get("buy_below"),
-        rearm_above=payload.get("rearm_above"),
         event_triggers=payload.get("event_triggers") or (),
         source_urls=payload.get("source_urls") or (),
     )
@@ -232,7 +246,9 @@ def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
         rearm_above=payload.get("rearm_above"),
         event_triggers=payload.get("event_triggers") or (),
         source_urls=payload.get("source_urls") or (),
+        information_cutoff=payload["information_cutoff"],
         report_markdown=payload.get("report_markdown"),
+        valuation_note=payload.get("valuation_note"),
     )
 
 
@@ -268,6 +284,20 @@ def _validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     return {"ok": True, "status": asdict(_flow(args).validate())}
 
 
+def _state_migrate_v2(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    flow = _flow(args)
+    migrated = flow.migrate_state_v2(at=args.at)
+    return {"migrated": migrated, "status": asdict(flow.validate())}
+
+
+def _state_prepare_rebaseline(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    flow = _flow(args)
+    reset = flow.prepare_rebaseline(at=args.at)
+    return {"reset": reset, "status": asdict(flow.validate())}
+
+
 def _universe_register(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     payload, _ = _load(args.input, stdin)
     companies = [
@@ -277,6 +307,15 @@ def _universe_register(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
     flow = _flow(args)
     added = flow.register_universe(companies, at=args.at)
     return {"added": added, "companies": flow.status().companies}
+
+
+def _universe_sync(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    payload, _ = _load(args.input, stdin)
+    companies = [
+        CompanyRef(symbol=item["symbol"], name=item.get("name"))
+        for item in _records(payload, "companies")
+    ]
+    return _jsonable(_flow(args).sync_universe(companies, at=args.at))
 
 
 def _screen_record(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
@@ -295,8 +334,7 @@ def _screen_record(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     return {
         "total": update.total,
         "ignore": update.ignored,
-        "watch": update.watched,
-        "research_now": update.research_now,
+        "research_now": update.candidates,
         "enqueued": [_jsonable(task) for task in update.enqueued_tasks],
         "deduplicated": update.deduplicated,
     }

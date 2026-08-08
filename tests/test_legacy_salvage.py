@@ -63,7 +63,7 @@ def _current_result(symbol: str, name: str) -> ResearchResult:
     return ResearchResult(
         symbol=symbol,
         name=name,
-        outcome="researched",
+        outcome="covered",
         summary="当前结论",
         key_logic=("当前逻辑",),
         risks=("当前风险",),
@@ -71,6 +71,7 @@ def _current_result(symbol: str, name: str) -> ResearchResult:
         buy_below=12,
         event_triggers=("下一份财报",),
         source_urls=("https://example.com/current",),
+        information_cutoff=AT,
         report_markdown=f"# {name}\n\n这是当前有效研究。",
     )
 
@@ -172,7 +173,7 @@ def _condensed_result(symbol: str = "CN:000001") -> dict:
     return {
         "symbol": symbol,
         "name": "甲公司（已核验）",
-        "outcome": "researched",
+        "outcome": "covered",
         "summary": "现金流改善可能带来重估，但仍需下一期财报确认。",
         "key_logic": ["业务质量改善", "现金流决定估值上沿"],
         "risks": ["改善无法持续", "行业需求回落"],
@@ -182,6 +183,7 @@ def _condensed_result(symbol: str = "CN:000001") -> dict:
         ],
         "event_triggers": ["下一期财报发布"],
         "source_urls": ["https://example.com/revalidated-primary-source"],
+        "information_cutoff": AT,
         "report_markdown": (
             "# 甲公司当前研究\n\n"
             "旧稿中仍有效的是业务与现金流框架；这里是重新核验后的压缩结论。"
@@ -265,7 +267,7 @@ def test_apply_migrates_only_explicit_condensation_through_current_flow(legacy_r
     flow = ResearchFlow(legacy_repo)
     states = {item["symbol"]: item for item in flow.read_states()}
     migrated = states["CN:000001"]
-    assert migrated["status"] == "researched"
+    assert migrated["status"] == "covered"
     assert migrated["name"] == "甲公司（已核验）"
     assert migrated["value_range"] == {"currency": "CNY", "high": 26.0, "low": 18.0}
     assert "999" not in json.dumps(migrated, ensure_ascii=False)

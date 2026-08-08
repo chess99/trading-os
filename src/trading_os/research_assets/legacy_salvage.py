@@ -560,7 +560,9 @@ class LegacyReportSalvager:
             rearm_above=payload.get("rearm_above"),
             event_triggers=payload.get("event_triggers") or (),
             source_urls=payload.get("source_urls") or (),
+            information_cutoff=payload["information_cutoff"],
             report_markdown=payload.get("report_markdown"),
+            valuation_note=payload.get("valuation_note"),
         )
 
     def apply_decisions(
@@ -694,8 +696,8 @@ class LegacyReportSalvager:
                 raise LegacySalvageError(f"invalid migrate result for {symbol}: {exc}") from exc
             if normalized["symbol"] != symbol:
                 raise LegacySalvageError("result symbol does not match selected candidate")
-            if normalized["outcome"] != "researched":
-                raise LegacySalvageError("legacy salvage only accepts researched results")
+            if normalized["outcome"] != "covered":
+                raise LegacySalvageError("legacy salvage only accepts covered results")
             selected.append((dict(decision, reason=reason), entry, result))
             selected_blob_ids.append(entry.object_id)
 
