@@ -19,6 +19,7 @@ Trading OS 是一套面向 A 股的轻量研究工作流。它不做自动交易
 ```text
 coverage/cn-a/research_state.jsonl       全市场当前状态，一家公司一行
 coverage/cn-a/research_queue.jsonl       当前待办与运行中的单公司任务
+coverage/cn-a/screening_baseline.json    当前全市场初筛的数据截止时间、选择口径与结果计数
 coverage/cn-a/event_scan_state.json      财报与重大公告扫描的可变成功检查点
 research/watchlist.jsonl                 由全市场状态派生的自选池
 research/companies/CN/{代码}/current.md  真正完成过完整研究的公司当前报告
