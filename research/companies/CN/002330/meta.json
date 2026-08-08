@@ -1,92 +1,96 @@
 {
-  "symbol": "CN:002330",
-  "market": "CN",
-  "ticker": "002330",
-  "name": "得利斯",
-  "company_name": "得利斯",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "得利斯有区域品牌、五大生产基地和低温肉制品/预制菜增长方向，但2025年扣非仍亏损、2026Q1经营现金流转负，当前更适合观察或低价小仓位试探，等待扣非利润和现金流改善验证。",
-  "quality_rating": "C+",
-  "valuation_rating": "B-",
-  "fair_value_range": [
-    3.3,
-    4.1
-  ],
-  "buy_zone": [
-    3.0,
-    3.35
-  ],
-  "sell_or_reduce_zone": [
-    4.3,
-    4.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "得利斯",
+    "security_status": "active",
+    "symbol": "CN:002330",
+    "ticker": "002330"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "fdaf87547586a5e1e0222dda641d936913a7332a84136f6783f0424cba9d6277"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格在3.00-3.35元且未发生食品安全、资金占用或重大亏损扩大",
-      "action": "试探建仓",
-      "max_weight": 0.005,
-      "reason": "价格低于基准合理价值下沿，接近0.9倍PB，有资产支撑但盈利尚需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、库存和分产品毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1扣非利润为正、经营现金流转正且低温肉制品或预制菜毛利额提升",
-      "action": "加仓",
-      "max_weight": 0.015,
-      "reason": "经营质量改善被验证后，允许从观察仓提升到小仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认低温肉制品、预制菜和新零售趋势是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于4.30元但扣非利润和经营现金流没有同步改善",
-      "action": "减仓或不追买",
-      "max_weight": 0.005,
-      "reason": "价格进入估值上沿，盈利质量不足以支撑更高PB"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.35
+      },
+      "reason": "进入试探买入区间，需复核是否存在新负面公告",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "跌至悲观估值附近，若基本面未恶化可重新评估安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.3
+      },
+      "reason": "进入减持区间，若扣非利润未改善则估值赔率下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.35,
-      "reason": "进入试探买入区间，需复核是否存在新负面公告"
-    },
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "跌至悲观估值附近，若基本面未恶化可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 4.3,
-      "reason": "进入减持区间，若扣非利润未改善则估值赔率下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、库存和分产品毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认低温肉制品、预制菜和新零售趋势是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "低温肉制品收入占比和毛利率",
-    "速冻调理产品收入和毛利率",
-    "冷却肉及冷冻肉毛利率",
-    "存货和预付账款变化",
-    "政府补助占净利润比例",
-    "控股股东质押股数",
-    "食品安全处罚或重大事故"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

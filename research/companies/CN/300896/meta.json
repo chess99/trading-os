@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:300896",
-  "ticker": "300896",
-  "name": "爱美客",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "爱美客仍是中国合规注射医美龙头，高毛利、注册证壁垒和医生教育体系仍有价值；但2025年核心产品收入下滑、利润下台阶，2026Q1仍未确认反转，当前价格接近基准公允价值下沿但安全边际不足，等待业绩拐点或更低价格。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    90,
-    115
-  ],
-  "buy_zone": [
-    70,
-    85
-  ],
-  "sell_or_reduce_zone": [
-    130,
-    150
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "爱美客",
+    "security_status": "active",
+    "symbol": "CN:300896",
+    "ticker": "300896"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "c9bdf0c4a4bcc303e936e5dedff8d990a55c59ad9ff401d119367572e50f56fd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于85元且2026H1收入恢复正增长或扣非净利润降幅收窄至10%以内时，建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查收入、扣非净利润、毛利率和新品收入。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于70-85元且毛利率维持90%以上、经营现金流/归母净利润大于0.9时，提高至核心观察仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润中枢和核心产品动销趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于70元且无重大监管、管线或并购减值风险，同时确认利润底部稳定时，重新评估加仓。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和分红/研发投入，重估公允价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 85.0
+      },
+      "reason": "进入初始买入观察区，需要结合2026H1业绩确认是否具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入熊市估值区，需要复核是否为基本面永久受损还是过度悲观。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 130.0
+      },
+      "reason": "价格高于当前基准估值区间，若利润未重回15亿元以上，应考虑减仓或不追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 85,
-      "reason": "进入初始买入观察区，需要结合2026H1业绩确认是否具备安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入熊市估值区，需要复核是否为基本面永久受损还是过度悲观。"
-    },
-    {
-      "type": "price_above",
-      "price": 130,
-      "reason": "价格高于当前基准估值区间，若利润未重回15亿元以上，应考虑减仓或不追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查收入、扣非净利润、毛利率和新品收入。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润中枢和核心产品动销趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和分红/研发投入，重估公允价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

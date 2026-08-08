@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603036",
-  "ticker": "603036",
-  "name": "如通股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_thesis": "如通股份是低负债、小而专的油气钻采井口工具公司，2025年利润与现金流恢复明显，但2026Q1收入和利润下滑，当前价格约12.08元已高于9.0-11.5元的基准合理价值区间，缺少足够安全边际，适合观察等待更低价格或更强增长证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    9.0,
-    11.5
-  ],
-  "buy_zone": [
-    7.5,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "如通股份",
+    "security_status": "active",
+    "symbol": "CN:603036",
+    "ticker": "603036"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "5bf3b912b08de1a7f26972af2e4e549cabad3c712cbb412bc3140350a429d251"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于8.5元，且最新半年报收入未继续恶化、经营现金流仍覆盖净利润",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点查看收入恢复、毛利率、经营现金流和应收存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于7.5元，且订单、毛利率和现金流未出现结构性恶化",
-      "action": "提高至小仓位配置",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断2025年利润高增是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于13.5元，且2026年净利润无法证明稳定超过1.25亿元",
-      "action": "不买入或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红，重新评估正常化利润与合理估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入安全边际初步可接受区域，需复核收入、现金流和订单质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入更有吸引力的买入区，若基本面未恶化可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "超过基准估值上沿，若业绩没有明显超预期应减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入安全边际初步可接受区域，需复核收入、现金流和订单质量。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入更有吸引力的买入区，若基本面未恶化可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "超过基准估值上沿，若业绩没有明显超预期应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点查看收入恢复、毛利率、经营现金流和应收存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断2025年利润高增是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红，重新评估正常化利润与合理估值。"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

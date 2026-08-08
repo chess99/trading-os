@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:000920",
-  "market": "CN",
-  "ticker": "000920",
-  "name": "沃顿科技",
-  "company_name": "沃顿科技",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "国产反渗透膜和纳滤膜龙头，2025年膜产品收入和毛利率表现较好，现金流强于利润；但当前估值已隐含工业膜、新能源和盐湖提锂等高端应用兑现预期，缺少可量化订单前暂列观察。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "expensive_but_watchable",
-  "fair_value_range": [
-    10.4,
-    12.2
-  ],
-  "buy_zone": [
-    9.0,
-    10.2
-  ],
-  "sell_or_reduce_zone": [
-    13.8,
-    15.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "沃顿科技",
+    "security_status": "active",
+    "symbol": "CN:000920",
+    "ticker": "000920"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "5cef0b39c4bbd334aea21d12f02c070dca281c23a1f74346db8b75e56c518b07"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约12.75元且未见盐湖提锂或新能源订单量化公告",
-      "action": "仅观察或保留跟踪仓",
-      "max_weight": 0.01,
-      "reason": "价格高于基准合理价值区间，主题预期尚未充分兑现为可核验收入"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点确认膜产品增速、毛利率、应收账款和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至9.0-10.2元且膜产品收入增速维持双位数、毛利率不低于39%",
-      "action": "建立首笔仓位",
-      "max_weight": 0.03,
-      "reason": "核心膜产品质量较好，回到买入区后具备安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和订单公告，判断全年业绩兑现概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "披露工业膜、海水淡化、高盐废水、盐湖提锂等公告级大订单并可量化收入贡献",
-      "action": "复核后提高仓位",
-      "max_weight": 0.04,
-      "reason": "订单兑现可验证高端应用国产替代逻辑，但仍需控制主题估值波动"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入买入区上沿，需复核最新膜产品毛利率和订单兑现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入高安全边际区，可考虑提高至计划仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.8
+      },
+      "reason": "进入减仓区，若缺少订单和业绩兑现，估值风险上升",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "显著依赖乐观情景估值，需降低主题预期暴露",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入买入区上沿，需复核最新膜产品毛利率和订单兑现"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入高安全边际区，可考虑提高至计划仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 13.8,
-      "reason": "进入减仓区，若缺少订单和业绩兑现，估值风险上升"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "显著依赖乐观情景估值，需降低主题预期暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点确认膜产品增速、毛利率、应收账款和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和订单公告，判断全年业绩兑现概率"
-    }
-  ],
-  "key_tracking_metrics": [
-    "膜产品收入增速",
-    "膜产品毛利率",
-    "工业膜和海外收入表现",
-    "盐湖提锂或新能源相关订单金额",
-    "经营活动现金流净额",
-    "应收账款和合同资产余额",
-    "信用减值损失",
-    "研发投入占营业收入比例",
-    "膜用材料及膜组件能力提升项目进度",
-    "前五大客户和供应商集中度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

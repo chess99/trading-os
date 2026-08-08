@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:603587",
-  "market": "CN",
-  "ticker": "603587",
-  "name": "地素时尚",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "地素时尚是现金储备厚、无有息银行债、股东回报强的中高端女装公司。2025年渠道收缩和利润下滑后，2026Q1营收与扣非利润恢复增长，电商和直营改善，经销端有止跌迹象；当前价格扣除净金融资产后经营资产估值不高，适合小仓位买入并跟踪修复质量。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    13.5,
-    16.5
-  ],
-  "buy_zone": [
-    10.0,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    19.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "地素时尚",
+    "security_status": "active",
+    "symbol": "CN:603587",
+    "ticker": "603587"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f0a452d362c4c166f8988bd1701371dbc45d9e617d012f0ab874d035d8cd2141"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价处于10.0-12.0元且2026H1未出现营收、扣非利润或存货恶化时，可建立初始仓位。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查营收、扣非利润、渠道、存货和MACKAGE整合进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1确认营收正增长、扣非利润增速高于营收且存货继续下降后，可加仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1修复是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌破10.0元但基本面未恶化、分红政策维持，可作为深度价值仓补仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与分红方案，重新评估长期盈利中枢和股东回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度营收重新下滑，或库存及资产减值显著恶化，降低仓位或退出。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入悲观情景下沿附近，若基本面未变坏，安全边际显著提高。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "达到公允价值区间上沿，需要盈利修复超预期才能继续持有满仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入悲观情景下沿附近，若基本面未变坏，安全边际显著提高。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "达到公允价值区间上沿，需要盈利修复超预期才能继续持有满仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查营收、扣非利润、渠道、存货和MACKAGE整合进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1修复是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与分红方案，重新评估长期盈利中枢和股东回报。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

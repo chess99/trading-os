@@ -1,85 +1,105 @@
 {
-  "symbol": "CN:300965",
-  "ticker": "300965",
-  "name": "恒宇信通",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "小市值航空机载显控与信息可视化供应商，资质和型号配套壁垒真实，资产负债表有较多现金及理财资产托底；但客户集中度极高、2026Q1收入下滑并亏损、扣非利润和订单可见度不足，当前39.73元价格缺少足够安全边际，暂列观察。",
-  "fair_value_range": [
-    30,
-    38
-  ],
-  "buy_zone": [
-    24,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恒宇信通",
+    "security_status": "active",
+    "symbol": "CN:300965",
+    "ticker": "300965"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "f85eaf8504ba7d6dc42391acfec99929951cfcc6f91f3e768f88a5d2a7da4301"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于安全买入区间且2026Q1扣非亏损，维持观察，不主动建仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入、扣非利润、应收账款、信用减值和订单线索。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价回落至30元以下，且半年报显示应收账款和信用减值未继续恶化，可复核小仓位试探。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报是否确认经营恢复，尤其是图形图像处理及显示产品收入与毛利率。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026H2收入和扣非利润显著恢复，并出现可核验新型号或低空业务订单，可在重新估值后提高上限。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，判断2025年恢复是否可持续以及安全边际区间是否需要重估。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入基准安全买入区间上沿，需要复核半年报、应收账款和订单兑现。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入深度安全边际区间，若基本面未恶化，应重新评估买入赔率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "超过乐观估值下沿，若扣非利润未同步上修，应考虑减仓或继续回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入基准安全买入区间上沿，需要复核半年报、应收账款和订单兑现。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入深度安全边际区间，若基本面未恶化，应重新评估买入赔率。"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "超过乐观估值下沿，若扣非利润未同步上修，应考虑减仓或继续回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入、扣非利润、应收账款、信用减值和订单线索。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报是否确认经营恢复，尤其是图形图像处理及显示产品收入与毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，判断2025年恢复是否可持续以及安全边际区间是否需要重估。"
-    }
-  ],
-  "key_monitoring_items": [
-    "2026H1收入和扣非利润是否恢复",
-    "应收账款和信用减值损失变化",
-    "图形图像处理及显示产品毛利率",
-    "高可靠电子模块对外配套收入与毛利率",
-    "前五大客户和第一大客户收入占比",
-    "现金及交易性金融资产变化",
-    "低空经济、无人机或新型号批产订单的可核验披露"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

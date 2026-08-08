@@ -1,47 +1,77 @@
 {
-  "symbol": "CN:920523",
-  "market": "CN",
-  "ticker": "920523",
-  "name": "德瑞锂电",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "盈利与现金质量较好但新产能回报、出口退税和客户集中仍待验证，16.25元仅处于公允价值下沿，12至14元才有较充分安全边际。",
-  "fair_value_range": [16.0, 20.0],
-  "buy_zone": [12.0, 14.0],
-  "sell_or_reduce_zone": [22.0, 26.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德瑞锂电",
+    "security_status": "active",
+    "symbol": "CN:920523",
+    "ticker": "920523"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "dc35048e08557868769eef7d182e4623c734858e00c76d0c00856cf30d6e97de"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于12至14元且毛利率、主要客户和新产线认证未恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报、新产线认证及出口退税下调后的利润率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于12元时仅在重新验证长期商业价值未受损后考虑加仓",
-      "max_weight": 0.02
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报、新产线认证及出口退税下调后的利润率"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入有安全边际的买入观察区间，仍须确认基本面未恶化"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入有安全边际的买入观察区间，仍须确认基本面未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "进入减仓或不应追高区间，需由更高自由现金流支撑"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入减仓或不应追高区间，需由更高自由现金流支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-16T15:42:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

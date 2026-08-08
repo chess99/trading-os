@@ -1,106 +1,105 @@
 {
-  "symbol": "CN:002753",
-  "market": "CN",
-  "ticker": "002753",
-  "name": "永东股份",
-  "company_name": "山西永东化工股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司具备煤焦油深加工和炭黑一体化优势，但 2025 年炭黑毛利率极薄、2026Q1 收入增长而净利润几乎归零，当前约 5.93 元价格缺少足够安全边际。等待价格低于 4.2 元且毛利率、经营现金流出现修复后再考虑小仓位。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [3.8, 5.0],
-  "buy_zone": [0, 4.2],
-  "sell_or_reduce_zone": [6.2, 999],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永东股份",
+    "security_status": "active",
+    "symbol": "CN:002753",
+    "ticker": "002753"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "556af5759534e2c0de0a1989546db3b3cb5c567d357b8ede5d23fb17470e674b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 5.0 元且季度净利率未恢复到 2%以上",
-      "action": "不建仓，仅跟踪",
-      "target_position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价跌至 4.2 元以下，且最近一季经营现金流转正或综合毛利率环比改善",
-      "action": "建立验证性小仓位",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价跌至 3.6 元以下，且存货未继续快速上升、资产负债表未恶化",
-      "action": "分批加仓",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "连续两个季度综合毛利率高于 6%、净利率高于 2.5%，且价格仍低于 5.0 元",
-      "action": "提高至中等观察仓",
-      "target_position": "4%-5%",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "unit": "CNY/share",
-      "reason": "进入保守可买区，接近正常化盈利和 PB 估值下沿",
-      "action": "进入可买区，复核毛利率、经营现金流和存货"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "unit": "CNY/share",
-      "reason": "进入强安全边际区，对应低于约 0.6 倍 2026Q1 BVPS",
-      "action": "进入强安全边际区，若基本面未恶化可分批买入"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "unit": "CNY/share",
-      "reason": "高于合理价值区间上沿，且当前盈利修复尚未被财报证明",
-      "action": "若盈利尚未修复则不买或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计 2026 年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证 2026Q1 低利润率是否延续",
-      "action": "更新盈利、现金流和估值"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计 2026 年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证行业价差和存货风险是否改善",
-      "action": "复核行业价差和合理估值区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计 2026 年年度报告披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "完整评估新产能转固后的盈利和现金回报",
-      "action": "重算每股价值、仓位上限和长期评级"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入保守可买区，接近正常化盈利和 PB 估值下沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入强安全边际区，对应低于约 0.6 倍 2026Q1 BVPS",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "高于合理价值区间上沿，且当前盈利修复尚未被财报证明",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "炭黑吨毛利",
-    "综合毛利率",
-    "季度净利率",
-    "经营活动现金流净额",
-    "存货余额和存货周转",
-    "应收账款余额",
-    "新建产能利用率",
-    "有息负债和应付债券余额",
-    "分红率和回购执行情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

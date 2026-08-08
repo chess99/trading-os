@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:002474",
-  "ticker": "002474",
-  "name": "榕基软件",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "榕基软件具备政务信息化、信创适配和区域交付基础，但系统集成占比高、连续亏损、研发资本化率高、短债压力较大，2026H1 仍预亏；当前价格接近乐观情景估值，安全边际不足，维持观察不买。",
-  "fair_value_range": [
-    3.3,
-    4.6
-  ],
-  "buy_zone": [
-    2.8,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    7.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "榕基软件",
+    "security_status": "active",
+    "symbol": "CN:002474",
+    "ticker": "002474"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "d3c14ffd35227361e69ba4e56f6bc0f248a3efcdc3b757cabd8686b85791bf83"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价进入买入区间且半年报或三季报显示收入恢复、经营现金流转正、短期借款下降、研发资本化率下降时，允许建立观察仓。",
-      "action": "watch_position",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "2026 年半年报预计披露后，核验业绩预告兑现、收入确认、现金流、短债和资产减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "扣非归母净利润连续两个季度转正且经营现金流同步转正后，才允许从观察仓提高到小仓位。",
-      "action": "small_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报披露后，核验是否出现连续改善和全年扭亏可能。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于卖出/减仓区间且基本面仍未扭亏时，不参与或降低已有仓位。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年年报披露窗口，重估长期盈利能力和资产质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "跌入买入区间上沿后，重新核验半年报、现金流、短债和研发资本化率是否同步改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "价格超过乐观情景下沿而基本面未修复时，风险收益比恶化，应继续回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "跌入买入区间上沿后，重新核验半年报、现金流、短债和研发资本化率是否同步改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "reason": "价格超过乐观情景下沿而基本面未修复时，风险收益比恶化，应继续回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "2026 年半年报预计披露后，核验业绩预告兑现、收入确认、现金流、短债和资产减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报披露后，核验是否出现连续改善和全年扭亏可能。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年年报披露窗口，重估长期盈利能力和资产质量。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

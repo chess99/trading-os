@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:002796",
-  "ticker": "002796",
-  "name": "世嘉科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "主营通信射频、天线和精密箱体仍处修复期，2026H1预亏显示盈利拐点未稳；当前价格已计入较多光通信和并购预期，缺少安全边际，宜观察等待价格回落或利润兑现。",
-  "fair_value_range": [
-    14,
-    22
-  ],
-  "buy_zone": [
-    10,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "世嘉科技",
+    "security_status": "active",
+    "symbol": "CN:002796",
+    "ticker": "002796"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "ed96f1764ddbdb351d9930a51368d6765c275db12f3da0d48c035a11c13abda2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且2026H1预亏，暂不建仓。",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际亏损、现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至14元以下，且后续季度亏损收窄或经营现金流改善。",
-      "action": "pilot_position",
-      "max_weight": 0.5
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现收入、毛利率和扣非利润改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非盈利改善，并购标的贡献可核验收入与利润。",
-      "action": "increase_after_validation",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和并购/定增事项的实际影响。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "跌入合理价值区间，需重新核验业务和估值。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入保守买入观察区，若基本面未恶化可评估小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "价格进一步透支乐观情景，需复核是否存在减持或回避理由。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "跌入合理价值区间，需重新核验业务和估值。"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入保守买入观察区，若基本面未恶化可评估小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "价格进一步透支乐观情景，需复核是否存在减持或回避理由。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际亏损、现金流、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现收入、毛利率和扣非利润改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和并购/定增事项的实际影响。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,104 +1,105 @@
 {
-  "symbol": "CN:688018",
-  "market": "CN",
-  "ticker": "688018",
-  "name": "乐鑫科技",
-  "company_name": "乐鑫科技",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "乐鑫科技是具备全球开发者生态和软硬件平台能力的优质 AIoT 连接芯片公司，但 2026-07-09 约 121 元股价已接近合理估值区间上沿，当前以观察或小仓跟踪为主，95 元以下才具备较好安全边际。",
-  "quality_rating": "A-",
-  "valuation_rating": "watch",
-  "fair_value_range": [
-    105,
-    125
-  ],
-  "buy_zone": [
-    80,
-    95
-  ],
-  "sell_or_reduce_zone": [
-    135,
-    170
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "乐鑫科技",
+    "security_status": "active",
+    "symbol": "CN:688018",
+    "ticker": "688018"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "a0b3c9ab7ded0dbce7928f616fbe03aa59ba1ebfe0bdee7fd95c93a2bf90c96f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_80_and_fundamentals_intact",
-      "action": "strong_buy",
-      "max_weight": 0.08,
-      "reason": "价格进入悲观情景折现区间，若收入、毛利率、库存和现金流未破坏，赔率显著改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报，重点验证收入增速、毛利率、库存和新品放量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_80_to_95",
-      "action": "accumulate",
-      "max_weight": 0.05,
-      "reason": "具备较明确安全边际，适合分批建立核心观察仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，确认库存周期和经营现金流是否支持全年估值。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_95_to_125",
-      "action": "watch_or_tracking_position",
-      "max_weight": 0.02,
-      "reason": "处于合理估值区间，当前更多是在买公司质量和长期生态，安全边际一般。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查 2026 年年报和 2027 年一季报，重估 2027-2028 年利润中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_above_135",
-      "action": "do_not_chase_or_reduce",
-      "max_weight": 0.01,
-      "reason": "估值要求 2027-2028 年连续超预期，风险收益不对称。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 95.0
+      },
+      "reason": "进入有安全边际的买入区间，复核库存、毛利率和订单后可分批买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 80.0
+      },
+      "reason": "进入强吸引力区间，若基本面未破坏，可提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 135.0
+      },
+      "reason": "进入不应追高区间，需要用连续业绩超预期证明估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 95,
-      "reason": "进入有安全边际的买入区间，复核库存、毛利率和订单后可分批买入。"
-    },
-    {
-      "type": "price_below",
-      "price": 80,
-      "reason": "进入强吸引力区间，若基本面未破坏，可提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 135,
-      "reason": "进入不应追高区间，需要用连续业绩超预期证明估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年报，重点验证收入增速、毛利率、库存和新品放量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，确认库存周期和经营现金流是否支持全年估值。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查 2026 年年报和 2027 年一季报，重估 2027-2028 年利润中枢。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "归母净利润和扣非归母净利润增速",
-    "综合毛利率",
-    "研发费用率",
-    "存货及存货周转天数",
-    "经营活动现金流净额",
-    "海外收入占比",
-    "前五大客户收入占比",
-    "ESP32-P/S/C/H 系列新品量产进展",
-    "Matter/Thread/Zigbee/Wi-Fi 6/边缘 AI 产品收入贡献"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

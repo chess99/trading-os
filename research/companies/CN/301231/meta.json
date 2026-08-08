@@ -1,81 +1,95 @@
 {
-  "symbol": "CN:301231",
-  "ticker": "301231",
-  "name": "荣信文化",
-  "market": "CN",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "荣信文化具备少儿内容策划、爆款运营和IP延展能力，资产负债表轻，但2025年和2026Q1仍亏损，当前约6.2倍2025年PS已计入较多AI/IP期权，需等待费用率、扣非利润和经营现金流验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    18,
-    25
-  ],
-  "buy_zone": [
-    0,
-    17
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    1000
-  ],
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "荣信文化",
+    "security_status": "active",
+    "symbol": "CN:301231",
+    "ticker": "301231"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "335e55429bf06bc69339f2b957d43e04ebbbd4c7ecc7f6d0ae2a96aaa544c598"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入17元以下买入区，且2026中报或三季报显示收入增长、销售费用率下降、经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的收入、费用率、扣非利润、经营现金流和AI/IP商业化披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "扣非归母净利润连续两个季度转正，且AI/IP商业化收入、毛利率和现金回款可核验",
-      "action": "提高至小仓位上限",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认旺季备货、内容电商ROI和现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元且基本面未同步兑现牛市情景",
-      "action": "不追高或降低仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，检验全年并表、并购整合和新业务盈利贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入有安全边际的观察买入区，重新评估中报/三季报经营质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过减仓/回避区，若利润与现金流未兑现则主题溢价过高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "进入有安全边际的观察买入区，重新评估中报/三季报经营质量"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "超过减仓/回避区，若利润与现金流未兑现则主题溢价过高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的收入、费用率、扣非利润、经营现金流和AI/IP商业化披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认旺季备货、内容电商ROI和现金流趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，检验全年并表、并购整合和新业务盈利贡献"
-    }
-  ],
-  "key_data": {
-    "reference_price": 25.34,
-    "reference_price_date": "2026-07-15",
-    "total_shares": 84400000,
-    "market_cap_cny": 2138696000,
-    "source_note": "价格来自新浪行情；股本、财务和股东数据来自东方财富F10与巨潮资讯公告交叉核验。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

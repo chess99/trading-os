@@ -1,106 +1,105 @@
 {
-  "symbol": "CN:301136",
-  "ticker": "301136",
-  "name": "招标股份",
-  "company_name": "福建省招标股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "福建省属工程咨询平台具备资质、区域公信力和较厚净现金资产，但2024-2025年扣非亏损、回款周期拉长和减值压力尚未完全解除；2026Q1恢复需要中报验证，当前价格接近乐观情景，安全边际不足。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    7.0,
-    9.0
-  ],
-  "buy_zone": [
-    5.8,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    13.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "招标股份",
+    "security_status": "active",
+    "symbol": "CN:301136",
+    "ticker": "301136"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "b4281138871e4943f57a1645be5cd3c578e66375a43e1e3e0a145030a8b2f5e0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于6.8元，且最新中报或季报显示扣非利润转正、应收账款与合同资产未继续恶化",
-      "action": "watchlist_starter",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的收入、扣非利润、经营现金流和应收合同资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于6.0元，且货币资金和交易性金融资产合计保持稳定、经营现金流全年为正",
-      "action": "small_position",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认一季度修复是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期扣非利润和经营现金流均改善，且卫星数据或全过程咨询业务披露可验证增量",
-      "action": "increase_after_confirmation",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红政策、减值与现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入基准估值下沿，开始具备观察价值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "接近净资产折价与现金资产保护区，若基本面未恶化可评估小仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "接近乐观情景估值，当前盈利修复证据不足，需警惕溢价回吐",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入基准估值下沿，开始具备观察价值"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "接近净资产折价与现金资产保护区，若基本面未恶化可评估小仓"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "接近乐观情景估值，当前盈利修复证据不足，需警惕溢价回吐"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的收入、扣非利润、经营现金流和应收合同资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认一季度修复是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红政策、减值与现金流质量"
-    }
-  ],
-  "key_monitoring_items": [
-    "扣非归母净利润是否连续转正",
-    "经营活动现金流净额是否全年为正",
-    "应收账款与合同资产账面价值及坏账准备变化",
-    "货币资金和交易性金融资产合计规模",
-    "卫星数据业务收入、利润和可复制订单披露"
-  ],
-  "sources": [
-    {
-      "title": "招标股份2025年年度报告",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225216457.PDF",
-      "date": "2026-04-28"
-    },
-    {
-      "title": "招标股份2026年第一季度报告",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225216468.PDF",
-      "date": "2026-04-28"
-    },
-    {
-      "title": "腾讯行情API",
-      "url": "https://qt.gtimg.cn/",
-      "date": "2026-07-15"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,73 +1,86 @@
 {
-  "symbol": "CN:301631",
-  "ticker": "301631",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "壹连科技",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "壹连科技是动力/储能电池电连接组件优质供应商，2025-2026Q1 增长仍强，但历史客户集中、制造属性毛利率约束和 2026Q1 现金流波动要求安全边际。当前价格低于基准公允中枢但未到高赔率买点，等待中报验证客户分散、毛利率和经营现金流。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    68,
-    86
-  ],
-  "buy_zone": [
-    50,
-    58
-  ],
-  "sell_or_reduce_zone": [
-    90,
-    105
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "壹连科技",
+    "security_status": "active",
+    "symbol": "CN:301631",
+    "ticker": "301631"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "1953de5a822bf7693063fd66f49dab11d01251f4c714663c49490dd6d6ad8cfd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入 50-58 元且未出现客户流失、毛利率恶化或现金流持续走弱，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报：收入、利润、毛利率、经营现金流和客户集中度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 中报确认经营现金流恢复、非宁德客户收入占比提升且毛利率稳定，再考虑加仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报和全年订单趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 90 元且没有明确上修 2026-2027 年利润中枢，逐步减持。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 58.0
+      },
+      "reason": "进入安全边际买入区，需要复核是否存在基本面恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "超过基准公允价值上沿，需要复核是否已透支增长预期。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 58,
-      "reason": "进入安全边际买入区，需要复核是否存在基本面恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "reason": "超过基准公允价值上沿，需要复核是否已透支增长预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报：收入、利润、毛利率、经营现金流和客户集中度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报和全年订单趋势。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 63.33,
-    "last_price_at": "2026-07-16 10:27:30",
-    "estimated_market_cap_cny_billion": 8.105,
-    "ttm_net_profit_cny_million": 303.96,
-    "ttm_pe": 26.7
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

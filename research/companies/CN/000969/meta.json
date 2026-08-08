@@ -1,28 +1,77 @@
 {
-  "symbol": "CN:000969",
-  "market": "CN",
-  "ticker": "000969",
-  "name": "安泰科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "多概念（核聚变+半导体+稀土+非晶节能）驱动的综合性新材料平台，技术实力强但综合毛利率仅17%、ROE仅6-7%。当前PE TTM 65x已严重透支预期。等待估值回归至PE 25-35x区间再考虑介入。",
-  "fair_value_range": [12, 16],
-  "buy_zone": [10, 16],
-  "sell_or_reduce_zone": [20, 25],
-  "position_plan": [
-    {"condition": "股价回调至16-18元区间，基本面未恶化", "max_weight": 0.01},
-    {"condition": "股价进入12-16元合理偏低区间", "max_weight": 0.02},
-    {"condition": "股价低于10元，出现显著安全边际", "max_weight": 0.04}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安泰科技",
+    "security_status": "active",
+    "symbol": "CN:000969",
+    "ticker": "000969"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "ef21041e3fffd4ee8b2f22a5561f3aab0d25e040a614d6b4e3fd92a388e89872"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复查",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入可观察买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "估值过高，可考虑减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 16, "reason": "进入可观察买入区间"},
-    {"type": "price_above", "price": 25, "reason": "估值过高，可考虑减仓"}
-  ],
-  "updated_at": "2026-07-08T17:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,103 +1,105 @@
 {
-  "symbol": "CN:300303",
-  "market": "CN",
-  "ticker": "300303",
-  "name": "聚飞光电",
-  "company_name": "深圳市聚飞光电股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "聚飞光电具备背光LED封装规模、客户认证和2025年现金流改善优势，但2026Q1收入停滞、利润下滑，当前约7.88元价格对应估值已较充分反映Mini LED、车载LED和不可见光/光通讯成长预期，安全边际不足。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.6,
-    7.4
-  ],
-  "buy_zone": [
-    5.5,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "聚飞光电",
+    "security_status": "active",
+    "symbol": "CN:300303",
+    "ticker": "300303"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "0b4c1c4200126bfa69eda6990b6df706efb2c8300f2730e9d98afbb60c9bbdd0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于7.4元，且未看到连续两个季度收入和扣非利润重新加速",
-      "max_weight": 0.0,
-      "action": "不新增仓位，继续观察"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认Q1利润下滑是否延续以及背光LED、车载LED、Mini LED收入结构变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌破6.2元，且经营现金流为正、毛利率和存货未明显恶化",
-      "max_weight": 0.02,
-      "action": "建立1%-2%观察仓"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，检查扣非利润、经营现金流、存货和应收账款趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌破5.5元，且Mini LED、车载LED或不可见光业务收入占比提升被季度报验证",
-      "max_weight": 0.05,
-      "action": "提高到3%-5%中等仓位"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理价值区间和资本配置质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于9.5元但利润没有超预期，或连续两个季度扣非净利润同比下滑",
-      "max_weight": 0.0,
-      "action": "减仓或退出"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
       "reason": "进入可买区间上沿，开始具备安全边际",
-      "action": "进入可买区，复核最新季报后考虑小仓位"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 5.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
       "reason": "进入强安全边际区间，对中性估值有较大折价",
-      "action": "进入强安全边际区，若基本面未恶化可加仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 9.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
       "reason": "价格超过乐观估值下沿，若利润未兑现则风险收益比转差",
-      "action": "估值进入偏高区，复核盈利兑现情况并考虑减仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认Q1利润下滑是否延续以及背光LED、车载LED、Mini LED收入结构变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，检查扣非利润、经营现金流、存货和应收账款趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理价值区间和资本配置质量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "扣非归母净利润及扣非净利率",
-    "经营现金流净额/归母净利润",
-    "背光LED、照明LED及其他业务收入结构",
-    "Mini LED、车载LED、不可见光及光通讯相关业务进展",
-    "毛利率、存货周转和应收账款周转",
-    "分红、回购和资本开支纪律"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

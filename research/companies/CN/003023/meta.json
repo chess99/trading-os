@@ -1,103 +1,105 @@
 {
-  "symbol": "CN:003023",
-  "market": "CN",
-  "ticker": "003023",
-  "name": "彩虹集团",
-  "company_name": "成都彩虹电器（集团）股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "细分电热取暖与家庭杀虫用品老品牌，净现金厚、分红尚可，但品类成熟、天气敏感、2025年利润和经营现金流承压；当前约18.5元附近未提供足够安全边际，等待15.5元以下或基本面连续改善。",
-  "quality_rating": "中",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    16.5,
-    21.5
-  ],
-  "buy_zone": [
-    0.0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "彩虹集团",
+    "security_status": "active",
+    "symbol": "CN:003023",
+    "ticker": "003023"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "18e7c8a0c626a5199160b0c01fcac95bf766c76c6157a19105e5b8834d136c0e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于15.5元，且最近一期没有出现毛利率跌破38%或经营现金流继续显著恶化",
-      "action": "试探建仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于14.0元，且2026年前三季度收入恢复增长、经营现金流/净利润回到1倍附近",
-      "action": "提高仓位",
-      "target_position": "3%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于24.0元且基本面没有超过预期的利润和现金流改善",
-      "action": "减仓或不新增",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入可买区，价格相对合理价值下沿有折价。",
-      "action": "进入可买区，复核最新季度收入、毛利率、库存和经营现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入高安全边际区，净现金和分红对下行保护更明显。",
-      "action": "进入高安全边际区，若基本面未恶化可考虑加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "价格超过估值上沿，除非利润和现金流明显超预期，否则赔率下降。",
-      "action": "进入减仓观察区，除非利润和现金流明显超预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证2026年上半年收入修复、毛利率和现金流质量。",
-      "condition": "预计2026年半年报披露后",
-      "action": "复核收入、毛利率、库存、合同负债和经营现金流。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能提前观察冬季取暖器具备货和预收款质量。",
-      "condition": "预计2026年三季报披露后",
-      "action": "复核取暖器具订单、预收款、库存和冬季备货质量。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报能完整验证利润、经营现金流、分红和净现金变化。",
-      "condition": "预计2026年年报披露后",
-      "action": "复核全年利润、经营现金流、分红和净现金变化。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入可买区，价格相对合理价值下沿有折价。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入高安全边际区，净现金和分红对下行保护更明显。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "价格超过估值上沿，除非利润和现金流明显超预期，否则赔率下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "家用柔性电热取暖器具收入增速",
-    "家庭卫生杀虫用品收入增速和毛利率",
-    "综合毛利率是否维持在41%-43%以上",
-    "经营性现金流/归母净利润",
-    "库存、合同负债和预收款变化",
-    "分红率和净现金余额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

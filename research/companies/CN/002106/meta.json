@@ -1,106 +1,115 @@
 {
-  "symbol": "CN:002106",
-  "market": "CN",
-  "ticker": "002106",
-  "name": "莱宝高科",
-  "company_name": "莱宝高科",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "传统触控显示业务有工艺和客户基础，但ROE偏低、客户集中且2026Q1利润明显下滑；MED项目是最大上行期权，也带来资本开支、折旧和费用化风险。当前股价高于基础合理价值，需等待半年报和MED订单/良率验证后再决定是否买入。",
-  "quality_rating": "B-",
-  "valuation_rating": "C-",
-  "fair_value_range": [
-    8.5,
-    10.5
-  ],
-  "buy_zone": [
-    7.0,
-    8.2
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    14.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "莱宝高科",
+    "security_status": "active",
+    "symbol": "CN:002106",
+    "ticker": "002106"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "04886b2c8f849eac7339f39b4742810519b888c2248ed289dc81608ad565a1cb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于11.0元且MED尚未披露明确客户订单、良率和产能爬坡数据",
-      "action": "不新开仓，已有仓位降至观察仓",
-      "max_weight": 0.01,
-      "reason": "当前估值已高于基础情景合理价值，且2026Q1利润下滑和汇兑损失风险尚未消化"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看财务费用、汇兑损失、传统业务毛利率和MED费用化节奏",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入7.2-8.2元且半年报显示传统业务毛利率企稳、扣非净利率未继续恶化",
-      "action": "试探买入",
-      "max_weight": 0.01,
-      "reason": "价格进入安全边际区，可用小仓位等待MED项目验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1下滑是否只是汇兑扰动或已演变为业务压力",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "MED披露公告级客户订单、良率/产能利用率改善且费用拖累可量化",
-      "action": "复核估值后加仓",
-      "max_weight": 0.03,
-      "reason": "新业务从期权转为可估算利润池后，估值体系可能上移"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和MED项目投产、点亮、客户导入进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入初始买入观察区，需要复核半年报和MED进展后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入较深安全边际区，若基本面未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于基础合理价值上沿，应复核是否存在被概念交易推高的减仓机会",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "进入乐观情景估值区，若无MED订单或玻璃基载板产业化证据应主动减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入初始买入观察区，需要复核半年报和MED进展后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入较深安全边际区，若基本面未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "高于基础合理价值上沿，应复核是否存在被概念交易推高的减仓机会"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "进入乐观情景估值区，若无MED订单或玻璃基载板产业化证据应主动减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看财务费用、汇兑损失、传统业务毛利率和MED费用化节奏"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1下滑是否只是汇兑扰动或已演变为业务压力"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和MED项目投产、点亮、客户导入进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "综合毛利率",
-    "扣非归母净利润",
-    "扣非净利率",
-    "经营活动现金流净额",
-    "财务费用和汇兑损益",
-    "全贴合产品收入和毛利率",
-    "车载盖板玻璃及车载触摸屏收入",
-    "前五大客户销售占比",
-    "应收账款周转",
-    "MED项目设备安装调试进度",
-    "MED客户验证、订单、良率和产能利用率",
-    "玻璃基面板级载板研发阶段"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

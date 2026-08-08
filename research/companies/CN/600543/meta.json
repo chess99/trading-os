@@ -1,80 +1,96 @@
 {
-  "symbol": "CN:600543",
-  "market": "CN",
-  "ticker": "600543",
-  "name": "*ST莫高",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "*ST莫高仍处在主营亏损、经营现金流为负、财务类退市风险警示和治理折价并存阶段；现价3.49元已高于保守合理价值区间，只有在2026年收入安全越过3亿元、亏损明显收窄且现金流改善后才值得重新评估。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.6,
-    2.5
-  ],
-  "buy_zone": [
-    0.9,
-    1.4
-  ],
-  "sell_or_reduce_zone": [
-    2.8,
-    3.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST莫高",
+    "security_status": "active",
+    "symbol": "CN:600543",
+    "ticker": "600543"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "f9f3182c5c0f07ebf02a56c1cc0bf6245b2379b2bc6d2d9b9189fbbe1bf78f0c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于2.80元且2026年半年报尚未证明现金流和盈利质量改善",
-      "action": "不建仓；已有仓位减至观察仓或清仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报正式数据，重点核验收入是否接近3亿元年化、亏损和经营现金流是否改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至1.00-1.40元且2026年收入年化接近或超过3亿元、经营现金流改善",
-      "action": "仅做小仓位研究性试错",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断全年是否仍有触发财务类退市风险的可能",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.00元且未新增退市硬伤、无重大监管处罚或内控缺陷",
-      "action": "可考虑事件型强安全边际仓位",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.4
+      },
+      "reason": "进入有安全边际买入观察区，但仍需收入、现金流和退市风险同步复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.0
+      },
+      "reason": "进入强吸引力价格区，仅在未新增退市硬伤时允许事件型小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.8
+      },
+      "reason": "高于保守合理区间，反转兑现前估值透支，应回避或减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.4,
-      "reason": "进入有安全边际买入观察区，但仍需收入、现金流和退市风险同步复核"
-    },
-    {
-      "type": "price_below",
-      "price": 1.0,
-      "reason": "进入强吸引力价格区，仅在未新增退市硬伤时允许事件型小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 2.8,
-      "reason": "高于保守合理区间，反转兑现前估值透支，应回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报正式数据，重点核验收入是否接近3亿元年化、亏损和经营现金流是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断全年是否仍有触发财务类退市风险的可能"
-    }
-  ],
-  "notes": [
-    "2026-07-20新浪行情显示收盘价3.49元，腾讯行情显示总市值约11.21亿元、PB约1.62。",
-    "2025年公司因经审计负利润且营业收入低于3亿元，自2026-04-27起被实施退市风险警示。",
-    "2026H1仍预亏2300万至3150万元，数据未经审计，需以半年报正式披露为准。",
-    "违规、诉讼和担保页面部分来自第三方汇总，需用监管和公司公告原文进一步复核。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

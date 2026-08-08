@@ -1,103 +1,96 @@
 {
-  "symbol": "CN:002264",
-  "market": "CN",
-  "ticker": "002264",
-  "name": "新华都",
-  "company_name": "新华都",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "fair_to_expensive",
-  "current_thesis": "新华都已完成零售业务剥离，当前核心是酒类及品牌互联网营销运营商；渠道、仓配和酒类品牌合作有价值，但客户和供应商集中度高、估值安全边际不足，适合等待价格回落或2026H1验证增长质量后再买入。",
-  "fair_value_range": [
-    5.1,
-    6.4
-  ],
-  "buy_zone": [
-    4.3,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新华都",
+    "security_status": "active",
+    "symbol": "CN:002264",
+    "ticker": "002264"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "73eb0394b537395970830282d718496d3756a7a178902a6bd82327c4fbd15b8f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.80元，且2026H1未出现客户流失、应收恶化或经营现金流转负",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "估值进入买入区间上沿，但基本面仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增长、扣非净利、经营现金流、应收账款和客户集中度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.30元，且扣非净利和经营现金流仍为正",
-      "action": "提高至小仓位",
-      "max_weight": 0.02,
-      "reason": "价格提供较明确安全边际，可承受客户集中折价"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认旺季备货后现金流和库存质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期扣非净利同比增长、经营现金流为正、前五客户集中度下降",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "业务质量被数据验证后可上调仓位上限"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入初始买入区间，复核2026H1经营质量后可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于7.20元但基本面未超预期",
-      "action": "不追涨或减仓",
-      "max_weight": 0.0,
-      "reason": "估值超过基准合理区间，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入更有安全边际的买入区间，可评估提高至2%以内",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "超过基准估值区间，若无业绩超预期应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入初始买入区间，复核2026H1经营质量后可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "reason": "进入更有安全边际的买入区间，可评估提高至2%以内"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "超过基准估值区间，若无业绩超预期应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增长、扣非净利、经营现金流、应收账款和客户集中度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认旺季备货后现金流和库存质量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "经营活动现金流量净额",
-    "销售费用率",
-    "毛利率",
-    "应收账款/单季收入",
-    "存货周转与存货跌价准备",
-    "前五客户销售占比",
-    "第一大客户销售占比",
-    "前五供应商采购占比",
-    "关联方采购占比",
-    "酒连酒粉丝数和会员数",
-    "海外业务收入和利润披露",
-    "沙县土地诉讼再审或执行进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

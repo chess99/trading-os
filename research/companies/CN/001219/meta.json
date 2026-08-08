@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:001219",
-  "market": "CN",
-  "ticker": "001219",
-  "name": "青岛食品",
-  "company_name": "青岛食品",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "区域品牌和现金资产提供下行保护，但全国化、产品创新和费用投放效率尚未充分验证；当前估值接近合理区间中枢，等待更低价格或2026H1经营数据确认。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    10.8,
-    13.6
-  ],
-  "buy_zone": [
-    9.0,
-    10.2
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    16.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "青岛食品",
+    "security_status": "active",
+    "symbol": "CN:001219",
+    "ticker": "001219"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "4a29fb2265e67a384514038e113d458aaff95f98c8772b79ebacd145d3424c72"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于10.2元且最近一期收入保持增长、毛利率未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.005,
-      "reason": "估值进入买入区上沿，但全国化与费用投放效率仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报收入、毛利率、销售费用率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于9.2元且2026H1经营现金流和利润质量未破坏",
-      "action": "加仓至小仓位",
-      "max_weight": 0.02,
-      "reason": "区域品牌和现金资产提供下行保护，安全边际更充分"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报费用投放效率和全年盈利指引",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于14.5元但收入未加速或销售费用率继续上行",
-      "action": "减持至观察仓",
-      "max_weight": 0.005,
-      "reason": "估值超过基准合理区间，成长证据不足以支撑溢价"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入首笔观察仓买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.2
+      },
+      "reason": "进入具备更高安全边际的加仓区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "进入减持观察区，需要重新核验增长与费用效率",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.2
+      },
+      "reason": "显著高于基准合理价值区间，应考虑退出大部分仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入首笔观察仓买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 9.2,
-      "reason": "进入具备更高安全边际的加仓区"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "进入减持观察区，需要重新核验增长与费用效率"
-    },
-    {
-      "type": "price_above",
-      "price": 16.2,
-      "reason": "显著高于基准合理价值区间，应考虑退出大部分仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报收入、毛利率、销售费用率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报费用投放效率和全年盈利指引"
-    }
-  ],
-  "key_tracking_metrics": [
-    "收入增速",
-    "饼干收入占比和毛利率",
-    "综合毛利率",
-    "销售费用率",
-    "预付款项中的推广费和投流费",
-    "经营现金流/归母净利润",
-    "货币资金与交易性金融资产",
-    "线上和省外渠道进展",
-    "小麦/面粉、油脂、白糖价格",
-    "控股股东持股和分红政策"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

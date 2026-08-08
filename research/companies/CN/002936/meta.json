@@ -1,150 +1,142 @@
 {
-  "symbol": "CN:002936",
-  "market": "CN",
-  "ticker": "002936",
-  "name": "郑州银行",
-  "company_name": "郑州银行股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "郑州银行A股约0.33倍PB，已反映较多区域银行悲观预期；2025年和2026Q1经营、资产质量边际改善，但核心一级资本充足率偏低、2025年不分红、收入结构依赖利息净收入。当前价格安全边际不足，低于1.50元才适合小仓观察性买入。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏低但需折价",
-  "fair_value_range": [
-    1.65,
-    2.10
-  ],
-  "buy_zone": [
-    1.35,
-    1.55
-  ],
-  "sell_or_reduce_zone": [
-    2.10,
-    2.30
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "郑州银行",
+    "security_status": "active",
+    "symbol": "CN:002936",
+    "ticker": "002936"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e0dbfae8e705d36e65b9e52273136ec063640b214d8189c768f11e156535e826"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于1.50元，且不良贷款率不高于1.75%、拨备覆盖率不低于190%",
-      "action": "试探买入",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于1.35元，且核心一级资本充足率不低于8.20%",
-      "action": "加至观察仓",
-      "target_position": "最高3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格在1.55元至1.90元之间，且分红未恢复、资本未改善",
-      "action": "仅观察或维持极小仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格高于2.10元，且ROE仍低于权益成本",
-      "action": "不加仓并评估减仓",
-      "target_position": "不高于当前仓位",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格高于2.30元，且没有分红恢复或资产质量显著超预期",
-      "action": "减仓或退出",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.50,
-      "currency": "CNY",
-      "reason": "对应约0.30倍2026Q1 PB，开始具备小仓安全边际",
-      "action": "进入可小仓买入区，复核最近一期不良率、拨备覆盖率和核心一级资本充足率"
-    },
-    {
-      "type": "price_below",
-      "price": 1.35,
-      "currency": "CNY",
-      "reason": "对应约0.27倍2026Q1 PB，对区域信用风险提供较厚折价",
-      "action": "进入较厚安全边际区，若资产质量未恶化可加至观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 2.10,
-      "currency": "CNY",
-      "reason": "接近合理价值上沿，若基本面未改善则收益风险比下降",
-      "action": "接近合理价值上沿，不再加仓并检查是否有分红和资本改善支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 2.30,
-      "currency": "CNY",
-      "reason": "超过当前保守估值上沿，需由分红恢复或资本改善支撑",
-      "action": "若基本面无明显超预期，执行减仓或退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证资产质量、资本和息差趋势的关键节点",
-      "condition": "披露2026年半年报或年报",
-      "action": "更新盈利、资产质量、资本和分红假设"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "核心一级资本充足率决定扩表、分红和估值折价",
-      "condition": "核心一级资本充足率低于8.20%或高于8.80%",
-      "action": "重新评估资本约束和合理PB"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "不良和拨备是区域银行安全边际的核心变量",
-      "condition": "不良贷款率高于1.85%或拨备覆盖率低于180%",
-      "action": "下调质量评级并复核买入区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "现金分红恢复会改变股东回报和估值上限",
-      "condition": "恢复现金分红且分红率达到15%以上",
-      "action": "上调股东回报假设并复核估值上沿"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "河南区域信用风险会直接影响资产质量假设",
-      "condition": "河南房地产、城投或中小企业信用风险出现集中暴露",
-      "action": "复核不良生成和拨备压力"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "资本补充会影响摊薄、资本缓冲和后续分红能力",
-      "condition": "启动普通股、可转债、永续债或二级资本债等重大资本补充方案",
-      "action": "评估摊薄、资本充足率和分红能力"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "对应约0.30倍2026Q1 PB，开始具备小仓安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.35
+      },
+      "reason": "对应约0.27倍2026Q1 PB，对区域信用风险提供较厚折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.1
+      },
+      "reason": "接近合理价值上沿，若基本面未改善则收益风险比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.3
+      },
+      "reason": "超过当前保守估值上沿，需由分红恢复或资本改善支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "核心一级资本充足率",
-    "不良贷款率",
-    "关注贷款率",
-    "拨备覆盖率",
-    "净息差",
-    "净利息收入增速",
-    "手续费及佣金净收入增速",
-    "个人存款增长率",
-    "现金分红率",
-    "涉房和地方平台相关贷款风险暴露"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

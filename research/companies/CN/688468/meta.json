@@ -1,66 +1,86 @@
 {
-  "symbol": "CN:688468",
-  "market": "CN",
-  "ticker": "688468",
-  "name": "科美诊断",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "科美诊断拥有差异化LiCA光激化学发光平台和较厚资产负债表，但集采后收入、毛利率和扣非利润仍未确认修复，现价约6元对应当期盈利估值偏贵；等待收入止跌或价格进入更充分安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.2,
-    7.2
-  ],
-  "buy_zone": [
-    4.2,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    9.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科美诊断",
+    "security_status": "active",
+    "symbol": "CN:688468",
+    "ticker": "688468"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "de24c8925a9fb8d17d74f338a3f8e783dc57bb1bc3026bcb2b0242e7b0fb64d1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于4.80元，且最近两个季度收入同比降幅收窄至个位数或转正时，仅建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非净利、经营现金流和新品进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年归母净利润恢复至5000万元以上，且p-tau217等新品出现可核验放量后，提高配置上限。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认收入止跌和毛利率修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "收入连续两个季度同比下滑超过15%或扣非净利润转负时，维持零仓位或退出。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入现金与账面资产提供更充分保护的买入观察区。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "超过基础情景估值上沿，若基本面未同步兑现应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入现金与账面资产提供更充分保护的买入观察区。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "超过基础情景估值上沿，若基本面未同步兑现应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非净利、经营现金流和新品进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认收入止跌和毛利率修复。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

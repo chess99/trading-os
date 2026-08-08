@@ -1,120 +1,120 @@
 {
-  "symbol": "CN:001301",
-  "market": "CN",
-  "ticker": "001301",
-  "name": "尚太科技",
-  "company_name": "石家庄尚太科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "尚太科技是一体化人造石墨负极材料头部公司，2025年销量与收入高增，北苏二期、山西及马来西亚项目提供2026-2027年产能弹性；2026-07-13收盘价50.31元处于买入区间上沿，适合小仓位买入并等待中报验证毛利率、经营现金流和客户结构。主要约束是宁德时代占比高、外协和原材料挤压毛利、扩产期债务与资本开支压力。",
-  "quality_rating": "A-",
-  "valuation_rating": "B+",
-  "fair_value_range": [
-    58,
-    72
-  ],
-  "buy_zone": [
-    42,
-    52
-  ],
-  "sell_or_reduce_zone": [
-    78,
-    90
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "尚太科技",
+    "security_status": "active",
+    "symbol": "CN:001301",
+    "ticker": "001301"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "cca998eba2063e4cd87d01fe6a07dd118d41b9d3dab36586082c055c66ad2018"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c8286ae8d3128e186839fe3bfd908f450b0d1e6c901940fa99c4e90611f6a5d0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在50-52元附近，且未出现宁德时代份额下降、经营现金流持续恶化或负极材料价格快速下跌的新证据",
-      "action": "建立观察买入仓位",
-      "max_weight": 0.02,
-      "reason": "当前价格处于买入区间上沿，估值已可接受，但2026Q1现金流和毛利率仍需中报验证。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查经营现金流、应收账款、负极材料毛利率、外协加工占比和客户集中度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至42-45元，且2026中报显示收入增长仍由销量驱动、毛利率未继续大幅下滑、客户结构未恶化",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "价格进入更厚安全边际区间，若基本面未同步恶化，风险收益明显改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，检查储能需求、单吨利润、山西四期/五期和马来西亚项目进度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026中报或三季报确认经营现金流修复、单吨利润稳定、山西或马来西亚项目按计划推进",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05,
-      "reason": "盈利质量和产能释放被验证后，可承受更高仓位，但客户集中度下降前不宜超过5%。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年产能释放节奏，重新测算合理价值区间与仓位上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于78元且盈利仅线性兑现，或高于90元但硅碳、海外客户、单吨利润没有超预期证据",
-      "action": "减仓或退出至观察仓",
-      "max_weight": 0.01,
-      "reason": "估值进入减持观察区，周期材料股不应在基本面未超预期时继续扩大仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入加仓观察区，需要复核2026中报现金流、毛利率、客户份额和负极材料价格。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入高安全边际买入区，但必须确认下跌不是由客户流失、价格崩塌或现金流恶化引发。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 78.0
+      },
+      "reason": "进入减持观察区，需要检验2027年盈利预期是否已被充分透支。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "进入高估区，除非硅碳负极、海外客户或单吨利润出现明确超预期，否则应降低仓位。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入加仓观察区，需要复核2026中报现金流、毛利率、客户份额和负极材料价格。"
-    },
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入高安全边际买入区，但必须确认下跌不是由客户流失、价格崩塌或现金流恶化引发。"
-    },
-    {
-      "type": "price_above",
-      "price": 78,
-      "reason": "进入减持观察区，需要检验2027年盈利预期是否已被充分透支。"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "reason": "进入高估区，除非硅碳负极、海外客户或单吨利润出现明确超预期，否则应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查经营现金流、应收账款、负极材料毛利率、外协加工占比和客户集中度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，检查储能需求、单吨利润、山西四期/五期和马来西亚项目进度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年产能释放节奏，重新测算合理价值区间与仓位上限。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "负极材料季度销量",
-    "负极材料单吨收入",
-    "负极材料单吨毛利",
-    "负极材料毛利率",
-    "宁德时代销售额占比",
-    "前五大客户销售额占比",
-    "经营活动现金流量净额",
-    "应收账款及应收票据余额",
-    "外协加工采购规模",
-    "存货及存货跌价准备",
-    "石油焦价格",
-    "针状焦价格",
-    "包覆沥青价格",
-    "石墨化电价和加工费",
-    "北苏二期产能利用率",
-    "山西四期项目进度",
-    "山西五期项目进度",
-    "马来西亚项目进度",
-    "硅碳负极客户验证进度",
-    "可转债转股及潜在摊薄"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

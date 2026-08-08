@@ -1,102 +1,106 @@
 {
-  "symbol": "CN:000596",
-  "market": "CN",
-  "ticker": "000596",
-  "name": "古井贡酒",
-  "company_name": "古井贡酒",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "古井贡酒是安徽区域白酒龙头，资产负债表稳健、现金充足、分红提升，但2025年以来收入利润显著下滑，2026年仍处于白酒周期和渠道去库存验证期。当前估值已回落至有吸引力区间，但需要等待合同负债、销售收现、批价和渠道库存改善后再提高仓位。",
-  "quality_rating": "A-",
-  "valuation_rating": "B+",
-  "fair_value_range": [
-    90,
-    115
-  ],
-  "buy_zone": [
-    65,
-    75
-  ],
-  "sell_or_reduce_zone": [
-    120,
-    140
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "古井贡酒",
+    "security_status": "active",
+    "symbol": "CN:000596",
+    "ticker": "000596"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "e1818544d6c9e419e9cca38dd0083668aef185bf43c8671e496f6b15c41b0b10"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "80元附近且二季报尚未验证复苏",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "估值已回落但盈利仍在下修，适合跟踪不适合重仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证收入降幅、合同负债、经营现金流和渠道库存",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入65-75元买入区且批价、现金流未继续恶化",
-      "action": "左侧加仓",
-      "max_weight": 0.03,
-      "reason": "低谷利润估值具备安全边际，现金和分红提供下行缓冲"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认旺季动销、批价和利润修复节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度合同负债、销售收现和主力产品批价改善，且股价低于85元",
-      "action": "右侧加仓",
-      "max_weight": 0.05,
-      "reason": "经营拐点得到验证后可提高区域白酒龙头配置权重"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "进入左侧买入区，需要复核渠道库存、批价和现金流是否仍可控",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于120元但利润和渠道未明显恢复",
-      "action": "减仓至观察仓",
-      "max_weight": 0.01,
-      "reason": "估值先于基本面修复时风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 65.0
+      },
+      "reason": "跌破悲观估值下沿，若无基本面破坏可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 120.0
+      },
+      "reason": "达到减持区下沿，需要检查估值是否已透支复苏",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 140.0
+      },
+      "reason": "超过合理减持区上沿，除非盈利恢复显著超预期否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 75,
-      "reason": "进入左侧买入区，需要复核渠道库存、批价和现金流是否仍可控"
-    },
-    {
-      "type": "price_below",
-      "price": 65,
-      "reason": "跌破悲观估值下沿，若无基本面破坏可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 120,
-      "reason": "达到减持区下沿，需要检查估值是否已透支复苏"
-    },
-    {
-      "type": "price_above",
-      "price": 140,
-      "reason": "超过合理减持区上沿，除非盈利恢复显著超预期否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证收入降幅、合同负债、经营现金流和渠道库存"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认旺季动销、批价和利润修复节奏"
-    }
-  ],
-  "key_tracking_metrics": [
-    "合同负债环比和同比变化",
-    "销售商品收到的现金/营业收入",
-    "经营活动现金流净额/归母净利润",
-    "年份原浆主力单品批价和终端成交价",
-    "安徽省内宴席和团购动销",
-    "省外收入增速与销售费用率",
-    "存货周转和渠道库存反馈",
-    "现金分红率和货币资金余额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

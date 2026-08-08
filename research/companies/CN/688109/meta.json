@@ -1,82 +1,95 @@
 {
-  "symbol": "CN:688109",
-  "market": "CN",
-  "ticker": "688109",
-  "name": "品茗科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "品茗科技具备建筑数字化、智慧工地和垂类AI应用的真实业务基础，现金资产较厚，但2025年收入仍下滑、2026Q1转亏，当前约67元股价已提前反映AI与基建订单兑现预期；在AI收入占比、订单复购和经营现金流进一步验证前，适合作为观察标的而非追高买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    42,
-    58
-  ],
-  "buy_zone": [
-    0,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    75,
-    120
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "品茗科技",
+    "security_status": "active",
+    "symbol": "CN:688109",
+    "ticker": "688109"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "ff2b431c7a3b01bfb79f78507ad84e00be173fd1dc53f0040c54a41f36ecb785"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于38元且未出现连续两个季度收入下滑、经营现金流恶化或重大治理风险",
-      "action": "建立观察仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入修复、分业务毛利率、经营现金流和应收合同资产",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于42至58元且2026年中报或三季报显示收入恢复增长、数字基建或AI订单可验证",
-      "action": "分批加至核心观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1转亏是否只是季节性波动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于75元但AI收入占比、续费率和基建订单未形成公告级验证",
-      "action": "不新增并考虑降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证AI产值占比、数字基建订单和全年现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入买入区间，较保守公允价值上沿具备约三成安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "估值超过基准情景，若缺少AI和数字基建兑现证据应降低风险暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入买入区间，较保守公允价值上沿具备约三成安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "估值超过基准情景，若缺少AI和数字基建兑现证据应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入修复、分业务毛利率、经营现金流和应收合同资产"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1转亏是否只是季节性波动"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证AI产值占比、数字基建订单和全年现金流质量"
-    }
-  ],
-  "key_metrics": {
-    "last_price_cny": 67.48,
-    "market_cap_cny_billion": 5.32,
-    "valuation_date": "2026-07-18",
-    "data_confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

@@ -1,122 +1,129 @@
 {
-  "symbol": "CN:003021",
-  "market": "CN",
-  "ticker": "003021",
-  "name": "兆威机电",
-  "company_name": "深圳市兆威机电股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "兆威机电具备微型传动、微型电机和电控系统一体化平台能力，智能汽车执行器、精密零件、机器人灵巧手和海外布局提供中长期成长空间；但 2026-07-13 A 股最新价 80.05 元对应约 214 亿元市值、TTM PE 约 89 倍，且 2026Q1 收入和利润同比下滑，机器人灵巧手订单仍待验证，当前适合观察或小仓位跟踪，不适合重仓追买。",
-  "quality_rating": "B+",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    60,
-    76
-  ],
-  "buy_zone": [
-    48,
-    58
-  ],
-  "sell_or_reduce_zone": [
-    95,
-    120
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "兆威机电",
+    "security_status": "active",
+    "symbol": "CN:003021",
+    "ticker": "003021"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "01f3b6c49644787326f293f50713701803e5cb1db0519af754b98ced62498d7c"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "73fb00473cd762c2a258f4df359520486bae7085536900c5ae535a71c6deec8e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约 80.05 元，高于合理价值区间上沿，除非已有研究跟踪需求，否则不新增；若已有仓位，控制在 0%-1% 跟踪仓。",
-      "max_weight": 0.01,
-      "current_price": 80.05,
-      "action": "observe"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报，重点验证收入恢复、毛利率、研发费用率、经营现金流和机器人灵巧手订单。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至 65-76 元且半年报显示收入恢复、毛利率维持 33% 以上，可建立 1%-2% 观察仓。",
-      "max_weight": 0.02,
-      "add_zone": [
-        65,
-        76
-      ],
-      "action": "starter_position"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，判断全年利润是否需要上修或下修。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至 48-58 元且核心客户、机器人订单、毛利率未恶化，可提高至 2%-3.5% 基础仓；48 元以下且基本面验证良好，可最高 5%。",
-      "max_weight": 0.05,
-      "buy_zone": [
-        48,
-        58
-      ],
-      "action": "accumulate"
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "年底复核灵巧手是否披露明确客户、订单金额、批量交付或收入占比，并重新评估成长假设和估值中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于 95 元且 2026-2027 年利润预测未被订单和财报实质上修，降低至 0%-1% 或退出。",
-      "max_weight": 0.01,
-      "reduce_above": 95,
-      "action": "reduce"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年报，若综合毛利率跌破 30% 或汽车年降导致产品结构恶化，需下修估值。",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 76.0
+      },
+      "reason": "进入合理价值区间上沿，若基本面未恶化，可开始重新评估跟踪仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 58.0
+      },
+      "reason": "进入安全买入区，若毛利率和订单未恶化，可提高至基础仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入强吸引区，若机器人和汽车执行器基本面未恶化，风险收益明显改善。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
+      "reason": "估值再次进入高容错要求区，若无利润上修或大订单验证，应减仓或回避。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 76,
-      "reason": "进入合理价值区间上沿，若基本面未恶化，可开始重新评估跟踪仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 58,
-      "reason": "进入安全买入区，若毛利率和订单未恶化，可提高至基础仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入强吸引区，若机器人和汽车执行器基本面未恶化，风险收益明显改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 95,
-      "reason": "估值再次进入高容错要求区，若无利润上修或大订单验证，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报，重点验证收入恢复、毛利率、研发费用率、经营现金流和机器人灵巧手订单。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，判断全年利润是否需要上修或下修。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "年底复核灵巧手是否披露明确客户、订单金额、批量交付或收入占比，并重新评估成长假设和估值中枢。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年报，若综合毛利率跌破 30% 或汽车年降导致产品结构恶化，需下修估值。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "扣非归母净利润同比增速",
-    "综合毛利率",
-    "研发费用率",
-    "经营活动现金流净额/归母净利润",
-    "前五大客户收入占比",
-    "智能汽车新增定点和量产项目",
-    "机器人灵巧手订单、收入和批量交付进展",
-    "精密零件收入增速和毛利率",
-    "H 股募集资金使用、H 股回购、宝安产业园和泰国产能进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

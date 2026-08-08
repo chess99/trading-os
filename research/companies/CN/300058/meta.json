@@ -1,31 +1,87 @@
 {
-  "symbol": "CN:300058",
-  "market": "CN",
-  "ticker": "300058",
-  "name": "蓝色光标",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "中国最大数字营销集团，出海业务占营收82%但毛利率仅2.6%/净利率0.3%——本质是媒介代理倒手而非高价值服务；2025年净利2.25亿对应447亿市值PE~175x严重偏贵，17.6亿商誉和136.7亿应收账款构成资产负债表脆弱性；公司质量普通，当前不在买入区间，需等待估值大幅回归或净利率实质改善信号",
-  "fair_value_range": [6, 9],
-  "buy_zone": [4.5, 6],
-  "sell_or_reduce_zone": [12, 18],
-  "position_plan": [
-    {"condition": "股价位于4.5-6.0元强吸引力买入区间，商誉未发生大额减值、净利率未跌破0.3%、出海业务增速维持>10%", "max_weight": 0.02},
-    {"condition": "股价位于6.0-9.0元合理估值区间，出海业务稳健增长、毛利率回升至3%以上", "max_weight": 0.012},
-    {"condition": "股价位于9.0-12.0元合理偏高区间，仅持有不加仓", "max_weight": 0.005}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "蓝色光标",
+    "security_status": "active",
+    "symbol": "CN:300058",
+    "ticker": "300058"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "8a9357560377ac9e8f81cef2a667d8ce6d80f01c6ef34db2cc5f785ba0a9eff5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "关注2026年中报披露——出海业务增速、毛利率变化、商誉减值测试、应收账款周转（2025年报PDF原文未取到，关键假设需复核）",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入有安全边际的买入区间(基准情景合理估值下沿)",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入强吸引力买入区间(悲观价格偏低端)",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "进入偏贵区间，不应追高；已有仓位考虑减半",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "关注2026年中报披露——出海业务增速、毛利率变化、商誉减值测试、应收账款周转（2025年报PDF原文未取到，关键假设需复核）"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 6, "reason": "进入有安全边际的买入区间(基准情景合理估值下沿)"},
-    {"type": "price_below", "price": 4.5, "reason": "进入强吸引力买入区间(悲观价格偏低端)"},
-    {"type": "price_above", "price": 12, "reason": "进入偏贵区间，不应追高；已有仓位考虑减半"}
-  ],
-  "updated_at": "2026-07-09T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:002862",
-  "ticker": "002862",
-  "name": "实丰文化",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "AI玩具转型带来增长期权，2026Q1已扭亏，但2025年大额亏损、TTM利润仍为负，当前13元附近估值已包含较强预期，缺少安全边际，等待半年报验证收入、扣非利润和现金流。",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    7.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "实丰文化",
+    "security_status": "active",
+    "symbol": "CN:002862",
+    "ticker": "002862"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "e6c19500698d8f134c5b2e8f62a40848d6ac46cf87dd25c1fa6ccbcc48f227da"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于合理价值上沿且AI玩具经营数据未充分披露时，仅观察不建仓",
-      "action": "watch",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入、扣非利润、经营现金流、存货和AI玩具披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入9.5元以下且2026半年报收入增长、扣非利润为正、经营现金流未明显背离",
-      "action": "research_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认Q1扭亏是否具备持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度披露并验证AI玩具收入和毛利率改善，且经营现金流同步转正",
-      "action": "increase_after_validation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报与年度现金流，重新评估转型兑现度和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入买入观察区间，需要复核半年报现金流和AI玩具披露",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "价格进入乐观情景区间，若无新增业绩验证应减仓或回避追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入买入观察区间，需要复核半年报现金流和AI玩具披露"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "价格进入乐观情景区间，若无新增业绩验证应减仓或回避追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入、扣非利润、经营现金流、存货和AI玩具披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认Q1扭亏是否具备持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报与年度现金流，重新评估转型兑现度和估值区间"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

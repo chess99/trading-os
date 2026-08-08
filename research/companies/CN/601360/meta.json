@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:601360",
-  "market": "CN",
-  "ticker": "601360",
-  "name": "三六零",
-  "company_name": "三六零",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "三六零处于盈利修复和 AI 安全商业化验证期，广告与增值服务提供现金流基础，网络安全和安全大模型提供上行期权，但当前价格已预支部分乐观预期，需等待扣非利润、经营现金流和政企 AI 安全订单进一步验证。",
-  "quality_rating": "hold",
-  "valuation_rating": "watch",
-  "fair_value_range": [
-    7.2,
-    8.8
-  ],
-  "buy_zone": [
-    6.2,
-    7.3
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三六零",
+    "security_status": "active",
+    "symbol": "CN:601360",
+    "ticker": "601360"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "a2c4ceceea7e7ea984751117269435839c06e9274b41ce7f6f6db8946dd06762"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_7.3_and_no_new_cashflow_or_governance_negative",
-      "action": "start_watch_position",
-      "max_weight": 0.01,
-      "reason": "进入基准合理估值下沿，可用小仓位验证盈利修复。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点检查扣非利润、经营现金流、安全及 AI 收入。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_below_6.5_and_2026_interim_confirms_non_gaap_profit_and_cashflow_recovery",
-      "action": "add_position",
-      "max_weight": 0.02,
-      "reason": "价格接近悲观情景上沿，且基本面验证后风险收益比改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认盈利修复是否连续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_above_10.5_without_new_order_and_cashflow_validation",
-      "action": "reduce_or_avoid_chasing",
-      "max_weight": 0.005,
-      "reason": "估值开始预支乐观情景，缺少财报验证时上行风险收益比转弱。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重估 AI 安全商业化和全年现金流质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_above_12.0_without_material_ai_security_revenue",
-      "action": "reduce_to_tracking_only",
-      "max_weight": 0.003,
-      "reason": "价格超过乐观区间下沿，若 AI 安全收入尚未兑现，应控制回撤。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.3
+      },
+      "reason": "进入买入观察区，适合复核 2026 中报前后是否可开首笔仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "接近悲观估值区，可在现金流和扣非利润未恶化时考虑加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "进入减仓观察区，需检查是否已有订单和现金流支撑高估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "进入明显乐观定价区，若缺少重大基本面验证应降低仓位。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.3,
-      "reason": "进入买入观察区，适合复核 2026 中报前后是否可开首笔仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "接近悲观估值区，可在现金流和扣非利润未恶化时考虑加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "进入减仓观察区，需检查是否已有订单和现金流支撑高估值。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "进入明显乐观定价区，若缺少重大基本面验证应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点检查扣非利润、经营现金流、安全及 AI 收入。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认盈利修复是否连续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重估 AI 安全商业化和全年现金流质量。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "研发费用率",
-    "销售费用率",
-    "安全及其他业务收入",
-    "互联网广告及服务收入",
-    "互联网增值服务收入",
-    "应收账款及合同资产",
-    "投资收益和非经常性损益",
-    "AI安全大模型合同和收入披露",
-    "控股股东减持进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

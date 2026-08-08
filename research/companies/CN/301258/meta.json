@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301258",
-  "ticker": "301258",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "富士莱",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "资产负债表强、低负债和现金/理财提供底部支撑，但硫辛酸主业价格压力仍在，2025扣非和2026Q1扣非均为负，山东基地与新产品尚未验证商业化利润；当前仅适合观察，等待扣非转正或更低PB安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    20.5,
-    26.7
-  ],
-  "buy_zone": [
-    16.0,
-    18.0
-  ],
-  "sell_or_reduce_zone": [
-    30.0,
-    34.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "富士莱",
+    "security_status": "active",
+    "symbol": "CN:301258",
+    "ticker": "301258"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "486a2a095989bcd23c42ece14f4190f1eee2c1f89d5ed4ce6b78f7d2794a7288"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于18元，且扣非亏损未扩大、现金和交易性金融资产未发生重大损失",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、山东基地转固和订单进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于16元，PB低于0.8倍，且山东基地已有订单或试生产积极证据",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断主营毛利率和扣非利润是否出现可持续修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利润转正，年化扣非利润可见超过8000万元",
-      "action": "重新评估是否上调仓位上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估山东基地和新产品商业化对长期估值的贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入资产折价和经营期权更有吸引力的安全边际区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "若扣非利润未兑现，估值已提前反映乐观情景，应考虑减仓或放弃",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "reason": "进入资产折价和经营期权更有吸引力的安全边际区间"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "reason": "若扣非利润未兑现，估值已提前反映乐观情景，应考虑减仓或放弃"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、山东基地转固和订单进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断主营毛利率和扣非利润是否出现可持续修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估山东基地和新产品商业化对长期估值的贡献"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:002097",
-  "market": "CN",
-  "ticker": "002097",
-  "name": "山河智能",
-  "company_name": "山河智能",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "山河智能受益工程机械行业复苏、出口和地下工程装备，但扣非仍亏、应收账款高、资产负债率高，当前价格接近基准合理价值上沿，暂不买入，等待价格回到买入区或现金流与扣非利润改善。",
-  "quality_rating": "low",
-  "valuation_rating": "fair_to_expensive",
-  "fair_value_range": [
-    5.4,
-    7.0
-  ],
-  "buy_zone": [
-    4.6,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    10.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山河智能",
+    "security_status": "active",
+    "symbol": "CN:002097",
+    "ticker": "002097"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "45bb029fe3e6acd649a58396d27d0c3b4f6a648755f2facc8deab1a1ed889608"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于5.6元，且未出现新增重大减值公告",
-      "action": "试仓",
-      "max_weight": 0.01,
-      "reason": "进入买入区，但应收、负债和扣非亏损仍需继续验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报，重点看扣非利润、应收账款、经营现金流和工程机械毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1扣非亏损收窄、经营现金流同比改善、应收账款较2026Q1下降",
-      "action": "加仓",
-      "max_weight": 0.025,
-      "reason": "复苏开始传导到利润与现金流后，可提高仓位上限"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报，确认行业复苏是否持续传导到现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于8.2元但扣非仍亏或现金流未改善",
-      "action": "减仓或不加仓",
-      "max_weight": 0.005,
-      "reason": "估值先于业绩兑现，赔率下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入初始买入观察区，检查半年度现金流和减值后决定是否试仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "高于基准合理价值上沿，需要复核是否已有扣非转正支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "进入乐观情景估值区，若无超预期业绩应减仓或退出",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入初始买入观察区，检查半年度现金流和减值后决定是否试仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "高于基准合理价值上沿，需要复核是否已有扣非转正支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "进入乐观情景估值区，若无超预期业绩应减仓或退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报，重点看扣非利润、应收账款、经营现金流和工程机械毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报，确认行业复苏是否持续传导到现金流"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度挖掘机行业销量及出口销量",
-    "工程机械分部收入和毛利率",
-    "地下工程机械收入和毛利率",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款余额和信用减值损失",
-    "存货余额和周转",
-    "资产负债率、有息负债和财务费用",
-    "国际市场收入占比和汇率影响",
-    "航空资产处置、购置及减值事项",
-    "大股东和创始人减持进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

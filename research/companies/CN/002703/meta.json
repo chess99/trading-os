@@ -1,116 +1,123 @@
 {
-  "symbol": "CN:002703",
-  "market": "CN",
-  "ticker": "002703",
-  "name": "浙江世宝",
-  "company_name": "浙江世宝股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "浙江世宝受益于汽车转向电动化、智能化和自主品牌客户放量，2025年收入增长较快且经营现金流改善；但客户集中度高、毛利率承压，2026Q1利润同比下降，当前约13.47元对应估值已提前反映线控转向期权，安全边际不足。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江世宝",
+    "security_status": "active",
+    "symbol": "CN:002703",
+    "ticker": "002703"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "3e7acd4df41115b6f2491de270c252c4f34c32d99e49257fee1772a7374578c8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.5元，且最新季度收入仍保持10%以上增长、经营现金流/净利润大于1",
-      "action": "建立2%-3%观察仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价处于8.5-9.5元，且毛利率稳定在20%以上或线控转向出现明确量产收入",
-      "action": "小仓试错，仓位不超过2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "线控转向或冗余EPS在2026-2027年形成可披露量产收入，前五大客户占比降至60%以下，净利率提升至7%以上",
-      "action": "可加仓至最高5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于14元且未见利润率和线控转向兑现证据，或收入增速低于10%、毛利率低于17%",
-      "action": "减仓至0%-1%或退出",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "低于合理价值下沿，开始具备安全边际",
-      "action": "进入买入区，复核最新订单、毛利率和现金流后可建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "高于合理价值上沿，估值已提前反映线控转向期权",
-      "action": "停止新买，等待业绩兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "估值明显偏贵，需要量产利润证据支撑",
-      "action": "若无新增量产利润证据，考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "复核2026年中报收入、利润率、现金流和客户集中度",
-      "condition": "披露2026年半年报或年报"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "线控转向和冗余EPS是估值上修的核心证据",
-      "condition": "公告线控转向、冗余EPS等核心项目量产或重大定点"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "客户集中度决定收入稳定性和议价压力",
-      "condition": "前五大客户占比、吉利/奇瑞订单或主机厂年降幅度出现重大变化"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "毛利率是判断放量质量和年降压力的关键指标",
-      "condition": "毛利率连续两个季度低于17%或高于21%"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "现金流恶化会削弱利润质量和扩产安全边际",
-      "condition": "经营现金流/净利润连续两个季度低于0.8"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "低于合理价值下沿，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "高于合理价值上沿，估值已提前反映线控转向期权",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "估值明显偏贵，需要量产利润证据支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "转向系统及部件收入和毛利率",
-    "归母净利润、扣非归母净利润和净利率",
-    "经营活动现金流净额/净利润",
-    "前五大客户销售占比及吉利、奇瑞收入占比",
-    "线控转向和冗余EPS定点、量产收入、良率和毛利率",
-    "应收账款周转天数和存货周转天数",
-    "资本开支、在建工程和产能利用率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,110 +1,120 @@
 {
-  "symbol": "CN:600353",
-  "market": "CN",
-  "ticker": "600353",
-  "company_name": "旭光电子",
-  "name": "旭光电子",
-  "status": "active",
-  "updated_at": "2026-07-09T12:35:00+08:00",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md",
-    "reports/2026-07-09-update.md"
-  ],
-  "rating": "观察/不买",
-  "current_thesis": "2026-07-09 午盘股价由 37.16 元（7/8 收盘）跳涨至 40.88 元（+10.01%），市值约 339 亿元，仍远超乐观情景下沿，结论由 initial 的'不买/观察'进一步强化为不追高并降仓；前端题材（可控核聚变/氮化铝）当前收入占比低，未到合理买区。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    12,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    35
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "旭光电子",
+    "security_status": "active",
+    "symbol": "CN:600353",
+    "ticker": "600353"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "75ed612506e93a3f634c83a41babab8b49541e7e16da648d5a00bb1809907a06"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-update.md",
+        "sha256": "a4d3f78ad72697ca487f3907ebf30220f53be44a1740b6a601b12a0b36c373e3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于30元且无新增大额订单或扣非利润兑现",
-      "action": "不买；已有仓位降为跟踪仓",
-      "max_weight": 0.01,
-      "reason": "估值主要由题材和流动性驱动，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报，重点看扣非利润、经营现金流、应收账款和氮化铝收入占比",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于18至24元且2026H1扣非利润和现金流未恶化",
-      "action": "小仓试探并等待下一份财报确认",
-      "max_weight": 0.03,
-      "reason": "进入合理估值区间，但增长兑现仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报和定增项目进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于15元且应收账款、经营现金流和毛利率稳定",
-      "action": "分批买入",
-      "max_weight": 0.05,
-      "reason": "核心业务估值开始有安全边际，题材期权无需高价支付"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复查2026年报，验证高压真空灭弧室、军工和电子材料增长是否兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于12元且基本面未恶化",
-      "action": "提高至上限仓位",
-      "max_weight": 0.07,
-      "reason": "悲观情景估值附近，赔率明显改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入合理价值区间上沿，启动财报和订单复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入具备安全边际的买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过不应追高区间，需要检查是否有足够新增业绩支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "进入明显高估区，已有仓位应考虑减仓或退出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入合理价值区间上沿，启动财报和订单复核"
-    },
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入具备安全边际的买入区间"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "超过不应追高区间，需要检查是否有足够新增业绩支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "reason": "进入明显高估区，已有仓位应考虑减仓或退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报，重点看扣非利润、经营现金流、应收账款和氮化铝收入占比"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报和定增项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复查2026年报，验证高压真空灭弧室、军工和电子材料增长是否兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款增速与账龄",
-    "氮化铝相关产品收入占比",
-    "可控核聚变相关产品订单和收入",
-    "高压真空灭弧室订单和产能利用率",
-    "定增项目审批、发行价格和建设进度",
-    "前五大客户集中度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

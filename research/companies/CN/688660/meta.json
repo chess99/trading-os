@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688660",
-  "market": "CN",
-  "ticker": "688660",
-  "name": "电气风电",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "观察：公司具备海上风电、上海电气体系和订单修复期权，但2025年亏损扩大、2026Q1仍亏且资产负债率高，当前价格已反映较多扭亏预期，需等待毛利率、现金流和亏损收窄被半年报/三季报验证。",
-  "fair_value_range": [
-    6.2,
-    8.8
-  ],
-  "buy_zone": [
-    5.0,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    9.8,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "电气风电",
+    "security_status": "active",
+    "symbol": "CN:688660",
+    "ticker": "688660"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "34905f514e6d883d1653af1fc68826a321d0996af58a014d1e38da34ac9b2aa8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于6.2元，且2026H1或2026Q3显示亏损同比收窄、经营现金流改善、订单毛利率未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看亏损收窄、毛利率、经营现金流和资产负债率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非亏损明显收窄或转正，资产负债率下降且经营现金流转正",
-      "action": "提高至困境反转小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断订单交付质量和减亏趋势是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.8元但盈利和现金流未同步验证",
-      "action": "不加仓或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报预告或正式业绩，决定是否从观察转向买入或回避",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入买入区间上沿，若同时验证亏损收窄和现金流改善，可考虑小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入悲观情景附近，若无资产负债表恶化，可重新评估安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.8
+      },
+      "reason": "超过基准合理价值区间，若基本面未显著改善，应降低预期或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入买入区间上沿，若同时验证亏损收窄和现金流改善，可考虑小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入悲观情景附近，若无资产负债表恶化，可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 9.8,
-      "reason": "超过基准合理价值区间，若基本面未显著改善，应降低预期或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看亏损收窄、毛利率、经营现金流和资产负债率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断订单交付质量和减亏趋势是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报预告或正式业绩，决定是否从观察转向买入或回避"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

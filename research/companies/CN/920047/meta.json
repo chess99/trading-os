@@ -1,83 +1,95 @@
 {
-  "symbol": "CN:920047",
-  "market": "CN",
-  "ticker": "920047",
-  "name": "诺思兰德",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "诺思兰德首个1类基因治疗药物塞多明基注射液已获批并开始挂网/商业化准备，具备国内促血管新生基因治疗先发稀缺性；但当前市值主要依赖未来销售峰值，2026-2027年的医保准入、渠道铺设、真实世界疗效和现金消耗尚未验证，当前更适合观察并等待更低价格或销售数据确认。",
-  "fair_value_range": [
-    17,
-    27
-  ],
-  "buy_zone": [
-    12,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "诺思兰德",
+    "security_status": "active",
+    "symbol": "CN:920047",
+    "ticker": "920047"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "568615f33288c631c59c654d9d297442158365bb25f60349b50bda8cd31f1f02"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入12-16元区间，且未出现上市后安全性、医保准入或融资条款重大负面",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "复核华索灵首批上市销售、DTP渠道和重点省份挂网进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "医保准入落地且连续两个季度披露华索灵收入爬坡、回款正常",
-      "action": "提高为小仓位核心观察",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核医保目录准入、价格和2026Q4商业化数据",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价超过32元但销售数据仍未验证，或出现高折价融资",
-      "action": "不加仓并考虑减仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、现金消耗、融资安排和华索灵收入确认",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入初始买入观察区，需复核医保、销售和安全性进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "超过情景估值上沿前段，若销售未验证则安全边际不足",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入初始买入观察区，需复核医保、销售和安全性进展"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "超过情景估值上沿前段，若销售未验证则安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "reason": "复核华索灵首批上市销售、DTP渠道和重点省份挂网进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核医保目录准入、价格和2026Q4商业化数据"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、现金消耗、融资安排和华索灵收入确认"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "华索灵省级挂网数量",
-    "华索灵单季度收入和患者数",
-    "医保准入结果及价格降幅",
-    "销售费用率和回款质量",
-    "真实世界研究安全性和疗效",
-    "现金余额及融资稀释"
-  ],
-  "valuation_notes": "相对估值、简化rNPV和情景估值交叉验证后，当前合理区间约17-27元/股；12-16元才具备更明确的初始安全边际。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

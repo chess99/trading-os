@@ -1,93 +1,95 @@
 {
-  "symbol": "CN:300410",
-  "market": "CN",
-  "ticker": "300410",
-  "name": "正业科技",
-  "company_name": "广东正业科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司已从光伏重资产亏损中修复，2025年扭亏且2026Q1收入、扣非利润、经营现金流继续改善；但资产负债率超过80%、净资产薄、应收和存货占用高，当前约7.78元价格已反映较多复苏预期，安全边际不足。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "正业科技",
+    "security_status": "active",
+    "symbol": "CN:300410",
+    "ticker": "300410"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "0073cbe538ffa12e841ce383206e00e5c66a8dc9ddfaf11bf010db10583d8a31"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.80 CNY，且最近一期经营现金流为正、合同负债不低于4亿元、未公告偏离主业的重资产投资",
-      "action": "建立1%-2%观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、合同负债、存货和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "持仓后连续两个季度扣非净利率不低于5%，经营现金流为正，应收账款和存货增速不高于收入增速",
-      "action": "可加仓至3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1增长是否持续以及资产负债率是否下降",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "资产负债率仍高于80%且存货继续上升，或股价高于8.50 CNY但利润未超预期",
-      "action": "不加仓，已有仓位减半或退出",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，决定是否从观察上调为买入或下调为不买",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 4.8,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
       "reason": "进入合理价值区间下沿以下，开始具备安全边际",
-      "action": "进入可买区，复核最新订单、现金流和存货"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 8.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
       "reason": "明显高于合理价值区间，且需要更强利润兑现支撑",
-      "action": "估值过热，除非基本面显著超预期，否则减仓或回避"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、合同负债、存货和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1增长是否持续以及资产负债率是否下降"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，决定是否从观察上调为买入或下调为不买"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1扣非净利润是否超过3000万元",
-    "2026全年扣非净利润是否超过6000万元",
-    "经营活动现金流净额是否连续为正",
-    "合同负债是否保持在4亿元以上且顺利转收入",
-    "存货/年化收入是否下降到45%以下",
-    "应收账款增速是否低于收入增速",
-    "X光检测自动化收入和毛利率",
-    "资产负债率是否下降到75%以下",
-    "是否出现偏离工业检测主业的重资产投资"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

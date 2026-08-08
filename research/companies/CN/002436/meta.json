@@ -1,152 +1,110 @@
 {
-  "symbol": "CN:002436",
-  "market": "CN",
-  "ticker": "002436",
-  "name": "兴森科技",
-  "company_name": "兴森科技",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "updated_at": "2026-07-17T17:00:00+08:00",
-  "current_rating": "watch",
-  "current_thesis": "2026年半年度业绩预告确认盈利拐点：上半年归母净利润预计1.00-1.20亿元、扣非净利润1.10-1.30亿元，第二季度隐含扣非净利润约0.82-1.02亿元，珠海兴科CSP封装基板受益于存储景气、量价齐升和订单饱满而扭亏；但FCBGA和mSAP尚未成为预告所列主要利润来源，现金流与分部毛利仍待半年报验证。2026-07-17收盘价34.06元仍高于22-30元合理价值，维持观察、不抢跌停反弹。",
-  "conclusion": "兴森科技CSP和PCB盈利修复已由业绩预告验证，但远期高估值逻辑尚未全部兑现；截至2026-07-17收盘价34.06元、总市值约578.91亿元，即使将上半年利润简单年化，估值仍约241-289倍。维持watch，合理价值22-30元、买入区18-22元；无仓位继续等待，已有主题仓控制在0%-1%。",
-  "quality_rating": "B+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    22,
-    30
-  ],
-  "fair_value": {
+  "identity": {
     "currency": "CNY",
-    "low": 22,
-    "high": 30,
-    "method": "盈利正常化、PB/ROE、分部SOTP综合"
+    "market": "CN",
+    "name": "兴森科技",
+    "security_status": "active",
+    "symbol": "CN:002436",
+    "ticker": "002436"
   },
-  "buy_zone": [
-    18,
-    22
-  ],
-  "buy_zone_detail": {
-    "currency": "CNY",
-    "safety_margin_low": 18,
-    "safety_margin_high": 22,
-    "strong_buy_below": 16,
-    "reason": "中报预告确认CSP和PCB盈利修复，但现金流、分部毛利及FCBGA/mSAP兑现仍不足以支撑当前高估值。"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "dd549248a7b2a5029f2fe34014e05aa5dbcbe16bc78dd8f8290f6f7251a0476b"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "3359d494d5efb1e8ac40bcd879a149ccd7fddda133d2ef9b2386702f7380d5af"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "sell_or_reduce_zone": [
-    35,
-    45
-  ],
-  "sell_or_reduce_zone_detail": {
-    "currency": "CNY",
-    "reduce_above": 35,
-    "reason": "35元以上已明显高于本次合理价区间，需由半导体业务毛利转正、mSAP放量和FCBGA量产共同支撑。"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "position_limits": {
-    "max_weight": 0.04,
-    "current_action": "当前34.06元不买入、不抢跌停反弹；无仓位等待22元以下，已有主题仓控制在0%-1%"
-  },
-  "position_plan": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_at_or_below_16",
-      "price_zone": "≤16元",
-      "action": "强吸引力买入",
-      "weight": "3%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-22"
+      },
+      "reason": "公司预约2026-08-21披露半年报，复查半导体业务毛利率、CSP产能利用率、FCBGA进度、mSAP订单和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_16_to_18",
-      "price_zone": "16-18元",
-      "action": "有吸引力，分批建仓",
-      "weight": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证收入增长、利润率和现金流是否持续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_18_to_22",
-      "price_zone": "18-22元",
-      "action": "安全边际买入区，小步买入",
-      "weight": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报，判断扩产、定增、FCBGA和mSAP是否兑现为利润。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_22_to_30",
-      "price_zone": "22-30元",
-      "action": "合理区间，持有/跟踪",
-      "weight": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入合理区间下沿，可重新评估小仓位建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_30_to_35",
-      "price_zone": "30-35元",
-      "action": "偏贵，不新增，仅保留观察仓",
-      "weight": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入强吸引力区，若基本面未恶化可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "price_above_35",
-      "price_zone": ">35元",
-      "action": "不追高，反弹无业绩支撑时降低风险",
-      "weight": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "高于不追高价，若业绩未同步兑现应降低估值回撤风险。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "currency": "CNY",
-      "reason": "进入合理区间下沿，可重新评估小仓位建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 16,
-      "currency": "CNY",
-      "reason": "进入强吸引力区，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "currency": "CNY",
-      "reason": "高于不追高价，若业绩未同步兑现应降低估值回撤风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-22",
-      "reason": "公司预约2026-08-21披露半年报，复查半导体业务毛利率、CSP产能利用率、FCBGA进度、mSAP订单和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证收入增长、利润率和现金流是否持续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报，判断扩产、定增、FCBGA和mSAP是否兑现为利润。"
-    }
-  ],
-  "review_plan": "以2026半年报、三季报和2026年报为主线跟踪：一看珠海兴科CSP扭亏能否持续及半导体业务毛利率，二看FCBGA客户认证、量产订单和亏损收窄，三看mSAP稳定批量、经营现金流、资产负债率和应收账款，四看定增审核、发行价格、摊薄幅度和募投进度。",
-  "key_risks": [
-    "FCBGA客户认证和量产订单不及预期，继续拖累利润。",
-    "当前估值显著依赖远期成长，即使中报预告改善，业绩低于预期或存储周期转弱仍可能触发估值压缩。",
-    "经营现金流为负、资产负债率偏高，扩产周期带来资金压力。",
-    "定增募投存在实施、产能消化、折旧摊销和股本摊薄风险。",
-    "应收账款和存货增加影响财务质量。",
-    "存储合约价与现货价格分化，若高价压制终端出货，CSP订单和产能利用率可能回落。",
-    "AI光模块、PCB行业景气和原材料价格波动。"
-  ],
-  "sources": [
-    "sources/2025-annual-report.pdf",
-    "sources/2026-q1-report.pdf",
-    "sources/2026-05-08-ir.pdf",
-    "sources/2026-private-placement-plan.pdf",
-    "sources/2026-07-08-quote-tencent.txt"
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

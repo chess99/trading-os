@@ -1,85 +1,105 @@
 {
-  "symbol": "CN:300716",
-  "market": "CN",
-  "ticker": "300716",
-  "name": "*ST泉为",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "avoid：公司经营几乎停摆、归母净资产为负、2025年财报保留意见且内控否定，当前约28.44亿元市值主要交易保壳/重整期权，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    2.0,
-    5.0
-  ],
-  "buy_zone": [
-    0.0,
-    1.5
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST泉为",
+    "security_status": "active",
+    "symbol": "CN:300716",
+    "ticker": "300716"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "09ab9abac6af9edf553c4459bbb6ee078e51e6ac9bbfcf6ac0cc5faa3734f2c6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于6元或退市风险、内控否定、债务诉讼未解除",
-      "action": "不买；已有仓位降至事件观察仓或清仓",
-      "max_weight": 0.0025
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报：收入恢复、净资产、现金、债务和诉讼进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于1.5元且有可核验的净资产修复、债务重组和收入恢复证据",
-      "action": "仅可试错第一笔仓位",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报：持续经营改善是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于0.8元且退市风险解除、内控重大缺陷基本消除",
-      "action": "可作为高风险事件仓，但预设归零",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报审计意见、内控意见及退市风险是否解除",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "进入有安全边际观察区，但仍需先验证退市风险解除路径",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入强吸引力事件期权区，适合极小仓位复核",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "明显超过基准合理价值区间，需避免追高或降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "进入有安全边际观察区，但仍需先验证退市风险解除路径"
-    },
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入强吸引力事件期权区，适合极小仓位复核"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "明显超过基准合理价值区间，需避免追高或降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报：收入恢复、净资产、现金、债务和诉讼进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报：持续经营改善是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报审计意见、内控意见及退市风险是否解除"
-    }
-  ],
-  "notes": [
-    "2026-07-20新浪行情显示股价17.77元，按160,020,000股测算市值约28.44亿元。",
-    "2025年营业收入4808.53万元，归母净利润-2.214亿元，归母净资产-1.634亿元。",
-    "2026Q1营业收入仅1.71万元，归母所有者权益-1.785亿元，货币资金585.07万元。",
-    "财报与行情数据可核验；逐笔诉讼、处罚和潜在重整安排低置信。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

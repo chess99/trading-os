@@ -1,91 +1,115 @@
 {
-  "symbol": "CN:600365",
-  "market": "CN",
-  "ticker": "600365",
-  "name": "ST通葡",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST通葡仍是高风险困境资产，葡萄酒本体有一定品牌和毛利基础，但合并口径主要受低毛利电商、历史违规担保、诉讼预计负债、现金流持续为负和ST事项约束。2026-07-20股价2.51元对应约11.39亿元市值和约5.2倍PB，明显高于资产法、EPV和相对估值可支持的0.45-0.85元合理区间，当前缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.45,
-    0.85
-  ],
-  "buy_zone": [
-    0.45,
-    0.65
-  ],
-  "sell_or_reduce_zone": [
-    1.1,
-    2.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST通葡",
+    "security_status": "active",
+    "symbol": "CN:600365",
+    "ticker": "600365"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "16c2af4f31e153bd400848a5ba2daaec1a8c30e26442ccb633c723a530671242"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 0.45 and no new delisting, audit, internal-control, litigation or liquidity deterioration",
-      "action": "research-only starter position after fresh review",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "review 2026 half-year report, actual loss, operating cash flow, ST and litigation progress",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "0.45 < price <= 0.65 and half-year/quarterly reports confirm cash-flow improvement",
-      "action": "watchlist only or very small tracking position",
-      "max_weight": 0.0025
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "review 2026 third-quarter report and whether cash burn/expected liabilities stabilize",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price > 0.65 or unresolved ST/litigation/cash-flow risks persist",
-      "action": "avoid new buying and keep position at zero",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "review 2026 annual report, audit opinion, internal control, delisting and other-risk-warning status",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.65
+      },
+      "reason": "enters conservative research buy zone based on asset and EPV cross-check",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.45
+      },
+      "reason": "enters strong distress-value zone if no new delisting or liquidity risk appears",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.1
+      },
+      "reason": "above fundamental fair value range; do not chase and reduce if held",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.0
+      },
+      "reason": "pricing becomes mostly event/speculation driven rather than fundamental value",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.65,
-      "reason": "enters conservative research buy zone based on asset and EPV cross-check"
-    },
-    {
-      "type": "price_below",
-      "price": 0.45,
-      "reason": "enters strong distress-value zone if no new delisting or liquidity risk appears"
-    },
-    {
-      "type": "price_above",
-      "price": 1.1,
-      "reason": "above fundamental fair value range; do not chase and reduce if held"
-    },
-    {
-      "type": "price_above",
-      "price": 2.0,
-      "reason": "pricing becomes mostly event/speculation driven rather than fundamental value"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "review 2026 half-year report, actual loss, operating cash flow, ST and litigation progress"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "review 2026 third-quarter report and whether cash burn/expected liabilities stabilize"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "review 2026 annual report, audit opinion, internal control, delisting and other-risk-warning status"
-    }
-  ],
-  "notes": [
-    "2026-07-20 close was 2.51 CNY from Tencent/Sina quote snapshots; total market capitalization was approximately 1.139 billion CNY.",
-    "2025 annual report disclosed revenue of 682.65 million CNY, net loss attributable to parent of 83.42 million CNY and operating cash flow of -409.23 million CNY.",
-    "2026 Q1 report disclosed revenue of 190.12 million CNY, net loss attributable to parent of 11.52 million CNY, operating cash flow of -71.78 million CNY and parent equity of 220.24 million CNY.",
-    "2026 half-year pre-loss announcement data was sourced from announcement aggregation because direct original PDF access was limited; confidence is medium.",
-    "Key unresolved risks are ST status, historical illegal guarantee, litigation execution, expected liabilities, frozen assets, weak operating cash flow and possible refinancing dilution."
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

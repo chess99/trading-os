@@ -1,82 +1,105 @@
 {
-  "symbol": "CN:003038",
-  "ticker": "003038",
-  "name": "鑫铂股份",
-  "company_name": "安徽鑫铂铝业股份有限公司",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "current_thesis": "鑫铂股份处于光伏铝边框价格下行后的亏损修复期，现价约0.9倍2026Q1 PB，已反映部分压力但高负债、连续亏损和现金流承压使安全边际不足；等待价格进入0.6-0.75倍PB且亏损收窄后再考虑小仓位。",
-  "fair_value_range": [
-    9.5,
-    12.5
-  ],
-  "buy_zone": [
-    7.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鑫铂股份",
+    "security_status": "active",
+    "symbol": "CN:003038",
+    "ticker": "003038"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "dc6861d2014d7cf66d5091678efb0264440f437c9cacaf9a6e060dad4fc78cc6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.5元，且最新半年报或三季报显示亏损收窄、经营现金流改善、资产负债率未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、经营现金流、应收账款、存货和担保余额",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.0元，且没有新增重大担保违约、客户流失或持续大额减值",
-      "action": "可加至小仓位上限",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认亏损是否继续收窄以及光伏铝边框价格是否企稳",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于13.5元但公司仍处亏损或现金流未改善",
-      "action": "不追高并减持已有仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估资产减值、债务压力和正常化盈利能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入初步买入观察区，对应约0.75倍2026Q1 BVPS，需要同时复核亏损和现金流是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入深度安全边际区，对应约0.6倍2026Q1 BVPS，需排除资产负债表继续恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "超过基准合理价值上沿，若基本面未明显修复应卖出或回避追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入初步买入观察区，对应约0.75倍2026Q1 BVPS，需要同时复核亏损和现金流是否改善"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入深度安全边际区，对应约0.6倍2026Q1 BVPS，需排除资产负债表继续恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "超过基准合理价值上沿，若基本面未明显修复应卖出或回避追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、经营现金流、应收账款、存货和担保余额"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认亏损是否继续收窄以及光伏铝边框价格是否企稳"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估资产减值、债务压力和正常化盈利能力"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

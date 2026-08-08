@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:301277",
-  "ticker": "301277",
-  "name": "新天地",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "新天地具备手性医药中间体工艺和产业链延伸基础，但2025年利润下滑、2026Q1收入高增未转化为利润改善；当前估值已经隐含修复预期，安全边际不足，等待价格回落或原料药/制剂放量验证。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    8.0,
-    10.5
-  ],
-  "buy_zone": [
-    6.5,
-    7.8
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新天地",
+    "security_status": "active",
+    "symbol": "CN:301277",
+    "ticker": "301277"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "fdf0dcd1a7ca17e2a329223ea6416f083277825b66e4e71309e5291808c54ca9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入6.5-7.8元买入区间，且2026年中报或三季报显示毛利率和扣非净利率企稳后小仓观察",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增长是否转化为毛利率和扣非净利率改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利润恢复增长，原料药或制剂收入贡献明确，且估值仍低于公允价值区间上沿",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润趋势、现金流、存货和应收账款变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026年全年归母净利润低于1.0亿元或经营现金流明显转负，停止加仓并重新评估",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估原料药/制剂商业化进展和公允价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.8
+      },
+      "reason": "进入买入区间上沿，需要复核半年报或三季报确认基本面没有继续恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "高于减持/降低仓位区间下沿，若利润尚未修复则估值安全边际不足",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.8,
-      "reason": "进入买入区间上沿，需要复核半年报或三季报确认基本面没有继续恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "高于减持/降低仓位区间下沿，若利润尚未修复则估值安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增长是否转化为毛利率和扣非净利率改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润趋势、现金流、存货和应收账款变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估原料药/制剂商业化进展和公允价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

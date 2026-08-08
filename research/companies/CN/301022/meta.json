@@ -1,67 +1,86 @@
 {
-  "symbol": "CN:301022",
-  "ticker": "301022",
-  "name": "海泰科",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "海泰科是汽车内外饰注塑模具细分供应商，2025年订单、外销和泰国产能带动收入与利润恢复，但2026Q1已转亏，说明汇率、财务费用、坏账和项目验收节奏对利润扰动很大。当前价格相对2025扣非和Q1后LTM盈利偏贵，安全边际不足，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    16.0,
-    20.0
-  ],
-  "buy_zone": [
-    0.0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    30.0
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海泰科",
+    "security_status": "active",
+    "symbol": "CN:301022",
+    "ticker": "301022"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "4d80f2765e6cfed6d4ad7fd81db46ad3a1191f84f9716ddfca09786dde984b28"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于15.5元，且最近一个季度扣非归母转正、经营现金流改善、应收账款和存货未继续恶化时，可试探建仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看Q2扣非利润、经营现金流、应收账款、存货、合同负债和泰国产能。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度归母利润恢复，年化归母利润接近7000万元，经营现金流覆盖净利润，且股价仍不高于20元时，可提高至中等观察仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证Q1亏损是否为一次性扰动，以及外销汇率影响是否收敛。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24元但利润仍未恢复，或连续两个季度扣非亏损，或经营现金流持续为负且应收/存货继续扩张时，不新增并考虑退出观察仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入买入区，需要复核最新季度利润、现金流和订单转化后决定是否试探。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "高于减仓观察区，若没有利润和现金流同步改善，风险收益比恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入买入区，需要复核最新季度利润、现金流和订单转化后决定是否试探。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "高于减仓观察区，若没有利润和现金流同步改善，风险收益比恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看Q2扣非利润、经营现金流、应收账款、存货、合同负债和泰国产能。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证Q1亏损是否为一次性扰动，以及外销汇率影响是否收敛。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

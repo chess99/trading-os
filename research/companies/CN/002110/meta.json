@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:002110",
-  "market": "CN",
-  "ticker": "002110",
-  "name": "三钢闽光",
-  "company_name": "三钢闽光",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_low",
-  "valuation_rating": "undervalued_high_risk",
-  "current_thesis": "福建区域钢铁龙头，2025年产能置换和超低排放改造基本收官，低PB提供周期底部资产保护；但2026年一季度再度亏损，买入需等待更低价格或吨钢利润、经营现金流修复验证。",
-  "fair_value_range": [
-    3.3,
-    4.3
-  ],
-  "buy_zone": [
-    2.4,
-    2.75
-  ],
-  "sell_or_reduce_zone": [
-    4.6,
-    5.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三钢闽光",
+    "security_status": "active",
+    "symbol": "CN:002110",
+    "ticker": "002110"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "580633337ca3b81adc58a854e25b5c60faa7dbd4494c5d738f6ccc7f6a70624d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于2.75元，且未出现经营现金流转负或短债显著上升",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "低于约0.34倍2025年末PB，估值保护较强但基本面仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、吨钢利润、现金流和资产负债表",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.55元，且最新季度现金流、库存和负债未恶化",
-      "action": "小幅加仓",
-      "max_weight": 0.015,
-      "reason": "接近0.32倍PB，周期底部赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及行业价差是否持续改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度归母净利转正、经营现金流为正、钢材-原燃料价差修复",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "盈利修复得到财报验证后，低PB反转逻辑成立度提升"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.75
+      },
+      "reason": "进入首笔买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价进入4.60元以上且利润修复未超过预期",
-      "action": "减持或停止加仓",
-      "max_weight": 0.01,
-      "reason": "估值接近0.57倍PB以上，若无盈利恢复支撑，赔率下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入深度低估区，但需同步复核现金流和负债",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.6
+      },
+      "reason": "进入减持观察区，需盈利修复支撑更高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "达到乐观估值下沿，除非吨钢利润显著恢复，否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.75,
-      "reason": "进入首笔买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入深度低估区，但需同步复核现金流和负债"
-    },
-    {
-      "type": "price_above",
-      "price": 4.6,
-      "reason": "进入减持观察区，需盈利修复支撑更高估值"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "达到乐观估值下沿，除非吨钢利润显著恢复，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、吨钢利润、现金流和资产负债表"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及行业价差是否持续改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "螺纹钢、中板、圆钢价格与铁矿石、焦煤、焦炭价差",
-    "福建区域钢价相对华东和华南价差",
-    "季度归母净利润和扣非归母净利润",
-    "吨钢净利和冶金制造业毛利率",
-    "经营活动现金流净额",
-    "货币资金、短期借款、一年内到期非流动负债、应付票据",
-    "资产负债率和净有息负债",
-    "工业材占比及中板、圆钢、制品毛利率",
-    "资本开支执行情况",
-    "现金分红政策"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

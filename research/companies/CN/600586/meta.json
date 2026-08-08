@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:600586",
-  "ticker": "600586",
-  "name": "金晶科技",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "金晶科技处于玻璃、光伏玻璃、纯碱三重周期底部，资产价格接近净资产但盈利仍恶化；在2026H1预亏约3.10亿元且毛利率未见拐点前，只适合观察，等待价格低于0.9倍PB且单季毛利率/经营现金流改善后小仓试错。",
-  "fair_value_range": [
-    3.2,
-    4.8
-  ],
-  "buy_zone": [
-    2.8,
-    3.4
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    6.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金晶科技",
+    "security_status": "active",
+    "symbol": "CN:600586",
+    "ticker": "600586"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "188374562c7eb177e90d3ea566d24a92e9ac05670dced1e7c91b3e6138d06c40"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约4元且2026H1仍预亏，维持观察，不主动买入。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、亏损构成、毛利率、现金流和减值风险。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.40元，且2026Q3单季毛利率环比改善、经营现金流恢复为正，可小仓试错。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断毛利率和经营现金流是否出现可持续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.00元，未出现大额资产减值或流动性风险，且玻璃/纯碱价格企稳，可提高至观察仓上限。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，评估周期底部是否结束及净资产安全垫是否被消耗。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "若2026H2继续大幅亏损、海外光伏资产减值或控股股东质押风险上升，取消买入计划。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "进入买入观察区，需要同步检查2026Q3毛利率、经营现金流和行业库存。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "低于估算买入区下沿，若无资产减值和流动性风险，安全边际显著改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "进入减持区，需要确认是否已有2027年利润恢复至4亿元以上的证据，否则风险收益转弱。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "进入买入观察区，需要同步检查2026Q3毛利率、经营现金流和行业库存。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "低于估算买入区下沿，若无资产减值和流动性风险，安全边际显著改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "reason": "进入减持区，需要确认是否已有2027年利润恢复至4亿元以上的证据，否则风险收益转弱。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、亏损构成、毛利率、现金流和减值风险。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断毛利率和经营现金流是否出现可持续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，评估周期底部是否结束及净资产安全垫是否被消耗。"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

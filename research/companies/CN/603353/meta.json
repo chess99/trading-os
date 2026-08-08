@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603353",
-  "market": "CN",
-  "ticker": "603353",
-  "name": "和顺石油",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "和顺石油本体是区域成品油流通资产，2026H1 受益于批零价差扩大和证券投资收益，短期利润弹性明显；但 2025 年仍亏损、扣非与经营现金流质量需验证，且当前市值已提前反映奎芯科技跨界半导体预期。以安全边际要求看，现价更适合观察，等待正式半年报、并购交割和奎芯经营兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    22,
-    28
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "和顺石油",
+    "security_status": "active",
+    "symbol": "CN:603353",
+    "ticker": "603353"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "8cdd3e487dbd62e8bf8bff16dc17b4d919e78a7bcb5040caad98dc8705d8f606"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "不建仓，仅跟踪 2026H1 正式报告、扣非利润、经营现金流和奎芯科技交易落地情况",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报正式数据、扣非利润、投资收益和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入 22 元以下，且 2026H1 正式报表显示扣非利润和经营现金流同步改善",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报中主业价差持续性、奎芯科技交易进展和并表影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "奎芯科技完成交割并披露高质量并表数据，2026 全年扣非利润进入 8000 万元以上",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报、奎芯业绩承诺起始年兑现质量及商誉风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入基准估值下沿，可复核半年报和现金流后考虑小仓位观察",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入较明显安全边际区，若基本面未恶化可重新评估买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "股价进入乐观情景区间，若没有奎芯和主业新增证据应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入基准估值下沿，可复核半年报和现金流后考虑小仓位观察"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入较明显安全边际区，若基本面未恶化可重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "股价进入乐观情景区间，若没有奎芯和主业新增证据应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报正式数据、扣非利润、投资收益和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报中主业价差持续性、奎芯科技交易进展和并表影响"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报、奎芯业绩承诺起始年兑现质量及商誉风险"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

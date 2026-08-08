@@ -1,135 +1,123 @@
 {
-  "symbol": "CN:002891",
-  "market": "CN",
-  "ticker": "002891",
-  "name": "中宠股份",
-  "company_name": "烟台中宠食品股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "中宠股份具备全球宠物食品制造底盘、国内主粮和自主品牌升级空间，2025年现金流质量较好，但2026Q1收入高增而利润与现金流承压，当前约24倍TTM PE未提供足够大安全边际。24元以下更适合分批买入，26元附近以观察或小仓跟踪为主。",
-  "quality_rating": "B+",
-  "valuation_rating": "合理略偏便宜但安全边际不足",
-  "fair_value_range": [
-    30,
-    36
-  ],
-  "buy_zone": [
-    22,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    48
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中宠股份",
+    "security_status": "active",
+    "symbol": "CN:002891",
+    "ticker": "002891"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "884b51b74d156bccfd9412e5f66881203d60cd47b7a46c5afc9618c49385fd0b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于22元，且未出现食品安全事件、海外大客户明显流失、经营现金流连续恶化",
-      "action": "加到目标仓位",
-      "target_position": "5%-6%",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "价格处于22-24元，2026年收入增速仍高于20%，扣非净利率不继续下滑",
-      "action": "分批买入",
-      "target_position": "3%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "价格处于24-26元，基本面未破坏但利润率尚未验证",
-      "action": "仅建立观察仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格处于26-36元",
-      "action": "持有或观察，不新增仓位",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格高于42元，或TTM PE高于35倍且扣非净利率未改善",
-      "action": "减仓或卖出",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "currency": "CNY",
-      "reason": "进入基础买入区，较合理价值下沿有约20%安全边际",
-      "action": "进入可买区，复核最新季度扣非净利率、现金流和应收存货后分批买入"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "currency": "CNY",
-      "reason": "进入更高安全边际区，若基本面未破坏则风险收益改善",
-      "action": "若基本面未恶化，可提高至目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "currency": "CNY",
-      "reason": "价格高于估值中枢上沿，需利润率显著改善才能支撑",
-      "action": "估值进入高预期区，若利润率未显著改善则减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证收入高增长是否转化为利润和现金流",
-      "action": "复核收入增速、扣非净利率、现金流和应收存货"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "观察销售费用和研发费用投入后的利润弹性",
-      "action": "复核单季度扣非净利率是否低于5%且收入增速放缓"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年度口径评估品牌化转型、客户集中度和现金流质量",
-      "action": "复核增长质量和营运资本压力"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "预计2027年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "检查应收账款和存货是否随规模扩张失控",
-      "action": "检查渠道压货、回款和库存减值风险"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-10-31",
-      "condition": "预计2027年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-10-31"
+      },
       "reason": "跟踪海外客户、贸易政策和食品安全风险是否改变估值折扣",
-      "action": "立即重估盈利预测和估值折扣"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入基础买入区，较合理价值下沿有约20%安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入更高安全边际区，若基本面未破坏则风险收益改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "价格高于估值中枢上沿，需利润率显著改善才能支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "国内收入增速",
-    "主粮收入占比及增速",
-    "直销收入增速和毛利率",
-    "扣非净利率",
-    "销售费用率与品牌投放ROI",
-    "经营现金流/归母净利润",
-    "应收账款和存货周转",
-    "前五大客户销售占比",
-    "境外收入增速和汇率/关税影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

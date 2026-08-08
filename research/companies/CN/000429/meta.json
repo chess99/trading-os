@@ -1,106 +1,106 @@
 {
-  "symbol": "CN:000429",
-  "market": "CN",
-  "ticker": "000429",
-  "name": "粤高速Ａ",
-  "company_name": "粤高速Ａ",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "广东核心高速收费资产现金流稳定、分红较高，适合红利防守型配置；但 2026-07-10 可核验股价已接近乐观估值下沿，新资金应等待 12.8 元以下再建观察仓。",
-  "quality_rating": "high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    12.0,
-    14.2
-  ],
-  "buy_zone": [
-    10.8,
-    12.8
-  ],
-  "sell_or_reduce_zone": [
-    15.2,
-    16.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "粤高速Ａ",
+    "security_status": "active",
+    "symbol": "CN:000429",
+    "ticker": "000429"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "e2ad353f4a5fa3e6c1bfe2c450904c387f995068f2a48c32ab7ed769d84caeae"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入 12.8 元以下，且无收费年限、改扩建成本或政策利空",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "以 2025 年每股分红 0.604 元测算，股息率接近 4.7%，安全边际开始出现"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报的通行费收入、归母净利润、经营现金流和改扩建资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入 11.8 元以下，且 2026 年利润和分红预期未下修",
-      "action": "加至核心防守仓",
-      "max_weight": 0.04,
-      "reason": "股息率约 5.1%，相对成熟高速现金流具备更好的风险补偿"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报和全年分红可持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 15.2 元，且没有明确的收费期限延长或利润上修",
-      "action": "不新增并考虑减仓",
-      "max_weight": 0.01,
-      "reason": "当前估值已接近乐观情景，新增资金赔率不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.8
+      },
+      "reason": "进入首笔观察仓买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "广澳高速南沙至珠海段改扩建投资显著超预算或核心通行费连续两个季度弱于预期",
-      "action": "降仓或退出观察仓",
-      "max_weight": 0.0,
-      "reason": "资本开支和车流下修会同时压低自由现金流与分红能力"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.8
+      },
+      "reason": "股息率和安全边际达到核心防守仓要求",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.2
+      },
+      "reason": "接近减仓观察区间，需复核估值和分红可持续性",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过乐观估值上沿，若无基本面上修应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.8,
-      "reason": "进入首笔观察仓买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 11.8,
-      "reason": "股息率和安全边际达到核心防守仓要求"
-    },
-    {
-      "type": "price_above",
-      "price": 15.2,
-      "reason": "接近减仓观察区间，需复核估值和分红可持续性"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "超过乐观估值上沿，若无基本面上修应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年报的通行费收入、归母净利润、经营现金流和改扩建资本开支"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报和全年分红可持续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入",
-    "季度归母净利润",
-    "经营活动现金流量净额",
-    "每股分红",
-    "核心路段通行费收入",
-    "核心路段车流量",
-    "货车占比",
-    "广澳高速南沙至珠海段改扩建总投资和进度",
-    "剩余收费年限",
-    "广东 GDP 和进出口增速",
-    "10 年期国债收益率",
-    "宁沪高速、深高速、皖通高速、山东高速、招商公路估值和股息率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

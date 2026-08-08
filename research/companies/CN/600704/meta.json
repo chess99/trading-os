@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:600704",
-  "ticker": "600704",
-  "name": "物产中大",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "浙江省属大宗商品供应链龙头，低 PE、低 PB、分红率提升和回购构成底部支撑；但经营现金流为负、资产负债表扩张和金融服务复杂度要求更高安全边际。当前价格接近买入区，先观察，等待 4.8 元以下或现金流改善后小仓介入。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    5.8,
-    7.0
-  ],
-  "buy_zone": [
-    4.3,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    7.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "物产中大",
+    "security_status": "active",
+    "symbol": "CN:600704",
+    "ticker": "600704"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "a347eb0bfad77fb39e03dd5046fd18967a99a277397053e7e2c28173f577a7ae"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 4.30-4.80 元区间，且无重大坏账、担保代偿、衍生品损失或分红规划下修",
-      "action": "建立观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查经营现金流、存货、预付款、短债和分红执行",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 半年报或三季报确认经营现金流改善、存货和预付款扩张受控、归母净利润全年化不低于 37 亿元",
-      "action": "可加至核心低估值仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年利润和现金流趋势是否支持提升评级",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 6.80 元且 ROE、经营现金流或分红率没有同步上修",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报和 2027 年分红安排，重估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入买入区上沿，重新评估是否建立小仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "接近减仓区，检查估值是否已充分反映基准情景",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入买入区上沿，重新评估是否建立小仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "接近减仓区，检查估值是否已充分反映基准情景"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查经营现金流、存货、预付款、短债和分红执行"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年利润和现金流趋势是否支持提升评级"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报和 2027 年分红安排，重估合理价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600653",
-  "ticker": "600653",
-  "name": "申华控股",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "申华控股处于亏损收敛和经营修复观察期：2026H1预告显示宝马经销板块扭亏、Q2单季归母盈利，但上半年合并仍预亏，汽车城等存量资产、高负债和受限资产使当前1.65元附近缺乏安全边际。只有在正式半年报验证减亏、财务费用下降兑现且价格低于1.05元时，才考虑小仓位观察。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    1.05,
-    1.35
-  ],
-  "buy_zone": [
-    0.85,
-    1.05
-  ],
-  "sell_or_reduce_zone": [
-    1.8,
-    2.1
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "申华控股",
+    "security_status": "active",
+    "symbol": "CN:600653",
+    "ticker": "600653"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "7e4477330f454e46ea6be882149762c2a52884dadc140eda26c9759a8feefb58"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于1.05元且2026半年报确认归母亏损不差于-2000万元、扣非亏损不差于-2800万元，同时宝马经销板块保持扭亏",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报正式数据、宝马经销板块毛利和政府补助确认情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年报确认扣非接近盈亏平衡、经营现金流持续为正且资产负债率下降",
-      "action": "可将仓位上限提高",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报是否延续Q2改善、财务费用是否下降",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于1.80元但未披露持续盈利证据，或半年报低于预告下限",
-      "action": "不买入并减持已有观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报是否实现扣非接近盈亏平衡和资产负债表改善",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.05
+      },
+      "reason": "进入基准估值下沿附近，可结合半年报验证是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.8
+      },
+      "reason": "价格进入乐观情景但盈利尚未稳定时，安全边际不足",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.05,
-      "reason": "进入基准估值下沿附近，可结合半年报验证是否建立观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 1.8,
-      "reason": "价格进入乐观情景但盈利尚未稳定时，安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报正式数据、宝马经销板块毛利和政府补助确认情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报是否延续Q2改善、财务费用是否下降"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报是否实现扣非接近盈亏平衡和资产负债表改善"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

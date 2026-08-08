@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:920026",
-  "market": "CN",
-  "ticker": "920026",
-  "name": "卓兆点胶",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "卓兆点胶具备精密点胶阀、核心部件和耗材的高毛利细分优势，并已进入苹果链/EMS/集成商客户体系；但2025年增长含项目验收和并购并表因素，经营现金流、应收账款、商誉及客户集中度限制安全边际。当前更适合观察，等待18元/股以下或现金流改善后再买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18.5,
-    25.5
-  ],
-  "buy_zone": [
-    15.0,
-    18.0
-  ],
-  "sell_or_reduce_zone": [
-    28.0,
-    32.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "卓兆点胶",
+    "security_status": "active",
+    "symbol": "CN:920026",
+    "ticker": "920026"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "b47d907da519a7ddfd4b33d7b478ad6c016213b9620cb9f9e4fbd63c570d7cdf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于18元/股，且2026年半年度或三季度经营现金流改善、应收账款增速低于收入增速",
-      "action": "建立观察仓到小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告中的收入、净利润、经营现金流、应收账款和奥茵绅并表进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于15元/股，且点胶阀及配件毛利率维持在65%以上、未出现商誉减值或大客户订单明显延后",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度订单验收、现金流修复和费用率变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于28元/股但2026年归母净利润预期未上修至8000万元以上",
-      "action": "不加仓并考虑降低持仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告、商誉减值风险及并购标的业绩承诺兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入基准买入区上沿，需要复核现金流与订单质量后考虑建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入较有安全边际区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "高于基准估值区间，若业绩未上修应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "reason": "进入基准买入区上沿，需要复核现金流与订单质量后考虑建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入较有安全边际区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "高于基准估值区间，若业绩未上修应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告中的收入、净利润、经营现金流、应收账款和奥茵绅并表进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度订单验收、现金流修复和费用率变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告、商誉减值风险及并购标的业绩承诺兑现"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

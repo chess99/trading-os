@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:300592",
-  "market": "CN",
-  "ticker": "300592",
-  "name": "华凯易佰",
-  "company_name": "华凯易佰科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是 A 股有收入规模的跨境电商运营商，2026Q1 已显示利润率修复，但泛品业务品牌壁垒不强，平台、库存、关税和汇率风险较高。17.47 元附近已反映较多修复预期，12.5 元以下才有较好安全边际。",
-  "quality_rating": "中等",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    12.0,
-    16.5
-  ],
-  "buy_zone": [
-    0,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华凯易佰",
+    "security_status": "active",
+    "symbol": "CN:300592",
+    "ticker": "300592"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "24790c49bc62a4fb5efe5d9a11379b73d452657f9a6eb298a69feb8f54a4bfed"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 16.5 元，且未披露新的利润上修证据",
-      "action": "不新增仓位，仅保留跟踪",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报：收入降幅、毛利率、净利率、经营现金流和存货周转是否验证利润率修复。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至 13.0-14.5 元，且 2026Q2 毛利率维持 35% 以上、收入降幅继续收窄",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报：全年利润是否有望达到 3.5-4.0 亿元区间，并检查现金流质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于 12.5 元，且经营现金流未显著弱于净利润",
-      "action": "买入基础仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报：确认低效 SKU 清理后的收入基盘、利润率和股东回报能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于 10.5 元，且没有出现平台处罚、库存减值或关税冲击导致的基本面恶化",
-      "action": "加至上限仓位",
-      "max_weight": 0.06
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
       "reason": "进入基础买入区，估值相对 2026 年正常化利润有安全边际",
-      "action": "复核中报、现金流和库存后考虑买入"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 10.5,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
       "reason": "进入深度安全边际区，若基本面未恶化可提高仓位",
-      "action": "若基本面未恶化，评估加仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 18.5,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
       "reason": "价格超过基础合理价值上沿，利润修复预期已较充分",
-      "action": "除非利润显著上修，否则停止买入并考虑减仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 22.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
       "reason": "价格进入强乐观修复情形，风险收益比显著下降",
-      "action": "按强修复预期定价处理，优先减仓或回避"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报：收入降幅、毛利率、净利率、经营现金流和存货周转是否验证利润率修复。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报：全年利润是否有望达到 3.5-4.0 亿元区间，并检查现金流质量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报：确认低效 SKU 清理后的收入基盘、利润率和股东回报能力。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1 和 2026Q3 收入同比降幅是否继续收窄",
-    "毛利率是否稳定在 35% 以上",
-    "净利率是否稳定在 3.5%-4.5%",
-    "经营现金流是否与净利润匹配",
-    "存货周转天数、存货跌价准备和海外仓库存变化",
-    "Amazon 等单一平台占比是否下降",
-    "广告费率、平台佣金率和物流履约费率",
-    "美国及欧洲关税、低值包裹和跨境电商合规政策变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

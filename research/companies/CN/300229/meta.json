@@ -1,102 +1,95 @@
 {
-  "symbol": "CN:300229",
-  "market": "CN",
-  "ticker": "300229",
-  "name": "拓尔思",
-  "company_name": "拓尔思信息技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司具备NLP、知识图谱、数据资产、行业大模型和政企客户积累，但2025年收入和利润大幅下滑，2026Q1继续恶化，当前估值已透支AI转型成功预期，缺少安全边际。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    6.5,
-    8.5
-  ],
-  "buy_zone": [
-    0,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "拓尔思",
+    "security_status": "active",
+    "symbol": "CN:300229",
+    "ticker": "300229"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "b340e1214269299f9dd2cedfe91373315c2463773e64eb9f72e2c653aaff0e6f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于11.0元，且2026年收入或经营现金流未明显改善",
-      "action": "不买或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入降幅、扣非亏损、经营现金流、应收账款和合同资产。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格位于8.5元至11.0元之间，基本面仍未确认拐点",
-      "action": "仅跟踪，不主动买入",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认AI软件收入是否恢复增长以及经营现金流是否转正。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格位于6.5元至8.5元之间，且收入降幅收窄、扣非亏损收窄",
-      "action": "小仓试错",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，评估转型是否进入可验证商业化阶段。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于5.5元，且低负债、现金资产和核心客户基本盘未恶化",
-      "action": "进入可买区",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入保守可买区，重新检查现金、减值和收入趋势。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "连续两个季度收入同比转正、经营现金流转正、AI产品收入绝对额增长",
-      "action": "重新评估并可提高仓位上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "高于合理区间较多，若基本面未兑现应避免买入或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "currency": "CNY",
-      "reason": "进入保守可买区，重新检查现金、减值和收入趋势。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "currency": "CNY",
-      "reason": "高于合理区间较多，若基本面未兑现应避免买入或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入降幅、扣非亏损、经营现金流、应收账款和合同资产。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认AI软件收入是否恢复增长以及经营现金流是否转正。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，评估转型是否进入可验证商业化阶段。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "人工智能软件产品及服务收入绝对额和占比",
-    "人工智能软件产品及服务毛利率",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款加合同资产占营业收入比例",
-    "研发投入金额和研发资本化率",
-    "商誉、无形资产、合同资产减值金额",
-    "拓天行业大模型研发及AIGC应用产业化项目投入进度和商业化收入",
-    "销售费用率、管理费用率、研发费用率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

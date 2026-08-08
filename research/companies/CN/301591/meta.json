@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:301591",
-  "ticker": "301591",
-  "name": "肯特股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "高性能工程塑料零部件小而专，客户认证和定制化工艺形成一定壁垒，但2025年和2026Q1利润承压，当前约50倍以上PE缺乏安全边际，适合观察等待价格或业绩确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    19,
-    25
-  ],
-  "buy_zone": [
-    18,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "肯特股份",
+    "security_status": "active",
+    "symbol": "CN:301591",
+    "ticker": "301591"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "1f7116f9a05f928f8fb0661bfac2d28ef666d2641ebb7773b2f3532fcf5acd02"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于22元，且2026半年报毛利率不低于35%、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入、归母净利润、毛利率、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元，且收入和归母净利润恢复双增长、经营现金流覆盖净利润",
-      "action": "提高至核心跟踪仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报以及减持计划执行情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于38元且最近一期归母净利润仍同比下滑",
-      "action": "不加仓并考虑减持已有仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、募投达产进度和现金分红政策",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入初步买入区间，需要复核半年报毛利率、现金流和募投进度",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入较有安全边际区间，若基本面稳定可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "估值重新接近乐观情景，若利润未修复应回避或减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入初步买入区间，需要复核半年报毛利率、现金流和募投进度"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入较有安全边际区间，若基本面稳定可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "估值重新接近乐观情景，若利润未修复应回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入、归母净利润、毛利率、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报以及减持计划执行情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、募投达产进度和现金分红政策"
-    }
-  ],
-  "decision": "不买",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

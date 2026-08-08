@@ -1,132 +1,133 @@
 {
-  "symbol": "CN:300148",
-  "market": "CN",
-  "ticker": "300148",
-  "name": "天舟文化",
-  "company_name": "天舟文化股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买/观察",
-  "current_rating": "watch",
-  "current_thesis": "公司从历史亏损修复到盈利，但2025年利润高度依赖联营企业投资收益，2026Q1收入、净利和经营现金流均同比走弱。2026-07-13收盘价3.12元对应约26.3亿元市值、约49倍TTM归母净利和约2.55倍2026Q1末净资产，已经高于稳态业务价值，当前不适合新买。",
-  "quality_rating": "中等偏弱",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.0,
-    2.6
-  ],
-  "buy_zone": [
-    1.7,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    3.4,
-    4.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天舟文化",
+    "security_status": "active",
+    "symbol": "CN:300148",
+    "ticker": "300148"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "aa9052e76423296d8f3b99ef05f797483c8fa0e599c23a813130c86b5ad89753"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于2.60元，且未看到扣非利润和经营现金流连续改善",
-      "action": "不买，维持0%仓位",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价跌至1.70-2.00元，且应收账款回款正常、货币资金和交易性金融资产合计维持在7亿元以上",
-      "action": "建立1%-3%观察仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价低于1.70元，且2026半年报或后续季报显示扣非利润、经营现金流和投资收益质量未恶化",
-      "action": "可提高至3%-5%上限",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于3.40元，且AI教育、新游或联营企业收益没有新增可量化兑现",
-      "action": "已有仓位降至0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "unit": "CNY/share",
-      "reason": "低于保守合理价值下沿，开始具备安全边际",
-      "action": "进入可买区，复核最新财报后小仓买入"
-    },
-    {
-      "type": "price_below",
-      "price": 1.7,
-      "unit": "CNY/share",
-      "reason": "市值接近资产缓冲和保守SOTP估值，赔率改善",
-      "action": "进入深度安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 3.4,
-      "unit": "CNY/share",
-      "reason": "显著高于合理价值区间，要求新增利润证据",
-      "action": "估值偏贵，持仓者降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 4.0,
-      "unit": "CNY/share",
-      "reason": "估值已计入较强转型和游戏弹性，安全边际不足",
-      "action": "显著高估，除非有利润上修证据，否则卖出或仅保留跟踪仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "确认2026年上半年收入、扣非利润和经营现金流是否修复",
-      "action": "复核收入、扣非利润、经营现金流和应收账款"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计2026年三季报披露后，并检查AI教育或二次元业务是否有明确订单、收入、毛利率或重大客户",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "判断转型期权是否开始兑现",
-      "action": "重估转型期权价值"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计2026年年报披露后，复核海南元游或其他联营企业投资收益",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2025年利润高度依赖投资收益，需要确认可持续性",
-      "action": "决定是否下修利润中枢和合理价格"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "预计2027年半年报披露后，复核青少年类图书目录、收入和回款",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "青少年图书是收入核心，需跟踪目录与回款质量",
-      "action": "复核教育出版收入可持续性"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-10-31",
-      "condition": "预计2027年三季报披露后，检查货币资金、交易性金融资产和非主业投资",
+      "active": true,
+      "condition": {
+        "date": "2027-10-31"
+      },
       "reason": "安全边际主要来自资产负债表和资本配置纪律",
-      "action": "复核资产安全边际和资本配置风险"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "低于保守合理价值下沿，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.7
+      },
+      "reason": "市值接近资产缓冲和保守SOTP估值，赔率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.4
+      },
+      "reason": "显著高于合理价值区间，要求新增利润证据",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "估值已计入较强转型和游戏弹性，安全边际不足",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "青少年类图书收入增速和毛利率",
-    "应收账款/营业收入比例及回款节奏",
-    "经营活动现金流量净额/归母净利润",
-    "投资收益金额及占利润总额比例",
-    "海南元游等联营企业贡献的权益法收益",
-    "移动游戏收入、流水、付费用户和ARPU",
-    "AI教育和二次元业务的可量化收入、订单和毛利",
-    "货币资金+交易性金融资产余额",
-    "母公司未弥补亏损处理进度和恢复分红可能性"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,45 +1,96 @@
 {
-  "symbol": "CN:300803",
-  "market": "CN",
-  "ticker": "300803",
-  "name": "指南针",
-  "company_name": "北京指南针科技发展股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "A股第二家拥有券商牌照的互联网金融信息服务商（收购麦高证券），软件+证券经纪双轮驱动，对标东方财富微型版。2025年营收21.5亿(+40%)、净利2.28亿(+119%)，毛利率87.4%优异。但PE_TTM极高（>100×）、PB约27×，安全边际薄，2026Q1净利同比-19.8%已现业绩波动信号。暂不追高，等待估值回归至38-55元合理区间再考虑首笔建仓。",
-  "quality_rating": "B+",
-  "valuation_rating": "D",
-  "fair_value_range": [38, 55],
-  "buy_zone": [30, 38],
-  "strong_attraction_zone": [22, 28],
-  "sell_or_reduce_zone": [120, 999],
-  "do_not_chase_above": 80,
-  "position_plan": [
-    {"zone": "80元以上", "condition": "估值严重透支", "action": "不追价，已有则减仓", "target_weight": 0.0, "max_weight": 0.01},
-    {"zone": "55-80元", "condition": "偏贵，安全边际不足", "action": "观察，不建仓", "target_weight": 0.0, "max_weight": 0.0},
-    {"zone": "38-55元", "condition": "合理估值上沿", "action": "首笔观察仓分3次介入", "target_weight": 0.02, "max_weight": 0.02},
-    {"zone": "30-38元", "condition": "接近安全边际", "action": "分批加仓", "target_weight": 0.03, "max_weight": 0.03},
-    {"zone": "22-30元", "condition": "强吸引力", "action": "加仓至中期目标", "target_weight": 0.05, "max_weight": 0.05},
-    {"zone": "22元以下", "condition": "极度低估（系统性恐慌）", "action": "重仓", "target_weight": 0.06, "max_weight": 0.06}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "指南针",
+    "security_status": "active",
+    "symbol": "CN:300803",
+    "ticker": "300803"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "b347951938980d9c50863226be8651062164af9325350a5ce35eb489436e43aa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报——检验麦高证券利润贡献与业绩波动",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报跟踪",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "进入合理估值上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入安全边际区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 120.0
+      },
+      "reason": "显著高估信号",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026半年报——检验麦高证券利润贡献与业绩波动"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026三季报跟踪"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 55, "action": "review_and_consider_entry", "reason": "进入合理估值上沿"},
-    {"type": "price_below", "price": 38, "action": "review_and_consider_add", "reason": "进入安全边际区间"},
-    {"type": "price_above", "price": 120, "action": "review_and_consider_reduce", "reason": "显著高估信号"}
-  ],
-  "key_risks": [
-    "A股行情周期性回落致营收利润剧烈波动",
-    "麦高证券整合不及预期、商誉减值风险",
-    "估值极高(PE_TTM>100×,PB~27×)，业绩不达即戴维斯双杀",
-    "券商牌照监管、Level2数据授权变动、投顾合规问题",
-    "东方财富、同花顺等平台竞争蚕食用户"
-  ],
-  "updated_at": "2026-07-08T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

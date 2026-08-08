@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688210",
-  "market": "CN",
-  "ticker": "688210",
-  "name": "统联精密",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "统联精密具备 MIM 起家的多工艺精密零部件平台能力，并向人形机器人、AI 眼镜、卫星通信和轻量化材料扩展；但 2025 年和 2026Q1 已转亏，当前估值已提前反映较多新业务成功预期，需等待收入、毛利率和订单的连续验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    20,
-    26
-  ],
-  "buy_zone": [
-    16,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "统联精密",
+    "security_status": "active",
+    "symbol": "CN:688210",
+    "ticker": "688210"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "4500692af2cf24057ad30cf0b7c9ddb6db9fea150777ad3dba169f18117a9c03"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值中枢且利润拐点未验证，保持零仓位或仅观察。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、存货减值和机器人/AI眼镜业务进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于20元且未出现客户流失、现金流恶化或新增大额减值，可建立观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利拐点是否出现。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价位于16-18元且连续两个季度收入增长、毛利率改善、经营现金流为正，可提高仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估扩产后的资本回报和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入基准合理价值下沿，若基本面未恶化可复核观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入悲观情景价值区间，若订单和现金流稳定则具备更高安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "进入减仓/回避区间，若利润尚未兑现则风险收益比转差。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入基准合理价值下沿，若基本面未恶化可复核观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入悲观情景价值区间，若订单和现金流稳定则具备更高安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "进入减仓/回避区间，若利润尚未兑现则风险收益比转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、毛利率、存货减值和机器人/AI眼镜业务进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利拐点是否出现。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估扩产后的资本回报和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

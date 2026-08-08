@@ -1,115 +1,123 @@
 {
-  "symbol": "CN:300007",
-  "market": "CN",
-  "ticker": "300007",
-  "name": "汉威科技",
-  "company_name": "汉威科技集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备气体传感器、智能仪表、智慧安全和城市生命线场景优势，传感器国产替代与机器人柔性触觉带来长期期权；但当前股价已反映较多成长预期，2025年扣非利润低、非经常性损益占比高，应收账款和项目回款压力仍需验证，35元以上不具备足够安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [24, 31],
-  "buy_zone": [22, 24],
-  "sell_or_reduce_zone": [42, 999],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汉威科技",
+    "security_status": "active",
+    "symbol": "CN:300007",
+    "ticker": "300007"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "cb09454c2dd88f38f6790cbd9a33fac4add0d0789d29dd5ca6d21291f3c6a231"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于22元，且未出现重大坏账、订单失速或核心传感器业务下滑",
-      "action": "可建立2%-3%观察仓",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "披露2026年半年报后复核扣非利润中枢",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于22-24元，且最近两个季度扣非利润与经营现金流同步改善",
-      "action": "小仓试买，等待后续验证",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "披露2026年三季报后复核现金流和应收账款",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于24-31元，但扣非利润和回款尚未充分验证",
-      "action": "观察，不主动加仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报后复核核心传感器收入增速",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于42元，且扣非利润年化仍低于2亿元",
-      "action": "减仓或回避新增买入",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报后复核机器人和柔性传感器商业化进展",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报后复核减值、坏账、并购整合和担保风险",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "股价进入初步可买区但仍需基本面确认",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "股价进入具备安全边际的观察仓区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "价格显著高于合理价值区间且需扣非利润验证",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "currency": "CNY",
-      "action": "进入可买区，复核扣非利润、现金流和应收账款",
-      "reason": "股价进入初步可买区但仍需基本面确认"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "currency": "CNY",
-      "action": "若基本面未恶化，可考虑建观察仓",
-      "reason": "股价进入具备安全边际的观察仓区间"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "currency": "CNY",
-      "action": "估值进入高风险区，复核是否需要减仓",
-      "reason": "价格显著高于合理价值区间且需扣非利润验证"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年报或三季报后复核扣非利润中枢",
-      "reason": "披露2026年半年报后复核扣非利润中枢"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "连续两个季度经营现金流为负或应收账款/收入继续上升",
-      "reason": "披露2026年三季报后复核现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "核心传感器业务收入增速低于10%",
-      "reason": "年报后复核核心传感器收入增速"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "机器人柔性触觉、IMU、电子鼻等产品获得重大批量订单或明确收入披露",
-      "reason": "年报后复核机器人和柔性传感器商业化进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "发生重大资产减值、坏账计提、并购整合失败或大额对外担保风险",
-      "reason": "年报后复核减值、坏账、并购整合和担保风险"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流净额/归母净利润",
-    "应收账款/营业收入",
-    "传感器业务收入增速和毛利率",
-    "智慧安全系统解决方案收入和毛利率",
-    "机器人/柔性传感器批量订单与收入披露",
-    "海外收入占比",
-    "研发费用率",
-    "政府补助和资产处置等非经常性损益占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

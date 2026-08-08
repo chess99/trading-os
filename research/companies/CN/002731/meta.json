@@ -1,75 +1,86 @@
 {
-  "symbol": "CN:002731",
-  "market": "CN",
-  "ticker": "002731",
-  "name": "ST萃华",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "年报无法披露、退市风险警示、证监会立案、主要银行账户冻结和债务逾期叠加，当前价格缺乏安全边际，维持avoid。",
-  "fair_value_range": [
-    0.8,
-    1.6
-  ],
-  "buy_zone": [
-    0.2,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    2.0,
-    2.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST萃华",
+    "security_status": "active",
+    "symbol": "CN:002731",
+    "ticker": "002731"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "cbb6fd2d9550ac817958cd4ac77e5db20e852b1ed89aa8e87ecb823f7980570e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2025年报、2026一季报未披露或审计/监管风险未解除",
-      "action": "不买，保持零仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-09-07"
+      },
+      "reason": "退市风险警示两个月期限，需确认是否披露合格2025年报或触发终止上市",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2025年报按期披露、审计意见不触发退市、主要银行账户解冻且债务展期框架落地，股价低于0.80元",
-      "action": "仅允许事件型观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报、债务逾期、账户冻结、立案调查和存货收入核查进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "退市风险警示撤销、证监会立案不涉及重大违法、经营现金流连续两个季度为正",
-      "action": "重新研究后再决定是否提高仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入困境估值下沿，可在退市风险解除后复核是否有事件型安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.0
+      },
+      "reason": "在风险未解除前高于减持区间下沿，风险收益不对称",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入困境估值下沿，可在退市风险解除后复核是否有事件型安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 2.0,
-      "reason": "在风险未解除前高于减持区间下沿，风险收益不对称"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-09-07",
-      "reason": "退市风险警示两个月期限，需确认是否披露合格2025年报或触发终止上市"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报、债务逾期、账户冻结、立案调查和存货收入核查进展"
-    }
-  ],
-  "notes": [
-    "当前结论为avoid，核心风险是年报无法披露、退市风险、证监会立案、债务逾期和主要银行账户冻结。",
-    "2025年报和2026一季报截至2026-07-19未披露，2025Q3之后财务数据置信度低。",
-    "公司2026-07-18公告否认正在筹划并购重组、债转股或实控人变更，壳/重组博弈不应作为买入依据。",
-    "资金占用、违规担保、重大会计差错等事项尚无最终核验结论，需等待审计报告和监管调查结果。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

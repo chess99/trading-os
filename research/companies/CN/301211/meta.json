@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:301211",
-  "ticker": "301211",
-  "name": "亨迪药业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "亨迪药业是布洛芬系列原料药为核心的周期型特色原料药公司，资产负债表较厚但 2025 年扣非盈利和经营现金流大幅承压；当前价格若在 12 元以上，已提前反映乐观修复，缺少安全边际，需等待扣非利润、现金流和新品订单兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.0,
-    9.0
-  ],
-  "buy_zone": [
-    6.0,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    14.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "亨迪药业",
+    "security_status": "active",
+    "symbol": "CN:301211",
+    "ticker": "301211"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "9716ae683ca8e7c51cccf93944d9b07f2e7fa48cea3f3d2a17e01ab6aa5943be"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价进入 6.0-7.2 元且最近两个季度扣非净利润率、经营现金流出现同步修复时，允许研究型小仓位试错。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看扣非净利润率、经营现金流、布洛芬价格和新品进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价高于 9.0 元但未出现新品订单或扣非盈利显著修复，不新增仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认盈利修复是否具有连续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于 12.0 元且基本面未超预期兑现，应降低关注或退出观察仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重估正常化盈利中枢和产品结构变化。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入基准估值下沿附近，可结合扣非利润和经营现金流修复情况重新评估买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "接近乐观情景估值，需要验证利润和订单是否已显著超预期，否则缺少安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入基准估值下沿附近，可结合扣非利润和经营现金流修复情况重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "接近乐观情景估值，需要验证利润和订单是否已显著超预期，否则缺少安全边际。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看扣非净利润率、经营现金流、布洛芬价格和新品进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认盈利修复是否具有连续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重估正常化盈利中枢和产品结构变化。"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

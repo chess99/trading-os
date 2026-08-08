@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603719",
-  "market": "CN",
-  "ticker": "603719",
-  "name": "良品铺子",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "良品铺子处于经营修复早期，品牌、全渠道和供应链仍有价值，但2026Q1扭亏尚未被H1预告充分验证，当前位置约9元缺少足够安全边际；等待连续扣非盈利、经营现金流转正或股价回落到买入区间。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.8,
-    10.8
-  ],
-  "buy_zone": [
-    6.8,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    13.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "良品铺子",
+    "security_status": "active",
+    "symbol": "CN:603719",
+    "ticker": "603719"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "4242fdea91ccb6ccdd156284646c6638769448b6ae4e33a3e39a143acdff4ad2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.5元，且2026H1正式半年报确认扣非盈利、存货和应收没有恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、毛利率、销售费用率、扣非净利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.8元，且2026Q3继续扣非盈利、经营现金流转正",
-      "action": "提高到小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否连续扣非盈利以及经营现金流是否转正",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于11.5元但扣非净利率低于2%或经营现金流未转正",
-      "action": "不加仓并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年盈利中枢和估值框架是否可从修复切换到稳定盈利",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入初始买入区间，需要复核半年报盈利质量和营运资本",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入更有安全边际的买入区间，若Q3继续改善可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "股价进入减仓观察区，需要基本面显著超预期才能支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入初始买入区间，需要复核半年报盈利质量和营运资本"
-    },
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入更有安全边际的买入区间，若Q3继续改善可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "股价进入减仓观察区，需要基本面显著超预期才能支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、毛利率、销售费用率、扣非净利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否连续扣非盈利以及经营现金流是否转正"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年盈利中枢和估值框架是否可从修复切换到稳定盈利"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

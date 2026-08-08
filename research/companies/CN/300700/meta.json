@@ -1,95 +1,96 @@
 {
-  "symbol": "CN:300700",
-  "market": "CN",
-  "ticker": "300700",
-  "name": "岱勒新材",
-  "company_name": "长沙岱勒新材料科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是金刚石线周期底部修复叠加消费电子玻璃加工第二曲线的高弹性反转标的，但2025年核心金刚石线毛利率仍为负，2026Q1仅小幅扭亏且经营现金流仍为负；2026-07-13收盘价18.03元对应约71.58亿元市值，已接近乐观情景估值，当前不具备安全边际。",
-  "quality_rating": "B-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    9.0,
-    13.0
-  ],
-  "buy_zone": [
-    0.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "岱勒新材",
+    "security_status": "active",
+    "symbol": "CN:300700",
+    "ticker": "300700"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "aac5f7e0c62f1fa791005b38afba064a3e7198176896fedaefaba7e91cd7cd0e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于15元且尚未看到连续两个季度正毛利和经营现金流改善",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看金刚石线毛利率、消费电子收入、经营现金流和减值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价10-13元且2026年中报或三季报显示综合毛利率转正、经营现金流接近打平",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认扭亏是否具有连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价8.5-10元且消费电子新业务收入真实放量、主业不再亏现金",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入可小仓试错区间，需要结合中报或三季报验证毛利率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于8.5元且资产负债表没有恶化、无低价大额摊薄融资",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入安全边际买入区间，若基本面未恶化可考虑分批建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价低于6.5元且连续两个季度确认毛利率和经营现金流改善",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "超过不应追高价格，若无连续报表验证应维持观察或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入可小仓试错区间，需要结合中报或三季报验证毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入安全边际买入区间，若基本面未恶化可考虑分批建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "超过不应追高价格，若无连续报表验证应维持观察或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看金刚石线毛利率、消费电子收入、经营现金流和减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认扭亏是否具有连续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比增速",
-    "综合毛利率",
-    "金刚石线毛利率",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流量净额",
-    "消费电子相关收入规模和毛利率",
-    "前五大客户销售占比",
-    "存货和固定资产减值",
-    "短期借款和一年内到期非流动负债",
-    "实控人股权质押和再融资安排"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

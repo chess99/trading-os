@@ -1,114 +1,114 @@
 {
-  "symbol": "CN:002615",
-  "market": "CN",
-  "ticker": "002615",
-  "name": "哈尔斯",
-  "company_name": "浙江哈尔斯真空器皿股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "哈尔斯具备全球杯壶制造能力、海外大客户基础和国内品牌渠道，但 2025-2026Q1 利润受泰国基地爬坡、汇率反转、费用上升和资本开支拖累。当前 7.38 元股价已经隐含较充分利润修复预期，合理区间约 5.2-6.3 元，4.8 元以下才有安全边际。",
-  "quality_rating": "B",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.2,
-    6.3
-  ],
-  "buy_zone": [
-    4.2,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    9.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "哈尔斯",
+    "security_status": "active",
+    "symbol": "CN:002615",
+    "ticker": "002615"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c75434298a5230c48895702e8c0ac9022f50c125eb5d2e95dae0aa0201756809"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于 6.8 元且利润修复尚未兑现",
-      "action": "不新买",
-      "target_position_pct": 0,
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证泰国基地爬坡和利润修复的最近关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至 4.8 元以下，且单季扣非净利恢复到 3000 万元以上、经营现金流不恶化",
-      "action": "开观察仓",
-      "target_position_pct": 3,
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报可以确认利润低谷是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至 4.2 元以下，且泰国基地毛利率改善、资本开支低于经营现金流",
-      "action": "提高至核心小仓",
-      "target_position_pct": 8,
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报能完整验证客户集中度、产能效率和资本开支回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "若泰国基地在两轮中报周期后仍未改善，需要下调长期盈利假设",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "低于安全边际买入价，若利润修复有证据可开始建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "低于强吸引力买入价，赔率显著改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "高于不应追高价，需要乐观利润修复才能支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "currency": "CNY",
-      "action": "复核是否开 2%-3% 观察仓",
-      "reason": "低于安全边际买入价，若利润修复有证据可开始建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "currency": "CNY",
-      "action": "复核是否提高至 5%-8% 仓位",
-      "reason": "低于强吸引力买入价，赔率显著改善"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "currency": "CNY",
-      "action": "不追高；已有仓位复核减仓",
-      "reason": "高于不应追高价，需要乐观利润修复才能支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026H1 报告披露",
-      "action": "复核收入、扣非净利、毛利率和现金流",
-      "reason": "半年报是验证泰国基地爬坡和利润修复的最近关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026Q3 报告披露",
-      "action": "复核单季扣非净利是否连续低于 1500 万元",
-      "reason": "三季报可以确认利润低谷是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年年报披露",
-      "action": "复核前五大客户占比、第一大客户订单和资本开支",
-      "reason": "年报能完整验证客户集中度、产能效率和资本开支回报"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "泰国基地毛利率、良率、人工效率或供应链本地化出现重大改善或恶化",
-      "action": "复核估值和质量评级",
-      "reason": "若泰国基地在两轮中报周期后仍未改善，需要下调长期盈利假设"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季扣非归母净利润",
-    "综合毛利率与境外毛利率",
-    "经营现金流净额/归母净利润",
-    "购建固定资产等资本开支",
-    "前五大客户销售占比与第一大客户销售占比",
-    "存货周转与应收账款周转",
-    "美元兑人民币汇率及汇兑损益"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,1 +1,106 @@
-{"buy_zone": [5.25, 5.6], "currency": "CNY", "current_rating": "watch", "current_thesis": "江苏金租是A股稀缺金融租赁标的，资产分散、设备属性强、分红高、资产质量稳健，但当前价格约处合理区间下沿而非明显低估，维持watch，等待5.60元以下再分批买入。", "fair_value_range": [6.2, 7.3], "latest_report": "reports/2026-07-10-initial.md", "market": "CN", "name": "江苏金租", "position_plan": [{"condition": "价格低于5.80元且无新增资产质量恶化公告", "max_weight": 0.02}, {"condition": "价格低于5.60元，且2026中报不良率不高于1.00%、拨备覆盖率不低于380%", "max_weight": 0.04}, {"condition": "价格低于5.25元，且租赁业务净利差高于3.40%、资本充足率高于15.5%", "max_weight": 0.06}, {"condition": "价格高于7.20元且ROE未回升至14%", "max_weight": 0.03}], "price_triggers": [{"price": 5.6, "reason": "进入基准买入区间，复核中报资产质量后可分批买入。", "type": "price_below"}, {"price": 5.25, "reason": "进入强买入区间，若净利差和资本充足率稳定，可加至上限仓位。", "type": "price_below"}, {"price": 7.2, "reason": "进入减仓区间，需要确认ROE和净利差是否足以支撑更高PB。", "type": "price_above"}, {"price": 7.8, "reason": "估值明显偏高，除非出现ROE修复或第二增长曲线，否则应兑现收益。", "type": "price_above"}], "report_history": ["reports/2026-07-10-initial.md"], "review_triggers": [{"date": "2026-08-31", "reason": "复核2026年中报，重点检查净利差、不良率、拨备覆盖率、资本充足率和分红政策。", "type": "date"}, {"date": "2026-10-31", "reason": "复核2026年三季报，观察资产质量迁徙和信用减值损失趋势。", "type": "date"}], "sell_or_reduce_zone": [7.2, 7.8], "status": "active", "symbol": "CN:600901", "ticker": "600901", "updated_at": "2026-07-10T19:30:00+08:00"}
+{
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江苏金租",
+    "security_status": "active",
+    "symbol": "CN:600901",
+    "ticker": "600901"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "0d1ac4afa6586882431aa4e49ad3b69344b6cdc88e1979a32a6c9dd0afd1ad13"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查净利差、不良率、拨备覆盖率、资本充足率和分红政策。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，观察资产质量迁徙和信用减值损失趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入基准买入区间，复核中报资产质量后可分批买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.25
+      },
+      "reason": "进入强买入区间，若净利差和资本充足率稳定，可加至上限仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "进入减仓区间，需要确认ROE和净利差是否足以支撑更高PB。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "估值明显偏高，除非出现ROE修复或第二增长曲线，否则应兑现收益。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
+}

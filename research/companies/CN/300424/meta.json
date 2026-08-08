@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:300424",
-  "market": "CN",
-  "ticker": "300424",
-  "name": "航新科技",
-  "company_name": "广州航新航空科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "航新科技具备航空维修与航空设备研制真实产业位置，2026Q1 收入和利润修复明显，但 2025 年审计报告带持续经营重大不确定性段落，短债、应收账款、存货和减值压力仍是核心约束。15 元附近价格已预支修复，缺乏安全边际；仅在 6.5 元以下或财务修复被连续验证后重新考虑。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    7.0,
-    10.5
-  ],
-  "buy_zone": [
-    0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "航新科技",
+    "security_status": "active",
+    "symbol": "CN:300424",
+    "ticker": "300424"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c9bfca9627e9fbdd9f4f62e3b696b954c349e1fd50cdc1b086a5088e2a27c123"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 6.5 元，且未出现新增重大减值、债务违约或出口管制实质冲击",
-      "action": "建立 1%-2% 试探仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报：应收账款、短债、经营现金流、扣非利润和减值是否继续改善。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 5.5 元，且 2026 中报显示经营现金流继续为正、应收账款下降、短债压力缓解",
-      "action": "加至 3%-4%，最高不超过 5%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报：确认 Q1 修复是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 12 元但财务修复尚未被连续两个报告期验证",
-      "action": "不新增，已有仓位降为跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和审计意见，判断持续经营重大不确定性是否消除。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "出现债务违约、审计关注事项恶化、重大商誉/存货/应收减值或 MEU 管制实质影响采购",
-      "action": "退出或暂停买入计划",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "低于安全边际上沿，赔率开始可接受。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "价格充分反映持续经营、短债和减值风险。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "价格高于合理价值区间上沿，需要连续财务修复支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "市场已预支盈利恢复、债务续接和减值结束。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "currency": "CNY",
-      "action": "进入可买区，复核最新财报后考虑小仓位",
-      "reason": "低于安全边际上沿，赔率开始可接受。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "currency": "CNY",
-      "action": "进入强安全边际区，若财务指标同步改善可加仓",
-      "reason": "价格充分反映持续经营、短债和减值风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "currency": "CNY",
-      "action": "估值偏贵，观察或减仓",
-      "reason": "价格高于合理价值区间上沿，需要连续财务修复支撑。"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "currency": "CNY",
-      "action": "缺乏安全边际，不买",
-      "reason": "市场已预支盈利恢复、债务续接和减值结束。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报：应收账款、短债、经营现金流、扣非利润和减值是否继续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报：确认 Q1 修复是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和审计意见，判断持续经营重大不确定性是否消除。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "应收账款余额及账龄结构",
-    "经营活动现金流净额",
-    "短期借款加一年内到期非流动负债",
-    "信用减值和资产减值金额",
-    "航空维修及服务收入增速与毛利率",
-    "境外 MMRO 净利润和现金回流",
-    "审计意见是否恢复为普通无保留意见",
-    "MEU 清单和美国出口管制对采购与交易的影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

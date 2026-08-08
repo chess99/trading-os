@@ -1,87 +1,95 @@
 {
-  "symbol": "CN:603948",
-  "market": "CN",
-  "ticker": "603948",
-  "name": "建业股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "建业股份是低碳脂肪胺、乙酸酯、增塑剂和电子化学品组合的精细化工公司。当前估值按2026-07-17收盘价约13倍TTM PE、1.4倍PB，现金和低杠杆提供安全边际；2026年税务事项压低短期利润但大概率为一次性。适合在16-20元区间小仓位买入，等待传统产品价差修复、电子化学品放量和分红兑现。",
-  "decision": "买入",
-  "confidence": "中",
-  "fair_value_range": [
-    23,
-    28
-  ],
-  "buy_zone": [
-    16,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    29,
-    34
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "建业股份",
+    "security_status": "active",
+    "symbol": "CN:603948",
+    "ticker": "603948"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "94bff9423758fae2745f3fe436f6fae77849e2e177b4224181746aba786e74dc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价处于18-20元且无新增税务、安全环保或重大减值事项",
-      "action": "建立基础仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，确认税务事项影响、主业毛利率和电子化学品收入",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至16-18元且2026年扣非经营趋势未恶化",
-      "action": "加仓至目标上限",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认税后正常化利润和经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于29元但电子化学品收入占比和扣非利润未明显上修",
-      "action": "逐步减仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估分红、利润中枢和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入更有吸引力的安全边际区间，复核无新增负面后可加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.0
+      },
+      "reason": "达到减仓区间下沿，若盈利未上修则估值吸引力下降",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入更有吸引力的安全边际区间，复核无新增负面后可加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 29,
-      "reason": "达到减仓区间下沿，若盈利未上修则估值吸引力下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，确认税务事项影响、主业毛利率和电子化学品收入"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认税后正常化利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估分红、利润中枢和估值区间"
-    }
-  ],
-  "key_metrics": {
-    "last_price_date": "2026-07-17",
-    "last_price": 18.95,
-    "estimated_market_cap_cny_billion": 3.079,
-    "ttm_pe": 13.2,
-    "pb": 1.39,
-    "normal_earnings_cny_billion": [
-      0.21,
-      0.24
-    ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

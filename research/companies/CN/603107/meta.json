@@ -1,91 +1,105 @@
 {
-  "symbol": "CN:603107",
-  "ticker": "603107",
-  "name": "上海汽配",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "上海汽配是汽车热管理管路和发动机系统零部件细分供应商，客户认证、海外产能和净现金资产负债表提供稳定性，但毛利率下行、客户集中、搬迁与新业务兑现仍限制安全边际；当前价格接近合理区间，适合观察等待半年报验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    10.0,
-    13.0
-  ],
-  "buy_zone": [
-    8.5,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海汽配",
+    "security_status": "active",
+    "symbol": "CN:603107",
+    "ticker": "603107"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "858fce23a48fd954042898bc8b3d91cc13f9a287a93efc93f7c00b26cb65e492"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于10.0元，且最新定期报告显示TTM扣非归母净利润不低于1.7亿元、主营毛利率未继续显著下滑",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、经营现金流、应收和存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于9.0元，且经营现金流/净利润恢复到0.8倍以上、应收和存货未异常扩张",
-      "action": "提高到小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和热管理/海外项目兑现情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "CO2阀集成模块出口、奔驰全球项目或海外燃油分配管项目开始贡献可核验收入，且热管理毛利率修复至19%以上",
-      "action": "上修估值后再评估加仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-11-01"
+      },
+      "reason": "关注限售股解禁后的减持公告和股东行为",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入基础买入区间，需要复核半年报毛利率和现金流后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入较高安全边际区间，若基本面未恶化可重点复核买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "价格超过当前估值上沿，若缺少订单和毛利率兑现应考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入基础买入区间，需要复核半年报毛利率和现金流后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入较高安全边际区间，若基本面未恶化可重点复核买入"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "价格超过当前估值上沿，若缺少订单和毛利率兑现应考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、经营现金流、应收和存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和热管理/海外项目兑现情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-11-01",
-      "reason": "关注限售股解禁后的减持公告和股东行为"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 11.55,
-    "last_price_date": "2026-07-17",
-    "market_cap_cny_billion": 3.896,
-    "ttm_net_profit_cny_billion": 0.155,
-    "ttm_adjusted_net_profit_cny_billion": 0.18,
-    "pe_ttm": 25.1,
-    "pe_ttm_adjusted": 21.6,
-    "pb_latest": 1.79
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

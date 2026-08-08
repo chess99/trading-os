@@ -1,87 +1,105 @@
 {
-  "symbol": "CN:603207",
-  "ticker": "603207",
-  "name": "小方制药",
-  "market": "CN",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "小方制药是高毛利、高净利率的家庭常备外用OTC细分龙头，品牌和渠道质量较好，但2026Q1收入增长未转化为利润增长，当前股价约处于合理价值区间内，缺少足够安全边际，先观察等待更低价格或利润恢复证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "currency": "CNY",
-  "fair_value_range": [
-    20.0,
-    25.5
-  ],
-  "buy_zone": [
-    16.0,
-    19.0
-  ],
-  "sell_or_reduce_zone": [
-    28.0,
-    32.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "小方制药",
+    "security_status": "active",
+    "symbol": "CN:603207",
+    "ticker": "603207"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "6952e9aef8c7422b7396ef8fd1f1ac370816f1fb54c6830b07f5c148ad585d03"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于19元且2026中报显示毛利率稳定、经营现金流/归母净利润不低于0.8倍",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入增长是否转化为利润增长、销售费用率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于17元且收入仍保持约8%以上增长、销售费用率不继续恶化",
-      "action": "提高到核心小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认渠道投入回报和核心品类毛利率趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于28元且未来12个月归母净利润增速仍低于10%",
-      "action": "减仓或仅保留跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新估值区间、分红和募投项目进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入基准买入区上沿，需要复核中报利润与现金流质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "接近悲观情景价值区，若基本面未破坏可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "高于基准合理价值上沿，需要利润增速重新加速才能支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19.0,
-      "reason": "进入基准买入区上沿，需要复核中报利润与现金流质量"
-    },
-    {
-      "type": "price_below",
-      "price": 17.0,
-      "reason": "接近悲观情景价值区，若基本面未破坏可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "高于基准合理价值上沿，需要利润增速重新加速才能支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入增长是否转化为利润增长、销售费用率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认渠道投入回报和核心品类毛利率趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新估值区间、分红和募投项目进展"
-    }
-  ],
-  "key_metrics": {
-    "revenue_2025_cny": 525280851.39,
-    "net_profit_2025_cny": 207489700.0,
-    "operating_cash_flow_2025_cny": 160796649.48,
-    "revenue_2026q1_cny": 145694452.27,
-    "net_profit_2026q1_cny": 56006923.51,
-    "operating_cash_flow_2026q1_cny": 45331226.6
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

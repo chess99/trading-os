@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:600029",
-  "market": "CN",
-  "ticker": "600029",
-  "name": "南方航空",
-  "company_name": "南方航空",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "南方航空是高经营杠杆的航空周期资产，2025年盈利转正、2026Q1利润弹性释放，但每收费客公里收益下滑、高负债、油价汇率和可转债/定增摊薄仍压制安全边际；当前适合观察仓，等待国际线票价、单位收益和资产负债表进一步确认。",
-  "quality_rating": "medium",
-  "valuation_rating": "fair_to_slightly_cheap",
-  "fair_value_range": [
-    5.6,
-    6.5
-  ],
-  "buy_zone": [
-    4.4,
-    4.9
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    7.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南方航空",
+    "security_status": "active",
+    "symbol": "CN:600029",
+    "ticker": "600029"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "23ecfc7fe622ee7051ccd6df2b75ce34291a32ab41bd799b1b6d6313091acb14"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约5.05元附近且油价、人民币汇率、暑运客座率未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "股价接近一年低位，2026Q1利润弹性释放，但负债和摊薄风险仍高"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、暑运经营数据、油价汇率和定增进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至4.60-4.85元且国际线恢复、单位收益企稳",
-      "action": "加仓至小仓位",
-      "max_weight": 0.03,
-      "reason": "进入买入区间上沿，风险回报改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、国庆旺季票价和可转债转股/下修影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "半年度或连续季度确认单位收益修复、油价温和、再融资落地",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05,
-      "reason": "周期修复从客座率扩展到票价和资产负债表"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.85
+      },
+      "reason": "进入买入区间，需要复核油价、汇率、客座率和单位收益后决定是否加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "低于买入区间下沿，不自动补仓，需确认是否发生基本面恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "进入减持区间，若利润修复未同步兑现应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.85,
-      "reason": "进入买入区间，需要复核油价、汇率、客座率和单位收益后决定是否加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.4,
-      "reason": "低于买入区间下沿，不自动补仓，需确认是否发生基本面恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "进入减持区间，若利润修复未同步兑现应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、暑运经营数据、油价汇率和定增进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报、国庆旺季票价和可转债转股/下修影响"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度客座率",
-    "ASK/RPK增速",
-    "国际线旅客量和客座率",
-    "每收费客公里收益",
-    "布伦特油价",
-    "美元兑人民币汇率",
-    "财务费用和汇兑损益",
-    "资产负债率",
-    "经营活动现金流",
-    "可转债转股和转股价格下修进展",
-    "向特定对象发行A股股票进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

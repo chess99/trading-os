@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688181",
-  "market": "CN",
-  "ticker": "688181",
-  "name": "八亿时空",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "八亿时空的液晶显示材料主业具备客户认证、配方和稳定供应壁垒，2025年仍贡献绝大多数收入与毛利；KrF光刻胶树脂、PSPI、OLED材料提供中期上行期权，但当前股价已明显计入二曲线预期，扣非盈利和现金流尚未证明足够安全边际，宜观察等待26元以下或新业务收入与毛利率拐点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    27,
-    34
-  ],
-  "buy_zone": [
-    20,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    50
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "八亿时空",
+    "security_status": "active",
+    "symbol": "CN:688181",
+    "ticker": "688181"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "70543c4a38f0ab64a0d7183b2e72ff71cf7148e36065e0019d666258110453e7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至26元以下且显示材料毛利率未明显恶化，可建立研究仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看半导体材料收入、毛利率、存货和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至22元以下，且经营现金流未继续大幅恶化，可提高至小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证KrF树脂和PSPI是否出现持续放量迹象。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "KrF光刻胶树脂或PSPI披露可核验的规模收入、复购和毛利率拐点后，可重新评估加仓。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新测算材料平台化的盈利质量和估值中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入保守买入区间，安全边际较当前价格明显改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过基准估值上沿，若新业务利润未兑现，应考虑减仓或避免追高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入保守买入区间，安全边际较当前价格明显改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "超过基准估值上沿，若新业务利润未兑现，应考虑减仓或避免追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看半导体材料收入、毛利率、存货和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证KrF树脂和PSPI是否出现持续放量迹象。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新测算材料平台化的盈利质量和估值中枢。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

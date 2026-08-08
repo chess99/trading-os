@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:600152",
-  "ticker": "600152",
-  "name": "维科技术",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "维科技术具备3C消费电池客户基础、小动力修复和钠离子储能期权，但2025年至2026H1仍处亏损和减值压力中；当前约2.7倍TTM PS对亏损中小电池公司缺乏安全边际，适合观察，等待价格回落或盈利修复证据。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    5.2,
-    7.2
-  ],
-  "buy_zone": [
-    4.5,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    10.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "维科技术",
+    "security_status": "active",
+    "symbol": "CN:600152",
+    "ticker": "600152"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "d2de4f0629dfa07b7e590907f140ddb52154b1835f135944d0783b85bf23d02b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.6元，且2026半年报未出现超预期新增减值或现金流恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、减值、现金流和钠电业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.2元，且2026H2毛利率改善、钠电负毛利收敛、经营现金流不再恶化",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和定增审核进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.8元但公司仍未恢复季度盈利",
-      "action": "不追高或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年亏损是否收窄及钠电订单是否兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入买入区上沿，重新评估是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可复核加仓条件",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "高于合理价值区间，若盈利未修复应避免追高或考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入买入区上沿，重新评估是否建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入深度安全边际区，若基本面未恶化可复核加仓条件"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "高于合理价值区间，若盈利未修复应避免追高或考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、减值、现金流和钠电业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和定增审核进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年亏损是否收窄及钠电订单是否兑现"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 7.81,
-    "reference_price_date": "2026-07-16",
-    "shares_outstanding": 529079375,
-    "market_cap_cny_billion": 4.13,
-    "revenue_2025_cny_billion": 1.4166,
-    "net_profit_2025_cny_million": -96.7,
-    "net_profit_2026h1_guidance_cny_million": -37.8322
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

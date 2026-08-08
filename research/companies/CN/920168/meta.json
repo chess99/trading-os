@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:920168",
-  "market": "CN",
-  "ticker": "920168",
-  "name": "通宝光电",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "通宝光电是北交所汽车照明系统小市值供应商，2025年盈利能力和分红较好，但2026Q1收入与扣非利润明显下滑，需等待中报验证订单节奏和利润率恢复；当前估值不贵但安全边际不足，列入观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    16.0,
-    20.5
-  ],
-  "buy_zone": [
-    12.0,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    21.0,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "通宝光电",
+    "security_status": "active",
+    "symbol": "CN:920168",
+    "ticker": "920168"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "df7a2acc42bbdc403181d448de18ed6e409e2ed80bd2ae79f341c29864308467"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026中报收入降幅收窄至15%以内、扣非净利率恢复至10%以上，且股价位于12.0至14.5元区间",
-      "action": "分批试探建仓",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认收入降幅、扣非净利率、客户与应收变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于11.0元且最新财报未显示客户流失或毛利率结构性下行",
-      "action": "提高研究优先级并允许逆向加仓",
-      "max_weight": 0.035
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1下滑是否已修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026中报收入和扣非利润继续大幅双降，或毛利率跌破22%",
-      "action": "暂停买入并下修估值",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红政策，更新长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入初步买入区间，需要结合中报验证是否具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "接近悲观情景价值，若基本面未恶化需重新评估逆向机会",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.0
+      },
+      "reason": "高于当前合理价值区间上沿，若业绩未修复则预期收益率不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入初步买入区间，需要结合中报验证是否具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "接近悲观情景价值，若基本面未恶化需重新评估逆向机会"
-    },
-    {
-      "type": "price_above",
-      "price": 21.0,
-      "reason": "高于当前合理价值区间上沿，若业绩未修复则预期收益率不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认收入降幅、扣非净利率、客户与应收变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1下滑是否已修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红政策，更新长期盈利中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

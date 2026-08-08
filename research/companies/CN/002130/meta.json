@@ -1,295 +1,134 @@
 {
-  "symbol": "CN:002130",
-  "market": "CN",
-  "ticker": "002130",
-  "name": "沃尔核材",
-  "company_name": "沃尔核材",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "report_date": "2026-07-08",
-  "updated_at": "2026-07-08T11:10:00+08:00",
-  "current_rating": "watch",
-  "current_thesis": "沃尔核材受益于高速通信线、新能源汽车连接与电力附件需求，质量中高；但当前价格接近合理区间上沿，新增仓位应等待安全边际。",
-  "research_conclusion": "中高质量制造公司，受益于高速通信线、新能源汽车连接与电力附件需求；但当前约17.6元股价接近合理区间上沿，不建议追高，等待13.5-15.0元再分批买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
-  "current_price": {
-    "price": 17.59,
+  "identity": {
     "currency": "CNY",
-    "as_of": "2026-07-08 10:57",
-    "source": "腾讯证券行情接口；新浪财经10:48交叉核验17.64元"
+    "market": "CN",
+    "name": "沃尔核材",
+    "security_status": "active",
+    "symbol": "CN:002130",
+    "ticker": "002130"
   },
-  "market_cap": {
-    "value": 24624000000,
-    "currency": "CNY",
-    "as_of": "2026-07-08 10:57",
-    "source": "腾讯证券行情接口"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "5cd8bb0a2af0ac57be84ffac7c1b71fee7eef31e5aad1f7825724b323f43abe2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "fair_value_range": [
-    14.0,
-    17.0
-  ],
-  "buy_zone": [
-    11.5,
-    13.5
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    20.0
-  ],
-  "reasonable_price_range": {
-    "low": 14.0,
-    "high": 17.0,
-    "currency": "CNY"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "buy_price": {
-    "price_below": 13.5,
-    "currency": "CNY",
-    "label": "安全边际买入价"
-  },
-  "strong_buy_price": {
-    "low": 11.5,
-    "high": 12.5,
-    "currency": "CNY",
-    "label": "强吸引力买入区间"
-  },
-  "do_not_chase_price": {
-    "price_above": 18.5,
-    "currency": "CNY"
-  },
-  "position_curve": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "price_range": "<11.5",
-      "judgment": "强吸引力",
-      "action": "分批买入，允许加速建仓",
-      "suggested_position": "20%-30%",
-      "max_weight": 0.3
-    },
-    {
-      "price_range": "11.5-13.5",
-      "judgment": "有安全边际",
-      "action": "分批买入",
-      "suggested_position": "15%-25%",
-      "max_weight": 0.25
-    },
-    {
-      "price_range": "13.5-15.0",
-      "judgment": "合理偏便宜",
-      "action": "建第一笔或小幅加仓",
-      "suggested_position": "10%-15%",
-      "max_weight": 0.15
-    },
-    {
-      "price_range": "15.0-17.0",
-      "judgment": "合理区间",
-      "action": "观察为主，仅轻仓",
-      "suggested_position": "0%-10%",
-      "max_weight": 0.1
-    },
-    {
-      "price_range": "17.0-18.5",
-      "judgment": "合理上沿",
-      "action": "不新增，持有需看订单和利润兑现",
-      "suggested_position": "0%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "price_range": ">18.5",
-      "judgment": "追高区",
-      "action": "不买；若基本面未同步上修可减仓",
-      "suggested_position": "0%",
-      "max_weight": 0.01
-    }
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于11.5元",
-      "price_range": "<11.5",
-      "judgment": "强吸引力",
-      "action": "分批买入，允许加速建仓",
-      "suggested_position": "20%-30%",
-      "max_weight": 0.3
-    },
-    {
-      "condition": "股价在11.5-13.5元",
-      "price_range": "11.5-13.5",
-      "judgment": "有安全边际",
-      "action": "分批买入",
-      "suggested_position": "15%-25%",
-      "max_weight": 0.25
-    },
-    {
-      "condition": "股价在13.5-15.0元",
-      "price_range": "13.5-15.0",
-      "judgment": "合理偏便宜",
-      "action": "建第一笔或小幅加仓",
-      "suggested_position": "10%-15%",
-      "max_weight": 0.15
-    },
-    {
-      "condition": "股价在15.0-17.0元",
-      "price_range": "15.0-17.0",
-      "judgment": "合理区间",
-      "action": "观察为主，仅轻仓",
-      "suggested_position": "0%-10%",
-      "max_weight": 0.1
-    },
-    {
-      "condition": "股价在17.0-18.5元",
-      "price_range": "17.0-18.5",
-      "judgment": "合理上沿",
-      "action": "不新增，持有需看订单和利润兑现",
-      "suggested_position": "0%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于18.5元",
-      "price_range": ">18.5",
-      "judgment": "追高区",
-      "action": "不买；若基本面未同步上修可减仓",
-      "suggested_position": "0%",
-      "max_weight": 0.01
-    }
-  ],
-  "tracking_indicators": [
-    "高速通信线收入增速与订单持续性",
-    "通信线缆毛利率是否维持在20%以上",
-    "2026年后续季度归母净利润是否恢复同比增长",
-    "经营现金流/净利润是否维持0.8倍以上",
-    "应收账款、存货和在建工程是否过快增长",
-    "海外收入占比是否继续提升"
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "currency": "CNY",
-      "reason": "进入合理区间下半段，安全边际开始出现",
-      "action": "进入复核区，准备第一笔观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "currency": "CNY",
-      "reason": "低于安全边际买入价",
-      "action": "达到安全边际买入价，复核基本面后分批买入"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "currency": "CNY",
-      "reason": "进入强吸引力区间",
-      "action": "强吸引力区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "currency": "CNY",
-      "reason": "超过不应追高价",
-      "action": "不追高，已有仓位检查是否减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "currency": "CNY",
-      "reason": "进入估值警戒区，要求盈利显著上修才能支撑",
-      "action": "进入估值警戒区，除非盈利显著上修，否则不新增"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证2026Q1收入高增但利润下滑是否改善",
-      "action": "复核高速通信线收入、毛利率和订单持续性"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "判断全年利润能否恢复增长并支撑当前估值",
-      "action": "复核归母净利润是否恢复同比增长"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "评估H股融资后资本配置和扩产项目回报",
-      "action": "复核经营现金流、营运资本和资本开支效率"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027年中报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "验证高速通信线和海外收入是否具备持续性",
-      "action": "复核高速通信线和海外收入持续性"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入合理区间下半段，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "低于安全边际买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入强吸引力区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "超过不应追高价",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "进入估值警戒区，要求盈利显著上修才能支撑",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "review_plan": {
-    "next_review": "2026-08-31",
-    "frequency": "quarterly",
-    "focus": [
-      "2026年中报中高速通信线收入和毛利率",
-      "归母净利润是否扭转2026Q1同比下滑",
-      "经营现金流、应收账款和存货变化",
-      "H股募集资金投向和资本开支效率"
-    ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
   },
-  "key_risks": [
-    "高速通信线需求和AI数据中心订单低于预期",
-    "收入增长但毛利率和净利率下滑",
-    "原材料价格波动侵蚀毛利",
-    "扩产后产能利用率不足导致折旧和库存压力",
-    "新能源汽车连接件竞争加剧和客户压价",
-    "应收账款与存货过快增长导致现金流恶化",
-    "H股融资后资本配置效率不及预期",
-    "海外业务汇率、贸易政策和合规风险"
-  ],
-  "sources": [
-    {
-      "name": "沃尔核材2025年年度业绩公告",
-      "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0331/2026033103351_c.pdf",
-      "date": "2026-03-31",
-      "type": "official"
-    },
-    {
-      "name": "沃尔核材2026年第一季度报告公告摘要",
-      "url": "https://vip.stock.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12052599&stockid=002130",
-      "date": "2026-04",
-      "type": "official_index"
-    },
-    {
-      "name": "同花顺F10主营构成与财务数据",
-      "url": "https://basic.10jqka.com.cn/002130/operate.html",
-      "date": "2026-07-08",
-      "type": "data"
-    },
-    {
-      "name": "腾讯证券行情接口",
-      "url": "https://qt.gtimg.cn/q=sz002130",
-      "date": "2026-07-08",
-      "type": "quote"
-    },
-    {
-      "name": "新浪财经行情接口",
-      "url": "https://hq.sinajs.cn/list=sz002130",
-      "date": "2026-07-08",
-      "type": "quote"
-    }
-  ],
-  "confidence": "中等",
-  "decision_today": "不追高；当前仅允许0%-5%观察仓，核心仓位等待15元以下。",
-  "first_position": "0%-5%观察仓",
-  "logic_stop_loss": [
-    "连续两个季度收入高增但归母净利润同比下滑且缺乏合理解释",
-    "通信线缆或高速通信线订单显著放缓，收入增速低于15%且估值仍高于20倍",
-    "经营现金流连续两个季度显著弱于净利润，应收账款和存货异常上升",
-    "扩产项目产能利用率不足，ROE/ROIC明显下行",
-    "股价突破20元但盈利预测没有同步上修"
-  ]
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

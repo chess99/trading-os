@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301503",
-  "ticker": "301503",
-  "name": "智迪科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "智迪科技是具备真实客户基础和制造交付能力的键鼠外设 ODM，但 2025 年收入增长未转化为利润增长，2026Q1 利润率进一步承压；当前估值需要等待更低价格或连续季度利润率、现金流修复后再提高仓位。",
-  "fair_value_range": [
-    22,
-    29
-  ],
-  "buy_zone": [
-    18,
-    21
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    36
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "智迪科技",
+    "security_status": "active",
+    "symbol": "CN:301503",
+    "ticker": "301503"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "9e0b1deccc39954abe145c401db6a6aee5aa6c490af657658f936a3074097c00"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入18-21元且无客户流失、现金流恶化或毛利率继续下行的新证据，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查毛利率、扣非净利率、经营现金流和越南产能进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利率环比改善且经营现金流/归母净利润回到0.8倍以上，可提高到小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1利润下滑是一次性波动还是盈利中枢下移。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元但利润率修复未兑现，停止加仓并考虑减仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红政策，重估正常化盈利与估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入估算买入区间上沿，需要复核毛利率、现金流和订单质量后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入较高安全边际区间，若基本面未恶化可考虑提高观察仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "高于基准合理价值区间上沿，若没有利润率修复证据则风险收益比转差。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 21,
-      "reason": "进入估算买入区间上沿，需要复核毛利率、现金流和订单质量后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入较高安全边际区间，若基本面未恶化可考虑提高观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "高于基准合理价值区间上沿，若没有利润率修复证据则风险收益比转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查毛利率、扣非净利率、经营现金流和越南产能进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1利润下滑是一次性波动还是盈利中枢下移。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红政策，重估正常化盈利与估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688293",
-  "market": "CN",
-  "ticker": "688293",
-  "name": "奥浦迈",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "奥浦迈具备国产细胞培养基稀缺性和临床前CRO并购后的CRDMO协同想象空间，但2026Q1扣非利润偏弱、并购整合与股本摊薄仍需验证；当前价格处于合理价值区间偏上，安全边际不足，适合观察而非追买。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    38,
-    55
-  ],
-  "buy_zone": [
-    28,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    90
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥浦迈",
+    "security_status": "active",
+    "symbol": "CN:688293",
+    "ticker": "688293"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c6d9a8dab60efc74cdba55dc7e77c600020aaa98373527c514bdf1b21197ea1b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于38元且培养基产品收入维持25%以上增长、扣非净利连续改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查培养基收入、澎立生物扣非利润、经营现金流和并购摊销影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于35元且经营现金流为正、澎立生物并表后季度扣非利润转正",
-      "action": "提高至核心小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证CRDMO协同和商业化培养基项目进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于65元但扣非利润和商业化培养基收入未明显兑现",
-      "action": "不追买并考虑减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及澎立生物业绩承诺完成情况，决定是否上调或下调评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入中性估值下沿，可结合季报验证启动观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "提供更充分安全边际，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "超过乐观估值中枢，需检查扣非利润是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入中性估值下沿，可结合季报验证启动观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "提供更充分安全边际，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "超过乐观估值中枢，需检查扣非利润是否足以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查培养基收入、澎立生物扣非利润、经营现金流和并购摊销影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证CRDMO协同和商业化培养基项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及澎立生物业绩承诺完成情况，决定是否上调或下调评级"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

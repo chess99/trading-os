@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688075",
-  "market": "CN",
-  "ticker": "688075",
-  "name": "安旭生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "资产保护型买入：公司短期经营仍承压，2025年扣非利润很薄且2026年一季度亏损，但2026-03-31归母净资产约51.50亿元，按2026-07-17收盘价测算PB约0.72倍；若其他流动资产可变现性成立，准净金融/流动资产接近当前市值。海外POCT注册证、研发平台和现金分红/回购提供等待价值，核心风险是海外快检订单和毛利率继续下行。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    33,
-    42
-  ],
-  "buy_zone": [
-    0,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安旭生物",
+    "security_status": "active",
+    "symbol": "CN:688075",
+    "ticker": "688075"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f7fd221ee4d1c082d3bdf083901deea3cbb76148e5a1939083c1acea3e71622f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于30元且未出现资产质量恶化或重大监管风险，分批建立基础仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、扣非利润、其他流动资产明细和回购进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于25元，且中报确认其他流动资产可变现性较好、回购继续推进，可提高仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认收入止跌和汇兑损失缓和",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于42元但扣非盈利仍未恢复，降低至观察仓位",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "回购期限接近届满，检查回购完成度及经营业务恢复情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入悲观情景价值下沿附近，若资产质量未恶化可复核加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "达到基准合理价值上沿，若经营未同步改善应减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入悲观情景价值下沿附近，若资产质量未恶化可复核加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "达到基准合理价值上沿，若经营未同步改善应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、扣非利润、其他流动资产明细和回购进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认收入止跌和汇兑损失缓和"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "回购期限接近届满，检查回购完成度及经营业务恢复情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

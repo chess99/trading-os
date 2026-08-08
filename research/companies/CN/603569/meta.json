@@ -1,86 +1,95 @@
 {
-  "symbol": "CN:603569",
-  "market": "CN",
-  "ticker": "603569",
-  "name": "长久物流",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "长久物流具备汽车整车物流网络、主机厂客户和国际滚装/班列资源，现金流好于利润，但 2025 年亏损、2026Q1 利润仍弱，控股股东质押和前期会计差错带来治理与财报折扣；当前应观察利润修复和毛利率回升，低于安全边际再买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.2,
-    7.4
-  ],
-  "buy_zone": [
-    4.8,
-    5.4
-  ],
-  "sell_or_reduce_zone": [
-    7.8,
-    8.6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长久物流",
+    "security_status": "active",
+    "symbol": "CN:603569",
+    "ticker": "603569"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d9e3144617a121e5e5033109e4b4f508ea08bc4fe6d9502b58bb75926a77a387"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 5.4 元且未出现新的会计差错、控股股东质押风险未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看利润修复、整车毛利率、国际业务和储能亏损",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1 归母净利超过 3000 万元、经营现金流为正且整车业务毛利率改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认全年盈利恢复能见度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026 全年归母净利恢复至 8000 万元以上且国际业务毛利率保持 22% 以上",
-      "action": "提高至核心观察仓上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和 2027 年一季报，更新估值与评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.4
+      },
+      "reason": "进入安全边际买入区间，可重新评估小仓位买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "接近减仓区间，若利润修复未验证则风险收益比下降",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.4,
-      "reason": "进入安全边际买入区间，可重新评估小仓位买入"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "接近减仓区间，若利润修复未验证则风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看利润修复、整车毛利率、国际业务和储能亏损"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认全年盈利恢复能见度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和 2027 年一季报，更新估值与评级"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 5.77,
-    "last_price_date": "2026-07-17",
-    "last_price_source_confidence": "低",
-    "market_cap_estimate_billion": 3.48,
-    "pb_estimate": 1.31,
-    "revenue_2025_billion": 3.693,
-    "net_profit_2025_billion": -0.087,
-    "operating_cash_flow_2025_billion": 0.326,
-    "revenue_2026_q1_billion": 0.733,
-    "net_profit_2026_q1_billion": 0.001
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

@@ -1,107 +1,115 @@
 {
-  "symbol": "CN:002215",
-  "market": "CN",
-  "ticker": "002215",
-  "name": "诺普信",
-  "company_name": "诺普信",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "诺普信当前是农药制剂现金流与云南蓝莓规模化农业资产的混合体。8.82元附近估值已低于10.5-13.5元合理价值区间，适合首笔2%-3%试买；核心跟踪蓝莓价格、生鲜毛利率、应收账款回款、经营现金流和食品安全/环保风险。",
-  "quality_rating": "B+",
-  "valuation_rating": "A-",
-  "fair_value_range": [
-    10.5,
-    13.5
-  ],
-  "buy_zone": [
-    7.8,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    15.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "诺普信",
+    "security_status": "active",
+    "symbol": "CN:002215",
+    "ticker": "002215"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "3482b550312c14c493aeb3977720b40ad4099b3018cb3ef29b1187f5b9facef7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格在8.8元附近或低于9.5元，且未出现食品安全、环保处罚、蓝莓价格快速下行或应收异常扩大信号",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.03,
-      "reason": "当前估值低于合理价值区间，但2026Q1应收账款和经营现金流需要后续验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查应收账款、经营现金流、生鲜消费毛利率和蓝莓价格",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至7.8-8.3元，且2026中报显示生鲜毛利率维持35%以上、应收账款回款正常",
-      "action": "分批加仓",
-      "max_weight": 0.05,
-      "reason": "价格进入更高安全边际区域，同时蓝莓利润质量得到阶段性确认"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认淡季亏损幅度、农药制剂景气和新产季蓝莓开局",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026全年利润和现金流双确认，蓝莓价格未系统性坍塌，农药制剂毛利率稳定",
-      "action": "提高核心仓上限",
-      "max_weight": 0.06,
-      "reason": "蓝莓规模化和作物解决方案双主线兑现后，估值可从低估修复切换为成长持有"
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核2026/2027蓝莓产季旺季价格、NKA回款、出口和食品安全情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于13.5元且基本面没有同步上修，或出现食品安全、环保、应收坏账、蓝莓毛利率跌破30%等逻辑破坏",
-      "action": "减仓或退出",
-      "max_weight": 0.01,
-      "reason": "上涨后风险收益比下降；若基本面破坏，应优先控制农业资产和信用风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.3
+      },
+      "reason": "进入加仓观察区，需同步复核蓝莓价格、应收账款和经营现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "若伴随基本面恶化触发逻辑止损；若无基本面恶化则重新评估安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "达到合理价值上沿，若盈利预测未上修应开始分批减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "进入乐观估值区，除非蓝莓利润和现金流继续超预期，否则降至观察仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.3,
-      "reason": "进入加仓观察区，需同步复核蓝莓价格、应收账款和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "若伴随基本面恶化触发逻辑止损；若无基本面恶化则重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "达到合理价值上沿，若盈利预测未上修应开始分批减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "进入乐观估值区，除非蓝莓利润和现金流继续超预期，否则降至观察仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查应收账款、经营现金流、生鲜消费毛利率和蓝莓价格"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认淡季亏损幅度、农药制剂景气和新产季蓝莓开局"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核2026/2027蓝莓产季旺季价格、NKA回款、出口和食品安全情况"
-    }
-  ],
-  "key_tracking_metrics": [
-    "蓝莓销售均价、商品果率、货损率和单吨成本",
-    "生鲜消费业务收入增速和毛利率，警戒线为毛利率低于30%-32%",
-    "应收账款余额、账龄、坏账准备和经营现金流净额",
-    "NKA全国性商超客户占比、账期、退货准备和回款节奏",
-    "农药原药价格指数、预付款、存货和主体制剂毛利率",
-    "新增投产面积、在建工程、生产性生物资产和租赁负债",
-    "食品安全抽检、农残、冷链召回、环保处罚和安全生产事故",
-    "控股股东质押、分红、再融资或债务融资安排"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

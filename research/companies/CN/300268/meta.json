@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300268",
-  "ticker": "300268",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "佳沃食品",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "佳沃食品剥离三文鱼业务后资产负债表明显修复，核心变为青岛国星水产加工和分销平台；但剩余业务规模小、毛利率受原料和关税挤压，2026Q1仍亏损，当前价格已提前反映摘帽和盈利修复预期，需等待毛利率与经营现金流验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.0,
-    9.0
-  ],
-  "buy_zone": [
-    0.0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    99.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "佳沃食品",
+    "security_status": "active",
+    "symbol": "CN:300268",
+    "ticker": "300268"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "50048e2ad1a9eddfc282b1229f18fe7016a84189f7ba18550cbdb42e361d9850"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.5元，且没有新的大额减值、资产收购或退市风险事项",
-      "action": "可建立观察性小仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看青岛国星毛利率、经营现金流和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度青岛国星毛利率修复且经营现金流转正",
-      "action": "可复核后提高仓位上限",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年盈利修复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.5元但归母盈利和现金流未超预期",
-      "action": "不追高，已有仓位减仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和审计意见，确认摘帽后持续经营质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入保守买入区间，需要复核最新经营数据和存货风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "价格进入乐观情景区间，若基本面未同步超预期应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入保守买入区间，需要复核最新经营数据和存货风险"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "价格进入乐观情景区间，若基本面未同步超预期应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看青岛国星毛利率、经营现金流和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年盈利修复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和审计意见，确认摘帽后持续经营质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,132 +1,133 @@
 {
-  "symbol": "CN:002978",
-  "market": "CN",
-  "ticker": "002978",
-  "name": "安宁股份",
-  "company_name": "四川安宁铁钛股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "安宁股份拥有优质攀西钒钛磁铁矿采选资产、较高矿端毛利率和小黑箐/钛材项目期权，但 2026 年进入高资本开支和项目爬坡期，当前约 25.71 元价格接近合理价值上沿，安全边际不足，等待 20-21 元以下或钛材项目被季报验证。",
-  "quality_rating": "中高",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    22.0,
-    27.0
-  ],
-  "buy_zone": [
-    19.0,
-    21.0
-  ],
-  "sell_or_reduce_zone": [
-    29.0,
-    34.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安宁股份",
+    "security_status": "active",
+    "symbol": "CN:002978",
+    "ticker": "002978"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "47a4f4e6e52c741c874d1b19b21138a5fe0570d79e675075b9f1138fb65af302"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于或等于 21 元，且最近一期扣非净利没有继续明显恶化、资产负债率不高于 55%",
-      "max_weight": 0.02,
-      "action": "建立观察仓"
-    },
-    {
-      "condition": "价格低于或等于 19 元，且钛精矿库存、价格和经营现金流未出现周期性断崖",
-      "max_weight": 0.04,
-      "action": "加仓至中等仓位"
-    },
-    {
-      "condition": "价格低于或等于 17 元，且公司资源、现金流和项目进度没有结构性恶化",
-      "max_weight": 0.06,
-      "action": "提高至最高仓位"
-    },
-    {
-      "condition": "价格高于 29 元但钛材项目尚未贡献可验证利润",
-      "max_weight": 0.02,
-      "action": "逐步减仓"
-    },
-    {
-      "condition": "价格高于 34 元且项目毛利、订单和经营现金流未被季报证明",
-      "max_weight": 0.0,
-      "action": "大幅降低或清仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 21.0,
-      "reason": "低于可买区上沿，约相当于对合理价值中枢提供 15% 左右折价",
-      "action": "进入可买区，复核最近季报后可建 2% 观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 19.0,
-      "reason": "低于强买区上沿，主业资源价值和项目期权折价更充分",
-      "action": "进入强买观察区，若基本面未恶化可加至 4%"
-    },
-    {
-      "type": "price_above",
-      "price": 29.0,
-      "reason": "高于当前合理价值区间上沿，若项目未兑现则风险收益比转弱",
-      "action": "若钛材项目未兑现，开始减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 34.0,
-      "reason": "显著高于未验证项目情景下的估值上限，需要已兑现的新利润支撑",
-      "action": "除非新项目已稳定贡献利润，否则显著降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年半年报披露或预约披露窗口结束",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证库存、现金流、负债和钛材试生产进度的第一个关键窗口",
-      "action": "复核钛精矿库存、经营现金流、资产负债率和钛材项目试生产进度"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 年三季报披露或钛材项目 EB 炉/试生产出现新公告",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可观察钛材项目是否开始影响利润表和现金流",
-      "action": "立即复核项目期权价值和估值区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年报披露窗口结束，重点检查资产负债率是否高于 55% 或有息负债率是否高于 45%",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可以完整评估扩张期资本开支、融资和财务压力",
-      "action": "复核扩张期财务风险和估值折价"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027 年半年报披露窗口结束，检查钛精矿或 61% 钒钛铁精矿毛利率是否连续下滑",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "连续两个以上报告期的毛利率变化会重定主业利润中枢",
-      "action": "下修主业利润中枢和买入区间"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2028-04-30",
-      "condition": "2027 年报披露窗口结束，检查小黑箐经质铁矿复工复产进度或产能扩张变化",
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
       "reason": "小黑箐复产关系到资源扩张和中期产量假设",
-      "action": "复核产量假设和资源期权价值"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "低于可买区上沿，约相当于对合理价值中枢提供 15% 左右折价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "低于强买区上沿，主业资源价值和项目期权折价更充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.0
+      },
+      "reason": "高于当前合理价值区间上沿，若项目未兑现则风险收益比转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "显著高于未验证项目情景下的估值上限，需要已兑现的新利润支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "钛精矿价格、销量、库存和毛利率",
-    "61% 钒钛铁精矿销量、售价和毛利率",
-    "经营活动现金流净额 / 归母净利润",
-    "资产负债率和有息负债率",
-    "6 万吨能源级钛（合金）材料项目试生产时间、产量、良率、订单、毛利率",
-    "小黑箐经质铁矿复工复产时间、产能、品位、单位成本",
-    "前五大客户销售占比和关联方东方钛业销售占比",
-    "分红率和新增融资规模"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,92 +1,96 @@
 {
-  "symbol": "CN:301626",
-  "market": "CN",
-  "ticker": "301626",
-  "name": "苏州天脉",
-  "company_name": "苏州天脉",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "苏州天脉是导热散热材料细分高毛利公司，消费电子客户认证和产品组合具备跟踪价值，但当前新股估值显著透支 AI 硬件散热和扩产预期，等待价格回落或半年报验证第二增长曲线后再考虑小仓位。",
-  "quality_rating": "hold",
-  "valuation_rating": "avoid",
-  "fair_value_range": [
-    125,
-    175
-  ],
-  "buy_zone": [
-    90,
-    120
-  ],
-  "sell_or_reduce_zone": [
-    220,
-    260
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "苏州天脉",
+    "security_status": "active",
+    "symbol": "CN:301626",
+    "ticker": "301626"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "0b9e72414f7d363f3149cc63bb10b27dfa341c4b4e2f789d37da7996a34d876e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间且估值超过基本面可支撑范围",
-      "action": "不买入，仅纳入高优先级观察名单",
-      "max_weight": 0,
-      "reason": "2026-07-09 第三方行情显示 PE(TTM) 约 209.98 倍，新股和 AI 散热叙事溢价过高"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，验证一季度利润下滑是否修复以及 AI/汽车/服务器散热收入进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至 120 元以下，且最新半年报验证收入增长、毛利率和经营现金流未恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.005,
-      "reason": "价格进入买入区间上沿，允许用小仓位跟踪高毛利细分材料公司的成长兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，观察募投扩产、毛利率和现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至 90-100 元，且客户集中、毛利率和产能利用率风险未扩大",
-      "action": "提高至研究期上限仓位",
-      "max_weight": 0.015,
-      "reason": "估值安全边际改善，且基本面未证伪时风险收益更均衡"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 120.0
+      },
+      "reason": "进入首笔观察仓买入区间，需要复核半年报和订单质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 90.0
+      },
+      "reason": "进入深度价值复核区间，若基本面未恶化可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 220.0
+      },
+      "reason": "显著高于基准合理价值区间，应重新评估是否只剩主题溢价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 120,
-      "reason": "进入首笔观察仓买入区间，需要复核半年报和订单质量"
-    },
-    {
-      "type": "price_below",
-      "price": 90,
-      "reason": "进入深度价值复核区间，若基本面未恶化可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 220,
-      "reason": "显著高于基准合理价值区间，应重新评估是否只剩主题溢价"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，验证一季度利润下滑是否修复以及 AI/汽车/服务器散热收入进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，观察募投扩产、毛利率和现金流趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "归母净利润和扣非归母净利润增速",
-    "销售毛利率和销售净利率",
-    "经营现金流净额与净利润匹配度",
-    "前五大客户销售占比",
-    "汽车电子、通信、服务器和 AI 终端相关收入进展",
-    "募投项目进度和产能利用率",
-    "应收账款和存货增速",
-    "限售股解禁和股东减持计划"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

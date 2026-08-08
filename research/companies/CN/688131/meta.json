@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688131",
-  "market": "CN",
-  "ticker": "688131",
-  "name": "皓元医药",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "皓元医药具备前端生命科学试剂现金牛与后端特色原料药/中间体/制剂/CDMO成长弹性的组合，2025年和2026Q1收入继续双位数增长，海外和ADC/CDMO是主要上行变量；但以2026-07-17收盘价对应约62倍TTM PE，估值已经反映较高成长预期，后端兑现和现金流仍需连续验证，当前更适合观察，等待更高安全边际。",
-  "fair_value_range": [
-    68,
-    82
-  ],
-  "buy_zone": [
-    50,
-    60
-  ],
-  "sell_or_reduce_zone": [
-    95,
-    110
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "皓元医药",
+    "security_status": "active",
+    "symbol": "CN:688131",
+    "ticker": "688131"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "65a2c2a907c31ddd465a9df7b41160e27d2452cddfbf6e6aeda1183e46bca109"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于60元，且最新定期报告显示收入同比增速不低于18%、扣非净利润同比增速不低于20%、经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "预计2026年半年报披露后，复核收入、扣非净利润、经营现金流、前后端业务增速和后端订单兑现",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于50元，且后端CDMO/ADC订单或收入确认继续改善，经营现金流/净利润比例连续两个报告期不低于0.8",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "预计2026年三季报披露后，复核全年增长可见度和估值假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于95元且没有上调盈利预测所需的新订单、毛利率或现金流证据",
-      "action": "不追买并考虑减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报和2027年一季报后，重估长期利润中枢、现金流质量和股东回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入初步买入区间，需要复核半年报或最新季报的扣非利润和现金流质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入较有吸引力安全边际区间，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
+      "reason": "估值进入乐观情景区间，需要确认ADC/CDMO和海外收入是否显著超预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 60,
-      "reason": "进入初步买入区间，需要复核半年报或最新季报的扣非利润和现金流质量"
-    },
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "进入较有吸引力安全边际区间，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 95,
-      "reason": "估值进入乐观情景区间，需要确认ADC/CDMO和海外收入是否显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "预计2026年半年报披露后，复核收入、扣非净利润、经营现金流、前后端业务增速和后端订单兑现"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "预计2026年三季报披露后，复核全年增长可见度和估值假设"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报和2027年一季报后，重估长期利润中枢、现金流质量和股东回报"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

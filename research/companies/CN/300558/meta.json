@@ -1,96 +1,96 @@
 {
-  "symbol": "CN:300558",
-  "market": "CN",
-  "ticker": "300558",
-  "name": "贝达药业",
-  "company_name": "贝达药业",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "status": "active",
-  "rating": "观察",
-  "current_thesis": "贝达药业已形成肺癌靶向药商业化能力和多产品组合，但当前股价已计入较多新品放量与管线成功预期；合理做法是等待估值回落或业绩连续超预期后再提高仓位。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    43,
-    54
-  ],
-  "buy_zone": [
-    38,
-    45
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    80
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "贝达药业",
+    "security_status": "active",
+    "symbol": "CN:300558",
+    "ticker": "300558"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "eee065da6c8fa78ddfd4c87407e2e85acfbc019f3afb337e60e7e59eae3ba256"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于35元，且核心产品销售和扣非利润未恶化",
-      "action": "分批买入",
-      "max_weight": 0.08,
-      "reason": "估值进入强安全边际区间，市场对管线和增长的付费显著下降。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点看贝福替尼、恩沙替尼放量、扣非利润和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在35-45元，且2026年中报验证新品放量",
-      "action": "建立或增加研究仓",
-      "max_weight": 0.05,
-      "reason": "接近合理价值下沿，风险收益比开始改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证利润弹性和费用率趋势是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在45-54元",
-      "action": "持有或小仓位观察",
-      "max_weight": 0.03,
-      "reason": "处于合理价值区间，收益取决于业绩兑现。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入有安全边际的买入观察区，应复核新品放量、扣非利润和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于60元且没有基本面超预期",
-      "action": "不追高或减仓",
-      "max_weight": 0.01,
-      "reason": "当前估值已透支较多增长预期，安全边际不足。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未破坏，可考虑提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "超过不应追高区间，应评估是否减仓或停止新增。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入有安全边际的买入观察区，应复核新品放量、扣非利润和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "进入强吸引力买入区，若基本面未破坏，可考虑提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "超过不应追高区间，应评估是否减仓或停止新增。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点看贝福替尼、恩沙替尼放量、扣非利润和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证利润弹性和费用率趋势是否持续。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "贝福替尼季度销售额和医保后放量曲线",
-    "恩沙替尼销售增速和市场份额",
-    "扣非归母净利润增速",
-    "销售费用率",
-    "研发费用率",
-    "经营活动现金流净额与净利润匹配度",
-    "核心管线临床、注册、获批和医保谈判进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

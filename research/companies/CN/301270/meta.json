@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301270",
-  "ticker": "301270",
-  "name": "汉仪股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "汉仪股份拥有稀缺中文字库版权资产、企业授权客户和手机主题/APP个性化装扮渠道，但2025年收入基本停滞、2026Q1转亏，当前约28元价格已充分预支AI字体和IP装扮第二曲线，缺少安全边际；合理策略是等待价格回落至16元以下或等待收入恢复双位数增长的证据。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    16.0,
-    21.0
-  ],
-  "buy_zone": [
-    0.0,
-    16.0
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汉仪股份",
+    "security_status": "active",
+    "symbol": "CN:301270",
+    "ticker": "301270"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "e548f91c684583bf128175ac68b00385697f93ed512ba462b37963faa4b478bc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于15.5元，且最近一期收入同比不再下滑、经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入是否恢复、C端APP装扮和海外收入进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于13.0元，且B端授权收入稳定、C端APP装扮收入继续提升",
-      "action": "提高至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证Q1转亏是否为季节性波动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于25.0元但未看到2026年收入恢复双位数增长",
-      "action": "不新增并降低仓位或关注优先级",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估AI字体、IP授权和C端业务贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入合理价值区间下沿，可重新评估小仓位买入赔率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "若基本面未恶化，安全边际明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过基准估值上沿，需要收入加速或AI/IP商业化证据支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入合理价值区间下沿，可重新评估小仓位买入赔率"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "若基本面未恶化，安全边际明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "超过基准估值上沿，需要收入加速或AI/IP商业化证据支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入是否恢复、C端APP装扮和海外收入进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证Q1转亏是否为季节性波动"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估AI字体、IP授权和C端业务贡献"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

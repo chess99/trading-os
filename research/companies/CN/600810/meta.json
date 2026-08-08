@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600810",
-  "ticker": "600810",
-  "name": "神马股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "神马股份是尼龙66/尼龙6一体化周期材料标的，2026H1盈利出现修复，但2025年会计差错、关联交易占比高、非经营性资金占用监管警示及证监会立案调查尚未出清，当前价格处于估值区间中部，安全边际不足，先观察。",
-  "fair_value_range": [
-    5.4,
-    7.4
-  ],
-  "buy_zone": [
-    4.6,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    7.8,
-    8.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "神马股份",
+    "security_status": "active",
+    "symbol": "CN:600810",
+    "ticker": "600810"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "6490610dba3f507cc73ddcc8c9d706e233498a4b9286db05156d513321cc268a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.20元，证监会立案未出现重大退市或重大处罚风险，且2026年半年报正式扣非净利润不低于预告约6500万元",
-      "action": "建立观察性小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、现金流、价差和预告兑现情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.00元，2026年全年归母净利润可见度提升至2亿元以上，经营现金流为正，关联交易和资金占用整改有明确进展",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、主产品价格和关联交易整改进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "证监会调查结论、内部控制整改和年报问询后续未完全落地",
-      "action": "维持观察，不主动加仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、证监会调查后续和完整年度盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入初始买入区间，且相对2026Q1每股净资产有更充分治理折价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入深度安全边际区，适合重新评估悲观情景是否已充分反映",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "接近乐观情景估值，若盈利和治理未同步兑现应考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入初始买入区间，且相对2026Q1每股净资产有更充分治理折价"
-    },
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入深度安全边际区，适合重新评估悲观情景是否已充分反映"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "接近乐观情景估值，若盈利和治理未同步兑现应考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、现金流、价差和预告兑现情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报、主产品价格和关联交易整改进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、证监会调查后续和完整年度盈利中枢"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

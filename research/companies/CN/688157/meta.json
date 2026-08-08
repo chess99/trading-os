@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:688157",
-  "market": "CN",
-  "ticker": "688157",
-  "name": "松井股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "松井股份具备高端消费电子功能涂层材料的客户导入、研发和柔性制造能力，并向乘用车、特种装备和新能源电池 UV 固化涂层/设备场景迁移；但 2025 年利润和现金流大幅下滑、2026Q1 继续亏损，当前价格已包含利润修复与新业务放量期权，缺少足够安全边际，适合观察等待验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    15,
-    22
-  ],
-  "buy_zone": [
-    12,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    35
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "松井股份",
+    "security_status": "active",
+    "symbol": "CN:688157",
+    "ticker": "688157"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c0e51e1a645eab05360c18989ece80530fdc534450aafcd5eda108fd4d784d68"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入12-15元且没有出现连续亏损扩大、经营现金流恶化或核心客户流失，可建立观察仓。",
-      "action": "buy_initial",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证消费电子收入与毛利率、乘用车毛利率、电池合同进展和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3显示单季收入恢复增长、归母净利润转正、乘用车毛利率提升且电池业务出现交付或复购证据，可提高仓位。",
-      "action": "add_on_validation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否成立以及是否需要调整评级和估值区间。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度亏损且经营现金流继续恶化，或电池/汽车订单兑现不及预期，退出观察仓。",
-      "action": "exit",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，确认新业务商业化是否形成可持续收入和现金流。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入估算买入区间上沿，重新评估是否具备安全边际和基本面恶化风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入深度安全边际区间，若基本面未破坏，可考虑建立或加大观察仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "高于合理价值区间，需要确认利润是否已可见到1.2亿元以上，否则考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "达到偏乐观估值区间，若缺少汽车和电池业务高质量兑现，应卖出或大幅减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入估算买入区间上沿，重新评估是否具备安全边际和基本面恶化风险。"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入深度安全边际区间，若基本面未破坏，可考虑建立或加大观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "高于合理价值区间，需要确认利润是否已可见到1.2亿元以上，否则考虑减仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "reason": "达到偏乐观估值区间，若缺少汽车和电池业务高质量兑现，应卖出或大幅减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证消费电子收入与毛利率、乘用车毛利率、电池合同进展和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否成立以及是否需要调整评级和估值区间。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，确认新业务商业化是否形成可持续收入和现金流。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

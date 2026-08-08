@@ -1,113 +1,114 @@
 {
-  "symbol": "CN:300729",
-  "market": "CN",
-  "ticker": "300729",
-  "name": "乐歌股份",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海外仓与人体工学产品构成双主业，当前估值接近账面折价但2026Q1扣非亏损和财务费用压力尚未验证，适合观察等待利润修复或更低价格。",
-  "decision": "观察",
-  "confidence": "中",
-  "currency": "CNY",
-  "last_price": {
-    "date": "2026-07-13",
-    "price": 9.63,
-    "source": "证券之星行情快报"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "乐歌股份",
+    "security_status": "active",
+    "symbol": "CN:300729",
+    "ticker": "300729"
   },
-  "fair_value_range": [
-    10.0,
-    14.0
-  ],
-  "buy_zone": [
-    7.5,
-    8.6
-  ],
-  "sell_zone": [
-    14.0,
-    17.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    17.5
-  ],
-  "price_ranges": {
-    "buy_below": [
-      7.5,
-      8.6
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "b9a7f6ffdac4bc4f38fd75d42c58004822a80377b88ddc05e48b954f1ee54b9a"
+      }
     ],
-    "fair_value": [
-      10.0,
-      14.0
-    ],
-    "trim_above": [
-      14.0,
-      17.5
-    ]
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "position_plan": [
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察或研究仓；在股价低于8.4元，或2026Q2/H1扣非利润恢复且经营现金流继续为正后，才考虑小仓位买入。",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.4,
-      "reason": "低于约0.8倍2026Q1账面净资产，资产安全边际显著提高，可重新评估买入。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入保守资产/PB估值下沿，若现金流未恶化，可考虑提高研究仓权重。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "接近当前分部估值和PB修复上沿，若扣非利润与海外仓ROIC未验证，应考虑减仓或不追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026Q2/H1扣非归母净利润继续为负",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "中报将验证Q1利润低谷是否只是汇率和渠道阶段性扰动。",
-      "action": "复核盈利恢复假设并考虑下调评级"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "海外仓毛利率或库容利用率显著低于管理层指引",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "海外仓是估值可选性的核心，利用率决定ROIC。",
-      "action": "重估海外仓ROIC和分部估值"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "资产负债率继续上行且经营现金流转负",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "重资产扩张依赖现金流和融资环境，财务费用已明显侵蚀利润。",
-      "action": "提高财务风险折价并复核仓网扩张节奏"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "关税、汇率或尾程快递价格出现超预期不利变化",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "关税、汇率和尾程成本是跨境产品与海外仓利润率的主要外部变量。",
-      "action": "更新利润敏感性和安全边际"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.4
+      },
+      "reason": "低于约0.8倍2026Q1账面净资产，资产安全边际显著提高，可重新评估买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入保守资产/PB估值下沿，若现金流未恶化，可考虑提高研究仓权重。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "接近当前分部估值和PB修复上沿，若扣非利润与海外仓ROIC未验证，应考虑减仓或不追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "watch_items": [
-    "2026Q2/H1扣非归母净利润是否恢复为正",
-    "海外仓毛利率、库容利用率和美国仓盈利改善",
-    "经营现金流是否持续显著高于净利润",
-    "财务费用、汇兑损益和资产负债率变化",
-    "美国线下经销渠道是否接近盈亏平衡"
-  ],
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

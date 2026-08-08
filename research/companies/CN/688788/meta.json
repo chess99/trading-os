@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688788",
-  "market": "CN",
-  "ticker": "688788",
-  "name": "科思科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "科思科技处在军工电子信息化、无人智能和自主可控芯片交汇处，技术和客户准入壁垒可能较高，但2025年及2026Q1仍大额亏损、研发投入和营运资金占用过重，当前估值已提前反映较强复苏预期；在订单、回款、毛利率和费用率验证前维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    20,
-    28
-  ],
-  "buy_zone": [
-    14,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    52
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科思科技",
+    "security_status": "active",
+    "symbol": "CN:688788",
+    "ticker": "688788"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "81f8d03b183982a0b122726f1826099cc02a537353dc2def47a7ce6211b9243d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于20元，且最近两个季度收入同比增长、经营现金流或回款指标改善后，建立研究仓",
-      "action": "initiate_research_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、订单、毛利率、研发费用率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "收入连续两个季度超过1.5亿元、毛利率回到35%以上且经营现金流转正",
-      "action": "increase_position",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现收入连续性和回款改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026全年亏损扩大、经营现金流继续大幅为负或核心订单不及预期",
-      "action": "exit_watchlist_or_reduce_to_zero",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认研发投入商业化与净资产消耗速度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入基准估值下沿并具备重新评估安全边际的条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "价格接近乐观情景下沿，若盈利和现金流尚未兑现应降低风险暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入基准估值下沿并具备重新评估安全边际的条件"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "价格接近乐观情景下沿，若盈利和现金流尚未兑现应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、订单、毛利率、研发费用率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现收入连续性和回款改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认研发投入商业化与净资产消耗速度"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,63 +1,86 @@
 {
-  "symbol": "CN:600702",
-  "ticker": "600702",
-  "name": "舍得酒业",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_thesis": "舍得酒业仍有老酒品牌和次高端白酒弹性，但2025年业绩大幅下滑且2026年半年度预减显示渠道与利润拐点尚未确认；当前价格缺少足够安全边际，适合观察等待。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    28,
-    42
-  ],
-  "buy_zone": [
-    0,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    60
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "舍得酒业",
+    "security_status": "active",
+    "symbol": "CN:600702",
+    "ticker": "600702"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "bb75f5b94365aa11e51eac6fd066e2608af02907f7922067114946d1df7a3b23"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于26元，且2026年半年报或三季报显示合同负债、渠道库存和中高档酒收入降幅同步改善后，仅可小仓位试探。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查Q2亏损原因、合同负债、存货和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若2026年收入恢复正增长、扣非净利率回到10%以上且批价稳定，可将观察仓上限提高。",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入悲观情景上沿附近，若基本面未继续恶化，可重新评估试仓价值。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认中高档酒收入降幅是否收窄及渠道是否恢复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 45,
-      "reason": "价格高于当前基准估值区间上沿，若利润恢复尚未兑现，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查Q2亏损原因、合同负债、存货和现金流。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入悲观情景上沿附近，若基本面未继续恶化，可重新评估试仓价值。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认中高档酒收入降幅是否收窄及渠道是否恢复。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "价格高于当前基准估值区间上沿，若利润恢复尚未兑现，应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

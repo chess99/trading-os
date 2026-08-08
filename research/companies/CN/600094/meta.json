@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:600094",
-  "ticker": "600094",
-  "market": "CN",
-  "name": "大名城",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "低杠杆地产资产提供一定账面安全垫，但主业增长弱、经营现金流承压，6G/低空/算力等科技转型仍缺少可审计利润兑现；当前股价接近中性估值上沿，适合观察等待更低价格或业务验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.2,
-    3.9
-  ],
-  "buy_zone": [
-    2.8,
-    3.1
-  ],
-  "sell_or_reduce_zone": [
-    4.3,
-    4.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大名城",
+    "security_status": "active",
+    "symbol": "CN:600094",
+    "ticker": "600094"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "51173e608918be7f37dcc46872e0208073ac279f2c334cfd0c3b4e9b391b9ef8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入买入区间，且最新定期报告显示资产负债率继续低于45%、现金短债比不低于1、经营现金流改善或转正",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、利润、经营现金流、负债和科技业务披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "科技业务连续两个季度披露可核验收入、正毛利和现金回款，同时地产经营现金流转正",
-      "action": "考虑提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认地产结转和现金流改善是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入减仓区间但科技业务仍无利润兑现，或出现大额减值、激进跨界资本开支",
-      "action": "减仓或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估净资产质量、分红回购和转型业务兑现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.1
+      },
+      "reason": "进入估算买入区间上沿，重新核验现金流、负债和项目去化后可考虑小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入具备更高安全边际的账面资产折价区间。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.3
+      },
+      "reason": "超过中性估值上沿，需要确认是否由可审计利润兑现支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "接近乐观情景上沿，若仍主要由主题交易驱动应减仓或回避。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.1,
-      "reason": "进入估算买入区间上沿，重新核验现金流、负债和项目去化后可考虑小仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入具备更高安全边际的账面资产折价区间。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.3,
-      "reason": "超过中性估值上沿，需要确认是否由可审计利润兑现支撑。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "接近乐观情景上沿，若仍主要由主题交易驱动应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、利润、经营现金流、负债和科技业务披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认地产结转和现金流改善是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估净资产质量、分红回购和转型业务兑现。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

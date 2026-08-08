@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301529",
-  "ticker": "301529",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "福赛科技",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是汽车内饰功能件、装饰件及新能源三电嵌件供应商，2025年收入、利润和现金流明显修复，海外收入高增和新能源客户扩展是真实看点；但2026年7月股价已按高成长和机器人期权充分定价，而机器人业务尚未形成正式订单、未贡献收入利润，当前安全边际不足，适合观察等待估值回落或订单兑现。",
-  "fair_value_range": [
-    55,
-    75
-  ],
-  "buy_zone": [
-    0,
-    50
-  ],
-  "sell_or_reduce_zone": [
-    95,
-    120
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "福赛科技",
+    "security_status": "active",
+    "symbol": "CN:301529",
+    "ticker": "301529"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "e73f7b0bdc410b09d0c290f372c46648388e70ef16964b33a024861e052cf298"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于50元，且2026半年报显示境外收入和归母净利润保持增长、经营现金流未明显恶化",
-      "action": "可建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看境外收入、毛利率、现金流和机器人/三电嵌件进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于55-75元公允区间，且新增客户或三电嵌件收入有可核验放量",
-      "action": "仅在组合缺少汽车零部件全球化敞口时小仓位持有",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证收入恢复、利润弹性和扩产消化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于95元且机器人业务仍无正式订单或收入确认",
-      "action": "不新买，已有仓位减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和定增/海外基地进展，更新长期估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入安全边际买入区，需要复核半年报和订单兑现情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
+      "reason": "估值重新进入明显透支区，若无新增订单和业绩兑现应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "进入安全边际买入区，需要复核半年报和订单兑现情况"
-    },
-    {
-      "type": "price_above",
-      "price": 95,
-      "reason": "估值重新进入明显透支区，若无新增订单和业绩兑现应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看境外收入、毛利率、现金流和机器人/三电嵌件进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证收入恢复、利润弹性和扩产消化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和定增/海外基地进展，更新长期估值"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

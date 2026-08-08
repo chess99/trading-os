@@ -1,100 +1,105 @@
 {
-  "symbol": "CN:300505",
-  "market": "CN",
-  "ticker": "300505",
-  "name": "川金诺",
-  "company_name": "昆明川金诺化工股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "川金诺 2025 年受益于磷酸业务放量、饲料级磷酸盐景气修复和柔性生产，归母净利润增至 4.54 亿元；但 2026Q1 收入增长而利润下滑、经营现金流转负，说明成本和价差周期仍是核心约束。公司有湿法净化磷酸、出口渠道和埃及项目期权，但上游资源控制弱于一体化龙头。当前价格接近合理价值下沿，适合观察或小仓跟踪，等待价格进入 15.0-16.5 元或 2026H1 现金流与毛利修复后再提高仓位。",
-  "quality_rating": "中",
-  "valuation_rating": "合理偏低",
-  "fair_value_range": [18.0, 23.0],
-  "buy_zone": [15.0, 16.5],
-  "sell_or_reduce_zone": [27.0, 30.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "川金诺",
+    "security_status": "active",
+    "symbol": "CN:300505",
+    "ticker": "300505"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "a8754017110d7f87cb0a0667b4dfa77428cc0b93b8ce3c85a0041dc752d2a508"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 15.0 元，且 2026H1 未出现产品价格崩塌、埃及项目重大延期或资产负债率快速上行",
-      "action": "买入至 3%-4% 仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看毛利率、经营现金流、应收预付存货占用和埃及项目资本开支。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在 15.0-16.5 元，且磷酸与饲料级磷酸盐价差稳定",
-      "action": "建立 2%-3% 跟踪仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断 2026 年利润中枢是否仍能维持 4 亿元以上。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在 16.5-18.0 元，且半年报确认经营现金流转正、毛利率改善",
-      "action": "从 1%-2% 提高至约 3% 仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年年度报告和分红资本开支安排，重新评估买入区和埃及项目估值权重。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价在 18.0-23.0 元，且没有新的利润上修证据",
-      "action": "持有或观察，不主动加仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价高于 27.0 元，且利润中枢未上修至 6 亿元以上或埃及项目确定性不足",
-      "action": "分批减仓",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
       "reason": "进入保守买入区上沿，估值接近 2026 年保守利润的 11 倍 PE。",
-      "action": "进入保守买入区，复核价差、现金流和埃及项目进度后可建跟踪仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 15.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
       "reason": "估值接近保守利润 10 倍 PE 和约 1.4 倍 PB，安全边际较充分。",
-      "action": "安全边际较充分，若基本面未恶化可提高至 3%-4% 仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 27.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
       "reason": "若没有利润中枢或埃及项目确定性上修，价格已接近乐观情景下沿。",
-      "action": "进入减仓观察区，除非利润和项目进度同步上修"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看毛利率、经营现金流、应收预付存货占用和埃及项目资本开支。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断 2026 年利润中枢是否仍能维持 4 亿元以上。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年年度报告和分红资本开支安排，重新评估买入区和埃及项目估值权重。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度归母净利润和扣非归母净利润",
-    "磷酸业务、饲料级磷酸盐、磷肥收入和毛利率",
-    "经营活动现金流净额",
-    "应收账款、预付款项和存货周转",
-    "硫磺、磷矿石、湿法净化磷酸、饲料级磷酸盐价格",
-    "出口收入占比和汇兑损益",
-    "埃及苏伊士磷化工项目进度、资本开支和投产时间",
-    "短期借款、长期借款、长期应付款和资产负债率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,114 +1,115 @@
 {
-  "symbol": "CN:002401",
-  "market": "CN",
-  "ticker": "002401",
-  "name": "中远海科",
-  "company_name": "中远海运科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备中远海运体系内航运数智化场景、数据和客户入口，数字航运与供应链业务正在成为主收入来源；但2025年盈利被低毛利数字城市与交通业务拖累，当前11.68元价格已隐含利润恢复和AI/数据产品化预期，缺乏安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    7.8,
-    9.8
-  ],
-  "buy_zone": [
-    6.2,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    13.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中远海科",
+    "security_status": "active",
+    "symbol": "CN:002401",
+    "ticker": "002401"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "8b02795143b9248c9d8b4970db192740602b395c59007978ff9dfc1876edac6e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price": "<=7.2",
-      "max_weight": 0.015,
-      "action": "首笔1.0%-1.5%",
-      "condition": "最新季度无经营恶化，数字航运与供应链收入保持增长"
-    },
-    {
-      "price": "<=6.2",
-      "max_weight": 0.03,
-      "action": "可加至2.5%-3.0%",
-      "condition": "订单、毛利和现金流未恶化"
-    },
-    {
-      "price": ">10.5",
-      "max_weight": 0,
-      "action": "不新增",
-      "condition": "等待连续业绩兑现"
-    },
-    {
-      "price": ">13.0",
-      "max_weight": 0.01,
-      "action": "卖出或显著降低仓位",
-      "condition": "除非盈利修复已被财报验证"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入有安全边际买入区",
-      "action": "进入有安全边际买入区，复核最新季报后可开首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入强吸引力区",
-      "action": "进入强吸引力区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过不应追高价",
-      "action": "不追高，要求业绩兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "进入卖出或减仓复核区",
-      "action": "卖出或减仓复核"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年中报预计已披露，是验证收入结构和毛利率改善的第一个关键节点",
-      "action": "复核2026年半年度报告的收入结构、毛利率、现金流和估值区间"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报可验证盈利修复是否连续",
-      "action": "复核2026年三季报，重点看数字航运与供应链收入增速和交通业务毛利率"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2026年年报和2027年一季报可验证全年利润恢复与现金流质量",
-      "action": "复核2026年年报和2027年一季报，决定是否从观察转为买入或不买"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入强吸引力区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过不应追高价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "进入卖出或减仓复核区",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "数字航运与供应链收入增速",
-    "数字航运与供应链毛利率",
-    "数字城市与交通毛利率",
-    "经营现金流净额/归母净利润",
-    "前五大客户销售占比和关联方销售占比",
-    "应收账款+合同资产+存货/营业收入",
-    "研发费用率",
-    "产品化、SaaS、API、数据服务收入披露"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

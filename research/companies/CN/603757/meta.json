@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:603757",
-  "market": "CN",
-  "ticker": "603757",
-  "name": "大元泵业",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "大元泵业具备传统泵现金流和屏蔽泵液冷期权，新沪品牌在储能液冷及数据中心大功率屏蔽泵方向有产业位置；但2026H1利润预告大幅下滑，当前股价主要定价乐观液冷情景，缺少足够安全边际，宜观察等待价格回落或订单兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    28,
-    42
-  ],
-  "buy_zone": [
-    22,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    80
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大元泵业",
+    "security_status": "active",
+    "symbol": "CN:603757",
+    "ticker": "603757"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d3b6db496c8330123a2e09ce43d996c3276ca8ce078e1a215d4d7880e63f2d0d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "无持仓且股价回落至32元以下，同时2026Q3或Q4扣非净利环比修复、液冷业务披露可验证订单或分部增量。",
-      "action": "建立观察性底仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式披露数据、液冷业务口径、存货和费用率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元，传统主业现金流稳定，数据中心液冷泵获得定点或批量供货证据。",
-      "action": "提高至核心跟踪仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报扣非利润修复情况和经营现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于55元但未披露液冷批量收入和利润贡献，或2026下半年扣非利润继续低迷。",
-      "action": "不新增并降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断液冷业务是否形成可持续收入和利润贡献。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入审慎买入观察区，传统主业估值可解释部分市值。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入深度安全边际区，可按传统泵现金流重新评估。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "超过基准合理价值上沿，若无液冷订单兑现应降低风险敞口。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 80.0
+      },
+      "reason": "接近仅由乐观液冷情景支撑的价格，应复核是否已有足够基本面证据。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入审慎买入观察区，传统主业估值可解释部分市值。"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入深度安全边际区，可按传统泵现金流重新评估。"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "超过基准合理价值上沿，若无液冷订单兑现应降低风险敞口。"
-    },
-    {
-      "type": "price_above",
-      "price": 80,
-      "reason": "接近仅由乐观液冷情景支撑的价格，应复核是否已有足够基本面证据。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式披露数据、液冷业务口径、存货和费用率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报扣非利润修复情况和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断液冷业务是否形成可持续收入和利润贡献。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

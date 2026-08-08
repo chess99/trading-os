@@ -1,108 +1,105 @@
 {
-  "symbol": "CN:300652",
-  "market": "CN",
-  "ticker": "300652",
-  "name": "雷迪克",
-  "company_name": "杭州雷迪克节能科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "雷迪克是汽车轴承小而专公司，2025年受益前装主机配套放量并推进精密传动第二曲线；但2025年经营现金流转负、2026Q1增收不增利，30元以上安全边际不足。等待24-25元以下或现金流与精密传动订单明确改善。",
-  "quality_rating": "中上",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    23,
-    34
-  ],
-  "buy_zone": [
-    22,
-    25
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    45
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "雷迪克",
+    "security_status": "active",
+    "symbol": "CN:300652",
+    "ticker": "300652"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "3a69952dfcb51b0343a4eb7322194c9a516e1561efb2df4d2cb1211ea43e368e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于30 CNY，且精密传动收入尚未显著放量",
-      "action": "观察，不新建仓",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查经营现金流、应收票据、毛利率、精密传动收入和摩洛哥项目进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至24-25 CNY且2026H1经营现金流/归母净利润明显修复",
-      "action": "试探性建仓",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断2026Q1利润下滑是否为阶段性，以及精密传动订单是否进入收入确认。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至21-22 CNY且汽车轴承主业毛利率未跌破27%",
-      "action": "提高至小仓位",
-      "target_position": "1.5%-2.0%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估主业盈利中枢、现金转换率和第二增长曲线兑现程度。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格超过35 CNY但精密传动批量订单、收入和利润率兑现",
-      "action": "仅保留跟踪仓，不追高",
-      "target_position": "不超过1.0%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
       "reason": "进入估算合理价值区间下沿，开始具备安全边际。",
-      "action": "复核2026H1现金流、应收票据和精密传动订单，决定是否试探建仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 22,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
       "reason": "低于主业保守估值，若基本面未恶化则赔率改善。",
-      "action": "若基本面未恶化，进入重点买入评估"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 40,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
       "reason": "超过基准合理价值上沿，需要精密传动兑现来支撑估值。",
-      "action": "若仍主要由汽车轴承利润支撑，考虑减仓或退出"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查经营现金流、应收票据、毛利率、精密传动收入和摩洛哥项目进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断2026Q1利润下滑是否为阶段性，以及精密传动订单是否进入收入确认。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估主业盈利中枢、现金转换率和第二增长曲线兑现程度。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营活动现金流量净额/归母净利润",
-    "应收账款、应收票据及应收款项融资占收入比例",
-    "综合毛利率是否稳定在29%-31%区间",
-    "前装主机配套收入和主要车型放量节奏",
-    "精密传动零部件及模组收入规模",
-    "丝杠、线性执行机构、灵巧手模组的批量订单或定点项目",
-    "誊展精密并表后的收入、利润率与减值风险",
-    "摩洛哥基地建设、投产、客户认证和产能利用率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

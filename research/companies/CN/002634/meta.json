@@ -1,81 +1,96 @@
 {
-  "symbol": "CN:002634",
-  "market": "CN",
-  "ticker": "002634",
-  "name": "*ST棒杰",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于预重整/重整关键期，2025年经审计净资产为负且持续经营存在重大不确定性；当前股价高于重整投资人价格锚，重整成功前缺乏安全边际，评级avoid。",
-  "fair_value_range": [
-    1.2,
-    2.1
-  ],
-  "buy_zone": [
-    0.8,
-    1.3
-  ],
-  "sell_or_reduce_zone": [
-    2.6,
-    3.3
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST棒杰",
+    "security_status": "active",
+    "symbol": "CN:002634",
+    "ticker": "002634"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "a7fef86021c86ade5271f867ab34a8b1cb7eb2267cafcd5015689395fce760ff"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "预重整推进但法院尚未正式受理公司重整，净资产为负且持续经营存在重大不确定性",
-      "action": "avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、扬州棒杰出表、债务豁免和净资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "法院受理并批准重整计划、净资产转正路径明确、股价低于1.30元",
-      "action": "watch_only_or_event_driven_probe",
-      "max_weight": 0.5
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核2026年末净资产是否转正及退市风险是否实质下降",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "重整计划失败、2026年末净资产转正不确定或光伏担保诉讼扩大",
-      "action": "sell_or_avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.3
+      },
+      "reason": "低于可买区间上沿后，若重整关键条件已兑现，可重新评估事件驱动小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.6
+      },
+      "reason": "高于财务投资人重整协议价格，若风险仍未消除应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.3
+      },
+      "reason": "接近或高于产业投资人重整协议价，二级市场风险收益明显恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.3,
-      "reason": "低于可买区间上沿后，若重整关键条件已兑现，可重新评估事件驱动小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 2.6,
-      "reason": "高于财务投资人重整协议价格，若风险仍未消除应减仓或回避"
-    },
-    {
-      "type": "price_above",
-      "price": 3.3,
-      "reason": "接近或高于产业投资人重整协议价，二级市场风险收益明显恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、扬州棒杰出表、债务豁免和净资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核2026年末净资产是否转正及退市风险是否实质下降"
-    }
-  ],
-  "notes": [
-    "评级为avoid，当前3.74元相对重整投资人价格和重整后潜在市值缺乏安全边际",
-    "ST原因包括2025年经审计净资产为负、持续经营重大不确定性及连续三年扣非前后净利润孰低者为负",
-    "2026年7月8日公告显示公司已被债权人申请重整，但截至公告日尚未收到法院受理重整申请法律文书",
-    "重整草案拟转增约6.5亿股且不向原股东分配，重整后总股本约10.997亿股",
-    "光伏板块扬州棒杰预计2026年半年度出表，但上市公司仍持续承担担保和回收不确定性"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

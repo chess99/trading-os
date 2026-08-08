@@ -1,80 +1,86 @@
 {
-  "market": "CN",
-  "symbol": "CN:301048",
-  "ticker": "301048",
-  "name": "金鹰重工",
-  "currency": "CNY",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "铁路工程机械与轨道工程装备小龙头，受益于铁路投资高位和存量线路维护需求，但客户集中、订单节奏和产品结构波动明显；2026-07-15估值接近合理区间上半部，安全边际不足，适合观察或小仓位跟踪。",
-  "fair_value_range": [
-    7.0,
-    9.6
-  ],
-  "buy_zone": [
-    7.0,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    11.5
-  ],
-  "review_triggers": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金鹰重工",
+    "security_status": "active",
+    "symbol": "CN:301048",
+    "ticker": "301048"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "48cba639faf8d434fdb615b9d94b0e97cbc5d5e7c816dff3e5cb709d365f73b4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年中报披露后复核基本面",
-      "note": "2026年中报后复核收入、毛利率、维修业务占比、经营现金流和仓位上限"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报披露后复核趋势",
-      "note": "2026年三季报后复核订单、现金流和估值假设"
-    }
-  ],
-  "conviction": "medium",
-  "max_weight": 0.03,
-  "position_plan": [
-    {
-      "condition": "7.0-7.5元且基本面未恶化",
-      "action": "进入买入观察区，单票仓位不超过3%",
-      "max_weight": 0.03
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期验证收入、毛利率和经营现金流改善",
-      "action": "可考虑将仓位上限从3%上调至5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入买入观察区，需复核基本面是否未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "经营现金流转弱或应收/存货显著扩张",
-      "action": "降低或退出仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "进入减持观察区，需复核估值是否已透支乐观情景",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入买入观察区，需复核基本面是否未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "进入减持观察区，需复核估值是否已透支乐观情景"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "updated_at": "2026-07-15",
-  "tags": [
-    "A股",
-    "轨交装备",
-    "铁路基建",
-    "央企体系",
-    "周期制造"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

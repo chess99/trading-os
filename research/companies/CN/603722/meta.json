@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603722",
-  "market": "CN",
-  "ticker": "603722",
-  "name": "阿科力",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "阿科力当前是聚醚胺周期底部资产叠加环烯烃光学材料商业化期权。2025年和2026H1仍亏损，说明传统业务和新材料放量尚未验证；在股价接近基础情景上沿时，应以观察为主，等待COC/COP订单、毛利和现金流改善后再提高评级。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24,
-    30
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "阿科力",
+    "security_status": "active",
+    "symbol": "CN:603722",
+    "ticker": "603722"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "24ea101fc177c88dad014787724b3a8d8cedb0493aa94b335071bbaee55026ad"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入20-24元且2026半年报显示亏损未继续扩大、经营现金流可控时，可建立观察仓。",
-      "action": "buy_small",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认环烯烃收入、毛利率、折旧摊销和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "COC/COP连续两个季度确认批量收入且毛利率改善，同时聚醚胺业务接近盈亏平衡。",
-      "action": "increase_selectively",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断亏损是否收窄以及传统业务是否止跌。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格超过42元但无明确订单和利润验证，或2026年仍持续亏损且现金流恶化。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证COC/COP商业化是否取得可重复订单。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入基础估值下沿并开始具备安全边际，可结合半年报质量评估小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "接近悲观情景上沿，若资产负债表未恶化且新材料项目未被证伪，风险回报改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "进入乐观情景估值区，若缺少COC/COP订单和利润兑现，应考虑减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入基础估值下沿并开始具备安全边际，可结合半年报质量评估小仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "接近悲观情景上沿，若资产负债表未恶化且新材料项目未被证伪，风险回报改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "进入乐观情景估值区，若缺少COC/COP订单和利润兑现，应考虑减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认环烯烃收入、毛利率、折旧摊销和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断亏损是否收窄以及传统业务是否止跌。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证COC/COP商业化是否取得可重复订单。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

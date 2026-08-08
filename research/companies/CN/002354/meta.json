@@ -1,129 +1,124 @@
 {
-  "symbol": "CN:002354",
-  "market": "CN",
-  "ticker": "002354",
-  "name": "天娱数科",
-  "company_name": "天娱数字科技集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "2025年收入仍高度集中于数据流量业务，AI营销和空间智能是待验证期权；2026Q1盈利改善但当前价格已显著透支乐观情景，缺少安全边际。",
-  "quality_rating": "C+",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    3.2,
-    4.8
-  ],
-  "buy_zone": [
-    2.2,
-    3.0
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    6.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天娱数科",
+    "security_status": "active",
+    "symbol": "CN:002354",
+    "ticker": "002354"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "f1b94857d35afbd922a01e9f3f44f4e8159b3b87f3ffa0908f5c55cce001f7fc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price": "<=2.2",
-      "condition": "无重大治理或持续亏损风险，经营现金流未恶化",
-      "action": "强吸引力买入",
-      "position": "4%-6%",
-      "max_weight": 0.06
-    },
-    {
-      "price": "2.2-3.0",
-      "condition": "扣非盈利和经营现金流未恶化",
-      "action": "有安全边际买入",
-      "position": "2%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "price": "3.0-4.8",
-      "condition": "等待2026半年报验证AI业务和现金流",
-      "action": "观察或小跟踪仓",
-      "position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "price": "4.8-5.5",
-      "condition": "估值偏贵，除非财报明显超预期",
-      "action": "偏贵，不新增",
-      "position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "price": ">5.5",
-      "condition": "无AI业务独立收入和利润兑现",
-      "action": "不追高/降低",
-      "position": "0%",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入合理价格上沿",
-      "condition": "进入合理价格上沿，复查2026半年报新业务和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入有安全边际买入区",
-      "condition": "有安全边际买入区，前提是扣非盈利和经营现金流未恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 2.2,
-      "reason": "进入强吸引力买入区",
-      "condition": "强吸引力区，前提是无重大治理或持续亏损风险"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "高于不应追高区",
-      "condition": "若无AI业务独立收入和利润兑现，应降低或不参与"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026半年报复查",
-      "condition": "2026半年报发布后复查收入结构、扣非利润、经营现金流和应收账款"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026三季报复查",
-      "condition": "公司公告单独披露AI营销、空间智能或AI售电收入/订单/客户时复查估值"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-01-31",
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
       "reason": "年度业绩预告或快报复查",
-      "condition": "连续两个季度扣非净利润转负时下调评级"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2026年报复查",
-      "condition": "出现重大治理、信披、减持、并购或资产减值事件时立即复查"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入合理价格上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "高于不应追高区",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "AI营销/空间智能/AI售电新业务收入占比",
-    "扣非归母净利润",
-    "经营现金流/净利润",
-    "应收账款周转天数",
-    "毛利率和销售费用率",
-    "空间智能付费客户数、合同金额、续费率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

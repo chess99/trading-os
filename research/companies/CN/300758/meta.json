@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:300758",
-  "ticker": "300758",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "七彩化学",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "高性能有机颜料与新材料平台具备技术和客户认证壁垒，但2026Q1收入增长未转化为利润增长，当前估值对利润修复和新材料兑现要求较高，暂列观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    10.5
-  ],
-  "buy_zone": [
-    6.0,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "七彩化学",
+    "security_status": "active",
+    "symbol": "CN:300758",
+    "ticker": "300758"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "05e3e05789625b689b709d6ff9e98cdd31ef8e85ac575c79d14b63863fcb2cac"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅作为观察仓跟踪，等待2026中报或三季报验证扣非利润恢复增长。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查收入增长是否转化为扣非利润和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入6.0-8.0元且无新增环保、安全、治理重大风险，同时经营现金流未恶化，可考虑试探性建仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证利润率修复、新材料进展和全年利润中枢。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非利润同比恢复增长，全年利润中枢上修至1.2亿元以上且估值低于30倍正常化利润，可提高配置。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估资本开支回报率与估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入初步买入区间，需要复核基本面是否无恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入较高安全边际区间，需要重新评估仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "若利润兑现不足而价格进入乐观估值区间，应考虑减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入初步买入区间，需要复核基本面是否无恶化。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入较高安全边际区间，需要重新评估仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "若利润兑现不足而价格进入乐观估值区间，应考虑减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查收入增长是否转化为扣非利润和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证利润率修复、新材料进展和全年利润中枢。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估资本开支回报率与估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

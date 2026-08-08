@@ -1,95 +1,106 @@
 {
-  "symbol": "CN:000779",
-  "market": "CN",
-  "ticker": "000779",
-  "name": "甘咨询",
-  "company_name": "甘咨询",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "甘咨询是甘肃省国资工程咨询平台，业务与分红有基础，但增长偏弱、应收账款和合同资产占用高，2026-07-10股价异动后估值已高于公允区间，当前只观察不追高。",
-  "quality_rating": "B-",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    7.2,
-    9.0
-  ],
-  "buy_zone": [
-    6.6,
-    7.6
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    11.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "甘咨询",
+    "security_status": "active",
+    "symbol": "CN:000779",
+    "ticker": "000779"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "d9eca230185505df52178cd30fb2cf8825ecffab14eaacf9c791b29f8d184cb3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于7.6元且无新增重大减值或回款恶化公告",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区上沿，但应收账款和合同资产压力仍需折价"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026中报的应收账款、合同资产、经营现金流和合同负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于6.8元且2026中报显示经营现金流、应收周转或合同负债改善",
-      "action": "加至标准小仓位",
-      "max_weight": 0.03,
-      "reason": "估值具备安全边际且基本面改善被财报验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报收入、利润和现金流是否验证改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于10.0元且无业绩上修、重大高质量订单或回款改善",
-      "action": "减仓至观察仓或空仓",
-      "max_weight": 0.01,
-      "reason": "股价高于综合公允价值区间，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.6
+      },
+      "reason": "进入初始买入区，复核应收账款、合同资产和经营现金流后可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入更有安全边际的加仓观察区，需结合中报回款质量",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "高于公允价值上沿，若无基本面上修应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "明显透支乐观情景，原则上退出交易仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.6,
-      "reason": "进入初始买入区，复核应收账款、合同资产和经营现金流后可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入更有安全边际的加仓观察区，需结合中报回款质量"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "高于公允价值上沿，若无基本面上修应考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "明显透支乐观情景，原则上退出交易仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026中报的应收账款、合同资产、经营现金流和合同负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报收入、利润和现金流是否验证改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "应收账款和合同资产合计/营业收入",
-    "经营活动现金流净额/归母净利润",
-    "合同负债余额及同比变化",
-    "信用减值损失/营业收入",
-    "毛利率、净利率和期间费用率",
-    "重大中标和甘肃省基建项目开工节奏",
-    "现金分红率和股息率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

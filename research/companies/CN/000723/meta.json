@@ -1,90 +1,96 @@
 {
-  "symbol": "CN:000723",
-  "market": "CN",
-  "ticker": "000723",
-  "name": "美锦能源",
-  "company_name": "美锦能源",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "美锦能源当前是焦化周期底部修复叠加氢能产业链期权的观察标的，但2025年和2026Q1仍亏损、负债压力较高，需等待焦炭价格、经营现金流和债务指标验证后再提高仓位。",
-  "quality_rating": "low",
-  "valuation_rating": "neutral",
-  "fair_value_range": [
-    2.6,
-    4.0
-  ],
-  "buy_zone": [
-    2.4,
-    2.9
-  ],
-  "sell_or_reduce_zone": [
-    4.6,
-    5.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美锦能源",
+    "security_status": "active",
+    "symbol": "CN:000723",
+    "ticker": "000723"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "d34ee5ce600cc82381bc1813dfc00e7d924fc68d7e27da72f8f01a4202eea5f7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入2.40-2.90元且焦炭价格企稳或季度经营现金流保持为正",
-      "action": "建立0.5%-1.0%观察仓",
-      "max_weight": 0.01,
-      "reason": "周期底部试错，但亏损和负债仍限制仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报亏损、现金流、负债和氢能资产进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报亏损显著收窄、经营现金流为正、短债压力未恶化",
-      "action": "加至1.5%-2.0%",
-      "max_weight": 0.02,
-      "reason": "主业修复得到报表验证后提高周期反弹敞口"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和焦炭价格周期位置",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于4.60元但焦化利润和氢能回款未同步改善",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.005,
-      "reason": "估值更多反映主题溢价，安全边际下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.9
+      },
+      "reason": "进入首笔观察仓买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入深度安全边际区，需复核债务和现金流后考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.6
+      },
+      "reason": "进入减仓观察区，需确认基本面是否支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.9,
-      "reason": "进入首笔观察仓买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入深度安全边际区，需复核债务和现金流后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 4.6,
-      "reason": "进入减仓观察区，需确认基本面是否支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报亏损、现金流、负债和氢能资产进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和焦炭价格周期位置"
-    }
-  ],
-  "key_tracking_metrics": [
-    "焦炭现货价格和吨焦利润",
-    "钢厂高炉开工率和日均铁水产量",
-    "季度毛利率和归母净利润",
-    "经营活动现金流量净额",
-    "货币资金、短期借款、一年内到期非流动负债和应付债券",
-    "飞驰汽车、国鸿氢能、鸿基创能等氢能资产订单、利润和估值变化",
-    "控股股东质押、对外担保、关联交易和资产减值公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

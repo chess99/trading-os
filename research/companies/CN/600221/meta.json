@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:600221",
-  "market": "CN",
-  "ticker": "600221",
-  "name": "海航控股",
-  "company_name": "海航控股",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "航空客运和国际线恢复带来盈利弹性，但高资产负债率、油价汇率暴露和重整后股东减持压力仍压制安全边际；等待价格进入1.15-1.25元且中报确认扣非盈利和现金流质量后再建立小仓位。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    1.35,
-    1.65
-  ],
-  "buy_zone": [
-    1.15,
-    1.25
-  ],
-  "sell_or_reduce_zone": [
-    1.75,
-    1.95
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海航控股",
+    "security_status": "active",
+    "symbol": "CN:600221",
+    "ticker": "600221"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "12509a542f0bd0ace06933b9012a19207cb3bf355bbbbe57684409d324a16800"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入1.15-1.25元且最新月度客座率维持83%以上、油价和人民币汇率未显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03,
-      "reason": "价格给出高负债和周期风险折价，先用小仓位验证航空盈利修复的持续性"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、暑运数据、油价汇率和债务结构变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报显示扣非盈利和经营现金流继续改善，资产负债率继续下降，且股价低于1.35元",
-      "action": "加仓至核心上限",
-      "max_weight": 0.06,
-      "reason": "基本面确认后可接受略高估值，但仍需控制财务杠杆风险"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报、国庆后需求与国际航线恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于1.75元但盈利预期未上修，或资产负债率未继续下降",
-      "action": "减仓或不追高",
-      "max_weight": 0.01,
-      "reason": "估值已透支恢复，财务安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.25
+      },
+      "reason": "进入首笔观察仓买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.15
+      },
+      "reason": "若基本面未恶化，进入更有吸引力的风险补偿区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.75
+      },
+      "reason": "接近减持区间，需要复核盈利兑现与财务改善是否匹配",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.25,
-      "reason": "进入首笔观察仓买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 1.15,
-      "reason": "若基本面未恶化，进入更有吸引力的风险补偿区间"
-    },
-    {
-      "type": "price_above",
-      "price": 1.75,
-      "reason": "接近减持区间，需要复核盈利兑现与财务改善是否匹配"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、暑运数据、油价汇率和债务结构变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报、国庆后需求与国际航线恢复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度客座率",
-    "月度RPK和ASK同比",
-    "国际航线旅客量和RPK同比",
-    "平均票价和单位收入",
-    "航油价格",
-    "人民币兑美元汇率",
-    "资产负债率",
-    "经营活动现金流净额",
-    "归母净利润和扣非净利润",
-    "关联交易和同业竞争承诺进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

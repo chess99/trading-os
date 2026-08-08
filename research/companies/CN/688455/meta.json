@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688455",
-  "market": "CN",
-  "ticker": "688455",
-  "name": "科捷智能",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "科捷智能在手订单较厚，2025年收入恢复、2026Q1订单继续增长，但净利率低、经营现金流为负且当前估值已反映较乐观修复；应等待现金流和利润率验证或更低价格提供安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    9.0,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科捷智能",
+    "security_status": "active",
+    "symbol": "CN:688455",
+    "ticker": "688455"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "eeb78401e6de7e6707f406f8ed8b395e93f030e2da36d47e84ac08ee7b115b15"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于11.5元，且最近一个季度经营现金流同比改善、在手订单不低于30亿元",
-      "action": "建立观察性小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、净利润、经营现金流和在手订单兑现情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.0元，且连续两个季度净利率改善、经营现金流转正",
-      "action": "提高至小中仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认订单增长是否转化为现金流和利润率改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于18.0元但盈利和现金流尚未验证，或2026H1继续亏损且经营现金流恶化",
-      "action": "不追高或降低仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估长期盈利能力和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入基准估值下沿并开始具备安全边际，可结合现金流改善复核买点",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入保守情景附近，若经营验证同步改善可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "价格已接近或高于当前合理价值区间上方，需防范乐观预期透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入基准估值下沿并开始具备安全边际，可结合现金流改善复核买点"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入保守情景附近，若经营验证同步改善可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "价格已接近或高于当前合理价值区间上方，需防范乐观预期透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、净利润、经营现金流和在手订单兑现情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认订单增长是否转化为现金流和利润率改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估长期盈利能力和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

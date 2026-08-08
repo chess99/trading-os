@@ -1,109 +1,106 @@
 {
-  "symbol": "CN:002029",
-  "market": "CN",
-  "ticker": "002029",
-  "name": "七匹狼",
-  "company_name": "七匹狼",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "七匹狼是资产折价和主业修复待验证的研究标的：现金及金融资产、低PB和分红回购提供下行缓冲，但2025年扣非归母净利润很弱、利润高度受金融资产公允价值和投资收益影响，需等待库存下降、直营同店改善、线上降幅收窄和扣非利润连续恢复后再进入标准买入仓位。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "asset_discount_but_earnings_not_cheap",
-  "fair_value_range": [
-    6.8,
-    8.8
-  ],
-  "buy_zone": [
-    6.2,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "七匹狼",
+    "security_status": "active",
+    "symbol": "CN:002029",
+    "ticker": "002029"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "564db671527f9a62e8f2367f46dd424df07f8782b16333ce99fede9304e0d059"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.00元，且2026半年报显示存货低于7.0亿元、扣非归母净利润为正、经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "资产折价提供安全边际，但主业质量仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报：库存、扣非利润、直营同店、线上销售和金融资产公允价值波动",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.50元，且无新增大额亏损性金融投资或治理风险",
-      "action": "提高至小仓位",
-      "max_weight": 0.03,
-      "reason": "价格接近熊市情景上沿，PB折价较充分"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报：秋冬订货、夹克核心单品、加盟恢复和资产减值趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026三季报显示直营同店增长、加盟降幅收窄、线上收入降幅收窄且库存继续下降",
-      "action": "加仓",
-      "max_weight": 0.05,
-      "reason": "主业修复得到连续验证后可降低资产折价要求"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入初始买入区间，复核半年报库存和扣非利润后可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于9.50元但扣非利润仍未恢复到1.5亿元以上，或股价高于11.00元",
-      "action": "减仓或退出",
-      "max_weight": 0.0,
-      "reason": "估值进入乐观区间但主业证明不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入更充分资产折价区间，若无治理和投资损失风险可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "接近减仓区间，需要确认扣非利润是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "达到乐观估值区间，若主业未显著改善应退出或大幅减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入初始买入区间，复核半年报库存和扣非利润后可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入更充分资产折价区间，若无治理和投资损失风险可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "接近减仓区间，需要确认扣非利润是否足以支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "达到乐观估值区间，若主业未显著改善应退出或大幅减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报：库存、扣非利润、直营同店、线上销售和金融资产公允价值波动"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报：秋冬订货、夹克核心单品、加盟恢复和资产减值趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "服装毛利率",
-    "销售费用率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "存货账面价值",
-    "存货跌价准备余额",
-    "线上销售收入增速",
-    "直营同店收入增速",
-    "加盟销售收入增速",
-    "交易性金融资产余额",
-    "公允价值变动损益",
-    "投资收益",
-    "现金分红与回购金额",
-    "新增重大投资或关联交易"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

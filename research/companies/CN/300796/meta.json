@@ -1,90 +1,105 @@
 {
-  "symbol": "CN:300796",
-  "ticker": "300796",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "贝斯美",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "current_thesis": "贝斯美具备二甲戊灵细分龙头、海外农药登记渠道和碳五新材料爬坡期权，但当前利润修复弱、治理与项目合规需折价；现价接近基准合理价值中枢，等待更低价格或碳五/二甲戊灵盈利改善证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.5,
-    7.0
-  ],
-  "buy_zone": [
-    4.8,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    7.8,
-    9.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "贝斯美",
+    "security_status": "active",
+    "symbol": "CN:300796",
+    "ticker": "300796"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "dfe3a1853b69611428086c49a35dcae1dd46ca0463d04c4930bb996b5b14704b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.5元，且无新增重大安全环保、信披或实控人处罚，2026H1经营现金流和库存未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看二甲戊灵库存、碳五毛利、经营现金流和董秘补选",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.8元，且二甲戊灵库存下降、碳五亏损收窄或毛利转正",
-      "action": "提高至中低仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证利润修复是否持续以及特种醇项目投产进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.8元但未看到归母净利润和经营现金流实质恢复",
-      "action": "不加仓并逐步降低观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断碳五新材料是否从期权转为可估值利润来源",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入基准买入观察区，PB接近或低于1倍，安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入悲观情景资产底区域，可复核是否具备逆周期配置价值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "超过基准合理价值上沿，若盈利未兑现需考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入基准买入观察区，PB接近或低于1倍，安全边际改善"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入悲观情景资产底区域，可复核是否具备逆周期配置价值"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "超过基准合理价值上沿，若盈利未兑现需考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看二甲戊灵库存、碳五毛利、经营现金流和董秘补选"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证利润修复是否持续以及特种醇项目投产进度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断碳五新材料是否从期权转为可估值利润来源"
-    }
-  ],
-  "research_notes": {
-    "decision": "观察",
-    "confidence": "中",
-    "last_price": 6.39,
-    "last_price_date": "2026-07-15",
-    "key_sources": [
-      "绍兴贝斯美化工股份有限公司2025年年度报告，披露日期2026-04-22",
-      "中财网300796行情与财务摘要，行情时间2026-07-15 15:00",
-      "中国证监会浙江监管局行政处罚决定书〔2026〕6号，发布日期2026-03-24"
-    ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

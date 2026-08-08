@@ -1,30 +1,96 @@
 {
-  "symbol": "CN:000988",
-  "market": "CN",
-  "ticker": "000988",
-  "name": "华工科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "AI光模块驱动高增长，但当前PE~104x已反映较多乐观预期，安全边际不足。等待回调至100元以下分批建仓更合理。",
-  "fair_value_range": [96, 130],
-  "buy_zone": [85, 100],
-  "sell_or_reduce_zone": [130, 160],
-  "position_plan": [
-    {"condition": "股价低于100元，AI光模块需求持续强劲", "max_weight": 0.02},
-    {"condition": "股价低于85元，基本面无恶化", "max_weight": 0.04},
-    {"condition": "股价低于70元，基本面无恶化", "max_weight": 0.07}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华工科技",
+    "security_status": "active",
+    "symbol": "CN:000988",
+    "ticker": "000988"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "c6120f5ce00a84297dd50d656f2b5b021b198ec870b890c84808159762245f92"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "2026年半年报披露后复查——关键看光模块收入增长和毛利率变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复查",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 100.0
+      },
+      "reason": "进入可观察的合理偏低区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 85.0
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 130.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-30", "reason": "2026年半年报披露后复查——关键看光模块收入增长和毛利率变化"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 100, "reason": "进入可观察的合理偏低区间"},
-    {"type": "price_below", "price": 85, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_above", "price": 130, "reason": "进入减仓或不应追高区间"}
-  ],
-  "updated_at": "2026-07-08T22:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

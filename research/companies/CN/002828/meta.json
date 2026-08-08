@@ -1,115 +1,105 @@
 {
-  "symbol": "CN:002828",
-  "market": "CN",
-  "ticker": "002828",
-  "name": "贝肯能源",
-  "company_name": "新疆贝肯能源工程股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "贝肯能源订单和海外收入有弹性，但2025年扣非净利率低、2026Q1亏损、加拿大诉讼回款未出清，当前约13元价格对应估值明显透支。合理价值约4.0-6.5元，等待价格回落或连续季度现金流与扣非利润改善后再评估。",
-  "quality_rating": "中低",
-  "valuation_rating": "昂贵",
-  "fair_value_range": [
-    4.0,
-    6.5
-  ],
-  "buy_zone": [
-    0.0,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "贝肯能源",
+    "security_status": "active",
+    "symbol": "CN:002828",
+    "ticker": "002828"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "3da9d4fc2b14d06e5c6e82770d7eb48ccb7663c936896d8cec513c9d3b6f8a0f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于8元/股",
-      "action": "不新增；已有持仓控制在0.5%-1%以内，等待事件催化兑现",
-      "target_weight": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格回落至6-8元/股且尚未看到连续季度现金流转正",
-      "action": "继续观察，不因订单公告追价",
-      "target_weight": "0%",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "价格低于4.5元/股且加拿大项目未继续恶化、国内和海外订单执行正常",
-      "action": "可建立0.5%-1%试探仓",
-      "target_weight": "0.5%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格低于3.5元/股且净资产未显著侵蚀、全年经营现金流转正",
-      "action": "可评估加仓，但仍按周期小票管理",
-      "target_weight": "1%-2%",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "unit": "CNY/share",
-      "reason": "进入保守安全边际区间，价格接近资产和归一化盈利可支撑水平",
-      "action": "进入可买区，复核最新季报和加拿大诉讼后评估试探仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "unit": "CNY/share",
-      "reason": "高于合理价值上沿，隐含较强利润修复假设",
-      "action": "进入高估区，不新增并评估减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "unit": "CNY/share",
-      "reason": "显著高于三种估值交叉验证区间，风险收益不对称",
-      "action": "偏卖出/减仓区，除非利润和现金流显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证2026年订单是否转化为收入和现金流",
-      "action": "复核收入、毛利率、扣非净利率、经营现金流和海外合同执行"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能观察旺季项目执行、加拿大诉讼及资产负债表变化",
-      "action": "复核加拿大诉讼、应收账款、短期借款和订单兑现"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报能完整验证全年扣非利润、经营现金流和分红/资本配置",
-      "action": "重估全年现金流、扣非净利润、分红和合理价值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入保守安全边际区间，价格接近资产和归一化盈利可支撑水平",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "高于合理价值上沿，隐含较强利润修复假设",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "显著高于三种估值交叉验证区间，风险收益不对称",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "季度营业收入",
-    "综合毛利率",
-    "扣非净利率",
-    "经营活动现金流量净额",
-    "未履行合同金额和新签合同金额",
-    "海外收入占比及海外合同回款",
-    "加拿大诉讼和回款进展",
-    "应收账款及合同资产周转",
-    "资产负债率和短期借款"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,112 +1,105 @@
 {
-  "symbol": "CN:300219",
-  "market": "CN",
-  "ticker": "300219",
-  "name": "鸿利智汇",
-  "company_name": "鸿利智汇集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是国内 LED 封装龙头之一，汽车照明和 Mini/Micro LED 提供改善期权，但 2025 年 ROE 仅 3.76%、扣非利润 0.70 亿元，当前 7.85 元对应估值偏高；等待价格进入 4.5-5.2 元或利润率显著改善后再买。",
-  "quality_rating": "B-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [5.0, 6.5],
-  "buy_zone": [4.5, 5.2],
-  "sell_or_reduce_zone": [8.0, 9.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鸿利智汇",
+    "security_status": "active",
+    "symbol": "CN:300219",
+    "ticker": "300219"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "db8f1d473e69f033e6682f7c1c0c8f43fc92dabe0c669e7cedc7830ab6c2da82"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 6.5 元且未看到扣非利润和 ROE 明显改善",
-      "action": "保持 0%-1% 观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点看汽车照明毛利率、扣非净利润、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入 4.5-5.2 元，且最近两个季度汽车照明收入增长、毛利率未恶化、经营现金流为正",
-      "action": "试买 2%-3% 仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认车灯项目和 Mini/Micro LED 是否形成利润改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于 4.5 元，且扣非净利率回到 2.5% 以上、应收账款/收入低于 30%",
-      "action": "可提高至 4%-5% 仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，更新完整估值和仓位计划",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于 9.0 元但年化净利润未超过 2 亿元、ROE 未接近 8%",
-      "action": "减仓或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入可买观察区，需要复核最新季度利润率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入较高安全边际区，可评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "估值透支，需要检查是否已有足够利润兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "currency": "CNY",
-      "reason": "进入可买观察区，需要复核最新季度利润率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "currency": "CNY",
-      "reason": "进入较高安全边际区，可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "currency": "CNY",
-      "reason": "估值透支，需要检查是否已有足够利润兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点看汽车照明毛利率、扣非净利润、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认车灯项目和 Mini/Micro LED 是否形成利润改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，更新完整估值和仓位计划"
-    }
-  ],
-  "key_tracking_metrics": [
-    {
-      "metric": "汽车照明收入增速",
-      "target": "保持 20% 以上且不是低毛利冲量"
-    },
-    {
-      "metric": "汽车照明毛利率",
-      "target": "从 2025 年 16.64% 回升至 18%-20%"
-    },
-    {
-      "metric": "扣非归母净利润",
-      "target": "提升至 1.5 亿元以上"
-    },
-    {
-      "metric": "ROE",
-      "target": "从 2025 年 3.76% 提升至 6%-8%"
-    },
-    {
-      "metric": "应收账款/营业收入",
-      "target": "低于 30%，且坏账风险不扩大"
-    },
-    {
-      "metric": "经营现金流净额",
-      "target": "持续高于归母净利润，自由现金流改善"
-    },
-    {
-      "metric": "Mini/Micro LED 项目进度",
-      "target": "TV 背光、车载、直显项目从样品/小批量转向可见收入和利润"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

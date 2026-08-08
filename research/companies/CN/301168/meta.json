@@ -1,89 +1,115 @@
 {
-  "symbol": "CN:301168",
-  "ticker": "301168",
-  "name": "通灵股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "current_thesis": "公司是国内光伏接线盒重要供应商，并通过汽车零部件形成第二业务曲线；但光伏接线盒受组件厂自产、行业过剩和铜价高位挤压，2026Q1 扣非已转负，当前估值接近乐观情景，需等待价格回落或业绩修复验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    26,
-    34
-  ],
-  "buy_zone": [
-    22,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    48
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "通灵股份",
+    "security_status": "active",
+    "symbol": "CN:301168",
+    "ticker": "301168"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "3c00f1f771930cbdc6b8294d5fb18e98812ac6cf564c781e3b761edaf5806453"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于26元，且最新财报显示经营现金流为正、汽车外饰件收入继续增长、接线盒毛利率未继续恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点查看接线盒毛利率、汽车件收入、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于22元，且资产负债表未恶化、无新增控制权或质押风险",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证扣非利润是否修复以及客户集中度是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣非净利润重新回到5000万元以上且汽车件客户多元化得到公告或财报验证",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估双主业利润中枢和长期估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入基准估值上沿以下，开始具备观察建仓价值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "接近悲观情景价值区间，若基本面未恶化可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "股价接近乐观情景，若利润和订单未兑现应考虑降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "明显超过当前交叉估值区间，除非出现重大业绩验证否则估值透支",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入基准估值上沿以下，开始具备观察建仓价值"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "接近悲观情景价值区间，若基本面未恶化可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "股价接近乐观情景，若利润和订单未兑现应考虑降低风险暴露"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "明显超过当前交叉估值区间，除非出现重大业绩验证否则估值透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点查看接线盒毛利率、汽车件收入、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证扣非利润是否修复以及客户集中度是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估双主业利润中枢和长期估值区间"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "接线盒销量和二极管/芯片接线盒毛利率",
-    "汽车外饰件收入、毛利率及客户多元化",
-    "前五大客户销售占比",
-    "应收账款和经营活动现金流",
-    "境外收入占比和毛利率",
-    "控股股东协议转让过户、股份质押和减持预披露"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

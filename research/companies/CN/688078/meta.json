@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:688078",
-  "market": "CN",
-  "ticker": "688078",
-  "name": "龙软科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "龙软科技具备矿山时空GIS、透明化地测、智能矿山工业软件和矿山AI应用的技术壁垒，但2025年收入大幅下滑并转亏，2026Q1仍未确认拐点；当前估值已隐含一定恢复预期，适合观察，等待订单、收入、毛利率和现金流共同改善，或价格跌入具备安全边际的区间再小仓位试错。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18,
-    27
-  ],
-  "buy_zone": [
-    14,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    36
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "龙软科技",
+    "security_status": "active",
+    "symbol": "CN:688078",
+    "ticker": "688078"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "3f9c841d71b71ddea55bfb6bcc4d753636548f5a854d5e271db493fa63f9b19d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入14-18元且最近一期经营现金流为正、应收账款未明显恶化，可建立观察仓",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入拐点、毛利率、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期收入同比改善、毛利率回升且AI/非煤/安监订单有可核验证据，可提高仓位",
-      "action": "add_on_confirmation",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断订单恢复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期收入继续下滑且经营现金流转负，取消买入计划或退出观察仓",
-      "action": "exit_or_stand_aside",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估长期收入中枢、AI产品化和安全边际",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入买入观察区上沿，若现金流与订单未恶化可重新评估小仓位试错",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入具备更高安全边际区间，需要核查是否由基本面进一步恶化导致",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "达到减仓区下沿，若收入和利润恢复证据不足则风险收益比转差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "接近乐观情景估值上沿，需有收入恢复至4-5亿元和利润率修复支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入买入观察区上沿，若现金流与订单未恶化可重新评估小仓位试错"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入具备更高安全边际区间，需要核查是否由基本面进一步恶化导致"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "达到减仓区下沿，若收入和利润恢复证据不足则风险收益比转差"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "接近乐观情景估值上沿，需有收入恢复至4-5亿元和利润率修复支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入拐点、毛利率、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断订单恢复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估长期收入中枢、AI产品化和安全边际"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

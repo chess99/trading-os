@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:601595",
-  "ticker": "601595",
-  "name": "上海电影",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备上海国资、头部院线、直营影院和上美影经典/新生国漫IP的组合资源，2025年验证了IP商业化弹性，但2026H1扣非预亏暴露院线周期和固定成本压力；当前估值已透支较多IP期权，等待更低价格或更清晰的持续利润证明。",
-  "fair_value_range": [
-    13.0,
-    16.0
-  ],
-  "buy_zone": [
-    10.5,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海电影",
+    "security_status": "active",
+    "symbol": "CN:601595",
+    "ticker": "601595"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "be61b96fddcb4be67b1b7091c8ca3df13d1ba0fff8f6b97ef23044d04507ab53"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入10.5-13.0元且2026半年报未显示现金流/应收显著恶化，可建立观察仓。",
-      "action": "start_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据，重点确认扣非、IP商业化收入利润和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "IP商业化收入和利润连续两个报告期增长，且扣非归母利润恢复到年化1.2亿元以上，可提高配置。",
-      "action": "increase",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断暑期档、IP文创和影院经营是否修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于18元但扣非利润仍低于年化1亿元，或2026年扣非持续亏损。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估盈利中枢和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入估算合理价值下沿及买入观察区，需要复核半年报和IP利润质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入较深安全边际区，若基本面未恶化应重新评估买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "高于当前估算合理价值且接近透支IP期权，若无业绩上修应避免追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入估算合理价值下沿及买入观察区，需要复核半年报和IP利润质量。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入较深安全边际区，若基本面未恶化应重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "高于当前估算合理价值且接近透支IP期权，若无业绩上修应避免追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据，重点确认扣非、IP商业化收入利润和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断暑期档、IP文创和影院经营是否修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估盈利中枢和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

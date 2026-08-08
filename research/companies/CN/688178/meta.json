@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688178",
-  "market": "CN",
-  "ticker": "688178",
-  "name": "万德斯",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "万德斯具备工业废水、垃圾渗滤液和有机垃圾处理项目经验，2026Q1收入和利润出现修复，但2025年仍大幅亏损、项目毛利偏低、应收和合同资产占用较高，且2026年7月披露的约7.56亿元重大诉讼在判决前构成核心尾部风险。当前估值约2.3倍PB，风险补偿不足，维持观察，等待诉讼进展和现金流改善验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    20,
-    28
-  ],
-  "buy_zone": [
-    0,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万德斯",
+    "security_status": "active",
+    "symbol": "CN:688178",
+    "ticker": "688178"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "b839ce56d3b01256bf64c4ab64d6eaafa962c6a3b294c1d7e339a372d40ae4f2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于18元，马泰壕诉讼未出现实质恶化，且最新一期经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、经营现金流和诉讼披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "诉讼风险解除或显著下降，连续两个季度扣非盈利且经营现金流/归母净利润大于1",
-      "action": "评估上调至核心观察或小仓位持有",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证Q1利润修复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "公司因诉讼计提重大损失、经营现金流转负或整体解决方案毛利率继续低于5%",
-      "action": "退出观察仓并下调评级",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及重大诉讼最终影响",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入具备诉讼折价和资产折价的观察买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "在诉讼未解除前估值接近乐观情景，应减持或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入具备诉讼折价和资产折价的观察买入区间"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "在诉讼未解除前估值接近乐观情景，应减持或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、经营现金流和诉讼披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证Q1利润修复是否持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及重大诉讼最终影响"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

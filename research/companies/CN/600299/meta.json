@@ -1,74 +1,105 @@
 {
-  "symbol": "CN:600299",
-  "ticker": "600299",
-  "name": "安迪苏",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "安迪苏是全球动物营养和蛋氨酸头部公司，2026 年盈利恢复已被一季报和半年度业绩快报验证；但当前估值已部分反映周期修复，安全边际不足，建议等待 6.0-6.8 元区间或盈利中枢进一步上修后再买入。",
-  "fair_value_range": [
-    7.4,
-    9.4
-  ],
-  "buy_zone": [
-    6.0,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    11.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安迪苏",
+    "security_status": "active",
+    "symbol": "CN:600299",
+    "ticker": "600299"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "d977d0f6aba4b92a55d774826538ad1de380a08fe68d091d9377b4704143cb72"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 6.0-6.8 元区间，且蛋氨酸价格未出现趋势性下跌，最近一个季度经营现金流质量正常",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报完整财务、毛利率、现金流、存货和特种产品披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于 10.5 元但 2026 年归母净利润预期未上修至 20 亿元以上",
-      "action": "不追买，已有仓位降低权重",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认半年度高增长是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年年报、分红、资本开支和 2027 年经营指引",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入安全买入区间上沿，需复核蛋氨酸价格、毛利率和现金流后决定是否建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入具备较好安全边际区间，若基本面未恶化可提高配置优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过合理估值上沿附近，除非盈利预期明显上修，否则风险收益转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入安全买入区间上沿，需复核蛋氨酸价格、毛利率和现金流后决定是否建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入具备较好安全边际区间，若基本面未恶化可提高配置优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过合理估值上沿附近，除非盈利预期明显上修，否则风险收益转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报完整财务、毛利率、现金流、存货和特种产品披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认半年度高增长是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年年报、分红、资本开支和 2027 年经营指引"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

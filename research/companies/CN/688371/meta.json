@@ -1,62 +1,86 @@
 {
-  "symbol": "CN:688371",
-  "market": "CN",
-  "ticker": "688371",
-  "name": "菲沃泰",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "菲沃泰是稀缺的纳米薄膜/PECVD防护平台型公司，具备消费电子大客户验证和汽车、医疗、服务器等新领域期权，但2026Q1收入下滑和扣非亏损显示项目周期、导入期毛利和费用刚性的短期压力很大；按2026-07-18延迟行情27.34元估算，市值仍显著高于基准价值区间，当前应观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14,
-    20
-  ],
-  "buy_zone": [
-    0,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "菲沃泰",
+    "security_status": "active",
+    "symbol": "CN:688371",
+    "ticker": "688371"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "31c3f875b425dc9384bf33acb1fc9cb4637691cd4291da11ad7eea05d44a22a5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入16元以下，且最近一期收入未继续恶化、毛利率不低于43%、现金及交易性金融资产仍能覆盖两年以上研发和期间费用压力",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入恢复、毛利率、扣非利润和非消费电子收入占比。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入恢复增长、扣非净利润转正，且非消费电子收入占比提升至25%以上",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入基准情景估值下沿，可重新评估小仓位观察买入。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证Q1所述项目爬坡和订单释放是否兑现。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 30,
-      "reason": "若缺少扣非利润和新领域订单验证，30元以上更接近乐观情景定价，应减持或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入恢复、毛利率、扣非利润和非消费电子收入占比。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入基准情景估值下沿，可重新评估小仓位观察买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证Q1所述项目爬坡和订单释放是否兑现。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "若缺少扣非利润和新领域订单验证，30元以上更接近乐观情景定价，应减持或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,133 +1,133 @@
 {
-  "symbol": "CN:002782",
-  "market": "CN",
-  "ticker": "002782",
-  "name": "可立克",
-  "company_name": "深圳可立克科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "可立克具备磁性元件和开关电源的制造、研发和大客户交付基础，受益于新能源车、光储、充电桩、AI服务器电源和海外产能布局；但2026Q1利润同比大幅下滑，当前16元附近估值已计入一定恢复预期，需等待13.5-15.5元安全边际或利润率恢复确认。",
-  "quality_rating": "中上",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    18.0,
-    23.0
-  ],
-  "buy_zone": [
-    13.5,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    28.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "可立克",
+    "security_status": "active",
+    "symbol": "CN:002782",
+    "ticker": "002782"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1e19fbfad37530a53e7a047fc88f08562624eb65d313fc7bd48026caba13e31f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于15.5元，且未出现客户订单、现金流或毛利率继续恶化信号",
-      "action": "建立2%-3%观察仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价低于14.5元，且后续季度毛利率回到13%以上、经营现金流与利润匹配",
-      "action": "加仓至5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价低于13.5元，且AI服务器/汽车电子/光储订单继续兑现，存货和应收未异常扩张",
-      "action": "加仓至7%",
-      "max_weight": 0.07
-    },
-    {
-      "condition": "股价高于24元且利润率未恢复，或2026全年归母净利低于2.7亿元",
-      "action": "降低仓位或退出",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "currency": "CNY",
-      "reason": "接近保守估值下沿，开始具备一定安全边际",
-      "action": "进入分批买入观察区"
-    },
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "currency": "CNY",
-      "reason": "较合理价值下沿折价约25%，若基本面未恶化则赔率改善",
-      "action": "若基本面未恶化，提升为高优先级买入"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "currency": "CNY",
-      "reason": "超过当前合理价值上沿，需确认业绩是否充分兑现",
-      "action": "检查估值与业绩兑现，考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "currency": "CNY",
-      "reason": "估值进入乐观区间，对高增长和利润率恢复依赖过高",
-      "action": "除非利润和订单明显超预期，否则卖出或大幅减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证2026Q1利润率下滑是否为短期扰动",
-      "action": "复核收入、毛利率、归母净利和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证全年利润恢复和旺季订单兑现程度",
-      "action": "重新评估护城河和估值"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
-      "condition": "海外越南、墨西哥基地投产、客户认证或资本开支计划发生重大变化",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "海外产能影响资本开支、毛利率和全球客户交付能力",
-      "action": "复核海外产能对收入、毛利和现金流的影响"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
-      "condition": "AI服务器电源磁性元件、车载OBC、光储和充电桩订单出现可核验重大变化",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "高功率新应用是估值上修的主要前提",
-      "action": "更新增长假设和估值区间"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
-      "condition": "前五大客户占比或第一大客户占比显著上升",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "客户集中度上升会放大订单和议价风险",
-      "action": "复核客户集中度风险和合理仓位"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "接近保守估值下沿，开始具备一定安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "较合理价值下沿折价约25%，若基本面未恶化则赔率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过当前合理价值上沿，需确认业绩是否充分兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "估值进入乐观区间，对高增长和利润率恢复依赖过高",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比增速",
-    "单季度毛利率与净利率",
-    "归母净利润和扣非归母净利润",
-    "经营现金流/归母净利润",
-    "应收账款周转和存货周转",
-    "磁性元件收入、销量和毛利率",
-    "开关电源收入、销量和毛利率",
-    "前五大客户销售占比",
-    "海外销售占比和海外销售毛利率",
-    "越南、墨西哥基地资本开支、投产和产能利用率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

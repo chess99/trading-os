@@ -1,84 +1,95 @@
 {
-  "symbol": "CN:600279",
-  "ticker": "600279",
-  "name": "重庆港",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "重庆港具备长江上游港口枢纽和区域整合期权，资产折价明显，但扣非盈利和ROE过低，当前4.19元处于合理价值区间内，安全边际不足，暂列观察。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    3.4,
-    4.6
-  ],
-  "buy_zone": [
-    3.0,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.5
-  ],
-  "position_plan": [
-    {
-      "condition": "价格跌至3.5元以下，且未出现扣非亏损扩大、贸易应收失控或重大资本开支失控",
-      "action": "建立观察仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "2026年中报或三季报显示扣非归母净利润明显转正，装卸代理毛利率稳定，综合物流收入质量改善",
-      "action": "重新评估是否提高至小仓位",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格高于4.8元但扣非利润、资产整合或分红没有同步改善",
-      "action": "不追高或降低已有交易仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入买入观察区，低PB资产折价开始提供安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "超过合理价值区间上沿，若基本面无改善应考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报扣非利润、吞吐量、装卸代理毛利率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认主业修复趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、分红政策和托管资产整合进展"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 4.19,
-    "last_price_date": "2026-07-16",
-    "market_cap_cny_billion": 4.973,
-    "pe_ttm": 85.09,
-    "pb": 0.74,
-    "source": "腾讯行情接口 qt.gtimg.cn/q=sh600279"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "重庆港",
+    "security_status": "active",
+    "symbol": "CN:600279",
+    "ticker": "600279"
   },
-  "confidence": "中",
-  "decision": "观察"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "4ccfcc141835ab7469b7af542dbdb4b53da950167a6aacd87d892b7fc32a7eec"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报扣非利润、吞吐量、装卸代理毛利率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认主业修复趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、分红政策和托管资产整合进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入买入观察区，低PB资产折价开始提供安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "超过合理价值区间上沿，若基本面无改善应考虑降低仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

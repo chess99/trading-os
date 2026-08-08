@@ -1,106 +1,105 @@
 {
-  "symbol": "CN:003007",
-  "market": "CN",
-  "ticker": "003007",
-  "name": "直真科技",
-  "company_name": "北京直真科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "直真科技传统运营商 OSS/网络管理软件业务具备客户基础，但公司规模小、项目制波动和客户集中度高。2025 年新增算力服务推动收入修复，2026Q1 收入继续高增但仍亏损，算力业务尚未证明稳定净利率和现金流。按发行后股本和 2026-07-13 约 36.59 元股价测算，市值已反映乐观算力兑现假设，安全边际不足。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    0,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "直真科技",
+    "security_status": "active",
+    "symbol": "CN:003007",
+    "ticker": "003007"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "cdbdf87ac67476ef3c83e909f312c6a6e52a83d432de5ab70e01240136e8958d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 32 元，且未来 4 个季度尚未证明年化净利润达到 1.5 亿元以上",
-      "action": "不新开仓；已有仓位考虑减仓",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价处于 24-32 元，且算力服务收入增长但利润和现金流仍未同步改善",
-      "action": "仅保留事件驱动观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价处于 18-24 元，且算力业务续约、利用率、毛利率有公开证据支持",
-      "action": "可建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于 16 元，且应收账款未继续恶化、经营现金流趋势改善",
-      "action": "可小仓试错",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "低于可买区上限，可能出现安全边际",
-      "action": "进入可买区，复核算力收入、毛利率和回款后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "接近合理价值区间下沿，可重新评估观察仓",
-      "action": "进入重点观察区，更新估值与订单兑现情况"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "高于减仓区下限，估值依赖乐观算力兑现",
-      "action": "进入减仓/回避区，除非利润兑现显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计 2026 年半年度报告披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证定增后算力业务放量、毛利率和回款质量",
-      "action": "更新收入、利润、现金流和算力业务验证情况"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计 2026 年三季度报告披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可观察算力服务是否连续贡献收入并改善利润",
-      "action": "复核算力服务收入、毛利率、应收账款和经营现金流"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计 2026 年年度报告披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整评估算力转型后的全年利润、现金流和资产负债表",
-      "action": "完整重估算力业务兑现、财务质量和合理价值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "低于可买区上限，可能出现安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "接近合理价值区间下沿，可重新评估观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "高于减仓区下限，估值依赖乐观算力兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "算力服务季度收入和毛利率",
-    "算力项目利用率、客户续约率和价格变化",
-    "经营活动现金流净额与归母净利润匹配度",
-    "应收账款、合同资产及周转天数",
-    "前五大客户收入占比和第一大客户收入占比",
-    "研发费用率、销售费用率和人效变化",
-    "租赁负债、短期借款、货币资金和定增资金使用进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

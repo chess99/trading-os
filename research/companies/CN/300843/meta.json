@@ -1,44 +1,91 @@
 {
-  "symbol": "CN:300843",
-  "market": "CN",
-  "ticker": "300843",
-  "name": "胜蓝股份",
-  "company_name": "胜蓝科技股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "消费电子/新能车连接器小厂，2025营收+35%但净利仅+9%，新能车连接器毛利率13.6%、ROE仅7.1%，当前PE(TTM)约221x严重透支AI/新能车预期，无安全边际；需等待估值回归40-70元合理区间后再评估。",
-  "quality_rating": "普通",
-  "valuation_rating": "泡沫",
-  "fair_value_range": [40, 70],
-  "buy_zone": [30, 40],
-  "strong_attraction_zone": [0, 25],
-  "sell_or_reduce_zone": [80, 9999],
-  "do_not_chase_above": 80,
-  "position_plan": [
-    {"zone": "40-50元", "condition": "股价跌至40-50元区间且基本面未恶化", "action": "可建仓观察", "target_weight": 0.01, "max_weight": 0.02},
-    {"zone": "30-40元", "condition": "股价跌至30-40元区间且基本面未恶化", "action": "买入", "target_weight": 0.02, "max_weight": 0.03},
-    {"zone": "25元以下", "condition": "股价跌至25元以下且基本面明显改善或估值回归", "action": "加仓", "target_weight": 0.03, "max_weight": 0.05},
-    {"zone": "80元以上", "condition": "股价维持80元以上或继续上涨", "action": "不买，如持有应减仓", "target_weight": 0, "max_weight": 0}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "胜蓝股份",
+    "security_status": "active",
+    "symbol": "CN:300843",
+    "ticker": "300843"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "2892cf715f0e01dff059e6028faff6847267d8838b62e49b7c11f153623609b8"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "8f7214c653457e91259c1a550aa1cbfc1df4705150b42fd8a8a6d431f22cdba0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后复查营收/利润剪刀差与新能车连接器毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报披露后复查全年盈利质量与可转债转股影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入有安全边际的买入区间，需深度复查",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 80.0
+      },
+      "reason": "如仍持有应减仓，估值已严重透支",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md", "reports/2026-07-09-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026年中报披露后复查营收/利润剪刀差与新能车连接器毛利率"},
-    {"type": "date", "date": "2027-04-30", "reason": "2026年年报披露后复查全年盈利质量与可转债转股影响"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 30, "reason": "进入有安全边际的买入区间，需深度复查"},
-    {"type": "price_above", "price": 80, "reason": "如仍持有应减仓，估值已严重透支"}
-  ],
-  "key_risks": [
-    "估值泡沫：PE(TTM)221x远超同行，AI故事透支",
-    "增收不增利：2025营收+35%但净利仅+9%",
-    "新能车连接器毛利率13.6%偏低，竞争加剧",
-    "可转债4.3亿若转股稀释约18-20%",
-    "客户集中度：前5大客户占33.7%",
-    "海外收入27.6%，受贸易摩擦与汇率影响",
-    "研发投入率从7.3%降至5.5%，技术迭代风险"
-  ],
-  "updated_at": "2026-07-08T12:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

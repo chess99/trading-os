@@ -1,83 +1,95 @@
 {
-  "symbol": "CN:301193",
-  "ticker": "301193",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "家联科技",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "家联科技具备出口餐饮具制造基础和3D打印耗材增长弹性，但截至2026Q1仍处于亏损扩大、财务杠杆偏高、自由现金流承压阶段；在盈利和现金流拐点被验证前仅列入观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    10.0,
-    14.0
-  ],
-  "buy_zone": [
-    8.0,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    19.0,
-    24.0
-  ],
-  "position_plan": [
-    {
-      "condition": "仅在股价进入8-10元且半年报显示毛利率、经营现金流、负债率至少两项改善时建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "若2026年或2027年报确认扣非盈利转正、经营现金流覆盖维护性资本开支且资产负债率降至65%以下，可上调至核心观察仓",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "若股价高于19元但盈利仍未转正或财务费用继续侵蚀利润，不新增仓位并考虑退出观察仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入初始买入观察区，需要复核半年报经营现金流、毛利率和负债率是否改善"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "超过基准情景估值上沿较多，若盈利拐点未确认则风险收益恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报披露后复核收入增长、毛利率、现金流、财务费用和负债率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后确认3D打印耗材增长是否转化为利润"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报披露后重新评估盈利修复、债务压力和合理价值区间"
-    }
-  ],
-  "key_risks": [
-    "财务杠杆高且财务费用侵蚀利润",
-    "收入增长未转化为归母盈利和自由现金流",
-    "3D打印耗材业务毛利率和客户复购缺少单独披露",
-    "海外需求、关税、汇率和原材料价格波动"
-  ],
-  "last_price_reference": {
-    "price": 17.09,
+  "identity": {
     "currency": "CNY",
-    "date": "2026-07-14",
-    "source": "公开行情页，2026-07-16当日未核验，置信度低"
+    "market": "CN",
+    "name": "家联科技",
+    "security_status": "active",
+    "symbol": "CN:301193",
+    "ticker": "301193"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "a6e381e136d89fe57cb37932e825468c92f6c338cdc1c2acc679eb99d53bb0e2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报披露后复核收入增长、毛利率、现金流、财务费用和负债率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后确认3D打印耗材增长是否转化为利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报披露后重新评估盈利修复、债务压力和合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入初始买入观察区，需要复核半年报经营现金流、毛利率和负债率是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过基准情景估值上沿较多，若盈利拐点未确认则风险收益恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

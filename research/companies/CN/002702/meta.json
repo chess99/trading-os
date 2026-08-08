@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:002702",
-  "ticker": "002702",
-  "name": "海欣食品",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海欣食品具备鱼糜制品老品牌、产能和渠道基础，2026Q1 出现收入与扣非利润修复，但 2026H1 仍预告亏损，控股股东近期减持，当前股价已接近偏乐观扭亏估值，安全边际不足。等待连续扣非盈利和经营现金流改善后再考虑买入。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    3.3,
-    4.3
-  ],
-  "buy_zone": [
-    0,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    5.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海欣食品",
+    "security_status": "active",
+    "symbol": "CN:002702",
+    "ticker": "002702"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "a8b1a2342beabbd220b52a2ccaefad191a6f770fde6ca2fc817f5be6d533f40a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅作为反转跟踪仓；股价低于3.2元且半年报未显著低于预告时，可建立观察仓。",
-      "action": "watchlist_or_small_tracking_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、毛利率、费用率、存货和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非盈利、经营现金流剔除一次性退税后为正、控股股东无新增减持，且股价不高于4.0元。",
-      "action": "increase_after_turnaround_verified",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q3是否延续扣非盈利。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年是否真正扭亏。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入基准估值下沿并提供初步安全边际，可重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "股价进入乐观扭亏情景区间，若全年盈利未验证应减持或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入基准估值下沿并提供初步安全边际，可重新评估观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "reason": "股价进入乐观扭亏情景区间，若全年盈利未验证应减持或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、毛利率、费用率、存货和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q3是否延续扣非盈利。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年是否真正扭亏。"
-    }
-  ],
-  "risk_flags": [
-    "2026H1仍预计亏损",
-    "控股股东近期减持",
-    "促销投入可能推高收入但压低利润",
-    "存货和固定资产占比较高",
-    "同业竞争激烈且公司非龙头"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600032",
-  "ticker": "600032",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "浙江新能",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "浙江新能是浙能集团旗下省属新能源运营平台，资产可持续经营和融资能力较强，但2026年盈利受来水、海风风资源、光伏限电和电价下行共同压制，当前约6.60元附近估值相对低ROE缺乏安全边际，等待5.20元以下或盈利修复信号。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    5.2,
-    6.4
-  ],
-  "buy_zone": [
-    4.6,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江新能",
+    "security_status": "active",
+    "symbol": "CN:600032",
+    "ticker": "600032"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "9f3a0c4511629daa1f60429856d11085a3dccf4ccfdb8eb6be5c92f461899571"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.20元且2026年正式半年报未显著低于业绩预告下限，可建立观察仓。",
-      "action": "initial_buy",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式利润、分业务电价、限电率、经营现金流和负债结构。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.80元，且后续公告显示限电率、电价或风水资源至少一项改善。",
-      "action": "add",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认H1是否为阶段性低点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.20元且ROE仍低于5.5%，或2026年盈利继续下修。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和新项目资本开支回报，更新DCF和相对估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入公允价值下沿并开始具备安全边际，适合重新核验半年报和电价数据。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "低于保守估值上沿，若基本面未恶化，赔率明显改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "高于基准公允价值区间，低ROE资产估值过热，需要减仓或等待业绩兑现。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入公允价值下沿并开始具备安全边际，适合重新核验半年报和电价数据。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "低于保守估值上沿，若基本面未恶化，赔率明显改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "高于基准公允价值区间，低ROE资产估值过热，需要减仓或等待业绩兑现。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式利润、分业务电价、限电率、经营现金流和负债结构。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认H1是否为阶段性低点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和新项目资本开支回报，更新DCF和相对估值。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

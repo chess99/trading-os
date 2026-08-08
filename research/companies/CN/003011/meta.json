@@ -1,112 +1,105 @@
 {
-  "symbol": "CN:003011",
-  "market": "CN",
-  "ticker": "003011",
-  "name": "海象新材",
-  "company_name": "浙江海象新材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海象新材是欧美出口导向的 PVC 地板 ODM 制造商，越南产能、客户认证、现金流和分红回购提供一定下行保护，但行业竞争激烈、外销占比过高、美国海关溯源/关税/汇率风险仍大，当前约18元上下价格落在合理价值区间，安全边际不足。等待13.5-15.0元以下或2026年订单和毛利率连续修复后再买。",
-  "quality_rating": "中",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    16.0,
-    20.0
-  ],
-  "buy_zone": [
-    13.5,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    26.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海象新材",
+    "security_status": "active",
+    "symbol": "CN:003011",
+    "ticker": "003011"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "465e15ac8729ac482d4acabd5706cac1fca0585fa3936e1ee1f63590c4dbba2b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于15.0元，且没有新增美国海关溯源、关税或重大客户流失负面公告",
-      "action": "小仓位试买",
-      "target_position": "1.0%-1.5%",
-      "max_weight": 0.015
-    },
-    {
-      "condition": "股价低于13.5元，且最近一期经营现金流为正、境外订单或毛利率出现改善",
-      "action": "提高到标准观察仓",
-      "target_position": "2.0%-2.5%",
-      "max_weight": 0.025
-    },
-    {
-      "condition": "连续两个季度收入同比转正、SPC毛利率回到30%以上、财务费用/汇兑损失回落",
-      "action": "可加仓但仍按周期制造票管理",
-      "target_position": "2.5%-3.0%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于24元且利润和ROE没有同步上修",
-      "action": "减持或退出",
-      "target_position": "0%-1.0%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "低于合理价值下沿并接近安全边际买点",
-      "action": "进入可买观察区，复核最新公告、订单、汇率和美国贸易政策"
-    },
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "接近1倍2026Q1每股净资产并覆盖贸易和汇率折价",
-      "action": "进入安全边际区，若基本面未恶化可建立小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "若盈利未同步上修，估值可能透支周期修复预期",
-      "action": "复核估值是否已透支，若基本面未上修则减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证越南产能、境外订单和SPC毛利率是否修复",
-      "action": "复核境外收入、SPC毛利率、越南产能利用率和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能观察汇兑损益、应收账款和全年盈利趋势",
-      "action": "复核收入恢复、汇兑损益、应收账款和经营现金流"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报能确认正常化盈利、分红回购和估值区间是否需要重估",
-      "action": "复核正常化盈利、分红、回购和估值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "低于合理价值下沿并接近安全边际买点",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "接近1倍2026Q1每股净资产并覆盖贸易和汇率折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "若盈利未同步上修，估值可能透支周期修复预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "境外收入同比增速",
-    "SPC地板收入和毛利率",
-    "越南产能利用率",
-    "经营活动现金流量净额",
-    "财务费用及汇兑损益",
-    "应收账款余额和信用减值损失",
-    "前五大客户销售占比",
-    "出口退税、美国海关溯源和关税政策变化",
-    "每股分红和回购价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

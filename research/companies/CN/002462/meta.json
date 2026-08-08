@@ -1,143 +1,133 @@
 {
-  "symbol": "CN:002462",
-  "market": "CN",
-  "ticker": "002462",
-  "name": "嘉事堂",
-  "company_name": "嘉事堂药业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "嘉事堂具备北京区域医药流通网络、医院及基层终端资源和药械物流资质，同仁堂集团拟入主带来治理与渠道协同预期；但2025年收入同比下降18.71%、2026Q1收入和利润继续下滑，ROE仅处低个位数，应收账款占用和减值风险较高。当前11.25元已高于基准合理区间，缺乏安全边际。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵/无安全边际",
-  "fair_value_range": [
-    8.5,
-    10.5
-  ],
-  "buy_zone": [
-    6.5,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    13.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "嘉事堂",
+    "security_status": "active",
+    "symbol": "CN:002462",
+    "ticker": "002462"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c2332615ec750030b4c9fee8491f327f57299a1c34cd2a76dd5459365e625311"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价<=6.5元且未发生商誉或应收账款重大恶化",
-      "price": "<=6.5",
-      "action": "强吸引力买入",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价6.5-7.5元且回款未继续恶化",
-      "price": "6.5-7.5",
-      "action": "有安全边际买入",
-      "position": "2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价7.5-8.5元且收入降幅收窄或ROE修复",
-      "price": "7.5-8.5",
-      "action": "小仓试错",
-      "position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价8.5-10.5元，处于基准合理区间",
-      "price": "8.5-10.5",
-      "action": "合理区间观察",
-      "position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价>11.0元且利润修复尚未验证",
-      "price": ">11.0",
-      "action": "不追高",
-      "position": "0%",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "price": 7.5,
-      "type": "price_below",
-      "action": "复核是否可建立首笔仓位",
-      "reason": "进入有安全边际买入价"
-    },
-    {
-      "price": 6.5,
-      "type": "price_below",
-      "action": "复核是否可提高至3%-5%仓位",
-      "reason": "进入强吸引力买入价"
-    },
-    {
-      "price": 11.0,
-      "type": "price_above",
-      "action": "不追高",
-      "reason": "高于基准合理区间上沿且业绩修复未验证"
-    },
-    {
-      "price": 13.0,
-      "type": "price_above",
-      "action": "若无利润修复则减仓或退出",
-      "reason": "价格进入乐观情景区间"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026年半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证收入降幅、回款和同仁堂事项进度",
-      "action": "复核收入降幅、毛利率、归母净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
-      "trigger": "同仁堂集团股份过户、董事会改组或业务协同公告",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "控制权变更是当前估值溢价的主要催化",
-      "action": "复核控制权变更后的治理和协同兑现概率"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "应收账款账期继续延长或出现大额信用减值",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "应收账款是资产质量和现金流的核心变量",
-      "action": "下调质量评级并重估安全边际"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "商誉减值或资产减值单年超过1亿元",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "减值会直接侵蚀低利润率下的股东回报",
-      "action": "检查资产质量和历史并购风险"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "trigger": "股价跌入7.5元以下安全边际区间",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "价格进入有安全边际买入区间",
-      "action": "重新评估是否可建立首笔仓位"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入有安全边际买入价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "高于基准合理区间上沿且业绩修复未验证",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "价格进入乐观情景区间",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润及扣非归母净利润",
-    "综合毛利率和医药批发毛利率",
-    "经营活动现金流量净额",
-    "应收账款余额、账龄和应收账款/收入比例",
-    "存货余额和存货跌价准备",
-    "商誉余额和商誉减值",
-    "短期借款和财务费用",
-    "同仁堂控制权转让进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

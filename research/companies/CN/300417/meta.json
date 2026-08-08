@@ -1,98 +1,115 @@
 {
-  "symbol": "CN:300417",
-  "ticker": "300417",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "南华仪器",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "机动车排放监管、新能源车检测和嘉得力并购提供收入弹性，但公司仍处亏损修复阶段，当前股价约10.22元高于7.0-9.2元基本面合理价值区间，安全边际不足，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.0,
-    9.2
-  ],
-  "buy_zone": [
-    5.8,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    13.0
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南华仪器",
+    "security_status": "active",
+    "symbol": "CN:300417",
+    "ticker": "300417"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "cf9cfaf6e655e43c9cdaab16be9b0694117903f1af92043471fd6b3829b33e75"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.0元，且2026年半年报显示收入增长同时归母净利润接近盈亏平衡、应收和存货未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看嘉得力并表贡献、归母利润、经营现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.0元，且嘉得力全年化并表后毛利率稳定、经营现金流转正",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入增长是否转化为利润和现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于11.0元但2026年利润修复未兑现",
-      "action": "不追高或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证全年并表后的真实盈利能力、商誉减值风险和股东减持进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入基本面合理价值区间下沿，可结合半年报重新评估安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "接近净资产与悲观情景折价区间，若基本面未恶化可考虑更积极观察。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "接近乐观情景估值，若盈利未兑现则风险收益转差。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "明显高于当前基本面可验证价值，除非利润可见度显著上修，否则应减持或回避。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入基本面合理价值区间下沿，可结合半年报重新评估安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "接近净资产与悲观情景折价区间，若基本面未恶化可考虑更积极观察。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "接近乐观情景估值，若盈利未兑现则风险收益转差。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "明显高于当前基本面可验证价值，除非利润可见度显著上修，否则应减持或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看嘉得力并表贡献、归母利润、经营现金流、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入增长是否转化为利润和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证全年并表后的真实盈利能力、商誉减值风险和股东减持进展。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 10.22,
-    "reference_price_date": "2026-07-15",
-    "reference_market_cap_cny_billion": 1.375,
-    "shares_outstanding": 134563200,
-    "revenue_2025_cny": 196339547.91,
-    "net_profit_attributable_2025_cny": -2597464.04,
-    "deducted_net_profit_attributable_2025_cny": -7898731.33,
-    "operating_cash_flow_2025_cny": 5293643.55,
-    "revenue_2026_q1_cny": 53257533.96,
-    "net_profit_attributable_2026_q1_cny": -2954589.34
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

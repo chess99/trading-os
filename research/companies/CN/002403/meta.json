@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:002403",
-  "ticker": "002403",
-  "name": "爱仕达",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "爱仕达具备炊具制造基础和机器人转型期权，但传统业务盈利修复不足、机器人业务尚未证明持续利润贡献，当前约9元以上股价已计入较多乐观预期，安全边际不足，适合观察而非买入。",
-  "fair_value_range": [
-    5.0,
-    7.0
-  ],
-  "buy_zone": [
-    0.0,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    99.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "爱仕达",
+    "security_status": "active",
+    "symbol": "CN:002403",
+    "ticker": "002403"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "d3cfe98d275da802141808c8dcd2a5393167aa75c5f2888df953d67e97e66bb2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于8.5元且扣非亏损未明显收窄",
-      "action": "不建仓，维持观察",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，验证亏损区间、债务压力和机器人业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至5.5元以下，且半年报或三季报显示亏损收窄、经营现金流改善",
-      "action": "可建立跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断扣非亏损、经营现金流和订单质量是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "机器人业务连续两个季度收入增长且毛利率改善，同时传统主业恢复正利润",
-      "action": "重新评估是否提高仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入买入观察区，需要复核亏损收窄和现金流改善是否同步发生",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "高于基准合理价值区间，若基本面未兑现应回避或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入买入观察区，需要复核亏损收窄和现金流改善是否同步发生"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "高于基准合理价值区间，若基本面未兑现应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，验证亏损区间、债务压力和机器人业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断扣非亏损、经营现金流和订单质量是否改善"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

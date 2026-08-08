@@ -1,91 +1,105 @@
 {
-  "symbol": "CN:300290",
-  "market": "CN",
-  "ticker": "300290",
-  "name": "ST荣科",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST荣科主营医疗信息化和政府公共事业IT服务，2025年收入约7.55亿元但归母亏损4508万元、经营现金流为负；2026年6月因前任控股股东管控期间违规担保被实施其他风险警示，披露累计违规担保本金余额约7.85亿元，接近最近一期归母净资产。当前4.02元主要交易担保责任解除和摘帽修复预期，在诉讼、内控、现金流未明确改善前风险补偿不足。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.6,
-    2.8
-  ],
-  "buy_zone": [
-    0,
-    1.8
-  ],
-  "sell_or_reduce_zone": [
-    3.2,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST荣科",
+    "security_status": "active",
+    "symbol": "CN:300290",
+    "ticker": "300290"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "d922507e1d06e82d7cb002dc0e36b347d8943cddb81bf9af0c6dace63feb9b5b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于3.20元且违规担保责任未实质解除",
-      "action": "不买入；已有仓位应降至0或仅保留观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：收入、经营现金流、应收账款、存货和担保事项进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在1.80元以下且无新增担保、冻结、监管处罚或经营恶化公告",
-      "action": "可建立小额困境观察仓，等待诉讼和半年报验证",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和诉讼/监管公告，判断是否存在风险警示升级或摘帽路径",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在1.20元以下且担保余额未继续扩大、主业现金流未恶化",
-      "action": "可提高至强吸引力试错仓，但必须设置事件止损",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见、内控意见、持续经营和盈利现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "法院或债权人文件确认上市公司免除主要担保责任，且经营现金流连续改善",
-      "action": "重新估值后再决定是否从avoid上调至watch或hold",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入有安全边际区间，可复核是否具备小仓位试错条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入强吸引力困境估值区，但仍需确认无新增重大负面公告",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.2
+      },
+      "reason": "高于不应追高线，若担保未解除则风险收益不对称",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入有安全边际区间，可复核是否具备小仓位试错条件"
-    },
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入强吸引力困境估值区，但仍需确认无新增重大负面公告"
-    },
-    {
-      "type": "price_above",
-      "price": 3.2,
-      "reason": "高于不应追高线，若担保未解除则风险收益不对称"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：收入、经营现金流、应收账款、存货和担保事项进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和诉讼/监管公告，判断是否存在风险警示升级或摘帽路径"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见、内控意见、持续经营和盈利现金流质量"
-    }
-  ],
-  "notes": [
-    "2026-07-20新浪行情显示收盘价4.02元，按2026Q1股本639,732,569股估算市值约25.7亿元。",
-    "2026-06-30起因违规担保事项被实施其他风险警示，股票简称变更为ST荣科。",
-    "公司披露累计违规担保本金余额78,496.99万元，未含欠息、罚息等，占最近一期经审计净资产94.47%。",
-    "2025年审计意见为标准无保留意见，但2026年暴露的历史违规担保显示历史内控可信度需要打折。",
-    "本次估值对同业倍数、担保责任比例和行业增长假设置信度较低，应以后续法院判决、债权人文件和半年报为准。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

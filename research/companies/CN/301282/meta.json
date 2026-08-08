@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:301282",
-  "ticker": "301282",
-  "name": "金禄电子",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "金禄电子具备汽车电子 PCB 基本盘和向通信/算力升级的期权，但 2025 年 PCB 主业毛利率仅 5.68%、2026Q1 收入增而利润降，当前价格已提前反映乐观情景，需等待毛利率修复和清远基地订单验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    10.0,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    28.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金禄电子",
+    "security_status": "active",
+    "symbol": "CN:301282",
+    "ticker": "301282"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "e371a773518e3eb2ebd6aecaffdc0fa87420876239fd603057cb52cc894f864d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于13元且2026H1 PCB主业毛利率不低于8%",
-      "action": "试探建仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看PCB主业毛利率、清远基地进度、经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于11元且经营现金流转正",
-      "action": "加至观察仓上限",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断收入增长是否转化为利润和现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H2明确披露算力订单放量且收入和毛利率同步改善",
-      "action": "重新评估后提高仓位上限",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年报，重新评估算力业务导入和公允价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于24元但未验证毛利率和算力订单",
-      "action": "不追高并减仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入初步买入区间，需同步复核2026H1毛利率和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入保守绝对估值安全边际区间，若经营现金流转正可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "价格进入乐观情景区间，若无算力订单和毛利率验证应减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入初步买入区间，需同步复核2026H1毛利率和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入保守绝对估值安全边际区间，若经营现金流转正可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "价格进入乐观情景区间，若无算力订单和毛利率验证应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看PCB主业毛利率、清远基地进度、经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断收入增长是否转化为利润和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年报，重新评估算力业务导入和公允价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

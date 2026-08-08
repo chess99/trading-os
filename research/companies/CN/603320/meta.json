@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:603320",
-  "market": "CN",
-  "ticker": "603320",
-  "name": "迪贝电气",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "迪贝电气是制冷压缩机电机细分供应商，低负债、现金流尚可、商用和境外业务毛利率较好，但终端需求成熟、客户议价强、2026Q1利润下滑，当前价格接近基准估值上沿，需等待更高安全边际或商用/车载/驱动器增长兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    10.5,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    19.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "迪贝电气",
+    "security_status": "active",
+    "symbol": "CN:603320",
+    "ticker": "603320"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "2cec6b7bce6194ce06790422fed6ed6f3088bee02b6a093fd5c0d2c6df1a054b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于12.0元，且商用压缩机电机毛利率不低于18%、经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入、毛利率、商用业务和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于10.5元，且2026年后续定期报告显示归母净利润TTM不低于7000万元、经营现金流/净利润大于1",
-      "action": "提高至价值仓上限",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润中枢和估值区间是否需要调整",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于19.0元且没有净利润上修或商用/车载业务放量证据",
-      "action": "不新增并考虑减持",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，验证长期投资假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入基准合理价值区间下沿，具备重新评估建仓的安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入目标买入区间下沿，若基本面未破坏可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 19.0
+      },
+      "reason": "超过基准估值上沿，需要检查是否由业绩上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入明显偏贵区间，若无新增长证据应降低风险暴露",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入基准合理价值区间下沿，具备重新评估建仓的安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入目标买入区间下沿，若基本面未破坏可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 19.0,
-      "reason": "超过基准估值上沿，需要检查是否由业绩上修支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "进入明显偏贵区间，若无新增长证据应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入、毛利率、商用业务和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润中枢和估值区间是否需要调整"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，验证长期投资假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

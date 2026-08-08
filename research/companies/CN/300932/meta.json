@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:300932",
-  "ticker": "300932",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "三友联众",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "三友联众是国内继电器制造商，2025 年和 2026Q1 收入、利润、现金流均在修复，境外和新能源/光伏/汽车继电器提供成长选项；但 2025 年 ROE 仅 4.15%、净利率约 3.15%，当前约 9.8 元价格对应约 41 倍 TTM PE，安全边际不足，适合观察等待更低价格或利润率修复证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.2,
-    9.2
-  ],
-  "buy_zone": [
-    0,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    11,
-    15
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三友联众",
+    "security_status": "active",
+    "symbol": "CN:300932",
+    "ticker": "300932"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "5dd401a144f18bb27defa8fae332d8465f40cf9b75cf34f31f9ad0b77678958f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 7.2 元，且最近一期报告显示收入同比增长、综合毛利率不低于 18%、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查收入增速、毛利率、经营现金流、境外收入和新能源继电器进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于 7.2-9.2 元，且未披露新能源/境外大客户放量或净利率改善证据",
-      "action": "继续观察，不新增仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断利润率修复是否延续以及估值是否需要上调或下调",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 11 元，且 TTM 净利率仍低于 4.5% 或订单证据不足",
-      "action": "回避追高或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入报告设定的买入观察区，需要复核半年报和毛利率后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "价格明显高于基准合理价值区间，若没有利润率或订单强化证据，应考虑回避或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入报告设定的买入观察区，需要复核半年报和毛利率后决定是否建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 11,
-      "reason": "价格明显高于基准合理价值区间，若没有利润率或订单强化证据，应考虑回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查收入增速、毛利率、经营现金流、境外收入和新能源继电器进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断利润率修复是否延续以及估值是否需要上调或下调"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

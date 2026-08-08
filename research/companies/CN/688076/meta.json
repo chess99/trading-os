@@ -1,47 +1,77 @@
 {
-  "symbol": "CN:688076",
-  "market": "CN",
-  "ticker": "688076",
-  "name": "ST诺泰",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "多肽业务具备技术和海外客户基础，但高资本开支、无订单产能及严重治理污点使当前价格缺乏安全边际。",
-  "fair_value_range": [21, 27],
-  "buy_zone": [16, 19],
-  "sell_or_reduce_zone": [32, 38],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST诺泰",
+    "security_status": "active",
+    "symbol": "CN:688076",
+    "ticker": "688076"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "c0cf19493c626f283c311c8b0bb9cca26bc569b4551e07b498ab42196fcb43f0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于16至19元且无新增监管问题、毛利率不低于58%、经营现金流为正",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报披露后复核毛利率、自由现金流、库存及产能订单",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "治理或核心客户基本面恶化时不因价格下跌补仓",
-      "max_weight": 0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报披露后复核毛利率、自由现金流、库存及产能订单"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19,
-      "reason": "进入有安全边际的研究性买入区间，仍须重新验证治理与基本面"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入有安全边际的研究性买入区间，仍须重新验证治理与基本面",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 32,
-      "reason": "进入减仓或不应追高区间"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-19T18:42:31+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

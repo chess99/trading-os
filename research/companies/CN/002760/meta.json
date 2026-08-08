@@ -1,117 +1,124 @@
 {
-  "symbol": "CN:002760",
-  "market": "CN",
-  "ticker": "002760",
-  "name": "凤形股份",
-  "company_name": "凤形股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "凤形股份经营已从2024年减值亏损中修复，船电系统及特种电机是主要增长来源，海外销售和毛利率改善提供弹性；但以2026-07-10收盘价16.54元估算，TTM PE约75倍，显著透支2026-2027年利润增长和外延并购预期。现阶段等待价格回到8.5元以下或船电利润与经营现金流连续兑现后再重估。",
-  "quality_rating": "B-",
-  "valuation_rating": "D",
-  "fair_value_range": [9.0, 12.0],
-  "buy_zone": [0.0, 8.5],
-  "sell_or_reduce_zone": [15.0, 18.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凤形股份",
+    "security_status": "active",
+    "symbol": "CN:002760",
+    "ticker": "002760"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "648ddb08f0aa8c10d2c39c63b44a9bbb9ef85ef3482a736815211a421a308f2d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于8.5元且未出现新的商誉减值、重大订单取消或控股股东治理风险",
-      "action": "建立观察仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于7.0元且2026年经营现金流转正、船电毛利率维持25%以上",
-      "action": "提高到价值仓",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格高于15元且未看到2026E归母净利润超过5000万元的证据",
-      "action": "不新增并逐步降低仓位",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格高于18元且上涨主要由重组传闻或主题驱动而非正式公告和利润兑现",
-      "action": "卖出或大幅减仓",
-      "target_position": "0%",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入PB约1.1倍、PE隐含增长要求较低的观察买入区",
-      "action": "复核半年报/三季报后考虑1%-2%观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "低于多数估值方法下沿，安全边际更充分",
-      "action": "若现金流和船电毛利率未恶化，考虑2%-3%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "价格进入高预期区，需要5000万元以上利润中枢支撑",
-      "action": "停止买入，检查是否有利润兑现支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "明显高于现有基本面估值，除非资产注入或利润大幅兑现",
-      "action": "无强基本面兑现则卖出或大幅减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证2025年船电放量和2026Q1利润改善是否持续",
-      "action": "重点核验船电收入增速、毛利率与经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可初步确认全年利润和现金流中枢",
-      "action": "复核全年利润中枢、现金流和估值区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可全面检查双主业盈利质量、资产减值和资本配置",
-      "action": "重新评估双主业质量、分红政策和安全边际"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "继续观察船电增长是否从订单驱动转为稳定经营能力",
-      "action": "验证船电业务是否形成可持续增长曲线"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入PB约1.1倍、PE隐含增长要求较低的观察买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "低于多数估值方法下沿，安全边际更充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "价格进入高预期区，需要5000万元以上利润中枢支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "明显高于现有基本面估值，除非资产注入或利润大幅兑现",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "船电系统解决方案及特种电机收入增速",
-    "船电系统解决方案及特种电机毛利率",
-    "高铬耐磨产品毛利率",
-    "经营活动现金流量净额",
-    "归母净利润和扣非归母净利润",
-    "前五大供应商采购占比",
-    "商誉及资产减值损失",
-    "国外销售收入及毛利率",
-    "重大资产重组或关联交易进展",
-    "分红或回购政策"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

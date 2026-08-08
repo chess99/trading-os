@@ -1,114 +1,115 @@
 {
-  "symbol": "CN:300537",
-  "market": "CN",
-  "ticker": "300537",
-  "name": "广信材料",
-  "company_name": "江苏广信感光新材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于扭亏修复和新材料产品扩张阶段，但2025年收入仍下降、扣非利润薄、ROE低；当前约22.81元价格对应约47亿元市值，明显透支光刻胶、光伏胶和高性能涂料兑现预期。合理价值约8.0-12.0元，7.5元以下才有小仓试错价值。",
-  "quality_rating": "C+",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    8.0,
-    12.0
-  ],
-  "buy_zone": [
-    0.0,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广信材料",
+    "security_status": "active",
+    "symbol": "CN:300537",
+    "ticker": "300537"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5faa03b19589a8541907bb1b6d702748eef4cec29a6169f38b69409b010701a7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于18元/股，且未看到连续两个季度收入、扣非净利润和经营现金流同步改善",
-      "action": "不新买；已有持仓降为题材观察仓或逐步减仓",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、扣非净利润、经营现金流、应收账款和龙南基地爬坡。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格位于8.0-12.0元/股，且扣非利润为正、经营现金流为正、应收账款未异常扩大",
-      "action": "继续观察，仅在确认订单和利润改善后试探",
-      "target_position": "0%-1.0%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q2/Q3盈利能力是否稳定以及光伏胶、消费电子涂料、高性能涂料是否放量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于7.5元/股，且龙南基地放量、功能涂层材料或光伏胶收入兑现，现金流质量不恶化",
-      "action": "小仓买入",
-      "target_position": "1.0%-1.5%",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理价值区间和是否从观察转为可买。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于6.5元/股，且扣非利润和经营现金流连续改善、应收账款周转未恶化",
-      "action": "提高到基本面试错仓上限",
-      "target_position": "2.0%",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
       "reason": "进入可买区间上沿，估值开始接近合理价值折价。",
-      "action": "进入可买区，复核最新季度利润、现金流、应收账款和订单进展"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 6.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
       "reason": "若基本面未恶化，该价格相对净资产和正常化利润假设具备更明显安全边际。",
-      "action": "若基本面未恶化，可评估提高仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 18.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
       "reason": "估值重新进入高预期区，需要盈利显著上修才可支撑。",
-      "action": "估值偏贵，除非盈利显著上修，否则不参与或降低仓位"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 22.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
       "reason": "接近本次研究基准价，按当前利润和ROE看明显透支成长。",
-      "action": "估值透支区，题材仓减仓或回避"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、扣非净利润、经营现金流、应收账款和龙南基地爬坡。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q2/Q3盈利能力是否稳定以及光伏胶、消费电子涂料、高性能涂料是否放量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理价值区间和是否从观察转为可买。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润：2026年是否超过2500-3000万元，2027年是否接近或超过5000万元",
-    "综合毛利率及分产品毛利率：光刻胶及配套材料、功能涂层材料毛利率是否改善",
-    "经营活动现金流净额：是否持续为正且高于或接近净利润",
-    "应收账款：余额、账龄、周转天数和坏账计提是否恶化",
-    "龙南基地：产能利用率、订单爬坡、折旧摊销和费用吸收情况",
-    "光伏BC电池绝缘胶、显示光刻胶、石墨烯重防腐涂料：是否形成批量收入和可持续毛利",
-    "资产减值和商誉减值：江苏宏泰商誉及固定资产、存货减值是否扩大"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603598",
-  "market": "CN",
-  "ticker": "603598",
-  "name": "引力传媒",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "引力传媒收入增长和AI营销提效具备一定弹性，但毛利率约3%、净利率极薄、客户和供应商集中度高，当前约15元股价对应的估值显著透支利润修复；只有在股价回落至安全边际区间且利润率、现金流连续改善后才值得重新评估。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    6.0,
-    9.0
-  ],
-  "buy_zone": [
-    5.5,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "引力传媒",
+    "security_status": "active",
+    "symbol": "CN:603598",
+    "ticker": "603598"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "a5c20e88c3c4e38bf42194556ea6abc20c878f3fc34e5a18d549bf74d826ac03"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于12.0元且未看到连续两个季度毛利率高于4.0%、经营现金流为正",
-      "action": "不新增，已有仓位减持或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、归母净利率、经营现金流、应收账款和客户集中度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入6.5-7.0元，最近两个季度归母净利润同比为正且经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润改善是否持续以及AI提效是否转化为财务指标",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.0元，归母净利率超过0.8%且客户或供应商集中度下降",
-      "action": "小幅加仓但保持高风险折价",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期盈利中枢和合理估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入安全边际上沿，需要结合最新利润率和现金流复核是否可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入深度价值区，需要重新核验是否存在基本面恶化或错杀",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于合理价值区间，若基本面未显著改善应回避或减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入安全边际上沿，需要结合最新利润率和现金流复核是否可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入深度价值区，需要重新核验是否存在基本面恶化或错杀"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "高于合理价值区间，若基本面未显著改善应回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、归母净利率、经营现金流、应收账款和客户集中度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润改善是否持续以及AI提效是否转化为财务指标"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期盈利中枢和合理估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

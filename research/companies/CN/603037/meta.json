@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603037",
-  "ticker": "603037",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "凯众股份",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "汽车底盘与聚氨酯弹性件小市值供应商，主业增长但利润和现金流承压；2026年安徽拓盛并购若完成可带来品类扩张和利润增厚，但当前估值已部分反映预期，安全边际不足。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    7.0,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凯众股份",
+    "security_status": "active",
+    "symbol": "CN:603037",
+    "ticker": "603037"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "29edfb2af25561209ad52c06435a856e77837c68e25810e9f40c00ff83790a80"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入7.0-8.0元且2026H1扣非净利润、经营现金流未继续恶化，安徽拓盛交易未暴露重大风险",
-      "action": "small_initial_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的毛利率、扣非净利润、经营现金流和应收存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "重组完成且并表利润与现金流连续两个报告期兑现，毛利率企稳",
-      "action": "increase_after_confirmation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及安徽拓盛重大资产重组进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于13.0元但并购和利润兑现未跟上",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、重组并表影响和新年度业绩指引",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入买入观察区，重新核验主业利润、现金流和重组风险后可小仓试探",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "高于公允价值区间上沿，需要确认并购和利润兑现，否则应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入买入观察区，重新核验主业利润、现金流和重组风险后可小仓试探"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "高于公允价值区间上沿，需要确认并购和利润兑现，否则应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、扣非净利润、经营现金流和应收存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及安徽拓盛重大资产重组进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、重组并表影响和新年度业绩指引"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

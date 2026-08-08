@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:002181",
-  "market": "CN",
-  "ticker": "002181",
-  "name": "粤传媒",
-  "company_name": "粤传媒",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "资产厚、主业弱、国资强、估值贵；当前9.10元显著高于4.20-5.20元合理价值区间，等待价格回到资产折价区并确认扣非利润不恶化。",
-  "quality_rating": "B-",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    4.2,
-    5.2
-  ],
-  "buy_zone": [
-    3.4,
-    4.4
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    8.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "粤传媒",
+    "security_status": "active",
+    "symbol": "CN:002181",
+    "ticker": "002181"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "4b926d6e36bec5c95fa8d82b499b5485c25d174b7089b17574f0727116f30e15"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且缺少扣非利润持续改善证据",
-      "action": "不建仓",
-      "max_weight": 0.0,
-      "reason": "2026-07-10收盘价9.10元显著高于4.20-5.20元合理价值区间"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、物业运营和投资收益",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至4.40元以下且最新季度扣非净利润为正",
-      "action": "观察仓试买",
-      "max_weight": 0.01,
-      "reason": "价格接近资产法合理区间下半部，但仍需确认主业不继续恶化"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润质量和分红可持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至3.60元以下且物业出租率维持90%以上、扣非利润未连续转负",
-      "action": "提高至小仓位",
-      "max_weight": 0.03,
-      "reason": "接近或低于一倍PB并具备资产折价保护"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "进入初始买入观察区，需要复核最近季度扣非利润和物业出租率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于6.50元且无重大资产注入或扣非利润上台阶",
-      "action": "减仓或回避追涨",
-      "max_weight": 0.0,
-      "reason": "价格已主要反映主题交易和国资平台期权"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入资产折价区，可复核是否具备2%-3%小仓位条件",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "高于基本面合理价值，已有仓位应评估减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "显著高估，除非有重大资产注入或主业利润跃升，否则应回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.4,
-      "reason": "进入初始买入观察区，需要复核最近季度扣非利润和物业出租率"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入资产折价区，可复核是否具备2%-3%小仓位条件"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "高于基本面合理价值，已有仓位应评估减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "显著高估，除非有重大资产注入或主业利润跃升，否则应回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、物业运营和投资收益"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润质量和分红可持续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "季度扣非归母净利润",
-    "经营活动现金流量净额",
-    "整合营销传播服务收入和毛利率",
-    "报刊广告及发行收入降幅",
-    "物业运营收入、毛利率和出租率",
-    "投资收益及公允价值变动收益占利润总额比例",
-    "投资性房地产和长期股权投资减值",
-    "诉讼案件进展及保险赔付确认",
-    "现金分红金额和扣非利润覆盖倍数"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

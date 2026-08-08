@@ -1,93 +1,115 @@
 {
-  "symbol": "CN:000632",
-  "market": "CN",
-  "ticker": "000632",
-  "name": "ST三木",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "ST三木不是低价安全边际标的，而是连续亏损、保留意见、内控否定、持续经营重大不确定性、债务逾期、主要账户冻结和诉讼担保集中暴露的困境股；国资控股背景提供保壳期权，但截至2026-07-19缺少正式重整、注资或债务豁免方案，现价3.12元对应约14.52亿元市值，远高于可解释的资产和净资产支撑。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.6,
-    1.2
-  ],
-  "buy_zone": [
-    0.0,
-    0.6
-  ],
-  "sell_or_reduce_zone": [
-    1.2,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST三木",
+    "security_status": "active",
+    "symbol": "CN:000632",
+    "ticker": "000632"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "cb1f3374e0a62fc51fce5178b5add8a8c613dcfaaa08e64f574cc710ee6b271e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约3.12元且债务逾期、账户冻结、半年报巨亏预告未解除",
-      "action": "avoid_or_sell",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "复核半年报，重点看归母净资产、减值、预计负债、账户冻结和债务展期",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格0.60-1.20元但无正式重整、注资、债务豁免或账户解冻",
-      "action": "watch_only",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报经营现金流、担保逾期和诉讼新增情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于0.60元，且账户冻结解除、主要债务展期、2026H1归母权益未转负同时满足",
-      "action": "speculative_review",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报审计意见、是否触发退市风险警示、净资产是否转正",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于0.35元，且正式重整、资产注入或债务豁免方案公告落地",
-      "action": "event_driven_only",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.6
+      },
+      "reason": "仅在账户解冻、债务展期、净资产未转负同时满足时复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.35
+      },
+      "reason": "若已有正式重整或注资方案，评估不超过1%事件驱动仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.2
+      },
+      "reason": "不追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.0
+      },
+      "reason": "维持0%仓位或卖出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.6,
-      "reason": "仅在账户解冻、债务展期、净资产未转负同时满足时复核"
-    },
-    {
-      "type": "price_below",
-      "price": 0.35,
-      "reason": "若已有正式重整或注资方案，评估不超过1%事件驱动仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 1.2,
-      "reason": "不追高"
-    },
-    {
-      "type": "price_above",
-      "price": 3,
-      "reason": "维持0%仓位或卖出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "复核半年报，重点看归母净资产、减值、预计负债、账户冻结和债务展期"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报经营现金流、担保逾期和诉讼新增情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报审计意见、是否触发退市风险警示、净资产是否转正"
-    }
-  ],
-  "notes": [
-    "2026-07-19为周日，价格采用2026-07-17新浪行情收盘价3.12元；股本采用2026Q1报告465,519,570股，市值约14.52亿元。核心证据来自巨潮公告：2025年报、2026一季报、2025年审计报告、风险警示公告、债务逾期及账户冻结公告、诉讼公告、2026半年度业绩预告。未运行git，未更新coverage/index/schedule/alerts。",
-    "????????????????????????????????"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688190",
-  "market": "CN",
-  "ticker": "688190",
-  "name": "云路股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "云路股份是非晶合金薄带龙头，主业护城河和节能应用需求真实，但2025年利润下行、2026Q1增收不增利、印度反倾销及治理扰动要求更高安全边际；当前价格处于合理区间而非显著低估，等待毛利率和现金流修复或价格回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    58,
-    82
-  ],
-  "buy_zone": [
-    45,
-    58
-  ],
-  "sell_or_reduce_zone": [
-    90,
-    115
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "云路股份",
+    "security_status": "active",
+    "symbol": "CN:688190",
+    "ticker": "688190"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "b7adae9823b42161680799ebda570d995b7ae3def108cb5d8f481b4c5cd8482e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_58_and_2026H1_gross_margin_not_worse",
-      "action": "start_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报毛利率、现金流、纳米晶和磁性粉末盈利修复情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_below_50_and_operating_cash_flow_to_net_profit_above_0_6",
-      "action": "add_position",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报与印度反倾销进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "india_antidumping_materially_hits_orders_or_gross_margin_below_23_percent",
-      "action": "do_not_add_or_reduce",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年报、分红、资本开支和超宽非晶项目进度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 58.0
+      },
+      "reason": "进入估值中枢下沿并具备初始安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "若基本面未恶化，进入明显低估区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "若利润仍未恢复增长，估值进入需要减仓的高区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 58,
-      "reason": "进入估值中枢下沿并具备初始安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "若基本面未恶化，进入明显低估区间"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "reason": "若利润仍未恢复增长，估值进入需要减仓的高区间"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报毛利率、现金流、纳米晶和磁性粉末盈利修复情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报与印度反倾销进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年报、分红、资本开支和超宽非晶项目进度"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

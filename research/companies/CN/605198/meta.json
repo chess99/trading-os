@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:605198",
-  "market": "CN",
-  "ticker": "605198",
-  "name": "安德利",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "安德利主业盈利质量和资产负债表好于一般农产品加工公司，但2026-07-17收盘价51.25元对应约52倍2025年PE、约6.0倍2026Q1 PB，已明显透支主业景气和跨界收购期权。当前不买，等待回落至有安全边际或甬强科技交易财务质量充分核验后再评估。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "不买",
-  "confidence": "中",
-  "fair_value_range": [
-    30,
-    42
-  ],
-  "buy_zone": [
-    24,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    65
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安德利",
+    "security_status": "active",
+    "symbol": "CN:605198",
+    "ticker": "605198"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "1620e11e84d3e006319156c334f8d5e95e8db3ff10bbc6256d429b5fffb6a12d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察，不在51元附近追买；若价格低于32元且主业毛利率仍高于20%、经营现金流与净利润匹配、甬强科技交易未显著削弱资产负债表，可建立观察仓。",
-      "action": "watch_or_small_entry",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、毛利率、经营现金流、存货和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若价格进入24-28元且主业没有结构性恶化、收购风险可控，可提高至核心小仓位。",
-      "action": "buy",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和甬强科技收购进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若价格高于52元且无可核验的第二增长曲线，或甬强科技交易显示高估值/高商誉/高债务压力，应减仓或不参与。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、分红回购、跨界交易最终影响。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入初步买入观察区，需要复核毛利率、现金流和收购进展。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入较强安全边际区，若基本面未恶化可重估为买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "超过主业合理估值上沿，若无可核验半导体并表价值应回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入初步买入观察区，需要复核毛利率、现金流和收购进展。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入较强安全边际区，若基本面未恶化可重估为买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "超过主业合理估值上沿，若无可核验半导体并表价值应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、毛利率、经营现金流、存货和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和甬强科技收购进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、分红回购、跨界交易最终影响。"
-    }
-  ],
-  "key_data": {
-    "last_price": {
-      "date": "2026-07-17",
-      "price": 51.25,
-      "source": "新浪财经实时行情"
-    },
-    "shares_outstanding_million": {
-      "date": "2026-03-31",
-      "value": 334.188,
-      "source": "新浪财经资产负债表实收资本"
-    },
-    "revenue_2025_cny_billion": {
-      "value": 1.677,
-      "source": "新浪财经利润表"
-    },
-    "net_profit_2025_cny_billion": {
-      "value": 0.33,
-      "source": "新浪财经利润表"
-    },
-    "revenue_2026q1_cny_billion": {
-      "value": 0.33,
-      "source": "新浪财经利润表"
-    },
-    "net_profit_2026q1_cny_billion": {
-      "value": 0.073,
-      "source": "新浪财经利润表"
-    }
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

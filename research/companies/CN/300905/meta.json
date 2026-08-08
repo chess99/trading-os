@@ -1,108 +1,115 @@
 {
-  "symbol": "CN:300905",
-  "ticker": "300905",
-  "name": "宝丽迪",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "current_thesis": "宝丽迪是化纤母粒细分龙头，主业具备客户认证、配方和绿色原液着色趋势支撑；但当前约45元股价已较大程度计入COFs新材料期权，而公司公告显示COFs商业化仍处初始阶段，缺乏安全边际，等待28元以下或COFs可核验订单/收入后再重估。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24.0,
-    32.0
-  ],
-  "buy_zone": [
-    22.0,
-    28.0
-  ],
-  "sell_or_reduce_zone": [
-    42.0,
-    55.0
-  ],
-  "position_plan": [
-    {
-      "condition": "股价高于42元且COFs仍无可核验订单或收入",
-      "action": "不建仓，已有仓位减至观察仓",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价低于28元且2026半年报收入增速不低于8%、归母净利率不低于9%",
-      "action": "建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于24元且经营现金流/净利润恢复至0.8以上、应收和存货未明显恶化",
-      "action": "提高至核心小仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "COFs出现可核验客户订单或收入确认且主业未恶化",
-      "action": "重新评估估值上沿和仓位",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28.0,
-      "reason": "进入买入观察区，需复核半年报主业质量和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 24.0,
-      "reason": "接近绝对估值下沿，若基本面稳定可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 42.0,
-      "reason": "在COFs未兑现时估值透支，停止买入并考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 55.0,
-      "reason": "显著高于基准估值，需要乐观情景兑现才能支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入、利润率、现金流、应收和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报及COFs商业化进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和分红、资本开支、非纤业务占比"
-    }
-  ],
-  "valuation": {
-    "base_case_fair_value_per_share": [
-      24.0,
-      32.0
-    ],
-    "assumed_share_count_million": 179.02,
-    "reference_price": 45.06,
-    "reference_price_date": "2026-07-15",
-    "reference_price_confidence": "medium"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宝丽迪",
+    "security_status": "active",
+    "symbol": "CN:300905",
+    "ticker": "300905"
   },
-  "key_risks": [
-    "COFs商业化不及预期",
-    "概念估值透支",
-    "下游化纤景气回落或客户自建产能",
-    "原材料价格波动",
-    "现金流弱于利润",
-    "家族控制和减持风险"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "d48fc17cac2f39305f63e8badc3dc52d2d12a910409b4a6206f20686c6fed6c5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入、利润率、现金流、应收和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报及COFs商业化进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和分红、资本开支、非纤业务占比",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入买入观察区，需复核半年报主业质量和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "接近绝对估值下沿，若基本面稳定可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "在COFs未兑现时估值透支，停止买入并考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "显著高于基准估值，需要乐观情景兑现才能支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

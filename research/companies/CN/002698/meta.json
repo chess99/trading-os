@@ -1,120 +1,123 @@
 {
-  "symbol": "CN:002698",
-  "market": "CN",
-  "ticker": "002698",
-  "name": "博实股份",
-  "company_name": "哈尔滨博实自动化股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是细分工业场景里的高端成套装备和工业服务复合型公司，2025年利润创历史高点、ROE约14%、合同负债高，但2026Q1体现验收和产品结构波动；以最近可用价12.49元看处于合理区间中部，缺少足够安全边际。",
-  "quality_rating": "良好",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    11.0,
-    14.5
-  ],
-  "buy_zone": [
-    0,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博实股份",
+    "security_status": "active",
+    "symbol": "CN:002698",
+    "ticker": "002698"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "075441006390ff746d528d42f9b0d8740ae3f3cfa77766e95bf76bc7461ab9f6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于11.0元且没有新的订单或利润上修证据",
-      "action": "仅观察或保持0-1%跟踪仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格低于10.0元，合同负债维持在16亿元以上，且后续季度收入确认恢复",
-      "action": "分批买入至2-3%仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格低于9.0元，经营现金流/归母净利润恢复到0.8倍以上，且毛利率未恶化",
-      "action": "可提高至4%仓位上限",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "价格高于15.5元但利润仍在5.5-6.0亿元区间且机器人+订单未放量",
-      "action": "减仓或不追高",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "低于基准买入价后具备相对安全边际",
-      "note": "进入基础买入区，需复核订单、合同负债和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "低于保守DCF和股息收益率支持区间",
-      "note": "进入强安全边际区，前提是基本面未破坏"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "高于合理估值上沿后预期收益率不足",
-      "note": "进入减仓或停止追买区"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报将验证Q1下滑是否只是验收节奏问题",
-      "condition": "发布2026年半年报或三季报",
-      "action": "复核收入确认、毛利率和现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "合同负债和客户回款是项目制装备公司质量核心指标",
-      "condition": "合同负债低于16亿元或前五大客户回款风险上升",
-      "action": "下调质量评级并重估仓位上限"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "机器人+业务需要订单和验收证明可复制性",
-      "condition": "机器人+或电石智能工厂出现可复制大订单并完成验收",
-      "action": "上修成长假设并复核合理估值上限"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "工业服务毛利率决定利润稳定性和估值溢价",
-      "condition": "工业服务毛利率连续两个报告期低于23%",
-      "action": "复核服务业务护城河和利润稳定性"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "价格进入买入区或减仓区时需要更新仓位决策",
-      "condition": "股价跌入10元以下或升至15.5元以上",
-      "action": "重新评估买入或减仓动作"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "低于基准买入价后具备相对安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "低于保守DCF和股息收益率支持区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "高于合理估值上沿后预期收益率不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "合同负债",
-    "智能装备收入和毛利率",
-    "工业服务收入增速和毛利率",
-    "经营现金流/归母净利润",
-    "应收账款和存货周转",
-    "前五大客户收入占比",
-    "机器人+收入和新签订单"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

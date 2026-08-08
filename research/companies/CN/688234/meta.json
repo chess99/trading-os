@@ -1,107 +1,106 @@
 {
-  "symbol": "CN:688234",
-  "market": "CN",
-  "ticker": "688234",
-  "name": "天岳先进",
-  "company_name": "天岳先进",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "天岳先进是全球碳化硅衬底稀缺龙头，8英寸放量、12英寸技术期权和A+H平台具备长期价值；但2025年销量大增仍收入下滑、利润转亏，说明ASP下行快于成本改善，当前156.67元对应约759亿元市值偏贵，需等待价格回到120元以下或毛利率/订单连续验证后再买入。",
-  "quality_rating": "7/10",
-  "valuation_rating": "4/10",
-  "fair_value_range": [
-    120,
-    145
-  ],
-  "buy_zone": [
-    95,
-    115
-  ],
-  "sell_or_reduce_zone": [
-    170,
-    190
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天岳先进",
+    "security_status": "active",
+    "symbol": "CN:688234",
+    "ticker": "688234"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "c608af4dec3e36f04f74950366b5d2ee0285761cf4099c58cd59bf2d45d98f1d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "无持仓且股价高于120元，或毛利率/订单尚未继续验证",
-      "action": "仅跟踪，不追高买入",
-      "max_weight": 0,
-      "reason": "当前市值已反映全球SiC衬底龙头和12英寸期权，但2025年及2026Q1仍亏损，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证收入环比、毛利率、ASP、订单和存货跌价",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入120元以下但尚未进入核心买入区",
-      "action": "可建立观察仓",
-      "max_weight": 0.005,
-      "reason": "开始接近基准合理价值下沿，但仍需验证ASP稳定和毛利率修复"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断盈利拐点是否接近",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价位于95-115元且连续季度收入环比增长、毛利率不低于19%、存货跌价未扩大",
-      "action": "分批买入",
-      "max_weight": 0.02,
-      "reason": "价格进入安全边际区，同时盈利修复证据改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 120.0
+      },
+      "reason": "进入合理价值下沿，允许重新评估小仓跟踪",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价位于95-115元且新增订单、8英寸良率、境外/车规级收入占比均超预期",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.03,
-      "reason": "龙头技术与规模优势开始转化为财务结果，但行业价格仍需持续跟踪"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 105.0
+      },
+      "reason": "进入买入区中部，若基本面同步改善可分批建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 170.0
+      },
+      "reason": "进入减仓/不追区，若无订单或盈利超预期，风险收益转差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 190.0
+      },
+      "reason": "明显高于乐观情景下沿，应复核估值假设并控制仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 120,
-      "reason": "进入合理价值下沿，允许重新评估小仓跟踪"
-    },
-    {
-      "type": "price_below",
-      "price": 105,
-      "reason": "进入买入区中部，若基本面同步改善可分批建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 170,
-      "reason": "进入减仓/不追区，若无订单或盈利超预期，风险收益转差"
-    },
-    {
-      "type": "price_above",
-      "price": 190,
-      "reason": "明显高于乐观情景下沿，应复核估值假设并控制仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证收入环比、毛利率、ASP、订单和存货跌价"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断盈利拐点是否接近"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入及环比增长",
-    "综合毛利率和主营业务毛利率",
-    "境内与境外主营毛利率差异",
-    "车规级及以上、非车规级、半绝缘产品ASP变化",
-    "8英寸产品占比、良率和单位成本",
-    "12英寸导电型和半绝缘客户验证进展",
-    "新增客户数量和客户质量",
-    "在手待交订单金额",
-    "存货余额、库龄和跌价准备",
-    "固定资产、在建工程、资本开支和折旧摊销",
-    "经营活动现金流量净额",
-    "汇兑损益和外汇套保效果",
-    "Wolfspeed、天科合达、Coherent、onsemi、ROHM等竞品价格和产能策略"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

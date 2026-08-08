@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600022",
-  "ticker": "600022",
-  "name": "山东钢铁",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "山东钢铁具备日照基地、区域市场和国资/宝武协同优势，但 2026 年上半年仍预计归母亏损，当前约 0.7 倍 PB 附近缺乏足够安全边际，适合观察而非主动买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.05,
-    1.35
-  ],
-  "buy_zone": [
-    0.85,
-    1.05
-  ],
-  "sell_or_reduce_zone": [
-    1.45,
-    1.7
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山东钢铁",
+    "security_status": "active",
+    "symbol": "CN:600022",
+    "ticker": "600022"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "6488d44de23f04cc6fc532e4afec76052eca8f2d79ebf40691045dfcc155e7c6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 1.05 元，且最近一个季度扣非亏损继续收窄或经营现金流转正后，允许建立观察仓。",
-      "action": "watch_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年半年报预计披露后，核验预告、扣非亏损、现金流和基地经营数据。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 0.90 元，且行业库存下降、吨钢购销差价环比改善、公司扣非归母接近盈亏平衡后，重新研究是否加仓。",
-      "action": "reassess_add",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报披露后，判断二季度改善是否延续到三季度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 1.45 元但扣非 ROE 仍低于 5%，或单季归母重新明显亏损。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年报和 2027 年一季报披露后，重新评估中周期盈利和估值锚。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.05
+      },
+      "reason": "进入估算买入区间，需要复核吨钢价差、库存和扣非利润。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.9
+      },
+      "reason": "进入深度折价区，若基本面未继续恶化可重新评估小仓位配置。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.45
+      },
+      "reason": "超过合理价值区间上沿，需要检查估值是否脱离扣非盈利质量。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.05,
-      "reason": "进入估算买入区间，需要复核吨钢价差、库存和扣非利润。"
-    },
-    {
-      "type": "price_below",
-      "price": 0.9,
-      "reason": "进入深度折价区，若基本面未继续恶化可重新评估小仓位配置。"
-    },
-    {
-      "type": "price_above",
-      "price": 1.45,
-      "reason": "超过合理价值区间上沿，需要检查估值是否脱离扣非盈利质量。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026 年半年报预计披露后，核验预告、扣非亏损、现金流和基地经营数据。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报披露后，判断二季度改善是否延续到三季度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年报和 2027 年一季报披露后，重新评估中周期盈利和估值锚。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,105 +1,111 @@
 {
-  "symbol": "CN:001326",
-  "market": "CN",
-  "ticker": "001326",
-  "name": "联域股份",
-  "company_name": "深圳市联域光电股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "联域股份具备北美中大功率LED照明ODM客户准入、认证、交付和海外产能布局优势，但2025年利润大幅下滑，2026Q1修复尚未足以支撑2026-07-13约51元股价。当前估值已透支利润率恢复、海外产能释放和新能源业务改善，适合观察，不适合新买。",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    18,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联域股份",
+    "security_status": "active",
+    "symbol": "CN:001326",
+    "ticker": "001326"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "8dbe9496a0d5c1ba73e4981eb358e6fd8d9a91473286cfa4dbbe27e93d839d68"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "38aae39b93ffacf672a6ab255e6e48470f3daabf5c7415ba447ea98e1b016a8f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于32元且2026H1扣非净利率未回到5%以上",
-      "action": "不买，仅观察",
-      "max_weight": 0,
-      "reason": "估值已透支盈利修复，缺乏安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重算收入增速、毛利率、扣非净利率、经营现金流和估值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至24元以下且综合毛利率稳定在21%以上、经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格接近合理价值下沿，但仍需验证盈利修复"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，重点验证北美订单、海外产能释放、汇兑损益和新能源亏损",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至18-22元且连续两个季度经营现金流为正、应收账款未恶化",
-      "action": "提高至基础仓位",
-      "max_weight": 0.02,
-      "reason": "具备较充分安全边际，可承受制造业利润波动"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入观察区，需要复核毛利率、经营现金流、汇兑损益和应收账款",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "连续两个季度扣非净利率回到6%以上且新能源业务亏损明显收窄",
-      "action": "提高至最高跟踪仓位",
-      "max_weight": 0.03,
-      "reason": "基本面确认后再提高仓位上限"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入理想买入区，若基本面未恶化可考虑基础仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "进入减持或不追价区，需要确认利润是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "高于牛市情景估值上沿，若基本面未显著超预期应减持",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入买入观察区，需要复核毛利率、经营现金流、汇兑损益和应收账款"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入理想买入区，若基本面未恶化可考虑基础仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "进入减持或不追价区，需要确认利润是否足以支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "高于牛市情景估值上沿，若基本面未显著超预期应减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重算收入增速、毛利率、扣非净利率、经营现金流和估值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，重点验证北美订单、海外产能释放、汇兑损益和新能源亏损"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比和环比",
-    "综合毛利率是否稳定在21%-22%以上",
-    "扣非净利率是否回到5%-6%以上",
-    "经营活动现金流净额",
-    "应收账款和存货周转",
-    "境外收入占比和北美订单变化",
-    "前五大客户销售占比",
-    "财务费用和汇兑损益",
-    "越南和墨西哥产能释放进度",
-    "深圳海搏新能源业务亏损是否收窄"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

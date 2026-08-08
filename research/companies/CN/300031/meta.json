@@ -1,134 +1,133 @@
 {
-  "symbol": "CN:300031",
-  "market": "CN",
-  "ticker": "300031",
-  "name": "宝通科技",
-  "company_name": "无锡宝通科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "2025 年和 2026Q1 业绩修复明显，工业输送业务提供现金流底座，游戏海外发行业务提供利润弹性；但双主业复杂、游戏生命周期波动、商誉及投资资产需折价。20 元以上安全边际不足，适合等待 16.5 元以下分批买入。",
-  "quality_rating": "B",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    17.0,
-    21.0
-  ],
-  "buy_zone": [
-    0,
-    16.5
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    28.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宝通科技",
+    "security_status": "active",
+    "symbol": "CN:300031",
+    "ticker": "300031"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "2060ec4d4d9bf21271126cdd19c9e2b179966fb24ce648ac44b62adde56baf9b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 21 元或行情源未复核时",
-      "action": "保持观察，不主动买入",
-      "target_position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价低于 16.5 元，且 2026 半年报未出现游戏流水断崖、商誉减值或工业订单恶化",
-      "action": "建立基础仓",
-      "target_position": "1/3 target",
-      "max_weight": 0.013
-    },
-    {
-      "condition": "股价低于 15.0 元，且 TTM 扣非净利改善、经营现金流转正",
-      "action": "提高仓位",
-      "target_position": "2/3 target",
-      "max_weight": 0.027
-    },
-    {
-      "condition": "股价高于 25.0 元，且没有 2026 全年利润上修到 3.5 亿元以上的证据",
-      "action": "分批减仓",
-      "target_position": "reduce",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "currency": "CNY",
-      "reason": "低于合理价值中枢并开始具备安全边际",
-      "action": "进入买入观察区，复核半年报和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "currency": "CNY",
-      "reason": "相对 SOTP、PB 和简化 DCF 均出现较明显折价",
-      "action": "若基本面未恶化，可提高至 2/3 目标仓"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "currency": "CNY",
-      "reason": "高于合理价值区间，除非利润预测上修否则赔率变差",
-      "action": "复核利润上修是否足以支撑估值，否则减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "currency": "CNY",
-      "reason": "明显透支当前可核验盈利能力和业务确定性",
-      "action": "视为估值偏高，除非出现可验证的新爆款或工业利润率上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证 2026Q1 高增长是否延续，以及经营现金流是否修复",
-      "action": "复核收入、归母净利润、扣非净利润、经营现金流、移动互联网毛利率和工业订单"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "确认全年盈利能否支撑当前估值",
-      "action": "检查移动互联网业务是否连续下滑，并复核全年 3.0-3.5 亿元归母净利假设"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报能集中验证现金流、资产减值、分红和股权激励质量",
-      "action": "复核经营现金流、资产减值、分红、股权激励考核和估值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027 半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "观察游戏产品周期和工业海外收入是否进入新中枢",
-      "action": "复核游戏产品周期、工业海外收入和现金流质量"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2028-04-30",
-      "condition": "2027 年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
       "reason": "形成 3 年维度的盈利中枢和资本配置复盘",
-      "action": "更新 3 年盈利中枢、资产质量和长期仓位上限"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
+      "reason": "低于合理价值中枢并开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "相对 SOTP、PB 和简化 DCF 均出现较明显折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "高于合理价值区间，除非利润预测上修否则赔率变差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "明显透支当前可核验盈利能力和业务确定性",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "移动互联网业务收入增速和毛利率",
-    "现代输送业务收入增速和毛利率",
-    "销售费用率及游戏买量效率",
-    "经营现金流净额/归母净利润",
-    "商誉、长期股权投资、其他非流动金融资产减值",
-    "境外收入占比及汇率影响",
-    "现金分红、回购和股权激励考核完成情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

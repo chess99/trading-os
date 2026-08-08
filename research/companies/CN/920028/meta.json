@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:920028",
-  "market": "CN",
-  "ticker": "920028",
-  "name": "新恒泰",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "新恒泰是具备 PE Foam、IXPE、MPP 多品类规模化能力的功能性高分子发泡材料公司，MPP 在新能源电池和通信应用中提供利润弹性，上市募资后资产负债表较强；但 2026 年 7 月火灾影响尚需公告核验，当前估值已反映部分成长预期，适合观察等待安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.0,
-    18.0
-  ],
-  "buy_zone": [
-    11.5,
-    13.2
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新恒泰",
+    "security_status": "active",
+    "symbol": "CN:920028",
+    "ticker": "920028"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "9c919cd8935af03163fde140cbeeae467410cd684fa0a648fcb915cd899e0ec9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 11.50-13.20 元，且公告确认火灾影响有限、主要产线复产正常、MPP 毛利率未明显低于 40%",
-      "action": "建立观察性试验仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报、火灾影响、MPP 收入占比、现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H2 经营现金流转正，MPP 收入占比继续高于 25%，应收账款周转未恶化",
-      "action": "在已有试验仓基础上加仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认经营现金流是否修复及募投/复产进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 20 元且没有净利润上修、复产确认或新增大客户证据",
-      "action": "不追高，已有仓位减至观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重估火灾全年影响、产能释放和合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.2
+      },
+      "reason": "进入安全边际买入区间上沿，需要复核火灾复产与 MPP 毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入高赔率观察区间，可在基本面未恶化时提高建仓优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过中性合理价值上沿较多，若无盈利上修应考虑降低仓位或放弃追买",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.2,
-      "reason": "进入安全边际买入区间上沿，需要复核火灾复产与 MPP 毛利率"
-    },
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入高赔率观察区间，可在基本面未恶化时提高建仓优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "超过中性合理价值上沿较多，若无盈利上修应考虑降低仓位或放弃追买"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报、火灾影响、MPP 收入占比、现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认经营现金流是否修复及募投/复产进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重估火灾全年影响、产能释放和合理价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

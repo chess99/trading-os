@@ -1,49 +1,87 @@
 {
-  "symbol": "CN:300033",
-  "market": "CN",
-  "ticker": "300033",
-  "name": "同花顺",
-  "company_name": "浙江核新同花顺网络信息股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "同花顺是A股顶级金融信息服务商，护城河深厚，盈利质量极高（净利率53%、ROE 38.5%），但当前PE约53x(2025实际)，股价225元已远超合理估值区间(140-180元)，安全边际不足。建议观察等待回调至150-180元再考虑建仓。",
-  "quality_rating": "优秀",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [1050, 1350],
-  "buy_zone": [900, 1050],
-  "strong_attraction_zone": [600, 900],
-  "sell_or_reduce_zone": [1500, 1800],
-  "do_not_chase_above": 1500,
-  "position_plan": [
-    {"zone": "200元以上", "condition": "当前价格225元，远超合理区间上沿", "action": "wait", "target_weight": 0.0, "max_weight": 0.00, "reason": "估值明显偏高，安全边际不足"},
-    {"zone": "180-200元", "condition": "接近合理区间，开始关注", "action": "wait", "target_weight": 0.0, "max_weight": 0.01, "reason": "接近合理区间，开始关注，但建仓优先级不高"},
-    {"zone": "150-180元", "condition": "进入合理估值区间", "action": "starter_buy", "target_weight": 0.03, "max_weight": 0.04, "reason": "进入基准合理区间，可分批建仓"},
-    {"zone": "120-150元", "condition": "有明显安全边际", "action": "add", "target_weight": 0.05, "max_weight": 0.06, "reason": "估值具有吸引力，积极买入"},
-    {"zone": "120元以下", "condition": "强吸引力", "action": "heavy_buy", "target_weight": 0.06, "max_weight": 0.06, "reason": "强吸引力，上限仓位"}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "同花顺",
+    "security_status": "active",
+    "symbol": "CN:300033",
+    "ticker": "300033"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "7b67ae537a1dc3853f91a1100642bcc4b72421c35df1af1b1c7dc26e81177342"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-30"
+      },
+      "reason": "2026年三季报发布后评估",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 180.0
+      },
+      "reason": "股价回落至合理区间上沿，开始关注",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 150.0
+      },
+      "reason": "股价进入合理区间，开始建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 240.0
+      },
+      "reason": "股价进一步上涨，估值泡沫加大",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-10-30", "reason": "2026年三季报发布后评估"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 180, "reason": "股价回落至合理区间上沿，开始关注"},
-    {"type": "price_below", "price": 150, "reason": "股价进入合理区间，开始建仓"},
-    {"type": "price_above", "price": 240, "reason": "股价进一步上涨，估值泡沫加大"}
-  ],
-  "key_risks": [
-    "市场周期风险：业绩与A股成交活跃度高度相关，熊市中营收利润双降",
-    "估值风险：当前PE 53x已包含较多乐观预期，存在戴维斯双杀可能",
-    "大股东减持：2026年5月已有高管减持预披露，限售股解禁后减持压力可能持续",
-    "AI投入回报不确定：年研发投入11.45亿，AI产品商业化程度尚不明确"
-  ],
-  "review_plan": "每季度财报发布后复盘，重点跟踪MAU、日均成交额、广告收入增速和AI产品商业化进展",
-  "sources": [
-    "CNINFO 2025年年度报告及摘要",
-    "CNINFO 2026年一季度报告",
-    "东方财富F10",
-    "Sina财经历史数据"
-  ],
-  "updated_at": "2026-07-08T15:35:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

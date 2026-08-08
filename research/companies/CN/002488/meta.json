@@ -1,125 +1,124 @@
 {
-  "symbol": "CN:002488",
-  "market": "CN",
-  "ticker": "002488",
-  "name": "金固股份",
-  "company_name": "浙江金固股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "金固股份的投资价值主要来自阿凡达低碳车轮从定点进入规模量产后的利润弹性，而非传统车轮业务的当前盈利。2025年扣非仍亏损，2026Q1扣非改善但经营现金流为负；8.93元股价已预支部分成长，适合等待6.50-7.00元以下再小仓位试错。",
-  "quality_rating": "B-",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    6.8,
-    8.8
-  ],
-  "buy_zone": [
-    6.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金固股份",
+    "security_status": "active",
+    "symbol": "CN:002488",
+    "ticker": "002488"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "f0d62c8dff72d3a3f31e89740f843d02ace398a986be0b22f998253d3a986c6d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "<=6.00 CNY",
-      "max_weight": 0.06,
-      "position": "5%-6%",
-      "action": "强吸引力区，前提是订单和现金流未恶化"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报披露后复查车轮收入、毛利率、阿凡达量产收入和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "6.00-7.00 CNY",
-      "max_weight": 0.04,
-      "position": "2%-4%",
-      "action": "分两笔建立观察仓"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复查经营现金流、应收账款、存货和负债",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "7.00-8.80 CNY",
-      "max_weight": 0.02,
-      "position": "0%-2%",
-      "action": "合理区，只适合已有仓位持有或小仓位跟踪"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报披露后复查阿凡达低碳车轮定点转收入和全年扣非利润",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "8.80-9.50 CNY",
-      "max_weight": 0,
-      "position": "0%",
-      "action": "等待验证"
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "2027年半年报披露后复查成长兑现程度和估值区间",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": ">=9.50 CNY",
-      "max_weight": 0,
-      "position": "0%",
-      "action": "不追高"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
       "reason": "进入强吸引力买入价，安全边际明显改善",
-      "condition": "<=6.00 CNY",
-      "action": "强吸引力买入区，允许提升至5%-6%仓位"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 7.0,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
       "reason": "进入有安全边际买入价，可小仓位试错",
-      "condition": "6.00-7.00 CNY",
-      "action": "有安全边际买入区，允许2%-4%仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 9.5,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
       "reason": "高于不应追高价，成长兑现不足时估值风险上升",
-      "condition": ">=9.50 CNY",
-      "action": "不追高，不新增仓位"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 11.5,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
       "reason": "进入减仓区，除非利润和现金流显著超预期",
-      "condition": ">=11.50 CNY",
-      "action": "若基本面未显著超预期则减仓或退出"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报披露后复查车轮收入、毛利率、阿凡达量产收入和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后复查经营现金流、应收账款、存货和负债"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报披露后复查阿凡达低碳车轮定点转收入和全年扣非利润"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "reason": "2027年半年报披露后复查成长兑现程度和估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "车轮业务收入增速",
-    "车轮业务毛利率",
-    "扣非归母净利润",
-    "经营现金流净额",
-    "应收账款和存货增速相对收入增速",
-    "短期借款、一年内到期非流动负债和长期借款",
-    "阿凡达低碳车轮新增定点和量产收入"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,108 +1,115 @@
 {
-  "symbol": "CN:002007",
-  "market": "CN",
-  "ticker": "002007",
-  "name": "华兰生物",
-  "company_name": "华兰生物",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "B",
-  "current_thesis": "华兰生物是血制品第一梯队中浆站效率较高、现金流较好且疫苗业务具备周期弹性的公司；当前估值进入可观察区，但 2026Q1 利润下滑、血制品毛利率和疫苗批签发尚需确认，因此评级为 watch，优先等待 10.5-12.0 元买入区和中报验证。",
-  "fair_value_range": [
-    15.0,
-    18.0
-  ],
-  "buy_zone": [
-    10.5,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华兰生物",
+    "security_status": "active",
+    "symbol": "CN:002007",
+    "ticker": "002007"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "5dbacfa51a1b9b112e14f5d86f90fe5ce740b144cc4f595353d78082e89ca47e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 12.0 and no negative change in plasma collection, batch release, or regulatory status",
-      "action": "build initial watch position in 2-3 tranches",
-      "max_weight": 0.02,
-      "reason": "Current valuation is acceptable, but 2026Q1 profit still declined and the business needs confirmation."
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "Review 2026 interim report for plasma collection, blood products margin, vaccine revenue, and cash-flow quality.",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price <= 11.5 and interim results confirm stable plasma collection and blood products margin above 48%",
-      "action": "increase position after reviewing interim report",
-      "max_weight": 0.04,
-      "reason": "Lower price provides a better margin of safety if the blood products core remains intact."
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "Review 2026 third-quarter report and flu vaccine batch-release seasonality.",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price <= 10.5 and decline is market-driven rather than caused by regulatory, quality, or pricing deterioration",
-      "action": "increase to full planned weight",
-      "max_weight": 0.06,
-      "reason": "At this level the implied valuation gives credit mainly to the blood products cash-flow base and little to vaccine recovery."
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "Review 2026 annual report, full-year plasma volume, dividend, and capital allocation.",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price >= 18.0 without evidence that 2026-2027 attributable profit can recover above CNY 1.1 billion",
-      "action": "reduce position gradually",
-      "max_weight": 0.02,
-      "reason": "Upside would be largely priced in unless earnings recovery accelerates."
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "Review for adding to the initial position if plasma collection and batch release indicators remain healthy.",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "Reassess whether the decline reflects fundamental damage or an attractive margin of safety.",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "Consider reducing unless earnings recovery and vaccine contribution justify a higher multiple.",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "Likely exceeds the base-case fair value range absent a bull-case rerating.",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "Review for adding to the initial position if plasma collection and batch release indicators remain healthy."
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "Reassess whether the decline reflects fundamental damage or an attractive margin of safety."
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "Consider reducing unless earnings recovery and vaccine contribution justify a higher multiple."
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "Likely exceeds the base-case fair value range absent a bull-case rerating."
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "Review 2026 interim report for plasma collection, blood products margin, vaccine revenue, and cash-flow quality."
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "Review 2026 third-quarter report and flu vaccine batch-release seasonality."
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "Review 2026 annual report, full-year plasma volume, dividend, and capital allocation."
-    }
-  ],
-  "key_tracking_metrics": [
-    "annual plasma collection volume and year-on-year growth",
-    "blood products revenue and gross margin",
-    "human albumin and IVIG pricing trend",
-    "NIFDC batch release volume for key blood products and vaccines",
-    "Hualan Vaccine revenue, profit, and batch release pace",
-    "operating cash flow versus attributable net profit",
-    "dividend per share and payout ratio",
-    "new plasma station approvals or disruptions",
-    "regulatory or quality-control announcements"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

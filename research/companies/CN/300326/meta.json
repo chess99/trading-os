@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:300326",
-  "market": "CN",
-  "ticker": "300326",
-  "name": "ST凯利",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST凯利有真实的骨科微创和低温射频耗材业务，2025年通过剥离贸易和消毒服务聚焦主业，资产负债表短期不紧张；但2024年财报保留意见和内控无法表示意见刚完成整改，撤销其他风险警示尚需持续核验，2025及2026Q1利润受金融资产公允价值、股权处置和并购重估收益扰动较大。当前可核验股价约5.83元已接近乐观情景，缺少安全边际，应避免追高，仅在摘帽落地、扣非现金流验证且价格低于3.80元后再考虑小仓。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    3.3,
-    4.7
-  ],
-  "buy_zone": [
-    3.2,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    6.1
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST凯利",
+    "security_status": "active",
+    "symbol": "CN:300326",
+    "ticker": "300326"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "d2fe072f7c007ebab4f177862697eda85762c19d70eb629e5f5595dd44c2783e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于4.80元或ST撤销结果未落地",
-      "action": "不买入，已有仓位降至观察仓",
-      "max_weight": 0.003
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看核心制造业务收入、毛利率、扣非利润、经营现金流和ST撤销状态",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.80元且其他风险警示已正式撤销、无新增监管或审计负面事项",
-      "action": "可建立第一笔试错仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证利润是否继续由经营而非非经常性收益驱动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.20元且2026半年报确认核心制造业务增长、扣非利润和经营现金流均为正",
-      "action": "可提高至强吸引力观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报及审计意见、内控审计意见、商誉和存货减值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入有安全边际买入区，需同步核验ST撤销和半年报经营质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入强吸引力买入区，资产折扣和正常化盈利均可能提供保护",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "高于合理区间上沿，不应追高，已有仓位应降低",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入有安全边际买入区，需同步核验ST撤销和半年报经营质量"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入强吸引力买入区，资产折扣和正常化盈利均可能提供保护"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "高于合理区间上沿，不应追高，已有仓位应降低"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看核心制造业务收入、毛利率、扣非利润、经营现金流和ST撤销状态"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证利润是否继续由经营而非非经常性收益驱动"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报及审计意见、内控审计意见、商誉和存货减值"
-    }
-  ],
-  "notes": [
-    "当前可核验行情为中财网2026-07-17 15:00收盘5.83元，2026-07-20实时价格未能稳定核验。",
-    "2025年报为标准无保留意见，但2024年财报保留意见和内部控制无法表示意见曾涉及权益工具投资估值、关联方清单及关联交易披露完整性。",
-    "2025年归母净利润1.35亿元、扣非归母净利润0.70亿元、经营现金流1.89亿元；非经常性损益0.65亿元，占归母净利润约48%。",
-    "2026Q1归母净利润0.66亿元、扣非归母净利润0.26亿元；非经常性损益0.40亿元，主要来自动之医学并表重估收益。",
-    "评级为avoid，含义是不在当前价格买入；若未来ST撤销落地且价格进入3.20-3.80元区间，可重新研究。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

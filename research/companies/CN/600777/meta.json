@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600777",
-  "ticker": "600777",
-  "name": "新潮能源",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司拥有美国二叠纪盆地页岩油气资产和较强经营现金流，但2026年上半年利润受Waha负气价和历史套保损失冲击，叠加治理与披露折价，当前价格缺乏足够安全边际，适合观察等待半年报现金流和套保风险出清。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.6,
-    4.8
-  ],
-  "buy_zone": [
-    2.8,
-    3.3
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新潮能源",
+    "security_status": "active",
+    "symbol": "CN:600777",
+    "ticker": "600777"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "0be2441591960a29addfd67b4f7979ace1224d4732022ab6026972de3faf4ba0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.30元，2026年半年报经营现金流未显著恶化，Waha气价边际转正，且套保亏损具备出清路径",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、现金流、套保敞口和管理层说明",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价接近2.80元且基本面、治理、现金流均未较本报告假设恶化",
-      "action": "提高至价值仓上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认气价修复和套保损失是否边际下降",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.20元但利润修复、治理改善或股东回报没有同步兑现",
-      "action": "降低仓位或不追买",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估储量、资本开支、治理折价和股东回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "进入初始买入观察区，需要复核半年报现金流、气价和套保敞口",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "高于合理价值中枢，若治理和利润未同步改善应考虑降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "进入初始买入观察区，需要复核半年报现金流、气价和套保敞口"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入深度安全边际区，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "高于合理价值中枢，若治理和利润未同步改善应考虑降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、现金流、套保敞口和管理层说明"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认气价修复和套保损失是否边际下降"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估储量、资本开支、治理折价和股东回报"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

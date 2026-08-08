@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:301177",
-  "ticker": "301177",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "迪阿股份",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "迪阿股份具备清晰婚恋钻戒品牌心智和一定资产缓冲，但天然钻石婚恋需求仍承压，2026Q1收入和现金流尚未确认反转；当前应观察，等待更低价格或连续季度经营验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18,
-    25
-  ],
-  "buy_zone": [
-    15,
-    17
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "迪阿股份",
+    "security_status": "active",
+    "symbol": "CN:301177",
+    "ticker": "301177"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "529098a394c44dda5626b2fb61bcd153a7dc4aa454a4b1d1f205043aefd868a9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入15-17元区间，且最近一个季度经营现金流转正、资产负债率保持低位",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、扣非净利率、经营现金流和门店效率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比降幅收窄至5%以内，扣非净利率恢复至8%以上，经营现金流为正",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现收入降幅收窄和现金流改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于28元但收入仍未企稳，或经营现金流继续为负",
-      "action": "减仓或不参与",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证品牌修复、费用收缩和资产安全边际",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入买入观察区，需要复核现金流、同店收入和行业数据",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "高于当前合理价值区间上沿，需要确认基本面是否已显著改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "进入买入观察区，需要复核现金流、同店收入和行业数据"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "高于当前合理价值区间上沿，需要确认基本面是否已显著改善"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、扣非净利率、经营现金流和门店效率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现收入降幅收窄和现金流改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证品牌修复、费用收缩和资产安全边际"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

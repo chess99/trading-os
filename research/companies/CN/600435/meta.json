@@ -1,67 +1,95 @@
 {
-  "symbol": "CN:600435",
-  "ticker": "600435",
-  "name": "北方导航",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "北方导航具备军工导航控制与弹药信息化平台价值，但2025年利润率偏低、2026H1预亏显示合同和验收节奏风险较高；当前估值已反映较多恢复预期，需等待订单、毛利率和估值安全边际共振。",
-  "fair_value_range": [
-    7.0,
-    9.0
-  ],
-  "buy_zone": [
-    6.0,
-    7.3
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    13.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北方导航",
+    "security_status": "active",
+    "symbol": "CN:600435",
+    "ticker": "600435"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "030a8671872d4ae0f2727a9ad8b925e475394b0927b7e2ee56e717b85daada0e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价进入买入区间且后续公告显示合同签订恢复、单季度收入和毛利率同步改善时建立研究仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认亏损原因、合同签订、毛利率、存货和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价高于合理价值上沿但2026H2利润修复未被验证，保持零仓位或仅保留观察仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断下半年订单和利润修复是否兑现。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报或业绩快报，重估归一化利润中枢和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.3
+      },
+      "reason": "进入买入观察区，需要结合订单恢复和毛利率修复重新评估风险收益比。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "进入减仓观察区，若缺少利润修复验证则估值透支风险上升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.3,
-      "reason": "进入买入观察区，需要结合订单恢复和毛利率修复重新评估风险收益比。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "进入减仓观察区，若缺少利润修复验证则估值透支风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认亏损原因、合同签订、毛利率、存货和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断下半年订单和利润修复是否兑现。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报或业绩快报，重估归一化利润中枢和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

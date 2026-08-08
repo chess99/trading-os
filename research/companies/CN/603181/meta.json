@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:603181",
-  "ticker": "603181",
-  "name": "皇马科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "特种表面活性剂龙头之一，2025年盈利与现金流质量改善，2026Q1延续增长；但当前估值只接近合理下沿，需等待12元以下安全边际或战略新兴板块/开眉客产能爬坡进一步验证。",
-  "fair_value_range": [
-    13.5,
-    17.5
-  ],
-  "buy_zone": [
-    10.5,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "皇马科技",
+    "security_status": "active",
+    "symbol": "CN:603181",
+    "ticker": "603181"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "2f730676d876289abd0c3a55d68baacbce6e4920834e4bb4425949aba9b14061"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌破12.0元且未出现毛利率明显下滑、经营现金流恶化或重大安全环保事件",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、战略新兴板块占比、开眉客项目进展和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报或三季报显示战略性新兴板块销量占比提升且经营现金流/归母净利润不低于0.7",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润是否能达到4.8-5.1亿元基准区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌破10.5元且基本面仍符合当前 thesis",
-      "action": "逆向加仓",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重估中期成长与合理估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于18.5元但2026E利润未上修至5.3亿元以上",
-      "action": "减仓或仅保留跟踪仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入初始买入区，安全边际开始具备吸引力",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "接近悲观情景估值，可复核基本面后考虑逆向加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "进入减仓区，需要用更高利润预测或战略新兴板块兑现来支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入初始买入区，安全边际开始具备吸引力"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "接近悲观情景估值，可复核基本面后考虑逆向加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "进入减仓区，需要用更高利润预测或战略新兴板块兑现来支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、战略新兴板块占比、开眉客项目进展和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润是否能达到4.8-5.1亿元基准区间"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重估中期成长与合理估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,103 +1,97 @@
 {
-  "symbol": "CN:002442",
-  "market": "CN",
-  "ticker": "002442",
-  "name": "龙星科技",
-  "company_name": "龙星科技集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "观察，不买入",
-  "current_rating": "avoid",
-  "current_thesis": "公司是国内规模靠前的炭黑企业，但主业仍属低毛利、高资本开支、高负债的周期材料资产。2025 年归母净利大幅下滑，2026Q1 扣非仍偏弱，当前 4.90 元股价和约 24.67 亿元市值已接近乐观修复情景，缺乏买入安全边际。",
-  "quality_rating": "B-/中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.4,
-    4.2
-  ],
-  "buy_zone": [
-    2.8,
-    3.4
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "龙星科技",
+    "security_status": "active",
+    "symbol": "CN:002442",
+    "ticker": "002442"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "46f519708259a15de9ddfda0b3377f37da6cf511ee596902aba3a4f366de4137"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price": "<=2.80",
-      "max_weight": 0.05,
-      "position": "最多 5%",
-      "condition": "强安全边际，且未触发基本面止损条件"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年半年报披露后复查收入、毛利率、扣非净利、经营现金流、负债、可转债转股和股价是否进入 3.40 元买入区或 5.20 元减仓复查区",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "price": "2.81-3.40",
-      "max_weight": 0.03,
-      "position": "最多 3%",
-      "condition": "可试错，需确认炭黑价差和现金流没有继续恶化"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入强安全边际区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "price": "3.41-4.20",
-      "max_weight": 0.02,
-      "position": "0-2%",
-      "condition": "仅在扣非利润、毛利率和经营现金流出现明确拐点后考虑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "price": "4.21-4.80",
-      "max_weight": 0.0,
-      "position": "0%",
-      "condition": "缺乏安全边际"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "高于不应追高价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "price": ">4.80",
-      "max_weight": 0.0,
-      "position": "0%",
-      "condition": "不追高；已有仓位应审视减仓"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "进入减仓或重新估值复查区",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入强安全边际区"
-    },
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "进入有安全边际买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "高于不应追高价"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "进入减仓或重新估值复查区"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026 年半年报披露后复查收入、毛利率、扣非净利、经营现金流、负债、可转债转股和股价是否进入 3.40 元买入区或 5.20 元减仓复查区"
-    }
-  ],
-  "key_tracking_metrics": [
-    "炭黑毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "全部债务/所有者权益",
-    "货币资金与短期债务覆盖",
-    "应收账款和存货周转",
-    "出口收入及出口毛利率",
-    "可转债转股进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

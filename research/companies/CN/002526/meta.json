@@ -1,132 +1,114 @@
 {
-  "symbol": "CN:002526",
-  "market": "CN",
-  "ticker": "002526",
-  "name": "山东矿机",
-  "company_name": "山东矿机集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "煤机主业成熟且 2025 年收入、毛利率和扣非利润下滑，2026Q1 利润与现金流继续承压；航空发动机零部件增长快但体量小、盈利质量仍需验证。2.58 元/股对应市值约 46.0 亿元，显著高于当前扣非盈利可支撑水平，缺乏安全边际。",
-  "quality_rating": "B-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    1.65,
-    2.15
-  ],
-  "buy_zone": [
-    1.25,
-    1.55
-  ],
-  "sell_or_reduce_zone": [
-    2.30,
-    999.00
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山东矿机",
+    "security_status": "active",
+    "symbol": "CN:002526",
+    "ticker": "002526"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "bfb7ba86e157b9e92d7a123d4ac64b65795c1eb722df7997625581e4dd4ceceb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价 <= 1.25 元且无重大财务或治理恶化",
-      "price": "<=1.25",
-      "action": "强吸引力，仅在无重大财务或治理恶化时分批买入",
-      "position": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证主业周期修复和营运资本压力",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价 1.26-1.55 元",
-      "price": "1.26-1.55",
-      "action": "有安全边际，可小仓试错",
-      "position": "1%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证新业务期权是否能转化为利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价 1.56-2.15 元",
-      "price": "1.56-2.15",
-      "action": "观察",
-      "position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "验证利润质量和回款改善",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价 2.16-2.30 元",
-      "price": "2.16-2.30",
-      "action": "估值吸引力不足",
-      "position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "验证资本配置是否保护中小股东",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "股价 > 2.30 元",
-      "price": ">2.30",
-      "action": "不追高，已有仓位评估减仓",
-      "position": "0%或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.55
+      },
+      "reason": "低于保守合理价值并接近账面折价区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.25
+      },
+      "reason": "约 0.7 倍 PB，悲观情景下有更强资产安全垫",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.3
+      },
+      "reason": "高于合理价值上沿且当前扣非盈利难以支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.55,
-      "condition": "股价 <= 1.55 元",
-      "action": "进入有安全边际买入区，复核财务和治理后可小仓试错",
-      "reason": "低于保守合理价值并接近账面折价区"
-    },
-    {
-      "type": "price_below",
-      "price": 1.25,
-      "condition": "股价 <= 1.25 元",
-      "action": "进入强吸引力买入区，若基本面未恶化可分批买入",
-      "reason": "约 0.7 倍 PB，悲观情景下有更强资产安全垫"
-    },
-    {
-      "type": "price_above",
-      "price": 2.30,
-      "condition": "股价 >= 2.30 元",
-      "action": "不追高；已有仓位在业绩未改善时评估减仓",
-      "reason": "高于合理价值上沿且当前扣非盈利难以支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026 年半年报披露",
-      "focus": "复查煤机收入、毛利率、存货与应收",
-      "reason": "验证主业周期修复和营运资本压力"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "航空发动机零部件业务更新",
-      "focus": "收入是否超过 1 亿元年化并保持毛利率稳定",
-      "reason": "验证新业务期权是否能转化为利润"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "2026 年中报或三季报披露",
-      "focus": "经营活动现金流是否由 2026Q1 的 -0.98 亿元转正",
-      "reason": "验证利润质量和回款改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "trigger": "2026 年定增进展公告",
-      "focus": "发行进展、资金用途和对中小股东摊薄影响",
-      "reason": "验证资本配置是否保护中小股东"
-    }
-  ],
-  "key_tracking_metrics": [
-    "煤机收入增速",
-    "煤机毛利率",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款加合同资产占收入比例",
-    "存货周转与减值",
-    "航空发动机零部件收入和毛利率",
-    "定增进展与募投项目回报"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

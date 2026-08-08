@@ -1,52 +1,86 @@
 {
-  "symbol": "CN:920405",
-  "market": "CN",
-  "ticker": "920405",
-  "name": "海希通讯",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "工业无线遥控业务有一定壁垒，但储能扩张依赖关联客户和外部融资，叠加审计保留意见与内控否定意见，20.15元缺乏安全边际。",
-  "fair_value_range": [9.0, 12.0],
-  "buy_zone": [6.5, 8.0],
-  "sell_or_reduce_zone": [14.0, 20.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海希通讯",
+    "security_status": "active",
+    "symbol": "CN:920405",
+    "ticker": "920405"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "dedf494133288d29965e5ab2afb7bea257acfa68ffe0297745e3c894ea6a1d59"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入6.5至8.0元，且内控恢复标准意见、在建工程无重大减值、滚动经营现金流转正、关联销售显著下降",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "复核工程造价评估、专项审计、三季报前经营现金流与关联销售变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "再次发生资金占用、非标意见延续、重大减值或被实施退市风险警示",
-      "max_weight": 0.0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "reason": "复核工程造价评估、专项审计、三季报前经营现金流与关联销售变化"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及内部控制审计意见是否恢复标准意见",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及内部控制审计意见是否恢复标准意见"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入条件性观察买入区，但必须先验证审计、现金流和客户结构"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入条件性观察买入区，但必须先验证审计、现金流和客户结构",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "超过公允价值上沿，应减仓或避免追高"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "超过公允价值上沿，应减仓或避免追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-18T05:00:46+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

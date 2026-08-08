@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:688123",
-  "market": "CN",
-  "ticker": "688123",
-  "name": "聚辰股份",
-  "company_name": "聚辰股份",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "聚辰股份是国内小容量非易失存储、DDR5 SPD和车规EEPROM/NOR的高质量设计公司，受益于DDR5渗透、AI服务器内存配置提升和汽车电子增长；但2026年7月初股价已充分交易NOR涨价与成长预期，当前以观察为主，等待价格回到合理区间或利润兑现证据。",
-  "quality_rating": "A-",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    145,
-    175
-  ],
-  "buy_zone": [
-    110,
-    135
-  ],
-  "sell_or_reduce_zone": [
-    210,
-    230
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "聚辰股份",
+    "security_status": "active",
+    "symbol": "CN:688123",
+    "ticker": "688123"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "1cd2440092b32c395eb6e40e99e79989ef52c4e891fc4a01ddbccd81a3f63d28"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于175元且未看到2026年利润显著加速的新增证据",
-      "action": "不新建仓位，维持观察",
-      "max_weight": 0,
-      "reason": "估值已反映NOR涨价、DDR5 SPD和车规存储的乐观预期，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证NOR涨价、DDR5 SPD、汽车电子和研发费用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至145-175元且半年报确认收入增长、毛利率稳定",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "公司质量较高，但仍需验证2026Q1利润下滑是否为阶段性扰动"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认利润修复和毛利率趋势是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格回落至110-135元且DDR5 SPD、汽车电子、NOR提价兑现为利润弹性",
-      "action": "分批买入",
-      "max_weight": 0.05,
-      "reason": "该区间具备较合理的成长股安全边际，可承受存储周期波动"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 175.0
+      },
+      "reason": "进入合理价值区间上沿，需要复核半年报后决定是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格低于100元且基本面未恶化",
-      "action": "按周期错杀候选提高仓位上限",
-      "max_weight": 0.06,
-      "reason": "若核心客户、毛利率和现金流未受损，低估值可补偿周期风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 135.0
+      },
+      "reason": "进入买入区上沿，若基本面未坏可执行首笔仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 210.0
+      },
+      "reason": "进入减仓/卖出观察区，若利润兑现不足需降低风险敞口",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 230.0
+      },
+      "reason": "显著交易乐观情景，除非2027年利润中枢上修至7亿元以上，否则风险收益比恶化",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 175,
-      "reason": "进入合理价值区间上沿，需要复核半年报后决定是否建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 135,
-      "reason": "进入买入区上沿，若基本面未坏可执行首笔仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 210,
-      "reason": "进入减仓/卖出观察区，若利润兑现不足需降低风险敞口"
-    },
-    {
-      "type": "price_above",
-      "price": 230,
-      "reason": "显著交易乐观情景，除非2027年利润中枢上修至7亿元以上，否则风险收益比恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证NOR涨价、DDR5 SPD、汽车电子和研发费用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认利润修复和毛利率趋势是否持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "综合毛利率",
-    "存储类芯片收入和毛利率",
-    "DDR5 SPD收入和出货趋势",
-    "汽车级EEPROM/NOR收入占比",
-    "NOR Flash涨价执行情况",
-    "研发费用率",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "存货周转和提前备货规模",
-    "境外收入占比和直销毛利率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

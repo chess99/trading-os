@@ -1,210 +1,96 @@
 {
-  "symbol": "CN:002249",
-  "name": "大洋电机",
-  "market": "CN",
-  "ticker": "002249",
-  "company_name": "大洋电机",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "status": "active",
-  "updated_at": "2026-07-08",
-  "currency": "CNY",
-  "research_conclusion": "大洋电机是成熟家电电机现金流加汽车电机/电驱增量的中等偏上质量制造公司，当前约7.46-7.47元、约184亿元市值已接近合理区间上沿，不适合追高，6.2元以下才有较好安全边际。",
-  "decision": "WATCH",
-  "current_rating": "watch",
-  "current_thesis": "成熟家电电机业务提供现金流，汽车起发电机和新能源电驱提供增量，但当前估值已接近合理区间上沿，需等待更好的安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "current_price": {
-    "price": 7.46,
-    "as_of": "2026-07-08",
-    "source": "东方财富行情接口；新浪行情接口同日10:04:09为7.47元"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大洋电机",
+    "security_status": "active",
+    "symbol": "CN:002249",
+    "ticker": "002249"
   },
-  "market_cap": {
-    "amount_cny": 18395000000,
-    "as_of": "2026-07-08",
-    "source": "东方财富行情接口"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "f45f7dc23b62c33d1089e5c05dd4accc53bf121dffae9d7c75a9e851e8cc69c4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "fair_value_range": [
-    6.2,
-    7.6
-  ],
-  "buy_below": 6.2,
-  "buy_zone": [
-    5.4,
-    6.2
-  ],
-  "strong_buy_below": 5.4,
-  "do_not_chase_above": 8.2,
-  "sell_or_reduce_zone": [
-    8.2,
-    999.0
-  ],
-  "position_plan": [
-    {
-      "condition": "当前价格处于合理区间中上部",
-      "price_range": "当前价",
-      "action": "不主动买，若必须覆盖则不超过1%观察仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价跌破6.2元且基本面未恶化",
-      "price_range": "6.2元以下",
-      "action": "分批建立仓位",
-      "target_position": "4%-8%",
-      "max_weight": 0.08
-    },
-    {
-      "condition": "股价跌破5.4元且现金流和利润未恶化",
-      "price_range": "5.4元以下",
-      "action": "基本面未恶化则提高仓位",
-      "target_position": "8%-12%",
-      "max_weight": 0.12
-    },
-    {
-      "condition": "股价高于8.2元且缺乏利润加速证据",
-      "price_range": "8.2元以上",
-      "action": "不追高并考虑降低仓位",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    }
-  ],
-  "position_curve": [
-    {
-      "price_range": "<5.4",
-      "judgement": "强吸引力",
-      "action": "分批买入，优先完成底仓",
-      "suggested_position": "8%-12%"
-    },
-    {
-      "price_range": "5.4-6.2",
-      "judgement": "有安全边际",
-      "action": "分批买入",
-      "suggested_position": "4%-8%"
-    },
-    {
-      "price_range": "6.2-7.6",
-      "judgement": "合理区间",
-      "action": "观察或小仓位持有",
-      "suggested_position": "0%-4%"
-    },
-    {
-      "price_range": "7.6-8.2",
-      "judgement": "偏贵",
-      "action": "仅持有，不新增",
-      "suggested_position": "0%-3%"
-    },
-    {
-      "price_range": ">8.2",
-      "judgement": "不应追高",
-      "action": "不买入，逢高降低仓位",
-      "suggested_position": "0%-2%"
-    }
-  ],
-  "tracking_indicators": [
-    "新能源车辆动力总成系统收入增速和毛利率",
-    "建筑及家居电器电机收入是否止跌，毛利率是否保持24%-25%",
-    "扣非归母净利润是否维持增长",
-    "经营现金流/归母净利润是否保持大于1倍",
-    "应收账款和存货周转",
-    "海外收入、汇率、关税对利润的影响",
-    "资本开支、金融资产投资和公允价值变动",
-    "控股股东及实际控制人诉讼进展"
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入有安全边际买入区",
-      "action": "进入有安全边际买入区，复核半年报后分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 5.4,
-      "reason": "进入强吸引力买入区",
-      "action": "进入强吸引力区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "进入不应追高区间",
-      "action": "不追高，若缺乏利润加速证据则降低仓位"
-    }
-  ],
-  "review_plan": {
-    "next_review": "2026年半年报披露后",
-    "focus": [
-      "汽车零部件与新能源动力总成毛利率",
-      "经营现金流、应收账款和存货",
-      "海外收入和汇兑影响",
-      "资本配置和金融资产波动",
-      "实际控制人诉讼进展"
-    ]
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "review_triggers": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "type": "date",
-      "condition": "2026年半年报披露",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证汽车零部件增量、家电电机压力和现金流质量",
-      "action": "复核收入结构、毛利率和现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "condition": "2026年三季报披露",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能继续验证利润韧性、应收账款和经营现金流",
-      "action": "复核估值区间和仓位上限"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.4
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "进入不应追高区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_risks": [
-    "实控人离婚诉讼带来控制权不确定性",
-    "家电及暖通链景气下行",
-    "新能源汽车电驱客户降价和竞争加剧",
-    "汇率、关税和地缘政治风险",
-    "原材料价格波动",
-    "应收账款上升和现金流波动",
-    "金融资产和产业投资带来的利润波动"
-  ],
-  "logical_stop_loss": [
-    "连续两个季度扣非归母净利润同比下滑超过20%",
-    "新能源车辆动力总成系统毛利率跌破14%",
-    "经营现金流连续两个季度显著低于净利润且应收账款继续上升",
-    "实控人诉讼导致控制权变化或治理动荡",
-    "金融资产或产业投资亏损侵蚀年度利润10%以上"
-  ],
-  "sources": [
-    {
-      "title": "大洋电机2025年年度报告",
-      "date": "2026-03-24",
-      "url": "http://static.cninfo.com.cn/finalpage/2026-03-24/1225026551.PDF",
-      "local_path": "sources/2025-annual-report.pdf"
-    },
-    {
-      "title": "大洋电机2026年第一季度报告",
-      "date": "2026-04-30",
-      "url": "http://static.cninfo.com.cn/finalpage/2026-04-30/1225256529.PDF",
-      "local_path": "sources/2026-q1-report.pdf"
-    },
-    {
-      "title": "关于控股股东、实际控制人涉及诉讼的公告",
-      "date": "2026-07-08",
-      "url": "http://static.cninfo.com.cn/finalpage/2026-07-08/1225413730.PDF",
-      "local_path": "sources/2026-07-08-controller-litigation.pdf"
-    },
-    {
-      "title": "新浪财经实时行情接口",
-      "date": "2026-07-08",
-      "url": "https://hq.sinajs.cn/list=sz002249"
-    },
-    {
-      "title": "东方财富行情接口",
-      "date": "2026-07-08",
-      "url": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.002249"
-    }
-  ],
-  "confidence": "中等偏高"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

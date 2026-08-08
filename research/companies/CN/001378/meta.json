@@ -1,110 +1,105 @@
 {
-  "symbol": "CN:001378",
-  "market": "CN",
-  "ticker": "001378",
-  "name": "德冠新材",
-  "company_name": "德冠新材",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium",
-  "valuation_rating": "expensive_to_fair",
-  "current_thesis": "德冠新材是功能性BOPP薄膜细分龙头之一，专利、产品线和料膜一体化具备中等质量优势，但2023-2025年行业供给过剩压低价格，电子及新能源膜收入占比仍小于1%。当前约20元价格已反映较多修复预期，等待15.5元以下或新业务规模化验证后再考虑首笔仓位。",
-  "fair_value_range": [
-    15.0,
-    18.5
-  ],
-  "buy_zone": [
-    12.8,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德冠新材",
+    "security_status": "active",
+    "symbol": "CN:001378",
+    "ticker": "001378"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "61c5a06f7a82c92c612b3afa06fc43297e92545db842413e8de2fe003612712c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于18.5元且电子及新能源膜收入占比仍低于1%",
-      "action": "不建仓，维持观察",
-      "max_weight": 0.0,
-      "reason": "按2025年利润估值偏贵，行业仍处于BOPP供给过剩周期，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看Q1增长是否延续、毛利率和经营现金流是否改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入15.5元以下，且最近一期扣非净利润、毛利率和订单未恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理价值下沿附近，可用小仓位跟踪产能爬坡和产品结构升级"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和新增产能爬坡，确认是否进入行业或公司盈利拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入13.0元附近，且经营现金流、产能利用率和毛利率保持稳定",
-      "action": "加仓至中低配",
-      "max_weight": 0.025,
-      "reason": "估值反映周期压力后具备更高赔率，但新业务仍未验证，仓位不宜过高"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估电子及新能源膜商业化进展和分红能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于22.0元且没有电子或新能源膜规模化收入验证",
-      "action": "不追高，已有仓位减仓",
-      "max_weight": 0.005,
-      "reason": "上涨主要来自估值扩张而非利润兑现，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入买入区间上沿，复核半年报毛利率、扣非净利和订单后考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入悲观情景中枢附近，如基本面未恶化可复核加仓至2.5%以内",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过合理价值上沿，若新业务未放量应考虑降低仓位或继续观察",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入买入区间上沿，复核半年报毛利率、扣非净利和订单后考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入悲观情景中枢附近，如基本面未恶化可复核加仓至2.5%以内"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "超过合理价值上沿，若新业务未放量应考虑降低仓位或继续观察"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看Q1增长是否延续、毛利率和经营现金流是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和新增产能爬坡，确认是否进入行业或公司盈利拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估电子及新能源膜商业化进展和分红能力"
-    }
-  ],
-  "key_tracking_metrics": [
-    "功能薄膜销量",
-    "功能薄膜设计产能和产能利用率",
-    "单吨收入和单吨毛利",
-    "综合毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "聚丙烯PP价格",
-    "BOPP厚光膜价格和行业价差",
-    "电子转移膜收入占比",
-    "锂电池绝缘膜客户认证和批量交付进度",
-    "新增功能薄膜和功能母料产能爬坡",
-    "电子及新能源膜材料升级扩能项目进度",
-    "应收账款周转",
-    "存货周转",
-    "分红和回购执行情况",
-    "大股东减持或锁定承诺变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

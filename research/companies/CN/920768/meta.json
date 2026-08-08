@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920768",
-  "market": "CN",
-  "ticker": "920768",
-  "name": "拾比佰",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "盈利修复和出口增长真实，但当前估值已计入较快现金流改善，客户集中与营运资金风险使安全边际不足。",
-  "fair_value_range": [5.7, 7.1],
-  "buy_zone": [4.6, 5.3],
-  "sell_or_reduce_zone": [8.0, 9.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "拾比佰",
+    "security_status": "active",
+    "symbol": "CN:920768",
+    "ticker": "920768"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "21f570c5ecae50add3ce6d9aaeef1415aec940960a20fa30106dfa892b09ab00"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于4.60-5.30元且中报确认毛利率、广义应收和滚动自由现金流未恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的产品与地区毛利、广义应收、自由现金流及芜湖产线利用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.60元，重新验证客户、出口、产线良率和回款后核心假设仍成立",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报与全年盈利、现金流假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "客户流失、毛利永久下台阶、连续两个报告期自由现金流为负或出现重大治理问题时，无论价格高低均退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.3
+      },
+      "reason": "进入有安全边际的买入观察区间，需先确认基本面未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "进入减仓或不应追高区间，除非正常化自由现金流显著上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的产品与地区毛利、广义应收、自由现金流及芜湖产线利用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报与全年盈利、现金流假设"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.3,
-      "reason": "进入有安全边际的买入观察区间，需先确认基本面未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "进入减仓或不应追高区间，除非正常化自由现金流显著上修"
-    }
-  ],
-  "updated_at": "2026-07-15T12:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

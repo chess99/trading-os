@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:688811",
-  "market": "CN",
-  "ticker": "688811",
-  "name": "有研复材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "有研复材具备央企科研背景、金属基复合材料工程化积累和航空航天/军工电子/高端手机客户壁垒，但2026-07-17股价21.40元对应约107亿元市值和约150倍以上盈利估值，已充分计入募投扩产和国产替代乐观预期；在扣非盈利和产能消化未连续验证前，以观察为主。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    10.0,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    28.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "有研复材",
+    "security_status": "active",
+    "symbol": "CN:688811",
+    "ticker": "688811"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "11b4d5add60bd415db2c3377b0674763e8b75c6fcc2ec5dc2c203eca6ba55ec8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入10-13元且2026半年度或三季度扣非净利润转正、金属复合材料订单持续增长",
-      "action": "建立观察仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复盘2026年半年报，重点验证扣非利润、毛利率、金属复合材料收入和订单质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "募投产能客户认证顺利、扣非净利率恢复到8%以上且估值仍低于60倍前瞻利润",
-      "action": "加至核心观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复盘2026年三季报，判断Q1收入高增是否转化为盈利弹性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于22元但2026年扣非利润未明显改善或订单兑现低于预期",
-      "action": "不追买并减持已有仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复盘2026年年报和2027年一季报，更新募投进度和估值中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入买入区上沿，若基本面验证同步改善则重新评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入悲观情景估值区，检查是否存在基本面永久受损",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过合理价值区间上沿且接近乐观情景，需审视是否由情绪驱动",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "显著高于乐观情景上沿，应考虑卖出或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入买入区上沿，若基本面验证同步改善则重新评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入悲观情景估值区，检查是否存在基本面永久受损"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "超过合理价值区间上沿且接近乐观情景，需审视是否由情绪驱动"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "显著高于乐观情景上沿，应考虑卖出或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复盘2026年半年报，重点验证扣非利润、毛利率、金属复合材料收入和订单质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复盘2026年三季报，判断Q1收入高增是否转化为盈利弹性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复盘2026年年报和2027年一季报，更新募投进度和估值中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

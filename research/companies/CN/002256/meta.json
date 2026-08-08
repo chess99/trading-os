@@ -1,90 +1,86 @@
 {
-  "symbol": "CN:002256",
-  "market": "CN",
-  "ticker": "002256",
-  "name": "兆新股份",
-  "company_name": "兆新股份",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "low",
-  "valuation_rating": "expensive",
-  "current_thesis": "当前不建议买入。兆新股份2025年和2026Q1净利润转正主要受非经常性收益影响，扣非利润仍为负，经营现金流偏弱；无控股股东和无实际控制人、担保余额较高、历史诉讼和债务重组风险仍需折价。只有在扣非利润连续转正、经营现金流改善且担保风险下降后，才可从回避转为观察。",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    1.0,
-    1.45
-  ],
-  "buy_zone": [
-    0.8,
-    1.05
-  ],
-  "sell_or_reduce_zone": [
-    2.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "兆新股份",
+    "security_status": "active",
+    "symbol": "CN:002256",
+    "ticker": "002256"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "fcb1fb2475cebba29674fa8bb018d615ae024c77189bf2dc9917ae08ca32af99"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于2.00元且扣非净利润仍为负",
-      "action": "不买入，已有仓位逐步降低或保持观察",
-      "max_weight": 0,
-      "reason": "当前市值主要反映主题和预期，未由可持续扣非利润和现金流支撑"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证扣非净利润、经营现金流、担保余额和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入0.80-1.05元且担保余额不再扩大、扣非亏损收窄",
-      "action": "仅允许研究性试仓",
-      "max_weight": 0.005,
-      "reason": "价格接近折价后的可核验资产价值，但经营质量仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润改善是否仍依赖非经常性损益",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利润转正、经营现金流转正、重大诉讼和担保风险下降",
-      "action": "复核后可提升至观察性配置",
-      "max_weight": 0.02,
-      "reason": "基本面从资产出清转向可持续经营改善后，才具备小仓位配置条件"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.05
+      },
+      "reason": "进入研究性买入区间，需要复核扣非利润、现金流和担保余额",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.0
+      },
+      "reason": "高于基本面合理价值上限，应回避或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.05,
-      "reason": "进入研究性买入区间，需要复核扣非利润、现金流和担保余额"
-    },
-    {
-      "type": "price_above",
-      "price": 2.0,
-      "reason": "高于基本面合理价值上限，应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证扣非净利润、经营现金流、担保余额和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润改善是否仍依赖非经常性损益"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度扣非归母净利润",
-    "经营活动现金流净额",
-    "精细化工毛利率",
-    "海外收入及回款",
-    "光伏发电收入和利用小时",
-    "光伏施工订单、毛利率和应收账款",
-    "担保余额及占归母净资产比例",
-    "重大诉讼新增涉案金额",
-    "应收账款余额和账龄",
-    "长期应付款和一年内到期债务",
-    "第一大股东及实际控制权变化"
-  ],
-  "notes": "2026-07-12初始研究结论为回避。核心依据：2025年和2026Q1扣非净利润仍为负，净利润受非经常性收益影响较大，担保和治理风险较高，当前价格显著高于可核验基本面价值。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

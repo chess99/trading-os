@@ -1,68 +1,86 @@
 {
-  "symbol": "CN:600518",
-  "ticker": "600518",
-  "name": "康美药业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "重整后的中药饮片、智慧药房和中药城资产有修复观察价值，但2025年扣非仍亏、2026Q1收入下滑且当前估值约2.5倍PB，安全边际不足。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    0.65,
-    0.95
-  ],
-  "buy_zone": [
-    0.45,
-    0.65
-  ],
-  "sell_or_reduce_zone": [
-    1.2,
-    1.6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "康美药业",
+    "security_status": "active",
+    "symbol": "CN:600518",
+    "ticker": "600518"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "6079b00ef68e602b624177dc3744c2acf2c2cdfda2153c35eadff605854be7e0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基准合理价值且扣非盈利未转正，不建立初始仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入是否止跌、扣非利润、经营现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌入0.45-0.65元且最新两个季度经营现金流改善、扣非亏损明显收窄，可作为修复期权小仓位观察。",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.65,
-      "reason": "进入安全边际观察区，需要复核资产减值、应收账款和扣非利润趋势。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认智慧药房、医疗机构渠道和终端消费业务是否恢复增长。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 1.2,
-      "reason": "价格进入乐观情景区，若缺少扣非盈利兑现应回避或降低关注优先级。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入是否止跌、扣非利润、经营现金流、应收账款和存货。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.65
+      },
+      "reason": "进入安全边际观察区，需要复核资产减值、应收账款和扣非利润趋势。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认智慧药房、医疗机构渠道和终端消费业务是否恢复增长。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.2
+      },
+      "reason": "价格进入乐观情景区，若缺少扣非盈利兑现应回避或降低关注优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "tags": [
-    "中药饮片",
-    "智慧药房",
-    "重整修复",
-    "治理折价"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

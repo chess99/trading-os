@@ -1,96 +1,106 @@
 {
-  "symbol": "CN:601162",
-  "market": "CN",
-  "ticker": "601162",
-  "name": "天风证券",
-  "company_name": "天风证券",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "天风证券的投资价值来自湖北国资控股、40亿元定增后资本修复、市场成交活跃带来的经纪和自营弹性，但历史合规处罚、资管/代销业务受限、减值尾部和低ROE仍压制估值；当前更适合等待中报验证后的观察仓，而非核心重仓。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    2.5,
-    3.2
-  ],
-  "buy_zone": [
-    2.3,
-    2.75
-  ],
-  "sell_or_reduce_zone": [
-    3.8,
-    4.4
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天风证券",
+    "security_status": "active",
+    "symbol": "CN:601162",
+    "ticker": "601162"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "45d2c6a95e10378b9781b66e39ce3595dcbe3012a3df802cfd85f949cfc60bbd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于2.75元且2026年中报确认归母净利润不低于1.64亿元，同时无新增重大监管处罚或大额减值",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.005,
-      "reason": "估值进入买入区上沿，且半年度业绩预增得到正式财报验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式利润、业务结构、减值、预计负债和风险控制指标",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.50元，2026全年利润年化趋势高于4亿元，净稳定资金率和风险覆盖率远离预警线",
-      "action": "小幅加仓",
-      "max_weight": 0.015,
-      "reason": "价格接近悲观情景下沿，安全边际改善，资本与盈利修复同步验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断二季度修复是否延续至三季度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于3.80元但ROE仍低于2%，或PB高于1.35倍且全年利润未明显上修",
-      "action": "减仓或不追高",
-      "max_weight": 0.005,
-      "reason": "当前估值已反映较多乐观修复预期，低ROE难以支撑更高估值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.75
+      },
+      "reason": "进入首笔观察仓买入区，需要结合中报利润和减值情况复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.5
+      },
+      "reason": "接近基准估值区间下沿，若资本和风控指标稳定可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.8
+      },
+      "reason": "进入减持区，若ROE修复不足应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.4
+      },
+      "reason": "高于乐观估值区间上沿，需除非全年盈利大幅上修否则减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.75,
-      "reason": "进入首笔观察仓买入区，需要结合中报利润和减值情况复核"
-    },
-    {
-      "type": "price_below",
-      "price": 2.5,
-      "reason": "接近基准估值区间下沿，若资本和风控指标稳定可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 3.8,
-      "reason": "进入减持区，若ROE修复不足应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 4.4,
-      "reason": "高于乐观估值区间上沿，需除非全年盈利大幅上修否则减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式利润、业务结构、减值、预计负债和风险控制指标"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断二季度修复是否延续至三季度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026年半年报归母净利润是否落在1.64亿-2.46亿元区间",
-    "2026年半年报扣非归母净利润、信用减值损失和预计负债",
-    "母公司净资本、风险覆盖率、资本杠杆率、流动性覆盖率、净稳定资金率",
-    "经纪业务佣金收入和沪深市场日均成交额",
-    "自营投资收益和公允价值变动收益",
-    "资管规模、私募代销业务恢复进展和监管整改公告",
-    "湖北宏泰集团增持、债务支持和业务协同进展",
-    "证券公司分类评级和外部信用评级变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

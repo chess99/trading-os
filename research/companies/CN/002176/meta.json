@@ -1,97 +1,111 @@
 {
-  "symbol": "CN:002176",
-  "market": "CN",
-  "ticker": "002176",
-  "name": "江特电机",
-  "company_name": "江特电机",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "C+",
-  "valuation_rating": "C",
-  "current_thesis": "江特电机是特种电机底盘叠加宜春锂云母资源期权的周期股；2026-07-17收盘价7.68元已回到6.5-8.2元合理区间，但H1预告确认茜坑仍未开采，外购矿、低利用率和高单位成本使锂盐业务继续亏损。维持观察，价格低于6.5元且现金流或扣非改善后再考虑首笔仓位。",
-  "fair_value_range": [
-    6.5,
-    8.2
-  ],
-  "buy_zone": [
-    5.5,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江特电机",
+    "security_status": "active",
+    "symbol": "CN:002176",
+    "ticker": "002176"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "4346bb87f57477d08760a822d25bc2e8f4ee87a2f6b573d6a00cf63f2dccf772"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "3d077949c33151ad71b7c14adbafb6755d8d0c5204ac8c224fde2854b9f24205"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格7.68元且2026H1预计继续亏损、茜坑矿仍未开采",
-      "action": "暂不买入，仅加入观察池",
-      "max_weight": 0,
-      "reason": "价格已进入合理区间，但尚未进入买入区，扣非盈利和自有矿降本均未验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看锂业务毛利率、经营现金流、减值和茜坑矿进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.5元，且2026Q2/Q3经营现金流继续为正、扣非亏损收窄",
-      "action": "建立0.5%-1.0%试探仓",
-      "max_weight": 0.01,
-      "reason": "价格进入基准价值下沿，且经营质量出现可验证改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断现金流改善是否可持续以及扣非是否接近转正",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "茜坑矿实现规模化出矿，锂盐单吨成本下降并带动扣非利润转正",
-      "action": "提高为跟踪仓或小核心仓",
-      "max_weight": 0.03,
-      "reason": "资源期权开始兑现，周期股从预期交易切换到业绩验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入基准合理价值下沿，可结合现金流和锂价复核首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入悲观情景上沿，若无新增减值和治理风险可重新评估安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "进入乐观情景区间，若基本面未同步兑现应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "价格明显高于基准价值，需要用茜坑出矿和扣非转正证据支撑继续持有",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入基准合理价值下沿，可结合现金流和锂价复核首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入悲观情景上沿，若无新增减值和治理风险可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "进入乐观情景区间，若基本面未同步兑现应考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "价格明显高于基准价值，需要用茜坑出矿和扣非转正证据支撑继续持有"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看锂业务毛利率、经营现金流、减值和茜坑矿进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断现金流改善是否可持续以及扣非是否接近转正"
-    }
-  ],
-  "key_tracking_metrics": [
-    "碳酸锂现货与期货价格中枢",
-    "茜坑锂矿手续进展、出矿时间和自有矿比例",
-    "锂盐单吨收入、单吨成本和毛利率",
-    "经营活动现金流净额",
-    "扣非归母净利润",
-    "存货、固定资产、在建工程和矿权减值",
-    "电机业务收入增速和毛利率",
-    "控股股东质押、实际控制人和董事高管变动"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

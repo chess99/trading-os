@@ -1,104 +1,96 @@
 {
-  "symbol": "CN:601665",
-  "market": "CN",
-  "ticker": "601665",
-  "name": "齐鲁银行",
-  "company_name": "齐鲁银行",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "齐鲁银行是山东区域优质城商行，2025年和2026Q1利润、资产质量、拨备和息差表现均较强，但城商行区域信用、地产和地方平台风险仍需折价；当前估值合理偏低，适合观察，等待5.2-5.8元买入区间和中报验证后分批建仓。",
-  "quality_rating": "good",
-  "valuation_rating": "fair_to_slightly_cheap",
-  "fair_value_range": [
-    6.6,
-    7.5
-  ],
-  "buy_zone": [
-    5.2,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    7.4,
-    8.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "齐鲁银行",
+    "security_status": "active",
+    "symbol": "CN:601665",
+    "ticker": "601665"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "511d13717fd9f28dc43b225fd60c2aca47901a0ba188fc77df9f621ebb17ee30"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.8元且2026中报未出现净息差、资产质量或资本恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "估值进入买入区间上沿，股息率和PB具备初步安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的净息差、资产质量、资本充足率和贷款投向",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.5元，净息差不低于1.50%，不良率不高于1.05%，拨备覆盖率高于340%",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.02,
-      "reason": "价格安全边际扩大且关键经营指标验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报增长与风险指标是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.2元，核心一级资本充足率不低于11.0%，区域信用风险未恶化",
-      "action": "加至上限仓位",
-      "max_weight": 0.03,
-      "reason": "PB和股息率均具备较高赔率，但城商行区域风险限制仓位上限"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入首笔买入区间，需要复核中报质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于7.4元或PB接近0.85倍且中报未证明风险继续改善",
-      "action": "分批减持",
-      "max_weight": 0.01,
-      "reason": "估值接近合理区间上沿，风险补偿下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入高赔率区间，可评估是否加至上限仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.4
+      },
+      "reason": "进入减持区间，需要评估PB与资产质量是否匹配",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入首笔买入区间，需要复核中报质量"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入高赔率区间，可评估是否加至上限仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.4,
-      "reason": "进入减持区间，需要评估PB与资产质量是否匹配"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的净息差、资产质量、资本充足率和贷款投向"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报增长与风险指标是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "净息差",
-    "利息净收入同比增速",
-    "贷款总额增速",
-    "存款总额增速",
-    "不良贷款率",
-    "关注类贷款占比",
-    "逾期贷款占比",
-    "拨备覆盖率",
-    "拨贷比",
-    "核心一级资本充足率",
-    "资本充足率",
-    "房地产和建筑业贷款敞口",
-    "地方平台及非标投资风险",
-    "分红率",
-    "山东省GDP和财政收入增速"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

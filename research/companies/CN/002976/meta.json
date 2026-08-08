@@ -1,100 +1,95 @@
 {
-  "symbol": "CN:002976",
-  "market": "CN",
-  "ticker": "002976",
-  "name": "瑞玛精密",
-  "company_name": "苏州瑞玛精密工业集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司正从精密金属结构件向座椅舒适系统和空气悬架系统升级，客户和赛道有看点，但 2025 年扣非仍亏损、2026Q1 收入下滑且亏损扩大，当前价格已经提前反映较多转型成功预期，等待更低价格或利润兑现。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    17,
-    21
-  ],
-  "buy_zone": [
-    0,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    27,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "瑞玛精密",
+    "security_status": "active",
+    "symbol": "CN:002976",
+    "ticker": "002976"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "7dc591e4d52c411f70948fd00f633d6f1aa4adaaa9e158e4cbe4b095eeba8d3b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 15 元，且最近一期扣非亏损明显收窄、经营现金流改善",
-      "action": "建立观察仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年半年度报告后复核收入、扣非利润、现金流和空气悬架放量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于 15-21 元，且连续两个季度收入恢复、毛利率改善、空气悬架订单转量产",
-      "action": "小仓跟踪或继续观察",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报后复核盈利拐点和经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 21 元但扣非利润尚未转正",
-      "action": "不新增仓位",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年年报后复核全年利润兑现、空气悬架收入和资本开支",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于 27 元且基本面没有同步改善",
-      "action": "减持或回避",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "低于安全买入区间上限，若基本面同步改善可建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "高于减持/回避区间下限，若扣非利润未兑现则估值过高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "unit": "CNY/share",
-      "action": "复核是否满足试买条件",
-      "reason": "低于安全买入区间上限，若基本面同步改善可建立观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 27,
-      "unit": "CNY/share",
-      "action": "复核是否应降低关注度或减仓",
-      "reason": "高于减持/回避区间下限，若扣非利润未兑现则估值过高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026 年半年度报告后复核收入、扣非利润、现金流和空气悬架放量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报后复核盈利拐点和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年年报后复核全年利润兑现、空气悬架收入和资本开支"
-    }
-  ],
-  "key_tracking_metrics": [
-    "座椅舒适系统收入及同比增速",
-    "空气悬架系统收入、定点数量和量产车型",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "毛利率和期间费用率",
-    "应收账款与存货周转",
-    "资本开支和在建工程进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

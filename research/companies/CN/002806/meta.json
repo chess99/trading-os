@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:002806",
-  "ticker": "002806",
-  "name": "华锋股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "双主业具备跟踪价值，但新能源汽车电控毛利率、售后三包费用、应收账款和商誉风险仍未出清；当前估值已提前反映修复预期，缺少安全边际，等待经营拐点和更低价格。",
-  "fair_value_range": [
-    8.0,
-    12.0
-  ],
-  "buy_zone": [
-    7.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华锋股份",
+    "security_status": "active",
+    "symbol": "CN:002806",
+    "ticker": "002806"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "d17395425fd1dc9fd6228b1df6d067c76386e5d89cba0092698dca1573a5632c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.5元，且2026半年报或三季报显示新能源电控毛利率企稳、扣非亏损明显收窄",
-      "action": "建立研究仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报正式数据、毛利率、售后三包费用和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价接近7.0元，经营活动现金流转正，且应收账款未继续恶化",
-      "action": "小幅加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报是否出现经营拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于13.5元但扣非利润和毛利率未修复",
-      "action": "不买或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、商誉减值测试和控制权变更后的经营效果",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入研究仓买入区间，需同步核验毛利率和现金流是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "接近悲观情景资产价值，可重新评估安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "高于基准公允价值上沿，若基本面未修复应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入研究仓买入区间，需同步核验毛利率和现金流是否改善"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "接近悲观情景资产价值，可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "高于基准公允价值上沿，若基本面未修复应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报正式数据、毛利率、售后三包费用和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报是否出现经营拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、商誉减值测试和控制权变更后的经营效果"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,75 +1,86 @@
 {
-  "symbol": "CN:600107",
-  "market": "CN",
-  "ticker": "600107",
-  "name": "*ST尔雅",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "*ST尔雅处于退市风险警示和内控修复期，2025年扣后营收低于3亿元且亏损，2026H1仍预亏，当前5.28元对应约19亿元市值显著高于保守折扣资产价值；在2026年审计确认收入、盈利、内控和持续经营风险改善前，应以回避为主。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.8,
-    2.2
-  ],
-  "buy_zone": [
-    0.5,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    2.2,
-    5.28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST尔雅",
+    "security_status": "active",
+    "symbol": "CN:600107",
+    "ticker": "600107"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "2b9ef5719053b22583cd30b7e9e7c62a155b4fb5e6b1e96703af6b6107807dd5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于2.20元且退市风险、内控否定意见、扣非亏损尚未解除",
-      "action": "不买；已有仓位减至0或接近0",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的扣后营业收入、扣非亏损、现金流、库存和监管问询",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入0.80元以下，且2026年扣后收入、经营现金流和内控整改均出现可核验证据",
-      "action": "仅允许事件型试探仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、财务审计意见、内控审计意见和是否触发财务类终止上市指标",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于0.50元，未进入终止上市整理期，且净资产未被新增损失显著侵蚀",
-      "action": "高风险资金可小仓位跟踪",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入安全边际观察区，但仍需同时验证退市风险和内控整改",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.2
+      },
+      "reason": "超过保守合理价值上沿，基本面无法支持追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入安全边际观察区，但仍需同时验证退市风险和内控整改"
-    },
-    {
-      "type": "price_above",
-      "price": 2.2,
-      "reason": "超过保守合理价值上沿，基本面无法支持追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的扣后营业收入、扣非亏损、现金流、库存和监管问询"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、财务审计意见、内控审计意见和是否触发财务类终止上市指标"
-    }
-  ],
-  "notes": [
-    "2026-07-20中财网行情显示股价5.28元，总股本3.60亿股，推算市值约19.01亿元。",
-    "2025年公司扣后营业收入低于3亿元且亏损，已被实施退市风险警示；若2026年度再次触及相关规则，存在终止上市风险。",
-    "2024、2025年度财务报告内部控制连续两年被出具否定意见，治理和财务可信度需大幅折价。",
-    "诉讼债务、资产可回收率和潜在或有事项未逐项核验，估值需保守处理。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

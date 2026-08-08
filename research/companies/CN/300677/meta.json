@@ -1,107 +1,96 @@
 {
-  "symbol": "CN:300677",
-  "market": "CN",
-  "ticker": "300677",
-  "name": "英科医疗",
-  "company_name": "英科医疗",
-  "status": "active",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "观察",
-  "current_thesis": "英科医疗是全球一次性手套周期出清后的低成本龙头之一，但当前股价已隐含较乐观的行业修复预期，等待价格回落或盈利确定性上修更合适。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    32,
-    40
-  ],
-  "buy_zone": [
-    28,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    69
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "英科医疗",
+    "security_status": "active",
+    "symbol": "CN:300677",
+    "ticker": "300677"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "d6f0fe75d73be3793ff89d73b5055631bc0bb338179a41ed95f8235b022fde16"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于45元且无连续季度盈利上修证据",
-      "action": "不买入，已有持仓不加仓",
-      "max_weight": 0.02,
-      "reason": "当前价格接近偏乐观情景，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报中的手套毛利率、销量、均价和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至36-40元且行业价格企稳",
-      "action": "仅建立观察仓",
-      "max_weight": 0.03,
-      "reason": "进入合理区间上沿，但仍需验证量价和毛利率修复"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报和海外同行供给出清进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至28-32元且经营现金流正常",
-      "action": "分批买入",
-      "max_weight": 0.07,
-      "reason": "估值具备安全边际，周期修复赔率改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入有安全边际的买入观察区，需要复核半年报和行业价格",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于28元且未出现贸易准入或现金流恶化",
-      "action": "提高配置",
-      "max_weight": 0.1,
-      "reason": "进入强吸引力买入区，低成本龙头价值被低估"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入强吸引力区，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "连续两个季度手套量价或毛利率恶化",
-      "action": "暂停买入并降仓",
-      "max_weight": 0.03,
-      "reason": "周期修复逻辑被削弱或证伪"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "超过偏乐观估值中枢，若无盈利上修应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入有安全边际的买入观察区，需要复核半年报和行业价格"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入强吸引力区，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "超过偏乐观估值中枢，若无盈利上修应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报中的手套毛利率、销量、均价和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报和海外同行供给出清进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "手套销量",
-    "手套平均售价",
-    "手套业务毛利率",
-    "产能利用率",
-    "经营活动现金流净额",
-    "存货周转天数",
-    "应收账款周转天数",
-    "资本开支",
-    "海外同行开工率和产能退出",
-    "丁腈胶乳和PVC原料价格",
-    "美元兑人民币汇率",
-    "美国和欧洲贸易政策"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

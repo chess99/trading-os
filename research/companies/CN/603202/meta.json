@@ -1,70 +1,86 @@
 {
-  "symbol": "CN:603202",
-  "ticker": "603202",
-  "name": "天有为",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "industry": "汽车零部件及配件制造",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_thesis": "天有为是汽车仪表细分领域高利润、高现金流公司，但 2025 年和 2026 年一季度业绩连续下滑，且客户集中度高；当前估值不贵但缺少右侧确认，等待中报验证收入修复和客户多元化。",
-  "current_rating": "watch",
-  "rating": {
-    "current_rating": "watch",
-    "current_thesis": "观察为主。若 2026 年中报确认收入降幅收窄、毛利率稳定且客户结构改善，可考虑小仓；若仅低 PB 而利润继续下修，不买。",
-    "rating_date": "2026-07-17"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天有为",
+    "security_status": "active",
+    "symbol": "CN:603202",
+    "ticker": "603202"
   },
-  "fair_value_range": [
-    46,
-    60
-  ],
-  "buy_zone": [
-    35,
-    42
-  ],
-  "sell_or_reduce_zone": [
-    70,
-    80
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "60b47d3810c06c625ced76c8e8a99b924e1200af302e03220020d672a9a501ff"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 35-42 元，且 2026 年中报毛利率不低于 30%、经营现金流未明显恶化、主要客户订单没有继续断崖式下滑",
-      "action": "分三笔建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点看收入降幅、毛利率、前五大客户占比和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于 60 元但 2026 年收入和利润尚未恢复同比增长",
-      "action": "不追高，仅跟踪",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入买入观察区，需要复核中报、客户结构和现金流后决定是否建仓"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年利润是否可回到 5.8-6.5 亿元基准区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 70,
-      "reason": "进入减持/不追高区，若利润未恢复到 7 亿元以上则估值缺乏安全边际"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点看收入降幅、毛利率、前五大客户占比和经营现金流"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入买入观察区，需要复核中报、客户结构和现金流后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年利润是否可回到 5.8-6.5 亿元基准区间"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "进入减持/不追高区，若利润未恢复到 7 亿元以上则估值缺乏安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

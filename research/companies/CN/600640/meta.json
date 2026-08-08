@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:600640",
-  "ticker": "600640",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "国脉文化",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "中国电信旗下数字内容与数字权益运营平台，资产负债表稳健、分红回购友好，但收入仍在修复、ROE很低，当前估值缺少足够安全边际，适合观察等待更低价格或现金流拐点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    10.5
-  ],
-  "buy_zone": [
-    6.0,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    14.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国脉文化",
+    "security_status": "active",
+    "symbol": "CN:600640",
+    "ticker": "600640"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "bc366bf684490c0ea9efd433280957f1a9e98ffaed814ebb362f642d98080f33"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于7.5元，且最近两个季度经营现金流为正、数字权益运营保持增长后，允许试探性配置。",
-      "action": "start_small",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、经营现金流、数字权益运营和研发投入转化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于6.5元且收入止跌、毛利率未恶化，可在组合风险允许时提高仓位。",
-      "action": "add",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认主业和现金流拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于12元且归母净利润或经营现金流没有同步显著改善，应减持或回避。",
-      "action": "reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红回购注销执行以及估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入买入观察区，需要复核现金流和数字权益运营是否支撑小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "超过减持观察区，若盈利未显著兑现则主题估值风险上升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入买入观察区，需要复核现金流和数字权益运营是否支撑小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "超过减持观察区，若盈利未显著兑现则主题估值风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、经营现金流、数字权益运营和研发投入转化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认主业和现金流拐点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红回购注销执行以及估值区间。"
-    }
-  ],
-  "research_confidence": "medium"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

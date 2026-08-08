@@ -1,109 +1,106 @@
 {
-  "symbol": "CN:001223",
-  "market": "CN",
-  "ticker": "001223",
-  "name": "欧克科技",
-  "company_name": "欧克科技",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    22,
-    28
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    38
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "欧克科技",
+    "security_status": "active",
+    "symbol": "CN:001223",
+    "ticker": "001223"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "fe2cb55d8dfdec21f83618733207b8de6291ca0b017047281194389c22103944"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于34元，且2026Q1利润和经营现金流同比下降",
-      "action": "不买入，仅观察",
-      "max_weight": 0,
-      "reason": "估值已反映乐观情景，但应收账款、信用减值和低毛利材料业务仍未改善"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点跟踪收入结构、应收账款、合同负债、信用减值和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于22元，且合同负债环比改善、应收账款收入比下降、经营现金流连续两个季度为正",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理价值下沿，同时订单和回款质量出现验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断生活用纸设备订单和薄膜材料毛利率是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元，且生活用纸智能装备收入恢复增长、信用减值低于归母净利润30%",
-      "action": "提高至小仓位",
-      "max_weight": 0.02,
-      "reason": "安全边际扩大，核心主业和利润质量同步改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入合理价值下沿，可结合半年报订单和回款质量复查首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "应收账款高于5.5亿元且合同负债低于0.5亿元",
-      "action": "维持回避或降低仓位",
-      "max_weight": 0,
-      "reason": "订单预收和回款质量不足，收入增长可能转化为坏账风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入保守买入区，若基本面未恶化可考虑小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "高于减持/回避区下沿，估值对利润恢复要求过高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "接近乐观情景估值中段，应减少风险暴露",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入合理价值下沿，可结合半年报订单和回款质量复查首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入保守买入区，若基本面未恶化可考虑小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "高于减持/回避区下沿，估值对利润恢复要求过高"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "接近乐观情景估值中段，应减少风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点跟踪收入结构、应收账款、合同负债、信用减值和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断生活用纸设备订单和薄膜材料毛利率是否改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "生活用纸智能装备收入及毛利率",
-    "合同负债余额",
-    "应收账款账面价值及占收入比例",
-    "信用减值损失占归母净利润比例",
-    "经营活动现金流量净额",
-    "薄膜材料收入占比及毛利率",
-    "新能源锂电智能装备订单和收入",
-    "境外收入及毛利率",
-    "研发费用率",
-    "前五大客户集中度和关联销售占比"
-  ],
-  "last_price": 37.31,
-  "last_price_date": "2026-07-10",
-  "market_cap_cny_billion": 4.876,
-  "confidence": "medium",
-  "current_thesis": "当前不买，仅观察。欧克科技拥有生活用纸智能装备客户和整线集成基础，但2025年及2026Q1仍受应收账款、信用减值、低毛利薄膜材料占比提升和估值偏高约束；只有价格低于22元且订单、回款和减值同步改善时才考虑首笔小仓位。",
-  "analyst_note": "当前不买，等待价格回到22元以下且订单、回款、减值三项同时改善。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

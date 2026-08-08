@@ -1,113 +1,114 @@
 {
-  "symbol": "CN:002882",
-  "market": "CN",
-  "ticker": "002882",
-  "name": "金龙羽",
-  "company_name": "金龙羽集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "线缆主业收入增长但毛利率低、经营现金流和应收账款压力大；固态电池仍处研发和建设期，2025年收入占比仅0.02%，当前17.10元股价隐含约95.6倍TTM PE，安全边际不足。",
-  "quality_rating": "中低",
-  "valuation_rating": "显著高估",
-  "fair_value_range": [
-    6.0,
-    9.5
-  ],
-  "buy_zone": [
-    0.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金龙羽",
+    "security_status": "active",
+    "symbol": "CN:002882",
+    "ticker": "002882"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "bf215bb8d790067427bb2f7b9ac3152c7cd9d8bf9b29ea80867e4880f6453afb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.0元，且最近两个报告期经营现金流改善、应收账款账面价值/收入下降",
-      "action": "建立1%-2%观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证2026Q1利润和现金流下滑是否延续",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于7.0-9.5元，且固态电池仍停留在研发或试产阶段",
-      "action": "最多保留不超过1%跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "年报披露惠东项目预计2026年底前部分投产",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于13.0元且固态电池无明确订单、良率、量产毛利率披露",
-      "action": "不新买，已有仓位减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报应披露固态电池项目进度、资本开支和收入贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于16.0元且基本面未显著改善",
-      "action": "卖出或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "持续观察控股股东质押、借款和应收账款变化",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "低于可买价格且接近主业合理估值下沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "高于合理价值区间上沿，需要额外商业化证据支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "估值主要由固态电池概念驱动，安全边际不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "action": "复核现金流和应收后考虑小仓位",
-      "reason": "低于可买价格且接近主业合理估值下沿"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "action": "复核是否由固态电池可核验进展支撑，否则减仓",
-      "reason": "高于合理价值区间上沿，需要额外商业化证据支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "action": "若无可审计订单和利润贡献，卖出或不参与",
-      "reason": "估值主要由固态电池概念驱动，安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露窗口结束",
-      "action": "复核收入、毛利率、经营现金流、应收账款和有息负债",
-      "reason": "验证2026Q1利润和现金流下滑是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "惠东固态电池材料项目预计部分投产窗口结束",
-      "action": "复核固态电池期权价值和估值区间",
-      "reason": "年报披露惠东项目预计2026年底前部分投产"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年报披露窗口结束",
-      "action": "复核固态电池商业化概率",
-      "reason": "2026年报应披露固态电池项目进度、资本开支和收入贡献"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027年半年报披露窗口结束",
-      "action": "复核治理和流动性风险",
-      "reason": "持续观察控股股东质押、借款和应收账款变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营现金流净额及经营现金流/净利润",
-    "应收账款账面价值/营业收入",
-    "线缆主业毛利率",
-    "固态电池收入、订单、良率、单位成本和毛利率",
-    "短期借款、长期借款、应付票据合计规模",
-    "前五大客户和前五大供应商集中度",
-    "控股股东质押股数和质押比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

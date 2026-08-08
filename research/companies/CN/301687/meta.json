@@ -1,100 +1,95 @@
 {
-  "symbol": "CN:301687",
-  "ticker": "301687",
-  "name": "新广益",
-  "company_name": "苏州市新广益电子股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "新广益是国内 FPC 制程特种功能膜细分龙头，具备流延成膜、精密涂布和客户认证壁垒，并向声学膜、光学胶膜、新能源材料延伸；但 2025 年和 2026Q1 利润增速仍为个位数，当前估值已提前反映较多成长预期，需等待更低价格或新业务放量验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    38,
-    50
-  ],
-  "buy_zone": [
-    0,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    999
-  ],
-  "last_reference_price": {
-    "price": 53.2,
-    "date": "2026-07-15",
-    "source": "证券之星/搜狐转载行情，2026-07-16；2026-07-16收盘价未核验"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新广益",
+    "security_status": "active",
+    "symbol": "CN:301687",
+    "ticker": "301687"
   },
-  "position_plan": [
-    {
-      "condition": "仅作为研究观察仓，当前价格高于基准合理价值上沿且2026-07-16收盘价未核验",
-      "action": "watch_only",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于38元，且最新财报显示收入、毛利率、经营现金流无明显恶化",
-      "action": "start_position",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "2026或2027年报验证收入增速超过15%、新品收入占比提升且经营现金流匹配利润",
-      "action": "add_on_confirmation",
-      "max_weight": 0.06
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入基准估值下沿，若基本面未恶化可重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "估值明显高于当前可验证盈利增速，若无新业务订单和利润加速应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、毛利率、新业务进展和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年业绩弹性是否足以支撑估值"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、募投项目进展、分红和客户结构变化"
-    }
-  ],
-  "key_metrics": {
-    "revenue_2025_cny": 702000000,
-    "net_profit_2025_cny": 123000000,
-    "revenue_2026q1_cny": 149229886.5,
-    "net_profit_2026q1_cny": 26354231.94,
-    "operating_cash_flow_2026q1_cny": 44188295.57,
-    "equity_2026q1_cny": 1533635248,
-    "shares_outstanding_estimate": 146864000
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "b8ca97f6b690499594e5dd099e2b4b8e07c444c684bd11f387e16431f46876ea"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "sources": [
-    "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?CompanyCode=82805723&gather=1&id=11875507.PDF",
-    "https://xinpi.cnstock.com/p/xg/detail/301687",
-    "https://www.stcn.com/article/detail/3550518.html",
-    "https://stcn.com/article/detail/3566055.html",
-    "https://www.csrc.gov.cn/csrc/c105917/c7587216/content.shtml",
-    "https://m.sohu.com/a/1016481749_115377/",
-    "https://www.sohu.com/a/1050831784_115377"
-  ]
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、新业务进展和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年业绩弹性是否足以支撑估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、募投项目进展、分红和客户结构变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入基准估值下沿，若基本面未恶化可重新评估买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "估值明显高于当前可验证盈利增速，若无新业务订单和利润加速应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

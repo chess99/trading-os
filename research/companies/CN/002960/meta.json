@@ -1,120 +1,114 @@
 {
-  "symbol": "CN:002960",
-  "market": "CN",
-  "ticker": "002960",
-  "name": "青鸟智控",
-  "company_name": "青鸟智慧控制科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "青鸟智控是消防电子与消防安全系统龙头之一，质量中上，但 2024-2026Q1 利润、ROE 和毛利率已经下台阶。当前约 8.13 元接近合理价值中枢，安全边际不足；等待 6.80 元以下或扣非利润、经营现金流确认修复后再买。",
-  "quality_rating": "中高",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    7.0,
-    9.0
-  ],
-  "buy_zone": [
-    0,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "青鸟智控",
+    "security_status": "active",
+    "symbol": "CN:002960",
+    "ticker": "002960"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "6a38706ff75b9b909fe83d175bb7748cd359f51cfc020b827e02d5b677f7c2c8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格在 8.13 元附近且 2026Q1 扣非利润仍同比下滑",
-      "action": "不新开标准仓，最多保留观察仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格低于或等于 6.80 元，且最近两个季度扣非利润没有继续恶化",
-      "action": "建立小仓位",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于或等于 6.20 元，且年度经营现金流/归母净利回到 0.8 倍以上",
-      "action": "提高至核心观察仓",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格高于 10.50 元，但扣非净利未恢复至 4.5 亿元以上",
-      "action": "减仓或不追高",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "currency": "CNY",
-      "reason": "进入可买区，较合理价值中枢具备初步安全边际。",
-      "action": "复核 2026 中报/三季报后考虑建立 1%-2% 仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "currency": "CNY",
-      "reason": "进入强安全边际区，但仍需现金流确认。",
-      "action": "若现金流同步改善，考虑提高至 3%-5% 仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "currency": "CNY",
-      "reason": "价格超过估值上沿，若盈利没有同步上修则风险收益比恶化。",
-      "action": "若盈利没有同步上修，减仓或放弃追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年中报披露或最晚至 2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026Q1 扣非利润下滑，需要用中报确认利润和现金流是否企稳。",
-      "action": "复核扣非归母净利、毛利率、经营现金流和应收账款周转"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 年三季报披露或最晚至 2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能更清楚判断全年利润修复和工业、海外业务贡献。",
-      "action": "提前复核增长假设和估值上沿"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年报披露或最晚至 2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可验证现金流、ROE、回购贷款和资本配置质量。",
-      "action": "提前复核资本配置和财务风险"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-13",
-      "condition": "一年期例行复盘，期间若控股股东质押、冻结或权益变动出现重大变化则提前复核",
+      "active": true,
+      "condition": {
+        "date": "2027-07-13"
+      },
       "reason": "初始研究满一年，需要重新评估估值区间和仓位计划。",
-      "action": "提前复核治理风险"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入可买区，较合理价值中枢具备初步安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入强安全边际区，但仍需现金流确认。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "价格超过估值上沿，若盈利没有同步上修则风险收益比恶化。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非归母净利同比增速",
-    "毛利率是否稳定在 34%-36%",
-    "经营现金流/归母净利是否大于 0.8",
-    "应收账款周转天数是否从约 200 天回落",
-    "工业与行业消防、海外、储能消防、智能控制新业务收入占比",
-    "资产负债率、长期借款和库存股变化",
-    "分红与回购执行进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

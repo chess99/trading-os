@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688611",
-  "market": "CN",
-  "ticker": "688611",
-  "name": "杭州柯林",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "杭州柯林主业电网数字化智能感知具备技术和客户壁垒，但2025年及2026Q1已转亏，储能、钙钛矿、机器人等新业务仍处兑现早期；当前股价对应约9.8倍PB和接近39倍TTM PS，已充分计入多条成长曲线，缺少安全边际，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    34,
-    45
-  ],
-  "buy_zone": [
-    25,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    75
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "杭州柯林",
+    "security_status": "active",
+    "symbol": "CN:688611",
+    "ticker": "688611"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "60662c0adb5e6ebb2914dfe5cfd4bb8c0fcf4eede748c12ef7b38db71aa0ea8e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅跟踪不买入，当前估值高且扣非仍亏损",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看储能合同确认、钙钛矿毛利率、扣非利润和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入25-32元且储能或钙钛矿毛利率转正，或智能感知主业恢复高质量增长",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入爬坡是否覆盖折旧和研发费用",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "收入年化超过4亿元、扣非归母净利润转正、经营现金流不恶化且估值低于6倍PB",
-      "action": "add",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新估算长期收入中枢和合理估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入买入观察区，需要复核订单、毛利率和扣非利润是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入具备较高安全边际区间，可重新评估小仓位买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "高于减仓区下沿，若基本面未兑现则估值风险显著",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入买入观察区，需要复核订单、毛利率和扣非利润是否改善"
-    },
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入具备较高安全边际区间，可重新评估小仓位买入"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "高于减仓区下沿，若基本面未兑现则估值风险显著"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看储能合同确认、钙钛矿毛利率、扣非利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入爬坡是否覆盖折旧和研发费用"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新估算长期收入中枢和合理估值"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

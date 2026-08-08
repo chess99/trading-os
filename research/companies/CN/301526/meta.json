@@ -1,107 +1,115 @@
 {
-  "symbol": "CN:301526",
-  "market": "CN",
-  "ticker": "301526",
-  "name": "国际复材",
-  "company_name": "国际复材",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "观察",
-  "current_thesis": "国际复材是玻纤二线龙头，2025年从周期底部转正，经营现金流较好，但行业强周期、ROE仍低，2026-07-09股价和市值已显著透支复苏预期，当前不应追高，只在大幅回落至有安全边际区间后考虑分批建仓。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    8.0,
-    13.0
-  ],
-  "buy_zone": [
-    7.0,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    25.0
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "status": "active",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国际复材",
+    "security_status": "active",
+    "symbol": "CN:301526",
+    "ticker": "301526"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "1247e301f3415be898bb3e7e172a17722a56ffdad75ddd9f3a0592873d3dd68c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price < 7.0 and industry price indicators stop falling",
-      "action": "strong_buy",
-      "max_weight": 0.08,
-      "reason": "低于悲观到基准估值区间，具备较厚安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，确认毛利率、净利润和经营现金流是否支撑复苏假设。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price >= 7.0 and price <= 10.0 and gross_margin improves for two consecutive quarters",
-      "action": "buy_in_batches",
-      "max_weight": 0.06,
-      "reason": "进入有安全边际的建仓区，但仍需确认周期修复。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断全年盈利中枢和行业价格趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price > 10.0 and price <= 12.0 and earnings recovery is confirmed",
-      "action": "small_tracking_position",
-      "max_weight": 0.03,
-      "reason": "接近合理区间上半段，适合小仓跟踪而非重仓。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，重估归一化盈利和资本开支回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price > 16.0",
-      "action": "do_not_chase_or_reduce",
-      "max_weight": 0.0,
-      "reason": "超过合理价值区间，需要极强盈利兑现支撑，风险收益比差。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入有安全边际买入区，复查玻纤价格、毛利率和现金流后可考虑首仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "超过不应追高价格，持仓需检查是否减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "明显进入估值透支区，若业绩未大幅超预期应优先控制仓位。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入有安全边际买入区，复查玻纤价格、毛利率和现金流后可考虑首仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "超过不应追高价格，持仓需检查是否减仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "明显进入估值透支区，若业绩未大幅超预期应优先控制仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，确认毛利率、净利润和经营现金流是否支撑复苏假设。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断全年盈利中枢和行业价格趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，重估归一化盈利和资本开支回报。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "玻纤纱价格和电子布价格",
-    "综合毛利率",
-    "归母净利润及扣非归母净利润",
-    "经营现金流净额/归母净利润",
-    "应收账款周转天数和前五大客户集中度",
-    "资本开支和新增产能投放",
-    "海外收入占比、汇兑损益和海外资产减值",
-    "分红率和资本配置纪律"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

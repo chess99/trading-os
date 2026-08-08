@@ -1,106 +1,106 @@
 {
-  "symbol": "CN:600350",
-  "market": "CN",
-  "ticker": "600350",
-  "name": "山东高速",
-  "company_name": "山东高速",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "山东高速是山东核心高速路产平台，现金流和分红稳定、资产质量高，但 2026-07-09 股价 12.14 元已反映高股息和公用事业重估，当前安全边际不足，等待 9.50 元以下或更明确的分红、REITs、资产注入催化。",
-  "quality_rating": "high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    9.5,
-    11.2
-  ],
-  "buy_zone": [
-    8.2,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    13.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山东高速",
+    "security_status": "active",
+    "symbol": "CN:600350",
+    "ticker": "600350"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "fd5d0d9664303971edb7a272162b4b9e5c30e83d29b94087aa22800e24d48c3d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价高于合理价值上沿且缺少新增催化",
-      "action": "暂不新买，保留观察",
-      "max_weight": 0,
-      "reason": "2026-07-09 收盘价 12.14 元已接近减持区，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报、车流、资本开支和分红可持续性",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至 9.50 元以下，且半年度车流、分红和资本开支未恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "进入合理价值下沿，股息和稳定现金流开始提供基础回报"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报是否延续 Q1 稳定利润和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至 8.80 元以下，且基本面无重大破坏",
-      "action": "提高至核心低波动仓位",
-      "max_weight": 0.03,
-      "reason": "悲观估值附近具备较好安全边际"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入基准买入区上沿，需复核半年度车流和分红",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "出现明确资产注入、REITs 盘活或分红率上调且每股价值可核验",
-      "action": "复核估值后再决定是否提高仓位上限",
-      "max_weight": 0.04,
-      "reason": "催化需要转化为每股现金流或资产价值提升才可加仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "接近悲观估值区，可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "进入减持或不追价区，新增资金预期收益不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "明显高于基准估值，需要强催化才能维持",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入基准买入区上沿，需复核半年度车流和分红"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "接近悲观估值区，可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "进入减持或不追价区，新增资金预期收益不足"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "明显高于基准估值，需要强催化才能维持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报、车流、资本开支和分红可持续性"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报是否延续 Q1 稳定利润和现金流"
-    }
-  ],
-  "key_tracking_metrics": [
-    "核心路产车流量",
-    "通行费收入",
-    "单公里通行费收入",
-    "归母净利润",
-    "经营活动现金流净额",
-    "资产负债率",
-    "有息债务成本",
-    "资本开支",
-    "每股股息",
-    "分红支付率",
-    "REITs 或资产注入进展",
-    "山东区域 GDP 与货运量"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

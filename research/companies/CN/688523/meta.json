@@ -1,69 +1,95 @@
 {
-  "symbol": "CN:688523",
-  "market": "CN",
-  "ticker": "688523",
-  "name": "航天环宇",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "航天环宇具备航天航空配套、卫星通信测控和航空产品的真实产业卡位，但2025年利润下滑、2026年一季度扣非盈利接近盈亏平衡，且43元股价对应约175亿元市值和极高TTM估值，已提前反映商业航天与航空放量预期；当前更适合观察，等待价格回落与利润、毛利率、回款同步改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    25,
-    32
-  ],
-  "buy_zone": [
-    18,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    50
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "航天环宇",
+    "security_status": "active",
+    "symbol": "CN:688523",
+    "ticker": "688523"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "62bf7a77315e9a5fe549c37499974c6bc63cffd605394f53b0c8c95228027dcd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价进入18-24元且2026年半年报或三季报显示收入增速恢复、扣非净利润转正、毛利率企稳、长账龄应收账款占比下降时建立观察仓",
-      "action": "buy_watch_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增长、扣非净利润、宇航及通信毛利率、应收账款账龄和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价仍高于42元且TTM PE仍高于250倍、扣非利润没有明显改善",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润恢复和订单验收节奏是否支持估值上修",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核募投项目是否按延期计划达到预定可使用状态，以及产能释放对应订单",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入观察区，需要复核中报或三季报的利润、毛利率和回款是否同步改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过估值上沿且缺少安全边际，应复核是否由主题交易驱动并考虑回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入买入观察区，需要复核中报或三季报的利润、毛利率和回款是否同步改善"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "超过估值上沿且缺少安全边际，应复核是否由主题交易驱动并考虑回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增长、扣非净利润、宇航及通信毛利率、应收账款账龄和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润恢复和订单验收节奏是否支持估值上修"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核募投项目是否按延期计划达到预定可使用状态，以及产能释放对应订单"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

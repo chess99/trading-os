@@ -1,103 +1,105 @@
 {
-  "symbol": "CN:920218",
-  "market": "CN",
-  "ticker": "920218",
-  "name": "新天力",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "食品容器制造中的优质细分公司，具备头部客户认证、直销服务和热成型/多层共挤/定位印刷等工艺积累，现金流质量较好；但客户集中度高、募投扩产消化和北交所流动性带来折价。当前约16.90元接近合理区间上沿，缺少足够安全边际，等待13.5元以下或中报验证后再行动。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.5,
-    17.5
-  ],
-  "buy_zone": [
-    12.2,
-    13.5
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新天力",
+    "security_status": "active",
+    "symbol": "CN:920218",
+    "ticker": "920218"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "650bf3928fc6640a1d4a55d8338f0928dd3cbe9c75d4e28321357b80b52913ce"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price review zone",
-      "action": "strong_buy_zone",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "buy_in_batches",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "starter_only_after_checks",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "hold_or_watch",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "复查客户、毛利率和中报预告，若无恶化可开第一笔1.0%-1.5%仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price review zone",
-      "action": "no_new_money",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.2
+      },
+      "reason": "进入强吸引力区，若基本面未破坏可提高至最高5%仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "price review zone",
-      "action": "avoid_chasing",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "不追高；除非2026E净利上修至9000万元以上且订单验证充分",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "action": "复查客户、毛利率和中报预告，若无恶化可开第一笔1.0%-1.5%仓位",
-      "reason": "复查客户、毛利率和中报预告，若无恶化可开第一笔1.0%-1.5%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 12.2,
-      "action": "进入强吸引力区，若基本面未破坏可提高至最高5%仓位",
-      "reason": "进入强吸引力区，若基本面未破坏可提高至最高5%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "action": "不追高；除非2026E净利上修至9000万元以上且订单验证充分",
-      "reason": "不追高；除非2026E净利上修至9000万元以上且订单验证充分"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "action": "复查2026中报：收入、扣非净利、前五大客户、毛利率、经营现金流",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "action": "复查2026三季报和募投扩产进度",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "action": "复查2026年报、分红政策和IPO后ROE",
-      "reason": "???????"
-    }
-  ],
-  "notes": [
-    "2026-07-19初始覆盖：质量评级B+，估值评级中性偏贵，当前决策watch。行情按2026-07-17最近交易日16.90元、总市值约15.83亿元；财务主要依据2026-05-18招股说明书、证券时报发行数据和行情网站交叉核验。地区收入结构未找到清晰一手拆分，标记为未核验。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,170 +1,101 @@
 {
-  "symbol": "CN:002192",
-  "market": "CN",
-  "ticker": "002192",
-  "company_name": "融捷股份",
-  "name": "融捷股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "hold",
-  "current_thesis": "2026年半年预告归母和扣非净利润均达约9-11亿元，确认锂精矿量价与联营锂盐利润弹性；62.30元已进入合理区间下半部，但约15万元/吨的高锂价会刺激供给回归，关联客户和联营收益仍要求折价，适合小跟踪仓而非重仓。",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "updated_at": "2026-07-17T21:45:00+08:00",
-  "conclusion": "融捷股份半年预告显著抬高盈利底座，股价又较7月8日回落29.1%；2026-07-17收盘价62.30元处于58-82元合理区间下半部，评级上调为持有，可用0.5%-1.0%跟踪仓试买，48-56元才是主要买入区。",
-  "quality_rating": "B+",
-  "valuation_rating": "合理",
-  "fair_value_range": [
-    58,
-    82
-  ],
-  "fair_value_method": "以半年预告上修后的中周期盈利为基础，采用更低的周期估值倍数，并用悲观/基准/乐观情景交叉校验，单位为人民币元/股。",
-  "buy_zone": [
-    48,
-    56
-  ],
-  "buy_zone_notes": "48-56元为主要买入区，48元以下强吸引；56-68元仅适合0.5%-1.0%跟踪仓，单位为人民币元/股。",
-  "sell_or_reduce_zone": [
-    88,
-    105
-  ],
-  "sell_or_reduce_zone_notes": "88元以上若盈利预测未继续上修则不追高，105元以上需要高锂价与高利润持续兑现，否则显著减仓，单位为人民币元/股。",
-  "position_plan": [
-    {
-      "stage": "today",
-      "condition": "2026-07-17收盘价62.30元，处于合理区间下半部但仍高于主要买入区",
-      "max_weight": 0.06,
-      "target_weight": 0.01,
-      "action": "无仓位者只开0.5%-1.0%跟踪仓；已有仓位维持，不一次性加仓。"
-    },
-    {
-      "stage": "first_entry",
-      "condition": "股价回落至56元以下，且碳酸锂未快速跌破12万元/吨、半年报现金流和应收未恶化",
-      "max_weight": 0.06,
-      "target_weight": 0.025,
-      "action": "56元以下提高至1.5%-2.5%；48元以下且基本面未证伪可提高至3%-5%。"
-    }
-  ],
-  "watch": {
-    "next_review": "2026年半年报披露后立即复核",
-    "focus": [
-      "半年报实际归母和扣非利润处于预告区间的位置",
-      "锂精矿产销量、售价和毛利率能否支撑二季度高利润",
-      "成都融捷锂业投资收益的规模和可持续性",
-      "经营现金流是否跟上利润、应收账款是否继续上升",
-      "碳酸锂高价下国内外复产节奏和35万吨/年选矿扩产进展"
-    ]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "融捷股份",
+    "security_status": "active",
+    "symbol": "CN:002192",
+    "ticker": "002192"
   },
-  "tracking_indicators": [
-    "锂精矿产量、销量和库存",
-    "锂精矿毛利率",
-    "成都融捷锂业利润和公司投资收益",
-    "经营现金流/归母净利润",
-    "前五大客户和关联方销售占比",
-    "35万吨选矿扩产、正负极项目和成都融捷锂业控制权进展"
-  ],
-  "price_triggers": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "e7ce3f6a5461b3487bddf1084b0cf67ddf718a5b0eca8c02363549d0885babdb"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "3250e92332cf8d886d306c247d79ab2fafeff3c73d0b61cdabc11ed8946ef691"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "type": "price_below",
-      "price": 56,
-      "currency": "CNY",
-      "reason": "进入主要买入区，可在复核锂价、半年报现金流和应收后分批建仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-19"
+      },
+      "reason": "公司预约2026-08-18披露半年报，次日复核实际利润、产销量、联营收益和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_below",
-      "price": 48,
-      "currency": "CNY",
-      "reason": "进入强吸引力区，若基本面未恶化，可提高至计划仓位上限。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报披露后复核锂价周期和全年利润中枢。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 88,
-      "currency": "CNY",
-      "reason": "进入偏贵区，若盈利预测未继续上修则停止新增并考虑降风险。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 56.0
+      },
+      "reason": "进入主要买入区，可在复核锂价、半年报现金流和应收后分批建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入强吸引力区，若基本面未恶化，可提高至计划仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 88.0
+      },
+      "reason": "进入偏贵区，若盈利预测未继续上修则停止新增并考虑降风险。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-19",
-      "reason": "公司预约2026-08-18披露半年报，次日复核实际利润、产销量、联营收益和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报披露后复核锂价周期和全年利润中枢。"
-    }
-  ],
-  "review_plan": "半年报后重点复核预告兑现位置、锂精矿产销量和毛利率、成都融捷锂业投资收益、经营现金流和应收账款；若价格触发56元以下或88元以上，或碳酸锂跌破12万元/吨，提前复查估值和仓位。",
-  "key_risks": [
-    "锂精矿和碳酸锂价格下行导致利润快速回落",
-    "前五大客户和关联方销售占比过高，存在关联交易和治理折价",
-    "委外选矿的品位、回收率、运输和成本控制不及预期",
-    "35万吨/年选矿扩产、正负极项目或成都融捷锂业股权安排低于预期",
-    "经营现金流转弱、应收账款和票据规模上升"
-  ],
-  "sources": [
-    {
-      "title": "融捷股份2025年年度报告",
-      "date": "2026-03-24",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-03-24/1225025147.PDF",
-      "local_file": "sources/2025-annual-report.pdf"
-    },
-    {
-      "title": "融捷股份2026年第一季度报告",
-      "date": "2026-04-28",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199987.PDF",
-      "local_file": "sources/2026-q1-report.pdf"
-    },
-    {
-      "title": "融捷股份投资者关系活动记录表",
-      "date": "2026-03-26",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-03-26/1225034546.PDF",
-      "local_file": "sources/2026-03-26-ir-record.pdf"
-    },
-    {
-      "title": "新浪行情接口 sz002192 快照",
-      "date": "2026-07-08",
-      "url": "https://hq.sinajs.cn/list=sz002192",
-      "local_file": "sources/2026-07-08-sina-quote.txt"
-    },
-    {
-      "title": "融捷股份2026年半年度业绩预告",
-      "date": "2026-07-11",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-07-11/1225418172.PDF",
-      "local_file": "sources/2026-07-17-announcement-notes.md"
-    },
-    {
-      "title": "融捷股份股票交易异常波动公告",
-      "date": "2026-07-13",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-07-13/1225418553.PDF",
-      "local_file": "sources/2026-07-17-announcement-notes.md"
-    },
-    {
-      "title": "新浪行情接口 sz002192 2026-07-17收盘快照",
-      "date": "2026-07-17",
-      "url": "https://hq.sinajs.cn/list=sz002192",
-      "local_file": "sources/2026-07-17-market-snapshots.md"
-    },
-    {
-      "title": "腾讯行情接口 sz002192 2026-07-17收盘快照",
-      "date": "2026-07-17",
-      "url": "https://qt.gtimg.cn/q=sz002192",
-      "local_file": "sources/2026-07-17-market-snapshots.md"
-    },
-    {
-      "title": "新浪期货行情接口 nf_LC0 2026-07-17快照",
-      "date": "2026-07-17",
-      "url": "https://hq.sinajs.cn/list=nf_LC0",
-      "local_file": "sources/2026-07-17-market-snapshots.md"
-    },
-    {
-      "title": "兴业期货碳酸锂2026年供需演变分析",
-      "date": "2025-12-12",
-      "url": "https://www.163.com/dy/article/KGJG5SC00519QIKK.html"
-    }
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

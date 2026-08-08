@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:301656",
-  "market": "CN",
-  "ticker": "301656",
-  "name": "联合动力",
-  "company_name": "联合动力",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "联合动力是新能源汽车电驱、电源和智能底盘零部件公司，并非风电资产；背靠汇川技术且具备规模交付能力，但2026Q1利润大幅下滑显示价格竞争、客户结构、材料成本、存货减值和研发投入压力仍待验证，现价不具备足够安全边际，维持观察。",
-  "quality_rating": "B",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    11.0,
-    14.5
-  ],
-  "buy_zone": [
-    10.0,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    17.0,
-    20.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联合动力",
+    "security_status": "active",
+    "symbol": "CN:301656",
+    "ticker": "301656"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "e46916364a8252de2ccda48e8fae9cee63fe845ffc25027f488b3c308d808f85"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于合理价值上半区且2026Q1利润尚未修复",
-      "action": "不主动建仓，仅保留研究观察",
-      "max_weight": 0,
-      "reason": "估值仍在定价利润修复，但价格竞争、存货减值和研发投入压力需要后续季报验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看毛利率、扣非净利率、存货减值和现金流质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至10.0-12.0元且扣非净利率、存货减值和经营现金流质量改善",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "接近IPO发行价和买入区间，同时需要基本面修复证据配合"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1利润压力是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于17.0元且未披露利润率持续修复证据",
-      "action": "不追高，已有仓位减仓",
-      "max_weight": 0.005,
-      "reason": "新股成长溢价偏高，2026Q1盈利波动尚未消化"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入买入观察区，需同步复核中报或三季报利润率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入深度折价区，但只有基本面未继续恶化时才考虑加到1%以内",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.0
+      },
+      "reason": "高于合理价值区间上沿，若缺少利润修复证据应避免追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入买入观察区，需同步复核中报或三季报利润率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入深度折价区，但只有基本面未继续恶化时才考虑加到1%以内"
-    },
-    {
-      "type": "price_above",
-      "price": 17.0,
-      "reason": "高于合理价值区间上沿，若缺少利润修复证据应避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看毛利率、扣非净利率、存货减值和现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1利润压力是否持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入增速",
-    "归母净利润和扣非归母净利润",
-    "扣非净利率",
-    "电驱系统收入和毛利率",
-    "电源系统收入和毛利率",
-    "智能底盘定点和SOP进度",
-    "资产减值损失和存货减值",
-    "经营活动现金流量净额及票据贴现影响",
-    "海外全球平台项目交付进度",
-    "限售解禁和股东减持安排"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

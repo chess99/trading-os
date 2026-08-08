@@ -1,84 +1,95 @@
 {
-  "symbol": "CN:301178",
-  "ticker": "301178",
-  "name": "天亿马",
-  "company_name": "广东天亿马信息产业股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "天亿马本体仍是低净利率智慧城市与政企信息化项目公司，独立估值支撑弱；拟收购星云开物若顺利完成并兑现利润承诺，将显著抬升盈利中枢并引入 IoT/SaaS 平台属性。但当前股价已反映较多交易成功预期，安全边际不足，适合观察而非追买。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    26,
-    36
-  ],
-  "buy_zone": [
-    0,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天亿马",
+    "security_status": "active",
+    "symbol": "CN:301178",
+    "ticker": "301178"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "dbfd85c168b048185bc777256bb8acfc61d83a897f63bd0a7b1e94c3b7091942"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "交易完成前，仅在股价跌入 24 元以下且无重组失败负面信号时建立观察仓",
-      "action": "watchlist_or_small_probe",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查本体业务利润率、经营现金流、应收账款和重组进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "星云开物完成交割并连续两个报告期利润与经营现金流达预期，且完全摊薄 PE 低于 25 倍",
-      "action": "increase_selectively",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报和星云开物交易审核/交割状态，更新完全摊薄估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "交易失败、标的业绩承诺不达预期，或股价高于 42 元但无新增经营兑现证据",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报及可能的并表效果、业绩承诺完成率和商誉风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入基准估值下沿并开始具备并购失败风险折价，可重新评估小仓位试错",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "进入乐观情景定价区，若缺乏星云开物并表和现金流兑现，应考虑减仓或不追",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入基准估值下沿并开始具备并购失败风险折价，可重新评估小仓位试错"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "进入乐观情景定价区，若缺乏星云开物并表和现金流兑现，应考虑减仓或不追"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查本体业务利润率、经营现金流、应收账款和重组进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报和星云开物交易审核/交割状态，更新完全摊薄估值"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报及可能的并表效果、业绩承诺完成率和商誉风险"
-    }
-  ],
-  "key_monitoring_items": [
-    "重大资产重组审核、股东会和交割进度",
-    "星云开物在线设备数、活跃设备数、SaaS收入占比和续费率",
-    "合并口径经营现金流净额与归母净利润匹配度",
-    "应收账款、合同资产和项目验收周期",
-    "完全摊薄市值与合并归母利润中枢的匹配"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

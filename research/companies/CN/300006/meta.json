@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300006",
-  "ticker": "300006",
-  "name": "莱美药业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司具备卡纳琳和纳米炭铁管线期权，但 2025 年和 2026Q1 仍亏损、收入下滑，当前市销率和市净率已明显高于保守可兑现基本面，不具备安全边际。",
-  "fair_value_range": [
-    2.2,
-    3.4
-  ],
-  "buy_zone": [
-    1.8,
-    2.5
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    5.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "莱美药业",
+    "security_status": "active",
+    "symbol": "CN:300006",
+    "ticker": "300006"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "f3476a1ca62fa0bc7dd77f8e13399f02a0de34d8772f0c82d159ec2ffeb0cea9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 2.5 元，且最近两个季度收入同比转正或经营现金流转正",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入、现金流、投资收益和减值情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 2.1 元，且没有新增重大减值或治理恶化",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报及纳米炭铁 II 期临床进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "纳米炭铁 II 期出现明确积极读出，且核心产品收入可核验增长",
-      "action": "重新估值后再决定是否加仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和全年盈利修复质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.5
+      },
+      "reason": "进入初步买入观察区，需要复核收入、现金流和减值风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "高于基准公允价值上沿且缺乏安全边际，应复核是否由真实催化驱动",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.5,
-      "reason": "进入初步买入观察区，需要复核收入、现金流和减值风险"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "高于基准公允价值上沿且缺乏安全边际，应复核是否由真实催化驱动"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入、现金流、投资收益和减值情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报及纳米炭铁 II 期临床进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和全年盈利修复质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

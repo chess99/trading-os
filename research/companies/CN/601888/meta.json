@@ -1,108 +1,105 @@
 {
-  "symbol": "CN:601888",
-  "market": "CN",
-  "ticker": "601888",
-  "name": "中国中免",
-  "company_name": "中国中免",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "中国中免仍是中国免税与旅游零售最稀缺的龙头资产，当前价格已接近可买区，但需要持续验证海南恢复、机场盈利修复、折扣率收敛和DFS整合质量，因此适合小仓位起步、下跌再加。",
-  "quality_rating": "high",
-  "valuation_rating": "neutral_to_attractive",
-  "fair_value_range": [
-    56,
-    72
-  ],
-  "buy_zone": [
-    46,
-    54
-  ],
-  "sell_or_reduce_zone": [
-    68,
-    82
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国中免",
+    "security_status": "active",
+    "symbol": "CN:601888",
+    "ticker": "601888"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "307760cef2a788478be848209512b372f6c54949cadd65fef9bd83d3ec9daa71"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_42",
-      "action": "aggressive_buy",
-      "max_weight": 0.1,
-      "reason": "对应悲观情景定价，安全边际充足。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点看海南收入、免税毛利率、机场盈利修复与减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_42_46",
-      "action": "buy",
-      "max_weight": 0.08,
-      "reason": "强吸引力买入区，适合提高核心仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季度和国庆旺季数据，验证海南与机场恢复持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_46_54",
-      "action": "accumulate",
-      "max_weight": 0.06,
-      "reason": "接近安全边际买入区，适合分批建仓。"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复查2026年报，评估DFS整合、分红率、利润中枢和资本配置。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_between_54_62",
-      "action": "starter_or_hold",
-      "max_weight": 0.04,
-      "reason": "估值回到合理区间下沿，只保留试仓或小幅加仓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 46.0
+      },
+      "reason": "进入有安全边际的买入区，复查是否分批加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_above_68",
-      "action": "avoid_chasing_or_reduce",
-      "max_weight": 0.01,
-      "reason": "超过不追高价格，赔率下降。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可显著加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 68.0
+      },
+      "reason": "超过不应追高价格，评估减仓或停止新增。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 46,
-      "reason": "进入有安全边际的买入区，复查是否分批加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入强吸引力买入区，若基本面未恶化可显著加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 68,
-      "reason": "超过不应追高价格，评估减仓或停止新增。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点看海南收入、免税毛利率、机场盈利修复与减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季度和国庆旺季数据，验证海南与机场恢复持续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复查2026年报，评估DFS整合、分红率、利润中枢和资本配置。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "海南离岛免税行业销售额、购物人次、人均消费",
-    "中国中免海南地区收入增速与市场份额变化",
-    "免税商品毛利率",
-    "存货跌价损失与存货周转",
-    "上海与北京机场门店盈利修复情况",
-    "DFS大中华整合进度与利润贡献",
-    "会员活跃度与线上平台整合效果",
-    "分红率与资本开支强度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

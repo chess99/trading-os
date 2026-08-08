@@ -1,105 +1,106 @@
 {
-  "symbol": "CN:002236",
-  "market": "CN",
-  "ticker": "002236",
-  "name": "大华股份",
-  "company_name": "大华股份",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "大华股份是视频监控与智能物联龙头之一，2025年和2026Q1收入、利润、现金流均有修复，海外业务贡献主要增长和较高毛利率；但海外制裁、传统安防成熟期、毛利率和回款质量仍需折价，当前更适合等待15-17元买入区间分批建仓。",
-  "quality_rating": "good",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    18.5,
-    23.5
-  ],
-  "buy_zone": [
-    15.0,
-    17.0
-  ],
-  "sell_or_reduce_zone": [
-    23.5,
-    27.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大华股份",
+    "security_status": "active",
+    "symbol": "CN:002236",
+    "ticker": "002236"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "6329b8a436272d8803cbe4f530afed4bf61d90af2389ad4ba7bcac2ba61237c1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格在17元附近且尚无持仓",
-      "action": "仅建立观察仓",
-      "max_weight": 0.02,
-      "reason": "基本面修复明确但海外制裁和行业成熟期风险仍压制估值，当前安全边际一般"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点核验海外收入、毛利率、现金流和应收质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至15-16元且无重大负面公告",
-      "action": "分批加仓",
-      "max_weight": 0.04,
-      "reason": "进入买入区间下半部，较合理价值区间具备约15%-25%安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断全年利润和现金流兑现程度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "半年报确认海外增长、毛利率和现金流均稳定",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.06,
-      "reason": "若增长质量被验证，可接受更高仓位，但仍需保留海外政策风险折价"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入更有吸引力的买入区间，需复核是否由基本面恶化导致",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于23.5元且盈利预测未上修",
-      "action": "停止加仓并逐步减仓",
-      "max_weight": 0.03,
-      "reason": "价格进入合理价值区间上沿，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "具备较充分安全边际，可考虑提高仓位但需检查海外政策和现金流",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.5
+      },
+      "reason": "达到合理价值区间上沿，若盈利未上修应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "估值进入乐观情景区间，需重新评估上涨是否由业绩驱动",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入更有吸引力的买入区间，需复核是否由基本面恶化导致"
-    },
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "具备较充分安全边际，可考虑提高仓位但需检查海外政策和现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 23.5,
-      "reason": "达到合理价值区间上沿，若盈利未上修应考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 27.0,
-      "reason": "估值进入乐观情景区间，需重新评估上涨是否由业绩驱动"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点核验海外收入、毛利率、现金流和应收质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断全年利润和现金流兑现程度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "扣非归母净利润同比增速",
-    "境外收入增速和占比",
-    "综合毛利率",
-    "境外业务毛利率",
-    "研发费用率",
-    "经营现金流净额/归母净利润",
-    "应收账款和合同资产变化",
-    "与海康威视的收入增速、毛利率和估值差",
-    "美国、欧盟及重点海外市场监管限制变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

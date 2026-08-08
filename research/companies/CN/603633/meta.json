@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603633",
-  "market": "CN",
-  "ticker": "603633",
-  "name": "徕木股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "徕木股份具备汽车精密连接器、屏蔽件和结构件的一体化制造能力，长期受益于汽车电动化和智能化，但 2025 年利润大幅下滑、2026 年上半年预计亏损，当前投资重点是验证产能利用率、毛利率和现金流修复。估值处于合理区间中部，暂宜观察，等待亏损收窄或价格给出更大安全边际。",
-  "fair_value_range": [
-    4.8,
-    6.6
-  ],
-  "buy_zone": [
-    4.0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "徕木股份",
+    "security_status": "active",
+    "symbol": "CN:603633",
+    "ticker": "603633"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "4a989ea5dfac69007bad809dfe5d3deeec4b37bb041c9a5496a0071e3ecc2293"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价低于 4.8 元且 2026H2 亏损收窄、经营现金流未恶化时建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，确认亏损、毛利率、现金流和担保情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于 4.0 元且 PB 接近或低于 1 倍，同时担保和短债风险未扩大，可提高至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断亏损是否收窄和收入是否恢复增长",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于 7.2 元但利润仍未恢复为正，降低或不新增仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和 2027 年一季报，更新正常化利润与估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入安全边际观察区，需同时复核亏损收窄和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "接近悲观情景估值，可重新评估小仓位买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "超过合理区间上沿且若利润未恢复，风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入安全边际观察区，需同时复核亏损收窄和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "接近悲观情景估值，可重新评估小仓位买入"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "超过合理区间上沿且若利润未恢复，风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，确认亏损、毛利率、现金流和担保情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断亏损是否收窄和收入是否恢复增长"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和 2027 年一季报，更新正常化利润与估值"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

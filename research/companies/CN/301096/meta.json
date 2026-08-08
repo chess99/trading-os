@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301096",
-  "ticker": "301096",
-  "name": "百诚医药",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "百诚医药具备药学研究、注册申报、成果转化和CDMO一体化能力，2026Q1利润表已从2025年亏损低谷修复；但收入仍同比下滑、经营现金流仍为负、估值对修复已有较多预期，当前应先观察扣非利润和现金流连续验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    38,
-    52
-  ],
-  "buy_zone": [
-    30,
-    36
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    68
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "百诚医药",
+    "security_status": "active",
+    "symbol": "CN:301096",
+    "ticker": "301096"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "673bd644241b6da35fdd21ceb1d82bcaded5b97a5c8de391ad55f8c6b67236f5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "若股价进入30-36元且最近两个季度扣非归母净利润连续为正、经营现金流转正，可建立观察仓。",
-      "action": "initiate_small_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、经营现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价处于38-52元且现金流尚未验证，仅保留研究跟踪，不新增仓位。",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否连续、现金流是否转正。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于58元且订单、扣非利润、现金流没有同步上修，已有仓位应减仓或退出。",
-      "action": "reduce_or_exit",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常化利润、资产质量和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入买入观察区，若同时满足现金流和扣非利润改善，可复核建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "超过合理价值上沿，若基本面没有同步上修，应复核减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入买入观察区，若同时满足现金流和扣非利润改善，可复核建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "超过合理价值上沿，若基本面没有同步上修，应复核减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、经营现金流、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否连续、现金流是否转正。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常化利润、资产质量和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

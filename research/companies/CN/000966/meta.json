@@ -1,91 +1,96 @@
 {
-  "symbol": "CN:000966",
-  "market": "CN",
-  "ticker": "000966",
-  "name": "长源电力",
-  "company_name": "长源电力",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "湖北区域电力平台具备央企股东、容量电价托底和新能源扩张方向，但2025年亏损后仍需等待煤价、电价、电量和现金流共同修复，当前适合观察仓而非重仓买入。",
-  "quality_rating": "medium",
-  "valuation_rating": "cheap_if_recovery",
-  "fair_value_range": [
-    3.9,
-    5.0
-  ],
-  "buy_zone": [
-    3.2,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    5.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长源电力",
+    "security_status": "active",
+    "symbol": "CN:000966",
+    "ticker": "000966"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "3202b193be2c81f76b9ea8c486e1a7dc3bfdc0f4442248337335b983b88ec2cd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.60元，且未出现煤价、电价、监管重大利空",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "接近低PB区间，但2025年亏损后仍需等待利润修复确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-20"
+      },
+      "reason": "公司预计披露下一期财报，需复核2026年中报利润、现金流、装机和电量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格接近3.20元，且2026年中报显示扣非利润和经营现金流修复",
-      "action": "加仓至小仓位",
-      "max_weight": 0.03,
-      "reason": "安全边际扩大，同时基本面出现初步兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核全年盈利修复趋势、煤价敏感性和容量电价兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于5.20元但利润未连续两个季度兑现",
-      "action": "减仓或暂停加仓",
-      "max_weight": 0.01,
-      "reason": "估值已提前反映煤价下行和容量电价托底，赔率下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入初始买入区间，适合复核中报和煤价后建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入高安全边际区间，但必须确认利润修复不是一次性因素",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "进入减仓区间，需检查估值是否已透支经营修复",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入初始买入区间，适合复核中报和煤价后建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入高安全边际区间，但必须确认利润修复不是一次性因素"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "进入减仓区间，需检查估值是否已透支经营修复"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-20",
-      "reason": "公司预计披露下一期财报，需复核2026年中报利润、现金流、装机和电量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核全年盈利修复趋势、煤价敏感性和容量电价兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度总发电量及火电、水电、新能源分项同比",
-    "湖北市场化交易电价和绿电交易溢价",
-    "入炉标煤单价、长协煤履约率和动力煤现货价格",
-    "容量电费确认金额和结算节奏",
-    "新能源新增并网装机、利用小时和弃电率",
-    "经营性现金流、资本开支、有息负债和财务费用",
-    "年度利润分配预案、分红率和母公司可分配利润",
-    "关联交易、煤炭采购定价和集团资产注入公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

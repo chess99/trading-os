@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600479",
-  "ticker": "600479",
-  "name": "千金药业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "女性健康中成药品牌叠加西药生产利润改善的现金流型公司，分红和品牌提供防御性，但当前价格已接近合理价值中部，缺少足够安全边际，等待低于买入区间或盈利中枢上修。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.5,
-    12.5
-  ],
-  "buy_zone": [
-    8.2,
-    9.0
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "千金药业",
+    "security_status": "active",
+    "symbol": "CN:600479",
+    "ticker": "600479"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b049c3678ad7ad0968fa48b4b8198240db1423c4da78081eeea053adbad3b740"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_between_8.8_and_9.0_and_no_fundamental_deterioration",
-      "action": "initiate_small_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增速、经营现金流和中药/西药/卫生用品分部表现。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_below_8.2_and_core_products_stable_and_cashflow_normal",
-      "action": "increase_to_full_watch_position",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润中枢是否高于3.3亿元。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_above_13.5_without_earnings_upgrade",
-      "action": "reduce_or_avoid_new_buying",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红方案，更新估值与持仓上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入初步买入观察区，需复核半年报和核心品种销量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "达到较充分安全边际，若基本面未恶化可考虑加仓至上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "高于基准估值区间上沿，除非盈利中枢上修否则风险收益下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入初步买入观察区，需复核半年报和核心品种销量。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "达到较充分安全边际，若基本面未恶化可考虑加仓至上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "高于基准估值区间上沿，除非盈利中枢上修否则风险收益下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增速、经营现金流和中药/西药/卫生用品分部表现。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润中枢是否高于3.3亿元。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红方案，更新估值与持仓上限。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

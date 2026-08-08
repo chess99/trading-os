@@ -1,146 +1,124 @@
 {
-  "symbol": "CN:002479",
-  "market": "CN",
-  "ticker": "002479",
-  "name": "富春环保",
-  "company_name": "浙江富春江环保热电股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "区域热电现金流提供底部，有色金属资源化业务在2026H1受产品价格上涨驱动利润显著修复；但当前4.86元已反映部分涨价预期，需等待4.10元以下安全边际或半年报验证现金流质量后再小仓位介入。",
-  "quality_rating": "B",
-  "valuation_rating": "B-/中性偏便宜",
-  "fair_value_range": [
-    4.5,
-    5.8
-  ],
-  "buy_zone": [
-    3.7,
-    4.1
-  ],
-  "sell_or_reduce_zone": [
-    5.3,
-    6.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "富春环保",
+    "security_status": "active",
+    "symbol": "CN:002479",
+    "ticker": "002479"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "40e4b6d58b7df81a09f19dcd5f582f43e4897c95d542350c2d2b2e88c01d2713"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价<=3.70元",
-      "price_range": "<=3.70",
-      "action": "强吸引力买入",
-      "target_position": "5%-8%",
-      "max_weight": 0.08
-    },
-    {
-      "condition": "股价3.70-4.10元",
-      "price_range": "3.70-4.10",
-      "action": "有安全边际买入",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价4.10-4.50元",
-      "price_range": "4.10-4.50",
-      "action": "小仓试错",
-      "target_position": "0%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价4.50-5.30元",
-      "price_range": "4.50-5.30",
-      "action": "观察/持有",
-      "target_position": "0%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价5.30-6.20元",
-      "price_range": "5.30-6.20",
-      "action": "不新买，择机减仓",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价>6.20元",
-      "price_range": ">6.20",
-      "action": "卖出或明显降仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "price <= 3.70",
-      "price": 3.7,
-      "action": "强吸引力买入",
-      "reason": "接近0.75x 2026E BVPS与悲观情景下沿"
-    },
-    {
-      "type": "price_below",
-      "condition": "price <= 4.10",
-      "price": 4.1,
-      "action": "有安全边际买入",
-      "reason": "低于合理价值中枢约20%"
-    },
-    {
-      "type": "price_above",
-      "condition": "price >= 5.30",
-      "price": 5.3,
-      "action": "不追高",
-      "reason": "需要2026H2业绩继续上修才能支撑"
-    },
-    {
-      "type": "price_above",
-      "condition": "price >= 6.20",
-      "price": 6.2,
-      "action": "卖出或明显降仓",
-      "reason": "接近乐观情景上沿"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026半年度报告披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证2026H1业绩预告兑现质量",
-      "focus": "复核利润、经营现金流、存货和非经常性损益"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "2026三季度报告披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证资源化高景气是否延续到下半年",
-      "focus": "复核资源化产品价格、盈利预测和买入价"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "2026年度报告披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "复盘全年利润、现金流和分红",
-      "focus": "复核热电主业现金流底盘"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "trigger": "2027半年度报告披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "判断2026周期利润是否具备持续性",
-      "focus": "复核资本配置质量"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.7
+      },
+      "reason": "接近0.75x 2026E BVPS与悲观情景下沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "低于合理价值中枢约20%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.3
+      },
+      "reason": "需要2026H2业绩继续上修才能支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "接近乐观情景上沿",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "归母净利润和扣非归母净利润",
-    "经营现金流/净利润",
-    "有色金属综合回收收入和毛利率",
-    "电力及热力收入和毛利率",
-    "存货余额、存货周转和跌价准备",
-    "短期借款、长期借款、净有息债务/EBITDA",
-    "煤价、蒸汽销量、上网电量、固废/污泥处置量",
-    "分红率、回购、并购和新项目ROIC"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

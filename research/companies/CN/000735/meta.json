@@ -1,129 +1,115 @@
 {
-  "symbol": "CN:000735",
-  "market": "CN",
-  "ticker": "000735",
-  "name": "罗牛山",
-  "company_name": "罗牛山股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "罗牛山是海南区域生猪、食品、冷链、地产和教育混合资产。2025年盈利为正，但2026Q1转亏，2026年上半年销量高增而收入下降，说明猪价压力尚未解除。当前5.00元接近基准合理区间上沿，缺少安全边际，等待4.20元以下或经营数据确认后再考虑小仓位。",
-  "quality_rating": "C+",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    4.3,
-    5.3
-  ],
-  "buy_zone": [
-    3.4,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    5.3,
-    6.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "罗牛山",
+    "security_status": "active",
+    "symbol": "CN:000735",
+    "ticker": "000735"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "38cfc9ed0afc404b5345479f5b95517622dda6b548cfabcbbb91dacc525ee915"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.40元且没有重大减值、债务或疫病事件",
-      "price_range": "<3.40",
-      "action": "强吸引力买入",
-      "target_position": "5%-8%",
-      "max_weight": 0.08
-    },
-    {
-      "condition": "股价在3.40-4.20元且月度销售收入降幅收窄、单季亏损收敛",
-      "price_range": "3.40-4.20",
-      "action": "分批买入",
-      "target_position": "2%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价在4.20-5.30元且经营数据尚未确认反转",
-      "price_range": "4.20-5.30",
-      "action": "观察",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价在5.30-6.00元且没有盈利或资产重估支撑",
-      "price_range": "5.30-6.00",
-      "action": "不追高",
-      "target_position": "0%新增",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价高于6.00元且基本面没有同步上修",
-      "price_range": ">6.00",
-      "action": "降低关注/减持",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "direction": "below",
-      "reason": "低于安全边际买入价",
-      "action": "进入有安全边际买入区，复核月度销售和半年报后考虑2%-5%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "direction": "below",
-      "reason": "低于强吸引力买入价",
-      "action": "进入强吸引力买入区，若无重大风险事件可考虑5%-8%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 5.3,
-      "direction": "above",
-      "reason": "高于合理区间上沿",
-      "action": "不追高，等待经营数据确认"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "direction": "above",
-      "reason": "高于减持观察区且基本面未必支撑",
-      "action": "若无盈利或资产重估支撑，降低关注或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报验证2026Q1亏损是否收敛",
-      "condition": "2026年半年度报告披露后复查收入、毛利率、存货跌价准备和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季度月度销售数据验证销量增长是否转化为收入",
-      "condition": "复查2026年7-9月畜牧销售简报，确认销量增长是否转化为收入恢复"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报验证全年盈利、现金流和资产质量",
-      "condition": "2026年年度报告披露后复查全年盈利、现金流、地产资产和债务压力"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "低于安全边际买入价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "低于强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.3
+      },
+      "reason": "高于合理区间上沿",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "高于减持观察区且基本面未必支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "月度生猪销量",
-    "月度生猪销售收入",
-    "头均销售收入",
-    "畜牧/食品毛利率",
-    "存货跌价准备",
-    "经营活动现金流净额",
-    "货币资金/短期债务覆盖",
-    "地产存货去化和投资性房地产收益"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

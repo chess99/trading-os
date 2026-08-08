@@ -1,97 +1,86 @@
 {
-  "market": "CN",
-  "symbol": "CN:301046",
-  "ticker": "301046",
-  "name": "能辉科技",
-  "company_name": "上海能辉科技股份有限公司",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "sector": "新能源",
-  "industry": "光伏电站系统集成与新能源技术服务",
-  "status": "active",
-  "current_rating": "watch",
-  "rating": "watch",
-  "recommendation": "观察",
-  "conviction": "low",
-  "risk_level": "high",
-  "max_weight": 0.01,
-  "fair_value_range": [
-    8.3,
-    11.9
-  ],
-  "buy_zone": [
-    7.0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    999.0
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "能辉科技",
+    "security_status": "active",
+    "symbol": "CN:301046",
+    "ticker": "301046"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "7f6bf7994fca3dfeacdba2b42677d773dec29481298b3c51df155dcfc3fdbd16"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "action": "watch",
-      "condition": "当前估值主要定价转型期权，不建议作为核心仓位。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证2025下半年以来的收入和毛利压力是否缓解",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "action": "reassess_buy",
-      "condition": "股价接近1.5倍PB或10.5元以下，且财务未恶化。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "验证扣非盈利和经营现金流是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "action": "reassess_upgrade",
-      "condition": "2026年连续两个季度扣非盈利和经营现金流转正。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入报告定义的安全边际复核区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "高于基准估值区间，接近乐观情景定价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "last_reviewed": "2026-07-15",
-  "next_review": "2026-10-31",
-  "current_thesis": "光伏EPC业务收入规模尚可但利润率薄、客户集中和回款波动大；储能与商用车充换电提供转型期权，但截至2026Q1尚未兑现到利润。当前市值主要定价乐观转型，安全边际不足。",
-  "thesis": "光伏EPC业务收入规模尚可但利润率薄、客户集中和回款波动大；储能与商用车充换电提供转型期权，但截至2026Q1尚未兑现到利润。当前市值主要定价乐观转型，安全边际不足。",
-  "key_points": [
-    "2025年收入11.82亿元，同比增长7.74%，归母净利润698.50万元，同比下降86.71%。",
-    "2026Q1收入1.46亿元，同比下降53.00%，归母净利润-482.62万元。",
-    "2025年光伏电站系统集成收入占比93.48%，毛利率10.13%，同比下降4.86pct。",
-    "截至2026-07-15收盘价22.12元，按2026Q1净资产测算PB约3.18倍，估值依赖新业务兑现。"
-  ],
-  "watch_items": [
-    "光伏系统集成毛利率是否恢复至12%以上",
-    "经营现金流、销售收现比和应收账款周转",
-    "海外储能350MWh框架合同的订单、交付和回款",
-    "商用车充换电业务收入与毛利率",
-    "前五大客户集中度变化"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "披露2026年半年报",
-      "reason": "验证2025下半年以来的收入和毛利压力是否缓解"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "披露2026年三季报",
-      "reason": "验证扣非盈利和经营现金流是否修复"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "action": "reassess_buy",
-      "reason": "进入报告定义的安全边际复核区间"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "action": "reduce_or_avoid",
-      "reason": "高于基准估值区间，接近乐观情景定价"
-    }
-  ],
-  "updated_at": "2026-07-15"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

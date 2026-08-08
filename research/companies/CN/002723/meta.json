@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:002723",
-  "ticker": "002723",
-  "name": "小崧股份",
-  "company_name": "广东小崧科技股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司仍处亏损和业务重构期，2025年及2026Q1未证明盈利反转；当前8.24元对应约3.73倍PB，显著高于其低毛利、负ROE和治理变动风险所能支持的价值。除非主营毛利率、现金流和新业务盈利能力连续验证，否则不建立仓位。",
-  "fair_value_range": [
-    2.0,
-    3.5
-  ],
-  "buy_zone": [
-    1.8,
-    2.5
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    8.24
-  ],
-  "position_plan": [
-    {
-      "condition": "当前基本面未改善且股价高于5元，不建立仓位。",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "若股价低于2.5元且连续两个季度经营现金流转正、毛利率超过12%，可重新研究，试探仓上限0.5%。",
-      "max_weight": 0.005
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.5,
-      "reason": "进入买入观察区，需要复核现金流、毛利率和控制权变更后的经营计划。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "reason": "若基本面仍未反转而股价维持高估，继续规避并复核是否存在交易性泡沫。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入、毛利率、亏损收窄、经营现金流和上海崧果披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断连续亏损是否缓解以及新控制人战略是否落地。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估净资产侵蚀、减值风险和合理估值区间。"
-    }
-  ],
-  "last_price": {
-    "price": 8.24,
-    "date": "2026-07-14",
-    "source": "腾讯行情"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "小崧股份",
+    "security_status": "active",
+    "symbol": "CN:002723",
+    "ticker": "002723"
   },
-  "decision": "不买",
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "ff5ea2207fa0da3c226c2479ff8a34ec43a088fdb93d3d86cbfc2b69010fc8d5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入、毛利率、亏损收窄、经营现金流和上海崧果披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断连续亏损是否缓解以及新控制人战略是否落地。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估净资产侵蚀、减值风险和合理估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.5
+      },
+      "reason": "进入买入观察区，需要复核现金流、毛利率和控制权变更后的经营计划。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "若基本面仍未反转而股价维持高估，继续规避并复核是否存在交易性泡沫。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

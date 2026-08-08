@@ -1,70 +1,105 @@
 {
-  "symbol": "CN:300984",
-  "ticker": "300984",
-  "name": "金沃股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "金沃股份是轴承套圈细分制造商，工艺和客户认证有一定壁垒，2026年利润有恢复迹象，但当前市值已提前反映高端轴承与机器人链条的乐观预期，缺乏安全边际，适合观察等待业绩兑现或估值回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [22, 28],
-  "buy_zone": [18, 23],
-  "sell_or_reduce_zone": [38, 45],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金沃股份",
+    "security_status": "active",
+    "symbol": "CN:300984",
+    "ticker": "300984"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "f69ca99d635728fcf331f65b898f65aa9ccf1c5bae7027b3193516c80c743e2c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于23元，最近两个季度收入同比增速不低于15%，且经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、现金流和高端产品进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于20元，毛利率同比改善，且应收账款和存货未明显快于收入扩张",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润是否能进入0.6亿元以上台阶",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元，并出现公告级高端轴承、机器人或新能源车客户订单验证",
-      "action": "提高至上限仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，更新估值区间与评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入买入观察区，需要复核最近两个季度增长与现金流质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入较高安全边际区，需要复核高端产品订单验证",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "明显高于乐观情景估值中枢，需要检查是否存在业绩超预期兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入买入观察区，需要复核最近两个季度增长与现金流质量"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入较高安全边际区，需要复核高端产品订单验证"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "明显高于乐观情景估值中枢，需要检查是否存在业绩超预期兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、现金流和高端产品进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润是否能进入0.6亿元以上台阶"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，更新估值区间与评级"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

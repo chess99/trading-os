@@ -1,75 +1,86 @@
 {
-  "symbol": "CN:002883",
-  "market": "CN",
-  "ticker": "002883",
-  "name": "*ST中设",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "*ST中设处于财务类退市风险警示期，2026年收入恢复有助于保壳但盈利和审计质量仍待验证；当前价格显著高于合理价值，维持回避。",
-  "fair_value_range": [
-    3.0,
-    4.5
-  ],
-  "buy_zone": [
-    2.0,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST中设",
+    "security_status": "active",
+    "symbol": "CN:002883",
+    "ticker": "002883"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "bfc896fa41a1bca8f63660a935ea6763219e186e9482cf1e8c8ff7e4529299a1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前仍处退市风险警示且价格明显高于合理价值区间",
-      "action": "不买入，保持空仓观察",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣除后营业收入、亏损收窄、现金流和应收款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.8元，且2026年扣除后营业收入年化趋势明确高于3亿元",
-      "action": "仅可建立跟踪仓，等待年报和审计意见验证",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及审计意见，判断退市风险是否解除",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年年报确认扣后收入高于3亿元、审计意见标准无保留、经营现金流为正且价格低于3.5元",
-      "action": "可提高至小仓位困境反转配置",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入可研究买入区，但仍需确认保壳和审计意见",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "明显高于基本面合理价值上沿，应回避或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入可研究买入区，但仍需确认保壳和审计意见"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "reason": "明显高于基本面合理价值上沿，应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣除后营业收入、亏损收窄、现金流和应收款"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及审计意见，判断退市风险是否解除"
-    }
-  ],
-  "notes": [
-    "本轮评级为avoid，核心原因是ST退市风险、审计强调事项和当前价格高于合理价值。",
-    "2026年半年度业绩预告来自证券时报等公告摘要，未能直接打开官方PDF，置信度中等。",
-    "未发现已核验的重大债务违约、重大违规担保或资金占用公告，但历史公告未逐条完成核验，需后续复核。",
-    "当前价格约8.5元来自行情聚合页，非公司公告，作为估值基准置信度中等。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

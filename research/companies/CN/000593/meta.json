@@ -1,107 +1,106 @@
 {
-  "symbol": "CN:000593",
-  "market": "CN",
-  "ticker": "000593",
-  "name": "德龙汇能",
-  "company_name": "德龙汇能",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "B-",
-  "valuation_rating": "expensive",
-  "current_thesis": "德龙汇能具备区域城燃特许经营和现金流底盘，但 2025 年利润体量薄、ROE 低、暂不具备分红条件，且 2026 年控制权变更后的治理与资本配置仍需验证。当前股价显著高于燃气公用事业基本面可解释区间，公司公告已澄清无资产注入计划、无半导体业务，因此现阶段应避免买入，等待价格回到 3.5-5.5 元且半年报验证利润质量后再考虑小仓位。",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    4.5,
-    7.5
-  ],
-  "buy_zone": [
-    3.5,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德龙汇能",
+    "security_status": "active",
+    "symbol": "CN:000593",
+    "ticker": "000593"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "377a478f4a915f1c76c1ce5f094a91d09cf2455a216888d83ef41c3743db0dab"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_above_9_5_or_asset_injection_unverified",
-      "action": "avoid_or_reduce",
-      "max_weight": 0,
-      "reason": "当前股价显著高于燃气公用事业可解释估值，且公司公告澄清无资产注入计划、无半导体业务。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-22"
+      },
+      "reason": "公司预计披露 2026 年半年度报告，需复核扣非利润、经营现金流、气量结构、顺价和治理变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_5_5_and_9_5",
-      "action": "watch_only",
-      "max_weight": 0.01,
-      "reason": "进入观察区但仍需等待半年报验证扣非利润、经营现金流和顺价质量。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报窗口，验证 Q1 利润改善是否可持续以及应收/合同资产减值是否反复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_3_5_and_5_5_and_h1_cashflow_profit_improve",
-      "action": "starter_position",
-      "max_weight": 0.02,
-      "reason": "价格接近资产和正常化盈利可解释区间，且基本面改善被报表验证后可小仓试探。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入保守买入观察区，复核半年报利润质量和经营现金流后可考虑首笔仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_below_3_5_and_no_fundamental_deterioration",
-      "action": "accumulate_cautiously",
-      "max_weight": 0.03,
-      "reason": "深度折价时风险补偿改善，但治理、应收和安全监管风险仍限制仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入深度价值区，若气量、顺价和治理未恶化，可重新评估上限 3% 仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "高于卖出/降低仓位区，估值脱离城燃基本面，应避免新增并降低存量仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "事件溢价过高且下行风险显著，已有仓位应优先降至观察仓或清仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入保守买入观察区，复核半年报利润质量和经营现金流后可考虑首笔仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入深度价值区，若气量、顺价和治理未恶化，可重新评估上限 3% 仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "高于卖出/降低仓位区，估值脱离城燃基本面，应避免新增并降低存量仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "事件溢价过高且下行风险显著，已有仓位应优先降至观察仓或清仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-22",
-      "reason": "公司预计披露 2026 年半年度报告，需复核扣非利润、经营现金流、气量结构、顺价和治理变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报窗口，验证 Q1 利润改善是否可持续以及应收/合同资产减值是否反复。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "居民与工商业售气量及经营气量",
-    "单位购销价差和毛利率",
-    "天然气上下游价格联动执行进度",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款及合同资产余额",
-    "信用减值损失及转回",
-    "安全生产费计提与使用",
-    "老旧管网改造资本开支",
-    "LNG 业务毛利率",
-    "新能源项目收入和投资回报",
-    "控股股东及实际控制人承诺和关联交易",
-    "分红条件和未分配利润修复进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

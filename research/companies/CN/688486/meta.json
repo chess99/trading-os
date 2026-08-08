@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688486",
-  "market": "CN",
-  "ticker": "688486",
-  "name": "龙迅股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "龙迅股份是A股稀缺的高速混合信号和智能视频芯片细分龙头，视频桥接底盘稳定，车载高速互连、AR/VR与AI/HPC接口芯片提供中期增长弹性；但以2026-07-17收盘价41.88元计，估值仍约40倍以上TTM PE，安全边际刚接近但尚不厚，需等待价格跌入买入区或半年度业绩进一步验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    42,
-    58
-  ],
-  "buy_zone": [
-    30,
-    39
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    80
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "龙迅股份",
+    "security_status": "active",
+    "symbol": "CN:688486",
+    "ticker": "688486"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "5baaac8a5221d56be85c2d68a1c2f5a64070552b691138298ce105a6013c8017"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于39元且未出现毛利率、客户流失或现金流恶化信号",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、扣非利润、毛利率、经营现金流和车载/互连芯片进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在39-45元之间且2026H1收入和扣非净利润增速均保持25%左右或更高",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年2.15-2.45亿元净利润假设是否仍成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于65元且盈利预测未明显上修",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和H股上市进展，更新中长期估值模型",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 39.0
+      },
+      "reason": "进入基础买入区，若基本面未恶化可建立3%-5%仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "接近悲观情景价值区间，需要复核是否为错杀或基本面破坏",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "超过基础估值区间上沿，若盈利未同步上修应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 39,
-      "reason": "进入基础买入区，若基本面未恶化可建立3%-5%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "接近悲观情景价值区间，需要复核是否为错杀或基本面破坏"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "超过基础估值区间上沿，若盈利未同步上修应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、扣非利润、毛利率、经营现金流和车载/互连芯片进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年2.15-2.45亿元净利润假设是否仍成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和H股上市进展，更新中长期估值模型"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

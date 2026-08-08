@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:300826",
-  "ticker": "300826",
-  "name": "测绘股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "测绘股份具备南京国资、测绘资质、城市空间数据和政策订单入口，但 2025-2026 年盈利率与 ROE 仍低，项目制应收/存货占用和并购诉讼风险压制安全边际；当前价格高于基准合理价值中枢，适合观察等待利润和现金流验证。",
-  "fair_value_range": [
-    8.5,
-    11.0
-  ],
-  "buy_zone": [
-    7.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "测绘股份",
+    "security_status": "active",
+    "symbol": "CN:300826",
+    "ticker": "300826"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "b3fe5e2bdb195e8b140d7af9f3aea44816ebf6d3f80f0a874743552895ab9543"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 7.0-8.5 元，且 2026 半年报扣非净利率高于 3%、无新增重大诉讼或商誉减值",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报收入、扣非净利率、经营现金流、应收账款和江苏易图并表表现。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "扣非净利率连续两个季度高于 4%，经营现金流转正，应收账款、合同资产、存货合计占收入比例下降",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，确认利润率修复是否连续、经营现金流是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 14 元且利润率和现金流未同步改善，或出现重大坏账、商誉减值、诉讼扩大",
-      "action": "不加仓并减仓/回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新评估并购协同、商誉减值、ROE 和长期合理估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入基准买入区上沿，可结合半年报扣非利润和现金流重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "接近熊市资产价值区间，若无减值和诉讼恶化，安全边际明显改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "高于基准合理价值区间，需用扣非净利率和经营现金流改善证明牛市情景。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "接近牛市情景上沿，若 ROE 仍低则风险收益比恶化。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入基准买入区上沿，可结合半年报扣非利润和现金流重新评估观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "接近熊市资产价值区间，若无减值和诉讼恶化，安全边际明显改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "高于基准合理价值区间，需用扣非净利率和经营现金流改善证明牛市情景。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "接近牛市情景上沿，若 ROE 仍低则风险收益比恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报收入、扣非净利率、经营现金流、应收账款和江苏易图并表表现。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，确认利润率修复是否连续、经营现金流是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新评估并购协同、商誉减值、ROE 和长期合理估值。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

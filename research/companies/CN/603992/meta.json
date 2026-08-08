@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603992",
-  "market": "CN",
-  "ticker": "603992",
-  "name": "松霖科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "松霖科技是高海外敞口的厨卫与大健康软硬件IDM平台，2026年受益越南产能释放和新项目转化，基本面从2025年低点修复；但当前股价已部分反映修复，需等待更低买点或中报验证现金流与订单持续性。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    22,
-    28
-  ],
-  "buy_zone": [
-    18,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    36
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "松霖科技",
+    "security_status": "active",
+    "symbol": "CN:603992",
+    "ticker": "603992"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e54205d9c24a886b47cd9248e50a39a41012f16441645e762ef02f5d4673a632"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于20元且2026中报扣非净利润不少于1.5亿元、经营现金流/净利润大于0.8",
-      "action": "建立观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报正式数据、经营现金流和越南产能进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于18元且订单、毛利率、现金流未恶化",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1高利润率是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于32元且2026E净利润未上修至4亿元以上",
-      "action": "降低仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和2027年订单展望，重新评估估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入基准估值下沿并提供初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "若基本面未恶化，达到更有吸引力的买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "接近乐观情景估值，需要利润上修或机器人订单验证支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入基准估值下沿并提供初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "若基本面未恶化，达到更有吸引力的买入区间"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "接近乐观情景估值，需要利润上修或机器人订单验证支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报正式数据、经营现金流和越南产能进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1高利润率是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和2027年订单展望，重新评估估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

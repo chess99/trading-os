@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603637",
-  "market": "CN",
-  "ticker": "603637",
-  "name": "镇海股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "镇海股份基本面是小而专的石化工程设计/EPC 公司，资产负债表低杠杆但收入和利润受项目周期影响较大；2026 年控股权公开征集转让提供事件期权，但协议、审批和产业协同尚未完全核验，当前应观察而非追高。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    11.0
-  ],
-  "buy_zone": [
-    7.2,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    16.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "镇海股份",
+    "security_status": "active",
+    "symbol": "CN:603637",
+    "ticker": "603637"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "a68534da8d249ea7974cbcb2619d48a868c6e07ae94ae04e22198d25ab06bda3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入8.5元以下，且2026年半年报经营现金流、应收账款和合同资产未显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非净利、经营现金流和应收合同资产",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "控股权转让完成交割且公告可核验的新材料或石化工程协同订单",
-      "action": "提高至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及控股权转让交割进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于14.5元但控制权转让未交割或协同订单未核验",
-      "action": "不追高或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红和新控制人战略执行情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入基本面估值安全边际区，可重新评估小仓观察",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.49
+      },
+      "reason": "接近公开征集转让底价，若事件未落地则估值和预期透支风险上升",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入基本面估值安全边际区，可重新评估小仓观察"
-    },
-    {
-      "type": "price_above",
-      "price": 15.49,
-      "reason": "接近公开征集转让底价，若事件未落地则估值和预期透支风险上升"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非净利、经营现金流和应收合同资产"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及控股权转让交割进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红和新控制人战略执行情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

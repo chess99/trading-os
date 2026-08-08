@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603079",
-  "ticker": "603079",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "圣达生物",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "圣达生物具备生物素、叶酸及生物保鲜剂细分行业地位，生物保鲜剂及功能配料业务毛利率更高、增长质量更好，但2026Q1收入和利润已同比下滑，当前股价对应TTM PE约39倍，安全边际不足，适合观察等待更低价格或更强业务验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    10.5
-  ],
-  "buy_zone": [
-    7.0,
-    7.8
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    18.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "圣达生物",
+    "security_status": "active",
+    "symbol": "CN:603079",
+    "ticker": "603079"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "d2f67671848d970e410499e3a76453189466db57c5894e9fec957f253c2dc478"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.8元，且最新季报未显示生物保鲜剂及功能配料毛利率跌破35%、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看生物保鲜剂及功能配料增长、毛利率和存货跌价",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.2元，且维生素价格企稳、生物保鲜剂收入连续两个季度同比增长",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认2026Q1下滑是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.5元且业绩仍按2026Q1趋势下滑",
-      "action": "不买入或减持观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，评估在建工程转固、资本开支和利润恢复情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.8
+      },
+      "reason": "进入初步买入区，重新核验生物保鲜剂增长、维生素价格和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "安全边际更充足，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "超过当前合理价值上沿，若缺少利润上修证据应减持或停止买入",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.8,
-      "reason": "进入初步买入区，重新核验生物保鲜剂增长、维生素价格和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "安全边际更充足，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "超过当前合理价值上沿，若缺少利润上修证据应减持或停止买入"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看生物保鲜剂及功能配料增长、毛利率和存货跌价"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认2026Q1下滑是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，评估在建工程转固、资本开支和利润恢复情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

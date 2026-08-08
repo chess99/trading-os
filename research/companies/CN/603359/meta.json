@@ -1,61 +1,91 @@
 {
-  "symbol": "CN:603359",
-  "market": "CN",
-  "ticker": "603359",
-  "name": "*ST东珠",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "退市、审计与内控风险尚未解除，当前价格主要计入保壳期权而非可持续自由现金流，缺少安全边际。",
-  "fair_value_range": [
-    0.8,
-    1.5
-  ],
-  "buy_zone": [
-    0.6,
-    0.9
-  ],
-  "sell_or_reduce_zone": [
-    1.8,
-    2.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST东珠",
+    "security_status": "active",
+    "symbol": "CN:603359",
+    "ticker": "603359"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "58c277b8aefbf524ab38aa1ab82ccbf5f4b0216f3e89418ec0f18a992c53faa4"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "a401934338a1630bd4f46661dc7fe4c77b8a6ec861f1175ab703b15b9aa57278"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于0.60至0.90元且退市概率显著下降、重大回款或审计整改已由一手公告验证",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、收入进度、回款、现金流和新增减值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "基本面恶化、审计问题扩大或仅因价格下跌而未出现改善证据",
-      "max_weight": 0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、收入进度、回款、现金流和新增减值"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报退市指标、审计意见和内控意见",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报退市指标、审计意见和内控意见"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.9,
-      "reason": "进入困境资产观察区，但必须先验证退市概率、回款和审计整改，禁止机械补仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.9
+      },
+      "reason": "进入困境资产观察区，但必须先验证退市概率、回款和审计整改，禁止机械补仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 1.8,
-      "reason": "进入减仓或不应追高区间，保壳期权溢价偏高"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.8
+      },
+      "reason": "进入减仓或不应追高区间，保壳期权溢价偏高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-20T22:05:39+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

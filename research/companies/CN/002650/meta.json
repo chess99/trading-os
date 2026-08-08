@@ -1,90 +1,105 @@
 {
-  "symbol": "CN:002650",
-  "market": "CN",
-  "ticker": "002650",
-  "name": "ST加加",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "仍处ST与治理修复期，2026Q1经营改善不足以覆盖2025年保留意见、关联方资金占用和资产质量尾部风险；当前约5.96元价格显著高于2.20-3.20元合理价值区间，不具备买入安全边际。",
-  "fair_value_range": [
-    2.2,
-    3.2
-  ],
-  "buy_zone": [
-    1.5,
-    2.2
-  ],
-  "sell_or_reduce_zone": [
-    4.0,
-    6.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST加加",
+    "security_status": "active",
+    "symbol": "CN:002650",
+    "ticker": "002650"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "046248018821a9d7b0acf685cb08b191bd0ad68f336f8e047cae0a6d092a26ca"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仍为ST且2025年保留意见事项未获年度审计确认消除，股价高于4.00元",
-      "action": "不买入；已有仓位优先降低风险敞口",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报盈利、现金流、宁夏事项和ST进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.20元，但仍处ST状态",
-      "action": "仅允许事件跟踪仓，等待摘帽与审计清洁化证据",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证Q1改善是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于1.50-2.00元且2026中报继续盈利、经营现金流为正、无新增资金占用或违规担保",
-      "action": "可建立小仓位困境反转试探仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报审计意见、内控意见和是否具备摘帽基础",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "撤销其他风险警示且2026年报为标准无保留意见、扣非净利率稳定在4%以上",
-      "action": "按正常小市值消费品重新评估并提高上限",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
+      "reason": "进入合理价值下沿，可重新评估事件跟踪仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "进入安全边际区间，若基本面和治理同步改善可考虑小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "显著高于合理价值，ST和非标审计折价不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.2,
-      "reason": "进入合理价值下沿，可重新评估事件跟踪仓"
-    },
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "进入安全边际区间，若基本面和治理同步改善可考虑小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 4.0,
-      "reason": "显著高于合理价值，ST和非标审计折价不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报盈利、现金流、宁夏事项和ST进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证Q1改善是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报审计意见、内控意见和是否具备摘帽基础"
-    }
-  ],
-  "notes": [
-    "当前结论基于2026-07-19可获得公开资料；行情价格采用新浪财经抓取值，属二级来源。",
-    "2025年审计报告为带强调事项段的保留意见，内控审计为带强调事项段的无保留意见。",
-    "2026年6月公司公告已取回宁夏库存资产拍卖变价所得款2504.02万元，但最终影响仍以年度审计确认为准。",
-    "公司当前更适合作为ST治理修复观察样本，不适合作为长期消费品核心持仓。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

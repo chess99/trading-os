@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688105",
-  "market": "CN",
-  "ticker": "688105",
-  "name": "诺唯赞",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "诺唯赞具备酶、抗原、抗体等上游功能性蛋白平台和高毛利生物试剂基本盘，海外业务恢复高增长且现金/交易性金融资产充足；但2025年仍亏损、2026Q1扣非仍亏，利润拐点需要半年报验证。当前价格接近公允价值下沿但安全边际不足，适合观察或小仓位等待验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    17.0,
-    22.0
-  ],
-  "buy_zone": [
-    14.0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    28.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "诺唯赞",
+    "security_status": "active",
+    "symbol": "CN:688105",
+    "ticker": "688105"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "1822e2b237d1a09c926544e0de3fe3d56924a9d865baea2191752c2ef90956e7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入14.0-15.5元且未出现海外收入失速、毛利率明显下滑或扣非亏损扩大的新证据",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、境外业务、扣非利润和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1收入同比超过12%、境外收入继续高增长且扣非亏损明显收窄",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年扣非转正概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24.0元但扣非利润仍未转正或收入增速低于10%",
-      "action": "减仓或不再加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红回购、海外与新业务兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入买入区间上沿，需要复核半年报前的基本面是否未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入悲观情景估值区间，需要评估是否出现错杀或基本面破坏",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "高于减持区间下沿，需要检查扣非利润是否已兑现以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入买入区间上沿，需要复核半年报前的基本面是否未恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入悲观情景估值区间，需要评估是否出现错杀或基本面破坏"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "高于减持区间下沿，需要检查扣非利润是否已兑现以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、境外业务、扣非利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年扣非转正概率"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红回购、海外与新业务兑现情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

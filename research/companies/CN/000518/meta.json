@@ -1,85 +1,86 @@
 {
-  "symbol": "CN:000518",
-  "market": "CN",
-  "ticker": "000518",
-  "name": "四环生物",
-  "company_name": "四环生物",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "low",
-  "valuation_rating": "overvalued",
-  "current_thesis": "四环生物当前更像退市风险刚解除后的壳价值与小规模医药资产组合，主营盈利和现金流尚不足以支撑当前约35亿元市值，维持回避，仅在价格大幅低于1.6元且半年报验证经营修复后允许极小研究仓。",
-  "fair_value_range": [
-    1.3,
-    2.1
-  ],
-  "buy_zone": [
-    1.2,
-    1.6
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    4.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "四环生物",
+    "security_status": "active",
+    "symbol": "CN:000518",
+    "ticker": "000518"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "ea31bfbead99d6856799b7ab6765b11eff5929a128ed066ca59e3b54318818b0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前股价高于3.0元且基本面未证明持续盈利",
-      "action": "不买入，已有仓位减仓或退出",
-      "max_weight": 0,
-      "reason": "市值显著高于净资产和可持续盈利能力，壳价值和交易情绪占主导"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，验证收入、扣非利润、经营现金流和风险警示状态",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.6元且2026年半年报显示医药业务收入、扣非利润和经营现金流同步改善",
-      "action": "仅允许研究性首笔观察仓",
-      "max_weight": 0.005,
-      "reason": "价格进入资产折价区后，可用极小仓位验证经营修复"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认盈利修复是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "重新触发退市风险警示、重大处罚、重大内控缺陷或经营现金流显著转负",
-      "action": "清仓并停止研究性持仓",
-      "max_weight": 0,
-      "reason": "核心风险重新暴露，壳价值折价应扩大"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "进入研究性买入观察区，但仍需半年报和现金流验证",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.0
+      },
+      "reason": "高于乐观基本面估值上沿，应复核是否由壳价值炒作驱动",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "进入研究性买入观察区，但仍需半年报和现金流验证"
-    },
-    {
-      "type": "price_above",
-      "price": 3.0,
-      "reason": "高于乐观基本面估值上沿，应复核是否由壳价值炒作驱动"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，验证收入、扣非利润、经营现金流和风险警示状态"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认盈利修复是否可持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026年半年报营业收入及医药业务收入占比",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款、其他应收款和坏账准备变化",
-    "园林业务相关资产减值、诉讼和回款进展",
-    "控制权变动后的关联交易、担保和资金往来",
-    "退市风险警示、其他风险警示、问询函、监管函和处罚公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

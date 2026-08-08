@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603402",
-  "market": "CN",
-  "ticker": "603402",
-  "name": "陕西旅游",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "陕西旅游拥有华清宫、《长恨歌》和少华山索道等稀缺文旅资产，现金流质量和资产负债表强于多数景区公司；但2025年和2026Q1业绩均有扰动，当前价接近合理价值下沿但安全边际不足，适合观察并等待更低价格或复演后业绩确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    62,
-    78
-  ],
-  "buy_zone": [
-    50,
-    56
-  ],
-  "sell_or_reduce_zone": [
-    82,
-    95
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "陕西旅游",
+    "security_status": "active",
+    "symbol": "CN:603402",
+    "ticker": "603402"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "df6afdca2b46d6cbcea2233a4c6b86d421a30d80497568a7e7e2cc6573227ab1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至56元以下，且未出现安全事故、停演延长或客流显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查长恨歌复演后收入、毛利率和现金流恢复情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026Q2或Q3收入和归母净利润恢复至同比正增长，且股价仍低于62元",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和暑期旺季表现，决定是否从观察转为买入",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于82元但未来12个月净利润未能证明稳定超过4.5亿元",
-      "action": "不追高并考虑减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红和募投项目进展，更新长期估值假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 56.0
+      },
+      "reason": "进入买入区间上沿，静态估值与停演恢复风险的安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入更有吸引力区间，可用小仓位承担短期业绩波动",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 82.0
+      },
+      "reason": "超过基准估值上沿，需要重新评估业绩弹性是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 56,
-      "reason": "进入买入区间上沿，静态估值与停演恢复风险的安全边际改善"
-    },
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "进入更有吸引力区间，可用小仓位承担短期业绩波动"
-    },
-    {
-      "type": "price_above",
-      "price": 82,
-      "reason": "超过基准估值上沿，需要重新评估业绩弹性是否足以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查长恨歌复演后收入、毛利率和现金流恢复情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和暑期旺季表现，决定是否从观察转为买入"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红和募投项目进展，更新长期估值假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

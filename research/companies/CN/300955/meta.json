@@ -1,100 +1,95 @@
 {
-  "symbol": "CN:300955",
-  "ticker": "300955",
-  "name": "嘉亨家化",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司收入正在修复且控制权变更带来事件期权，但制造代工属性、客户集中和连续亏损使当前30元以上价格缺乏买方安全边际；等待盈利质量验证或价格回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12,
-    20
-  ],
-  "buy_zone": [
-    0,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    999
-  ],
-  "position_plan": [
-    {
-      "condition": "价格低于14元且无重大质量、治理或退市风险时，允许建立观察仓。",
-      "action": "start_position",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "连续两个报告期毛利率超过20%、扣非净利润转正且经营现金流为正后，可复核上调估值和仓位。",
-      "action": "add_after_validation",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "价格高于30元且盈利能力仍未确认时，不新增仓位并考虑减持。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入初始买入区，需要复核订单、毛利率和控制权进展。"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "超过估值上沿且盈利未验证时，安全边际不足。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-07-24",
-      "reason": "要约收购期结束后复核接受结果、控制权交割和治理变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露窗口后复核收入、毛利率、扣非净利润和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复核盈利拐点是否成立。"
-    }
-  ],
-  "key_metrics": {
-    "revenue_2025_cny_mn": 1137.86,
-    "net_profit_2025_cny_mn": -37.16,
-    "operating_cash_flow_2025_cny_mn": 43.87,
-    "revenue_2026q1_cny_mn": 301.44,
-    "net_profit_2026q1_cny_mn": -4.18,
-    "top1_customer_sales_ratio_2025": 0.3629,
-    "top5_customer_sales_ratio_2025": 0.5725
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "嘉亨家化",
+    "security_status": "active",
+    "symbol": "CN:300955",
+    "ticker": "300955"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "e563abadb25f8ef5bca227008ea70632b868dddae8154efc65b467e480e03d05"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "title": "嘉亨家化2025年年度报告",
-      "date": "2026-04-22",
-      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-22/77cc4870-1165-4049-a909-9efc2b46e87d.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-07-24"
+      },
+      "reason": "要约收购期结束后复核接受结果、控制权交割和治理变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "title": "嘉亨家化2026年第一季度报告",
-      "date": "2026-04-29",
-      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-29/eb2319a7-acd7-497a-894a-85af70b5fbcd.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露窗口后复核收入、毛利率、扣非净利润和现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "title": "嘉亨家化要约收购报告书",
-      "date": "2026-06-23",
-      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-06-23/a30cf385-6943-4ab7-91f9-7342f55ebcea.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复核盈利拐点是否成立。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入初始买入区，需要复核订单、毛利率和控制权进展。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过估值上沿且盈利未验证时，安全边际不足。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

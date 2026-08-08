@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:601326",
-  "ticker": "601326",
-  "name": "秦港股份",
-  "company_name": "秦皇岛港股份有限公司",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "hold",
-  "current_rating": "hold",
-  "current_thesis": "秦港股份是环渤海大宗干散货港口资产，低杠杆、现金流稳定、河北港口整合提供协同，但煤炭和铁矿石长期需求约束明显。2026-07-17 股价约处合理区间中部偏低，尚缺足够安全边际，维持观察/持有。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    3.4,
-    4.1
-  ],
-  "buy_zone": [
-    2.9,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    4.25,
-    4.7
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "秦港股份",
+    "security_status": "active",
+    "symbol": "CN:601326",
+    "ticker": "601326"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "8001251fb075972bc317bcc30846fe116b873e659e3c2b370742bc3fd663d184"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入2.90-3.20元且最新季度吞吐量未明显转弱、毛利率仍接近或高于39%",
-      "action": "分批建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "复核2026年半年报，重点关注吞吐量、毛利率、经营现金流和资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.70元且基本面未出现煤炭和铁矿石双弱导致的盈利下修",
-      "action": "提高到防守型核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年盈利兑现进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于4.25元且EPS没有上修至0.34元以上、派息率没有提升至50%以上",
-      "action": "降低或退出仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、分红方案和下一年度经营指引",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入初步买入区间，需要复核吞吐量、毛利率和分红执行情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.7
+      },
+      "reason": "进入高安全边际区间，需要判断是否由基本面恶化驱动",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.25
+      },
+      "reason": "进入减持区间，若无盈利或分红上修则估值性价比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入初步买入区间，需要复核吞吐量、毛利率和分红执行情况"
-    },
-    {
-      "type": "price_below",
-      "price": 2.7,
-      "reason": "进入高安全边际区间，需要判断是否由基本面恶化驱动"
-    },
-    {
-      "type": "price_above",
-      "price": 4.25,
-      "reason": "进入减持区间，若无盈利或分红上修则估值性价比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "复核2026年半年报，重点关注吞吐量、毛利率、经营现金流和资本开支"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年盈利兑现进度"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、分红方案和下一年度经营指引"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,113 +1,105 @@
 {
-  "symbol": "CN:002366",
-  "market": "CN",
-  "ticker": "002366",
-  "name": "融发核电",
-  "company_name": "融发核电设备股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "watch",
-  "current_thesis": "公司具备核电主管道、主泵泵壳和核级铸锻件资质与工艺壁垒，受益于核电建设恢复；但2025年仍亏损、2026Q1扣非利润很薄，存货/合同资产/应收与受限资产压力较大。2026-07-10收盘价5.27元对应约109.7亿元市值和约2.36倍2026Q1 PB，已透支较多乐观订单修复预期，当前不买，仅观察订单、扣非盈利和现金流兑现。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.6,
-    3.6
-  ],
-  "buy_zone": [
-    2.2,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    4.0,
-    5.27
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "融发核电",
+    "security_status": "active",
+    "symbol": "CN:002366",
+    "ticker": "002366"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "4ef91b5ae43649835fa0c4454e1e075c47050684a6ba580b132637cd623f8cf8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price_range": "current",
-      "position": "0%",
-      "max_weight": 0,
-      "action": "不买",
-      "condition": "当前价格5.27元高于合理区间和不应追高价。"
-    },
-    {
-      "price_range": "<=2.2",
-      "position": "3%-5%",
-      "max_weight": 0.05,
-      "action": "可考虑强吸引力观察仓",
-      "condition": "无重大负面且订单、扣非利润、现金流至少两项改善。"
-    },
-    {
-      "price_range": "2.2-2.8",
-      "position": "1%-3%",
-      "max_weight": 0.03,
-      "action": "可考虑安全边际观察仓",
-      "condition": "等待半年报或季报验证。"
-    },
-    {
-      "price_range": ">2.8",
-      "position": "0%",
-      "max_weight": 0,
-      "action": "不新买",
-      "condition": "估值不足以补偿不确定性。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入安全边际买入价，需复核订单确认、扣非盈利和经营现金流。",
-      "action": "进入安全边际复核，检查订单确认、扣非盈利和经营现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.2,
-      "reason": "进入强吸引力买入价。",
-      "action": "若基本面未恶化，可考虑强吸引力观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.0,
-      "reason": "超过不应追高价，已反映较多乐观修复预期。",
-      "action": "不追高；若持仓则复核是否需要降仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年半年报应披露核心经营验证数据。",
-      "action": "复核2026年半年度报告：收入确认、扣非归母净利、经营现金流、订单兑现和减值。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报可验证改善是否具备连续性。",
-      "action": "复核2026年三季报：确认扣非盈利和经营现金流是否连续改善。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2026年报可完整验证订单、毛利率、减值和现金流。",
-      "action": "复核2026年报：检查订单、毛利率、减值和现金流是否支持重估。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入安全边际买入价，需复核订单确认、扣非盈利和经营现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
+      "reason": "进入强吸引力买入价。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "超过不应追高价，已反映较多乐观修复预期。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "新签订单金额及在手订单金额",
-    "2025年末重大订单约5.79亿元中预计2026年确认的2.50亿元兑现情况",
-    "核电行业收入及反应堆一回路主管道收入",
-    "主管道、石化装备、锻造产品毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款、合同资产、存货及减值准备",
-    "受限货币资金、长期借款、一年内到期非流动负债",
-    "前五大客户销售占比和应收/合同资产集中度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

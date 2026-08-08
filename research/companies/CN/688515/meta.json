@@ -1,66 +1,86 @@
 {
-  "symbol": "CN:688515",
-  "market": "CN",
-  "ticker": "688515",
-  "name": "裕太微",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "裕太微是国内稀缺的以太网PHY/交换机/网卡芯片平台型公司，2025-2026Q1收入高增长验证了国产替代与产品放量，但公司仍亏损，研发投入高，且数据中心DSP/高速互联远期叙事尚未产品化；140元附近估值已提前反映较多乐观预期，等待安全边际或更强经营拐点。",
-  "fair_value_range": [
-    95,
-    125
-  ],
-  "buy_zone": [
-    70,
-    95
-  ],
-  "sell_or_reduce_zone": [
-    160,
-    220
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "裕太微",
+    "security_status": "active",
+    "symbol": "CN:688515",
+    "ticker": "688515"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e70b4994576b2f5cbe3885fe9d8fb09d308183c4fa1910aaaad849fc34623e7b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值中枢且公司仍亏损，维持0仓位观察。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "预计披露下一份财报，需核验2026年中报收入、毛利率、亏损收窄、现金流和产品线拆分。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至95元以下，且收入增速、毛利率和亏损收窄趋势未恶化，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报，判断全年收入和盈利拐点是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比增长60%以上、毛利率不低于42%、单季亏损显著收窄，并有车载或交换机芯片收入放量证据，可提高仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 95.0
+      },
+      "reason": "进入研究买入区，若基本面未恶化则重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 160.0
+      },
+      "reason": "高于当前证据支持的合理区间，应检查是否有足够新增基本面证据。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 95,
-      "reason": "进入研究买入区，若基本面未恶化则重新评估建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 160,
-      "reason": "高于当前证据支持的合理区间，应检查是否有足够新增基本面证据。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "预计披露下一份财报，需核验2026年中报收入、毛利率、亏损收窄、现金流和产品线拆分。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报，判断全年收入和盈利拐点是否成立。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

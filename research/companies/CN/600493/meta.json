@@ -1,84 +1,86 @@
 {
-  "symbol": "CN:600493",
-  "ticker": "600493",
-  "name": "凤竹纺织",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "凤竹纺织具备针织染整和区域产能基础，但主业处于低毛利、低ROE、弱议价的纺织中游环节。2026H1预告显示扣非再度亏损，当前价格高于保守估值区间，需等待价格进入安全边际并验证毛利率、扣非利润和产能利用率修复。",
-  "current_rating": "avoid",
-  "rating": {
-    "current_rating": "avoid",
-    "as_of": "2026-07-17",
-    "reason": "低ROE与扣非盈利不稳定，当前市净率和股价缺乏安全边际。"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凤竹纺织",
+    "security_status": "active",
+    "symbol": "CN:600493",
+    "ticker": "600493"
   },
-  "fair_value_range": [
-    3.6,
-    4.6
-  ],
-  "buy_zone": [
-    2.8,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    6.5
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "a20d48e5ba6da331a030626eecfa5f4c767b5a261e215c9cfc2f205c2f34b1b5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.50元，且最近一期扣非净利润转正、单季毛利率不低于13%、经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、毛利率、扣非净利润和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.80元，且未出现资金占用、证券投资重大亏损或环保处罚，同时经营现金流保持为正",
-      "action": "提高至小仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证H2产能利用率和主业盈利修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.60元且扣非利润仍未稳定修复",
-      "action": "不买入或减持已有仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入保守买入观察区，可结合基本面修复情况复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "高于乐观情景上沿附近，若基本面未显著改善应回避或减持。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入保守买入观察区，可结合基本面修复情况复核。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "reason": "高于乐观情景上沿附近，若基本面未显著改善应回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、毛利率、扣非净利润和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证H2产能利用率和主业盈利修复。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 6.08,
-    "reference_price_date": "2026-07-17",
-    "reference_price_note": "参考新浪/搜狐行情页约6.05-6.11元，非交易所收盘数据，置信度中。",
-    "shares_outstanding": 272000000,
-    "book_value_per_share_2026q1": 4.0993,
-    "revenue_2025": 920894717.38,
-    "parent_net_profit_2025": 15710280.82,
-    "revenue_2026q1": 200601690.96,
-    "parent_net_profit_2026q1": -6754148.82
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

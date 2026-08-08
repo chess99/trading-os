@@ -1,85 +1,96 @@
 {
-  "symbol": "CN:300295",
-  "market": "CN",
-  "ticker": "300295",
-  "name": "*ST三六",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "公司处于*ST退市风险警示状态，2025年扣除后收入低于1亿元且亏损、经营现金流大幅为负，审计报告提示持续经营重大不确定性。2026一季度经营改善但尚不足以证明可持续修复；当前约10元价格显著高于保守资产价值与经营修复价值，主要交易摘星和小市值期权，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    4.2,
-    6.8
-  ],
-  "buy_zone": [
-    0,
-    4
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    12
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST三六",
+    "security_status": "active",
+    "symbol": "CN:300295",
+    "ticker": "300295"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "732430ebe879d7cb90fc244d23337081dd79eb29c83ff41e7e1d05ae1c7da556"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约10元且退市风险、持续经营、现金流和资产回收风险未解除",
-      "action": "不新开仓；已有仓位降至观察仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报：扣除后收入、扣非利润、经营现金流、贷款及垫款回收",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至3.00-4.00元且2026半年报显示扣除后收入具备超过1亿元年化节奏、经营现金流未恶化",
-      "action": "可观察性试仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报和审计意见，确认是否消除退市风险与持续经营重大不确定性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.00元且无新增退市硬触发、审计和内控风险边际改善",
-      "action": "可作为事件驱动小仓位买入",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入有安全边际观察买入区，但仍需确认无新增退市硬触发",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于7.50元或市场主要交易摘星情绪而非经营现金流改善",
-      "action": "回避、减仓或卖出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "价格低于保守资产价值下沿，可评估强吸引力事件驱动仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "高于合理价值上沿，安全边际不足，应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4,
-      "reason": "进入有安全边际观察买入区，但仍需确认无新增退市硬触发"
-    },
-    {
-      "type": "price_below",
-      "price": 3,
-      "reason": "价格低于保守资产价值下沿，可评估强吸引力事件驱动仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "高于合理价值上沿，安全边际不足，应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报：扣除后收入、扣非利润、经营现金流、贷款及垫款回收"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报和审计意见，确认是否消除退市风险与持续经营重大不确定性"
-    }
-  ],
-  "notes": [
-    "当前股价和市值采用2026-07-20公开行情摘要交叉，实时行情接口请求失败，低置信度；报告中按约10.0元、约18.9-19.1亿元市值处理。",
-    "核心财务数据来自公司2025年年度报告和2026年第一季度报告，置信度高。",
-    "由于公司带*ST，估值以退市风险、持续经营、现金流和贷款类资产回收为优先约束。",
-    "本报告未写入sources目录，未修改队列文件或generated文件。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

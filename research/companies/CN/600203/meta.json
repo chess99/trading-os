@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600203",
-  "ticker": "600203",
-  "name": "福日电子",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "智能终端订单修复带来收入与一季度扣非利润改善，但2026年半年度预告利润主要来自投资收益和政府补助，主营盈利持续性、现金流和资产负债表质量仍需验证；当前估值已反映乐观修复，安全边际不足。",
-  "fair_value_range": [
-    5.5,
-    8.0
-  ],
-  "buy_zone": [
-    0.0,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    99.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "福日电子",
+    "security_status": "active",
+    "symbol": "CN:600203",
+    "ticker": "600203"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "b145d74584a6e6532b4378fd4aa70895349e3abcaaced286e1b28e85857e4f16"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价低于6.0元且2026半年度或后续正式财报显示扣非利润改善、经营现金流转正时建立观察仓",
-      "action": "start_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据，重点检查扣非利润、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度扣非净利润均超过5000万元且经营现金流为正，可将仓位上限小幅提高",
-      "action": "increase_after_confirmation",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q2后主营盈利是否恢复以及订单修复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于11.0元但主营扣非和现金流未同步兑现，避免新买并考虑退出观察仓",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估可持续盈利、分红能力和资产负债表风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入保守合理价值下沿附近，且具备重新评估安全边际的必要",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "接近乐观情景估值，若主营扣非未连续兑现则风险收益不匹配",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入保守合理价值下沿附近，且具备重新评估安全边际的必要"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "接近乐观情景估值，若主营扣非未连续兑现则风险收益不匹配"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据，重点检查扣非利润、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q2后主营盈利是否恢复以及订单修复是否持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估可持续盈利、分红能力和资产负债表风险"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

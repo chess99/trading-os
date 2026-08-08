@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603350",
-  "market": "CN",
-  "ticker": "603350",
-  "name": "安乃达",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "安乃达是两轮车电驱动系统供应商，收入规模与客户资源具备看点，国内新国标、海外电助力恢复和机器人等新场景提供成长可选项；但2025年利润增速明显低于收入增速，经营现金流转弱，2026Q1扣非利润继续承压，现价约30倍TTM PE缺少足够安全边际，适合观察而非立即重仓买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    26,
-    34
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    48
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安乃达",
+    "security_status": "active",
+    "symbol": "CN:603350",
+    "ticker": "603350"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f902ef531ede8d75106cfab96f45f57f94d0093e66d34a9c4fffa9591733812b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价进入20-24元买入区，且最新季度经营现金流未继续显著恶化时，建立观察仓。",
-      "action": "start_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、海外收入和中置电机毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若2026年中报或三季报显示扣非净利润恢复同比增长、经营现金流连续改善，且中置电机或新业务收入占比提升，可小幅加仓。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认新国标后国内订单是否恢复以及客户集中度变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于40元但扣非利润和经营现金流未同步验证，或前五大客户集中度继续上升，应降低或清空仓位。",
-      "action": "reduce_or_exit",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红方案，重新校准长期盈利与现金流假设。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入估算买入区，需要复核订单、现金流和中置电机毛利率后再决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "超过基准估值上沿，若缺少利润和现金流验证应考虑减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入估算买入区，需要复核订单、现金流和中置电机毛利率后再决定是否建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "超过基准估值上沿，若缺少利润和现金流验证应考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、海外收入和中置电机毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认新国标后国内订单是否恢复以及客户集中度变化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红方案，重新校准长期盈利与现金流假设。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

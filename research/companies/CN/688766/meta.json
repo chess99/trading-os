@@ -1,110 +1,111 @@
 {
-  "symbol": "CN:688766",
-  "market": "CN",
-  "ticker": "688766",
-  "name": "普冉股份",
-  "company_name": "普冉股份",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "截至2026-07-17，普冉股份收盘价428元已从极端乐观定价回到320-460元合理价值区间上半部，但旧报告后没有新增公司一手公告支持盈利上修；维持watch，标准买入仍需等待240-330元并确认毛利率、存货和SHM整合未恶化。",
-  "quality_rating": "A-",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    320,
-    460
-  ],
-  "buy_zone": [
-    240,
-    330
-  ],
-  "sell_or_reduce_zone": [
-    560,
-    700
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "普冉股份",
+    "security_status": "active",
+    "symbol": "CN:688766",
+    "ticker": "688766"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "5deebf684632800710760df7f71c3a9674cb7a66ed99ba7c53d95a7f5e5773d7"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "49aa6ee8ea20764075b10ce6009110f6a8360ff0f260df1bb0fbfba57bd32d5f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价处于330-460元且2026年半年报尚未验证高景气持续性",
-      "action": "不新增标准仓位，仅允许0%-0.5%研究型观察仓",
-      "max_weight": 0.005,
-      "reason": "价格已回到合理价值区间但仍处上半部，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入、毛利率、存货、SHM并表和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入240-330元且NOR/SLC NAND价格未连续下跌、公司毛利率仍高于35%",
-      "action": "分批建立初始仓位",
-      "max_weight": 0.02,
-      "reason": "价格回到基准合理价值下沿附近，且基本面尚未破坏"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和存储价格趋势，判断涨价周期是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于280元、2026年预期PE回到25-35倍且SHM整合顺利",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "估值进入可承受区间，同时平台化逻辑仍在"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 330.0
+      },
+      "reason": "进入买入区间上沿，复核行业价格和Q2/Q3毛利率后可考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "连续两个季度毛利率低于30%或存货跌价显著增加",
-      "action": "降至0或仅保留跟踪仓",
-      "max_weight": 0.005,
-      "reason": "存储上行周期可能结束，周期高估值需要下修"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 280.0
+      },
+      "reason": "进入更有吸引力的估值区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 560.0
+      },
+      "reason": "进入减仓区间，价格已显著反映乐观周期预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 700.0
+      },
+      "reason": "高于减仓区间上沿，除非盈利预测继续大幅上修，否则风险收益比恶化",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 330,
-      "reason": "进入买入区间上沿，复核行业价格和Q2/Q3毛利率后可考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 280,
-      "reason": "进入更有吸引力的估值区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 560,
-      "reason": "进入减仓区间，价格已显著反映乐观周期预期"
-    },
-    {
-      "type": "price_above",
-      "price": 700,
-      "reason": "高于减仓区间上沿，除非盈利预测继续大幅上修，否则风险收益比恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入、毛利率、存货、SHM并表和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和存储价格趋势，判断涨价周期是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "NOR Flash合约价与交期",
-    "SLC NAND合约价与交期",
-    "季度营业收入",
-    "季度毛利率",
-    "归母净利润",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "存货金额与存货周转",
-    "存货跌价准备",
-    "SHM收入和毛利率",
-    "少数股东损益",
-    "车规和工业客户导入",
-    "MCU收入占比和毛利率",
-    "VCM Driver/OIS产品出货",
-    "重大资产重组审核进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

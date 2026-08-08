@@ -1,110 +1,105 @@
 {
-  "symbol": "CN:300611",
-  "market": "CN",
-  "ticker": "300611",
-  "name": "美力科技",
-  "company_name": "浙江美力科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "美力科技主业经营质量在2025年明显改善，海外收入和悬架弹簧放量提供增长弹性；但2026Q1并入ACPS资产负债表后，杠杆、商誉、应收和存货显著上升，利润表尚未完整验证并购质量。当前23.08元接近合理价值中部偏上，安全边际不足，等待ACPS完整并表后的利润和现金流验证。",
-  "quality_rating": "B",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    18.0,
-    26.0
-  ],
-  "buy_zone": [
-    0.0,
-    17.5
-  ],
-  "sell_or_reduce_zone": [
-    30.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美力科技",
+    "security_status": "active",
+    "symbol": "CN:300611",
+    "ticker": "300611"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "d108fb263ecda69b59bcd7f131064a0478982fcf6ddb12651d0f4e10e95e2812"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于17.5元，且2026H1显示ACPS并表后经营现金流/归母净利润不低于0.8，应收和存货未继续显著快于收入增长",
-      "action": "buy",
-      "target_position": "0.5-1.0 unit",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认ACPS完整并表后的收入、利润、现金流、应收、存货、财务费用和商誉质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于14.5元，且净有息债务没有继续上升、毛利率保持23%以上、并购整合无重大负面公告",
-      "action": "add",
-      "target_position": "1.5-2.0 units",
-      "max_weight": 0.1
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断并购整合是否连续改善以及全年利润是否可达到正常化估值假设。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于18-26元且ACPS完整利润和现金流尚未验证",
-      "action": "hold_or_watch",
-      "target_position": "0-0.5 unit",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估ACPS全年贡献、债务去化、分红能力和长期合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元且没有归母净利润持续上修到3.5亿元以上或净负债下降证据",
-      "action": "reduce",
-      "target_position": "0-0.5 unit",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.5
+      },
+      "reason": "进入初始可买区间，但需同步复核ACPS并表现金流和债务风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "价格提供更高安全边际，若基本面未恶化可考虑加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "高于当前估值上沿，若业绩未显著上修应考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.5,
-      "unit": "CNY/share",
-      "action": "review_for_initial_buy",
-      "reason": "进入初始可买区间，但需同步复核ACPS并表现金流和债务风险。"
-    },
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "unit": "CNY/share",
-      "action": "review_for_add",
-      "reason": "价格提供更高安全边际，若基本面未恶化可考虑加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "unit": "CNY/share",
-      "action": "review_for_reduce",
-      "reason": "高于当前估值上沿，若业绩未显著上修应考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认ACPS完整并表后的收入、利润、现金流、应收、存货、财务费用和商誉质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断并购整合是否连续改善以及全年利润是否可达到正常化估值假设。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估ACPS全年贡献、债务去化、分红能力和长期合理价值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "ACPS并表收入、净利润和经营现金流",
-    "归母净利润及扣非归母净利润增速",
-    "经营现金流/归母净利润",
-    "应收账款周转天数",
-    "存货周转天数",
-    "净有息债务/EBITDA",
-    "毛利率和财务费用率",
-    "商誉减值风险",
-    "智能悬架和牵引系统量产订单",
-    "海外收入占比及海外业务毛利率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

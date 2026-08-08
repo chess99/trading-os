@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:601007",
-  "ticker": "601007",
-  "name": "金陵饭店",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "金陵饭店具备江苏国资背景、南京新街口核心资产、老牌高端酒店品牌、245家签约酒店和2220万会员资源，利润端已从低基数修复；但收入连续承压，酒类贸易和租赁业务拖累仍在，当前约6.5元附近估值已反映较多恢复预期，安全边际不足，适合观察等待更低价格或半年报确认。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    5.7,
-    6.8
-  ],
-  "buy_zone": [
-    4.8,
-    5.3
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金陵饭店",
+    "security_status": "active",
+    "symbol": "CN:601007",
+    "ticker": "601007"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "148afcedd50165be1f4119a162f272ada64f20bfb331c2440959931fd361f712"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.3元，且2026年半年报扣非归母净利润同比增长、酒店管理收入继续增长、商品贸易毛利率未继续恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报披露后复核收入、扣非利润、酒店管理收入、租赁和贸易拖累",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.8元，且酒店服务收入和经营现金流未明显恶化",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复核全年利润中枢和估值区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.2元且无盈利预测上修或食品科技/酒店管理超预期证据",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "2026年年报窗口复核分红、食品科技贡献和资产整合进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.3
+      },
+      "reason": "进入观察买入区间，需要结合半年报确认基本面是否稳定",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入具备初步安全边际区间，可复核是否提高观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "超过基准估值上沿，若无业绩上修应考虑降低仓位或继续观望",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "进入偏乐观估值区间，需要强业绩兑现支撑，否则风险收益比不足",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.3,
-      "reason": "进入观察买入区间，需要结合半年报确认基本面是否稳定"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入具备初步安全边际区间，可复核是否提高观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "超过基准估值上沿，若无业绩上修应考虑降低仓位或继续观望"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "进入偏乐观估值区间，需要强业绩兑现支撑，否则风险收益比不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报披露后复核收入、扣非利润、酒店管理收入、租赁和贸易拖累"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后复核全年利润中枢和估值区间"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "2026年年报窗口复核分红、食品科技贡献和资产整合进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

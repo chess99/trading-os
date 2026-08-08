@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301449",
-  "ticker": "301449",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "天溯计量",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "天溯计量是以计量校准为核心、向检测认证延伸的新上市第三方技术服务公司，2025年盈利和现金流质量较好，但2026Q1利润明显承压且当前估值已反映较乐观成长预期，暂以观察为主，等待价格安全边际或利润恢复验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    29,
-    36
-  ],
-  "buy_zone": [
-    23,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    44,
-    52
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天溯计量",
+    "security_status": "active",
+    "symbol": "CN:301449",
+    "ticker": "301449"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "1a37248eef9dad6aeccf63da76039a95218929de647372bf10e5324047be167e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于28元且2026半年报未显示毛利率、现金流或应收账款显著恶化时，可建立观察仓。",
-      "action": "starter_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点检查收入增长、扣非净利润、毛利率、费用率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入增长转化为扣非净利润增长，且经营现金流恢复为正时，可提高至核心小仓位。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-12-23"
+      },
+      "reason": "上市满一年后复核限售/流通盘变化、市场估值和核心股东行为。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入44元以上且利润兑现不足，或2026全年扣非净利低于0.9亿元时，避免新增并考虑退出观察仓。",
-      "action": "reduce_or_exit",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，验证检测扩张是否创造利润和现金流。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入买入观察区，需要复核半年报和估值安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 44.0
+      },
+      "reason": "进入乐观情景估值区，需要确认利润兑现是否支撑高估值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入买入观察区，需要复核半年报和估值安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 44,
-      "reason": "进入乐观情景估值区，需要确认利润兑现是否支撑高估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点检查收入增长、扣非净利润、毛利率、费用率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-23",
-      "reason": "上市满一年后复核限售/流通盘变化、市场估值和核心股东行为。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，验证检测扩张是否创造利润和现金流。"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

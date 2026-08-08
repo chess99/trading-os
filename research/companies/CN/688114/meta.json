@@ -1,88 +1,95 @@
 {
-  "symbol": "CN:688114",
-  "market": "CN",
-  "ticker": "688114",
-  "name": "华大智造",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "华大智造具备国产稀缺基因测序平台资产，2025-2026Q1 收入恢复且亏损收窄；若装机转化为耗材复购、费用率下降并带来 2027 年前后盈利拐点，当前估值低于基础情景价值。风险在于 Illumina 政策压力缓解、海外和专利不确定性、以及盈利拐点仍未完全证明。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    55,
-    70
-  ],
-  "buy_zone": [
-    42,
-    50
-  ],
-  "sell_or_reduce_zone": [
-    72,
-    85
-  ],
-  "decision": "买入",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华大智造",
+    "security_status": "active",
+    "symbol": "CN:688114",
+    "ticker": "688114"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "81a672edbdbbe440aa54468e9efb56a21d4e1a6690218385351bebe2332e3223"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "42-50 元区间且 2026 中报收入增速不低于 15%、毛利率未明显恶化时分批建立初始仓位",
-      "action": "buy",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报收入增速、毛利率、费用率、现金流和耗材复购迹象",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 中报后确认收入增长、亏损收窄、经营现金流改善且耗材复购证据增强",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报是否延续亏损收窄和现金流改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入 72-85 元区间但盈利拐点仍不清晰，或 PS 估值明显高于基础情景",
-      "action": "reduce",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年报并重新评估盈利拐点与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入更高安全边际买入区，复核基本面无恶化后可加快建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 72.0
+      },
+      "reason": "达到基础情景估值上沿附近，需要盈利拐点或更高增长证据支撑继续持有",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入更高安全边际买入区，复核基本面无恶化后可加快建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 72,
-      "reason": "达到基础情景估值上沿附近，需要盈利拐点或更高增长证据支撑继续持有"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报收入增速、毛利率、费用率、现金流和耗材复购迹象"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报是否延续亏损收窄和现金流改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年报并重新评估盈利拐点与估值区间"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "收入增速",
-    "毛利率",
-    "研发费用率",
-    "销售费用率",
-    "经营活动现金流",
-    "新增装机",
-    "耗材复购",
-    "海外收入占比",
-    "应收账款和存货周转",
-    "关联交易占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

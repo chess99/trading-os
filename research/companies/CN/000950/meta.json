@@ -1,92 +1,96 @@
 {
-  "symbol": "CN:000950",
-  "market": "CN",
-  "ticker": "000950",
-  "name": "重药控股",
-  "company_name": "重药控股",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "重药控股具备重庆及中西部医药流通渠道、医院配送网络和通用技术集团央企整合价值，但低毛利、高应收账款和资金周转压力限制估值与仓位；当前价格接近合理区间下沿但安全边际不足，等待4.8元以下或现金流改善确认后再建立小仓位。",
-  "quality_rating": "B-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    5.4,
-    6.2
-  ],
-  "buy_zone": [
-    4.3,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    6.4,
-    7.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "重药控股",
+    "security_status": "active",
+    "symbol": "CN:000950",
+    "ticker": "000950"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "e759405cfa15ea09f520afb90e7bfad2f2adef53495377ac75895797dceebc03"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.8元且下一期报告显示应收账款周转和经营现金流没有恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "医药流通龙头具备区域渠道价值，但低毛利、高杠杆和医院回款风险限制仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的医院渠道回款、应收账款余额、债务成本和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.3元且TTM归母净利润维持4亿元以上、经营现金流转正",
-      "action": "加至小仓位",
-      "max_weight": 0.04,
-      "reason": "价格给出足够安全边际时，可用低PB央国企流通平台逻辑参与"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报收入增速、扣非利润和经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.4元或应收账款继续快于收入增长",
-      "action": "不加仓或减仓",
-      "max_weight": 0.01,
-      "reason": "估值进入较充分区间后，资产周转和现金流的不确定性会压缩风险收益比"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入观察买入区，需同步复核最新应收账款和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入更有安全边际的首笔加仓区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.4
+      },
+      "reason": "进入减仓复核区，低毛利流通业务不宜按高成长估值持有",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入观察买入区，需同步复核最新应收账款和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "reason": "进入更有安全边际的首笔加仓区"
-    },
-    {
-      "type": "price_above",
-      "price": 6.4,
-      "reason": "进入减仓复核区，低毛利流通业务不宜按高成长估值持有"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的医院渠道回款、应收账款余额、债务成本和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报收入增速、扣非利润和经营现金流"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润",
-    "应收账款余额及应收账款周转天数",
-    "经营活动现金流量净额",
-    "资产负债率和有息负债成本",
-    "医药批发与零售收入增速",
-    "医院渠道回款周期",
-    "集采和两票制对毛利率的影响",
-    "重庆国资与通用技术集团整合进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

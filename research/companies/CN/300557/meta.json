@@ -1,100 +1,105 @@
 {
-  "symbol": "CN:300557",
-  "market": "CN",
-  "ticker": "300557",
-  "name": "理工光科",
-  "company_name": "武汉理工光科股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "细分赛道和资产负债表质量较好，光纤传感监测系统具备技术溢价，但当前股价对应约90倍以上滚动市盈率，已经透支较多成长预期；等待价格回到16-18.5元可买区，或等待高毛利业务放量和净利率上台阶后再重估。",
-  "quality_rating": "B",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [19.0, 24.0],
-  "buy_zone": [16.0, 18.5],
-  "sell_or_reduce_zone": [30.0, 34.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "理工光科",
+    "security_status": "active",
+    "symbol": "CN:300557",
+    "ticker": "300557"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "b0d1347a7e04d8a8984f9b95184a171692f787ec559fa5f08d17b8847c54bf82"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于16元，且最近一期未出现应收账款和存货同步恶化",
-      "action": "可建立3%-5%观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看光纤传感监测系统收入增速、毛利率、合同负债、应收账款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在16-18.5元之间，且光纤传感监测系统收入维持两位数增长",
-      "action": "分批买入，目标仓位2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年收入与利润率改善是否足以支撑估值上修。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在18.5-22元之间，但尚未验证净利率改善",
-      "action": "仅保留0%-1.5%跟踪仓，不主动加仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红方案，重新评估三年盈利中枢、安全边际和资本配置。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于22元且没有连续两个季度利润率改善",
-      "action": "不新增仓位",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价高于30元且滚动PE仍高于70倍",
-      "action": "已有仓位考虑减仓",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
       "reason": "进入估算可买区，安全边际开始覆盖项目制和估值波动风险。",
-      "action": "进入可买区，复核最新季报和订单回款后考虑建仓。"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 16.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
       "reason": "进入强安全边际区，估值接近保守PB/现金底线法区间。",
-      "action": "进入强安全边际区，若基本面未变坏，可提高仓位上限。"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 30.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
       "reason": "价格显著高于合理价值区间，且需要利润率拐点才能支撑。",
-      "action": "估值预期过满，若无利润率拐点，考虑减仓或停止跟踪买入。"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看光纤传感监测系统收入增速、毛利率、合同负债、应收账款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年收入与利润率改善是否足以支撑估值上修。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红方案，重新评估三年盈利中枢、安全边际和资本配置。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "光纤传感监测系统收入增速和毛利率",
-    "消防报警一体化服务毛利率是否回升至15%以上",
-    "合同负债是否转化为收入和现金流",
-    "应收账款、合同资产、存货占收入比例",
-    "经营现金流净额/归母净利润",
-    "研发投入占收入比例及研发资本化率",
-    "前五大客户集中度和重大项目验收回款节奏",
-    "大交通、大能源新增订单和标杆项目复制情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

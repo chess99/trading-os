@@ -1,117 +1,114 @@
 {
-  "symbol": "CN:300170",
-  "market": "CN",
-  "ticker": "300170",
-  "name": "汉得信息",
-  "company_name": "上海汉得信息技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "汉得信息是企业数字化与 ERP 实施服务老牌厂商，2025 年利润和经营现金流改善，2026Q1 收入恢复小幅增长，AI 与自研产品提供上行弹性；但当前约 15 元价格已反映较多乐观预期，商业模式仍有较强人力交付属性，缺少足够安全边际。",
-  "quality_rating": "中上",
-  "valuation_rating": "偏贵但未明显泡沫",
-  "fair_value_range": [
-    11.0,
-    16.0
-  ],
-  "buy_zone": [
-    0,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    21.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汉得信息",
+    "security_status": "active",
+    "symbol": "CN:300170",
+    "ticker": "300170"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "6c2a51db5b56423abd6d26d03721be26050bd92806e3deb0ec663b841d093556"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于或等于 10.5 元，且收入恢复增长、扣非利润率不恶化、经营现金流/净利润维持在 1 倍以上",
-      "action": "积极买入",
-      "target_position": "4%-6%",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "价格在 10.5-12.0 元，且 2026 年中报验证收入和扣非利润继续增长",
-      "action": "分批建仓",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "价格在 12.0-16.0 元，基本面无恶化但 AI 收入尚未量化兑现",
-      "action": "观察或仅保留跟踪仓",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格高于或等于 21.0 元，且 AI/自研产品未带来可量化利润跃迁",
-      "action": "减仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入估算合理价值下沿附近，开始具备安全边际",
-      "action": "进入可买区，复核最近一期收入、扣非利润和现金流后分批买入"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "价格低于保守 DCF 与利润倍数估值下沿，若基本面未恶化则风险收益比改善",
-      "action": "若基本面未恶化，提高至核心观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 21.0,
-      "reason": "价格显著高于合理价值区间，除非 AI 和产品化兑现超预期，否则估值风险上升",
-      "action": "除非 AI/产品化收入显著超预期，否则减仓或卖出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年中报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "中报可验证收入恢复、利润率和现金流质量",
-      "action": "复核收入增速、扣非净利率、经营现金流和应收/合同资产变化"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "公司首次量化披露 AI 或自研产品收入、毛利率、续费率、客户数",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "AI 与自研产品是估值上修的核心变量",
-      "action": "重估收入质量、利润率和合理估值区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "扣非归母净利润连续两个季度同比下滑或经营现金流显著弱于净利润",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "利润和现金流背离会削弱质量评级",
-      "action": "下调质量评级并复核持仓上限"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "股价跌入 12 元以下或升至 21 元以上",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "价格触及买入区或减仓区需要重新校准仓位",
-      "action": "立即复核估值与仓位"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入估算合理价值下沿附近，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "价格低于保守 DCF 与利润倍数估值下沿，若基本面未恶化则风险收益比改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.0
+      },
+      "reason": "价格显著高于合理价值区间，除非 AI 和产品化兑现超预期，否则估值风险上升",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润率",
-    "经营活动现金流净额/归母净利润",
-    "自研产品与 AI 相关收入规模及毛利率",
-    "应收账款和合同资产增速相对收入增速",
-    "人均创收和人均利润",
-    "股权激励费用对利润的影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

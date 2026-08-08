@@ -1,41 +1,77 @@
 {
-  "symbol": "CN:920575",
-  "market": "CN",
-  "ticker": "920575",
-  "name": "*ST康乐",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "公司尚无商业化疫苗收入且已资不抵债，当前股价隐含融资续命、三价获批和商业化成功的较高确定性，安全边际不足。",
-  "fair_value_range": [0.5, 1.2],
-  "buy_zone": [0.2, 0.4],
-  "sell_or_reduce_zone": [1.5, 3.8],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST康乐",
+    "security_status": "active",
+    "symbol": "CN:920575",
+    "ticker": "920575"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "2659c35ac6a73c73efceff736e95ac2dcebc5359c27f6df8c714a728d3de1530"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入0.20至0.40元且已完成足额股权融资、主要逾期债务得到解决、三价HPV疫苗审评实质推进，基本面未恶化",
-      "max_weight": 0.005
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": ["reports/2026-07-14-initial.md"],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的现金、净资产、债务逾期和持续经营风险"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.4,
-      "reason": "仅在融资、债务与审批核心假设均改善时进入条件性买入区间"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的现金、净资产、债务逾期和持续经营风险",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 1.5,
-      "reason": "高于风险调整公允价值上沿，进入减仓或不应追高区间"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.4
+      },
+      "reason": "仅在融资、债务与审批核心假设均改善时进入条件性买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.5
+      },
+      "reason": "高于风险调整公允价值上沿，进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-19T16:52:59+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

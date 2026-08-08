@@ -1,178 +1,151 @@
 {
-  "symbol": "CN:002412",
-  "market": "CN",
-  "ticker": "002412",
-  "name": "汉森制药",
-  "company_name": "湖南汉森制药股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "高毛利、低负债、分红意愿较强的中成药现金流公司，四磨汤口服液和天麻醒脑胶囊构成主要价值；但单品集中、销售费用率高、增长偏低，2026-07-10 的 6.00 元股价基本处于合理区间，缺少安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏合理",
-  "fair_value_range": [
-    5.5,
-    7.0
-  ],
-  "buy_zone": [
-    0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汉森制药",
+    "security_status": "active",
+    "symbol": "CN:002412",
+    "ticker": "002412"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "de23c3efe2f050f385cfb85a1e62c4459cdd26020bc93c1338f41a565503bf32"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于 4.2 元",
-      "price_range": [
-        0,
-        4.2
-      ],
-      "action": "强吸引力，分批买入",
-      "target_position": "5%-7%",
-      "max_weight": 0.07
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证 Q1 利润高增是否具备主营持续性",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价大于 4.2 元且小于等于 4.8 元",
-      "price_range": [
-        4.2,
-        4.8
-      ],
-      "action": "有安全边际，可买",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "判断基药目录纳入是否转化为真实订单",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价大于 4.8 元且小于等于 5.5 元",
-      "price_range": [
-        4.8,
-        5.5
-      ],
-      "action": "等待或极小试仓",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "第一大单品决定公司利润稳定性",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价大于 5.5 元且小于等于 7.0 元",
-      "price_range": [
-        5.5,
-        7.0
-      ],
-      "action": "合理区间，观察",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "第二增长曲线失速会压低估值中枢",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "股价大于 7.0 元且小于 8.0 元",
-      "price_range": [
-        7.0,
-        8.0
-      ],
-      "action": "不追高",
-      "target_position": "0%新增",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "费用效率下降会侵蚀高毛利价值",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "condition": "股价大于等于 8.0 元且基本面未同步上修",
-      "price_range": [
-        8.0,
-        999.0
-      ],
-      "action": "若持有则复核减仓",
-      "target_position": "降至观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "现金流质量恶化会削弱分红和防守价值",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "政策价格压力会改变盈利模型",
+      "trigger_id": "legacy-review-7",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "低于约 11 倍 TTM PE，接近无增长价值上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "市场按低增长现金流资产定价，股息和防守价值提升",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "超过合理区间上沿且需要业绩上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "价格已资本化乐观情景，安全边际不足",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "股价低于 4.8 元",
-      "price": 4.8,
-      "action": "进入有安全边际买入区",
-      "reason": "低于约 11 倍 TTM PE，接近无增长价值上沿"
-    },
-    {
-      "type": "price_below",
-      "condition": "股价低于 4.2 元",
-      "price": 4.2,
-      "action": "进入强吸引力买入区",
-      "reason": "市场按低增长现金流资产定价，股息和防守价值提升"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价高于 7.2 元",
-      "price": 7.2,
-      "action": "不追高",
-      "reason": "超过合理区间上沿且需要业绩上修支撑"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价高于 8.0 元且基本面未同步上修",
-      "price": 8.0,
-      "action": "复核减仓",
-      "reason": "价格已资本化乐观情景，安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026 年半年报披露后复查主营收入、利润质量和经营现金流",
-      "reason": "验证 Q1 利润高增是否具备主营持续性"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "trigger": "2026-09-01 基药目录实施后跟踪四磨汤口服液基层终端放量",
-      "reason": "判断基药目录纳入是否转化为真实订单"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "四磨汤口服液连续两个报告期收入同比下滑",
-      "reason": "第一大单品决定公司利润稳定性"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "天麻醒脑胶囊增速降至个位数以下",
-      "reason": "第二增长曲线失速会压低估值中枢"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "销售费用率连续抬升但收入低增",
-      "reason": "费用效率下降会侵蚀高毛利价值"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "经营现金流净额/归母净利润连续两年低于 0.8",
-      "reason": "现金流质量恶化会削弱分红和防守价值"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "trigger": "核心产品进入集采后价格或毛利率显著下降",
-      "reason": "政策价格压力会改变盈利模型"
-    }
-  ],
-  "key_tracking_metrics": [
-    "四磨汤口服液收入增速和毛利率",
-    "天麻醒脑胶囊收入增速",
-    "基药目录实施后的新增订单和基层渠道覆盖",
-    "销售费用率",
-    "经营现金流净额/归母净利润",
-    "研发费用率",
-    "分红率和股息率",
-    "投资收益占税前利润比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

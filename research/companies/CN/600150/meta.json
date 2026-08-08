@@ -1,108 +1,105 @@
 {
-  "symbol": "CN:600150",
-  "market": "CN",
-  "ticker": "600150",
-  "name": "中国船舶",
-  "company_name": "中国船舶",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "观察",
-  "current_thesis": "中国船舶是本轮全球造船上行周期中 A 股最核心的总装平台之一，订单、船价和央企整合提供中期利润弹性；但当前价格已反映较多高价订单交付和合并预期，安全边际不足，适合观察或小仓位跟踪，等待 26-30 元区间再系统性买入。",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    32,
-    42
-  ],
-  "buy_zone": [
-    26,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国船舶",
+    "security_status": "active",
+    "symbol": "CN:600150",
+    "ticker": "600150"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "90fc287e06645b8765476e794f15d3e8de170e73d97a7cc34841a11bf6f93a66"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 25 元且新船价格指数仍处高位、公司订单和交付未恶化",
-      "action": "强吸引力区间分批加仓",
-      "max_weight": 0.07,
-      "reason": "接近悲观情景估值，周期下行风险已有较充分折价"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报中的船舶造修毛利率、合同负债、存货、经营现金流和合并进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价 26-30 元且半年报确认船舶造修毛利率继续改善",
-      "action": "买入并建立核心仓位",
-      "max_weight": 0.05,
-      "reason": "该区间具备较好的基准情景赔率和安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报和高价订单交付节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价 30-35 元且订单、汇率、交付节奏正常",
-      "action": "谨慎配置或补足跟踪仓",
-      "max_weight": 0.03,
-      "reason": "估值进入合理区间下半部，但仍需业绩兑现"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查 2026 年年报，重估完整年度盈利能力和整合后口径",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价 35-42 元",
-      "action": "观察或持有，不主动加重仓",
-      "max_weight": 0.02,
-      "reason": "处在合理价值区间，新增仓位预期收益一般"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入有安全边际的买入区间，需要复核订单、船价和毛利率后考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于 48 元且业绩或订单没有同步上修",
-      "action": "减仓或停止新增买入",
-      "max_weight": 0.01,
-      "reason": "价格进入乐观情景定价区，周期股回撤风险上升"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入强吸引力区间，需要判断是否为基本面恶化导致",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "进入减仓区间，需要确认是否有业绩或资产整合超预期支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入有安全边际的买入区间，需要复核订单、船价和毛利率后考虑加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入强吸引力区间，需要判断是否为基本面恶化导致"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "进入减仓区间，需要确认是否有业绩或资产整合超预期支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年报中的船舶造修毛利率、合同负债、存货、经营现金流和合并进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报和高价订单交付节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查 2026 年年报，重估完整年度盈利能力和整合后口径"
-    }
-  ],
-  "key_tracking_metrics": [
-    "Clarkson 新造船价格指数",
-    "公司新签订单金额和高附加值船型占比",
-    "在手订单金额与交付排期",
-    "船舶造修业务毛利率",
-    "合同负债、存货、应收款和经营现金流",
-    "人民币兑美元汇率及汇兑损益",
-    "吸收合并中国重工进度和合并后资产质量",
-    "军品订单和验收结算节奏"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

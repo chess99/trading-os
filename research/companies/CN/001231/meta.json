@@ -1,115 +1,115 @@
 {
-  "symbol": "CN:001231",
-  "market": "CN",
-  "ticker": "001231",
-  "name": "农心科技",
-  "company_name": "农心科技",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "农心科技是以农药制剂、登记证资源和经销渠道为核心的小型农化公司，财务安全性尚可但利润规模和成长弹性仍需验证。以 2026-07-10 收盘价 18.74 元测算估值偏贵，当前适合观察，等待价格进入 13.5-15.5 元或 2026 年收入、毛利率、经营现金流同步改善后再考虑轻仓。",
-  "quality_rating": "medium",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    16.0,
-    20.0
-  ],
-  "buy_zone": [
-    13.5,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    25.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "农心科技",
+    "security_status": "active",
+    "symbol": "CN:001231",
+    "ticker": "001231"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "b6f0aa35a5760b281e63996ccccb5a21bea09bf28ce46bfbbb12a62248a936ad"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于买入区间且未看到利润加速证据",
-      "action": "暂不新买入，保留观察名单",
-      "max_weight": 0.0,
-      "reason": "2026-07-10 收盘价 18.74 元对应约 28 倍 2025 年归母净利润，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计 2026 年中报披露后复查收入增速、毛利率、存货、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 15.5 元且 2026 年中报收入、毛利率、经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "价格进入合理价值下沿附近，可用小仓位跟踪制剂景气和渠道修复"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报披露后验证旺季销售、渠道库存和全年利润兑现度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于 13.5 元且经营现金流继续覆盖净利润",
-      "action": "提高至轻仓",
-      "max_weight": 0.03,
-      "reason": "估值进入较有安全边际区域，但公司规模和护城河仍不足以成为核心仓位"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年年报披露后重估登记证、海外业务、现金分配和长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于 22.0 元且 2026 年利润增速未超过 20%",
-      "action": "减仓或不追高",
-      "max_weight": 0.0,
-      "reason": "估值进入乐观区间，需要利润台阶上移支撑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入初始买入区间上沿，复查中报和现金流后可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入较强安全边际区间，若基本面未证伪可提高至轻仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入降仓区间下沿，若利润和海外进展未上修应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "进入乐观估值上沿，除非盈利显著加速否则应卖出或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入初始买入区间上沿，复查中报和现金流后可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入较强安全边际区间，若基本面未证伪可提高至轻仓"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "进入降仓区间下沿，若利润和海外进展未上修应降低风险暴露"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "进入乐观估值上沿，除非盈利显著加速否则应卖出或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计 2026 年中报披露后复查收入增速、毛利率、存货、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报披露后验证旺季销售、渠道库存和全年利润兑现度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年年报披露后重估登记证、海外业务、现金分配和长期盈利中枢"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "扣非归母净利润同比增速",
-    "综合毛利率",
-    "杀虫剂毛利率",
-    "杀菌剂毛利率",
-    "除草剂毛利率",
-    "销售费用率",
-    "经营现金流净额/归母净利润",
-    "应收账款周转",
-    "存货周转",
-    "农药登记证数量",
-    "海外登记证数量",
-    "重点新品销售进展",
-    "原药价格趋势",
-    "经销商库存健康度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,92 +1,86 @@
 {
-  "symbol": "CN:000990",
-  "market": "CN",
-  "ticker": "000990",
-  "name": "诚志股份",
-  "company_name": "诚志股份",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "hold",
-  "valuation_rating": "buy",
-  "current_thesis": "低PB资产型公司叠加2026年盈利修复，清华系/诚志科融背景和南京诚志永清等重资产提供修复弹性；但化工景气、减值和资本开支仍限制仓位，适合8.6元以下分批观察买入。",
-  "fair_value_range": [
-    10.0,
-    12.8
-  ],
-  "buy_zone": [
-    7.6,
-    8.6
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "诚志股份",
+    "security_status": "active",
+    "symbol": "CN:000990",
+    "ticker": "000990"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "974f03e2a436aa2f74c434345621fa366ebd64f0c9bf288f921944181e1c4be5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价不高于8.8元，且2026年半年度业绩预告未被下修",
-      "action": "建立0.5%-1.0%首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "低PB和盈利修复已有初步证据，但半年报质量仍需确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证扣非净利润、经营现金流、毛利率和资产减值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入7.6-8.3元，且未出现新增重大减值或经营恶化",
-      "action": "分批加至2.0%以内",
-      "max_weight": 0.02,
-      "reason": "价格进入安全边际更充分区域，可用资产折价承接周期波动"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断盈利修复是否跨季度持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026半年报扣非净利润兑现预告上半区，经营现金流改善，清洁能源价差延续修复",
-      "action": "加至3.0%-4.0%以内",
-      "max_weight": 0.04,
-      "reason": "盈利修复从预告变成报表事实后，可提高周期修复仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.3
+      },
+      "reason": "进入更有安全边际的买入区间，可复核是否加至2%以内",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价进入12.5-15.0元，或盈利修复低于预期且减值扩大",
-      "action": "减仓或退出至0%-1.0%",
-      "max_weight": 0.01,
-      "reason": "估值修复已反映，或核心买入逻辑被破坏"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "接近基准合理价值上沿，应检查盈利兑现并考虑减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.3,
-      "reason": "进入更有安全边际的买入区间，可复核是否加至2%以内"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "接近基准合理价值上沿，应检查盈利兑现并考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证扣非净利润、经营现金流、毛利率和资产减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断盈利修复是否跨季度持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026年半年度扣非净利润是否落在2.40亿-3.00亿元预告区间",
-    "经营现金流净额及自由现金流",
-    "清洁能源和工业气体业务毛利率",
-    "南京诚志永清装置负荷、单体利润和主要产品价差",
-    "液晶材料、OLED材料、PI材料收入增速和毛利率",
-    "资产减值、信用减值、商誉和固定资产减值变化",
-    "资本开支、在建工程转固和资产周转",
-    "控股股东诚志科融相关治理、分红、回购或资产整合动作"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

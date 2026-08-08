@@ -1,104 +1,96 @@
 {
-  "symbol": "CN:601878",
-  "market": "CN",
-  "ticker": "601878",
-  "name": "浙商证券",
-  "company_name": "浙商证券",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "浙商证券具备浙江区域券商资源、国资背景和国都证券整合弹性，2026年业绩受市场成交、投行修复和自营环境驱动；当前估值处于合理偏低但安全边际不足，适合观察或小仓位，等待9元以下更优买点。",
-  "quality_rating": "medium",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    10.0,
-    12.5
-  ],
-  "buy_zone": [
-    8.2,
-    9.0
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙商证券",
+    "security_status": "active",
+    "symbol": "CN:601878",
+    "ticker": "601878"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "c2017a76e4825ed112f74233e6d294b482f2f283c19850a03b7593b5185631fd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约9.6元附近，估值处于合理偏低但未到安全边际充足区间",
-      "action": "仅建立观察仓或继续等待",
-      "max_weight": 0.015,
-      "reason": "券商Beta弹性存在，但1.1倍以上PB对中型券商不算深度低估"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点核验经纪、投行、资管、自营和国都证券贡献",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至9.0元以下且A股日均成交额、两融余额维持改善",
-      "action": "分批买入",
-      "max_weight": 0.03,
-      "reason": "接近1.0-1.1倍PB，市场成交弹性与资本实力提供较好风险收益比"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报与市场成交弹性，更新全年盈利和估值区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.2元且公司风控指标、ROE和国都整合未恶化",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "悲观情景接近充分定价，PB安全垫较厚"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入计划买入区间上沿，复核成交额、两融和公司基本面后可分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于13.0元且2026年利润未显示可持续超过30亿元",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.02,
-      "reason": "估值进入1.5倍PB以上区域，需要更高ROE兑现支撑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入深度安全边际区，若无风控或业绩恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "进入减持区间，需要验证ROE和利润是否足以支撑高PB",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入计划买入区间上沿，复核成交额、两融和公司基本面后可分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入深度安全边际区，若无风控或业绩恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "进入减持区间，需要验证ROE和利润是否足以支撑高PB"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点核验经纪、投行、资管、自营和国都证券贡献"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报与市场成交弹性，更新全年盈利和估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "A股日均成交额",
-    "两融余额",
-    "浙商证券季度归母净利润",
-    "加权平均ROE",
-    "经纪业务收入及市占率",
-    "投行业务收入和债券承销规模",
-    "资产管理业务收入和主动管理规模",
-    "投资收益及公允价值变动收益",
-    "母公司净资本",
-    "风险覆盖率",
-    "资本杠杆率",
-    "流动性覆盖率",
-    "净稳定资金率",
-    "国都证券净利润及监管事项",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

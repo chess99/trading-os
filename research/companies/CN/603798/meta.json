@@ -1,81 +1,95 @@
 {
-  "symbol": "CN:603798",
-  "market": "CN",
-  "ticker": "603798",
-  "name": "康普顿",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "康普顿资产负债表稳健、经营现金流好，但收入连续下滑、扣非ROE偏低，当前约29亿元市值对应2025/TTM利润估值偏贵，安全边际不足；进入观察池，等待股价回落或主业增长拐点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.8,
-    8.2
-  ],
-  "buy_zone": [
-    0,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    11,
-    13.5
-  ],
-  "position_plan": [
-    {
-      "condition": "当前价格高于基准合理价值区间，收入和扣非ROE尚未修复，暂不建仓，仅跟踪季度数据。",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价跌入5.8元以下且最近两个季度收入不再恶化、经营现金流保持为正，可建立观察仓。",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "收入连续两个季度同比转正、扣非净利率稳定高于5%、新能源或工业油业务形成可核验增量后，可提升至小仓位。",
-      "max_weight": 0.06
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入买入区间，需要复核收入、现金流和估值假设。"
-    },
-    {
-      "type": "price_above",
-      "price": 11,
-      "reason": "高于基准合理价值上沿，安全边际不足，应避免追高或考虑降低暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查收入增速、扣非净利率、经营现金流和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q2-Q3是否延续2025年非一季度盈利偏弱的问题。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期盈利中枢、分红政策和新能源业务贡献。"
-    }
-  ],
-  "valuation": {
-    "as_of": "2026-07-17",
-    "last_price": 11.31,
-    "market_cap_cny_billion": 2.9,
-    "base_case_value_per_share": [
-      5.8,
-      8.2
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "康普顿",
+    "security_status": "active",
+    "symbol": "CN:603798",
+    "ticker": "603798"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "153955ef3204835f176699c76c88c71918df2b837719212462e929ee5f6ffb2a"
+      }
     ],
-    "method": "相对估值、绝对估值和情景估值交叉验证"
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查收入增速、扣非净利率、经营现金流和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q2-Q3是否延续2025年非一季度盈利偏弱的问题。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期盈利中枢、分红政策和新能源业务贡献。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入买入区间，需要复核收入、现金流和估值假设。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "高于基准合理价值上沿，安全边际不足，应避免追高或考虑降低暴露。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

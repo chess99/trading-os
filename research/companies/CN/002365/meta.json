@@ -1,131 +1,123 @@
 {
-  "symbol": "CN:002365",
-  "market": "CN",
-  "ticker": "002365",
-  "name": "永安药业",
-  "company_name": "潜江永安药业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "全球牛磺酸龙头，低负债且现金类资产厚，但2025年扣非亏损、2026Q1修复仍弱，当前10.46元接近乐观情景定价，缺乏安全边际。",
-  "quality_rating": "B",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    6.8,
-    8.5
-  ],
-  "buy_zone": [
-    5.2,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永安药业",
+    "security_status": "active",
+    "symbol": "CN:002365",
+    "ticker": "002365"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "780197b842f6d24fd79ce2253dc0621530f58f7672ddc63076dc870cbd28e190"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 5.20",
-      "price": "<=5.20",
-      "action": "强吸引力买入",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "5.20 < price <= 6.20",
-      "price": "5.20-6.20",
-      "action": "有安全边际，小仓试错",
-      "position": "1%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "6.20 < price <= 8.50",
-      "price": "6.20-8.50",
-      "action": "观察或极小仓",
-      "position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "price >= 9.00",
-      "price": ">=9.00",
-      "action": "不买或降低已有仓位",
-      "position": "0%",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "低于安全边际买入价。",
-      "condition": "进入有安全边际买入区，复核最近一期扣非利润和现金流后可试错。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "低于强吸引力买入价。",
-      "condition": "进入强吸引力买入区，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "高于不应追高价。",
-      "condition": "高于不应追高价，除非半年报证明利润率显著修复。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证2026Q1修复是否延续。",
-      "action": "复查牛磺酸销量、售价、毛利率、产能利用率。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "美国专利诉讼程序恢复或出现判决/和解公告",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "专利诉讼可能影响美国销售和赔偿风险。",
-      "action": "评估美国销售限制、赔偿和客户订单影响。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "保健食品和一水肌酸业务出现重大投资、减值、客户认证或利润贡献公告",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "新业务是增长来源，但已存在费用和减值压力。",
-      "action": "更新新业务盈利和资本开支假设。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "货币资金和交易性金融资产合计低于7亿元或金融资产发生重大亏损",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "现金类资产是当前估值下行保护的核心。",
-      "action": "重估资产保护和资本配置质量。"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "董事长、实控人、关联交易、安全环保出现新的重大负面公告",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "治理和安全环保事件会扩大估值折价。",
-      "action": "下调治理评级并复查是否触发逻辑止损。"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "低于安全边际买入价。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "低于强吸引力买入价。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "高于不应追高价。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "牛磺酸销量",
-    "牛磺酸平均售价",
-    "牛磺酸毛利率",
-    "产能利用率",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "保健食品收入与销售费用率",
-    "一水肌酸收入和资产减值",
-    "货币资金加交易性金融资产",
-    "美国专利诉讼进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

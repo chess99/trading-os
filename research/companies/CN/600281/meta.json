@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:600281",
-  "ticker": "600281",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "华阳新材",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司主业仍处扣非亏损，高负债和极薄净资产使经营波动被放大；生物降解业务拟剥离是止损而非成长证明，当前价格显著高于基本面可支持价值，维持不买。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.8,
-    1.4
-  ],
-  "buy_zone": [
-    0.5,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    2.0,
-    4.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华阳新材",
+    "security_status": "active",
+    "symbol": "CN:600281",
+    "ticker": "600281"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "967584705ffb77e496169512da1f5c1d7aadd5f86eedd0b2e1f5e201cac83e30"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "扣非亏损持续且股价高于合理价值区间",
-      "action": "不建仓，仅观察",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、扣非亏损、经营现金流和资产剥离进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于0.80元且生物降解业务剥离完成、连续两个季度扣非盈利",
-      "action": "重新研究后最多试探性小仓位",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "跌入基本面观察区，可重新评估是否有资产修复安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断贵金属业务是否进入持续盈利",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 2.0,
-      "reason": "显著高于基准估值且扣非仍亏损，应维持回避或卖出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、扣非亏损、经营现金流和资产剥离进展"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "跌入基本面观察区，可重新评估是否有资产修复安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断贵金属业务是否进入持续盈利"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.0
+      },
+      "reason": "显著高于基准估值且扣非仍亏损，应维持回避或卖出",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

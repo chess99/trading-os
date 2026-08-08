@@ -1,114 +1,114 @@
 {
-  "symbol": "CN:002937",
-  "market": "CN",
-  "ticker": "002937",
-  "name": "兴瑞科技",
-  "company_name": "宁波兴瑞电子科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "精密零组件平台型制造商，汽车电子、智能终端和服务器/AI硬件结构件具备长期机会，但2025年利润显著下滑、2026Q1增收不增利，当前价格已透支液冷服务器等主题预期，缺少安全边际。",
-  "quality_rating": "中上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    23,
-    30
-  ],
-  "buy_zone": [
-    20,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    35,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "兴瑞科技",
+    "security_status": "active",
+    "symbol": "CN:002937",
+    "ticker": "002937"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "99332ecdbb204704b63cbc4332e5f4065d254cfd8d3860f9a5aa3d6d651ada17"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于23元，且最近一个季度综合毛利率回升至24%以上或汽车电子订单恢复明确",
-      "max_weight": 0.04,
-      "action": "可建立2%-4%观察仓，分批买入"
-    },
-    {
-      "condition": "股价低于20元，且无重大客户流失、经营现金流仍高于净利润",
-      "max_weight": 0.05,
-      "action": "可提高至3%-5%核心跟踪仓"
-    },
-    {
-      "condition": "股价高于35元且AI/液冷服务器订单仍未定量披露",
-      "max_weight": 0.02,
-      "action": "已有仓位降至0%-2%，无仓位不追买"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "currency": "CNY",
-      "reason": "23元以下接近本报告合理价值下沿，开始具备基本面安全边际",
-      "action": "进入可买区，复核最近一期毛利率、订单和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "currency": "CNY",
-      "reason": "20元以下低于正常化PE、PS和PB/ROE估值交叉验证区间",
-      "action": "进入深度安全边际区，检查是否存在基本面恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "currency": "CNY",
-      "reason": "35元以上明显高于当前已兑现利润支持的合理价值区间",
-      "action": "进入减仓或不买区，除非利润和订单明显上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证苏州和泰国基地爬坡、毛利率恢复和现金流质量",
-      "action": "复核收入增速、毛利率、净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "公司披露AI/液冷服务器相关明确订单、收入或客户",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "AI/液冷服务器是当前估值溢价的关键假设，需要定量订单或收入验证",
-      "action": "复核估值上沿和成长假设"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "汽车电子毛利率连续两个季度低于23%",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "汽车电子是最大收入来源，毛利率持续低位会削弱正常化利润假设",
-      "action": "下调质量评级并复核买入区"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "前五大客户集中度继续上升或应收账款显著恶化",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "客户集中和回款变化直接影响公司制造业务的议价权与利润含金量",
-      "action": "复核客户集中和现金流风险"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "23元以下接近本报告合理价值下沿，开始具备基本面安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "20元以下低于正常化PE、PS和PB/ROE估值交叉验证区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "35元以上明显高于当前已兑现利润支持的合理价值区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "汽车电子收入同比增速",
-    "汽车电子毛利率",
-    "智能终端收入同比增速",
-    "综合毛利率",
-    "归母净利润和扣非净利润",
-    "经营活动现金流净额/归母净利润",
-    "存货周转率和存货跌价准备",
-    "应收账款周转率",
-    "AI/液冷服务器相关订单和收入",
-    "苏州与泰国基地投产后的产能利用率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

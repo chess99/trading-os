@@ -1,100 +1,106 @@
 {
-  "symbol": "CN:000785",
-  "market": "CN",
-  "ticker": "000785",
-  "name": "居然智家",
-  "company_name": "居然智家",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "居然智家仍有全国家居卖场网络、品牌和经营现金流基础，但2025年大幅亏损、2026Q1利润继续下滑，地产后周期、租金减免、资产减值和治理过渡尚未出清；当前适合观察，等待扣非利润、出租率和现金流修复后再提高仓位。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "neutral_to_expensive",
-  "fair_value_range": [
-    2.2,
-    2.9
-  ],
-  "buy_zone": [
-    1.8,
-    2.1
-  ],
-  "sell_or_reduce_zone": [
-    3.2,
-    3.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "居然智家",
+    "security_status": "active",
+    "symbol": "CN:000785",
+    "ticker": "000785"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "4b6872c7cbca6d5ff287e7e5eadd865865f95f0bb23ae81063d6ba4ef0801b18"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于2.10元且2026H1扣非净利、经营现金流未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "估值进入买入区但基本面仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-25"
+      },
+      "reason": "复核2026年半年报：租赁及管理收入、扣非净利、经营现金流、出租率和资产减值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.10元且租赁及管理业务收入企稳、出租率改善、减免收敛",
-      "action": "加仓至小仓位",
-      "max_weight": 0.03,
-      "reason": "利润修复开始被定报验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：确认减免是否收敛、利润是否恢复、治理过户和质押风险是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于3.20元但扣非利润和出租率未同步修复",
-      "action": "减仓或不追高",
-      "max_weight": 0.005,
-      "reason": "估值已透支正常化盈利修复"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.1
+      },
+      "reason": "进入初始买入区，复核半年报和经营现金流后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入深度安全边际区，但需排除资产减值、质押和经营现金流恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.2
+      },
+      "reason": "进入减仓观察区，若经营修复未验证则降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.8
+      },
+      "reason": "乐观估值区上沿，除非盈利和分红恢复否则卖出或大幅减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.1,
-      "reason": "进入初始买入区，复核半年报和经营现金流后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入深度安全边际区，但需排除资产减值、质押和经营现金流恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 3.2,
-      "reason": "进入减仓观察区，若经营修复未验证则降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 3.8,
-      "reason": "乐观估值区上沿，除非盈利和分红恢复否则卖出或大幅减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-25",
-      "reason": "复核2026年半年报：租赁及管理收入、扣非净利、经营现金流、出租率和资产减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：确认减免是否收敛、利润是否恢复、治理过户和质押风险是否改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "直营卖场出租率",
-    "租赁及管理业务收入同比增速",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "关店和转加盟相关资产处置损益",
-    "投资性房地产公允价值变动",
-    "商誉和长期资产减值",
-    "有息负债和货币资金",
-    "控股股东及一致行动人质押比例",
-    "分红条件恢复情况",
-    "洞窝和Homestyler收入及付费客户数",
-    "私募REITs或资产盘活进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

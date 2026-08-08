@@ -1,30 +1,96 @@
 {
-  "symbol": "CN:002131",
-  "market": "CN",
-  "ticker": "002131",
-  "name": "利欧股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "双主业公司（水泵+数字营销），数字营销占收入65-70%但利润极薄，扣非净利润率仅0.02%。净利润完全依赖不可持续的非经常性损益（投资收益）。近5年营收停滞在200亿，ROE极低（2025年0.27%），ROIC仅0.13%。当前PB 2.25x严重高估（对应0.3%的ROE合理PB应在0.8-1.2x）。不买。",
-  "fair_value_range": [1.8, 2.5],
-  "buy_zone": [1.8, 2.5],
-  "sell_or_reduce_zone": [3.5, 20],
-  "position_plan": [
-    {"condition": "股价跌至1.80-2.50元区间且扣非净利润持续为正", "max_weight": 0.01},
-    {"condition": "股价跌破1.80元且基本面未显著恶化", "max_weight": 0.02},
-    {"condition": "公司公告剥离数字营销业务或聚焦水泵主业战略明确", "max_weight": 0.03}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "利欧股份",
+    "security_status": "active",
+    "symbol": "CN:002131",
+    "ticker": "002131"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "6e83d29aec60f0ec198df5e5d70fe2503c17b4e3b12c9285da80ac188437553b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-30"
+      },
+      "reason": "2026年三季报发布，观察扣非净利润和经营现金流是否改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报发布，检查数字营销业务收入和毛利率变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "进入强吸引力买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.5
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-10-30", "reason": "2026年三季报发布，观察扣非净利润和经营现金流是否改善"},
-    {"type": "date", "date": "2027-04-30", "reason": "2026年年报发布，检查数字营销业务收入和毛利率变化"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 1.8, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_below", "price": 1.5, "reason": "进入强吸引力买入区间"},
-    {"type": "price_above", "price": 3.5, "reason": "进入减仓或不应追高区间"}
-  ],
-  "updated_at": "2026-07-08T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

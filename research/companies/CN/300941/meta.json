@@ -1,78 +1,95 @@
 {
-  "symbol": "CN:300941",
-  "ticker": "300941",
-  "name": "创识科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "资产负债表强、银行和行业客户资源有价值，但传统支付业务承压，数字营销低毛利且拖累现金流，2025和2026Q1尚未证明利润质量修复；当前价格高于保守合理价值中枢，安全边际不足，先观察。",
-  "fair_value_range": [
-    8.5,
-    12.5
-  ],
-  "buy_zone": [
-    7.0,
-    9.0
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "创识科技",
+    "security_status": "active",
+    "symbol": "CN:300941",
+    "ticker": "300941"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "a92caf7c77b68e0e980c931cd2f38d9cdaa0331320492c24f188ef0fb51fc082"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入7.0-9.0元且现金和类现金资产未明显流失、经营现金流改善迹象明确",
-      "action": "可重新评估建立观察性小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看数字营销毛利率、经营现金流、应收账款和智慧医疗养老收入",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利润和经营现金流同时改善，数字营销毛利率稳定且智慧医疗养老收入放量",
-      "action": "可将上限提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润修复和现金流拐点是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于14元但未出现利润和现金流拐点",
-      "action": "不新增，已有仓位应减仓或退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新校准估值和长期 thesis",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入保守买入观察区，需要复核现金资产、订单和现金流质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "进入乐观情景定价区，若无业绩兑现应降低风险暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入保守买入观察区，需要复核现金资产、订单和现金流质量"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "进入乐观情景定价区，若无业绩兑现应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看数字营销毛利率、经营现金流、应收账款和智慧医疗养老收入"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润修复和现金流拐点是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新校准估值和长期 thesis"
-    }
-  ],
-  "last_price": 13.41,
-  "last_price_date": "2026-07-15",
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

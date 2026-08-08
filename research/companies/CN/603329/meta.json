@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603329",
-  "market": "CN",
-  "ticker": "603329",
-  "name": "上海雅仕",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "上海雅仕受益于2026年上半年硫磺等大宗商品供应链景气，利润弹性显著释放，但历史现金流质量偏弱且存在监管警示，当前价格未给出足够治理和周期安全边际，适合观察而非追高。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    9.0,
-    12.0
-  ],
-  "buy_zone": [
-    7.0,
-    8.2
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海雅仕",
+    "security_status": "active",
+    "symbol": "CN:603329",
+    "ticker": "603329"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "80acbcc3db40f43f5f728e1968085e6e890036ffdf9a12af8b423b73023ba10c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价进入7.0-8.2元且2026半年报经营现金流为正、应收和存货未显著恶化时试探建仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、经营现金流、应收账款、存货和监管整改进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若监管整改不清晰或半年报利润主要来自不可持续价差收益，则维持零仓位观察",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断H1利润弹性是否延续至H2",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价升至13.0元以上且没有现金流和盈利持续性超预期证据，则不新增并考虑退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年盈利质量和现金流兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入买入观察区，需要复核半年报现金流和商品价格趋势",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "超过情景估值上沿附近，需要检查是否已透支2026年周期利润",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入买入观察区，需要复核半年报现金流和商品价格趋势"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "超过情景估值上沿附近，需要检查是否已透支2026年周期利润"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、经营现金流、应收账款、存货和监管整改进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断H1利润弹性是否延续至H2"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年盈利质量和现金流兑现情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

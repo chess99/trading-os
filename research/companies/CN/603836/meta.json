@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603836",
-  "market": "CN",
-  "ticker": "603836",
-  "name": "海程邦达",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "海程邦达处于2025年空运亏损低谷后的利润修复阶段，2026H1预告显示扣非盈利明显改善，但业务本质仍是价格和现金流波动较大的跨境货代/综合物流，当前约8元以上股价已计入较多复苏预期，安全边际不足，等待半年度报告验证现金流和毛利质量后再评估。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.2,
-    7.2
-  ],
-  "buy_zone": [
-    4.8,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    11.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海程邦达",
+    "security_status": "active",
+    "symbol": "CN:603836",
+    "ticker": "603836"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "cdce6ba0ea96d6a8d1ba29608aa3f129c5a0e06ec33baf5b3508de307537242c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于估算公允价值上沿且2026H1正式报告尚未披露，暂不建仓",
-      "action": "wait",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点看扣非利润、经营现金流、应收账款和空运盈利质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.0元且2026H1经营现金流/归母净利润大于0.8、扣非利润落在预告区间",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否从低基数反弹转为持续经营改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.2元且2026H2继续验证空运盈利和应收账款改善",
-      "action": "add_on_validation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与股权激励净利润目标兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入买入观察区，若半年报现金流和扣非利润同步改善，可建立小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "低于估算公允价值下沿，若基本面未恶化，安全边际明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "接近乐观情景估值，若无超预期利润质量，应回避或降低敞口",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入买入观察区，若半年报现金流和扣非利润同步改善，可建立小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "低于估算公允价值下沿，若基本面未恶化，安全边际明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "接近乐观情景估值，若无超预期利润质量，应回避或降低敞口"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点看扣非利润、经营现金流、应收账款和空运盈利质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否从低基数反弹转为持续经营改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与股权激励净利润目标兑现情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

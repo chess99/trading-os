@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:002456",
-  "market": "CN",
-  "ticker": "002456",
-  "name": "欧菲光",
-  "company_name": "欧菲光",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "欧菲光处于苹果剔除后的经营重建期，安卓旗舰/华为链修复和智能汽车业务提供弹性，但扣非利润、毛利率、资产负债表和客户集中度尚未证明稳定修复；当前更适合观察，等待半年报和三季报验证。",
-  "quality_rating": "watch",
-  "valuation_rating": "hold",
-  "fair_value_range": [
-    6.5,
-    8.5
-  ],
-  "buy_zone": [
-    5.8,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "欧菲光",
+    "security_status": "active",
+    "symbol": "CN:002456",
+    "ticker": "002456"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "6afc3a46afdd0ac6293d081dd06a2b8b47e3224a7fe385b7e1a0e78e8d8986a9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.80元，且2026半年报扣非净利润转正、经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "修复逻辑出现财报确认但仍处于低盈利质量阶段，先用小仓位验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报：扣非净利润、毛利率、现金流、资产负债率和车载业务披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利润为正，毛利率企稳改善，资产负债率下降",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "只有盈利质量、现金流和杠杆同时改善，才配得上更高仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报，验证二季度修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.50元且扣非年化利润仍低于3亿元",
-      "action": "不追高或减仓",
-      "max_weight": 0.005,
-      "reason": "估值主要反映题材修复，基本面安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入买入观察区，可结合半年报质量评估首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "跌破观察仓逻辑止损位，需要复核是否出现基本面恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "进入减仓区，若利润未兑现则题材估值风险升高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "超出合理估值上沿，除非扣非利润和车载业务显著超预期，否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入买入观察区，可结合半年报质量评估首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "跌破观察仓逻辑止损位，需要复核是否出现基本面恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "进入减仓区，若利润未兑现则题材估值风险升高"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "超出合理估值上沿，除非扣非利润和车载业务显著超预期，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报：扣非净利润、毛利率、现金流、资产负债率和车载业务披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报，验证二季度修复是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非净利润",
-    "综合毛利率",
-    "经营活动现金流净额",
-    "资产负债率",
-    "有息负债和财务费用",
-    "应收账款周转",
-    "存货周转",
-    "前五大客户销售占比",
-    "智能汽车业务收入和毛利率",
-    "重大客户或车载定点公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

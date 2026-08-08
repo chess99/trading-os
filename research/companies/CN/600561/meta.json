@@ -1,92 +1,105 @@
 {
-  "symbol": "CN:600561",
-  "ticker": "600561",
-  "name": "江西长运",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "江西长运具备江西区域客运站场、班线、车辆和国资资源底座，但传统道路客运仍处下行周期，2025年扣非亏损、2026Q1收入继续下滑，当前股价缺少安全边际；等待价格回落或扣非盈利拐点确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.2,
-    4.2
-  ],
-  "buy_zone": [
-    2.6,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.0
-  ],
-  "position_plan": [
-    {
-      "condition": "仅当股价低于3.2元且2026年中报显示扣非亏损收窄、经营现金流为正时建立观察仓",
-      "action": "initiate",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "若连续两个季度扣非归母净利润接近盈亏平衡且短期借款下降，可提高至小仓位",
-      "action": "add",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "若股价高于5.2元但扣非盈利未验证，或客运收入继续双位数下滑，避免买入并减持已有仓位",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入基准估值下沿，可重新评估是否有账面资产安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "进入悲观情景估值附近，若流动性无明显恶化可考虑小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "超过减持区下沿，若扣非盈利尚未改善则风险收益不对称"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非利润、客运降幅、货运收入、物业租赁和债务变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q2/Q3是否出现经营拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，检查文旅交通、站场盘活和关联收购资产的全年贡献"
-    }
-  ],
-  "key_metrics": {
-    "last_price_reference": {
-      "date": "2026-07-17",
-      "price": 5.27,
-      "source": "搜狐证券行情页",
-      "confidence": "medium"
-    },
-    "shares_outstanding": 284476800,
-    "book_value_per_share_2026q1": 3.2,
-    "pb_at_reference_price": 1.65
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江西长运",
+    "security_status": "active",
+    "symbol": "CN:600561",
+    "ticker": "600561"
   },
-  "notes": "仅产出初始报告和meta；未创建sources或临时抓取文件。"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "37389f7b28f7396619773d196b6871c624b5f508e813216df2ebbc1c17b541cc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非利润、客运降幅、货运收入、物业租赁和债务变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q2/Q3是否出现经营拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，检查文旅交通、站场盘活和关联收购资产的全年贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入基准估值下沿，可重新评估是否有账面资产安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入悲观情景估值附近，若流动性无明显恶化可考虑小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "超过减持区下沿，若扣非盈利尚未改善则风险收益不对称",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

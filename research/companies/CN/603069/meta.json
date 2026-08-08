@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:603069",
-  "ticker": "603069",
-  "name": "海汽集团",
-  "company_name": "海南海汽运输集团股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司主业为海南道路客运和客运站经营，具备区域网络和站场资源，但行业营业性道路客运持续受高铁、民航、私家车、网约车和自驾分流，2025年亏损且2026H1预告继续亏损。当前约5倍PB主要反映海旅免税重组期权，但公告显示标的剔除华庭项目后2025年亏损1.4554亿元，重组推进存在重大障碍，现价缺乏安全边际。",
-  "fair_value_range": [
-    3.5,
-    5.5
-  ],
-  "buy_zone": [
-    0.0,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    99.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海汽集团",
+    "security_status": "active",
+    "symbol": "CN:603069",
+    "ticker": "603069"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "50d8808bcdbfbe4c0dc844a8d912d86eb34a0542c0aa16c730745deaf400985e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "主业仍亏损且海旅免税重组未明确优质条款前不建仓",
-      "action": "avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、亏损构成和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至3.5元以下且未出现额外资产减值或现金流恶化",
-      "action": "watchlist_only",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和海旅免税重组进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非盈利转正，且重组条款明确不承接低质量亏损资产",
-      "action": "re_underwrite",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、主业转型效果和资产减值风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "跌入保守净资产折价估值区间，可重新评估观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "高于基准公允价值上沿且仍无盈利拐点时应回避或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "跌入保守净资产折价估值区间，可重新评估观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "高于基准公允价值上沿且仍无盈利拐点时应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、亏损构成和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和海旅免税重组进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、主业转型效果和资产减值风险"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:605337",
-  "market": "CN",
-  "ticker": "605337",
-  "name": "李子园",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "李子园是甜牛奶细分心智和下沉渠道仍有价值的现金流型公司，但 2025 年和 2026Q1 核心含乳饮料持续下滑，宁夏深加工、新品和电商尚未证明能恢复利润增长。当前价格接近合理价值，缺少足够安全边际，适合观察和小仓跟踪，等待主品类企稳或价格显著回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.2,
-    10.3
-  ],
-  "buy_zone": [
-    6.5,
-    7.4
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    13.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "李子园",
+    "security_status": "active",
+    "symbol": "CN:605337",
+    "ticker": "605337"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "462f5674c90799ea51279b77eaf9f0198c04e81b43896d5f61312d447868260d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格位于合理价值区间内但核心品类仍未企稳，仅允许研究仓跟踪。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-22"
+      },
+      "reason": "预计 2026 年中报窗口，需复核含乳饮料、其他饮料、电商和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入 6.5-7.4 元买入区间，且未出现食品安全、治理或现金流恶化事件。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报后复核主品类是否企稳及宁夏项目投产影响。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1 或 2026Q3 证明含乳饮料收入下滑收敛至 5% 以内、主营毛利率恢复至 39% 以上、经营现金流改善。",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年报后重估利润中枢、分红可持续性和深加工项目回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.4
+      },
+      "reason": "进入估算买入区间上沿，安全边际开始出现。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入买入区间下沿，按基础情景具备较好赔率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "达到减持观察区间，若基本面未同步改善则估值偏贵。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.4,
-      "reason": "进入估算买入区间上沿，安全边际开始出现。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入买入区间下沿，按基础情景具备较好赔率。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "达到减持观察区间，若基本面未同步改善则估值偏贵。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-22",
-      "reason": "预计 2026 年中报窗口，需复核含乳饮料、其他饮料、电商和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报后复核主品类是否企稳及宁夏项目投产影响。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年报后重估利润中枢、分红可持续性和深加工项目回报。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

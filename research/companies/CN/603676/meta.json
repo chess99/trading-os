@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603676",
-  "market": "CN",
-  "ticker": "603676",
-  "name": "卫信康",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "卫信康是肠外营养细分注射剂平台型公司，具备首仿/独家/竞品较少品种、较强省级准入和推广能力，以及高现金低负债资产负债表；但服务性收入占比高、集采扩面和利润恢复仍需验证，当前价格接近中性估值中枢，宜观察等待安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    10.2
-  ],
-  "buy_zone": [
-    6.8,
-    7.6
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    13.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "卫信康",
+    "security_status": "active",
+    "symbol": "CN:603676",
+    "ticker": "603676"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "a2979c06987b53888f0828b2d292671b7d35004be362b6ea5da8e96e4b7da361"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于合理区间且2026H1/H2扣非利润与经营现金流尚未确认改善，保持观察不建仓。",
-      "action": "watch",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、经营现金流与新品准入进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入6.8-7.6元且两个季度经营现金流/净利润大于0.8、扣非净利率稳定在16%以上，可小仓位试买。",
-      "action": "start_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、集采执行区域和全年利润兑现概率。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "新品审批和准入兑现、收入增速连续两个季度高于8%、扣非利润恢复正增长，可提高至单票上限。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、研发管线审批结论和2027年估值假设。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.6
+      },
+      "reason": "进入买入观察区，估值较中性价值中枢具备初步安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入强安全边际区，需复核基本面未恶化后考虑建仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "超过中性估值上沿并接近乐观情景，需要复核是否已透支增长。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.6,
-      "reason": "进入买入观察区，估值较中性价值中枢具备初步安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入强安全边际区，需复核基本面未恶化后考虑建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "超过中性估值上沿并接近乐观情景，需要复核是否已透支增长。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、经营现金流与新品准入进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报、集采执行区域和全年利润兑现概率。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、研发管线审批结论和2027年估值假设。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

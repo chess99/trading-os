@@ -1,1 +1,105 @@
-{"buy_zone":[15.5,18],"company_name":"安徽海螺水泥股份有限公司","currency":"CNY","current_rating":"watch","current_thesis":"水泥行业周期底部的最低成本龙头。资产负债表近乎净现金（货币+交易性金融资产约613亿），现金流/净利润>2，PB约0.47、PE-TTM约11.7处历史低分位。2026Q1业绩再次回落、拐点未明，但安全垫厚、估值已隐含悲观预期。适合低位配置博周期回升，非成长股。当前价17.11元位于安全边际区上沿，首笔1-2%试探建仓，等待2026半年报拐点确认或PB<0.42加仓。","do_not_chase_above":23.5,"fair_value_range":[18,23],"latest_report":"reports/2026-07-08-initial.md","market":"CN","name":"海螺水泥","position_plan":[{"action":"首笔1-2%试探建仓，等待2026半年报拐点确认或股价下探至15.5元以下再加仓","condition":"股价位于15.5-18.0元区间且半年报前基本面未进一步恶化","max_weight":0.02},{"action":"分批重点加仓至仓位上限附近","condition":"股价回调至12.5-15.5元区间或市场对水泥周期恐慌性抛售，PB<0.42","max_weight":0.06},{"action":"持有或小幅增仓","condition":"股价位于18.0-23.0元，且行业景气拐点确认（半年报归母净利同比转正、水泥均价突破380元/吨）","max_weight":0.04},{"action":"不追，已持仓减50%","condition":"股价≥23.5元、PE接近16倍，已price in周期回升而基本面未跟上","max_weight":0.01}],"price_triggers":[{"price":15.5,"reason":"进入安全边际买入区（PB<0.42、PE<10.5），可分批建仓加仓","type":"price_below"},{"price":12.5,"reason":"进入强吸引力区（PB<0.34、周期恐慌位），重点加仓至仓位上限","type":"price_below"},{"price":23.5,"reason":"进入止盈区（PE接近16），已price in周期回升，需评估是否减持","type":"price_above"}],"quality_rating":"A-","report_history":["reports/2026-07-08-initial.md"],"review_triggers":[{"date":"2026-08-31","reason":"2026半年报披露临近，复核拐点信号：归母净利是否≥50亿元、同比是否转正、毛利率是否企稳24%以上","type":"date"},{"date":"2026-10-31","reason":"三季报披露，复核行业均价、煤价、骨料与海外业务进展、交易性金融资产规模","type":"date"},{"date":"2027-04-30","reason":"2026年报披露，复盘全年业绩、分红率、净现金与资本配置方向，重评估值与thesis","type":"date"}],"sell_or_reduce_zone":[23,30],"status":"active","strong_attraction_zone":[12.5,15.5],"symbol":"CN:600585","ticker":"600585","updated_at":"2026-07-08T23:30:00+08:00","valuation_rating":"B+"}
+{
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海螺水泥",
+    "security_status": "active",
+    "symbol": "CN:600585",
+    "ticker": "600585"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "444538cb7e4ba0e4b2df64f36487c6ed43efaf9520e05c40f99b2983640ef7e1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报披露临近，复核拐点信号：归母净利是否≥50亿元、同比是否转正、毛利率是否企稳24%以上",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报披露，复核行业均价、煤价、骨料与海外业务进展、交易性金融资产规模",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露，复盘全年业绩、分红率、净现金与资本配置方向，重评估值与thesis",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入安全边际买入区（PB<0.42、PE<10.5），可分批建仓加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入强吸引力区（PB<0.34、周期恐慌位），重点加仓至仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.5
+      },
+      "reason": "进入止盈区（PE接近16），已price in周期回升，需评估是否减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
+}

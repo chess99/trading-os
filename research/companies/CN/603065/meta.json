@@ -1,69 +1,95 @@
 {
-  "symbol": "CN:603065",
-  "ticker": "603065",
-  "market": "CN",
-  "name": "宿迁联盛",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "宿迁联盛是国内受阻胺光稳定剂重要厂商，但2025年已亏损、2026Q1利润修复很弱，近期股价严重异常波动并显著偏离基本面；在主业价格、扣非利润率和新产能回报未验证前，不具备买入安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    4.8,
-    7.2
-  ],
-  "buy_zone": [
-    0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宿迁联盛",
+    "security_status": "active",
+    "symbol": "CN:603065",
+    "ticker": "603065"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "60e2cfe09503049cc3d22713e935538032194af3ec27e65da59025b94f10c47b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价低于4.8元/股，且HALS价格止跌、扣非净利率连续两个季度改善时，允许建立观察仓。",
-      "action": "watchlist_probe",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查HALS均价、毛利率、扣非净利率、经营现金流和募投进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价高于8.5元/股且未出现年化扣非净利润超过5000万元的验证，不买入并减持已有仓位。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认主业利润恢复是否持续以及异常交易风险是否消退。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "检查募投项目是否按计划达到预定可使用状态，以及新增产能对价格和库存的影响。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入基准公允价值下沿以下，若基本面同步改善可重新评估小仓位买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "高于估值上沿且主业利润尚未验证，风险收益比不合格。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入基准公允价值下沿以下，若基本面同步改善可重新评估小仓位买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "高于估值上沿且主业利润尚未验证，风险收益比不合格。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查HALS均价、毛利率、扣非净利率、经营现金流和募投进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认主业利润恢复是否持续以及异常交易风险是否消退。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "检查募投项目是否按计划达到预定可使用状态，以及新增产能对价格和库存的影响。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

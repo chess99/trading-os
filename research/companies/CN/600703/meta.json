@@ -1,106 +1,75 @@
 {
-  "symbol": "CN:600703",
-  "market": "CN",
-  "ticker": "600703",
-  "name": "三安光电",
-  "company_name": "三安光电股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "LED cycle bottoming + compound semiconductor (SiC/GaN/RF/optical) long-term growth, but 2025 ex-non-recurring loss 827m CNY, IC gross margin only 5.64%, controlling shareholder shares judicially frozen; await earnings inflection and governance risk relief before action.",
-  "quality_rating": "B-",
-  "valuation_rating": "neutral",
-  "fair_value_range": [
-    9.0,
-    11.5
-  ],
-  "buy_zone": [
-    7.5,
-    8.5
-  ],
-  "strong_attraction_zone": [
-    0,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    99.0
-  ],
-  "do_not_chase_above": 12.5,
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三安光电",
+    "security_status": "active",
+    "symbol": "CN:600703",
+    "ticker": "600703"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "ae30d82bfc786f7c802d902e2062bc1bef6e2c42af1c9e5fc6cfad720ce8a68b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "<7.5",
-      "condition": "PB<1.07x and IC inflection signal",
-      "action": "分批建仓",
-      "target_weight": 0.04,
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报：验证IC毛利率环比改善与湖北三安事件进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "7.5-8.5",
-      "condition": "PB<1.22x and governance risk eased",
-      "action": "启动试点仓",
-      "target_weight": 0.02,
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报：观察IC业务毛利率与SiC/GaN客户落地进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "8.5-11.5",
-      "condition": "fair range, no chasing",
-      "action": "watch",
-      "target_weight": 0.0,
-      "max_weight": 0.02
-    },
-    {
-      "zone": "11.5-12.5",
-      "condition": "expensive",
-      "action": "仅持有不加仓",
-      "target_weight": 0.0,
-      "max_weight": 0.02
-    },
-    {
-      "zone": ">12.5",
-      "condition": "do not chase",
-      "action": "不进场/减仓",
-      "target_weight": 0.0,
-      "max_weight": 0.0
-    },
-    {
-      "zone": ">14.0",
-      "condition": "PB>2.0x, reduce 50%",
-      "action": "减仓50%",
-      "target_weight": 0.0,
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报：核实扣非归母是否转正及全年现金流",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026半年报：验证IC毛利率环比改善与湖北三安事件进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026三季报：观察IC业务毛利率与SiC/GaN客户落地进度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报：核实扣非归母是否转正及全年现金流"
-    }
-  ],
-  "price_triggers": [],
-  "key_risks": [
-    "控股股东股份被司法冻结及治理风险发酵",
-    "IC业务产能爬坡慢于预期、毛利率长期<10%",
-    "SiC行业价格战与海外IDM竞争",
-    "LED终端需求疲软与Mini/Micro渗透不及预期",
-    "湖北三安资产被查封后续仲裁与或有损失",
-    "高固定资产与在建工程折旧拖累、自由现金流持续为负、再融资稀释风险",
-    "海外设备/材料出口管制升级"
-  ],
-  "updated_at": "2026-07-08T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

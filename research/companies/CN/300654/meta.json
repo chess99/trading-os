@@ -1,107 +1,105 @@
 {
-  "symbol": "CN:300654",
-  "market": "CN",
-  "ticker": "300654",
-  "name": "世纪天鸿",
-  "company_name": "世纪天鸿教育科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "传统教辅主业现金流和资产负债表尚可，但收入和扣非利润下滑、ROE偏低；AI教育产品具备期权价值但2025年技术服务收入很小，尚未验证规模化商业化。2026-07-13股价10.26元对应估值明显高于当前利润可解释范围，等待价格回落或AI收入数据验证。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.0,
-    6.8
-  ],
-  "buy_zone": [
-    4.8,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    10.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "世纪天鸿",
+    "security_status": "active",
+    "symbol": "CN:300654",
+    "ticker": "300654"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "343a7eae6afd7bccc75f93e7eb75b06f327b611b37e6f47ebaad5a4088bb27e0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.8元，且最近两个季度营业收入不再同比下滑、经营现金流累计为正",
-      "action": "分批买入",
-      "target_position": "2.0%-3.0%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入是否止跌、扣非利润和经营现金流是否改善。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在4.8-5.5元之间，且AI教育产品出现可核验付费收入或客户数披露",
-      "action": "小仓位试错",
-      "target_position": "1.0%-1.5%",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核教育内容AI系统建设项目是否达到预定可使用状态及是否披露商业化进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在5.5-7.0元之间，且缺少AI收入放量证据",
-      "action": "仅观察或极小仓位跟踪",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证AI产品收入、分红、ROE和扣非利润恢复情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.0元，且扣非利润未恢复到4000万元以上",
-      "action": "不新增买入",
-      "target_position": "0%",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入可买观察区，复核主业收入、现金流和AI收入证据",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "若基本面未恶化，可考虑提高至核心观察仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "若AI商业化未放量，不买或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "currency": "CNY",
-      "action": "进入可买观察区，复核主业收入、现金流和AI收入证据",
-      "reason": "进入可买观察区，复核主业收入、现金流和AI收入证据"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "currency": "CNY",
-      "action": "若基本面未恶化，可考虑提高至核心观察仓位",
-      "reason": "若基本面未恶化，可考虑提高至核心观察仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "currency": "CNY",
-      "action": "若AI商业化未放量，不买或减仓",
-      "reason": "若AI商业化未放量，不买或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入是否止跌、扣非利润和经营现金流是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核教育内容AI系统建设项目是否达到预定可使用状态及是否披露商业化进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证AI产品收入、分红、ROE和扣非利润恢复情况。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "图书收入同比增速、销量和毛利率",
-    "技术服务及AI教育产品收入、付费客户数、续费率和单客户收入",
-    "扣非归母净利润是否恢复到4000万元以上",
-    "经营现金流净额是否持续高于净利润",
-    "教育内容AI系统建设项目投入进度和2026-12-31节点完成情况",
-    "前五大客户和供应商集中度变化",
-    "现金分红率、货币资金与交易性金融资产变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

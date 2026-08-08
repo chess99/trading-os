@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:002900",
-  "ticker": "002900",
-  "name": "哈三联",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "哈三联处在集采和固定成本压力后的亏损修复阶段。2026H1预告显示亏损收窄，但扣非仍亏，且改善包含政府补助和存货跌价准备转回；当前价格相对净资产和恢复期盈利缺乏足够安全边际，适合观察而非买入。",
-  "fair_value_range": [
-    7.0,
-    8.8
-  ],
-  "buy_zone": [
-    5.5,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "哈三联",
+    "security_status": "active",
+    "symbol": "CN:002900",
+    "ticker": "002900"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "29da68b0b0f94640a33f48ceb6ac2a44144a67b0e7f6af0245b0ac33fadd2373"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "观察期：扣非仍亏、经营现金流未连续转正，或价格高于合理价值区间上沿",
-      "action": "不建仓，仅跟踪半年报和三季报",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认预告收入、扣非亏损、政府补助和现金流质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于6.8元，且最近一个季度扣非亏损低于2000万元、经营现金流为正",
-      "action": "可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断单季扣非亏损是否继续收窄",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非接近盈亏平衡或转正，大输液毛利率修复至15%以上，且价格不高于8.0元",
-      "action": "可提升为小仓位配置",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新集采放量、固定资产折旧和大输液毛利率趋势",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入保守买入区间，需要复核扣非亏损和现金流是否同步改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "高于基准合理价值区间，若扣非盈利未兑现应继续回避或降低仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入保守买入区间，需要复核扣非亏损和现金流是否同步改善"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "高于基准合理价值区间，若扣非盈利未兑现应继续回避或降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认预告收入、扣非亏损、政府补助和现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断单季扣非亏损是否继续收窄"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新集采放量、固定资产折旧和大输液毛利率趋势"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

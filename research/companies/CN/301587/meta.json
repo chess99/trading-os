@@ -1,93 +1,105 @@
 {
-  "symbol": "CN:301587",
-  "ticker": "301587",
-  "name": "中瑞股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "圆柱锂电池精密安全结构件细分强者，组合盖帽是利润基本盘，大圆柱结构件提供中期弹性；但2025年降价、产能爬坡和大圆柱负毛利压制盈利，2026Q1虽修复但现金流仍需验证，当前价格安全边际不足。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    15.0,
-    21.5
-  ],
-  "buy_zone": [
-    12.0,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中瑞股份",
+    "security_status": "active",
+    "symbol": "CN:301587",
+    "ticker": "301587"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "8feb271ef0354b2bb621a4d70e594e42ca0d1d304b744c764421c41dc53539a8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于15元，且2026H1收入增长、组合盖帽毛利率稳定在20%以上、大圆柱结构件亏损收窄",
-      "action": "研究性小仓买入",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、大圆柱结构件和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于12元，且经营现金流转正、客户集中度未继续恶化",
-      "action": "提高到中等观察仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否验证利润修复和经营现金流改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于25元，且大圆柱结构件仍未转正毛利或利润未上修",
-      "action": "不追高并考虑降低仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报及2027年限售解禁前风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入基准安全买入区，需要复核半年报经营质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高观察仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过乐观前置估值区，需要大圆柱毛利转正或利润上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入基准安全买入区，需要复核半年报经营质量"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入深度安全边际区，若基本面未恶化可提高观察仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "超过乐观前置估值区，需要大圆柱毛利转正或利润上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、大圆柱结构件和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否验证利润修复和经营现金流改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报及2027年限售解禁前风险"
-    }
-  ],
-  "key_metrics": {
-    "price_date": "2026-07-16",
-    "last_price": 19.69,
-    "market_cap_cny": 2900889107.6,
-    "ttm_pe": 48.12,
-    "revenue_2025_cny": 691525852.4,
-    "net_profit_2025_cny": 51207082.91,
-    "ocf_2025_cny": 51112032.06,
-    "revenue_2026q1_cny": 188748762.65,
-    "net_profit_2026q1_cny": 15070360.75,
-    "ocf_2026q1_cny": -33863888.39
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

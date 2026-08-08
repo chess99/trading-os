@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:000927",
-  "market": "CN",
-  "ticker": "000927",
-  "name": "中国铁物",
-  "company_name": "中国铁物",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中国铁物具备央企铁路物资供应链平台属性，但低毛利贸易、2026Q1利润下滑和应收账款占用压制估值，当前适合观察，等待半年报验证现金流和利润修复后再扩大仓位。",
-  "quality_rating": "B-",
-  "valuation_rating": "fair_to_expensive",
-  "fair_value_range": [
-    1.95,
-    2.25
-  ],
-  "buy_zone": [
-    1.75,
-    1.95
-  ],
-  "sell_or_reduce_zone": [
-    2.55,
-    2.85
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国铁物",
+    "security_status": "active",
+    "symbol": "CN:000927",
+    "ticker": "000927"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "1a95d8cf077ad1e558178fff06ee7e22467df72cb5cee405371c1c3789642e64"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于1.95元且2026H1经营现金流/归母净利润大于0.8",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "估值回到安全边际附近，同时现金流未恶化"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，确认利润下滑、应收账款和现金流变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.75元且应收账款较年初未增长超过10%",
-      "action": "加仓至价值仓",
-      "max_weight": 0.03,
-      "reason": "PB接近低位且信用风险可控"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认全年利润和信用风险趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于2.55元且无利润率改善或资产整合公告",
-      "action": "减仓或不新增",
-      "max_weight": 0.01,
-      "reason": "主题估值高于基本面验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.95
+      },
+      "reason": "进入基准买入观察区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.75
+      },
+      "reason": "进入具备更高安全边际的加仓区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.55
+      },
+      "reason": "进入卖出或降低仓位区间下沿",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.85
+      },
+      "reason": "超过乐观情景估值上沿",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.95,
-      "reason": "进入基准买入观察区间"
-    },
-    {
-      "type": "price_below",
-      "price": 1.75,
-      "reason": "进入具备更高安全边际的加仓区间"
-    },
-    {
-      "type": "price_above",
-      "price": 2.55,
-      "reason": "进入卖出或降低仓位区间下沿"
-    },
-    {
-      "type": "price_above",
-      "price": 2.85,
-      "reason": "超过乐观情景估值上沿"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，确认利润下滑、应收账款和现金流变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认全年利润和信用风险趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1归母净利润同比增速",
-    "铁路产业综合服务收入同比增速",
-    "综合物流服务收入同比增速",
-    "营业毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款/营业收入",
-    "信用减值损失",
-    "投资收益和套期保值损益",
-    "中国物流集团资产整合公告",
-    "主要股东减持或增持进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

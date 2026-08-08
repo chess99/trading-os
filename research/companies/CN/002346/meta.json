@@ -1,125 +1,115 @@
 {
-  "symbol": "CN:002346",
-  "market": "CN",
-  "ticker": "002346",
-  "name": "柘中股份",
-  "company_name": "上海柘中集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "制造业务有半导体和电网等订单改善线索，但利润质量受金融资产公允价值强烈扰动；21.81元/股、96.31亿元市值已明显高于基准SOTP价值，缺乏安全边际。",
-  "quality_rating": "B-",
-  "valuation_rating": "高估",
-  "fair_value_range": [
-    11.0,
-    16.0
-  ],
-  "buy_zone": [
-    8.5,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "柘中股份",
+    "security_status": "active",
+    "symbol": "CN:002346",
+    "ticker": "002346"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "e1903db3d09112f14b726f58ff5fca545f5eb432961ef8ef018d0cdd838c105c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 8.5",
-      "price_range": "<=8.5",
-      "action": "强吸引力买入",
-      "position": "6%-8%",
-      "max_weight": 0.08
-    },
-    {
-      "condition": "8.5 < price <= 11.0",
-      "price_range": "8.5-11.0",
-      "action": "分批买入",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "11.0 < price <= 16.0",
-      "price_range": "11.0-16.0",
-      "action": "观察/小仓跟踪",
-      "position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "price > 18.0",
-      "price_range": ">18.0",
-      "action": "回避或减仓",
-      "position": "0%",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "direction": "below",
-      "reason": "低于合理价值下沿，具备基础安全边际",
-      "action": "进入安全边际买入区，复核订单和投资资产后可建2%-3%"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "direction": "below",
-      "reason": "接近悲观情景价值",
-      "action": "进入强吸引力区，若基本面未恶化可加至6%-8%"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "direction": "above",
-      "reason": "高于合理价值上沿，安全边际不足",
-      "action": "不追高"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "direction": "above",
-      "reason": "需要乐观情景继续上修才可解释",
-      "action": "若持有则减仓或退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证大订单转收入和毛利率",
-      "action": "复核10.86亿元新签订单转收入和毛利率"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证扣非利润、现金流和投资资产波动",
-      "action": "复核扣非净利润、经营现金流和投资资产公允价值"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年度数据足以重做估值和仓位计划",
-      "action": "重做全年估值和仓位计划"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "低于合理价值下沿，具备基础安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "接近悲观情景价值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "高于合理价值上沿，安全边际不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "需要乐观情景继续上修才可解释",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "新签订单和在手订单",
-    "成套开关设备收入",
-    "成套开关设备毛利率",
-    "扣非归母净利润",
-    "经营现金流/扣非净利润",
-    "应收账款/营业收入",
-    "其他非流动金融资产公允价值",
-    "分红和回购执行"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

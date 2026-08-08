@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:603082",
-  "ticker": "603082",
-  "name": "北自科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "央企控股智能物流系统集成商，技术、头部客户和订单储备较强，但项目制业务导致验收、毛利率、应收与现金流波动明显；2026Q1 利润下滑后需要等待毛利率和现金流修复，当前仅观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    26,
-    31
-  ],
-  "buy_zone": [
-    22,
-    25
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北自科技",
+    "security_status": "active",
+    "symbol": "CN:603082",
+    "ticker": "603082"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "4b9cc7144cec1c3f67e0e333c172a474992e7836ba0089c51cacd96a7486d8b9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于25元，且最近一期毛利率修复至18%以上、经营现金流转正、应收账款增速低于收入增速",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报毛利率、订单、现金流和穗柯智能并表影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于22元，且在手订单维持50亿元以上、未出现重大坏账或存货跌价",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报经营现金流、应收账款和存货周转",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于38元且没有利润上修证据，或连续两个季度毛利率低于15%且经营现金流为负",
-      "action": "不买入或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、穗柯智能业绩承诺和在手订单质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入初始买入观察区，需要复核毛利率、现金流和应收账款",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入较有安全边际区间，若基本面未恶化可考虑小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "高于基准合理价值上沿较多，需要复核是否有利润上修，否则减持或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入初始买入观察区，需要复核毛利率、现金流和应收账款"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入较有安全边际区间，若基本面未恶化可考虑小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "高于基准合理价值上沿较多，需要复核是否有利润上修，否则减持或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报毛利率、订单、现金流和穗柯智能并表影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报经营现金流、应收账款和存货周转"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、穗柯智能业绩承诺和在手订单质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

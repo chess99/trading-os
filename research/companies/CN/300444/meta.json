@@ -1,115 +1,115 @@
 {
-  "symbol": "CN:300444",
-  "market": "CN",
-  "ticker": "300444",
-  "name": "双杰电气",
-  "company_name": "北京双杰电气股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处在配网改造、新能源并网、储能和充换电设备景气方向，且在固体绝缘环网柜、环保开关柜、变压器和新能源装备上有真实业务积累；但2025年扣非净利润下降、经营现金流很弱，2026Q1利润主要来自佛塑科技/河北金力相关公允价值变动，主业扣非为负。2026-07-13收盘10.70元对应约4倍PB和较高主业扣非估值，安全边际不足，宜观察而非买入。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    4.6,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "双杰电气",
+    "security_status": "active",
+    "symbol": "CN:300444",
+    "ticker": "300444"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1cd098b62f1912fd569888303ec7c5035077bbb36f8725c2733d50a47cf18dc7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于8.5元，且最近一期扣非利润未恢复、经营现金流仍为负",
-      "action": "不买入；已有仓位降为观察仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报：扣非净利润、经营现金流、应收账款和存货是否改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在6.5-8.5元之间，海外收入或新能源订单增长但现金流尚未验证",
-      "action": "仅保留跟踪或小额试验仓",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：主业盈利是否脱离公允价值收益依赖",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格在5.2-6.5元之间，且2026中报或三季报扣非利润转正、经营现金流改善",
-      "action": "可建立观察性仓位",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：海外收入、低毛利新能源建设开发占比、负债率和分红覆盖能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于5.2元，扣非利润年化达到1.5亿元以上且应收账款、存货周转改善",
-      "action": "可提高到中等仓位，但仍需控制单票风险",
-      "target_position": "4%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入合理价值上沿附近",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "相对正常化盈利和PB估值具备初步安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "价格脱离保守合理价值区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "当前估值主要依赖乐观预期和非经常收益",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "currency": "CNY",
-      "action": "复核中报/三季报后考虑小仓位",
-      "reason": "进入合理价值上沿附近"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "currency": "CNY",
-      "action": "若基本面未恶化，进入可买区",
-      "reason": "相对正常化盈利和PB估值具备初步安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "currency": "CNY",
-      "action": "若主业扣非和现金流未改善则减仓或不买",
-      "reason": "价格脱离保守合理价值区间"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "currency": "CNY",
-      "action": "不新增，已有仓位复核卖出纪律",
-      "reason": "当前估值主要依赖乐观预期和非经常收益"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报：扣非净利润、经营现金流、应收账款和存货是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：主业盈利是否脱离公允价值收益依赖"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：海外收入、低毛利新能源建设开发占比、负债率和分红覆盖能力"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润及扣非净利率",
-    "经营活动现金流量净额/归母净利润",
-    "应收账款、合同资产、存货合计占收入比例",
-    "新能源建设开发收入占比及毛利率",
-    "海外收入及海外毛利率",
-    "资产负债率、短期借款、长期借款和财务费用",
-    "佛塑科技/河北金力相关金融资产公允价值变动对利润和净资产的影响",
-    "控股股东及一致行动人股权质押变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

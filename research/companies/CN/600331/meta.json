@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600331",
-  "ticker": "600331",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "宏达股份",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "宏达股份的核心矛盾是现有锌冶炼、磷化工业务盈利弱，而市场已提前定价蜀道系入主后的治理修复和多龙铜矿资源期权。现价安全边际不足，需等待多龙矿业现金流路径或价格回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.8,
-    7.2
-  ],
-  "buy_zone": [
-    0,
-    5
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    12
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宏达股份",
+    "security_status": "active",
+    "symbol": "CN:600331",
+    "ticker": "600331"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "7609a4cfe1942651c7365772e04a30c376026f14cd293bc7fcfcd03e02248e37"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价低于5.0元且未出现主业亏损继续扩大的新证据时，允许建立观察仓",
-      "action": "watch_build",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中主业亏损、现金流和多龙矿业进展披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若多龙矿业采矿权、建设投资、投产时间表和上市公司现金流路径获得公告级验证，可提高研究仓上限",
-      "action": "add_on_verified_resource_progress",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报盈利修复与资产负债表变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于9.5元且没有多龙矿业实质进展，避免追高并降低已有仓位",
-      "action": "reduce_or_avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和多龙矿业年度进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入基础业务加折价资源期权的安全边际区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "估值重新接近乐观资源期权定价，需要复核是否有公告级进展支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5,
-      "reason": "进入基础业务加折价资源期权的安全边际区间"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "估值重新接近乐观资源期权定价，需要复核是否有公告级进展支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中主业亏损、现金流和多龙矿业进展披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报盈利修复与资产负债表变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和多龙矿业年度进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

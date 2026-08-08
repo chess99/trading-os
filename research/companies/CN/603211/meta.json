@@ -1,94 +1,115 @@
 {
-  "symbol": "CN:603211",
-  "ticker": "603211",
-  "name": "晋拓股份",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "晋拓股份是汽车铝合金精密零部件供应商，机器人结构件提供期权，但截至2026-07-17可核验利润仍主要来自中低利润率制造业务；当前股价显著透支机器人主题，安全边际不足，列入观察池而非买入。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    7.5,
-    12.5
-  ],
-  "buy_zone": [
-    5.5,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晋拓股份",
+    "security_status": "active",
+    "symbol": "CN:603211",
+    "ticker": "603211"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "948c6aae23027b2b62deb00531de45f7dcd6b36ba95a32add04322ea505797a5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.0元，且2026年半年报或三季报显示扣非净利润与经营现金流同步改善",
-      "action": "建立观察性仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看机器人业务披露、扣非利润、经营现金流和应收存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.0元，机器人业务披露可核验收入、毛利率和持续订单，且定增摊薄风险清晰",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证主业利润恢复和定增进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于18.0元且没有定期报告级别的机器人利润验证",
-      "action": "不追高或减持",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和募投项目进展，重新评估公允价值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入审慎买入区上沿，需要复核半年报/三季报现金流和机器人业务披露",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入深度价值区，若基本面未恶化可重新测算安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "高于审慎公允价值上沿较多，若缺乏机器人利润验证应避免追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "接近乐观情景价值上沿，主题溢价过高，应减持或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入审慎买入区上沿，需要复核半年报/三季报现金流和机器人业务披露"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入深度价值区，若基本面未恶化可重新测算安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "高于审慎公允价值上沿较多，若缺乏机器人利润验证应避免追高"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "接近乐观情景价值上沿，主题溢价过高，应减持或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看机器人业务披露、扣非利润、经营现金流和应收存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证主业利润恢复和定增进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和募投项目进展，重新评估公允价值"
-    }
-  ],
-  "key_metrics": {
-    "revenue_2025_cny": 1283492900,
-    "net_profit_2025_cny": 68826800,
-    "deducted_net_profit_2025_cny": 56898900,
-    "revenue_q1_2026_cny": 334003100,
-    "net_profit_q1_2026_cny": 11328800,
-    "deducted_net_profit_q1_2026_cny": 15824400,
-    "operating_cash_flow_q1_2026_cny": 10918600
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

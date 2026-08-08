@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688737",
-  "market": "CN",
-  "ticker": "688737",
-  "name": "中自科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "中自科技是国七排放标准升级和国产替代背景下具备技术与客户资源的环境催化剂公司，但2025年扣非亏损、经营现金流大幅流出，2026Q1收入高增尚未兑现为高质量利润；当前约1.09倍PB估值不贵但缺少直接买入确认，需等待扣非利润和经营现金流连续修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    15,
-    20
-  ],
-  "buy_zone": [
-    10,
-    13
-  ],
-  "sell_or_reduce_zone": [
-    23,
-    28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中自科技",
+    "security_status": "active",
+    "symbol": "CN:688737",
+    "ticker": "688737"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "efe693d3d692490a969f8c731cdc23c300201f45117b46600dba5845e4892395"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入10-13元且未出现新增大额减值、现金流继续恶化或核心客户流失时，仅建立观察仓。",
-      "action": "starter_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、存货和新业务亏损。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "扣非归母净利润连续两个季度为正，经营活动现金流转正，且收入增长不是单纯低毛利放量时，允许提高仓位。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1收入高增是否延续且利润质量是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于23元但扣非利润、经营现金流和毛利率未同步兑现，或国七推进明显延后时，降低或清空仓位。",
-      "action": "reduce_or_exit",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年度报告及国七标准推进情况，决定是否从观察转为买入或回避。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入买入观察区，需要复核现金流、存货和国七进展。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "接近悲观情景价值下沿，若基本面未恶化可能具备较强安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "超过当前估值上沿，需要确认扣非利润和现金流是否足以支撑重估。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "进入买入观察区，需要复核现金流、存货和国七进展。"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "接近悲观情景价值下沿，若基本面未恶化可能具备较强安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 23,
-      "reason": "超过当前估值上沿，需要确认扣非利润和现金流是否足以支撑重估。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、存货和新业务亏损。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1收入高增是否延续且利润质量是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年度报告及国七标准推进情况，决定是否从观察转为买入或回避。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

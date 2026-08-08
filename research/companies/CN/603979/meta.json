@@ -1,96 +1,106 @@
 {
-  "symbol": "CN:603979",
-  "market": "CN",
-  "ticker": "603979",
-  "name": "金诚信",
-  "company_name": "金诚信",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "金诚信具备矿山服务现金流底座和海外铜矿、磷矿资源开发弹性，2025年和2026Q1利润及经营现金流表现强，但当前股价已部分反映资源业务放量预期，应等待55元以下或半年报进一步验证后建立首笔仓位。",
-  "quality_rating": "B+",
-  "valuation_rating": "neutral_to_slightly_cheap",
-  "fair_value_range": [
-    62,
-    78
-  ],
-  "buy_zone": [
-    48,
-    55
-  ],
-  "sell_or_reduce_zone": [
-    82,
-    90
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金诚信",
+    "security_status": "active",
+    "symbol": "CN:603979",
+    "ticker": "603979"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "ca2a92b89028cb2b82f48fa8ed4c4e309644816c1f035fad0697ddafd2b6ca25"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于55元，且LME铜价维持在9000美元/吨以上，无重大安全或海外政策风险公告",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "估值进入买入区间，同时铜价与项目风险未破坏核心逻辑"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证资源产量、现金流、资本开支和矿服毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于50元，或2026年中报确认资源业务放量且经营现金流继续改善",
-      "action": "加仓",
-      "max_weight": 0.03,
-      "reason": "安全边际扩大或基本面验证增强"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及铜价变化，更新全年利润和估值区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于82元但Lubambe达产和自由现金流尚未进一步验证",
-      "action": "降低仓位或停止加仓",
-      "max_weight": 0.01,
-      "reason": "市场已提前计入较多资源弹性，赔率下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "进入首笔买入区，需同步核验铜价和项目公告",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入深度安全边际区，若基本面未变可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 82.0
+      },
+      "reason": "达到减仓观察区，需确认资源项目是否足以支撑更高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "估值进入偏乐观区，若无新增达产证据应控制仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 55,
-      "reason": "进入首笔买入区，需同步核验铜价和项目公告"
-    },
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入深度安全边际区，若基本面未变可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 82,
-      "reason": "达到减仓观察区，需确认资源项目是否足以支撑更高估值"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "reason": "估值进入偏乐观区，若无新增达产证据应控制仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证资源产量、现金流、资本开支和矿服毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及铜价变化，更新全年利润和估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "LME铜价与沪铜主力价格",
-    "Lonshi、Dikulushi、Lubambe铜金属当量产量和销量",
-    "Lubambe采矿量、选矿量、品位、回收率和单位现金成本",
-    "资源开发业务收入、毛利率和利润贡献",
-    "矿山服务业务收入和毛利率",
-    "经营活动现金流净额与资本开支",
-    "有息负债、在建工程和转债转股情况",
-    "海外项目安全、停工、税费、许可和社区风险公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

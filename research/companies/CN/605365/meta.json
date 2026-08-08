@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:605365",
-  "market": "CN",
-  "ticker": "605365",
-  "name": "立达信",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "立达信具备海外照明与IoT智能硬件制造交付基础，但2025年利润和现金流走弱、2026Q1扣非利润继续承压，当前估值已反映部分修复预期，需等待毛利率、扣非净利率和经营现金流连续改善后再考虑买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.5,
-    15.5
-  ],
-  "buy_zone": [
-    8.8,
-    10.8
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    19.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "立达信",
+    "security_status": "active",
+    "symbol": "CN:605365",
+    "ticker": "605365"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "4e936e19b1bcf12b7583a7be507669217f0f2ccfc3a7bd1fb6c3391effdd65b8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入8.8-10.8元且最新财报显示扣非净利率不再恶化、经营现金流/净利润大于1时，可建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查海外收入、毛利率、扣非净利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入恢复正增长、扣非净利率超过3%、毛利率稳定在26%以上时，可提高至核心跟踪仓。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利修复是否连续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于16.5元且利润未同步兑现，或经营现金流再次显著低于净利润时，降低或不建立仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常化利润和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入安全边际买入观察区间，需结合最新财报复核扣非利润和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "高于基准合理价值上沿，若无利润修复应复核减持或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入安全边际买入观察区间，需结合最新财报复核扣非利润和现金流。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "高于基准合理价值上沿，若无利润修复应复核减持或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查海外收入、毛利率、扣非净利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利修复是否连续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常化利润和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

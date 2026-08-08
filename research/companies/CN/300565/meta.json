@@ -1,62 +1,86 @@
 {
-  "symbol": "CN:300565",
-  "market": "CN",
-  "ticker": "300565",
-  "currency": "CNY",
-  "name": "科信技术",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "科信技术是亏损修复期的通信网络能源与数据中心能源设备公司，海外收入和数据中心产品提供修复期权，但当前9元附近估值已反映较多乐观预期，需等待价格回落或现金流与亏损收窄被进一步验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.0,
-    7.5
-  ],
-  "buy_zone": [
-    0.0,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科信技术",
+    "security_status": "active",
+    "symbol": "CN:300565",
+    "ticker": "300565"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "6b2a0ee8a4bacfe32670e6dcdffdee85e044add78e5fc0ed25d74b7c0f67d753"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.2元，且后续半年报或季报显示海外收入继续增长、经营现金流改善、扣非亏损继续收窄，可考虑试探仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证收入、毛利率、经营现金流和货币资金。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.0元但未披露明确扭亏订单或经营现金流转正，不新增仓位，已有仓位减至观察仓。",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入基准合理价值下沿附近，若基本面同步改善可重新评估试探仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认亏损收窄趋势是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "高于当前基准价值区间，若没有订单和现金流验证，安全边际不足。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证收入、毛利率、经营现金流和货币资金。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入基准合理价值下沿附近，若基本面同步改善可重新评估试探仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认亏损收窄趋势是否延续。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "高于当前基准价值区间，若没有订单和现金流验证，安全边际不足。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

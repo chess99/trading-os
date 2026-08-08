@@ -1,93 +1,105 @@
 {
-  "symbol": "CN:601606",
-  "ticker": "601606",
-  "name": "长城军工",
-  "company_name": "安徽长城军工股份有限公司",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "长城军工具备军工资质、安徽省军工平台和弹药配套资产属性，但2025年扣非仍亏、2026H1预告亏损约0.96亿元，当前约190亿元市值明显透支未来订单和利润修复，适合跟踪而非买入。",
-  "fair_value_range": [
-    8.0,
-    12.0
-  ],
-  "buy_zone": [
-    8.0,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长城军工",
+    "security_status": "active",
+    "symbol": "CN:601606",
+    "ticker": "601606"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "0c1b9005793b759904d7e8b52884c3d7930335488b3af7fc5855ef1853d7a447"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于10元，且2026半年报后订单、毛利率或扣非亏损收窄出现公告级证据",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际亏损、订单交付、毛利率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于10-12元，且2026三季报扣非净利润转正或亏损明显收窄",
-      "action": "维持小仓位跟踪",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现收入、毛利率和扣非利润修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于18元且没有大额订单、资产注入或利润中枢上修证据",
-      "action": "不新增仓位并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报并重估正常化盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入买入观察区，需要重新核验订单、毛利率和扣非利润是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过基本面可支撑区间上方，若无公告级利好应评估减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "接近乐观情景估值上沿，安全边际显著不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入买入观察区，需要重新核验订单、毛利率和扣非利润是否改善"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "超过基本面可支撑区间上方，若无公告级利好应评估减仓或回避"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "接近乐观情景估值上沿，安全边际显著不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际亏损、订单交付、毛利率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现收入、毛利率和扣非利润修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报并重估正常化盈利中枢"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 26.06,
-    "reference_price_date": "2026-07-16",
-    "shares_outstanding": 724228400,
-    "market_cap_estimate_cny": 18870000000,
-    "revenue_2025_cny": 1564000000,
-    "net_profit_2025_cny": 8354800,
-    "deducted_net_profit_2025_cny": -5272100,
-    "operating_cash_flow_2025_cny": 152000000,
-    "equity_attributable_2025_cny": 2236700000,
-    "h1_2026_net_profit_forecast_cny": -96000000
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

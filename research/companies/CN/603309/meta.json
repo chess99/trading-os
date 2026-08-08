@@ -1,73 +1,95 @@
 {
-  "symbol": "CN:603309",
-  "market": "CN",
-  "ticker": "603309",
-  "name": "维力医疗",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "维力医疗是导尿、麻醉、泌尿外科等低值医用导管耗材的细分龙头。2025年表观利润被1.47亿元商誉减值压低，但经营现金流、海外收入和泌尿外科高毛利产品线仍显示韧性；按2026年正常化利润估算，当前约14-15倍PE，具备中等安全边际。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    14.0,
-    17.0
-  ],
-  "buy_zone": [
-    9.8,
-    12.3
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    21.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "维力医疗",
+    "security_status": "active",
+    "symbol": "CN:603309",
+    "ticker": "603309"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "1d71f035f5977b135c08744a04b8a9b75caa8fde1e1f5a7cf0477981f97335fa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价处于9.8-12.3元买入区间且2026H1扣非净利不低于1.10亿元时建立基础仓位",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利、泌尿外科增速、境外收入和商誉余额。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌至9.8元以下且未出现商誉继续大额减值、泌尿外科收入失速或海外订单恶化，可加仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年2.35-2.65亿元正常化净利假设是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价进入18.5元以上且2026E正常化净利未上修至2.8亿元以上，逐步减仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和印尼基地爬坡情况，更新估值中枢和仓位上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入高安全边际区间，若基本面未恶化应复核加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "超过当前合理价值区间上沿，需要检查是否已有业绩上修，否则考虑降低仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入高安全边际区间，若基本面未恶化应复核加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "超过当前合理价值区间上沿，需要检查是否已有业绩上修，否则考虑降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利、泌尿外科增速、境外收入和商誉余额。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年2.35-2.65亿元正常化净利假设是否成立。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和印尼基地爬坡情况，更新估值中枢和仓位上限。"
-    }
-  ],
-  "decision": "买入",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

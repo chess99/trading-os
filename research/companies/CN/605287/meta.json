@@ -1,66 +1,86 @@
 {
-  "symbol": "CN:605287",
-  "market": "CN",
-  "ticker": "605287",
-  "name": "德才股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "德才股份的城市更新和城市配套订单具备基本面修复线索，但工程业务仍受高应收、高合同资产、高负债和信用减值周期约束；当前股价已把AI/数字城市期权和利润修复大幅资本化，安全边际不足，适合观察而非追买。",
-  "fair_value_range": [
-    16,
-    22
-  ],
-  "buy_zone": [
-    0,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德才股份",
+    "security_status": "active",
+    "symbol": "CN:605287",
+    "ticker": "605287"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "3a6a970684562cdfee1f59edce43f53b8132498e7ba60425e230ff04991424e8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于保守公允价值区间，仅观察；若股价回落至16元以下且未出现新增大额信用减值，可试探配置。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、经营现金流、应收账款、合同资产和信用减值变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度经营现金流为正、应收账款加合同资产占收入比例下降，且AI或数字城市业务贡献可核验收入，可提高观察仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、新签订单质量、口里村改造项目进度和AI业务披露。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若收盘价高于32元且没有盈利预测上修或AI订单兑现，已有仓位应减至零或仅保留跟踪仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入保守买入区，约对应核心建筑业务正常化估值并保留一定安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "显著高于保守公允价值，除非AI业务和利润修复被进一步核验，否则应减仓或避免追高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入保守买入区，约对应核心建筑业务正常化估值并保留一定安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "显著高于保守公允价值，除非AI业务和利润修复被进一步核验，否则应减仓或避免追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、经营现金流、应收账款、合同资产和信用减值变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报、新签订单质量、口里村改造项目进度和AI业务披露。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

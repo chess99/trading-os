@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920396",
-  "market": "CN",
-  "ticker": "920396",
-  "name": "常辅股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "核电资质与客户验证形成细分壁垒，但当前估值已透支增长，且应收集中、扩产资本开支和自由现金流脆弱性尚未消化。",
-  "fair_value_range": [10, 14],
-  "buy_zone": [8.5, 11],
-  "sell_or_reduce_zone": [16, 19],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "常辅股份",
+    "security_status": "active",
+    "symbol": "CN:920396",
+    "ticker": "920396"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "5227b5dfe0ac6e5877321c9a99d073546bc1df2577da98e79f1a3f92c709b4a7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价10至11元，募投按期投产、核电收入保持双位数增长且应收增速不高于收入时小额试仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报的核电收入、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价8.5至10元，重新验证核心商业价值未受损、自由现金流改善且ROIC不低于资本成本后分批买入",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "核验延期后的募投项目是否达到预定可使用状态",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "基本面恶化、募投再次延期或应收质量下降时，不因股价下跌机械加仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入可研究试仓区间，仍需复核新厂投产、应收与现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报的核电收入、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "reason": "核验延期后的募投项目是否达到预定可使用状态"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11,
-      "reason": "进入可研究试仓区间，仍需复核新厂投产、应收与现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 16,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-14T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

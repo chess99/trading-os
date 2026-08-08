@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688323",
-  "market": "CN",
-  "ticker": "688323",
-  "name": "瑞华泰",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "瑞华泰具备国内稀缺的高性能PI薄膜配方、工艺和装备一体化能力，嘉兴产能释放与TPI、超厚热控PI、COF/CPI等新品构成中长期成长选择权；但2025年和2026Q1仍亏损，当前约26.52元对应的市销率和调整后市净率已预支较强扭亏预期，需等待更低价格或利润拐点验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18,
-    25
-  ],
-  "buy_zone": [
-    14,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "瑞华泰",
+    "security_status": "active",
+    "symbol": "CN:688323",
+    "ticker": "688323"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "456bc4dd15eb15aea294815908d02fd32f87c773332b5a940f6903f7b3767aa7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至18元以下，且2026H1收入、毛利率、经营现金流未出现进一步恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-25"
+      },
+      "reason": "复核2026年半年报，重点看嘉兴产能利用率、毛利率、库存、现金流和最终股本",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比增长20%以上、主营毛利率回升至22%以上、经营现金流为正且亏损同比收窄",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断亏损是否同比收窄以及财务费用是否因转债转股下降",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "主营毛利率持续低于18%、经营现金流转负或嘉兴产线爬坡明显低于预期",
-      "action": "不买入或退出观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新长期收入、利润率和资本开支假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入基准估值下沿以下，若基本面未恶化，安全边际开始具备吸引力",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "进入乐观情景估值区间，若利润拐点尚未验证，应降低预期收益率或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入基准估值下沿以下，若基本面未恶化，安全边际开始具备吸引力"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "进入乐观情景估值区间，若利润拐点尚未验证，应降低预期收益率或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-25",
-      "reason": "复核2026年半年报，重点看嘉兴产能利用率、毛利率、库存、现金流和最终股本"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断亏损是否同比收窄以及财务费用是否因转债转股下降"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新长期收入、利润率和资本开支假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

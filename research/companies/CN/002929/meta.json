@@ -1,124 +1,132 @@
 {
-  "symbol": "CN:002929",
-  "market": "CN",
-  "ticker": "002929",
-  "name": "润建股份",
-  "company_name": "润建股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备通信运维底盘、能源网络和算力网络增长期权，2025年底/2026Q1末在手订单约222/230亿元；但2025-2026Q1利润质量偏弱、经营现金流波动大、资产负债率高，当前约60元以上价格已反映较强AI和算力预期，缺乏买入安全边际。",
-  "quality_rating": "B-/中等偏低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [38, 52],
-  "buy_zone": [28, 40],
-  "sell_or_reduce_zone": [60, 68],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "润建股份",
+    "security_status": "active",
+    "symbol": "CN:002929",
+    "ticker": "002929"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ccc06006e5fe9c5efdba4a0086123f8b74c5349d037af4069b6808fa5d8325fd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入35-40元，且2026年中报确认收入恢复、经营现金流未继续恶化",
-      "action": "建立观察仓",
-      "target_weight": "1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年度报告可验证收入恢复、利润率和经营现金流修复情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入30-33元，且在手订单保持220亿元以上、资产负债率不再上行",
-      "action": "加仓至中等观察仓",
-      "target_weight": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "现金流和应收账款是判断订单质量的核心反证。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元，且扣非净利率回到2.5%以上、应收账款周转改善",
-      "action": "加至上限仓位",
-      "target_weight": "4%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "高杠杆会降低算力和能源扩张的容错率。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于60元且利润和经营现金流未同步修复",
-      "action": "不加仓",
-      "target_weight": "0%新增",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "算力网络是估值溢价的主要来源，需要验证规模和盈利。",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "股价高于68元且仍主要由AI/算力主题驱动",
-      "action": "分批减仓或放弃新买入",
-      "target_weight": "降低至0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "在手订单是收入可见度的关键领先指标。",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "重大项目和融资事项会直接改变估值、现金流和风险敞口。",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "40元以下接近合理价值下沿，可用小仓位验证基本面。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 33.0
+      },
+      "reason": "33元附近相对合理价值中枢具备约25%以上折价。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 68.0
+      },
+      "reason": "68元以上估值主要由AI/算力预期支撑，安全边际不足。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 40,
-      "action": "进入可研究买入区，复核中报和现金流后可建1%观察仓",
-      "reason": "40元以下接近合理价值下沿，可用小仓位验证基本面。"
-    },
-    {
-      "type": "price_below",
-      "price": 33,
-      "action": "进入较有吸引力区，若基本面未恶化可加至2%-3%",
-      "reason": "33元附近相对合理价值中枢具备约25%以上折价。"
-    },
-    {
-      "type": "price_above",
-      "price": 68,
-      "action": "若无利润和现金流改善，分批减仓",
-      "reason": "68元以上估值主要由AI/算力预期支撑，安全边际不足。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布2026年半年度报告或三季度报告",
-      "reason": "半年度报告可验证收入恢复、利润率和经营现金流修复情况。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "经营活动现金流连续两个报告期为负且应收账款继续上升",
-      "reason": "现金流和应收账款是判断订单质量的核心反证。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "资产负债率超过72%或短期借款继续快速增长",
-      "reason": "高杠杆会降低算力和能源扩张的容错率。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "算力网络收入增速低于30%或毛利率显著下滑",
-      "reason": "算力网络是估值溢价的主要来源，需要验证规模和盈利。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "在手订单跌破200亿元",
-      "reason": "在手订单是收入可见度的关键领先指标。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "公司披露重大算力、能源项目投产、融资、减值或客户违约事项",
-      "reason": "重大项目和融资事项会直接改变估值、现金流和风险敞口。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营活动现金流净额/归母净利润",
-    "扣非净利率",
-    "资产负债率",
-    "短期借款与应付票据余额",
-    "应收账款与合同资产周转",
-    "算力网络收入及毛利率",
-    "能源网络收入及回款周期",
-    "在手订单金额和结构",
-    "股权激励费用对净利润的影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

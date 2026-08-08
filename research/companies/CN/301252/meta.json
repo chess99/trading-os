@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301252",
-  "ticker": "301252",
-  "name": "同星科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "同星科技具备轻商制冷换热器基本盘和汽车热管理、数据中心液冷、机器人散热的延展期权，但2025年和2026Q1利润承压、经营现金流偏弱，当前价格已部分反映新业务预期，安全边际不足，适合观察等待价格或订单兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    26,
-    32
-  ],
-  "buy_zone": [
-    20,
-    25
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    50
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "同星科技",
+    "security_status": "active",
+    "symbol": "CN:301252",
+    "ticker": "301252"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "daae5fa0a9298994c760fcea1c4bbcf8944639fe468a84bc6d8727ae36399734"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于25元且2026半年报显示毛利率企稳、经营现金流明显改善",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看毛利率、扣非净利润、经营现金流、存货和预付款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于20元且主营收入仍保持增长、无重大治理或客户流失风险",
-      "action": "提高至小仓位配置",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认客户降价影响是否扩大以及新业务是否有收入兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "数据中心液冷或机器人散热披露明确量产订单且扣非净利润恢复增长",
-      "action": "重新评估是否上调评级和仓位上限",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，判断数据中心液冷和机器人散热是否从研发叙事进入财务兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入初始买入区间，需要结合半年报毛利率和现金流确认",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "接近悲观情景估值下沿，可评估是否具备深度安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "明显高于基准估值，若新业务未形成可审计订单和收入，应考虑减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入初始买入区间，需要结合半年报毛利率和现金流确认"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "接近悲观情景估值下沿，可评估是否具备深度安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "明显高于基准估值，若新业务未形成可审计订单和收入，应考虑减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看毛利率、扣非净利润、经营现金流、存货和预付款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认客户降价影响是否扩大以及新业务是否有收入兑现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，判断数据中心液冷和机器人散热是否从研发叙事进入财务兑现"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

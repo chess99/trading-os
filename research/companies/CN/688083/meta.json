@@ -1,66 +1,86 @@
 {
-  "symbol": "CN:688083",
-  "market": "CN",
-  "ticker": "688083",
-  "name": "中望软件",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "中望软件是国内稀缺的自主 CAD/CAE 工业软件平台型公司，受益于国产替代和制造业研发数字化；但 2025 年和 2026 年一季度仍处亏损投入期，当前股价已反映较高成长预期，需等待收入增速、费用率和现金流改善进一步验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    45,
-    65
-  ],
-  "buy_zone": [
-    35,
-    45
-  ],
-  "sell_or_reduce_zone": [
-    70,
-    85
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中望软件",
+    "security_status": "active",
+    "symbol": "CN:688083",
+    "ticker": "688083"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f640ad89d7a6db23e86e18a1cefd2aeeab47d59b62b02d5db5bacb34b7cc4305"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 35-45 元买入区，且最近两个季度收入增速保持双位数、经营性现金流未继续恶化时，可建立试探仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查收入增速、经营现金流、研发费用率和 3D/CAE 商业化进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若 3D/CAE 商业化订单或央国企国产替代项目超预期，同时股价仍低于 65 元，可加至观察核心仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报及国产替代订单节奏，决定是否调整评级和估值区间。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若收入增速低于 5% 且亏损扩大或现金流恶化，维持零仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入估值买入区，安全边际改善，需要复核半年报和订单质量后考虑建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "高于基准合理价值区间上沿，若基本面未同步上修，应考虑减仓或等待。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入估值买入区，安全边际改善，需要复核半年报和订单质量后考虑建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 70,
-      "reason": "高于基准合理价值区间上沿，若基本面未同步上修，应考虑减仓或等待。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查收入增速、经营现金流、研发费用率和 3D/CAE 商业化进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报及国产替代订单节奏，决定是否调整评级和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

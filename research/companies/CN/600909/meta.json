@@ -1,33 +1,105 @@
 {
-  "symbol": "CN:600909",
-  "market": "CN",
-  "ticker": "600909",
-  "name": "华安证券",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "区域根基扎实、华安资管改善明显，但盈利弹性和竞争壁垒不足以支撑当前约1.9倍PB估值；当前价格已透支2026-2027高景气弹性与区域科创想象力，对新买入者不友好，观察不买。",
-  "fair_value_range": [6.3, 7.4],
-  "buy_zone": [5.8, 6.6],
-  "sell_or_reduce_zone": [8.8, 10.5],
-  "position_plan": [
-    {"condition": "股价<=5.8元且基本面未恶化（资管高增延续、经纪与两融底盘未恶化、ROE中枢未下台阶）", "max_weight": 0.03},
-    {"condition": "股价在5.8-6.6元区间，进入初步安全边际且中报未证伪核心假设", "max_weight": 0.015},
-    {"condition": "股价在6.6-7.4元区间，接近合理价值上沿", "max_weight": 0.005},
-    {"condition": "股价在7.4-8.8元区间，胜率与赔率均不足", "max_weight": 0},
-    {"condition": "股价>=8.8元，市场已透支景气与主题故事", "max_weight": 0}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华安证券",
+    "security_status": "active",
+    "symbol": "CN:600909",
+    "ticker": "600909"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "ad7d6df05a0be180091829e043fdcf5fa4d230f035d76b4c49ccf185df6a122c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报后复查经纪、自营、资管、投行四条线利润贡献与高景气延续性",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复查景气延续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报后全面复查可持续ROE中枢与估值体系",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "进入具备初步安全边际的试探建仓区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入强吸引力买入区，可显著提高仓位（受单标的上限约束）",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "进入不应追高区，若已持有应审视减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": ["reports/2026-07-09-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026年中报后复查经纪、自营、资管、投行四条线利润贡献与高景气延续性"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报后复查景气延续性"},
-    {"type": "date", "date": "2027-04-30", "reason": "2026年报后全面复查可持续ROE中枢与估值体系"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 6.6, "reason": "进入具备初步安全边际的试探建仓区"},
-    {"type": "price_below", "price": 5.8, "reason": "进入强吸引力买入区，可显著提高仓位（受单标的上限约束）"},
-    {"type": "price_above", "price": 8.8, "reason": "进入不应追高区，若已持有应审视减仓"}
-  ],
-  "updated_at": "2026-07-09T21:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

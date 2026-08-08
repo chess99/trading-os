@@ -1,95 +1,115 @@
 {
-  "symbol": "CN:920190",
-  "market": "CN",
-  "ticker": "920190",
-  "name": "雷神科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "雷神科技是有细分品牌和海尔体系背书的电竞PC/外设公司，AI PC、RTX50换机和信创业务提供增长期权；但当前仍是低毛利硬件品牌模型，2025年扣非净利率仅0.62%，2026Q1利润改善同时伴随存货、短借和经营现金流压力。2026-07-17收盘27.17元对应TTM PE约97倍，已高于基准合理价值，缺乏安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    15,
-    22
-  ],
-  "buy_zone": [
-    12,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "雷神科技",
+    "security_status": "active",
+    "symbol": "CN:920190",
+    "ticker": "920190"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "3b017b8f486d9a09c82b37a63407a7ad743a7ea3c413bd9500d5349672750a24"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于12元且无重大财务或渠道恶化信号",
-      "action": "可积极试错买入",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报：存货、短借、经营现金流、毛利率和信创收入质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价12-16元，且订单、毛利率、库存至少一项改善",
-      "action": "分批建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：旺季订单兑现、库存消化和现金流是否转正",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价16-22元，且2026中报证实经营现金流修复",
-      "action": "仅保留很小观察仓",
-      "max_weight": 1
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报：验证AI PC/信创第二曲线是否带来净利率跃迁",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于22元且现金流和净利率未明显升级",
-      "action": "不追高",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入强吸引力价，悲观情景已有较多保护",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于25元或进入乐观估值区间但基本面未兑现",
-      "action": "回避或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入安全边际买入区间上沿",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过基准合理价值上沿，不追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "进入减仓观察区，除非利润率和现金流同时兑现",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入强吸引力价，悲观情景已有较多保护"
-    },
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入安全边际买入区间上沿"
-    },
-    {
-      "type": "price_above",
-      "price": 22,
-      "reason": "超过基准合理价值上沿，不追高"
-    },
-    {
-      "type": "price_above",
-      "price": 25,
-      "reason": "进入减仓观察区，除非利润率和现金流同时兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报：存货、短借、经营现金流、毛利率和信创收入质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：旺季订单兑现、库存消化和现金流是否转正"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报：验证AI PC/信创第二曲线是否带来净利率跃迁"
-    }
-  ],
-  "notes": "质量评级B-，估值评级偏贵，置信度中等偏低。2026-07-17收盘27.17元，按总股本100,000,001股反算总市值约27.17亿元；当前决策为不买、观察，第一笔仓位0%。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

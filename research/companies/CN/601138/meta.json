@@ -1,80 +1,110 @@
 {
-  "symbol": "CN:601138",
-  "market": "CN",
-  "ticker": "601138",
-  "name": "工业富联",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "AI服务器全球龙头，FY2025营收9029亿(+48%)净利353亿(+52%)，但毛利率仅7%、FY2025 OCF仅52亿、PE 35.7x已反映乐观预期，安全边际不足，观察待回调",
-  "fair_value_range": [
-    48,
-    55
-  ],
-  "buy_zone": [
-    38,
-    48
-  ],
-  "sell_or_reduce_zone": [
-    70,
-    90
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "工业富联",
+    "security_status": "active",
+    "symbol": "CN:601138",
+    "ticker": "601138"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-failed.md",
+        "sha256": "ede0aec6b3990b721ff98ec808d341f1d066c713e6e8246a029cd1c0302c41d0"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "8375b29dc8c83e473e356ce53795717f26f58343b0ab1bee7ab0120bbfc1b5b6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前63元附近，估值偏贵不建仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "FY2026半年报披露，重点跟踪云计算收入增速与毛利率、是否提示AI服务器OCF改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回调至48元以下且基本面未恶化（FY2026季度收入增速维持20%以上，毛利率稳定6.5%以上）",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "FY2026三季报，跟踪全年业绩兑现度，关注北美CSP Q3季度capex指引",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格回调至38-48元且基本面维持",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查关税/出口管制政策是否发生重大变化，可能影响墨西哥/越南产能和NVIDIA产品交付",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格跌破30元且财务质量未恶化（OCF/净利恢复至0.7以上）",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入有安全边际的买入区间（PE 20x以下）",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入强吸引力买入区间，分批建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "进入泡沫区间，已持仓应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-failed.md",
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "FY2026半年报披露，重点跟踪云计算收入增速与毛利率、是否提示AI服务器OCF改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "FY2026三季报，跟踪全年业绩兑现度，关注北美CSP Q3季度capex指引"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查关税/出口管制政策是否发生重大变化，可能影响墨西哥/越南产能和NVIDIA产品交付"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入有安全边际的买入区间（PE 20x以下）"
-    },
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入强吸引力买入区间，分批建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 70,
-      "reason": "进入泡沫区间，已持仓应减仓"
-    }
-  ],
-  "updated_at": "2026-07-07T14:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

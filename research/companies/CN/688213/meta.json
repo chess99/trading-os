@@ -1,110 +1,115 @@
 {
-  "symbol": "CN:688213",
-  "market": "CN",
-  "ticker": "688213",
-  "name": "思特威",
-  "company_name": "思特威",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "hold",
-  "current_rating": "hold",
-  "quality_rating": "A-",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "current_thesis": "思特威是国产CMOS图像传感器多场景平台型公司，安防及AIoT提供份额和现金流基本盘，手机高像素与汽车电子贡献中期弹性；但2026-07-09价格已接近中性合理价值区间上沿，适合持有观察，等待75-88元买入区或盈利上修后再提高仓位。",
-  "fair_value_range": [
-    90,
-    115
-  ],
-  "buy_zone": [
-    75,
-    88
-  ],
-  "sell_or_reduce_zone": [
-    125,
-    140
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "思特威",
+    "security_status": "active",
+    "symbol": "CN:688213",
+    "ticker": "688213"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "8feed6094ecc55f762a4b1b013a0a7bb20a62f0c52f36494a49c84bc5ac78863"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于88元且2026H1毛利率维持24%以上、存货未显著恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "进入买入区上沿，基本面仍验证成长与盈利质量"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看收入结构、毛利率、存货和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于78元且手机高像素、汽车电子、经营现金流均未出现负面拐点",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "估值进入悲观区间上方，风险收益比改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认手机高像素与汽车电子增长是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格处于90至115元且业绩符合预期",
-      "action": "持有或仅保留小仓位观察",
-      "max_weight": 0.03,
-      "reason": "价格接近合理价值区间，等待更好的买点或盈利上修"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报和2027年一季报，重估中期盈利和合理PE",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于125元且未来两个季度盈利预期未明显上修",
-      "action": "减仓",
-      "max_weight": 0.01,
-      "reason": "估值进入乐观区间，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 88.0
+      },
+      "reason": "进入买入观察区，复核毛利率、库存和客户导入后可建立首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 78.0
+      },
+      "reason": "进入偏悲观估值区，若基本面未破坏则风险收益比明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 125.0
+      },
+      "reason": "进入减持观察区，需要盈利上修才能支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 140.0
+      },
+      "reason": "高于当前乐观估值上沿，除非车载和高端手机超预期，否则应控制仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 88,
-      "reason": "进入买入观察区，复核毛利率、库存和客户导入后可建立首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 78,
-      "reason": "进入偏悲观估值区，若基本面未破坏则风险收益比明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 125,
-      "reason": "进入减持观察区，需要盈利上修才能支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 140,
-      "reason": "高于当前乐观估值上沿，除非车载和高端手机超预期，否则应控制仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看收入结构、毛利率、存货和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认手机高像素与汽车电子增长是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报和2027年一季报，重估中期盈利和合理PE"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "毛利率",
-    "扣非净利率",
-    "研发投入金额及研发投入率",
-    "存货余额及存货周转率",
-    "经营活动现金流净额",
-    "智慧安防及AIoT收入增速",
-    "智能手机5000万像素及以上产品出货",
-    "汽车电子量产客户和收入增速",
-    "晶圆代工与封测供应稳定性",
-    "前五大客户和供应商集中度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

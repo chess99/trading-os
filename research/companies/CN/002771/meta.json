@@ -1,71 +1,86 @@
 {
-  "symbol": "CN:002771",
-  "ticker": "002771",
-  "name": "真视通",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "真视通仍是项目型视讯集成商叠加 AI 算力中心和充电业务转型期权。2025 年和 2026Q1 持续亏损，当前约 4.2 倍 PB 和约 6.8 倍 PS 已显著预支转型成功，缺少安全边际；需等待可核验的大额高质量 AIDC 订单、亏损收窄和经营现金流改善。",
-  "fair_value_range": [
-    6.5,
-    9.0
-  ],
-  "buy_zone": [
-    0,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "真视通",
+    "security_status": "active",
+    "symbol": "CN:002771",
+    "ticker": "002771"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "15454ad9e8dcb6a5988c89c6bb217d17d8f372269c5522e6189177a11a4e4a0d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基准合理价值且 2026Q1 仍亏损，未见公告级 AIDC 高质量订单和现金流改善证据，维持空仓观察。",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年度报告，重点检查 AIDC 订单、亏损收窄和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 6 元，且最近一期报告显示亏损明显收窄、经营现金流转正或接近转正、货币资金未被重资产投入快速消耗。",
-      "action": "research_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断传统业务和转型业务是否出现连续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "公告披露长期 AIDC/算力或液冷订单，客户质量、合同期限、毛利率和回款可核验，并连续两个季度收入和现金流改善。",
-      "action": "increase_small_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入研究型买入区间，需要复核亏损收窄、现金流和 AIDC 订单质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "高于基准合理价值上沿，若无可核验转型兑现证据应考虑回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入研究型买入区间，需要复核亏损收窄、现金流和 AIDC 订单质量。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "高于基准合理价值上沿，若无可核验转型兑现证据应考虑回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年度报告，重点检查 AIDC 订单、亏损收窄和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断传统业务和转型业务是否出现连续改善。"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

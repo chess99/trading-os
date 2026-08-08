@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920608",
-  "market": "CN",
-  "ticker": "920608",
-  "name": "丰安股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "资产负债表稳健且持续分红，但单一客户占比极高、自由现金流和核心盈利质量尚未验证，现价隐含的长期增长过于乐观，应等待更低价格或新客户与回款兑现。",
-  "fair_value_range": [8.5, 10.5],
-  "buy_zone": [7.0, 8.5],
-  "sell_or_reduce_zone": [12.0, 14.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "丰安股份",
+    "security_status": "active",
+    "symbol": "CN:920608",
+    "ticker": "920608"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "e50c121b965134e414b4b1b90ae721b16713292df5abe7aad1f4ccd38d5acdd0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入7.0-8.5元买入区间，且大客户订单、毛利率和回款未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复查客户集中度、回款、毛利率及募投项目利用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.0元，重新验证非大客户流失或坏账导致，且规范化自由现金流假设仍成立",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入有安全边际的买入区间，但必须先复核大客户、坏账和自由现金流假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于12.0元且经营兑现未超出基准情景",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "进入减仓或不应追高区间，除非新客户量产与自由现金流显著超预期",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复查客户集中度、回款、毛利率及募投项目利用率"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入有安全边际的买入区间，但必须先复核大客户、坏账和自由现金流假设"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "进入减仓或不应追高区间，除非新客户量产与自由现金流显著超预期"
-    }
-  ],
-  "updated_at": "2026-07-15T16:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

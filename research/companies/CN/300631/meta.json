@@ -1,112 +1,115 @@
 {
-  "symbol": "CN:300631",
-  "market": "CN",
-  "ticker": "300631",
-  "name": "久吾高科",
-  "company_name": "江苏久吾高科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备陶瓷膜、有机膜、锂吸附剂及膜集成工程能力，盐湖提锂、粉体洗涤、废酸资源化和固态电解质粉体提供增长期权；但项目制收入波动、客户集中、应收账款高和毛利率波动压低财务质量。以2026-07-13收盘价21.31元测算，当前估值已反映较多期权，缺少安全边际，适合跟踪不适合直接买入。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    16.0,
-    20.0
-  ],
-  "buy_zone": [
-    13.5,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    26.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "久吾高科",
+    "security_status": "active",
+    "symbol": "CN:300631",
+    "ticker": "300631"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "b5987ae552c4fe75b5dde06ece6213ffed00b6a291a5c6ff7c6dff8c41a46123"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约21.31元且仅有2026Q1信息验证，估值缺少安全边际",
-      "action": "观察，不建仓",
-      "target_position": "0%",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至15.5元以下，且2026H1扣非利润仍同比增长、应收账款未继续恶化",
-      "action": "建立试探仓",
-      "target_position": "1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润趋势和项目回款质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至13.5元以下，或2026H1/H3显示扣非利润年化接近0.8亿元且经营现金流转正",
-      "action": "提高至核心观察仓",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常利润、现金流和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "TTM扣非净利润超过1亿元，重大盐湖/废酸/粉体洗涤订单进入验收回款，毛利率稳定在40%上下",
-      "action": "考虑上限仓位",
-      "target_position": "4%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入基准合理价值下沿并具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于24-26元但利润、回款、订单未同步兑现",
-      "action": "减仓或不追",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入强安全边际区，可在基本面未恶化时加大跟踪仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "高于基准合理价值区，若无订单和利润兑现应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "期权溢价较高，除非新材料或盐湖提锂兑现超预期，否则应回避追高",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入基准合理价值下沿并具备初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入强安全边际区，可在基本面未恶化时加大跟踪仓"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "高于基准合理价值区，若无订单和利润兑现应降低风险暴露"
-    },
-    {
-      "type": "price_above",
-      "price": 26.0,
-      "reason": "期权溢价较高，除非新材料或盐湖提锂兑现超预期，否则应回避追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润趋势和项目回款质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常利润、现金流和估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "TTM扣非净利润是否提升至0.8-1.0亿元",
-    "经营现金流净额/净利润是否滚动四季度大于1",
-    "应收账款/TTM收入是否下降至60%以下",
-    "综合毛利率是否稳定在40%以上",
-    "前五大客户销售占比和第一大客户占比是否下降",
-    "重大盐湖提锂、粉体洗涤、工业废酸资源化合同的验收与回款进度",
-    "LLZO、LATP、硫化锂、固相合成载体等新材料是否贡献可披露收入和毛利"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

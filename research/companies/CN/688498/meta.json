@@ -1,99 +1,96 @@
 {
-  "symbol": "CN:688498",
-  "market": "CN",
-  "ticker": "688498",
-  "name": "源杰科技",
-  "company_name": "源杰科技",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "A-",
-  "valuation_rating": "F",
-  "current_thesis": "源杰科技是国内稀缺的 AI 数据中心光互连上游激光器芯片标的，2025 年以来数据中心 CW 光源放量验证质量，但 2026-07-09 市值和估值已明显透支，当前只适合研究跟踪，等待价格回落或业绩继续兑现。",
-  "fair_value_range": [
-    360,
-    560
-  ],
-  "buy_zone": [
-    250,
-    420
-  ],
-  "sell_or_reduce_zone": [
-    900,
-    1200
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "源杰科技",
+    "security_status": "active",
+    "symbol": "CN:688498",
+    "ticker": "688498"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "e4740a2c05ca94bd72e33154a55a78ddb8020417ec80fbde22fd3d56aeab9969"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_above_1200_or_valuation_above_150x_forward_pe",
-      "action": "avoid_new_buy; keep_only_tracking_position_if_already_owned",
-      "max_weight": 0.005,
-      "reason": "当前估值已透支多年高增长，赔率不足。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计半年报披露后复核 Q2 数据中心收入、毛利率、应收账款、产能利用率和客户认证进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_420_and_900_with_growth_confirmed",
-      "action": "watch; require_qoq_data_center_growth_and_margin_validation_before_buy",
-      "max_weight": 0.02,
-      "reason": "价格回落后可进入深度跟踪，但仍需订单、毛利率和客户认证继续证明。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核增长持续性、CW 光源价格和 100G/200G PAM4 EML 商业化进度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_250_and_420_and_fundamentals_intact",
-      "action": "start_staged_buy",
-      "max_weight": 0.03,
-      "reason": "若基本面未恶化，风险收益开始改善，可小仓位建仓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 420.0
+      },
+      "reason": "进入买入观察区，需要复核 2026 年半年报、CW 放量、EML 验证和毛利率。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_below_250_and_no_customer_or_margin_break",
-      "action": "increase_after_research_refresh",
-      "max_weight": 0.04,
-      "reason": "极端回撤后若客户、产能和毛利率仍健康，可提升至研究上限。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 250.0
+      },
+      "reason": "进入深度价值复核区，若基本面未破坏可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1200.0
+      },
+      "reason": "高估值风险区，不应新增主动仓位，已有仓位需按纪律降风险。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 420,
-      "reason": "进入买入观察区，需要复核 2026 年半年报、CW 放量、EML 验证和毛利率。"
-    },
-    {
-      "type": "price_below",
-      "price": 250,
-      "reason": "进入深度价值复核区，若基本面未破坏可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 1200,
-      "reason": "高估值风险区，不应新增主动仓位，已有仓位需按纪律降风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计半年报披露后复核 Q2 数据中心收入、毛利率、应收账款、产能利用率和客户认证进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核增长持续性、CW 光源价格和 100G/200G PAM4 EML 商业化进度。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "数据中心收入及环比增速",
-    "CW 激光器芯片收入占比和价格趋势",
-    "100G PAM4 EML 批量交付进展",
-    "200G PAM4 EML 客户验证进展",
-    "综合毛利率和数据中心产品毛利率",
-    "产能利用率、良率、在建工程和资本开支",
-    "前五大客户收入占比和最大客户占比",
-    "应收账款、存货和经营现金流",
-    "海外 Lumentum、Coherent、Broadcom、三菱、住友等竞争动态",
-    "光迅科技、仕佳光子等国内竞品在高端光芯片上的订单和毛利率变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

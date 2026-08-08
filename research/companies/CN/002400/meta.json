@@ -1,122 +1,105 @@
 {
-  "symbol": "CN:002400",
-  "market": "CN",
-  "ticker": "002400",
-  "name": "省广集团",
-  "company_name": "广东省广告集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司具备广告营销规模、国资背景和出海/AI营销期权，但当前盈利质量偏弱：2025年扣非为负、经营现金流为负、应收与合同资产占用高。2026-07-12可见股价6.19元对应市值约107.90亿元，已处于乐观改善情景，安全边际不足。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.0,
-    4.2
-  ],
-  "buy_zone": [
-    2.5,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "省广集团",
+    "security_status": "active",
+    "symbol": "CN:002400",
+    "ticker": "002400"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "eedcfcd321e2df694732f31d912b8c28907e1db4003ec0f56afb3c4402e75e22"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "current",
-      "price_range": "6.19 CNY",
-      "action": "观察",
-      "target_position": "0%",
-      "max_weight": 0.0,
-      "condition": "当前价格高于合理价值区间，安全边际不足。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报可验证2026年收入增长是否转化为利润和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "strong_buy",
-      "price_range": "<=2.50 CNY",
-      "action": "买入",
-      "target_position": "4%-5%",
-      "max_weight": 0.05,
-      "condition": "未出现重大减值、现金流或治理风险。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报可观察改善是否连续，而非单季扰动。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "safe_buy",
-      "price_range": "2.50-3.20 CNY",
-      "action": "买入/加观察仓",
-      "target_position": "2%-3%",
-      "max_weight": 0.03,
-      "condition": "扣非归母净利润持续为正且应收账款/合同资产未恶化。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报可完整核验盈利质量、减值和资本配置。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "zone": "do_not_chase",
-      "price_range": ">5.00 CNY",
-      "action": "不追高/降低",
-      "target_position": "0%",
-      "max_weight": 0.0,
-      "condition": "净利率未稳定超过1.2%且经营现金流未转正。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "低于基准合理价值区间上限，开始具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.5
+      },
+      "reason": "对应市值已显著低于基准估值，能覆盖盈利质量折扣。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "高于5元已进入乐观改善情景，当前财务结果支撑不足。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "action": "重新评估首笔2%-3%",
-      "condition": "扣非归母净利润持续为正且应收/合同资产未恶化",
-      "reason": "低于基准合理价值区间上限，开始具备安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.5,
-      "action": "强吸引力买入候选",
-      "condition": "未出现重大减值、现金流或治理风险",
-      "reason": "对应市值已显著低于基准估值，能覆盖盈利质量折扣。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "action": "不追高/已有则降低",
-      "condition": "净利率未稳定超过1.2%且经营现金流未转正",
-      "reason": "高于5元已进入乐观改善情景，当前财务结果支撑不足。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026年半年报预计披露窗口",
-      "action": "复查扣非净利润、经营现金流、应收账款和合同资产",
-      "reason": "半年报可验证2026年收入增长是否转化为利润和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "2026年三季报预计披露窗口",
-      "action": "复查海外业务毛利率、扣非净利率和经营现金流是否连续改善",
-      "reason": "三季报可观察改善是否连续，而非单季扰动。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "2026年年报预计披露窗口",
-      "action": "复核全年扣非利润、现金流、应收核销、商誉及长期股权投资减值",
-      "reason": "年报可完整核验盈利质量、减值和资本配置。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款+合同资产/营业收入",
-    "数字营销毛利率",
-    "海外业务收入和毛利率",
-    "归母净利率",
-    "商誉及长期股权投资减值",
-    "AI营销工具对人效和费用率的实际贡献"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

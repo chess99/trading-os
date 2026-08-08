@@ -1,47 +1,77 @@
 {
-  "symbol": "CN:920792",
-  "market": "CN",
-  "ticker": "920792",
-  "name": "东和新材",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "资源一体化与新产品推动增长，但ROE低于资本成本且扩张期自由现金流为负，当前价格已部分反映矿山投产和利润改善。",
-  "fair_value_range": [7.8, 9.2],
-  "buy_zone": [6.5, 7.4],
-  "sell_or_reduce_zone": [10.5, 11.8],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东和新材",
+    "security_status": "active",
+    "symbol": "CN:920792",
+    "ticker": "920792"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "ab007d97718ca18c76eda6b9c3f15fa0e31e76f339003e8dc2198fb107b6ea5c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于7.0至7.4元且采矿权续期、半年报现金流和核心产品毛利未恶化",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、矿权续期进度、自由现金流与新产品订单",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于6.5至6.9元且重新验证长期商业价值未受损、自由现金流改善",
-      "max_weight": 0.025
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、矿权续期进度、自由现金流与新产品订单"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.4,
-      "reason": "进入有安全边际的观察买入区间，需先复核核心假设"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.4
+      },
+      "reason": "进入有安全边际的观察买入区间，需先复核核心假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "进入减仓或不应追高区间，除非盈利与现金流预测同步上修"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "进入减仓或不应追高区间，除非盈利与现金流预测同步上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-15T12:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600468",
-  "market": "CN",
-  "ticker": "600468",
-  "name": "百利电气",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "百利电气受益新型电力系统、电能质量治理和电磁线需求，但2025年ROE仅4.51%、主营毛利率下行、供应商集中度高，当前5元附近估值已接近乐观情景，安全边际不足，等待价格回到3元中段或毛利率改善被验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.2,
-    4.2
-  ],
-  "buy_zone": [
-    0,
-    3.3
-  ],
-  "sell_or_reduce_zone": [
-    5.8,
-    6.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "百利电气",
+    "security_status": "active",
+    "symbol": "CN:600468",
+    "ticker": "600468"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "6bcebb5f51cbf1352952db4326d403081a4904abf11de41694424a37ebf3d8d5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.3元，最近一期扣非净利润为正，主营毛利率不低于21%，经营现金流未显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看主营毛利率、扣非净利润、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.8元，2026年年化EPS确认达到0.10元以上，主营毛利率回升至23%以上",
-      "action": "小幅加仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否持续以及估值区间是否需要调整",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于5.8元且EPS未上修至0.12元以上，或主营毛利率低于20%，或应收账款扩张且经营现金流转弱",
-      "action": "减仓或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及分红，评估ROE、资本配置和股东回报是否改善",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "进入合理价值下沿并具备安全边际，可复核毛利率和现金流后考虑观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.8
+      },
+      "reason": "价格进入乐观情景估值区间，若利润未同步上修则风险收益不匹配",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "进入合理价值下沿并具备安全边际，可复核毛利率和现金流后考虑观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.8,
-      "reason": "价格进入乐观情景估值区间，若利润未同步上修则风险收益不匹配"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看主营毛利率、扣非净利润、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否持续以及估值区间是否需要调整"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及分红，评估ROE、资本配置和股东回报是否改善"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

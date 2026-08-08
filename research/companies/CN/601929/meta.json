@@ -1,87 +1,95 @@
 {
-  "symbol": "CN:601929",
-  "ticker": "601929",
-  "name": "吉视传媒",
-  "exchange": "SSE",
-  "market": "CN",
-  "currency": "CNY",
-  "industry": "电信、广播电视和卫星传输服务",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备吉林省省域广电网络、IPTV播控和地方政企入口，但传统公众客户业务承压、折旧摊销和财务费用拖累利润，2025年至2026H1仍处亏损。当前更适合作为困境反转跟踪标的，等待政企业务兑现为现金流和亏损持续收窄后再小仓位试错。",
-  "fair_value_range": [
-    1.3,
-    1.8
-  ],
-  "buy_zone": [
-    1.1,
-    1.4
-  ],
-  "sell_or_reduce_zone": [
-    2.4,
-    3.0
-  ],
-  "position_plan": [
-    {
-      "condition": "股价进入1.10-1.40元且2026年半年报亏损不差于预告中值、经营现金流环比改善",
-      "action": "建立观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "连续两个季度经营现金流为正且扣非亏损明显收窄",
-      "action": "可提高至小仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于2.40元但未出现扭亏或现金流持续转正证据",
-      "action": "不追高并减仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.4,
-      "reason": "进入保守买入观察区，若基本面同步改善可小仓位试错"
-    },
-    {
-      "type": "price_above",
-      "price": 2.4,
-      "reason": "超过乐观情景估值下沿，若无扭亏证据风险收益比转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际亏损、经营现金流、政企业务收入和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现现金流改善和扣非亏损收窄"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与年度债务、资本开支、分红或回购安排"
-    }
-  ],
-  "key_metrics": {
-    "revenue_2025_cny_billion": 1.983,
-    "net_profit_2025_cny_billion": -0.4596,
-    "revenue_2026_q1_cny_billion": 0.5276,
-    "net_profit_2026_q1_cny_billion": -0.1001,
-    "operating_cash_flow_2026_q1_cny_billion": -0.1025,
-    "equity_attributable_2026_q1_cny_billion": 4.6797,
-    "shares_2026_q1_billion": 3.4898
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "吉视传媒",
+    "security_status": "active",
+    "symbol": "CN:601929",
+    "ticker": "601929"
   },
-  "decision": "观察",
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f51e5970e81a08cff968b5299e8166df2f295676aa9698c8b491cfae38dc95d2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际亏损、经营现金流、政企业务收入和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现现金流改善和扣非亏损收窄",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与年度债务、资本开支、分红或回购安排",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.4
+      },
+      "reason": "进入保守买入观察区，若基本面同步改善可小仓位试错",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.4
+      },
+      "reason": "超过乐观情景估值下沿，若无扭亏证据风险收益比转差",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

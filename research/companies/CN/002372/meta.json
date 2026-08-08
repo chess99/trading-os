@@ -1,157 +1,132 @@
 {
-  "symbol": "CN:002372",
-  "market": "CN",
-  "ticker": "002372",
-  "name": "伟星新材",
-  "company_name": "浙江伟星新型建材股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "高毛利PPR零售管材龙头，现金流和分红质量优秀，但2025年收入利润下滑、2026Q1扣非仍弱，当前7.98元接近合理价值偏下沿但未到6.8元以下的安全边际买点。",
-  "quality_rating": "A-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    7.5,
-    9.5
-  ],
-  "buy_zone": [
-    0,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "伟星新材",
+    "security_status": "active",
+    "symbol": "CN:002372",
+    "ticker": "002372"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "21c9651a80477eff6b4a6262a0341800f7695eae72df55da8784782bcf9ae5c1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "current",
-      "condition": "当前价格处于合理区间且未到安全边际买点",
-      "price_range": "7.5-9.5",
-      "action": "观察",
-      "position": "0%",
-      "max_weight": 0,
-      "note": "首笔仓位0%，最大仓位5%。"
-    },
-    {
-      "zone": "strong_buy",
-      "condition": "股价低于或等于6.0元且基本面未破坏",
-      "price_range": "<=6.0",
-      "action": "强吸引力买入",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "zone": "safe_buy",
-      "condition": "股价高于6.0元且低于或等于6.8元",
-      "price_range": "6.0-6.8",
-      "action": "分批买入",
-      "position": "1.5%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "zone": "small_buy",
-      "condition": "股价高于6.8元且低于7.5元",
-      "price_range": "6.8-7.5",
-      "action": "小仓试探或持有",
-      "position": "0.5%-1.5%",
-      "max_weight": 0.015
-    },
-    {
-      "zone": "fair",
-      "condition": "股价处于7.5-9.5元合理区间",
-      "price_range": "7.5-9.5",
-      "action": "观察或持有",
-      "position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "zone": "do_not_chase",
-      "condition": "股价高于10.0元且增长未显著改善",
-      "price_range": ">10.0",
-      "action": "不追高/复盘减仓",
-      "position": "0新增",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "达到约15%-25%安全边际",
-      "action": "进入有安全边际买入区，复核半年报后可分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "悲观情景下也具备较强估值保护",
-      "action": "进入强吸引力买入区，若基本面未破坏可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "超过合理估值上沿，赔率下降",
-      "action": "估值进入追高区，除非增长恢复否则不新增"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证收入和扣非利润是否见底",
-      "action": "复查收入、扣非净利、毛利率和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "PPR毛利率跌破50%或经销收入继续双位数下滑",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "PPR零售是核心护城河",
-      "action": "重新评估护城河和买入价"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "经营现金流/归母净利年度低于1",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "现金流质量是质量评级核心",
-      "action": "下调质量评级"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "工程端应收账款或合同资产增速显著高于收入",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "工程业务回款风险会侵蚀估值",
-      "action": "复查工程业务回款风险"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "分红率显著下降且未说明高回报再投资用途",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "高分红是当前估值支撑之一",
-      "action": "复查股东回报假设"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "并购资产出现减值或整合不及预期",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "新业务增长假设依赖并购整合",
-      "action": "复查新业务增长假设"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "达到约15%-25%安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "悲观情景下也具备较强估值保护",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "超过合理估值上沿，赔率下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "PPR系列收入和毛利率",
-    "经销收入占比和增速",
-    "经营现金流量净额/归母净利润",
-    "应收账款和合同资产变化",
-    "每股现金分红和分红率",
-    "海外、防水、净水等同心圆业务收入增速"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

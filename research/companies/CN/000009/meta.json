@@ -1,93 +1,124 @@
 {
-  "symbol": "CN:000009",
-  "market": "CN",
-  "ticker": "000009",
-  "name": "中国宝安",
-  "company_name": "中国宝安",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B-",
-  "valuation_rating": "B",
-  "current_thesis": "中国宝安的核心投资逻辑是以折价买入贝特瑞和马应龙等上市/准上市资产，但母公司扣非利润、财务费用、非核心资产和治理复杂度限制仓位，应等待5.5-6.2元买入区间及贝特瑞盈利企稳信号。",
-  "fair_value_range": [
-    6.8,
-    8.4
-  ],
-  "buy_zone": [
-    5.5,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国宝安",
+    "security_status": "active",
+    "symbol": "CN:000009",
+    "ticker": "000009"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "4921cc4d45e7af2ede3150eae16f0efc29db73c041cf80272318950a080b4fb5"
+      }
+    ],
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-39618283f6ee.md",
+        "report_id": "CN-000009-2026-07-30-rapid-triage-39618283f6ee",
+        "report_type": "rapid_triage",
+        "sha256": "99efbbdaaa2d5b0d8a9208268efcaa21a926362164da54779ed83f28adec9ccc"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-39618283f6ee.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-39618283f6ee.md"
+    }
+  },
+  "research": {
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T05:08:00+08:00",
+      "report_id": "CN-000009-2026-07-30-rapid-triage-39618283f6ee",
+      "report_path": "reports/2026-07-30-rapid-triage-39618283f6ee.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000009/20260730T050800+0800.triage.json",
+      "source_package_sha256": "39618283f6ee89aa108124695b319a02f295aed741966bf55cdbd993d0ec0d3c"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入5.5-6.2元且贝特瑞负极毛利率未继续显著下滑",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "表观SOTP折价具备安全边际，但母公司扣非利润和财务费用仍需验证"
+      "active": true,
+      "condition": {
+        "description": "中国宝安披露2026年半年度报告"
+      },
+      "reason": "核验实际归母及扣非亏损、贝特瑞分部毛利与汇兑损失、地产存货减值、母公司单体债务、经营现金流、资本开支和少数股东分配。",
+      "trigger_id": "cn-000009-2026h1-report",
+      "type": "filing"
     },
     {
-      "condition": "价格低于5.5元且2026年半年报显示扣非改善或资产处置兑现",
-      "action": "加仓至小仓上限",
-      "max_weight": 0.03,
-      "reason": "折价极端化且基本面未恶化时，资产折价修复赔率改善"
+      "active": true,
+      "condition": {
+        "description": "承兴投资及一致行动人披露增持实施结果、持股比例继续显著上升、控制权安排、董事高管调整或与中国宝安有关的正式资产重组及资本运作方案"
+      },
+      "reason": "深圳国资影响能否转化为资本纪律和价值释放，是控股折价能否收敛的关键；传闻或最低100万股增持本身不足以验证。",
+      "trigger_id": "cn-000009-state-shareholder-change",
+      "type": "event"
     },
     {
-      "condition": "价格高于9.5元且无贝特瑞盈利上修、分红提升或资产处置事件",
-      "action": "减仓或退出",
-      "max_weight": 0.005,
-      "reason": "折价修复空间收窄，利润表估值支撑不足"
+      "active": true,
+      "condition": {
+        "description": "中国宝安连续两个报告期扣非归母盈利且经营现金流覆盖维护性资本开支，同时财务费用、地产减值、母公司净债务和实际担保余额不恶化"
+      },
+      "reason": "该组合证据可否定当前归母所有者收益低且依赖投资波动的判断。",
+      "trigger_id": "cn-000009-owner-earnings-recovery",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "贝特瑞连续两个报告期负极材料单位盈利或毛利率企稳回升，海外产能贡献正现金回报，且中国宝安收到的分红增加"
+      },
+      "reason": "贝特瑞规模增长只有转化为母公司可上收现金，上市资产价值锚才更接近普通股股东可兑现价值。",
+      "trigger_id": "cn-000009-btr-margin-recovery",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "5.50元对应约142亿元市值，可扩大相对两项上市股权毛值的缓冲；触发后仍须扣除母公司净债务和平台折价，不代表自动晋级或买入。",
+      "trigger_id": "cn-000009-price-lte-5-50",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "若财报、股东增持或论点事件未先命中，90天后复核三季报窗口、深圳国资持股、贝特瑞盈利和资产处置进展。",
+      "trigger_id": "cn-000009-routine-90d-refresh",
+      "type": "date"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入初始买入区间，需要复核贝特瑞毛利率和中国宝安扣非趋势"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入深度折价区间，若基本面未恶化可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "进入减持区间，若无新增价值释放事件应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认贝特瑞负极盈利、中国宝安扣非和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及资产处置、分红或资本配置变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "贝特瑞负极材料销量",
-    "贝特瑞负极材料毛利率",
-    "贝特瑞单吨净利",
-    "贝特瑞海外产能利用率",
-    "中国宝安扣非归母净利润",
-    "中国宝安经营活动现金流量净额",
-    "中国宝安财务费用",
-    "中国宝安受限资产规模",
-    "马应龙归母净利润与分红",
-    "低效资产处置回款"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-30T05:08:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

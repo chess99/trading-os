@@ -1,68 +1,95 @@
 {
-  "symbol": "CN:600076",
-  "ticker": "600076",
-  "name": "康欣新材",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "传统木质材料主业仍处亏损和减值压力期，历史财务差错及2025年保留意见削弱账面净资产可信度；宇邦半导体并表提供转型期权，但分部利润、现金流和整合效果尚未验证，当前价格缺少安全边际。",
-  "fair_value_range": [
-    1.8,
-    2.4
-  ],
-  "buy_zone": [
-    0.0,
-    1.8
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    3.6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "康欣新材",
+    "security_status": "active",
+    "symbol": "CN:600076",
+    "ticker": "600076"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "88a2b0c9ea9115600ecb0f53414d718b2675f28b26ee84143566fdb561f80599"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未消除保留意见、传统主业未证明现金流转正、宇邦半导体未披露可持续利润前不建仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点检查宇邦半导体并表利润、现金流、应收账款和分部披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若正式半年报显示宇邦半导体并表后贡献可持续利润，且传统主业亏损显著收窄，可重新评估观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度报告，观察传统主业毛利率、存货减值和经营现金流是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见、历史差错整改进展及宇邦全年业绩兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入折价NAV观察区，且需同时复核财务可靠性和宇邦并表质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.3
+      },
+      "reason": "高于基准合理价值上沿且接近乐观情景下沿，若基本面未验证应避免追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入折价NAV观察区，且需同时复核财务可靠性和宇邦并表质量"
-    },
-    {
-      "type": "price_above",
-      "price": 3.3,
-      "reason": "高于基准合理价值上沿且接近乐观情景下沿，若基本面未验证应避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点检查宇邦半导体并表利润、现金流、应收账款和分部披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度报告，观察传统主业毛利率、存货减值和经营现金流是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见、历史差错整改进展及宇邦全年业绩兑现情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

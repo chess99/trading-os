@@ -1,107 +1,105 @@
 {
-  "symbol": "CN:300509",
-  "market": "CN",
-  "ticker": "300509",
-  "name": "新美星",
-  "company_name": "江苏新美星包装机械股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "液态食品包装设备小市值公司，2025年海外收入、现金流和分红明显改善，2026Q1合同负债继续增加；但项目制设备商波动大，当前7.84元已部分反映改善，等待6.80-7.20元或连续业绩验证后再小仓买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "合理偏低但安全边际一般",
-  "fair_value_range": [
-    7.5,
-    9.5
-  ],
-  "buy_zone": [
-    6.8,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    11.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新美星",
+    "security_status": "active",
+    "symbol": "CN:300509",
+    "ticker": "300509"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5f3c552f3a81421fe81dac4ca76a5b4e8895b30a6d1a6d59cd24a3241995aedf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于7.20-7.50元，且2026年中报确认收入增长、毛利率稳定、经营现金流未恶化",
-      "action": "只建立观察仓",
-      "target_position": "1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看海外收入、毛利率、合同负债和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至6.80-7.20元，且合同负债、海外收入和回款质量没有明显转弱",
-      "action": "分批买入",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断2025年利润改善是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.20元，基本面未破坏，经营现金流/归母净利润仍高于0.8倍",
-      "action": "提高到非核心上限仓位",
-      "target_position": "3%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红政策，更新长期利润中枢与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.50元，或估值超过24倍可持续净利润但订单与利润率没有继续上修",
-      "action": "逐步减仓至观察仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
       "reason": "进入安全边际买入区上沿",
-      "action": "进入可买区，复核最新订单、毛利率和现金流后考虑1%-2%仓位"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 6.2,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
       "reason": "价格低于保守估值区，若基本面未破坏则赔率改善",
-      "action": "若基本面未变坏，复核后考虑提高至3%-4%非核心仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 10.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
       "reason": "进入减仓区下沿，估值可能透支中性增长情景",
-      "action": "进入减仓区，检查估值是否已透支2026-2027年增长"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看海外收入、毛利率、合同负债和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断2025年利润改善是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红政策，更新长期利润中枢与估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "境外收入增速和毛利率",
-    "合同负债余额及变化",
-    "经营现金流净额/归母净利润",
-    "应收账款和存货周转",
-    "备件及其他收入占比",
-    "综合毛利率和净利率",
-    "现金分红和资本开支匹配度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

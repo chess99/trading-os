@@ -1,104 +1,110 @@
 {
-  "symbol": "CN:688400",
-  "market": "CN",
-  "ticker": "688400",
-  "name": "凌云光",
-  "company_name": "凌云光技术股份有限公司",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "凌云光是A股稀缺的机器视觉与视觉AI平台型公司，JAI并购补强高端工业相机与全球渠道，具身智能和AI新基建提供长期期权；但2026H1表观利润主要被智谱华章公允价值变动收益放大，主业扣非和现金流仍需半年报、三季报验证，当前股价缺少足够安全边际，维持观察。",
-  "quality_rating": "B+",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    34,
-    43
-  ],
-  "buy_zone": [
-    28,
-    34
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    65
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凌云光",
+    "security_status": "active",
+    "symbol": "CN:688400",
+    "ticker": "688400"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "a56127c2b64954f5eebc79d0cde4c1c7d2e8a95e319e684165e9cf4580c95f1a"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "68fd8d7a12c2620d19d84ebf9c22947ddd75f8161272986b1429e28f650e7786"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于43元，且2026H1正式半年报尚未验证主业扣非、现金流、应收账款和存货质量",
-      "action": "保持观察，不新建仓位",
-      "max_weight": 0,
-      "reason": "当前估值仍主要支付AI视觉和智谱华章投资收益期权，主业安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "公司预计披露2026年半年报，复核主业收入、扣非净利、现金流、应收账款、存货和智谱华章公允价值收益",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至34-43元，且半年报显示机器视觉收入增长、扣非净利润同比增长、毛利率稳定、经营现金流没有明显恶化",
-      "action": "建立小额观察仓",
-      "max_weight": 0.01,
-      "reason": "接近合理价值区间，可用小仓位跟踪JAI协同和AI视觉业务兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报窗口，验证扣非利润能否持续增长以及经营现金流是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至28-34元，且三季报继续验证主业扣非增长、经营现金流修复、应收账款和存货周转可控",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "进入买入区间并获得经营质量验证，风险收益比改善"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报窗口，复核JAI协同、AI新业务收入兑现、商誉减值风险和全年现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期机器视觉收入转弱、扣非净利润低于预期、经营现金流恶化，或JAI整合出现商誉减值迹象",
-      "action": "退出观察仓或降至零仓位",
-      "max_weight": 0,
-      "reason": "主业成长与现金流逻辑被破坏，不能继续用AI叙事支撑估值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入买入区间上沿，需要复核半年报经营质量并评估是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入深度安全边际区间，需要判断是市场错杀还是基本面恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "进入减持或回避区间，除非主业扣非利润、订单和现金流显著超预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入买入区间上沿，需要复核半年报经营质量并评估是否建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入深度安全边际区间，需要判断是市场错杀还是基本面恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "进入减持或回避区间，除非主业扣非利润、订单和现金流显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "公司预计披露2026年半年报，复核主业收入、扣非净利、现金流、应收账款、存货和智谱华章公允价值收益"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报窗口，验证扣非利润能否持续增长以及经营现金流是否修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报窗口，复核JAI协同、AI新业务收入兑现、商誉减值风险和全年现金流质量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "机器视觉业务收入同比增速",
-    "扣非归母净利润及扣非净利率",
-    "经营活动现金流量净额",
-    "应收账款及合同资产占收入比例",
-    "存货余额、存货跌价准备和周转天数",
-    "视觉器件、视觉系统、智能视觉装备分产品毛利率",
-    "JAI并表后的海外收入、毛利率和商誉减值迹象",
-    "AI服务器检测、具身智能动捕、机器人量产检测、OCS/OIO订单与收入",
-    "研发投入占收入比例和资本化率",
-    "非经常性损益及公允价值变动收益金额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

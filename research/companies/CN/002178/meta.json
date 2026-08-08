@@ -1,90 +1,86 @@
 {
-  "symbol": "CN:002178",
-  "market": "CN",
-  "ticker": "002178",
-  "name": "延华智能",
-  "company_name": "延华智能",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "延华智能具备智慧城市、智慧医疗和绿色双碳题材，但项目制收入下滑、应收账款和合同资产占用高、现金流波动大且历史治理信用受损；当前股价明显高于可验证基本面价值，暂不买入。",
-  "quality_rating": "low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    1.2,
-    1.8
-  ],
-  "buy_zone": [
-    0.8,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    4.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "延华智能",
+    "security_status": "active",
+    "symbol": "CN:002178",
+    "ticker": "002178"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "41f2a4e99527e7da78a6be99591b647bcd935f19d0b6b292b9f30167b46132d8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间且2026Q1收入、利润、现金流未验证反转",
-      "action": "不买入，已持有则逢反弹减仓",
-      "max_weight": 0,
-      "reason": "项目制回款风险和估值溢价均过高"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、现金流、应收账款和合同资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.20元且连续两个季度经营现金流为正、扣非利润为正",
-      "action": "允许观察型首笔试仓",
-      "max_weight": 0.005,
-      "reason": "只有价格和基本面同时修复才具备小仓位研究价值"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现连续改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "应收账款加合同资产占最近12个月收入低于80%，收入同比转正，毛利率稳定在20%以上",
-      "action": "可提高至最高跟踪仓位",
-      "max_weight": 0.015,
-      "reason": "证明项目质量、交付和回款进入可持续状态"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入可接受买入价上沿，需要同步复核回款和扣非利润",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "显著高于合理价值区间，触发卖出或减仓复核",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入可接受买入价上沿，需要同步复核回款和扣非利润"
-    },
-    {
-      "type": "price_above",
-      "price": 4.0,
-      "reason": "显著高于合理价值区间，触发卖出或减仓复核"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、现金流、应收账款和合同资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现连续改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款",
-    "合同资产",
-    "应收账款加合同资产占最近12个月收入比例",
-    "综合毛利率",
-    "新签订单金额和预付款比例",
-    "信用减值损失",
-    "资产减值损失",
-    "投资收益占利润比例",
-    "监管问询和信披处罚进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

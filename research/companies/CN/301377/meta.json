@@ -1,106 +1,105 @@
 {
-  "symbol": "CN:301377",
-  "market": "CN",
-  "ticker": "301377",
-  "name": "鼎泰高科",
-  "company_name": "鼎泰高科",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "观察",
-  "current_thesis": "鼎泰高科是全球 PCB 钻针龙头，受 AI 服务器高端 PCB 需求拉动，2025-2026 年收入、利润和毛利率进入高景气阶段；但 2026-07-09 附近股价约 473 元、总市值约 1950-2010 亿元，对应约 313-323 倍 TTM PE，已显著透支未来多年增长，当前应观察而非追高。",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    120,
-    180
-  ],
-  "buy_zone": [
-    90,
-    120
-  ],
-  "sell_or_reduce_zone": [
-    220,
-    9999
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "status": "active",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鼎泰高科",
+    "security_status": "active",
+    "symbol": "CN:301377",
+    "ticker": "301377"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "1e3a10f03a61a3c2a1f89368ba3c6e1d42e13272ea7d7ba413394767ec9f13b4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 90 元且季度收入、利润、毛利率和现金流未发生趋势性恶化",
-      "action": "积极分批买入",
-      "max_weight": 0.08,
-      "reason": "估值回到高质量制造龙头可接受区间，若基本面仍在兑现，赔率突出。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-21"
+      },
+      "reason": "预计 2026 年半年报后复查收入、利润率、现金流和应收存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在 90-120 元且 2026 半年报继续验证 AI PCB 需求和高端钻针占比提升",
-      "action": "分批买入",
-      "max_weight": 0.05,
-      "reason": "具备安全边际，可用季度数据验证后逐步加仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复查 AI PCB 需求、产能利用率和估值是否仍严重透支。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在 120-180 元",
-      "action": "仅小仓跟踪或等待更好价格",
-      "max_weight": 0.02,
-      "reason": "处于合理价值区间，仍需确认高毛利率和现金流可持续。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年报后复核全年利润兑现、自由现金流和资本开支回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于 220 元",
-      "action": "不新建仓，已有仓位减至跟踪仓",
-      "max_weight": 0.01,
-      "reason": "估值容错率过低，当前价格已显著透支未来增长。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 120.0
+      },
+      "reason": "进入安全边际买入区上沿，若基本面未恶化，应重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 90.0
+      },
+      "reason": "进入强吸引力区间，若收入、毛利率和现金流仍健康，赔率显著改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 220.0
+      },
+      "reason": "超过不应追高价格，估值对预期下修极度敏感，应避免新仓或考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 120,
-      "reason": "进入安全边际买入区上沿，若基本面未恶化，应重新评估建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 90,
-      "reason": "进入强吸引力区间，若收入、毛利率和现金流仍健康，赔率显著改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 220,
-      "reason": "超过不应追高价格，估值对预期下修极度敏感，应避免新仓或考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-21",
-      "reason": "预计 2026 年半年报后复查收入、利润率、现金流和应收存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复查 AI PCB 需求、产能利用率和估值是否仍严重透支。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年报后复核全年利润兑现、自由现金流和资本开支回报。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "归母净利润同比增速",
-    "销售毛利率和净利率",
-    "经营现金流净额/归母净利润",
-    "应收账款和存货增速",
-    "0.20mm 及以下微钻销量占比",
-    "涂层钻针销量占比",
-    "高长径比钻针需求和单价",
-    "钻针产能、利用率和良率",
-    "前五大客户销售占比",
-    "海外收入占比",
-    "资本开支和资产负债率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600185",
-  "ticker": "600185",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "珠免集团",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司已完成去地产化并聚焦口岸免税，珠海口岸资源、华发体系和新增门店带来中期修复期权；但2026年半年度归母利润预告仍薄，债务与汇率扰动较大，当前价格缺乏足够安全边际，适合观察等待盈利兑现或更低买点。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    3.0,
-    4.4
-  ],
-  "buy_zone": [
-    2.5,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.3,
-    6.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "珠免集团",
+    "security_status": "active",
+    "symbol": "CN:600185",
+    "ticker": "600185"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "253d508766cb4e741e6fb1abdad6c2e47defd0270815ad831ea44980264c2b25"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.2元，且2026年半年报或三季报确认扣非归母改善、经营现金流为正、股权转让款回收路径清晰",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、扣非归母、财务费用和新增门店筹备进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.8元，且核心口岸客流和免税毛利率未明显恶化",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认免税主业盈利是否持续传导至上市公司归母利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年扣非归母年化稳定超过2.5亿元，净债务下降，新增门店开业贡献明确",
-      "action": "重新评估是否提高配置",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断去地产化后的完整年度盈利能力和债务回收情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入基准估值下沿附近，若基本面未恶化则具备初始安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入较强安全边际区间，可结合半年报或三季报复核小仓位买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.3
+      },
+      "reason": "超过基准估值上沿，若盈利兑现不足应考虑减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入基准估值下沿附近，若基本面未恶化则具备初始安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入较强安全边际区间，可结合半年报或三季报复核小仓位买入"
-    },
-    {
-      "type": "price_above",
-      "price": 5.3,
-      "reason": "超过基准估值上沿，若盈利兑现不足应考虑减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、扣非归母、财务费用和新增门店筹备进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认免税主业盈利是否持续传导至上市公司归母利润"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断去地产化后的完整年度盈利能力和债务回收情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

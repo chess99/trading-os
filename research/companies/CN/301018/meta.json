@@ -1,76 +1,120 @@
 {
-  "symbol": "CN:301018",
-  "market": "CN",
-  "ticker": "301018",
-  "name": "申菱环境",
-  "currency": "CNY",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "申菱环境具备数据中心液冷先发积累、头部客户交付经验和专业特种空调工程底盘，2025年数据服务收入同比增长51.42%、新增订单同比增长约72%，长期受益AI算力温控升级。但2026-07-15收盘价105.98元对应转增后估算市值约394.7亿元、2025 PE约182倍、TTM PE约207倍，且2026Q1收入同比-1.80%、归母净利润同比-47.71%、经营现金流为负，当前安全边际不足。结论为观察，等待60元以下或半年报验证订单兑现和现金流改善。",
-  "fair_value_range": [55, 75],
-  "buy_zone": [45, 60],
-  "sell_or_reduce_zone": [95, 125],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "申菱环境",
+    "security_status": "active",
+    "symbol": "CN:301018",
+    "ticker": "301018"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "b0b190d0740f8cc20a59c2a51b07e997752f1829a4cd597a61eda750ca97950b"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "21d37a068ee0b273d68cdac708bfd41ceeecc3bc891acb81bdf3393ebd3ed176"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于95元且没有2026年业绩显著超预期证据时不追高，维持0仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报披露后复核数据服务收入、液冷订单转化、毛利率、存货和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至70元附近，且数据服务订单、毛利率和存货未恶化时，纳入重点观察但不超过观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报披露后复核全年业绩兑现概率和高估值是否仍可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至55-60元，且2026半年报显示液冷订单开始兑现、经营现金流改善，可建立小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露后重估液冷业务规模、海外收入质量、现金流和合理估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价回落至45-55元，且数据服务毛利率稳定、应收账款和存货风险可控，可提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入重点观察区，复核订单兑现、数据服务毛利率和存货变化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入初步买入区，若半年报或三季报验证基本面可考虑小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入具备更高安全边际区间，需确认液冷订单和现金流未恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
+      "reason": "估值重新接近牛市情景上沿，若缺少业绩超预期证据应回避追高",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入重点观察区，复核订单兑现、数据服务毛利率和存货变化"
-    },
-    {
-      "type": "price_below",
-      "price": 60,
-      "reason": "进入初步买入区，若半年报或三季报验证基本面可考虑小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "进入具备更高安全边际区间，需确认液冷订单和现金流未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 95,
-      "reason": "估值重新接近牛市情景上沿，若缺少业绩超预期证据应回避追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026半年报披露后复核数据服务收入、液冷订单转化、毛利率、存货和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026三季报披露后复核全年业绩兑现概率和高估值是否仍可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报披露后重估液冷业务规模、海外收入质量、现金流和合理估值区间"
-    }
-  ],
-  "updated_at": "2026-07-15"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

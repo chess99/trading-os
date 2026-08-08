@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688807",
-  "market": "CN",
-  "ticker": "688807",
-  "name": "优迅股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "优迅股份是国产光通信电芯片稀缺标的，受益于接入网升级、AI 数据中心高速光模块和国产替代，但 2026-07-17 价格已隐含乐观成长情景，当前缺少安全边际，应等待价格回落或高端数据中心产品放量被财报确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    115,
-    165
-  ],
-  "buy_zone": [
-    0,
-    130
-  ],
-  "sell_or_reduce_zone": [
-    220,
-    260
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "优迅股份",
+    "security_status": "active",
+    "symbol": "CN:688807",
+    "ticker": "688807"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "0d9e133865cb63393f28b38011bfbc5c1ec30bfb74070fb166c394f352e52560"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 130 元且毛利率维持在 58% 以上、收入增速未明显失速时建立观察仓",
-      "action": "initial_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入、毛利率、经营现金流和高速产品披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 115 元且经营现金流全年转正、高速产品验证继续推进时加仓",
-      "action": "add_position",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报增长是否持续以及存货/应收是否恶化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 220 元且未披露高端数据中心产品批量收入时不买或减仓",
-      "action": "reduce_or_avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报、募投项目进度和高端产品批量收入",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 130.0
+      },
+      "reason": "进入基准估值折让区，可重新评估初始仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 115.0
+      },
+      "reason": "接近绝对估值下沿，若基本面未恶化具备较好安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 220.0
+      },
+      "reason": "估值重新接近乐观情景，需确认高端产品放量是否兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 130,
-      "reason": "进入基准估值折让区，可重新评估初始仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 115,
-      "reason": "接近绝对估值下沿，若基本面未恶化具备较好安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 220,
-      "reason": "估值重新接近乐观情景，需确认高端产品放量是否兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入、毛利率、经营现金流和高速产品披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报增长是否持续以及存货/应收是否恶化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报、募投项目进度和高端产品批量收入"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

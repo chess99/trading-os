@@ -1,103 +1,106 @@
 {
-  "symbol": "CN:920200",
-  "market": "CN",
-  "ticker": "920200",
-  "name": "振宏股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "风电主轴专精锻件企业，2025年收入和利润质量尚可，客户资质较好，但客户集中、风电零部件周期和北交所次新股估值波动明显；2026-07-17约28.09元/股处于合理区间上半段，缺少安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    23.0,
-    30.0
-  ],
-  "buy_zone": [
-    20.5,
-    23.5
-  ],
-  "sell_or_reduce_zone": [
-    30.0,
-    34.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "振宏股份",
+    "security_status": "active",
+    "symbol": "CN:920200",
+    "ticker": "920200"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "a637099e708455af905b837f4cf62a68addfe7088366dd10fdc98444b3ea58ef"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price review zone",
-      "action": "strong_accumulate_if_fundamentals_intact",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "?? 2026 ????",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "accumulate_in_batches",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "?? 2026 ????",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "small_accumulate_after_results_check",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.5
+      },
+      "reason": "enter_buy_zone",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price review zone",
-      "action": "watch_or_tracking_only",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.5
+      },
+      "reason": "strong_attraction_zone",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "price review zone",
-      "action": "do_not_chase",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "no_chase_zone",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "condition": "price review zone",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "reduce_or_avoid_zone",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23.5,
-      "action": "enter_buy_zone",
-      "reason": "enter_buy_zone"
-    },
-    {
-      "type": "price_below",
-      "price": 20.5,
-      "action": "strong_attraction_zone",
-      "reason": "strong_attraction_zone"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "action": "no_chase_zone",
-      "reason": "no_chase_zone"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "action": "reduce_or_avoid_zone",
-      "reason": "reduce_or_avoid_zone"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "action": "review_2026_interim_report",
-      "reason": "?? 2026 ????"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "action": "review_2026_third_quarter_report_if_available",
-      "reason": "?? 2026 ????"
-    }
-  ],
-  "notes": [
-    "质量评级B+，估值评级中性偏贵；当前决策为不主动买入，第一笔仓位0，若必须覆盖仅0%-1%观察仓。行情口径为2026-07-17公开行情页约28.09元/股，未直接核验交易所实时数据，置信度中等。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

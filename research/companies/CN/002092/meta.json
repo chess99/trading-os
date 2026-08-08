@@ -1,105 +1,115 @@
 {
-  "symbol": "CN:002092",
-  "market": "CN",
-  "ticker": "002092",
-  "name": "中泰化学",
-  "company_name": "中泰化学",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中泰化学具备新疆煤电盐一体化和PVC/烧碱规模优势，但2025亏损、负债较高、资产减值和历史治理处罚压制估值；当前低PB只支持观察仓，需等待PVC/烧碱价差、经营现金流和扣非利润持续修复后再提高仓位。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "low_pb_but_cycle_and_governance_discount",
-  "fair_value_range": [
-    3.2,
-    4.6
-  ],
-  "buy_zone": [
-    2.6,
-    3.1
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    6.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中泰化学",
+    "security_status": "active",
+    "symbol": "CN:002092",
+    "ticker": "002092"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "73c1532391c8b99cfbc2da171e64dcfe790a8ee6c9bfb70ebd9876e0183b45f1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价约3.90元且2026中报原文尚未核验",
-      "action": "仅允许观察仓或继续等待",
-      "max_weight": 0.005,
-      "reason": "低PB有吸引力，但负债、治理和周期持续性尚未验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报原文、经营现金流、扣非利润、债务和受限资金",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.10元，且2026中报确认经营现金流为正、扣非亏损显著收窄",
-      "action": "分两笔建立小仓位",
-      "max_weight": 0.015,
-      "reason": "价格进入买入区且基本面边际改善得到财报确认"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q2修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "PVC/烧碱价差连续两个季度修复，净债务下降，且无新增治理处罚",
-      "action": "提升为周期配置仓",
-      "max_weight": 0.03,
-      "reason": "周期弹性与财务安全边际同时改善后才允许提高仓位"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和资产减值、治理整改、现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.1
+      },
+      "reason": "进入初始买入区，需要复核中报现金流和扣非利润",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "跌至悲观估值区，需判断是否出现资产质量或治理新风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "进入减仓区，若主营现金流未同步改善应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "达到乐观估值上沿，除非扣非盈利持续修复否则应退出大部分周期仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.1,
-      "reason": "进入初始买入区，需要复核中报现金流和扣非利润"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "跌至悲观估值区，需判断是否出现资产质量或治理新风险"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "reason": "进入减仓区，若主营现金流未同步改善应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "达到乐观估值上沿，除非扣非盈利持续修复否则应退出大部分周期仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报原文、经营现金流、扣非利润、债务和受限资金"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q2修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和资产减值、治理整改、现金流质量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "PVC SG5价格和电石法PVC价差",
-    "烧碱液碱32%和片碱价格",
-    "粘胶短纤价格、库存和开工率",
-    "新疆煤价、电价、电石成本",
-    "经营活动现金流净额",
-    "扣非归母净利润",
-    "资产负债率和净债务",
-    "受限货币资金",
-    "短期借款和一年内到期非流动负债",
-    "资产减值损失和存货跌价准备",
-    "关联交易、资金占用和监管处罚",
-    "环保安全处罚、停产检修和能耗约束"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

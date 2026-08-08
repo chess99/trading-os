@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920346",
-  "market": "CN",
-  "ticker": "920346",
-  "name": "威贸电子",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "现金流和资产负债表稳健，但客户高度集中，15.32元已隐含显著高于历史的自由现金流增长，等待9.5-11.0元且基本面验证后再买。",
-  "fair_value_range": [11.5, 13.5],
-  "buy_zone": [9.5, 11.0],
-  "sell_or_reduce_zone": [15.0, 17.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "威贸电子",
+    "security_status": "active",
+    "symbol": "CN:920346",
+    "ticker": "920346"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "d750bdd3e10291f5c794ebfaa8dfa099865b6610581cc185e03f19b2e77bd1aa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于9.5-11.0元且第一大客户、毛利率、回款和自由现金流未恶化",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的客户集中、毛利率、汇兑损益、现金流和新项目量产情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.5元并完成基本面复核，确认长期商业价值未受损且悲观情景未成真",
-      "max_weight": 0.035
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入有安全边际的买入复核区间，仍需确认基本面未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于15.0元或核心假设被证伪",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的客户集中、毛利率、汇兑损益、现金流和新项目量产情况"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入有安全边际的买入复核区间，仍需确认基本面未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-18T20:47:21+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

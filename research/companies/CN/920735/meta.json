@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920735",
-  "market": "CN",
-  "ticker": "920735",
-  "name": "德源药业",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "代谢慢病仿制药产品群、高ROE和低负债具备吸引力，但26元附近已接近公允价值中枢，需等待集采、现金转化和创新药节点验证或更大安全边际。",
-  "fair_value_range": [24, 31],
-  "buy_zone": [20, 23],
-  "sell_or_reduce_zone": [34, 39],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德源药业",
+    "security_status": "active",
+    "symbol": "CN:920735",
+    "ticker": "920735"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "d52499a51fdfd7b2f78a480b6c876eb27d0f02b2ae501ea083d4d51902da945e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于21至23元且TTM收入和扣非利润仍增长8%以上、经营现金流转化未恶化",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-09-01"
+      },
+      "reason": "复核2026年半年报、基本药物目录实施和创新药II期节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于18至20元且重新验证集采、新基地产能、应收存货和创新药假设均未受损",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入有安全边际的初始买入区间，但必须先复核核心假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "核心产品盈利、销售合规或现金流逻辑被证伪时，不因低价加仓并退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "进入减仓或不应追高区间，除非临床与现金流显著超预期",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-09-01",
-      "reason": "复核2026年半年报、基本药物目录实施和创新药II期节点"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入有安全边际的初始买入区间，但必须先复核核心假设"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "进入减仓或不应追高区间，除非临床与现金流显著超预期"
-    }
-  ],
-  "updated_at": "2026-07-15T00:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

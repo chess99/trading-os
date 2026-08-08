@@ -1,70 +1,139 @@
 {
-  "symbol": "CN:601088",
-  "market": "CN",
-  "ticker": "601088",
-  "name": "中国神华",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "煤电运化一体化龙头，质量优秀但2025分红骤降至39%是重大信号；当前估值合理偏低，安全边际尚不充分，宜在35元以下分批建仓至多5%仓位",
-  "fair_value_range": [
-    34,
-    42
-  ],
-  "buy_zone": [
-    30,
-    35
-  ],
-  "sell_or_reduce_zone": [
-    50,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国神华",
+    "security_status": "active",
+    "symbol": "CN:601088",
+    "ticker": "601088"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "d99dbbe59af4f722afe3c18f33ce47c4a2e280a53801e09cb4e74262ca4482a1"
+      }
+    ],
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_id": "CN-601088-2026-07-22-initial-research-v2",
+        "report_type": "initial_research",
+        "sha256": "733e450ef8db73fd102eb7f3efc12d6e455da8f1fbc5e24882fe8cd05fe2e390"
+      },
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v3.md",
+        "report_id": "CN-601088-2026-07-22-initial-research-v3",
+        "report_type": "initial_research",
+        "sha256": "19a063b709e6030b2e32ebc0f5a8f303a3dbd461c07365c444e6fb448d85fab9"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v3.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v3.md"
+    }
+  },
+  "research": {
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:00:00+08:00",
+    "rebaseline_required": false
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于30-35元买入区间且基本面未恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年度报告披露后核对并购后完整报表、分部利润和现金流",
+      "trigger_id": "h1-2026-filing",
+      "type": "filing"
     },
     {
-      "condition": "股价跌至30元以下（强吸引力买入价格）",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后核对短期借款、利息费用和每股收益稀释",
+      "trigger_id": "q3-2026-filing",
+      "type": "filing"
     },
     {
-      "condition": "股价在35-42元合理偏低区间",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入初研价值安全边际观察区，需更新煤价、现金流和并购整合证据",
+      "trigger_id": "valuation-review-low",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "进入乐观情景估值区，需复核市场隐含利润和分红假设",
+      "trigger_id": "valuation-review-high",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "annual_cash_payout_ratio",
+        "operator": "lt",
+        "threshold": 0.65
+      },
+      "reason": "现金分红低于股东回报规划底线时重估股东回报逻辑",
+      "trigger_id": "payout-policy-breach",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "new_parent_asset_injection_or_major_capex"
+      },
+      "reason": "新的母集团资产注入或重大投资需重新评估关联定价和ROIC",
+      "trigger_id": "capital-allocation-event",
+      "type": "event"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "date": "2026-08-31",
-      "reason": "2026中报披露后核实分红政策与煤价走势",
-      "type": "date"
-    },
-    {
-      "date": "2027-03-31",
-      "reason": "2026年报披露，确认分红率是否恢复及新能源转型进展",
-      "type": "date"
-    }
-  ],
-  "price_triggers": [
-    {
-      "price": 35,
-      "reason": "进入有安全边际的买入区间（PE<13x，PB<1.6x）",
-      "type": "price_below"
-    },
-    {
-      "price": 30,
-      "reason": "进入强吸引力买入价格区间（PE<11x，股息率>4.5%）",
-      "type": "price_below"
-    },
-    {
-      "price": 50,
-      "reason": "进入减仓区间，安全边际不足（PE>19x）",
-      "type": "price_above"
-    }
-  ],
-  "updated_at": "2026-07-07T13:30:00+08:00"
+  "underwriting": {
+    "confidence": "low",
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "critical_post_merger_financials_missing",
+      "cyclical_price_evidence_stale",
+      "evidence_stale_at_finalization",
+      "material_related_party_merger",
+      "no_margin_of_safety",
+      "price_above_conservative_fair_value",
+      "underwriting_failed",
+      "valuation_method_divergence_unresolved"
+    ],
+    "review_id": "2026-07-22-value-rebaseline-001",
+    "status": "failed"
+  },
+  "updated_at": "2026-07-23T00:41:00+08:00",
+  "valuation": {
+    "bear_value": 16.5,
+    "buy_zone": [
+      16.0,
+      18.0
+    ],
+    "currency": "CNY",
+    "fair_value_range": [
+      23.0,
+      31.0
+    ],
+    "price_as_of": "2026-07-22T15:00:00+08:00",
+    "reduce_zone": [
+      31.0,
+      34.0
+    ]
+  }
 }

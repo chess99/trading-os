@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603301",
-  "market": "CN",
-  "ticker": "603301",
-  "name": "振德医疗",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "振德医疗具备医用敷料、手术感控和伤口护理领域的规模制造、医院渠道与全球供应链优势，2026年与墨尼克成立先进伤口护理合资公司带来潜在高端化期权；但2025年和2026Q1收入增长仍低、扣非利润承压，当前约80倍以上TTM PE已大幅透支改善，买方应等待价格回到安全边际或业绩连续验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    36,
-    52
-  ],
-  "buy_zone": [
-    28,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    70,
-    90
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "振德医疗",
+    "security_status": "active",
+    "symbol": "CN:603301",
+    "ticker": "603301"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "e2d7e4445d038f855382ede02bf9da104fdc680b4bde22f42c723e6acbce349c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于38元且最近一期扣非归母净利润同比转正，先建立观察仓。",
-      "action": "buy_watch",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、海外产能爬坡和墨尼克合资进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于30元、经营现金流/归母净利润继续大于1且造口及现代伤口护理毛利率维持45%以上。",
-      "action": "increase",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证扣非利润是否连续修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于70元且2026H1或2026Q3扣非利润没有明显恢复。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新估计正常化盈利和公允价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入买入区间上沿，需要复核扣非利润和现金流后考虑观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入较有安全边际区间，若基本面未恶化可提高目标仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "若业绩未同步上修，估值重新接近牛市情景，应回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入买入区间上沿，需要复核扣非利润和现金流后考虑观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入较有安全边际区间，若基本面未恶化可提高目标仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 70,
-      "reason": "若业绩未同步上修，估值重新接近牛市情景，应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、海外产能爬坡和墨尼克合资进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证扣非利润是否连续修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新估计正常化盈利和公允价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

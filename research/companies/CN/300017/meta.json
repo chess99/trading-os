@@ -1,103 +1,106 @@
 {
-  "symbol": "CN:300017",
-  "market": "CN",
-  "ticker": "300017",
-  "name": "网宿科技",
-  "company_name": "网宿科技",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "网宿科技具备厚现金安全垫和CDN、边缘计算、云安全、海外业务的修复弹性，但当前价格已反映部分AI与算力网络预期，需等待扣非利润和经营现金流验证后再提高仓位。",
-  "quality_rating": "B+",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    12.0,
-    15.5
-  ],
-  "buy_zone": [
-    10.5,
-    12.2
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "网宿科技",
+    "security_status": "active",
+    "symbol": "CN:300017",
+    "ticker": "300017"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "ea5580f8de204d8aead064a02cca1e67a5a23e31a46ef8f7fa80355333fee1d1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格接近或高于15.0元，且2026中报尚未验证扣非利润和经营现金流同步改善",
-      "action": "仅保留观察仓或不新建仓",
-      "max_weight": 0.01,
-      "reason": "当前估值已反映一部分AI、边缘计算和算力网络预期，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点确认收入增速、毛利率、扣非利润和经营现金流质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至10.5-12.2元，且收入增速、毛利率和现金流未恶化",
-      "action": "建立首笔仓位",
-      "max_weight": 0.025,
-      "reason": "该区间更接近中性估值，现金及金融资产提供下行保护"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证Q1高增长是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入增速超过10%，扣非利润和经营现金流同步改善，云安全、边缘计算或海外业务贡献被验证",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "基本面从传统CDN修复切换为高质量增长，可接受更高估值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.2
+      },
+      "reason": "进入买入区上沿，需要复核收入质量和现金流后评估首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价进入18.0-22.0元且基本面未明显超预期",
-      "action": "分批减仓",
-      "max_weight": 0.0,
-      "reason": "价格已进入乐观估值区，若无业绩验证则风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入较有吸引力区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "进入减仓观察区，需要确认AI、边缘计算和海外业务是否兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "显著高于当前合理价值区间，若缺乏业绩超预期应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.2,
-      "reason": "进入买入区上沿，需要复核收入质量和现金流后评估首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入较有吸引力区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "进入减仓观察区，需要确认AI、边缘计算和海外业务是否兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "显著高于当前合理价值区间，若缺乏业绩超预期应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点确认收入增速、毛利率、扣非利润和经营现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证Q1高增长是否可持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比增速",
-    "毛利率及带宽成本压力",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "投资收益和公允价值变动占利润比例",
-    "云安全、边缘计算、海外业务收入占比",
-    "应收账款周转和坏账准备",
-    "现金及金融资产规模和底层风险",
-    "分红、回购与股权激励达成情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

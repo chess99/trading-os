@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:301606",
-  "ticker": "301606",
-  "name": "绿联科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "绿联科技具备全球消费电子品牌、渠道和 NAS 第二曲线，2025-2026Q1 增长强劲；但经营现金流连续承压、消费电子竞争激烈且 H 股潜在摊薄尚未落地，当前更适合观察或小仓跟踪，等待现金流修复或价格进入更高安全边际。",
-  "fair_value_range": [
-    68,
-    86
-  ],
-  "buy_zone": [
-    45,
-    55
-  ],
-  "sell_or_reduce_zone": [
-    86,
-    100
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "绿联科技",
+    "security_status": "active",
+    "symbol": "CN:301606",
+    "ticker": "301606"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "fa3a9027783204de8212e8f44dc1db05ba9538a64a6ff698fe19b71ac04612b4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于55元且2026年中报经营现金流改善、智能存储收入继续高增长",
-      "action": "分批建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看经营现金流、存货、智能存储收入和毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于45元且基本面未恶化",
-      "action": "提高至中等仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和H股发行进度，评估全年盈利预测是否需要上修或下修",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于86元且NAS软件化证据不足",
-      "action": "降低仓位或只保留跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年报，确认NAS第二曲线、海外渠道和现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "进入基础买入区，具备约25%以上安全边际，需要复核现金流和库存",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入高安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 86.0
+      },
+      "reason": "接近或超过基准公允价值上沿，需要确认NAS软件化和现金流修复是否支撑更高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 100.0
+      },
+      "reason": "进入乐观情景估值区，若无超预期证据应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 55,
-      "reason": "进入基础买入区，具备约25%以上安全边际，需要复核现金流和库存"
-    },
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入高安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 86,
-      "reason": "接近或超过基准公允价值上沿，需要确认NAS软件化和现金流修复是否支撑更高估值"
-    },
-    {
-      "type": "price_above",
-      "price": 100,
-      "reason": "进入乐观情景估值区，若无超预期证据应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看经营现金流、存货、智能存储收入和毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和H股发行进度，评估全年盈利预测是否需要上修或下修"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年报，确认NAS第二曲线、海外渠道和现金流质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

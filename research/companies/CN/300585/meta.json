@@ -1,87 +1,105 @@
 {
-  "symbol": "CN:300585",
-  "ticker": "300585",
-  "name": "奥联电子",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "汽车电子主业仍有供应链价值和低负债缓冲，但 2025 年归母亏损、2026Q1 收入与扣非利润仍弱，且历史信披处罚、诉讼预计负债、控制权转让失败和重要股东减持带来持续治理折价；当前只能观察，不具备买入安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    4.0,
-    5.8
-  ],
-  "buy_zone": [
-    2.8,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥联电子",
+    "security_status": "active",
+    "symbol": "CN:300585",
+    "ticker": "300585"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "0efa07e6fc02de1a610f817c7fe7b9b81a53368de6ca12f29a144e7cb58def2c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 3.8 元，且最近两个季度至少一个季度扣非归母净利润转正、毛利率不低于 18%",
-      "action": "仅允许观察性试探仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点关注收入、毛利率、扣非利润和预计负债变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 3.2 元，净资产未明显受损，诉讼预计负债无新增重大恶化",
-      "action": "可提高至小仓位，但仍需等待连续盈利确认",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认主业是否连续修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非归母净利润转正，毛利率回到 20% 以上，并披露明确新产品量产定点",
-      "action": "重新评估为 hold/watch，估值区间可上修",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和审计意见，重新评估治理折价与正常化利润",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入买入观察区，需要结合扣非盈利和毛利率复核安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "接近严格资产折价区，可复核是否存在资产负债表下行保护",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "高于当前基本面可支撑区间，若无连续盈利证据应减持或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入买入观察区，需要结合扣非盈利和毛利率复核安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "接近严格资产折价区，可复核是否存在资产负债表下行保护"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "高于当前基本面可支撑区间，若无连续盈利证据应减持或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点关注收入、毛利率、扣非利润和预计负债变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认主业是否连续修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和审计意见，重新评估治理折价与正常化利润"
-    }
-  ],
-  "key_monitoring_items": [
-    "单季收入是否恢复至 1.1-1.3 亿元",
-    "毛利率是否回到 19%-21%",
-    "扣非归母净利润是否连续两个季度转正",
-    "投资者诉讼预计负债是否继续增加",
-    "重要股东减持和控制权变化",
-    "新产品定点、量产和客户披露情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

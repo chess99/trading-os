@@ -1,124 +1,123 @@
 {
-  "symbol": "CN:300039",
-  "market": "CN",
-  "ticker": "300039",
-  "name": "上海凯宝",
-  "company_name": "上海凯宝药业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "资产负债表强、独家中药品种仍有存量价值，但药品收入和利润持续下滑，2026年监管整改带来治理折价；5.20元附近接近合理价值上沿，缺少买入安全边际。",
-  "quality_rating": "中上",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    4.4,
-    5.4
-  ],
-  "buy_zone": [
-    0,
-    4.1
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海凯宝",
+    "security_status": "active",
+    "symbol": "CN:300039",
+    "ticker": "300039"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "48536b338092deaa7f165ff10270f3ce2666ace708e67e3012cc5f8b382eb196"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于4.10元且2026年收入、利润仍下滑",
-      "action": "不建仓，保持观察",
-      "target_position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格跌至4.10元以下，且未出现新的监管、集采或财务恶化信号",
-      "action": "建立观察仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于3.70元，经营现金流保持为正，整改闭环且扣非利润企稳",
-      "action": "提高至小仓位",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "连续两个季度收入恢复正增长，扣非归母净利润转正增长，新品贡献可核验",
-      "action": "重新评估是否提高仓位上限",
-      "target_position": "3%-4%",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.1,
-      "reason": "低于保守买入价，开始具备安全边际",
-      "action": "进入买入复核区"
-    },
-    {
-      "type": "price_below",
-      "price": 3.7,
-      "reason": "低于强安全边际价，可覆盖利润继续下滑风险",
-      "action": "进入强安全边际复核区"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "高于减仓区，风险收益比恶化",
-      "action": "若已持有则减仓或卖出复核"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年半年报将验证一季度下滑是否延续",
-      "condition": "披露2026年半年度报告或三季度报告",
-      "action": "复核收入、扣非利润和经营现金流趋势"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "监管整改后的后续披露会影响治理折价",
-      "condition": "监管整改出现新增问询、处罚、资金占用或收入确认问题",
-      "action": "下调质量评级和估值倍数"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报和政策变化将影响全年盈利预期",
-      "condition": "中成药集采或医保支付政策影响痰热清、芪参胶囊、硫普罗宁系列",
-      "action": "重估核心品种销量、价格和毛利率"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可验证新品是否形成实质收入贡献",
-      "condition": "痰热清胶囊、经典名方或中药3.1类新品单独披露收入并形成实质增量",
-      "action": "复核成长性和仓位上限"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报和利润分配预案可验证股东回报改善",
-      "condition": "公司提高分红率、回购或处置金融资产",
-      "action": "复核股东回报和资产底价值"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "低于保守买入价，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.7
+      },
+      "reason": "低于强安全边际价，可覆盖利润继续下滑风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "高于减仓区，风险收益比恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "药品收入同比增速",
-    "扣非归母净利润同比增速",
-    "经营现金流净额/归母净利润",
-    "痰热清注射液和痰热清胶囊终端需求变化",
-    "新品收入贡献",
-    "资产负债率和金融资产公允价值波动",
-    "监管整改闭环和审计意见"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

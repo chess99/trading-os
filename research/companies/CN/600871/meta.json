@@ -1,105 +1,101 @@
 {
-  "symbol": "CN:600871",
-  "market": "CN",
-  "ticker": "600871",
-  "name": "石化油服",
-  "company_name": "石化油服",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "石化油服具备央企油服平台、稳定关联客户和油气资本开支周期修复弹性，但低净利率、重资产负债表和现金流波动压制股东回报；当前更适合观察，只有在1.60-1.80元且利润率与现金流未恶化时才考虑小仓位。",
-  "quality_rating": "B-/C+",
-  "valuation_rating": "neutral_to_expensive",
-  "fair_value_range": [
-    1.75,
-    2.25
-  ],
-  "buy_zone": [
-    1.6,
-    1.8
-  ],
-  "sell_or_reduce_zone": [
-    2.45,
-    2.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "石化油服",
+    "security_status": "active",
+    "symbol": "CN:600871",
+    "ticker": "600871"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial-supplement.md",
+        "sha256": "af275798abcd5de54ea2c6ba4ac1ab226a3ed88f5946b5fba5675cd6258fdebb"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "825e959829e10a1192c3e1847d6e664dd22bcba61fd9a32629a939733a9ef6fa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于1.80元，且2026年中报或三季报确认归母净利率不低于0.8%，经营现金流未明显背离净利润",
-      "action": "建立观察性首笔仓位",
-      "max_weight": 0.005,
-      "reason": "低利润率油服工程资产需要价格安全边际，先用小仓位验证周期和利润率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的毛利率、净利率、经营现金流、资产负债率和海外订单",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格接近1.60元，订单和资产负债表未恶化，且无重大亏损项目或减值",
-      "action": "可加仓至小仓位上限",
-      "max_weight": 0.01,
-      "reason": "估值进入保守买入区，但商业模式仍不支持高仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报并更新全年盈利和合理价值区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度海外订单质量、毛利率和经营现金流改善",
-      "action": "提高组合上限",
-      "max_weight": 0.02,
-      "reason": "只有利润率和现金流同步改善，才说明周期弹性真正转化为股东价值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入初步买入区，需复核中报、现金流和订单质量后决定是否开仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于2.45元但净利率和现金流没有突破",
-      "action": "减仓或不追买",
-      "max_weight": 0,
-      "reason": "股价已反映央企油服周期预期，缺少盈利兑现支撑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "进入更高安全边际区，若基本面稳定可考虑加至1.0%以内",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.45
+      },
+      "reason": "进入减仓区，若无净利率和现金流突破应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入初步买入区，需复核中报、现金流和订单质量后决定是否开仓"
-    },
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "进入更高安全边际区，若基本面稳定可考虑加至1.0%以内"
-    },
-    {
-      "type": "price_above",
-      "price": 2.45,
-      "reason": "进入减仓区，若无净利率和现金流突破应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、净利率、经营现金流、资产负债率和海外订单"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报并更新全年盈利和合理价值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新签合同额",
-    "在手合同额",
-    "海外合同占比",
-    "营业收入同比",
-    "毛利率",
-    "归母净利率",
-    "扣非净利率",
-    "经营活动现金流净额",
-    "应收账款",
-    "合同资产",
-    "资产负债率",
-    "有息负债",
-    "财务费用",
-    "中国石化勘探开发资本开支",
-    "布伦特油价中枢",
-    "重大工程项目中标和回款"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

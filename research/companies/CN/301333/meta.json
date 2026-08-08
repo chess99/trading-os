@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301333",
-  "ticker": "301333",
-  "market": "CN",
-  "name": "诺思格",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "诺思格是 A 股稀缺的独立临床 CRO 标的，收入端受益于创新药临床需求修复，但 2025-2026Q1 利润率和现金流尚未同步恢复；当前估值接近审慎公允区间，适合观察，等待更好的价格或毛利率/现金流验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    48,
-    58
-  ],
-  "buy_zone": [
-    42,
-    46
-  ],
-  "sell_or_reduce_zone": [
-    68,
-    75
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "诺思格",
+    "security_status": "active",
+    "symbol": "CN:301333",
+    "ticker": "301333"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "258910537007403912e03470ac20a69fdf7c7af383a718bad2eb656aa00627fc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 42-46 元且未出现订单、毛利率或现金流恶化的新证据时，建立观察性底仓。",
-      "action": "initial_buy",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点验证收入增速、毛利率、经营现金流和订单描述。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 年后续季度收入同比保持 12% 以上、毛利率环比改善且经营现金流转正时，允许加仓。",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断收入增长是否传导为利润和现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 68 元但盈利预测未上修，或连续两个季度毛利率低于 31% 且现金流弱于利润时，减仓或退出。",
-      "action": "reduce_or_exit",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报与 2027 年一季报，重新评估长期利润率和估值中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 46.0
+      },
+      "reason": "进入审慎买入区，按 2026 年约 1.5 亿元归母净利对应约 30 倍 PE，安全边际开始出现。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 68.0
+      },
+      "reason": "超过基准公允区间上沿，若没有盈利上修或毛利率修复，风险收益转差。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 46,
-      "reason": "进入审慎买入区，按 2026 年约 1.5 亿元归母净利对应约 30 倍 PE，安全边际开始出现。"
-    },
-    {
-      "type": "price_above",
-      "price": 68,
-      "reason": "超过基准公允区间上沿，若没有盈利上修或毛利率修复，风险收益转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点验证收入增速、毛利率、经营现金流和订单描述。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断收入增长是否传导为利润和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报与 2027 年一季报，重新评估长期利润率和估值中枢。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

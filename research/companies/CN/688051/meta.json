@@ -1,62 +1,86 @@
 {
-  "symbol": "CN:688051",
-  "market": "CN",
-  "ticker": "688051",
-  "name": "佳华科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "佳华科技具备生态环境和双碳数字化主题弹性，但2025年与2026Q1收入继续下滑、亏损扩大、经营现金流流出，应收账款和坏账准备压力较大；当前股价相对净资产和可验证盈利能力明显缺乏安全边际，维持回避。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    6.0,
-    10.0
-  ],
-  "buy_zone": [
-    0.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    25.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "佳华科技",
+    "security_status": "active",
+    "symbol": "CN:688051",
+    "ticker": "688051"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "806e07579111844ac11a511ecc3ed16635b4bf7f78a66b70b31cc6c93b627577"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前股价高于可验证价值且经营现金流仍未修复，不建立仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看双碳收入、应收账款、坏账准备和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7元且双碳收入、毛利率、回款同时改善后，仅允许研究性小仓位",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入经折价净资产附近，重新评估安全边际和现金流修复"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入修复是否具备持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "若无明确订单和现金流证据，估值重新脱离基本面，应减仓或继续回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看双碳收入、应收账款、坏账准备和经营现金流"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入经折价净资产附近，重新评估安全边际和现金流修复",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入修复是否具备持续性"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "若无明确订单和现金流证据，估值重新脱离基本面，应减仓或继续回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

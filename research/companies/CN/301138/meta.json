@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301138",
-  "ticker": "301138",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "华研精机",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "华研精机是高腔数 PET 瓶坯智能成型系统国产替代标的，2025 年海外收入快速增长且现金充足，但 2026Q1 利润下滑、存货较高，报告日附近估值接近合理区间上沿，适合观察而非追高。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    22,
-    28
-  ],
-  "buy_zone": [
-    18,
-    21
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    36
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华研精机",
+    "security_status": "active",
+    "symbol": "CN:301138",
+    "ticker": "301138"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "bd6a82006f4c687dcaf273309ef18ed6ff975fa6d7b398a4ea7a459a817c04cc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 21 元且最新财报显示扣非净利恢复正增长、存货和合同负债未异常恶化时，可建立研究型小仓位。",
-      "action": "start_small",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看海外收入、扣非净利、存货和合同负债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在 22-28 元且 2026 年利润仍未恢复增长时，仅跟踪不新增仓位。",
-      "action": "watch",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 Q1 利润下滑是否修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 32 元但未出现海外订单和瓶盖压塑系统超预期兑现时，已有仓位应减仓。",
-      "action": "reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "跟踪 2026 年业绩预告或快报，以及高新技术企业资格复审进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入买入观察区，需要复核最新订单、存货和利润趋势。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "高于基准合理区间，若基本面未同步上修，应考虑减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 21,
-      "reason": "进入买入观察区，需要复核最新订单、存货和利润趋势。"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "高于基准合理区间，若基本面未同步上修，应考虑减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看海外收入、扣非净利、存货和合同负债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 Q1 利润下滑是否修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "跟踪 2026 年业绩预告或快报，以及高新技术企业资格复审进展。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

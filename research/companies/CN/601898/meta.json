@@ -1,95 +1,96 @@
 {
-  "symbol": "CN:601898",
-  "market": "CN",
-  "ticker": "601898",
-  "name": "中煤能源",
-  "company_name": "中煤能源",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中煤能源是具备低成本资源、长协稳定性和央企分红纪律的高质量周期股，但在2026年煤价回落周期中，当前价格尚未提供足够安全边际，适合等待回落到10元附近再逐步建仓。",
-  "quality_rating": "A-",
-  "valuation_rating": "B-",
-  "fair_value_range": [
-    10.8,
-    12.4
-  ],
-  "buy_zone": [
-    9.8,
-    10.8
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中煤能源",
+    "security_status": "active",
+    "symbol": "CN:601898",
+    "ticker": "601898"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "c66ec611e674948b3da1bbb370ebe0cb53c05665554d67d4bea3f8b88be97494"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_9.8",
-      "action": "buy",
-      "max_weight": 0.25,
-      "reason": "接近悲观情景估值，安全边际明显。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报，确认煤价回落对盈利和现金流的影响。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_9.8_10.8",
-      "action": "accumulate",
-      "max_weight": 0.15,
-      "reason": "进入有安全边际的买入区，可分批建仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报和动力煤、长协价格走势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_10.8_12.4",
-      "action": "watch",
-      "max_weight": 0.1,
-      "reason": "价格与质量大体匹配，赔率一般。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入安全边际买入区，适合建立首笔仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_above_14.0",
-      "action": "reduce_or_avoid_new_buy",
-      "max_weight": 0.05,
-      "reason": "更接近乐观情景定价，不宜追高。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.8
+      },
+      "reason": "进入强吸引力买入区，可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "超过不应追高价格，应停止加仓并评估减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入安全边际买入区，适合建立首笔仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 9.8,
-      "reason": "进入强吸引力买入区，可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "超过不应追高价格，应停止加仓并评估减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年报，确认煤价回落对盈利和现金流的影响。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报和动力煤、长协价格走势。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "环渤海动力煤与CCTD 5500大卡价格",
-    "动力煤长协基准价与兑现率",
-    "自产商品煤产量、销量、吨煤售价、吨煤销售成本",
-    "煤化工产品价差与开工率",
-    "年度资本开支与重点项目投产进度",
-    "全年派息率与经营活动现金净流量"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

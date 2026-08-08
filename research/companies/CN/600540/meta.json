@@ -1,74 +1,86 @@
 {
-  "symbol": "CN:600540",
-  "ticker": "600540",
-  "name": "新赛股份",
-  "company_name": "新疆赛里木现代农业股份有限公司",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "低毛利、高杠杆、强周期的新疆棉花供应链资产；2026Q1 利润和现金流改善但含期货/仓单收益因素，且 2026-06-23 因涉嫌信息披露违法违规被证监会立案。当前约 5.2 倍 2026Q1 PB、约 20 亿元市值缺乏安全边际，立案落地和连续扣非盈利前不买。",
-  "fair_value_range": [
-    1.5,
-    2.4
-  ],
-  "buy_zone": [
-    0.9,
-    1.5
-  ],
-  "sell_or_reduce_zone": [
-    2.8,
-    3.6
-  ],
-  "position_plan": [
-    {
-      "condition": "证监会立案结论落地且无重大财报追溯或重大处罚，连续两个季度扣非归母净利润为正，经营现金流与利润匹配，且价格进入 1.50 元以下买入观察区。",
-      "action": "仅可建立研究观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格高于 2.80 元而监管未落地，或扣非利润重新转负，或经营现金流再度大幅流出。",
-      "action": "不建仓；如已有仓位应退出",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "进入基准买入观察区，需要复核立案进展、扣非盈利和经营现金流。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.8,
-      "reason": "接近乐观情景估值下沿，在监管和盈利质量未验证前风险收益恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查扣非利润、经营现金流、存货和资产负债率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报及证监会立案调查进展。"
-    }
-  ],
-  "decision": "不买",
-  "confidence": "中",
-  "last_price": {
-    "date": "2026-07-16",
-    "price": 3.45,
-    "source": "新浪实时行情接口 sh600540"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新赛股份",
+    "security_status": "active",
+    "symbol": "CN:600540",
+    "ticker": "600540"
   },
-  "valuation_notes": "按 2026Q1 归母权益约 3.85 亿元、总股本 5.8137696 亿股估算 BVPS 约 0.66 元，给予 2.3-3.6 倍折价 PB 得到 1.50-2.40 元/股。"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b591bc90c6c98cdd45df8301247317bc32cf379953df5130aa398db6f8afcfa9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查扣非利润、经营现金流、存货和资产负债率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报及证监会立案调查进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "进入基准买入观察区，需要复核立案进展、扣非盈利和经营现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.8
+      },
+      "reason": "接近乐观情景估值下沿，在监管和盈利质量未验证前风险收益恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,85 +1,106 @@
 {
-  "symbol": "CN:300147",
-  "market": "CN",
-  "ticker": "300147",
-  "name": "*ST香雪",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "*ST香雪当前主要是重整期权而非可按常规医药公司估值的资产。2025年归母净资产为负、经营现金流为负、审计提示持续经营重大不确定性且内控为否定意见；广药资本中选预重整投资人改善了保壳想象，但法院受理、债权清偿、摊薄比例和主营现金流修复均未落地。当前价格已明显反映乐观预期，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    2.0,
-    4.5
-  ],
-  "buy_zone": [
-    0.8,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    4.5,
-    6.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST香雪",
+    "security_status": "active",
+    "symbol": "CN:300147",
+    "ticker": "300147"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "c890844dbe55611a44b110e8c3e6c1a32a2cb5ff1c82ce3a6f1afea7bf4c11ab"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于4.5元且重整协议、债权清偿率、原股东摊薄比例未披露",
-      "action": "不新开仓；已有仓位降至观察仓或清仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报、净资产、现金流、债务和重整进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至1.2-2.0元且法院正式受理重整、投资人协议披露、退市风险有明确解除路径",
-      "action": "只做试探性事件仓，等待半年报和方案细节确认",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报和是否出现退市风险解除的实质性证据",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.2元且重整路径清晰、无新增重大处罚或退市确定性风险",
-      "action": "可作为高风险重整期权小仓参与",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "进入有安全边际观察区，需要重新核验重整成功概率和摊薄条款",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入强吸引力事件期权区，但仅在退市尾部风险可承受时考虑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.5
+      },
+      "reason": "高于合理价格区间上沿，公开信息不足以支撑追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "价格基本透支重整顺利和强协同预期，应回避或减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "进入有安全边际观察区，需要重新核验重整成功概率和摊薄条款"
-    },
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入强吸引力事件期权区，但仅在退市尾部风险可承受时考虑"
-    },
-    {
-      "type": "price_above",
-      "price": 4.5,
-      "reason": "高于合理价格区间上沿，公开信息不足以支撑追高"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "价格基本透支重整顺利和强协同预期，应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报、净资产、现金流、债务和重整进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报和是否出现退市风险解除的实质性证据"
-    }
-  ],
-  "notes": [
-    "2026-07-20行情数据存在冲突：Investing.com显示6.83元，部分中文行情页仍显示2026-07-17收盘6.42元且临时停牌；本次市值估算置信度低，应以券商终端或深交所行情为准。",
-    "2025年年报数据来自公告PDF：营业收入15.95亿元、归母净利润-7.72亿元、归母净资产-3.60亿元、经营活动现金流量净额-2.76亿元。",
-    "广药资本中选预重整投资人改善重整预期，但正式协议、法院受理、债权人会议和原股东摊薄比例尚未落地。",
-    "因公司为*ST且财务和治理风险集中，当前结论宁可保守。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

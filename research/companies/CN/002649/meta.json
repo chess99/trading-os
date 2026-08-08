@@ -1,194 +1,123 @@
 {
-  "market": "CN",
-  "ticker": "002649",
-  "symbol": "CN:002649",
-  "name": "博彦科技",
-  "company_name": "博彦科技股份有限公司",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "status": "active",
-  "coverage_status": "active",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "last_updated": "2026-07-12",
-  "updated_at": "2026-07-12",
-  "decision": "观察",
-  "current_rating": "watch",
-  "confidence": "中",
-  "analyst": "independent_buy_side_worker",
-  "summary": "现金和净资产提供一定下方支撑，AI、数据、行业解决方案和出海业务提供转型期权；但2025年利润下降、2026Q1归母净利润同比大幅下滑，现价需要后续利润修复验证，暂定观察。",
-  "current_thesis": "博彦科技具备现金、净资产和全球交付网络支撑，AI、数据、行业解决方案和出海业务提供利润修复期权；但当前传统研发工程占比仍高，2025年利润下降且2026Q1归母净利润大幅下滑，现价需要后续扣非利润、毛利率和现金流共同验证。",
-  "thesis": [
-    "2026Q1 PB约1.16倍，资产端具备一定防守性。",
-    "公司正在从传统研发工程和IT运维外包转向AI、数据与行业解决方案，若人效和毛利率改善，利润弹性大于收入弹性。",
-    "2025年经营现金流净额3.03亿元、期末货币资金19.50亿元，为转型和抗波动提供缓冲。"
-  ],
-  "concerns": [
-    "2025年归母净利润1.04亿元，同比下降16.20%；2026Q1归母净利润1162万元，同比下降83.79%。",
-    "传统研发工程收入占比仍高，业务具有人力外包属性，客户议价权较强。",
-    "AI和新行业解决方案尚缺少持续、可量化的收入和利润披露。"
-  ],
-  "business": {
-    "segments": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博彦科技",
+    "security_status": "active",
+    "symbol": "CN:002649",
+    "ticker": "002649"
+  },
+  "reports": {
+    "historical_artifacts": [
       {
-        "name": "产品及解决方案",
-        "revenue_2025_cny_bn": 1.487,
-        "gross_margin_2025": 0.2616
-      },
-      {
-        "name": "研发工程",
-        "revenue_2025_cny_bn": 4.182,
-        "gross_margin_2025": 0.2127
-      },
-      {
-        "name": "IT运营维护",
-        "revenue_2025_cny_bn": 0.984,
-        "gross_margin_2025": 0.2008
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "d5ea6c3e8ab429fc57b14df501ae44d688fd1d3365946d4b01cd15047e3a3a2a"
       }
     ],
-    "industry_exposure": [
-      "金融",
-      "互联网",
-      "高科技",
-      "能源化工",
-      "农业",
-      "海外数字化服务"
-    ]
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "financials": {
-    "revenue_2025_cny_bn": 6.678,
-    "net_profit_2025_cny_bn": 0.104,
-    "operating_cash_flow_2025_cny_bn": 0.303,
-    "cash_2025_cny_bn": 1.95,
-    "revenue_2026q1_cny_bn": 1.538,
-    "net_profit_2026q1_cny_bn": 0.01162,
-    "book_equity_2026q1_cny_bn": 4.161,
-    "shares_outstanding_bn": 0.585344532,
-    "reference_price_cny": 8.26,
-    "reference_price_date": "2026-07-10"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "valuation": {
-    "pb_floor_value_per_share_cny": 7.1,
-    "base_value_per_share_cny": 7.5,
-    "upside_value_per_share_cny": 9.2,
-    "preferred_entry_below_cny": 6.9,
-    "notes": "PB、正常化PE、分部EV/Sales三种方法综合后，现价接近中性资产估值但高于盈利保守估值，需等待利润修复。"
-  },
-  "fair_value_range": [
-    6.7,
-    8.2
-  ],
-  "buy_zone": [
-    6.6,
-    6.9
-  ],
-  "sell_or_reduce_zone": [
-    9.2,
-    10.5
-  ],
-  "position_plan": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.90元，且无新增重大财务或治理风险",
-      "action": "建立观察仓",
-      "target_weight": "0.5%-1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "2026H1或2026Q3扣非归母净利润恢复正增长，产品及解决方案毛利率维持26%以上，经营现金流改善",
-      "action": "上调为买入并加仓",
-      "target_weight": "2.0%-3.0%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "2026全年扣非净利润低于1亿元且经营现金流转负，或AI与新行业业务缺少可复制订单",
-      "action": "下调为不买并退出观察仓",
-      "target_weight": "0%",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.9,
-      "reason": "进入观察仓买入区，接近PB安全边际",
-      "note": "进入观察仓买入区，接近PB安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "reason": "低于净资产折价区，赔率改善",
-      "note": "强安全边际区，可在基本面未恶化前提下提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.2,
-      "reason": "超过乐观PB估值上沿，需利润兑现支撑",
-      "note": "超过乐观PB估值上沿，若无利润兑现应降低预期收益。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布2026年半年报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证业务结构调整和利润修复的第一个关键节点",
-      "action": "复核收入、扣非利润、毛利率和现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "扣非归母净利润同比恢复正增长或继续大幅下滑",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "当前观察评级依赖利润修复而非收入扩张",
-      "action": "重新评估评级和仓位上限"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "产品及解决方案毛利率显著高于或低于26%",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "解决方案毛利率决定转型是否真正改善商业模式",
-      "action": "验证转型质量和估值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "经营活动现金流转负或应收账款明显恶化",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "现金流是低利润率服务公司最重要的质量指标",
-      "action": "检查收入质量和回款风险"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露重大并购、商誉减值或海外合规事件",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "公司现金安全垫和海外扩张可能被重大事件重估",
-      "action": "更新风险评估"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.9
+      },
+      "reason": "进入观察仓买入区，接近PB安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "低于净资产折价区，赔率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.2
+      },
+      "reason": "超过乐观PB估值上沿，需利润兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "watchlist": [
-    "产品及解决方案收入占比和毛利率",
-    "扣非归母净利润同比增速",
-    "经营活动现金流净额",
-    "应收账款和合同资产变化",
-    "人员数量、人均收入和人均毛利",
-    "海外收入占比和汇兑损益",
-    "AI Agent、AI计算平台、能源化工和农业项目订单"
-  ],
-  "risks": [
-    "低毛利外包业务收缩快于高毛利业务增长",
-    "AI商业化不及预期",
-    "汇率波动",
-    "地缘政治和海外合规风险",
-    "商誉及长期股权投资减值",
-    "并购整合失败"
-  ],
-  "next_review": "2026-08-31",
-  "sources": [
-    "https://file.finance.sina.com.cn/cn/diaoyan/jgdy/2026/2026-04/2026-04-29/10178464_1.PDF",
-    "https://static.cninfo.com.cn/finalpage/2025-10-28/1224744002.PDF",
-    "https://www.beyondsoft.com/",
-    "https://static.cninfo.com.cn/finalpage/2025-12-20/1224888228.PDF",
-    "https://paper.people.com.cn/rmrb/pc/content/202602/02/content_30137429.html",
-    "https://www.sohu.com/a/1048679568_121319643"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

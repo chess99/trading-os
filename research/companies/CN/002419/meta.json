@@ -1,113 +1,105 @@
 {
-  "symbol": "CN:002419",
-  "market": "CN",
-  "ticker": "002419",
-  "name": "天虹股份",
-  "company_name": "天虹数科商业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "区域零售与数字化改造能力存在修复线索，但2025年扣非利润薄、ROE低，当前4.39元接近基准合理价值上沿，缺乏安全边际，需等待2026年中报和后续季度验证。",
-  "quality_rating": "B-/中等偏低",
-  "valuation_rating": "C/当前偏贵",
-  "fair_value_range": [
-    3.6,
-    4.6
-  ],
-  "buy_zone": [
-    2.7,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    6.55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天虹股份",
+    "security_status": "active",
+    "symbol": "CN:002419",
+    "ticker": "002419"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "dc2c4594806e785a81c660f80048e22d53bc96fe7c51a57bbccf7e155d28d67c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "today",
-      "max_weight": 0,
-      "position": "0%",
-      "action": "观察，不买入"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计半年报后复查，验证Q1利润修复是否可持续",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "<=2.70元且经营未恶化",
-      "max_weight": 0.05,
-      "position": "3%-5%",
-      "action": "强吸引力买入区"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复查超市毛利率、购物中心利润和百货下滑幅度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2.71-3.20元",
-      "max_weight": 0.03,
-      "position": "1%-3%",
-      "action": "安全边际买入区"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报后复查全年扣非利润、ROE、现金流和资本配置",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "3.21-4.60元",
-      "max_weight": 0.01,
-      "position": "0%-1%",
-      "action": "等待经营确认"
-    },
-    {
-      "condition": ">4.80元",
-      "max_weight": 0,
-      "position": "0%",
-      "action": "不追高，已有仓位可降权"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
       "reason": "进入有安全边际买入价",
-      "action": "重新评估首笔买入"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 2.7,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.7
+      },
       "reason": "进入强吸引力买入价",
-      "action": "若经营未恶化，进入强吸引力买入区"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 4.8,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
       "reason": "超过不应追高价",
-      "action": "不追高，已有仓位考虑降权"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计半年报后复查，验证Q1利润修复是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复查超市毛利率、购物中心利润和百货下滑幅度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报后复查全年扣非利润、ROE、现金流和资本配置"
-    }
-  ],
-  "key_tracking_metrics": [
-    "可比店营业收入同比",
-    "可比店利润总额同比",
-    "超市毛利率",
-    "购物中心出租率",
-    "百货收入及利润同比",
-    "扣非归母净利润",
-    "经营现金流及租赁付款后的自由现金流",
-    "灵智数科收入增速和利润贡献",
-    "门店数量、关闭低效门店数量和储备项目面积",
-    "ROE和PB"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

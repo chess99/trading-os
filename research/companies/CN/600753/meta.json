@@ -1,70 +1,105 @@
 {
-  "symbol": "CN:600753",
-  "market": "CN",
-  "ticker": "600753",
-  "name": "ST海钦",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "公司已撤销财务类退市风险警示但仍处ST；2025年扭亏和2026Q1改善尚未转化为稳定自由现金流，H1预告又显示Q2盈利骤降，当前价格显著透支持续反转预期。",
-  "fair_value_range": [
-    2.2,
-    5.8
-  ],
-  "buy_zone": [
-    0,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST海钦",
+    "security_status": "active",
+    "symbol": "CN:600753",
+    "ticker": "600753"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "fa7c314e294a57854365f951ceab1840068c6e12cca88997c9f8bd2dfcc38d39"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "c2c70fd6ba36e03f8106ac46376ca19d8e453ce695e3c100c18ae4b028fe3d03"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "7a0f14357b7e9fd3e7d6bd9235eb726a10add2e7938d035f2a506acf79720052"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于6.8元，或公司仍处ST且扣非盈利与现金流连续性未经正式财报验证",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式值，重点检查Q2单季利润、扣非净利润、经营现金流、存货和应收预付变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于2.2元至3.2元且最近两个季度扣非净利润为正、经营现金流未恶化、无新增退市或内控风险",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利恢复连续性以及其他风险警示撤销路径",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.2元且ST撤销路径清晰、净资产持续修复、现金流质量经正式财报验证",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-05-01"
+      },
+      "reason": "行政处罚决定满12个月附近，跟踪是否满足申请撤销其他风险警示的条件",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入具备初步安全边际的观察区，复核基本面后决定是否建立不超过1%的研究仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "进入减仓或不应追高区间，盈利和现金流难以支撑该估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式值，重点检查Q2单季利润、扣非净利润、经营现金流、存货和应收预付变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利恢复连续性以及其他风险警示撤销路径"
-    },
-    {
-      "type": "date",
-      "date": "2027-05-01",
-      "reason": "行政处罚决定满12个月附近，跟踪是否满足申请撤销其他风险警示的条件"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入具备初步安全边际的观察区，复核基本面后决定是否建立不超过1%的研究仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "进入减仓或不应追高区间，盈利和现金流难以支撑该估值"
-    }
-  ],
-  "updated_at": "2026-07-20T21:59:44+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:601860",
-  "ticker": "601860",
-  "name": "紫金银行",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "南京本地农商行，区域和负债稳定性较好，估值约0.46倍PB已反映悲观预期；但2025年ROE下滑、净息差继续承压、关注类贷款占比抬升，当前只适合观察或小仓试错，需等待息差和资产质量企稳。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    2.55,
-    3.15
-  ],
-  "buy_zone": [
-    2.2,
-    2.4
-  ],
-  "sell_or_reduce_zone": [
-    3.35,
-    4.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "紫金银行",
+    "security_status": "active",
+    "symbol": "CN:601860",
+    "ticker": "601860"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "eccff6f2d0765b485b8804f27555d2705885a7cabf398c59a19ff75d05a5d95b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入2.20-2.40元且2026中报净息差不低于1.05%、关注类贷款占比不高于2.00%",
-      "action": "小仓试错",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查净息差、关注类贷款、不良率、拨备覆盖率和ROE",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格高于3.35元且ROE未恢复至8.0%附近",
-      "action": "减仓或退出",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入买入观察区，PB约0.42倍附近，安全边际改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认资产质量迁徙和全年盈利修复概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 3.35,
-      "reason": "高于基准合理价值上沿，若盈利未明显修复应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查净息差、关注类贷款、不良率、拨备覆盖率和ROE"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入买入观察区，PB约0.42倍附近，安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认资产质量迁徙和全年盈利修复概率"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.35
+      },
+      "reason": "高于基准合理价值上沿，若盈利未明显修复应降低仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

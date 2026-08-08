@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:001268",
-  "market": "CN",
-  "ticker": "001268",
-  "name": "联合精密",
-  "company_name": "联合精密",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "hold",
-  "valuation_rating": "avoid",
-  "current_thesis": "联合精密具备压缩机核心零部件铸造与精密加工一体化能力，并已进入美的、格力、海立等客户体系，但2025年盈利下滑、2026Q1转亏、客户集中度极高，当前估值已反映乐观扩产预期，适合观察而非追高买入。",
-  "fair_value_range": [
-    16.0,
-    20.0
-  ],
-  "buy_zone": [
-    13.0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    30.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联合精密",
+    "security_status": "active",
+    "symbol": "CN:001268",
+    "ticker": "001268"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "bdb5551299c3a9ab3ff8dab5cf1c01784d553fc26698635637c5d37db777c3b4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于15.5元，且最新季度毛利率不低于18%，经营现金流未显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.005,
-      "reason": "价格进入买入区间上沿，但仍需基本面止跌确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报原文、毛利率、现金流、客户集中度和募投进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于13.0元，且2026H1不亏损，存货和应收未异常上升",
-      "action": "提高至小仓位",
-      "max_weight": 0.01,
-      "reason": "估值进入悲观情景下沿，若经营未继续恶化可小额试错"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1亏损是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "净利率恢复至8%以上，客户集中度改善或新产线订单被验证",
-      "action": "最高提升至研究仓",
-      "max_weight": 0.02,
-      "reason": "只有盈利质量和订单可见度改善后才允许扩大风险暴露"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入初始买入观察区，需要复核毛利率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入深度价值观察区，需要复核2026H1是否继续亏损",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "进入减仓或回避区，当前价格接近乐观情景估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入初始买入观察区，需要复核毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入深度价值观察区，需要复核2026H1是否继续亏损"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "进入减仓或回避区，当前价格接近乐观情景估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报原文、毛利率、现金流、客户集中度和募投进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1亏损是否修复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1营业收入和同比增速",
-    "综合毛利率和精密件毛利率",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流净额",
-    "前五大客户销售占比",
-    "存货余额和库存量增速",
-    "固定资产、在建工程和有息债务",
-    "顺德精密智造华南总部基地建设进度",
-    "压缩机核心零部件精密制造产线产能利用率",
-    "长江铝锭、铸造生铁和废钢价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

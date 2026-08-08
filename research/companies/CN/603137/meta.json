@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603137",
-  "ticker": "603137",
-  "name": "恒尚节能",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "主业建筑幕墙处于下行周期，2025年亏损且2026Q1收入继续大幅下降；拟收购金胜电子仍处审计评估和审批阶段，标的壁垒与并表确定性不足，当前股价显著高于可核验基本面价值，缺乏安全边际。",
-  "fair_value_range": [
-    8.5,
-    13.0
-  ],
-  "buy_zone": [
-    7.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    20.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恒尚节能",
+    "security_status": "active",
+    "symbol": "CN:603137",
+    "ticker": "603137"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "c576966827ef6fb31cbd5573d799a23655c5a2bf744b1c4d4790c390adeb73ea"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格显著高于合理价值区间，且重组收益未并表、主业收入仍下滑",
-      "action": "不新开仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入降幅、经营现金流、应收账款和合同资产",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入买入区间且连续两个季度经营现金流为正、收入降幅明显收窄、应收账款和合同资产占收入比例下降",
-      "action": "重新评估后最多试探性仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和重组进展，确认并购是否继续推进及主业是否企稳",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "重组完成且金胜电子经审计利润、现金流、业绩承诺和商誉风险均可验证，同时主业订单修复",
-      "action": "重新建模后再决定是否提高仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、审计意见、减值和重组结果",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "跌入买入观察区，需要复核主业现金流、订单和重组条款是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "显著高于乐观情景价值上沿，若无经审计高质量并购利润和主业修复，应回避或减持",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "跌入买入观察区，需要复核主业现金流、订单和重组条款是否改善"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "显著高于乐观情景价值上沿，若无经审计高质量并购利润和主业修复，应回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入降幅、经营现金流、应收账款和合同资产"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和重组进展，确认并购是否继续推进及主业是否企稳"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、审计意见、减值和重组结果"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

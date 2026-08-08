@@ -1,114 +1,115 @@
 {
-  "symbol": "CN:002826",
-  "market": "CN",
-  "ticker": "002826",
-  "name": "易明医药",
-  "company_name": "西藏易明西雅医药科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司自有药品收入占比高，2025年和2026年一季度收入、扣非利润、经营现金流均改善，且现金和理财资产较厚；但现价约16.70元已接近乐观估值，非经常性收益和政府补助不能高倍数资本化，品种集中、集采降价和控制权变化后的资本配置仍需验证。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    11.0,
-    15.0
-  ],
-  "buy_zone": [
-    10.5,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "易明医药",
+    "security_status": "active",
+    "symbol": "CN:002826",
+    "ticker": "002826"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "093fba2707e83dc0c6f9f92c38a261135548b5302546f1952b1017706d09a81c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于11.50元，且最新季度扣非归母净利润、经营现金流未出现同比恶化",
-      "max_weight": 0.01,
-      "action": "建立1%观察仓"
-    },
-    {
-      "condition": "股价低于10.50元，且2026年扣非归母净利润年化达到8000万元以上、经营现金流/扣非净利润大于1",
-      "max_weight": 0.03,
-      "action": "增至2%-3%仓位"
-    },
-    {
-      "condition": "股价高于15.00元但扣非利润尚未稳定达到1亿元",
-      "max_weight": 0.01,
-      "action": "不新增，仅保留跟踪或小观察仓"
-    },
-    {
-      "condition": "股价高于17.00元，且没有新品放量或核心利润上修证据",
-      "max_weight": 0.0,
-      "action": "减仓或退出观察仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入中性估值下沿并开始具备安全边际",
-      "action": "进入可买区，复核最新季报后可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "达到约30%安全边际要求",
-      "action": "进入高安全边际区，若基本面未恶化可加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "超过合理价值区间上沿",
-      "action": "超过中性合理价值上沿，停止新增并评估减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "接近或超过乐观情景估值",
-      "action": "进入偏乐观定价区，除非核心利润上修，否则降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报验证2026年增长质量",
-      "condition": "2026年半年报披露后",
-      "action": "复核自有产品收入、扣非归母净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报验证全年利润年化水平",
-      "condition": "2026年三季报披露后",
-      "action": "复核核心利润年化水平、毛利率和现金转化"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报验证扣非利润承诺和资本配置",
-      "condition": "2026年年报披露后",
-      "action": "复核扣非利润承诺、非经常性收益占比和资本配置"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入中性估值下沿并开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "达到约30%安全边际要求",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过合理价值区间上沿",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "接近或超过乐观情景估值",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "自有产品收入增速",
-    "经营现金流净额/扣非归母净利润",
-    "毛利率",
-    "销售费用率",
-    "前五大客户销售占比",
-    "前五大供应商采购占比",
-    "政府补助和投资收益占利润比重",
-    "分红与回购金额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

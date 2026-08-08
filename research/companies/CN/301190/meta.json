@@ -1,90 +1,115 @@
 {
-  "symbol": "CN:301190",
-  "ticker": "301190",
-  "name": "善水科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "氯代吡啶募投项目放量带动扣非利润快速增长，6-硝体/氧体提供高毛利底盘；但经营现金流仍为负，信托理财逾期与公允价值损失尚未完全出清，当前价格约处于基准公允价值中部，暂不具备足够安全边际。",
-  "fair_value_range": [
-    13.5,
-    17.5
-  ],
-  "buy_zone": [
-    11.5,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    21.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "善水科技",
+    "security_status": "active",
+    "symbol": "CN:301190",
+    "ticker": "301190"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "437dee0d735010a0ab5c7893f6c4a9d45705ade3af48635b023f3d2876ee7fca"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅跟踪或观察仓；在信托逾期未明显回收、经营现金流未转正前不加到核心仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、氯代吡啶毛利率和信托逾期余额。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌入11.5-13.0元且2026半年报显示扣非利润继续增长、经营现金流明显改善，可建立小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认主业放量是否转化为现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若信托逾期大额回收且氯代吡啶毛利率稳定、全年扣非利润具备1.8亿元以上可见度，可提高为中等观察仓。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估募投项目达产进度和长期盈利中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入买入区间上沿，需要复核半年报现金流和信托回收情况。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入较有吸引力的安全边际区间，若基本面未恶化可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "超过基准公允价值区间，若无新的利润上修证据应减仓或停止买入。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.0
+      },
+      "reason": "接近乐观情景估值，需要兑现利润并重新评估产能利用率和现金流。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入买入区间上沿，需要复核半年报现金流和信托回收情况。"
-    },
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入较有吸引力的安全边际区间，若基本面未恶化可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "超过基准公允价值区间，若无新的利润上修证据应减仓或停止买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 21.0,
-      "reason": "接近乐观情景估值，需要兑现利润并重新评估产能利用率和现金流。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、氯代吡啶毛利率和信托逾期余额。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认主业放量是否转化为现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估募投项目达产进度和长期盈利中枢。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 15.25,
-    "last_price_date": "2026-07-15",
-    "market_cap_cny_billion_est": 3.27,
-    "ttm_pe_reported_est": 35.2,
-    "ttm_pe_ex_nonrecurring_est": 21.9,
-    "pb_latest_est": 1.65,
-    "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

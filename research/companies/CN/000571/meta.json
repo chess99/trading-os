@@ -1,95 +1,96 @@
 {
-  "symbol": "CN:000571",
-  "market": "CN",
-  "ticker": "000571",
-  "name": "新大洲A",
-  "company_name": "新大洲A",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "新大洲A当前核心资产已主要是五九集团煤炭业务，但上市公司层面归母权益极薄、经营现金流为负、债务诉讼和历史食品资产尾部风险仍未完全解除；当前价格已反映较强困境反转预期，暂不具备基本面买入安全边际。",
-  "quality_rating": "low",
-  "valuation_rating": "expensive",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    2.2,
-    3.2
-  ],
-  "buy_zone": [
-    1.8,
-    2.4
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    99.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新大洲A",
+    "security_status": "active",
+    "symbol": "CN:000571",
+    "ticker": "000571"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "74b860e39863fff57d1b48435c8566837b12e6097de39e359fa8175d49c26feb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于4.20元且归母权益未显著修复",
-      "action": "不建仓，仅保留研究跟踪",
-      "max_weight": 0.0,
-      "reason": "市值已反映困境反转预期，但2026年一季度末归母权益仅1507.84万元且经营现金流仍为负"
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "公司预约披露2026年半年报，复核收入、现金流、归母权益和债务诉讼进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.40元，且无新增退市风险警示或重大资产处置恶化",
-      "action": "可建立观察仓",
-      "max_weight": 0.005,
-      "reason": "价格进入风险调整后的买入观察区，但债务和治理问题仍未解决"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报窗口，检查持续经营能力是否继续恶化或出现反转证据",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "归母权益回升至3亿元以上，经营现金流连续两个季度为正，主要债务诉讼形成可执行解决方案",
-      "action": "可提高为困境反转小仓位",
-      "max_weight": 0.015,
-      "reason": "只有资产负债表和现金流同时修复后，煤炭资产价值才更可能穿透到普通股"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入买入观察区，复核债务诉讼、退市风险和五九集团经营现金流后再决定是否试仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入深度折价区，若同时有债务重组进展可评估0.5%-1.0%试验仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "高于风险调整后合理价值上沿，若持有应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入买入观察区，复核债务诉讼、退市风险和五九集团经营现金流后再决定是否试仓"
-    },
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入深度折价区，若同时有债务重组进展可评估0.5%-1.0%试验仓"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "高于风险调整后合理价值上沿，若持有应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "公司预约披露2026年半年报，复核收入、现金流、归母权益和债务诉讼进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报窗口，检查持续经营能力是否继续恶化或出现反转证据"
-    }
-  ],
-  "key_tracking_metrics": [
-    "五九集团季度原煤产量",
-    "五九集团季度原煤销量",
-    "五九集团煤炭库存量",
-    "吨煤售价和吨煤成本",
-    "经营活动现金流量净额",
-    "归属于上市公司股东的所有者权益",
-    "资产负债率和流动负债缺口",
-    "长期借款展期和债务重组进展",
-    "银行账户冻结和重大诉讼进展",
-    "乌拉圭牛肉资产债权股权转让交割状态",
-    "大连和升持股质押冻结及财务支持履行情况",
-    "退市风险警示或其他风险警示状态"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

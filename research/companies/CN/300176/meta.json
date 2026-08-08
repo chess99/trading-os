@@ -1,129 +1,132 @@
 {
-  "symbol": "CN:300176",
-  "market": "CN",
-  "ticker": "300176",
-  "name": "鸿特科技",
-  "company_name": "广东鸿特科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处于汽车铝合金压铸业务修复期，2025年扭亏、2026Q1扣非改善，但利润率仍薄、一次性收益占比较高、南通和泰国基地仍需验证产能爬坡与现金回报。2026-07-13股价4.79元已反映较多修复预期，安全边际不足。",
-  "quality_rating": "中等偏低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.2,
-    4.2
-  ],
-  "buy_zone": [
-    0,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.8,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鸿特科技",
+    "security_status": "active",
+    "symbol": "CN:300176",
+    "ticker": "300176"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "673fa8ced25c7a4e758d07101cf9a538e2b374cd8debd0c2d56e767e5e1f3fbc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在4.20元以上，且扣非净利率未连续两个季度超过2%",
-      "action": "不新增，最多保留观察仓",
-      "max_position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价低于3.20元，且经营现金流为正、无客户流失或债务恶化迹象",
-      "action": "建立观察仓",
-      "max_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于2.60元，且收入转正、扣非净利率超过2%、资本开支压力下降",
-      "action": "可提高到小仓位",
-      "max_position": "3%-4%",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "currency": "CNY",
-      "reason": "进入基准可买区间，安全边际开始出现",
-      "action": "重新评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "currency": "CNY",
-      "reason": "进入深度安全边际区，但仍需确认基本面未恶化",
-      "action": "在基本面未恶化时评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.8,
-      "currency": "CNY",
-      "reason": "价格超过乐观情景上沿，若业绩未兑现则风险收益恶化",
-      "action": "若业绩未兑现则减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "连续两个季度营业收入同比转正",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "收入修复是估值上修前提",
-      "action": "复核收入修复和估值上修空间"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "扣非归母净利率连续两个季度高于2%",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "扣非利润率决定盈利质量",
-      "action": "复核盈利质量和仓位上限"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "年度经营现金流净额低于净利润或转负",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "现金流弱化会降低安全边际",
-      "action": "复核现金流质量和债务风险"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "南通或泰国基地披露重大投产、订单、亏损或减值",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "新基地回报是核心变量",
-      "action": "复核扩产回报和资本开支假设"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "有息债务、财务费用或应收账款周转显著恶化",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "资产负债表压力会侵蚀修复弹性",
-      "action": "复核资产负债表风险"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "新能源压铸件收入占比超过30%或明显下滑",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "产品结构变化影响成长性判断",
-      "action": "复核产品结构变化"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入基准可买区间，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入深度安全边际区，但仍需确认基本面未恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.8
+      },
+      "reason": "价格超过乐观情景上沿，若业绩未兑现则风险收益恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "新能源压铸件收入及占比",
-    "扣非归母净利润率",
-    "经营活动现金流净额/归母净利润",
-    "资本开支和投资活动现金流净额",
-    "有息债务和财务费用",
-    "前五大客户集中度和新增定点项目",
-    "南通基地与泰国基地收入、毛利率和产能利用率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

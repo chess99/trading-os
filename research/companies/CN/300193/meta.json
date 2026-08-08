@@ -1,131 +1,133 @@
 {
-  "symbol": "CN:300193",
-  "market": "CN",
-  "ticker": "300193",
-  "name": "佳士科技",
-  "company_name": "深圳市佳士科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "佳士科技现金资产厚、分红较高、主业清晰，但焊割设备行业处于成熟期，2026Q1 扣非利润受汇率和费用扰动明显下滑；7.42 元处于合理价值区间中上部，安全边际不足，等待 6.2 元以下或扣非利润修复后再加仓。",
-  "quality_rating": "中上",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    6.8,
-    7.8
-  ],
-  "buy_zone": [
-    5.6,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    8.6,
-    9.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "佳士科技",
+    "security_status": "active",
+    "symbol": "CN:300193",
+    "ticker": "300193"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "2f6a2309fc7da3297cc6a9a15622ba2f0e026b89f50994a637c6bd8c7962c947"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 6.8 元且最新季度扣非净利润未继续恶化",
-      "action": "建立 1%-2% 跟踪仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于 6.2 元且经营现金流/净利润维持在 80% 以上",
-      "action": "加至 2%-3% 仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格低于 5.6 元且出口毛利率保持 35% 以上、分红政策未恶化",
-      "action": "加至 4%-5% 上限仓位",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格高于 8.6 元但扣非利润和海外收入没有同步改善",
-      "action": "逐步降仓",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "currency": "CNY",
-      "reason": "跌入合理价值区间下半段，安全边际开始出现",
-      "action": "进入可研究买入区，复核最近季度扣非利润和财务费用"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "currency": "CNY",
-      "reason": "对应股息率和 PB 更具吸引力，接近明确买入区",
-      "action": "进入初步买入区，考虑分批建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.6,
-      "currency": "CNY",
-      "reason": "超出合理价值区间，除非扣非利润修复否则风险收益变差",
-      "action": "若基本面未上修，考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "currency": "CNY",
-      "reason": "成熟制造业估值明显透支，需要新成长曲线支撑",
-      "action": "除非成长性显著验证，否则卖出或仅留观察仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布 2026 年半年报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证 2026Q1 扣非利润下滑是否修复的最近关键节点",
-      "action": "复核扣非净利润、财务费用和出口毛利率"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "单季财务费用再次超过 2000 万元或汇兑损失持续扩大",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "汇率损益已显著扰动 2026Q1 利润，需要在三季报前后复核",
-      "action": "下调利润质量评级并重估合理价值"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "出口收入连续两个季度同比下滑或出口毛利率跌破 35%",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "海外业务毛利率高，是公司利润弹性的核心变量",
-      "action": "复核海外渠道竞争力和估值上限"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "国内收入增长但综合毛利率明显下滑",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "国内业务增速较快但毛利率低，需排除价格战式增长",
-      "action": "检查是否出现价格战，以扣非利润验证增长质量"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "公司调整分红政策、实施大额回购或进行重大资本开支/并购",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "现金充裕和分红是当前投资价值的重要组成部分",
-      "action": "重新评估资本配置质量"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "跌入合理价值区间下半段，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "对应股息率和 PB 更具吸引力，接近明确买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.6
+      },
+      "reason": "超出合理价值区间，除非扣非利润修复否则风险收益变差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "成熟制造业估值明显透支，需要新成长曲线支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "出口销售收入增速",
-    "出口销售毛利率",
-    "国内销售毛利率",
-    "扣非归母净利润",
-    "财务费用及汇兑损益",
-    "经营活动现金流净额/归母净利润",
-    "研发费用率及新品量产进展",
-    "现金分红率和股息率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

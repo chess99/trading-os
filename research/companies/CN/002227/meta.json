@@ -1,76 +1,86 @@
 {
-  "symbol": "CN:002227",
-  "market": "CN",
-  "ticker": "002227",
-  "name": "*ST特迅",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司仍处退市风险警示期，2025年扣后收入低于3亿元且亏损，2026H1预告继续亏损；虽有工业电源和充电技术资产，但当前6.04元已高于风险折价后的合理价值区间，今天不买，仅观察收入跨线、现金流和审计风险是否改善。",
-  "fair_value_range": [
-    2.2,
-    3.8
-  ],
-  "buy_zone": [
-    2.2,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    6.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST特迅",
+    "security_status": "active",
+    "symbol": "CN:002227",
+    "ticker": "002227"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "3a817be37b1151cfcc81e0092bd32d001c5d0315fd7bd3b51ed7a43a4392d697"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前退市风险警示未解除且价格高于合理价值上沿",
-      "action": "不买，已有仓位以降低风险为主",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、毛利率、现金流、借款和退市风险",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报或三季报显示扣后收入跨过3亿元路径清晰、经营现金流改善且价格低于2.8元",
-      "action": "仅可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报是否触发终止上市或撤销退市风险警示条件",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "退市风险解除概率显著提高、无新增非标/债务/诉讼风险且价格低于2.2元",
-      "action": "事件型小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入有安全边际观察区，但仍需同时核验扣后收入和现金流改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "高于风险解除前的估值上限，不应追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入有安全边际观察区，但仍需同时核验扣后收入和现金流改善"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "高于风险解除前的估值上限，不应追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、毛利率、现金流、借款和退市风险"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报是否触发终止上市或撤销退市风险警示条件"
-    }
-  ],
-  "notes": [
-    "2026-07-17收盘价6.04元，总市值约14.97亿元；2026-07-19为周日，采用最近交易日行情。",
-    "2025年扣除后营业收入2.65亿元、归母净利润-0.67亿元，已触及退市风险警示。",
-    "2026H1预告归母净亏损3,500万至4,060万元，扣非净亏损3,700万至4,260万元，风险未解除。",
-    "2025年审计报告和内控审计报告为标准无保留意见，但2024年曾因应收账款及合同资产函证证据不足被出具保留意见。",
-    "当前评级为watch；今天不买，等待2026中报和收入跨线证据。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688351",
-  "market": "CN",
-  "ticker": "688351",
-  "name": "微电生理",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "微电生理是A股稀缺的电生理平台型公司，具备三维标测、导管耗材、冷冻和PFA新品组合，海外收入和PFA商业化提供成长弹性；但当前估值已预支高增长，利润质量仍受补助和理财收益影响，需等待更明确的安全边际或PFA放量验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18.0,
-    24.0
-  ],
-  "buy_zone": [
-    16.0,
-    17.5
-  ],
-  "sell_or_reduce_zone": [
-    28.0,
-    32.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "微电生理",
+    "security_status": "active",
+    "symbol": "CN:688351",
+    "ticker": "688351"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "100c1be02a55d165cc3e3b5cd2f28ea2c400b68f24d04b442deccbfec68e9bc8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入16.0-17.5元且2026H1收入增速、PFA商业化和经营现金流未恶化时，建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增速、境外收入、PFA进展和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "PFA形成可核验放量、海外收入维持30%以上增长且经营现金流连续为正时，允许加仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证全年利润和现金流是否支撑估值。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于28元且盈利预测没有上修，或2026年收入低于5.4亿元且经营现金流转负时，不新增并考虑退出。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年度报告和PFA商业化兑现情况，决定是否上调评级。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.5
+      },
+      "reason": "进入有安全边际的初始买入区，需要复核PFA、海外收入和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "估值进入乐观情景区，若基本面未同步上修应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.5,
-      "reason": "进入有安全边际的初始买入区，需要复核PFA、海外收入和现金流。"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "估值进入乐观情景区，若基本面未同步上修应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增速、境外收入、PFA进展和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证全年利润和现金流是否支撑估值。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年度报告和PFA商业化兑现情况，决定是否上调评级。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

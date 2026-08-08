@@ -1,98 +1,119 @@
 {
-  "symbol": "CN:002581",
-  "market": "CN",
-  "ticker": "002581",
-  "name": "*ST未名",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "当前股价3.63元显著高于0.90-1.50元合理价值区间；公司仍处退市风险警示和其他风险警示状态，天津未名未复产，2026H1预计继续亏损9,000万至12,000万元，且2025年报保留意见、收入确认差错、监管警示和深交所公开谴责削弱财务可信度。",
-  "fair_value_range": [
-    0.9,
-    1.5
-  ],
-  "buy_zone": [
-    0.7,
-    1.1
-  ],
-  "sell_or_reduce_zone": [
-    1.8,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST未名",
+    "security_status": "active",
+    "symbol": "CN:002581",
+    "ticker": "002581"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "49ecd9adaa2b3489d6e292c38ae429a7d74c4568a4bde1e60554c5deac971803"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "caae692e584c3b7c6baed01f0706ad7c49e5fc1b414e14d8b92f9339a9c6efe7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于0.70元，未新增终止上市进程，净资产未继续大幅下滑",
-      "action": "只建立困境观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026中报实际亏损、现金余额、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价0.70-1.10元，且天津未名复产或撤销风险警示路径出现明确证据",
-      "action": "小仓位试错",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "复核天津未名复产批复、药监整改和干扰素销售恢复证据",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价1.10-1.50元，复产、风险警示改善、经营现金流转正至少满足两项",
-      "action": "仅持有观察，不主动加仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核SMR001 III期入组、安全性和注册临床关键节点",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于1.80元，且尚未消除非标审计意见、退市风险警示和天津未名停产影响",
-      "action": "不买；已有仓位减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报审计意见、扣后收入是否超过3亿元及风险警示撤销条件",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.1
+      },
+      "reason": "进入可重新评估小仓位观察区，需同步核验复产和风险警示进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.7
+      },
+      "reason": "进入深度折价观察区，但仍需排除新增退市风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.8
+      },
+      "reason": "高于当前合理价值上沿，未修复前赔率不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.1,
-      "reason": "进入可重新评估小仓位观察区，需同步核验复产和风险警示进展"
-    },
-    {
-      "type": "price_below",
-      "price": 0.7,
-      "reason": "进入深度折价观察区，但仍需排除新增退市风险"
-    },
-    {
-      "type": "price_above",
-      "price": 1.8,
-      "reason": "高于当前合理价值上沿，未修复前赔率不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026中报实际亏损、现金余额、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "reason": "复核天津未名复产批复、药监整改和干扰素销售恢复证据"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核SMR001 III期入组、安全性和注册临床关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报审计意见、扣后收入是否超过3亿元及风险警示撤销条件"
-    }
-  ],
-  "notes": [
-    "2026-07-17收盘价3.63元，按659,735,586股估算市值约23.95亿元，明显高于基准价值区间。",
-    "2026H1预计归母净亏损9,000万至12,000万元，亏损较上年同期扩大。",
-    "2026-04-30起被实施退市风险警示；2025-07-08起已因天津未名停产被实施其他风险警示。",
-    "2025年报为保留意见，保留事项涉及抵债药品技术和吉林未名股权价值。",
-    "2026年6月公司及董事长兼总经理、财务总监因收入确认差错和业绩预告违规被监管警示及深交所公开谴责。",
-    "未发现2025年报披露的重大担保；控股股东、实际控制人及其附属企业非经营性资金占用小计为空，但合并体系内部往来金额较大，需持续跟踪。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

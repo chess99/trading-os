@@ -1,116 +1,115 @@
 {
-  "symbol": "CN:300263",
-  "market": "CN",
-  "ticker": "300263",
-  "name": "隆华科技",
-  "company_name": "隆华科技集团（洛阳）股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处于节能环保现金流底盘向电子新材料、高分子复合材料提升结构的阶段，2025 年和 2026Q1 利润改善真实，但 2026Q1 现金流转负且当前 11.87 元价格已隐含较高成长预期，安全边际不足。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    8.5,
-    10.8
-  ],
-  "buy_zone": [
-    6.8,
-    7.8
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    16.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "隆华科技",
+    "security_status": "active",
+    "symbol": "CN:300263",
+    "ticker": "300263"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5e8bdd525dbc0b25a39eaa0bfff7a9aa7a46a81fca2c4aa6d2951bd24022242b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回到8.0-8.8元，且2026H1扣非净利润增速不低于25%、经营现金流不继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查电子新材料收入占比、毛利率、扣非净利润和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.8元，电子新材料收入占比继续提升，毛利率回到20%以上",
-      "action": "分批买入",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润是否能达到2.6亿元以上以及Q1现金流压力是否缓解。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.8元，全年归母净利润有望达到2.8亿元以上，经营现金流恢复",
-      "action": "加仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，决定是否从观察股升级为可买入核心跟踪标的。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于11元但没有新增大客户、产能释放或利润率改善证据",
-      "action": "不新增仓位",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价高于14.5元，或2026年扣非归母净利润低于2.2亿元",
-      "action": "降低至观察仓或清仓",
-      "max_weight": 0.005
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.8,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.8
+      },
       "reason": "进入安全边际初步可接受区间，需要复核基本面是否维持。",
-      "action": "进入买入复核"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 6.8,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
       "reason": "低于保守估值区间下沿，若现金流和利润未恶化可考虑加仓。",
-      "action": "若基本面未恶化，进入加仓复核"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 14.5,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
       "reason": "高于合理价值上沿较多，若没有订单和利润超预期应减仓。",
-      "action": "复核是否减仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 16.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
       "reason": "进入主题溢价区，估值对业绩容错率很低。",
-      "action": "进入卖出或大幅降仓复核"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查电子新材料收入占比、毛利率、扣非净利润和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润是否能达到2.6亿元以上以及Q1现金流压力是否缓解。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，决定是否从观察股升级为可买入核心跟踪标的。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "电子新材料收入占比",
-    "综合毛利率与电子新材料分部毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额/归母净利润",
-    "应收账款与预付款增长率",
-    "新材料客户导入和批量供货公告",
-    "实控人及高管持股、减持、质押变化",
-    "研发投入占营业收入比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,101 +1,110 @@
 {
-  "symbol": "CN:688652",
-  "market": "CN",
-  "ticker": "688652",
-  "name": "京仪装备",
-  "company_name": "京仪装备",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_high",
-  "valuation_rating": "expensive",
-  "current_thesis": "京仪装备是国内半导体前道辅助设备稀缺标的，温控设备、工艺废气处理设备和晶圆传片设备受益于国产替代与晶圆厂扩产，2025年收入高增、2026Q1利润弹性改善、合同负债较高；但客户集中、存货高、毛利率修复仍需验证，且2026-07-17收盘价153.39元对应约163倍TTM PE，已经透支较多成长预期，当前更适合观察而非追买。",
-  "fair_value_range": [
-    105,
-    135
-  ],
-  "buy_zone": [
-    80,
-    100
-  ],
-  "sell_or_reduce_zone": [
-    165,
-    220
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "京仪装备",
+    "security_status": "active",
+    "symbol": "CN:688652",
+    "ticker": "688652"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "b2d46ab6a2918717257cc10e9e4572d66e657a5d8674bad80774b0ef5b678ce8"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "6cc50ea91cc2df7831e7619c16385c00a326c3b51cb083a9c4291e6b867a446f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于135元，且最近一期扣非净利润增速未显著超过40%、经营现金流未持续转正",
-      "action": "不新买，已持有仓位降为观察仓或等待业绩验证",
-      "max_weight": 0.005,
-      "reason": "估值已经接近乐观情景，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、经营现金流、存货和合同负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至100元以下，且最新定期报告显示收入同比增长不低于20%、综合毛利率不低于34%、合同负债不低于12亿元",
-      "action": "可建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区间上沿，同时基本面没有明显恶化"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年订单兑现、利润弹性和估值是否需要重算",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至80元附近或以下，且经营现金流转正、存货增速低于收入增速、晶圆传片或新产品放量得到定期报告验证",
-      "action": "可提高至核心跟踪仓",
-      "max_weight": 0.03,
-      "reason": "估值具备安全边际，且成长兑现概率提高"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年度报告，确认国产替代增长是否转化为现金流和可持续利润",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 100.0
+      },
+      "reason": "进入买入区间上沿，需要复核半年报或三季报后决定是否首买",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 80.0
+      },
+      "reason": "进入较有安全边际区域，需要评估是否提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 165.0
+      },
+      "reason": "超过减仓/回避区间下沿，若利润未大幅超预期应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 100,
-      "reason": "进入买入区间上沿，需要复核半年报或三季报后决定是否首买"
-    },
-    {
-      "type": "price_below",
-      "price": 80,
-      "reason": "进入较有安全边际区域，需要评估是否提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 165,
-      "reason": "超过减仓/回避区间下沿，若利润未大幅超预期应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、毛利率、经营现金流、存货和合同负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年订单兑现、利润弹性和估值是否需要重算"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年度报告，确认国产替代增长是否转化为现金流和可持续利润"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "综合毛利率和温控设备毛利率",
-    "研发投入金额及研发费用率",
-    "经营活动现金流量净额",
-    "存货金额及存货/收入比例",
-    "合同负债金额及其收入转化",
-    "半导体专用温控设备收入和销量",
-    "半导体专用工艺废气处理设备收入和毛利率",
-    "晶圆传片设备收入和毛利率",
-    "前五大客户收入占比",
-    "真空泵、超低温温控等新产品验证进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

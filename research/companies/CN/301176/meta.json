@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301176",
-  "ticker": "301176",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "逸豪新材",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "逸豪新材具备电子电路铜箔、铝基覆铜板和 PCB 纵向协同，高端铜箔若批量兑现有利润弹性；但 2025 年仍亏损、现金流为负，2026Q1 仅初步转正，现价已充分反映 AI/HVLP 预期，安全边际不足，适合观察不适合买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24,
-    34
-  ],
-  "buy_zone": [
-    20,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "逸豪新材",
+    "security_status": "active",
+    "symbol": "CN:301176",
+    "ticker": "301176"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "0f88ed49c569f321fb3d480f82bfdd49f294b6ba5a15431b5edfae009cc2996b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 45 元或 HVLP/高频高速铜箔仍未披露批量出货时不新开仓。",
-      "action": "observe_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入、毛利率、现金流、短债和高端铜箔披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入 20-28 元且最近一个季度收入继续增长、毛利率高于 8%、短期借款未继续显著上升。",
-      "action": "starter_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断 Q1 改善是否延续为连续盈利。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度归母净利润超过 3000 万元、经营现金流转正，并披露高端铜箔形成批量收入。",
-      "action": "increase_with_cap",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新评估正常化盈利和合理估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入买入观察区，需要复核毛利率、现金流和高端铜箔出货进展。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "超过乐观情景上沿，若基本面未同步兑现应避免追高或考虑减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入买入观察区，需要复核毛利率、现金流和高端铜箔出货进展。"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "超过乐观情景上沿，若基本面未同步兑现应避免追高或考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入、毛利率、现金流、短债和高端铜箔披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断 Q1 改善是否延续为连续盈利。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新评估正常化盈利和合理估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

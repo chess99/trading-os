@@ -1,87 +1,105 @@
 {
-  "symbol": "CN:601500",
-  "ticker": "601500",
-  "name": "通用股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_thesis": "通用股份是轮胎出海链条中的二线弹性标的，泰国和柬埔寨产能释放带来2026年利润修复，但品牌、毛利率、现金流和贸易壁垒风险仍不足以支持在当前价格直接买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.6,
-    4.8
-  ],
-  "buy_zone": [
-    3.0,
-    3.3
-  ],
-  "sell_or_reduce_zone": [
-    5.3,
-    6.2
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "通用股份",
+    "security_status": "active",
+    "symbol": "CN:601500",
+    "ticker": "601500"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "ab67dcfa32e298402adfc911732774ac051279fb3800afeaed55c7f4c769d2ac"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入3.00-3.30元且2026年半年报确认毛利率环比改善、贸易壁垒未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据，重点看毛利率、海外基地利润、财务费用和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年扣非净利润年化能力达到3.5亿元以上且财务费用下降",
-      "action": "可提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断H1利润修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.30元但2027年5亿元净利润能力未被订单和毛利率验证",
-      "action": "减持或不追买",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年净利润、分红恢复和海外基地达产质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "进入买入观察区，若基本面未恶化可重新评估小仓位配置",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入深度安全边际区，需要复核贸易壁垒和财务费用是否恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.3
+      },
+      "reason": "超过基准估值上沿，若利润验证不足应考虑减持或放弃",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "进入买入观察区，若基本面未恶化可重新评估小仓位配置"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入深度安全边际区，需要复核贸易壁垒和财务费用是否恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 5.3,
-      "reason": "超过基准估值上沿，若利润验证不足应考虑减持或放弃"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据，重点看毛利率、海外基地利润、财务费用和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断H1利润修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年净利润、分红恢复和海外基地达产质量"
-    }
-  ],
-  "key_risks": [
-    "美国和欧盟贸易壁垒加码",
-    "轮胎行业价格战导致毛利率修复不及预期",
-    "天然胶、炭黑、钢帘线等原材料价格上涨",
-    "财务费用和汇率波动吞噬海外基地利润",
-    "国资入主后的治理协同兑现低于预期"
-  ],
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

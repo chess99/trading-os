@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:002145",
-  "market": "CN",
-  "ticker": "002145",
-  "name": "钛能化学",
-  "company_name": "钛能化学",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "钛能化学是钛白粉周期股叠加磷化工和新能源材料扩张的资产，2025年和2026Q1收入增长但利润率仍弱，当前价格已反映部分周期修复，需等待毛利率、经营现金流和治理风险进一步验证。",
-  "quality_rating": "medium",
-  "valuation_rating": "fair_to_expensive",
-  "fair_value_range": [
-    3.6,
-    4.4
-  ],
-  "buy_zone": [
-    3.1,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    5.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "钛能化学",
+    "security_status": "active",
+    "symbol": "CN:002145",
+    "ticker": "002145"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "ea9384ac01a90bc4362d156b3060054a29f1243fb83e8ce94fa4791c9fc26996"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.60元且钛白粉基准价仍高于15500元/吨",
-      "action": "建立跟踪仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区且周期价格未明显破位，具备小仓位观察价值。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报分产品毛利率、经营现金流、存货和治理事项。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1毛利率高于14%、经营现金流为正且存货下降",
-      "action": "加仓至观察上限",
-      "max_weight": 0.02,
-      "reason": "利润质量和现金流共同验证经营拐点后，可提高仓位但仍保留治理折价。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及钛白粉、钛矿、硫酸价格周期变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于5.20元但扣非利润和经营现金流未同步改善",
-      "action": "减仓或不追高",
-      "max_weight": 0.005,
-      "reason": "估值进入乐观区，若没有业绩兑现，风险收益比下降。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入初始买入区，复核钛白粉价格、毛利率和治理风险后可建跟踪仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.1
+      },
+      "reason": "接近悲观估值下沿，若基本面未恶化可重新评估安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "进入减仓区，除非利润显著上修，否则当前周期修复预期可能已充分反映。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入初始买入区，复核钛白粉价格、毛利率和治理风险后可建跟踪仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.1,
-      "reason": "接近悲观估值下沿，若基本面未恶化可重新评估安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "进入减仓区，除非利润显著上修，否则当前周期修复预期可能已充分反映。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报分产品毛利率、经营现金流、存货和治理事项。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及钛白粉、钛矿、硫酸价格周期变化。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "生意社钛白粉基准价",
-    "SMM TiO2≥46%和TiO2≥47%钛精矿价格",
-    "硫酸价格",
-    "单季毛利率",
-    "经营活动现金流净额",
-    "存货余额及跌价准备",
-    "钛白粉销量和均价",
-    "黄磷产销量",
-    "磷酸铁销量及客户结构",
-    "货币资金、短期借款和受限资金",
-    "实控人处罚后续及投资者索赔进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,106 +1,123 @@
 {
-  "symbol": "CN:000020",
-  "market": "CN",
-  "ticker": "000020",
-  "name": "深华发Ａ",
-  "company_name": "深华发Ａ",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "low_to_medium",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    4.5,
-    6.5
-  ],
-  "buy_zone": [
-    3.8,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    99.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深华发Ａ",
+    "security_status": "active",
+    "symbol": "CN:000020",
+    "ticker": "000020"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "d574dd176d7d813ab6e36ff0bf1df7a81f2abd381627f78bf6f3655ed1feb8a9"
+      }
+    ],
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-3ffd30761cce.md",
+        "report_id": "CN-000020-2026-07-30-rapid-triage-3ffd30761cce",
+        "report_type": "rapid_triage",
+        "sha256": "8445eda313e9e534fa16551304ea6355a776e3ffecadc25a626f1c29ce918a21"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-3ffd30761cce.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-3ffd30761cce.md"
+    }
+  },
+  "research": {
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T05:45:00+08:00",
+      "report_id": "CN-000020-2026-07-30-rapid-triage-3ffd30761cce",
+      "report_path": "reports/2026-07-30-rapid-triage-3ffd30761cce.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000020/20260730T054500+0800.triage.json",
+      "source_package_sha256": "3ffd30761cce85be77020fb6410141af3e649a660f09c930a4573b8a83a38d46"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-08-31T00:00:00+08:00"
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前股价高于8.0元，且治理、司法变卖、旧改执行风险未解除",
-      "action": "不买入，维持0%仓位",
-      "max_weight": 0,
-      "reason": "当前市值已显著高于经营收益与折价资产期权可支撑区间"
+      "active": true,
+      "condition": {
+        "description": "公司披露2026年半年度报告，列明分部收入和毛利、经营现金流、受限货币资金、应收账款、存货及诉讼预计负债"
+      },
+      "reason": "中报可检验收入下滑是否持续、现金转化是否修复以及保全对经营资金的实际影响。",
+      "trigger_id": "000020-2026-h1-filing",
+      "type": "filing"
     },
     {
-      "condition": "股价跌入6.5元以下但仍高于4.8元，且最新公告未新增重大负面事项",
-      "action": "仅复查，不主动建仓",
-      "max_weight": 0,
-      "reason": "进入合理价值上沿附近，但安全边际仍不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "若此前未触发财报观察，届时按法定披露期限复核半年度经营和司法事项。",
+      "trigger_id": "000020-h1-deadline",
+      "type": "date"
     },
     {
-      "condition": "股价跌入3.8-4.8元，经营现金流为正，控股股东司法事项无新增恶化",
-      "action": "可建立小观察仓",
-      "max_weight": 0.005,
-      "reason": "估值开始覆盖经营价值和部分资产期权，仍需控制事件风险"
+      "active": true,
+      "condition": {
+        "description": "深圳万科相关仲裁或执行形成终局裁决、和解或执行方案，并披露深华发实际现金责任、资产解封和控股股东补偿履约条款"
+      },
+      "reason": "这是判断普通股是否承担重大损失及治理折价能否消除的决定性事件。",
+      "trigger_id": "000020-arbitration-resolution",
+      "type": "event"
     },
     {
-      "condition": "股价低于3.8元，且万科仲裁/旧改风险有明确改善公告",
-      "action": "可分批加至研究上限",
-      "max_weight": 0.015,
-      "reason": "安全边际较充分，但公司质量和治理约束决定不适合重仓"
+      "active": true,
+      "condition": {
+        "description": "控股股东股份司法变卖、质押或冻结出现成交、解除或控制权变更，并披露受让方和后续安排"
+      },
+      "reason": "控制权和控股股东偿付能力变化可能重塑关联风险与治理约束。",
+      "trigger_id": "000020-control-risk-resolution",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "价格下降约37%后静态盈利与净资产隐含要求明显降低，值得在司法风险不恶化前提下重新测算赔率。",
+      "trigger_id": "000020-price-6-50",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "连续两个报告期经营现金流不低于归母净利润，显示器毛利率不低于7%，且应收账款和存货未快于收入增长"
+      },
+      "reason": "满足该条件将显著提高正常化所有者收益区间的可信度。",
+      "trigger_id": "000020-cash-conversion-thesis",
+      "type": "thesis"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入合理价值区间上沿，触发估值复查"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入买入区间上沿，可结合公告风险评估首笔观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "高于减持/回避区间，应维持0仓位或降低暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报预计披露后复查收入、毛利率、现金流和司法事项"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复查订单趋势和存货风险"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入",
-    "显示器业务毛利率",
-    "注塑件毛利率",
-    "经营活动现金流量净额",
-    "前五大客户销售占比",
-    "第一大客户销售占比",
-    "关联采购金额",
-    "关联销售金额",
-    "存货余额及跌价准备",
-    "控股股东股份冻结和司法变卖进展",
-    "万科仲裁恢复执行及不予执行审查进展",
-    "深圳旧改项目补偿和实施进展"
-  ],
-  "thesis": "低毛利显示器代工和小体量注塑制造贡献有限经营价值，深圳物业/旧改提供期权但受诉讼和执行事项约束，当前价格已显著透支可核验基本面。",
-  "current_thesis": "低毛利显示器代工和小体量注塑制造贡献有限经营价值，深圳物业/旧改提供期权但受诉讼和执行事项约束，当前价格已显著透支可核验基本面。",
-  "last_price": 10.59,
-  "last_price_at": "2026-07-09 16:14:42",
-  "market_cap_cny": 2999000000,
-  "confidence": "medium_low"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-30T05:45:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

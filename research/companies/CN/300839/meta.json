@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300839",
-  "ticker": "300839",
-  "name": "博汇股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "主业在2026Q1明显修复，液冷新业务提供期权，但2025年仍亏损、现金流和盈利连续性尚未验证，当前价格已反映较多反转预期，适合观察等待中报和三季报确认。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    8.8,
-    12.2
-  ],
-  "buy_zone": [
-    7.6,
-    9.0
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博汇股份",
+    "security_status": "active",
+    "symbol": "CN:300839",
+    "ticker": "300839"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "589356e7db0b4f3168612db5616d49515bb369ef570fc65dc31e7ceccb11da26"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入7.6-9.0元且2026Q2归母净利润和经营现金流均为正，可建立观察仓。",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，确认Q2盈利、经营现金流、存货和应收账款变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H2连续两个季度单季归母净利润超过3500万元，经营现金流为正，且液冷业务披露可核验订单和毛利。",
-      "action": "increase_after_validation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断主业修复是否连续以及液冷业务是否有实质披露。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于14元但盈利和液冷订单未同步验证，或经营现金流转负。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年全年业绩预告或年报，重新评估估值区间和仓位上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入安全边际区间，可结合中报现金流和盈利质量重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "超过当前合理价值上沿，若缺少连续利润和液冷订单验证，应考虑降低或不参与。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入安全边际区间，可结合中报现金流和盈利质量重新评估观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "超过当前合理价值上沿，若缺少连续利润和液冷订单验证，应考虑降低或不参与。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，确认Q2盈利、经营现金流、存货和应收账款变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断主业修复是否连续以及液冷业务是否有实质披露。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年全年业绩预告或年报，重新评估估值区间和仓位上限。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

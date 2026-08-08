@@ -1,117 +1,115 @@
 {
-  "symbol": "CN:300455",
-  "market": "CN",
-  "ticker": "300455",
-  "name": "航天智装",
-  "company_name": "北京航天神舟智能装备科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司具备航天科技集团体系、微系统与测试仿真、铁路检测和核工业特种机器人等稀缺标签，但2025年核工业业务价格审核差导致大额亏损，客户集中、应收与存货占用高，2026Q1盈利修复很弱。2026-07-13收盘20.66元已显著透支商业航天和央企科技资产期权，缺乏安全边际。",
-  "quality_rating": "中低",
-  "valuation_rating": "高估",
-  "fair_value_range": [
-    5.5,
-    8.5
-  ],
-  "fair_value_method": "PB、正常化PE、PS/订单期权交叉验证；单位为CNY/share",
-  "buy_zone": [
-    0,
-    6.5
-  ],
-  "buy_zone_conditions": [
-    "2026半年报或后续季报显示收入恢复增长",
-    "核工业及特殊环境智能装备毛利率转正",
-    "扣非净利润连续两个季度为正",
-    "应收账款/收入下降或经营现金流明显改善"
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    999.0
-  ],
-  "sell_or_reduce_reason": "若利润和现金流未兑现，12元以上已计入较多商业航天期权；18元以上缺乏基本面支撑，应减仓或卖出。单位为CNY/share。",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "航天智装",
+    "security_status": "active",
+    "symbol": "CN:300455",
+    "ticker": "300455"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "3aa7bcfbbebb58cb5916741f81dc16b2a89126965e5392fa4dd4e0636c0c27ce"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于12元且未看到年度净利润超过1亿元、经营现金流持续为正",
-      "action": "不建仓；已有仓位逐步降低到观察仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、毛利率、扣非利润、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至8.5元以下，且半年报显示收入恢复增长、核工业板块毛利率转正",
-      "action": "允许建立小观察仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断2025年亏损冲击是否真正出清。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至6.5元以下，且扣非利润连续两个季度为正、应收账款/收入下降、合同负债或订单增长",
-      "action": "可提升为核心跟踪仓",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认商业航天和核工业智能装备是否形成可持续利润。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入合理价值区间上沿，需要复核基本面是否同步改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "接近安全边际价格，若利润和现金流修复可考虑买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于基本面估值上沿，已计入较多商业航天期权。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "估值显著脱离当前盈利和现金流支撑。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "unit": "CNY/share",
-      "action": "重新评估半年报与订单数据，决定是否建立观察仓",
-      "reason": "进入合理价值区间上沿，需要复核基本面是否同步改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "unit": "CNY/share",
-      "action": "若基本面同步改善，进入可买区",
-      "reason": "接近安全边际价格，若利润和现金流修复可考虑买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "unit": "CNY/share",
-      "action": "若利润未兑现，降低或避免仓位",
-      "reason": "高于基本面估值上沿，已计入较多商业航天期权。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "unit": "CNY/share",
-      "action": "原则上卖出或仅保留极小跟踪仓",
-      "reason": "估值显著脱离当前盈利和现金流支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、毛利率、扣非利润、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断2025年亏损冲击是否真正出清。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认商业航天和核工业智能装备是否形成可持续利润。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "核工业及特殊环境智能装备毛利率",
-    "智能测试仿真系统和微系统与控制部组件收入增速",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款/营业收入",
-    "存货余额和周转率",
-    "合同负债和在手订单",
-    "商业航天订单金额与毛利率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

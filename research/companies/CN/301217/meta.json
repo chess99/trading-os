@@ -1,27 +1,77 @@
 {
-  "symbol": "CN:301217",
-  "market": "CN",
-  "ticker": "301217",
-  "name": "铜冠铜箔",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "铜箔加工费触底回升但产能过剩格局未改变，公司2025年净利润仅0.63亿，而股价3个月内从37元暴涨至200元（最高5.4x），当前134元对应静态PE 1675x、PB 20.6x，估值处于极度泡沫水平，不具备任何安全边际",
-  "fair_value_range": [30, 60],
-  "buy_zone": [15, 30],
-  "sell_or_reduce_zone": [60, 100],
-  "position_plan": [
-    {"condition": "股价进入有安全边际的买入区间（<30元）", "max_weight": 0.02},
-    {"condition": "股价处于极端低估区间（<20元）且基本面未恶化", "max_weight": 0.03}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "铜冠铜箔",
+    "security_status": "active",
+    "symbol": "CN:301217",
+    "ticker": "301217"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "996e20386a5c2fa7364af6641266e4d7a67100395d41fca3bc0f02f90a87ca7e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-30"
+      },
+      "reason": "2026年三季报发布后复查",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 100.0
+      },
+      "reason": "进入极度泡沫区间，不应追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": ["reports/2026-07-09-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-10-30", "reason": "2026年三季报发布后复查"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 30, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_above", "price": 100, "reason": "进入极度泡沫区间，不应追高"}
-  ],
-  "updated_at": "2026-07-09T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

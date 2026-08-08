@@ -1,111 +1,105 @@
 {
-  "symbol": "CN:002707",
-  "market": "CN",
-  "ticker": "002707",
-  "name": "众信旅游",
-  "company_name": "众信旅游集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "出境游复苏和入境游政策红利仍在，但公司2025年与2026Q1呈现增收不增利，当前约4.85元价格已反映较多利润率修复预期，需等待更低价格或扣非净利率连续改善。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.8,
-    4.8
-  ],
-  "buy_zone": [
-    3.2,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "众信旅游",
+    "security_status": "active",
+    "symbol": "CN:002707",
+    "ticker": "002707"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c045ded66e19a64d1cd83cb49d4368d5b4fa29f283a309cd3a7c05c2fc171a1a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在4.2-4.8元且尚未看到扣非净利率连续改善",
-      "action": "观察，不建仓",
-      "target_position": "0%",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价低于3.8元，出入境客流仍同比增长，旅游批发毛利率不低于2025年水平",
-      "action": "试探性买入",
-      "target_position": "1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价低于3.2元，未出现治理风险、重大亏损或行业客流逆转",
-      "action": "分批加仓",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于6.0元且没有年化归母利润1.5亿元以上的证据",
-      "action": "减持或避免追高",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入估算可买区上沿，开始具备安全边际",
-      "action": "复核2026年最新业绩与行业客流，考虑1%试探仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "低于保守买入区下沿，若基本面未恶化则赔率改善",
-      "action": "若基本面未恶化，考虑提升至2%-3%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "高于估算合理价值且需要更强利润兑现支撑",
-      "action": "若利润未显著兑现，减持或继续空仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年半年报将验证旺季前收入恢复和利润率变化",
-      "condition": "预计2026年半年报披露完成",
-      "action": "更新利润率、现金流和估值区间"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报将覆盖暑期旺季，是判断利润修复最关键节点",
-      "condition": "预计2026年三季报披露完成",
-      "action": "复核是否从观察上调为买入或继续等待"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2026年年报将验证全年正常化盈利能力和分红恢复可能",
-      "condition": "预计2026年年报披露完成",
-      "action": "重估正常化利润和安全边际"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入估算可买区上沿，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "低于保守买入区下沿，若基本面未恶化则赔率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "高于估算合理价值且需要更强利润兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "出入境人员和内地居民出入境同比增速",
-    "国际及地区航班恢复率",
-    "旅游批发收入与毛利率",
-    "旅游零售收入占比与毛利率",
-    "扣非归母净利润和扣非净利率",
-    "经营现金流及其季节性回吐",
-    "应收账款、预付款项、合同负债变化",
-    "累计未分配利润和分红能力"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

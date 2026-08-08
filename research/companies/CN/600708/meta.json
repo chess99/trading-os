@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:600708",
-  "ticker": "600708",
-  "market": "CN",
-  "name": "光明地产",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "上海国资背景和融资能力提供信用支撑，但2025-2026年持续亏损、存货占比高、杠杆和担保压力大，当前股价高于可接受安全边际，暂不买入。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.5,
-    2.4
-  ],
-  "buy_zone": [
-    1.2,
-    1.6
-  ],
-  "sell_or_reduce_zone": [
-    2.8,
-    3.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "光明地产",
+    "security_status": "active",
+    "symbol": "CN:600708",
+    "ticker": "600708"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "92e2de61520bee56e4eaa9bb2c7003e08bc3243a083b8a82180fd51aeb5bedb9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于1.60元，且最近一期经营现金流为正、存货减值未扩大到侵蚀归母权益10%以上",
-      "action": "watchlist_small_probe",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的亏损、存货减值、经营现金流和担保余额",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于2.80元，且签约金额、经营现金流、毛利率没有连续两个季度改善",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "进入估算买入区上沿，需要复核现金流和存货减值后决定是否小仓位观察"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报签约、现金流和短债覆盖变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 2.8,
-      "reason": "高于合理价值区间上沿，若基本面未同步改善应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的亏损、存货减值、经营现金流和担保余额"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "进入估算买入区上沿，需要复核现金流和存货减值后决定是否小仓位观察",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报签约、现金流和短债覆盖变化"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.8
+      },
+      "reason": "高于合理价值区间上沿，若基本面未同步改善应回避或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

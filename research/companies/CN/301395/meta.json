@@ -1,81 +1,114 @@
 {
-  "symbol": "CN:301395",
-  "ticker": "301395",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "仁信新材",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "仁信新材具备48万吨/年PS产能、华南区域规模优势、头部家电客户验证和一体化项目期权，但2025年盈利下滑、2026Q1大幅亏损，行业供给过剩与原料成本传导仍待验证。当前估值处于基准公允区间中部，暂列观察。",
-  "fair_value_range": [
-    8.0,
-    12.5
-  ],
-  "buy_zone": [
-    6.5,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "仁信新材",
+    "security_status": "active",
+    "symbol": "CN:301395",
+    "ticker": "301395"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "6aa56a13fb33c5611a555c3b9902d09bad73382d2fe479c032e52682ec1d0157"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "观察仓：股价低于8.0元且2026Q2或Q3经营现金流、毛利率、产能利用率中至少两项改善后，允许建立小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查Q2利润、经营现金流、存货减值和三期产能利用率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "加仓前提：公司连续两个季度恢复盈利，PS-苯乙烯价差改善，一体化项目未造成资产负债率快速恶化。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断苯乙烯成本冲击是否缓解以及全年盈利修复可见度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "回避或降仓：季度继续大额亏损、存货减值扩大、项目融资显著稀释或股价高于14元但盈利未兑现。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-01-03"
+      },
+      "reason": "首发前限售股拟解除限售日，关注重要股东减持、流动性和市场定价变化。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报与2027年一季报，重新评估周期正常化利润和一体化项目资金压力。",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入估算买入区间上沿，需要复核苯乙烯-PS价差、现金流和三期产能爬坡。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "接近悲观情景估值下沿，需要判断是否为行业风险恶化导致的价值陷阱。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "高于基准公允价值区间，若盈利修复尚未兑现应考虑降低预期收益率。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入估算买入区间上沿，需要复核苯乙烯-PS价差、现金流和三期产能爬坡。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "接近悲观情景估值下沿，需要判断是否为行业风险恶化导致的价值陷阱。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "高于基准公允价值区间，若盈利修复尚未兑现应考虑降低预期收益率。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查Q2利润、经营现金流、存货减值和三期产能利用率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断苯乙烯成本冲击是否缓解以及全年盈利修复可见度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-03",
-      "reason": "首发前限售股拟解除限售日，关注重要股东减持、流动性和市场定价变化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报与2027年一季报，重新评估周期正常化利润和一体化项目资金压力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

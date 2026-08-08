@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600933",
-  "ticker": "600933",
-  "name": "爱柯迪",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "爱柯迪是汽车铝合金精密压铸优质制造商，2025年利润和现金流质量较好，2026Q1虽增收不增利但估值已处低位；在12-14.5元区间可小仓位买入并跟踪利润率修复和卓尔博并表兑现。",
-  "fair_value_range": [
-    16.0,
-    20.0
-  ],
-  "buy_zone": [
-    12.0,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "爱柯迪",
+    "security_status": "active",
+    "symbol": "CN:600933",
+    "ticker": "600933"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f0506e56940c292365aae03beb84bff49c14bf91fcb45e1c37af88262ff2ddb6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价处于12.0-14.5元且未出现连续两个季度扣非净利润同比下降超过15%",
-      "action": "initial_buy",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报毛利率、扣非净利率、经营现金流和卓尔博并表进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1毛利率恢复至28%以上且经营现金流接近或高于归母净利润",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认增收不增利是否已经改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于22元但2026年归母净利润预期低于14亿元",
-      "action": "reduce",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及卓尔博2026年业绩承诺完成情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "跌入深度安全边际区，若基本面未恶化可复核加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入减仓区，需确认盈利是否足以支撑乐观估值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "跌入深度安全边际区，若基本面未恶化可复核加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "进入减仓区，需确认盈利是否足以支撑乐观估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报毛利率、扣非净利率、经营现金流和卓尔博并表进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认增收不增利是否已经改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及卓尔博2026年业绩承诺完成情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

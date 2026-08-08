@@ -1,42 +1,82 @@
 {
-  "symbol": "CN:601633",
-  "market": "CN",
-  "ticker": "601633",
-  "name": "长城汽车",
-  "company_name": "长城汽车股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "长城汽车具备坦克越野品牌与出口能力两项核心资产,但2026Q1利润显著承压,说明新能源转型、主流SUV竞争和价格战仍在侵蚀盈利;15元附近已不贵但安全边际一般,更适合观察或小仓位试仓,14元以下才进入更有吸引力的买点区间。",
-  "quality_rating": "B+",
-  "valuation_rating": "neutral_to_cheap",
-  "fair_value_range": [15.5, 19.5],
-  "buy_zone": [12.5, 14.5],
-  "strong_attraction_zone": [10.0, 12.5],
-  "sell_or_reduce_zone": [22.0, 999.0],
-  "do_not_chase_above": 21.0,
-  "position_plan": [
-    {"zone": "19.5-21元", "condition": "合理偏贵", "action": "观察", "target_weight": 0.01, "max_weight": 0.02},
-    {"zone": "15.5-19.5元", "condition": "合理区间", "action": "小仓试探", "target_weight": 0.03, "max_weight": 0.04},
-    {"zone": "12.5-14.5元", "condition": "买入区", "action": "分批买入", "target_weight": 0.05, "max_weight": 0.06},
-    {"zone": "10-12.5元", "condition": "强吸引力区", "action": "建仓至6%", "target_weight": 0.06, "max_weight": 0.06}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长城汽车",
+    "security_status": "active",
+    "symbol": "CN:601633",
+    "ticker": "601633"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "7522825b23e4cbcd45f0511a04a4a2768019f0a7d3b6c6c955b9797027ef824f"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "3a06e9c0aace8f5e4d0c46aae256893383b487c5784e46a00567f7159c0fd11c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报披露,关注坦克品牌销量与利润率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.0
+      },
+      "reason": "不追高/减仓评估",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026半年报披露,关注坦克品牌销量与利润率"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 14.5, "reason": "进入买入区"},
-    {"type": "price_above", "price": 21, "reason": "不追高/减仓评估"}
-  ],
-  "key_risks": [
-    "新能源转型慢于同行,主流SUV竞争激烈",
-    "价格战持续侵蚀盈利",
-    "2026Q1利润显著承压",
-    "海外出口受关税与地缘影响",
-    "坦克品牌高端化不及预期",
-    "очной混动与PHEV技术迭代"
-  ],
-  "updated_at": "2026-07-08T16:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

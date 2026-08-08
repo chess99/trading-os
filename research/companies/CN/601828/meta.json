@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:601828",
-  "ticker": "601828",
-  "market": "CN",
-  "name": "美凯龙",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "美凯龙账面资产折价显著，2026Q1 与半年预告显示经营从深亏向微利修复，但扣非盈利和资产质量尚未证明可持续，当前价格缺少足够安全边际，适合观察等待现金流、出租率和债务成本连续验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.9,
-    2.7
-  ],
-  "buy_zone": [
-    1.6,
-    1.9
-  ],
-  "sell_or_reduce_zone": [
-    2.8,
-    3.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美凯龙",
+    "security_status": "active",
+    "symbol": "CN:601828",
+    "ticker": "601828"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "08f7bed62635138a8c0346595e32c2332f637a73972f3bb8fb85f6b811b86b50"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于1.90元且2026H1或2026Q3扣非盈利为正、经营现金流为正、无新增重大减值",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的扣非盈利、经营现金流、出租率和债务结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.60元且债务滚动与出租率未恶化",
-      "action": "提高至小仓位上限",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于2.80元但扣非利润和经营现金流未连续验证",
-      "action": "不追买并减持已有仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报与资产减值、公允价值变动情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.9
+      },
+      "reason": "进入基准买入观察区，需复核经营现金流、扣非利润和债务风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "进入深度折价区，若基本面未恶化可重新评估安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.8
+      },
+      "reason": "高于基准公允价值上沿附近，若缺乏利润和现金流验证应回避追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.9,
-      "reason": "进入基准买入观察区，需复核经营现金流、扣非利润和债务风险"
-    },
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "进入深度折价区，若基本面未恶化可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 2.8,
-      "reason": "高于基准公允价值上沿附近，若缺乏利润和现金流验证应回避追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的扣非盈利、经营现金流、出租率和债务结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报与资产减值、公允价值变动情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

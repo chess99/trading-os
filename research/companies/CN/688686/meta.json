@@ -1,103 +1,124 @@
 {
-  "symbol": "CN:688686",
-  "market": "CN",
-  "ticker": "688686",
-  "name": "奥普特",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "奥普特是机器视觉/工业AI方向值得长期跟踪的高毛利公司，产品线覆盖光源、镜头、相机、视觉控制系统、软件、AI质检与3D视觉，2025和2026Q1收入恢复较强。但当前约156元价格对应约99倍TTM PE和约14倍TTM PS，已隐含未来三年收入高增长、净利率修复和AI/3D商业化成功，安全边际不足。等待95-120元区间并重新验证订单、毛利率、现金流和应收质量。",
-  "fair_value_range": [
-    115,
-    155
-  ],
-  "buy_zone": [
-    95,
-    120
-  ],
-  "sell_or_reduce_zone": [
-    190,
-    220
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥普特",
+    "security_status": "active",
+    "symbol": "CN:688686",
+    "ticker": "688686"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "accbcc4a84eeef2541071164785adec2c20b3ca13992af909bc79e6a77267ba8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "155元以上",
-      "action": "不追高，仅可维持0%-0.5%观察仓",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报后复盘收入是否达到25%增长路径、毛利率、净利率、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "95-120元且订单、毛利率、经营现金流、AI/3D进展验证通过",
-      "action": "可分批买入",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复盘AI质检、3D视觉、锂电、半导体、海外业务进展和利润率修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "90元以下且核心假设未破坏",
-      "action": "可提高至最高仓位",
-      "target_position": "3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报后复盘全年增长目标、自由现金流、资本配置、可转债募投和并购整合",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "190-220元且基本面未同步上修",
-      "action": "减仓或退出",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "2027年半年报后复盘收入向利润和现金流的传导是否持续",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "价格下跌但核心假设未重验",
-      "action": "禁止机械补仓",
-      "target_position": "维持或降低",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 120.0
+      },
+      "reason": "进入买入观察区，重新核验订单、毛利率、经营现金流和AI/3D进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 90.0
+      },
+      "reason": "进入强吸引力买入区，若核心假设未破坏可考虑最高3%仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 155.0
+      },
+      "reason": "超过合理价值上沿，不追高，除非利润和现金流预期同步上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 190.0
+      },
+      "reason": "进入减仓评估区，若基本面未同步上修则降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报后复盘收入是否达到25%增长路径、毛利率、净利率、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复盘AI质检、3D视觉、锂电、半导体、海外业务进展和利润率修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报后复盘全年增长目标、自由现金流、资本配置、可转债募投和并购整合"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "reason": "2027年半年报后复盘收入向利润和现金流的传导是否持续"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 120,
-      "reason": "进入买入观察区，重新核验订单、毛利率、经营现金流和AI/3D进展"
-    },
-    {
-      "type": "price_below",
-      "price": 90,
-      "reason": "进入强吸引力买入区，若核心假设未破坏可考虑最高3%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 155,
-      "reason": "超过合理价值上沿，不追高，除非利润和现金流预期同步上修"
-    },
-    {
-      "type": "price_above",
-      "price": 190,
-      "reason": "进入减仓评估区，若基本面未同步上修则降低仓位"
-    }
-  ],
-  "updated_at": "2026-07-09"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

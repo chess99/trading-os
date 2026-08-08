@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:605080",
-  "market": "CN",
-  "ticker": "605080",
-  "name": "浙江自然",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "浙江自然是现金充足、负债很低的户外用品出口制造商，细分品类具备一定工艺和客户审核门槛，但代工属性决定其缺少终端品牌定价权。2026Q1 收入恢复而利润下滑，说明经营拐点尚未充分确认；当前价格接近公允价值下沿但安全边际不足，等待更低价格或半年报验证扣非利润修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    20,
-    26
-  ],
-  "buy_zone": [
-    15,
-    18.5
-  ],
-  "sell_or_reduce_zone": [
-    27,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江自然",
+    "security_status": "active",
+    "symbol": "CN:605080",
+    "ticker": "605080"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "31ef23287f31a680051813a460624438b038e010194407932673896a738fd0b2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至 18.5 元以下，且 2026H1 扣非净利润同比降幅收窄至 10%以内、毛利率未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报，重点验证扣非利润、毛利率、经营现金流和订单恢复",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1 或 2026Q3 显示收入增速高于 8%、扣非净利润恢复正增长、经营现金流改善",
-      "action": "加仓至中等仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，确认全年利润修复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 27 元但扣非利润未恢复，或毛利率跌破 29%",
-      "action": "减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报及分红、现金用途和海外产能进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
+      "reason": "进入初始买入区间，若基本面未恶化则具备较好安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入深度价值区间，需要复核是否存在未披露基本面恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "超过基准公允价值上沿，若利润没有同步修复应考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.5,
-      "reason": "进入初始买入区间，若基本面未恶化则具备较好安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入深度价值区间，需要复核是否存在未披露基本面恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 27,
-      "reason": "超过基准公允价值上沿，若利润没有同步修复应考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报，重点验证扣非利润、毛利率、经营现金流和订单恢复"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，确认全年利润修复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报及分红、现金用途和海外产能进展"
-    }
-  ],
-  "risk_flags": [
-    "海外需求恢复不及预期",
-    "毛利率继续下行",
-    "客户集中和代工议价",
-    "汇率与贸易摩擦",
-    "现金低效"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

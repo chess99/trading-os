@@ -1,116 +1,123 @@
 {
-  "symbol": "CN:002989",
-  "market": "CN",
-  "ticker": "002989",
-  "name": "中天精装",
-  "company_name": "深圳中天精装股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "research_only",
-  "current_rating": "watch",
-  "current_thesis": "中天精装处于地产链装饰业务收缩与半导体转型早期叠加阶段。2025年和2026Q1仍亏损，现价主要交易半导体转型期权；在可审计的新业务收入、利润和现金流出现前，当前估值缺乏安全边际。",
-  "quality_rating": "低",
-  "valuation_rating": "高估",
-  "fair_value_range": [8.0, 13.0],
-  "buy_zone": [8.0, 10.0],
-  "sell_or_reduce_zone": [18.0, 999.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中天精装",
+    "security_status": "active",
+    "symbol": "CN:002989",
+    "ticker": "002989"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4245baf0ba21bc6696b1e7a21d60096a9f3ed3fc688f9dcee040fe2774fa6575"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于18元且半导体/算力业务没有可审计的规模收入和利润",
-      "max_weight": 0.0,
-      "action": "维持0仓位，仅跟踪公告和季报"
-    },
-    {
-      "condition": "股价跌至10元以下，且2026Q2或Q3归母净资产未大幅缩水、经营现金流不恶化",
-      "max_weight": 0.01,
-      "action": "可建立0.5%-1.0%观察仓"
-    },
-    {
-      "condition": "股价跌至8元以下，且应收款项、合同资产和工抵房没有新增重大减值",
-      "max_weight": 0.03,
-      "action": "可提高到2%-3%以内"
-    },
-    {
-      "condition": "半导体或算力业务单季收入超过5000万元，毛利率和现金回款可核验，且不是一次性贸易代采",
-      "max_weight": 0.03,
-      "action": "重做成长型估值，再决定是否放宽买入价格"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "currency": "CNY",
-      "reason": "价格进入初步可买区间，接近1.4倍2026Q1每股净资产",
-      "action": "复核资产质量并考虑观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "currency": "CNY",
-      "reason": "价格接近账面净资产保护区，安全边际改善",
-      "action": "若财务未恶化，复核是否进入安全边际区"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "currency": "CNY",
-      "reason": "若缺少新业务利润验证，该价格明显高于资产型估值",
-      "action": "若无新业务利润验证，维持不买或减仓判断"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报将验证传统主业止血、现金流和资产质量变化",
-      "action": "更新收入、利润、现金流、资产质量和估值区间"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "半导体/算力业务披露大额订单、量产、客户认证或融资估值",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "转型期权是当前估值主要来源，需定期核验",
-      "action": "重估转型期权价值"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "应收款项融资、合同资产、工抵房或长期股权投资发生重大减值",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "资产质量直接决定安全边际和可买价格",
-      "action": "下修资产价值和可买价格"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-16",
-      "condition": "精装转债触发赎回、回售、转股价格调整或偿付压力事件",
+      "active": true,
+      "condition": {
+        "date": "2027-03-16"
+      },
       "reason": "可转债会影响稀释、现金偿付和资本结构",
-      "action": "复核稀释和流动性风险"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "控股股东、实控人、董事长或总经理发生重大变更",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "治理变化可能改变半导体投资和现金使用节奏",
-      "action": "复核资本配置和治理假设"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "价格进入初步可买区间，接近1.4倍2026Q1每股净资产",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "价格接近账面净资产保护区，安全边际改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "若缺少新业务利润验证，该价格明显高于资产型估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "半导体/算力合并口径收入及毛利率",
-    "微封科技和中天数算订单金额、交付节点及回款",
-    "科睿斯客户认证、量产和融资进展",
-    "远见智存HBM产品流片、验证、量产和融资进展",
-    "经营活动现金流净额",
-    "应收款项融资和合同资产账面价值及坏账准备",
-    "工抵房和其他非流动资产处置价格与账面价值差异",
-    "归母净资产和每股净资产",
-    "前五大客户收入占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

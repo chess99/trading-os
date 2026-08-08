@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:002088",
-  "market": "CN",
-  "ticker": "002088",
-  "name": "鲁阳节能",
-  "company_name": "鲁阳节能",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "current_thesis": "陶瓷纤维龙头资产质量仍在，但2025年以来收入、毛利率和净利润大幅下滑，2026Q1尚未确认拐点；当前以观察为主，等待毛利率和经营现金流恢复后再提高仓位。",
-  "fair_value_range": [
-    7.0,
-    9.5
-  ],
-  "buy_zone": [
-    5.8,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鲁阳节能",
+    "security_status": "active",
+    "symbol": "CN:002088",
+    "ticker": "002088"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "e04d967de7abed3a8de1fbd1a903616368232d3ed3eb101a5058ccf890f7f68f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.50元，且最新一期毛利率不低于20%、经营现金流不持续为负",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "低于保守PB买入区上沿，开始具备资产安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比转正或降幅收窄至5%以内，陶瓷纤维毛利率回到27%以上",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.05,
-      "reason": "盈利拐点被订单和毛利率共同验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认盈利拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "年化扣非净利恢复至2亿元以上，经营现金流为正且应收账款未继续恶化",
-      "action": "提高至上限仓位",
-      "max_weight": 0.08,
-      "reason": "龙头质量重新转化为利润和现金流"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入首笔买入区，需复核毛利率和现金流是否未继续恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入深度价值区，可按资产法重新评估风险收益",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "高于基准合理价值区上沿，若盈利未修复应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "接近乐观情景估值，需兑现或等待更强业绩证据",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入首笔买入区，需复核毛利率和现金流是否未继续恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入深度价值区，可按资产法重新评估风险收益"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "高于基准合理价值区上沿，若盈利未修复应减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "接近乐观情景估值，需兑现或等待更强业绩证据"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认盈利拐点"
-    }
-  ],
-  "key_tracking_metrics": [
-    "陶瓷纤维产品收入同比增速",
-    "陶瓷纤维产品毛利率",
-    "综合毛利率",
-    "经营活动现金流净额",
-    "应收账款及应收账款/收入比例",
-    "陶瓷纤维棉毯及组件产能利用率",
-    "库存量及库存同比变化",
-    "汽车衬垫和工业过滤制品收入及毛利率",
-    "分红金额及利润覆盖倍数",
-    "控股股东及关联交易变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

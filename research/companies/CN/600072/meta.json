@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:600072",
-  "ticker": "600072",
-  "name": "中船科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "中船科技是中国船舶集团体系内风电装备与工程科技平台，收入规模已由风电业务驱动增长，但2025年和2026H1仍处亏损，利润质量和现金流拐点尚未验证；当前适合观察，等待风电装备毛利率转正、经营现金流改善和估值回落到安全边际区间。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.8,
-    7.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    7.8,
-    9.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中船科技",
+    "security_status": "active",
+    "symbol": "CN:600072",
+    "ticker": "600072"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "41e8a01aeffc4e20052f0be08f5592dccf483075ee5069738f8ecf8e53492058"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前仍亏损且价格高于保守公允价值中枢，维持观察，不建立仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点检查风电装备毛利率、经营现金流、减值和回款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若价格回落至5.6元以下，且2026中报或三季报显示亏损继续收窄、经营现金流改善、风电装备毛利率明显修复，可试探性建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认亏损是否继续收窄以及订单交付质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度归母净利润为正、经营现金流为正且应收/存货/合同资产未恶化，可提高至小仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断风电业务是否完成出清并具备恢复期估值基础。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入保守买入区间上沿，需复核财报确认是否存在安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "高于基准公允价值上沿，若未确认扭亏应降低关注优先级或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入保守买入区间上沿，需复核财报确认是否存在安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "高于基准公允价值上沿，若未确认扭亏应降低关注优先级或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点检查风电装备毛利率、经营现金流、减值和回款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认亏损是否继续收窄以及订单交付质量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断风电业务是否完成出清并具备恢复期估值基础。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

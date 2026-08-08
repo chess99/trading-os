@@ -1,99 +1,96 @@
 {
-  "symbol": "CN:601636",
-  "market": "CN",
-  "ticker": "601636",
-  "name": "旗滨集团",
-  "company_name": "旗滨集团",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "旗滨集团是具备规模、成本与产品平台优势的玻璃周期股，但截至2026-07-09估值未到明显便宜区，适合观察并等待5.6-6.3元买入区，4.9-5.5元强吸引力区。",
-  "quality_rating": "B+",
-  "valuation_rating": "neutral_to_expensive",
-  "fair_value_range": [
-    6.2,
-    7.8
-  ],
-  "buy_zone": [
-    5.6,
-    6.3
-  ],
-  "sell_or_reduce_zone": [
-    8.6,
-    9.7
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "旗滨集团",
+    "security_status": "active",
+    "symbol": "CN:601636",
+    "ticker": "601636"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "64166d24db91cb2c0ef4e0a2c9b7bfb1d7be1943f4fac307b1c7e36a7bfda694"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于8.6元或出现短期情绪化拉升但基本面未同步改善",
-      "action": "不追高，控制仓位或逢高减仓",
-      "max_weight": 0.05,
-      "reason": "当前仍属强周期行业，估值扩张可持续性不足。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、光伏玻璃毛利率和定增推进。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于6.3元至7.8元，行业数据无显著改善",
-      "action": "维持观察，不急于建仓",
-      "max_weight": 0.15,
-      "reason": "赔率一般，尚未形成足够安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断行业修复是否从价格走到利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至5.6元至6.3元，且光伏玻璃/浮法玻璃价格不再继续恶化",
-      "action": "分批建仓",
-      "max_weight": 0.30,
-      "reason": "接近合理偏低区间，安全边际开始出现。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.3
+      },
+      "reason": "进入初步可买区间，开始复核行业库存、价格和公司现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价回落至4.9元至5.5元，且资产负债表与现金流未明显恶化",
-      "action": "积极买入",
-      "max_weight": 0.50,
-      "reason": "接近悲观估值区，赔率显著改善。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入强吸引力买点，前提是确认不是基本面断裂。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.6
+      },
+      "reason": "进入不应追高区间，需要评估是否减仓或继续观望。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.3,
-      "reason": "进入初步可买区间，开始复核行业库存、价格和公司现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入强吸引力买点，前提是确认不是基本面断裂。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.6,
-      "reason": "进入不应追高区间，需要评估是否减仓或继续观望。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、光伏玻璃毛利率和定增推进。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断行业修复是否从价格走到利润。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "浮法玻璃价格与行业库存",
-    "光伏玻璃价格、库存与冷修节奏",
-    "超白光伏玻璃毛利率",
-    "节能建筑玻璃收入占比与毛利率",
-    "海外收入占比与海外毛利率",
-    "经营活动现金流净额",
-    "资本开支与自由现金流",
-    "定增项目审批、投产与回报率",
-    "分红率与回购执行情况",
-    "资产负债率与有息负债变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

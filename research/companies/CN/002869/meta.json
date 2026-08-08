@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:002869",
-  "market": "CN",
-  "ticker": "002869",
-  "name": "金溢科技",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "金溢科技具备 ETC/RFID 与智慧交通积累，账面现金和理财资产提供下行缓冲，但 2025-2026H1 经营仍处亏损和转型验证期。当前价格大致处于基准价值中部，需等待车路云/智慧高速订单、毛利率和扣非盈利拐点确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12,
-    16
-  ],
-  "buy_zone": [
-    9,
-    11
-  ],
-  "sell_or_reduce_zone": [
-    20,
-    23
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金溢科技",
+    "security_status": "active",
+    "symbol": "CN:002869",
+    "ticker": "002869"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "d4e91995daab7f84c32ff46328eff360c170e63f54adde41b276ca783bec5e9c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌至 10-11 元且货币资金加交易性金融资产仍不低于 11 亿元、未出现大额减值或治理风险",
-      "action": "建立研究仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报的收入、毛利率、扣非亏损、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 9 元且半年报确认经营现金流未显著恶化、应收账款和存货风险可控",
-      "action": "复核后考虑提高仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报是否出现订单确认和亏损收窄",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 20 元但车路云订单和扣非盈利未验证",
-      "action": "不追高并减持已有研究仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断车路云与新业务是否形成可持续收入",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入资产安全边际观察区，需复核现金资产、应收账款和存货质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "接近悲观情景估值下沿，若资产质量稳定可重新评估买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "进入乐观情景估值区，若无大订单和扣非转正支撑应降低风险敞口",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11,
-      "reason": "进入资产安全边际观察区，需复核现金资产、应收账款和存货质量"
-    },
-    {
-      "type": "price_below",
-      "price": 9,
-      "reason": "接近悲观情景估值下沿，若资产质量稳定可重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 20,
-      "reason": "进入乐观情景估值区，若无大订单和扣非转正支撑应降低风险敞口"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报的收入、毛利率、扣非亏损、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报是否出现订单确认和亏损收窄"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断车路云与新业务是否形成可持续收入"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

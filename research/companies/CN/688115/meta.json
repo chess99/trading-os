@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:688115",
-  "market": "CN",
-  "ticker": "688115",
-  "name": "思林杰",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "思林杰具备嵌入式智能仪器和自动化测试设备的技术弹性，2026Q1 显示收入与利润修复，但 2025 年仍亏损，当前除权后 47 元价格已经提前计入较强增长和利润率修复，安全边际不足，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    32,
-    42
-  ],
-  "buy_zone": [
-    24,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "思林杰",
+    "security_status": "active",
+    "symbol": "CN:688115",
+    "ticker": "688115"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "8d6cb333a8f0cf702547aa8d2671abe3670edfba3a64cc1545b555636b3d4ee7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 32 元，且最近一期收入增速高于 30%、归母净利率为正、经营现金流未明显恶化，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入持续性、净利率、经营现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入、利润率、经营现金流同步改善，且估值仍低于 42 元合理价值上沿，可提高配置。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 Q1 高增长是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 52 元但业绩未超过基准情景，或应收和存货明显快于收入增长，应降至零仓或仅保留跟踪。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和 2027 年一季报，重新评估合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入合理价值区间下沿，需要复核半年报/三季报后评估小仓位买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入悲观情景价值区间，若基本面未恶化可能出现安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "超过基准估值上沿，若缺少订单、利润率和现金流验证，应考虑减持或不参与。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "接近乐观情景估值，需要重新核验增长兑现度和估值泡沫风险。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入合理价值区间下沿，需要复核半年报/三季报后评估小仓位买入。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入悲观情景价值区间，若基本面未恶化可能出现安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "超过基准估值上沿，若缺少订单、利润率和现金流验证，应考虑减持或不参与。"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "接近乐观情景估值，需要重新核验增长兑现度和估值泡沫风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入持续性、净利率、经营现金流、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 Q1 高增长是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和 2027 年一季报，重新评估合理价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

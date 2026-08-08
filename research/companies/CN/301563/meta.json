@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:301563",
-  "ticker": "301563",
-  "name": "云汉芯城",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "云汉芯城是电子元器件线上分销与产业互联网平台，受益于半导体周期复苏、AI/服务器和国产替代需求，2026H1 业绩预告显示利润弹性强；但当前估值已计入较多改善，仍需半年报验证现金流、存货和应收质量。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    115,
-    145
-  ],
-  "buy_zone": [
-    95,
-    115
-  ],
-  "sell_or_reduce_zone": [
-    170,
-    190
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "云汉芯城",
+    "security_status": "active",
+    "symbol": "CN:301563",
+    "ticker": "301563"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "42b6842cdf996466ff58b4af6bc70fa36b2521f55ed162de6a1689907b3ecb97"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026H1 半年报归母净利润落在预告区间且经营现金流没有明显背离利润，同时股价进入 95-115 元区间",
-      "action": "建立观察性小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报正式数据、经营现金流、存货和应收账款质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 全年利润上修至 4 亿元以上且存货周转、应收账款质量保持健康",
-      "action": "可在估值回落后提高配置",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断高增长是否延续至下半年",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 170 元且盈利预测没有同步上修，或经营现金流连续背离利润",
-      "action": "不新增仓位并考虑减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重估全年盈利中枢和现金流转化率",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 115.0
+      },
+      "reason": "进入初始买入区上沿，若半年报验证利润和现金流质量，可重新评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 95.0
+      },
+      "reason": "进入更明确安全边际区，若基本面未恶化，风险收益比显著改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 170.0
+      },
+      "reason": "超过情景估值基准区间上沿，若业绩未继续上修，应考虑降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 115,
-      "reason": "进入初始买入区上沿，若半年报验证利润和现金流质量，可重新评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 95,
-      "reason": "进入更明确安全边际区，若基本面未恶化，风险收益比显著改善"
-    },
-    {
-      "type": "price_above",
-      "price": 170,
-      "reason": "超过情景估值基准区间上沿，若业绩未继续上修，应考虑降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报正式数据、经营现金流、存货和应收账款质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断高增长是否延续至下半年"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重估全年盈利中枢和现金流转化率"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

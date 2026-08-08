@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:688196",
-  "market": "CN",
-  "ticker": "688196",
-  "name": "卓越新能",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "卓越新能是国内废弃油脂制生物柴油龙头，具备原料网络、工艺和海外渠道优势，HVO/SAF及海外产能提供中期弹性；但2026Q1利润大幅下滑、经营现金流和存货压力较大，且7月补税事项削弱短期确定性，当前应观察H1毛利率、现金流及新产能试生产验证后再加大仓位。",
-  "fair_value_range": [
-    35,
-    45
-  ],
-  "buy_zone": [
-    26,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    50,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "卓越新能",
+    "security_status": "active",
+    "symbol": "CN:688196",
+    "ticker": "688196"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "5dd4e0f3aa44a270005af6aa1deca7777c2d6bfe814a9659560602bf6e2b668f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于30元，且无新增税务、贸易政策或产能试生产负面公告",
-      "action": "建立0.5%-1.0%观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "预计2026年半年报披露后复核毛利率、存货、经营现金流和补税影响。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1披露后，生物柴油毛利率修复、经营现金流改善，且HVO/SAF试生产进展正常",
-      "action": "加至2%-3%核心观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复核HVO/SAF试生产、海外项目进度和全年盈利中枢。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "HVO/SAF形成可验证订单和毛利贡献，存货不再上升，出口价格改善",
-      "action": "最高提高至4%，不追高超过合理价值上沿",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入明显安全边际区，若基本面未恶化可复核加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 50.0
+      },
+      "reason": "超过当前合理价值区间上沿，需要复核HVO/SAF兑现程度并考虑减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入明显安全边际区，若基本面未恶化可复核加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 50,
-      "reason": "超过当前合理价值区间上沿，需要复核HVO/SAF兑现程度并考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "预计2026年半年报披露后复核毛利率、存货、经营现金流和补税影响。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复核HVO/SAF试生产、海外项目进度和全年盈利中枢。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

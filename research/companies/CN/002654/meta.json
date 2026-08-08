@@ -1,76 +1,111 @@
 {
-  "symbol": "CN:002654",
-  "market": "CN",
-  "ticker": "002654",
-  "name": "万润科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "存储业务已形成真实收入且增长较快，但2025年毛利率仅4.69%、万润半导体净利润仅560.99万元，2026Q1公司仍亏损且经营现金流净流出、存货和短期借款上升；12.86元对应约109亿元市值，仍透支存储收入、利润率和客户层级同时跃迁的预期，当前不建仓。",
-  "fair_value_range": [
-    6.0,
-    9.0
-  ],
-  "buy_zone": [
-    4.8,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万润科技",
+    "security_status": "active",
+    "symbol": "CN:002654",
+    "ticker": "002654"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "13e22e4ed51552abad2ad8fa5249f1885dd24e79d5b87dc92da03887baf90047"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "0f0a20a670800fb83b0359bf85c4f57f03dff42c6b9ea654b4a66f837ce44de4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于12元，且存储业务毛利率、净利润和现金流没有公告级跃迁证据",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的存储分部收入、毛利、子公司利润、库存、应收和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入6.50-9.00元，且存储毛利率达到8%以上、库存周转未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1亏损是否扭转及备货是否有效转化为销售。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格进入4.80-6.50元，连续两个季度经营现金流改善且存储收入与利润同步增长",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入合理价值上沿，复核存储毛利率和库存后再决定是否观察。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入初步买入区，仅在经营质量同步改善时建立观察仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "进入减仓区，若存储利润和现金流未兑现则不应追涨。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "超过减仓区上沿，除非公告级利润跃迁得到验证，否则应退出。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的存储分部收入、毛利、子公司利润、库存、应收和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1亏损是否扭转及备货是否有效转化为销售。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入合理价值上沿，复核存储毛利率和库存后再决定是否观察。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入初步买入区，仅在经营质量同步改善时建立观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "进入减仓区，若存储利润和现金流未兑现则不应追涨。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "超过减仓区上沿，除非公告级利润跃迁得到验证，否则应退出。"
-    }
-  ],
-  "updated_at": "2026-07-18T09:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

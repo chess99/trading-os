@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600383",
-  "ticker": "600383",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "金地集团",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "金地集团处于房地产深度调整后的困境修复期，静态P/B极低但2026H1仍预亏且销售降幅大于行业；当前更适合观察，等待股价进入足够折价区或销售、现金流、减值三项指标确认改善后再小仓试错。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    1.8,
-    2.8
-  ],
-  "buy_zone": [
-    1.55,
-    1.9
-  ],
-  "sell_or_reduce_zone": [
-    3.1,
-    3.6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金地集团",
+    "security_status": "active",
+    "symbol": "CN:600383",
+    "ticker": "600383"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "351f060b736a3c4c6bf017c8eb1cd183e5f25f8f042ac3aaf0670702b7f566a1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入1.55-1.90元且月度销售降幅未继续扩大、公开债务兑付和银行续作无负面事件时，可建立观察性困境反转仓。",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报真实亏损、归母权益、现金流、减值和债务结构。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续3个月签约金额同比降幅收窄至25%以内，经营现金流转正，且中报或三季报减值明显下降。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报以及7-9月销售是否出现趋势性修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于3.10元但销售、毛利率、现金流没有同步改善，或公告显示重大资产折价出售、融资续作恶化。",
-      "action": "reduce_or_exit",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、全年减值、债务兑付和2027年经营计划。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.9
+      },
+      "reason": "进入买入区上沿，需要复核销售、现金流和债务续作后决定是否试错。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.55
+      },
+      "reason": "进入深度折价区，若无新增债务风险，可重新评估安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.1
+      },
+      "reason": "进入卖出或减持区下沿，若基本面未同步修复应降低风险暴露。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.9,
-      "reason": "进入买入区上沿，需要复核销售、现金流和债务续作后决定是否试错。"
-    },
-    {
-      "type": "price_below",
-      "price": 1.55,
-      "reason": "进入深度折价区，若无新增债务风险，可重新评估安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 3.1,
-      "reason": "进入卖出或减持区下沿，若基本面未同步修复应降低风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报真实亏损、归母权益、现金流、减值和债务结构。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报以及7-9月销售是否出现趋势性修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、全年减值、债务兑付和2027年经营计划。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

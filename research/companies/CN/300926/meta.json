@@ -1,90 +1,95 @@
 {
-  "symbol": "CN:300926",
-  "ticker": "300926",
-  "name": "博俊科技",
-  "company_name": "江苏博俊工业科技股份有限公司",
-  "market": "CN",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "博俊科技从传统冲压件供应商升级为新能源车白车身、热成型和一体化压铸结构件供应商，2025年收入和利润高增，当前约9倍TTM PE已反映2026Q1阶段性放缓。若核心客户新车型放量和压铸项目爬坡兑现，当前价格具备分批买入价值。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "decision": "买入",
-  "confidence": "中",
-  "currency": "CNY",
-  "last_price": {
-    "price": 17.12,
-    "date": "2026-07-15",
-    "source": "Investing/Google Finance/Moomoo snapshot; multiple market data sources differ slightly"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博俊科技",
+    "security_status": "active",
+    "symbol": "CN:300926",
+    "ticker": "300926"
   },
-  "fair_value_range": [
-    24,
-    30
-  ],
-  "buy_zone": [
-    0,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    999
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "7bc8644e4f4522e660e1a56a84a12715b56c8465edba7466c3786c25808d0c7f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价低于18元且未出现核心客户订单恶化或经营现金流恶化",
-      "action": "建立或维持观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、净利率、经营现金流和客户集中度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于15元且2026Q2/Q3收入恢复同比增长、净利率不低于12%",
-      "action": "提高至核心仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1下滑是否已修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年单季收入和利润连续两个季度改善，经营现金流/净利润高于60%",
-      "action": "可继续加仓但控制单一中小盘汽车链暴露",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及压铸项目、机器人业务进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "若基本面未恶化，估值进入高安全边际区间，可复核是否加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "价格超过基准公允价值上沿，需要验证2026年利润或新业务订单，否则考虑减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "若基本面未恶化，估值进入高安全边际区间，可复核是否加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "价格超过基准公允价值上沿，需要验证2026年利润或新业务订单，否则考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、净利率、经营现金流和客户集中度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1下滑是否已修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及压铸项目、机器人业务进展。"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "2026Q2/Q3收入同比增速",
-    "单季归母净利率是否不低于12%",
-    "经营现金流/净利润是否不低于60%",
-    "前五大客户收入占比是否低于65%",
-    "一体化压铸项目新增定点和量产节奏",
-    "机器人业务是否出现可核验订单"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

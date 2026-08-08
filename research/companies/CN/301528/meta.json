@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:301528",
-  "ticker": "301528",
-  "name": "多浦乐",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "多浦乐是国内工业超声无损检测设备稀缺标的，技术和现金资产质量较好，但 2026Q1 收入下滑且净利转亏，当前估值已接近乐观情景，安全边际不足，适合观察等待业绩恢复或价格回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    45,
-    58
-  ],
-  "buy_zone": [
-    40,
-    45
-  ],
-  "sell_or_reduce_zone": [
-    70,
-    85
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "多浦乐",
+    "security_status": "active",
+    "symbol": "CN:301528",
+    "ticker": "301528"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "cff84a5cc8a6b283a009119c3e06f8cca2d4ae298e26dd4a26fb5210ae7e3dc6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入 40-45 元且 2026 半年报确认收入恢复、毛利率稳定、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报收入、扣非利润、毛利率、合同负债和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格高于 70 元且未出现扣非利润 30% 以上增长或明确订单能见度改善",
-      "action": "不新增并考虑降低已有仓位",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入基准估值下沿附近，可结合最新财报重新评估试探仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，确认 Q1 波动是否已被后续交付修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 70,
-      "reason": "接近乐观情景定价，若缺乏业绩加速则安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报收入、扣非利润、毛利率、合同负债和经营现金流"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入基准估值下沿附近，可结合最新财报重新评估试探仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，确认 Q1 波动是否已被后续交付修复"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "接近乐观情景定价，若缺乏业绩加速则安全边际不足",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

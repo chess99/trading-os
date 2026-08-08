@@ -1,125 +1,115 @@
 {
-  "symbol": "CN:002266",
-  "market": "CN",
-  "ticker": "002266",
-  "name": "浙富控股",
-  "company_name": "浙富控股",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "updated_at": "2026-07-08T11:30:00+08:00",
-  "conclusion": "浙富控股是危废资源化现金流周期品叠加水电/核电高端装备期权的混合资产，2026年上半年业绩弹性已兑现，但现金流、客户集中度、商品价格和套保波动要求保守仓位；5.28元处于合理区间中部偏下，只适合小仓试探，不适合追高。",
-  "current_rating": "watch",
-  "current_thesis": "危废资源化业务提供利润弹性和规模基础，水电/核电装备提供高端制造期权；只有在经营现金流延续改善、资源化毛利率稳定且订单兑现时，当前估值才有上修空间。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏便宜",
-  "fair_value_range": [4.8, 6.4],
-  "fair_value": {
+  "identity": {
     "currency": "CNY",
-    "range": [4.8, 6.4],
-    "method": "相对PE、正常化现金流绝对估值、悲观/基准/乐观情景交叉"
+    "market": "CN",
+    "name": "浙富控股",
+    "security_status": "active",
+    "symbol": "CN:002266",
+    "ticker": "002266"
   },
-  "buy_zone": [4.2, 4.8],
-  "buy_zone_detail": {
-    "currency": "CNY",
-    "safe_below": 4.8,
-    "strong_below": 4.2,
-    "reason": "低于4.8元开始具备安全边际，低于4.2元已接近悲观情景估值下沿。"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "e2940e668554c6e3fa0c67bc98da9364745dc628ee1063e1dfabf89302b45a8c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "sell_or_reduce_zone": [6.4, 6.8],
-  "sell_or_reduce_zone_detail": {
-    "currency": "CNY",
-    "reduce_above": 6.4,
-    "watch_above": 6.8,
-    "reason": "高于6.4元需要新增订单和现金流继续验证，高于6.8元若基本面无增量则赔率转弱。"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "position_plan": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约5.28元，处于合理区间中部偏下但未进入安全边际区",
-      "max_weight": 0.06,
-      "action": "5.28元不追涨，可用1%-1.5%观察仓，优先等待4.80元以下再加仓。",
-      "first_position_weight": 0.015,
-      "add_below": 4.8,
-      "strong_add_below": 4.2
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际数据、现金流和资源化业务毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认H1高增长能否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年利润、现金流、分红和订单质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入安全边际买入区，允许从观察仓提高到3%-5%。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "接近悲观情景下沿，若基本面未恶化，具备强吸引力。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.4
+      },
+      "reason": "超过合理估值上沿，不再追高，等待业绩和现金流验证。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "若无新增订单或现金流改善，应考虑降仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "watch": [
-    "2026H1归母净利润是否落在12.50-14.50亿元预告区间",
-    "2026H1扣非归母净利润是否落在11.50-13.50亿元预告区间",
-    "经营现金流净额/归母净利润是否持续高于0.8",
-    "危险废物处置及资源化产品毛利率是否稳定在10%-12%以上",
-    "清洁能源装备新签订单是否恢复到20亿元以上",
-    "前五大客户销售占比和第一大客户占比是否下降",
-    "持股5%以上股东后续减持节奏"
-  ],
-  "tracking_indicators": [
-    "资源化产品销量、吨毛利、库存与主要金属价格",
-    "经营现金流净额/归母净利润",
-    "危废资源化业务毛利率",
-    "水电、抽蓄、核电新签订单与在手订单",
-    "研发费用投向和资源化回收率改善",
-    "客户集中度",
-    "股东减持、质押和回购股份用途"
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入安全边际买入区，允许从观察仓提高到3%-5%。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "接近悲观情景下沿，若基本面未恶化，具备强吸引力。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.4,
-      "reason": "超过合理估值上沿，不再追高，等待业绩和现金流验证。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "若无新增订单或现金流改善，应考虑降仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际数据、现金流和资源化业务毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认H1高增长能否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年利润、现金流、分红和订单质量。"
-    }
-  ],
-  "review_plan": "半年报披露后第一时间复核预告兑现、经营现金流、资源化产品量价、清洁能源装备新签订单；三季报复核增长延续性；年报复核全年现金流转化和资本配置。",
-  "key_risks": [
-    "金属价格下跌或原料价差收窄导致资源化毛利率回落",
-    "2025年经营现金流弱，若2026年不能持续改善，利润质量会被折价",
-    "前五大客户销售占比59.29%，客户集中度高",
-    "危废环保合规、安全生产、排放事故或资质风险",
-    "套期保值平仓损益和公允价值变动扰动利润",
-    "持股5%以上股东持续减持造成供给压力",
-    "水电、核电装备订单交付和收入确认低于预期"
-  ],
-  "sources": [
-    "巨潮资讯：2025年年度报告，finalpage/2026-04-29/1225226528.PDF",
-    "巨潮资讯：2026年一季度报告，finalpage/2026-04-29/1225226536.PDF",
-    "巨潮资讯：2026年半年度业绩预告，finalpage/2026-07-06/1225408984.PDF",
-    "巨潮资讯：2025年度权益分派实施公告，finalpage/2026-06-04/1225349219.PDF",
-    "新浪行情：https://hq.sinajs.cn/list=sz002266，2026-07-08 11:17:24",
-    "腾讯行情：https://qt.gtimg.cn/q=sz002266，2026-07-08 11:18:06",
-    "腾讯同业行情：https://qt.gtimg.cn/q=sz002340,sz002672,sh603588,sh600875,sh601727，2026-07-08 11:24:57/11:24:58"
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

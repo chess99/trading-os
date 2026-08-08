@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:600618",
-  "ticker": "600618",
-  "name": "氯碱化工",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是A股氯碱/PVC链条中盈利质量较稳的标的，上海化工区管道配套、上海/广西双基地和烧碱高毛利构成主要优势；但2026-07-16收盘价9.82元已接近合理价值中枢，PVC仍处亏损状态，当前安全边际不足，适合观察等待更好价格或新项目兑现。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    8.5,
-    10.8
-  ],
-  "buy_zone": [
-    7.2,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    13.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "氯碱化工",
+    "security_status": "active",
+    "symbol": "CN:600618",
+    "ticker": "600618"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "76c216225cc4aa23ffbb9588e9cf7f675d3b594beb61f23719ac508c908cbef5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入7.2-8.0元且烧碱价格、PVC毛利率、单季扣非净利润未明显恶化时，可小仓位观察买入。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看PVC毛利率、烧碱价格和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若2026年半年报显示PVC毛利率修复且新项目爬坡顺利，可在合理估值下维持跟踪仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认单季盈利是否继续承压。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若价格高于12.0元且利润未上修至10亿元以上，应降低仓位或停止加仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及新项目投产贡献。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入买入观察带，约对应低于1倍2026Q1 PB和约10倍2025 PE。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "进入减仓观察带，估值需要烧碱高景气和新材料项目兑现共同支撑。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入买入观察带，约对应低于1倍2026Q1 PB和约10倍2025 PE。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "进入减仓观察带，估值需要烧碱高景气和新材料项目兑现共同支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看PVC毛利率、烧碱价格和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认单季盈利是否继续承压。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及新项目投产贡献。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

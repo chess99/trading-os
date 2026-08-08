@@ -1,139 +1,115 @@
 {
-  "symbol": "CN:000792",
-  "market": "CN",
-  "ticker": "000792",
-  "name": "盐湖股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "盐湖股份仍是稀缺的钾肥现金牛叠加低成本盐湖提锂资产，2026Q1利润与经营现金流质量良好，五矿整合和新增锂盐产能提供长期增量；但2025年利润含较大递延所得税收益，2026H1钾肥销量依赖库存释放、锂盐产销差约1万吨，且母公司未分配利润尚未转正。2026-07-17收盘24.93元处于22-29元合理价值区间中部，赔率不足以建立正式仓，当前以等待或0.3%-0.5%跟踪仓为主，21.5-23元且半年报未证伪时再建正式仓。",
-  "fair_value_range": [
-    22.0,
-    29.0
-  ],
-  "buy_zone": [
-    21.5,
-    23.0
-  ],
-  "sell_or_reduce_zone": [
-    29.0,
-    33.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盐湖股份",
+    "security_status": "active",
+    "symbol": "CN:000792",
+    "ticker": "000792"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "d5d3476db76f4056d1352c3d16c2200c79653c48b5199f1ae50dc1daace2f2f0"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "dd47a3518489d61aa61c9ab0d8941f8c57ad15b1bf69dd0b04798a56ea2f067d"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-investment-committee-review.md",
+        "sha256": "efba5c6a40331789bc742921d5e9dfc08c136b31b88250d46b1bf0282d5d41bb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price_range": [
-        19.5,
-        20.5
-      ],
-      "condition": "股价处于19.5-20.5元且确认只是价格错杀，现金流、库存、锂价和产能逻辑未破坏",
-      "action": "accumulate_after_recheck",
-      "target_weight": [
-        0.01,
-        0.015
-      ],
-      "max_weight": 0.02
-    },
-    {
-      "price_range": [
-        21.5,
-        23.0
-      ],
-      "condition": "股价处于21.5-23元且半年报未出现现金流、库存或产能证伪",
-      "action": "buy",
-      "target_weight": [
-        0.008,
-        0.01
-      ],
-      "max_weight": 0.02
-    },
-    {
-      "price_range": [
-        23.0,
-        28.5
-      ],
-      "condition": "股价处于23-28.5元；仅在组合没有钾锂或资源品敞口时建立研究跟踪仓",
-      "action": "watch_or_tracking_position",
-      "target_weight": [
-        0.0,
-        0.005
-      ],
-      "max_weight": 0.02
-    },
-    {
-      "price_range": [
-        28.5,
-        29.0
-      ],
-      "condition": "股价达到28.5元以上且盈利预测未继续上修",
-      "action": "avoid_chasing",
-      "target_weight": [
-        0.0,
-        0.005
-      ],
-      "max_weight": 0.02
-    },
-    {
-      "price_range": [
-        29.0,
-        33.0
-      ],
-      "condition": "股价处于29-33元且锂价和盈利预测没有继续上修",
-      "action": "reduce",
-      "target_weight": [
-        0.0,
-        0.01
-      ],
-      "max_weight": 0.02
-    }
-  ],
-  "latest_report": "reports/2026-07-18-investment-committee-review.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md",
-    "reports/2026-07-18-investment-committee-review.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年半年报披露后复核归母净利润、扣非净利润、产销量、库存和五矿盐湖并表影响",
-      "condition": "2026年半年报披露后",
-      "action": "核对归母净利润、扣非净利润、产销量、库存和五矿盐湖并表影响"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报披露后复核钾肥和碳酸锂毛利率、库存、经营现金流和全年利润中枢",
-      "condition": "2026年三季报披露后",
-      "action": "复核钾肥和碳酸锂毛利率、库存、经营现金流和全年利润中枢"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2026年年报披露后复核分红恢复、五矿盐湖并表效果、资本开支和正常化估值",
-      "condition": "2026年年报披露后",
-      "action": "复核分红恢复、五矿盐湖并表效果、资本开支和正常化估值"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 23.0,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
       "reason": "进入正式首仓买入区",
-      "action": "复核半年报现金流、库存、锂价和产能后，考虑建立0.8%-1.0%正式仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 20.5,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.5
+      },
       "reason": "进入深度买入区",
-      "action": "先确认属于价格错杀而非基本面证伪，逻辑未坏时可增至约1.5%"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 29.0,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.0
+      },
       "reason": "进入减仓观察区",
-      "action": "若锂价和盈利预测没有继续上修，停止新增并逐步兑现"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-18"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

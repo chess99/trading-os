@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688280",
-  "market": "CN",
-  "ticker": "688280",
-  "name": "精进电动",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "精进电动处于电驱动系统供应链盈利修复观察期：2025 年收入和毛利率改善并实现归母盈利，但 2026Q1 再度亏损，客户和应收集中度高，当前估值只支持观察，等待扣非盈利、毛利率和现金流连续验证后再提高评级。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.4,
-    5.2
-  ],
-  "buy_zone": [
-    2.8,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "精进电动",
+    "security_status": "active",
+    "symbol": "CN:688280",
+    "ticker": "688280"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f0b63ee2c2399d894d5048134bba498d941d3eecf307789bad4362fdf390d824"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入 2.8-3.6 元且最近两个季度收入同比改善、毛利率不低于 18%、无重大客户流失",
-      "action": "建立观察性小仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入恢复、毛利率、扣非利润和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "扣非归母净利润连续两个季度为正，经营现金流覆盖净利润，且股价仍低于 4.5 元",
-      "action": "可提高至中小仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 Q1 亏损是否为短期波动。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 6.2 元但扣非盈利和经营现金流未同步改善",
-      "action": "不加仓并考虑减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估盈利修复持续性和客户集中风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入买入区上沿，需要复核季度收入、毛利率和应收账款后决定是否小仓试错。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入深度安全边际区，需要排除客户流失和现金流恶化后重新评估买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "进入减仓观察区，若扣非盈利未兑现则估值赔率下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入买入区上沿，需要复核季度收入、毛利率和应收账款后决定是否小仓试错。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入深度安全边际区，需要排除客户流失和现金流恶化后重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "进入减仓观察区，若扣非盈利未兑现则估值赔率下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入恢复、毛利率、扣非利润和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 Q1 亏损是否为短期波动。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估盈利修复持续性和客户集中风险。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

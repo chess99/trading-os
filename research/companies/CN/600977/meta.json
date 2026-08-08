@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600977",
-  "ticker": "600977",
-  "name": "中国电影",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中国电影是A股稀缺的电影全产业链央企平台，发行、院线和片单资源构成护城河；但2026H1仍预亏，盈利高度依赖头部影片兑现，当前价格安全边际不足，维持观察。",
-  "fair_value_range": [
-    11.0,
-    14.5
-  ],
-  "buy_zone": [
-    8.8,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    19.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国电影",
+    "security_status": "active",
+    "symbol": "CN:600977",
+    "ticker": "600977"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "65fc49ab2db208a0c042b8affa6c5dad2a2e90b60fcd2c4ac75441085b7e1535"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入10.5元以下，且2026Q3扣非亏损明显收窄或转正，可试探建仓。",
-      "action": "starter_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、应收账款、项目成本和管理层对下半年片单的说明。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于8.8-10.5元且年度片单票房、发行份额、经营现金流同步改善。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认暑期档和国庆档后扣非利润是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于16.5元但扣非利润未持续转正，或主控影片连续低于预期。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重估正常化盈利中枢与分红能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入初步安全边际区间，需复核暑期档和三季报后再决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "接近悲观情景估值，可重新评估资产底和长期回报率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过乐观估值下沿，如利润未兑现需考虑降低收益预期或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入初步安全边际区间，需复核暑期档和三季报后再决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "接近悲观情景估值，可重新评估资产底和长期回报率。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "超过乐观估值下沿，如利润未兑现需考虑降低收益预期或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、应收账款、项目成本和管理层对下半年片单的说明。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认暑期档和国庆档后扣非利润是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重估正常化盈利中枢与分红能力。"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

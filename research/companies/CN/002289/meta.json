@@ -1,104 +1,105 @@
 {
-  "symbol": "CN:002289",
-  "market": "CN",
-  "ticker": "002289",
-  "name": "宇顺电子",
-  "company_name": "宇顺电子",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "宇顺电子通过收购中恩云数据中心切入IDC业务，2026Q1盈利显著修复，但当前股价已充分反映重组和撤销退市风险警示预期；在债务转移、经营现金流、应收账款和商誉风险未完成验证前，不具备买入安全边际。",
-  "quality_rating": "low_to_medium",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    20.0,
-    28.0
-  ],
-  "buy_zone": [
-    14.0,
-    18.0
-  ],
-  "sell_or_reduce_zone": [
-    36.0,
-    45.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宇顺电子",
+    "security_status": "active",
+    "symbol": "CN:002289",
+    "ticker": "002289"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "447c7e3b49081c5de97c89c805dd3119dcb0255be85ef7b731be20421c27376f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于36元或未完成剩余交易对价债务转移",
-      "action": "不买入，保持0仓位",
-      "max_weight": 0.0,
-      "reason": "当前估值已充分反映IDC重组和撤销退市风险警示预期，安全边际不足。"
+      "active": true,
+      "condition": {
+        "date": "2026-07-20"
+      },
+      "reason": "复查2026年第五次临时股东会及剩余交易对价债务转移是否生效。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于18元，且债务转移生效、半年报验证IDC收入和回款质量",
-      "action": "建立观察仓",
-      "max_weight": 0.005,
-      "reason": "估值进入买入区间后，可用小仓位跟踪困境反转兑现情况。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证IDC收入、毛利率、应收账款和经营现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于15元，经营现金流转正，IDC毛利率维持45%以上且商誉无减值迹象",
-      "action": "提高到小仓位",
-      "max_weight": 0.01,
-      "reason": "只有在价格和经营质量同时满足时，才允许提高风险暴露。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断Q1盈利修复是否可持续。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度验证IDC稳定盈利、应收账款受控且融资安排落地",
-      "action": "上限提高但仍保持审慎",
-      "max_weight": 0.02,
-      "reason": "公司仍有历史扣非亏损、商誉和高负债问题，不能按成熟IDC平台给高仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入观察买入区间，复查债务转移、半年报和经营现金流后再决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入更有安全边际的困境反转价格，需要结合IDC经营质量确认是否提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "高于基础合理价值上沿较多，若基本面未同步超预期，应继续回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "reason": "进入观察买入区间，复查债务转移、半年报和经营现金流后再决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入更有安全边际的困境反转价格，需要结合IDC经营质量确认是否提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 36.0,
-      "reason": "高于基础合理价值上沿较多，若基本面未同步超预期，应继续回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-07-20",
-      "reason": "复查2026年第五次临时股东会及剩余交易对价债务转移是否生效。"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证IDC收入、毛利率、应收账款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断Q1盈利修复是否可持续。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "IDC收入及毛利率",
-    "经营活动现金流量净额",
-    "应收账款余额及周转",
-    "货币资金余额",
-    "其他应付款和一年内到期非流动负债",
-    "剩余交易对价债务转移进展",
-    "商誉减值迹象",
-    "前五大客户收入占比",
-    "机柜上架率或上电率",
-    "融资租赁和并购贷款成本"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

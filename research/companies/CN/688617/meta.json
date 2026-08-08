@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688617",
-  "market": "CN",
-  "ticker": "688617",
-  "name": "惠泰医疗",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "惠泰医疗是高盈利的平台型心血管介入器械公司，冠脉通路提供现金流，电生理 PFA 提供未来三年主要增长期权，外周介入提供第二曲线；204元附近对应约26-27倍2026E PE，已进入可分批买入区间。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    270,
-    330
-  ],
-  "buy_zone": [
-    180,
-    220
-  ],
-  "sell_or_reduce_zone": [
-    340,
-    420
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "惠泰医疗",
+    "security_status": "active",
+    "symbol": "CN:688617",
+    "ticker": "688617"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d3901062fe8cbf23cdcfd469d3acf107840b5c81f3374a55b50fcfb49bef5b24"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于220元且2026年收入增速仍高于20%、归母净利率维持30%左右，建立或加至核心仓位。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-20"
+      },
+      "reason": "预计披露2026年半年报，复核收入增速、净利率、现金流和PFA放量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于190元且未出现PFA推广失败、集采超预期降价或治理恶化，逆向加仓。",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核全年利润中枢和估值区间。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于340元且盈利预测未同步上修，逐步降至观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "年报后复核PFA、冠脉、外周三条业务线的兑现情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 220.0
+      },
+      "reason": "进入买入区，2026E估值相对增长质量具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 180.0
+      },
+      "reason": "进入深度价值区，若基本面未破坏可提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 340.0
+      },
+      "reason": "估值接近乐观情景，若业绩未上修需降低风险暴露。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 220,
-      "reason": "进入买入区，2026E估值相对增长质量具备安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 180,
-      "reason": "进入深度价值区，若基本面未破坏可提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 340,
-      "reason": "估值接近乐观情景，若业绩未上修需降低风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-20",
-      "reason": "预计披露2026年半年报，复核收入增速、净利率、现金流和PFA放量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核全年利润中枢和估值区间。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "年报后复核PFA、冠脉、外周三条业务线的兑现情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

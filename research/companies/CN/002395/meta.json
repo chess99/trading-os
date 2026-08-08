@@ -1,146 +1,123 @@
 {
-  "symbol": "CN:002395",
-  "market": "CN",
-  "ticker": "002395",
-  "name": "双象股份",
-  "company_name": "无锡双象超纤材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备超纤革、光学级PMMA/MS的技术和产能基础，2025年扣非利润改善，MS放量提供成长弹性；但2026Q1利润同比大幅下滑，关联采购占比高，25亿元特种材料项目相对公司体量过大，当前价格接近合理价值中枢，缺少安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    10.8,
-    14.2
-  ],
-  "buy_zone": [
-    8.0,
-    9.8
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "双象股份",
+    "security_status": "active",
+    "symbol": "CN:002395",
+    "ticker": "002395"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "5d655fdde9ee2461b19f34aacce7239538f878973cc7e045759018542e11097f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于8.00元",
-      "price_range": [
-        0,
-        8.0
-      ],
-      "position": "3%-5%",
-      "max_weight": 0.05,
-      "note": "强安全边际，需确认毛利率未继续恶化"
-    },
-    {
-      "condition": "股价8.01元至9.80元",
-      "price_range": [
-        8.01,
-        9.8
-      ],
-      "position": "1%-3%",
-      "max_weight": 0.03,
-      "note": "可分批试探"
-    },
-    {
-      "condition": "股价9.81元至14.20元",
-      "price_range": [
-        9.81,
-        14.2
-      ],
-      "position": "0%-1%",
-      "max_weight": 0.01,
-      "note": "合理区间，以跟踪为主"
-    },
-    {
-      "condition": "股价高于14.20元",
-      "price_range": [
-        14.21,
-        999.0
-      ],
-      "position": "0%",
-      "max_weight": 0.0,
-      "note": "不新增"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "股价低于或等于9.80元",
-      "price": 9.8,
-      "reason": "低于基准合理价值并接近16倍TTM PE，开始有安全边际",
-      "action": "进入可买区，考虑1%-3%分批试探"
-    },
-    {
-      "type": "price_below",
-      "condition": "股价低于或等于8.00元",
-      "price": 8.0,
-      "reason": "约13倍TTM PE，对周期成长型材料公司具备较强风险补偿",
-      "action": "进入强吸引力区，若基本面未恶化可提高至3%-5%"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价高于15.50元",
-      "price": 15.5,
-      "reason": "超过合理价值上沿，需要强业绩兑现才可支撑",
-      "action": "不追高，若已持有且业绩未兑现则减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年半年报通常已披露，需要验证Q1毛利率下滑是否延续",
-      "condition": "2026年半年报披露",
-      "action": "复查毛利率、扣非利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "25亿元项目相对公司体量较大，需要跟踪开工和融资节奏",
-      "condition": "年产35万吨特种材料项目开工、融资结构、资本开支节奏发生重大变化",
-      "action": "重估资本开支、ROIC和财务风险"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "关联采购占比较高，是治理和利润质量的关键折价因素",
-      "condition": "MMA关联采购价格与市场价格偏离或关联采购占比继续上升",
-      "action": "下调治理与估值评分"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "控股股东质押股份数量较高，需要跟踪控制权和流动性压力",
-      "condition": "控股股东质押比例显著上升",
-      "action": "复查控制权和流动性风险"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "股价进入买入区或高估区时需要更新仓位动作",
-      "condition": "股价跌破9.80元或高于15.50元",
-      "action": "重新评估买入或减仓决策"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.8
+      },
+      "reason": "低于基准合理价值并接近16倍TTM PE，开始有安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "约13倍TTM PE，对周期成长型材料公司具备较强风险补偿",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "超过合理价值上沿，需要强业绩兑现才可支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "综合毛利率",
-    "PMMA/MS收入与毛利率",
-    "MS板材毛利率",
-    "重庆光学净利润",
-    "重庆超纤净利润",
-    "经营现金流/净利润",
-    "应收账款、预付款项、存货周转",
-    "关联采购金额及占比",
-    "25亿元项目在建工程、融资、订单和ROIC",
-    "控股股东质押股份数量"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

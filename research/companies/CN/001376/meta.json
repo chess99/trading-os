@@ -1,109 +1,115 @@
 {
-  "symbol": "CN:001376",
-  "market": "CN",
-  "ticker": "001376",
-  "name": "百通能源",
-  "company_name": "百通能源",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "区域工业园区集中供热/热电联产资产现金流稳定、负债率低，但2026Q1原材料成本上升导致毛利率和利润承压，当前10元以上估值已偏充分，等待7.0-8.0元买入区或中报验证新增项目贡献。",
-  "quality_rating": "B+",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    8.1,
-    9.3
-  ],
-  "buy_zone": [
-    7.0,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "百通能源",
+    "security_status": "active",
+    "symbol": "CN:001376",
+    "ticker": "001376"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "00246fe6c9b84eb71ac1f674785a8dcee8999d1fdb92d7d12de0b43b240d8740"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.8元且动力煤价格未继续上行，2026年中报前只作为观察仓",
-      "action": "buy_initial",
-      "max_weight": 0.01,
-      "reason": "区域供热资产现金流稳定，但当前成长与成本传导尚未充分验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证毛利率、经营现金流和新增项目贡献",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于7.0元附近且2026年中报显示毛利率企稳、经营现金流/净利润大于1.2倍",
-      "action": "add",
-      "max_weight": 0.02,
-      "reason": "价格进入基准情景折价区，同时成本压力得到验证性缓解"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认煤价传导和全年利润区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连云港、曹县、泗阳新增项目连续两个报告期贡献收入和扣非利润",
-      "action": "add_with_cap",
-      "max_weight": 0.03,
-      "reason": "增长从项目进度转化为现金利润后可提高仓位上限"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报、分红和资本开支兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元且基本面没有同步上修，或扣非净利润滚动低于1.6亿元",
-      "action": "reduce_or_exit",
-      "max_weight": 0.005,
-      "reason": "估值接近乐观情景，若盈利下修则安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入买入观察区，需要复核煤价、毛利率和半年度项目贡献",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入较有吸引力的安全边际区，可评估加仓至2%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过合理价值上沿，若无盈利上修应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "接近乐观情景上沿，风险收益明显转差",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入买入观察区，需要复核煤价、毛利率和半年度项目贡献"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入较有吸引力的安全边际区，可评估加仓至2%"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过合理价值上沿，若无盈利上修应减仓或回避"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "接近乐观情景上沿，风险收益明显转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证毛利率、经营现金流和新增项目贡献"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认煤价传导和全年利润区间"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报、分红和资本开支兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "动力煤价格与公司单位燃料成本",
-    "蒸汽销售量和平均售价",
-    "电力销售量、电价和电力毛利率",
-    "综合毛利率是否回到31%以上",
-    "经营现金流/净利润是否维持1.2倍以上",
-    "连云港百通热电联产项目进度",
-    "曹县3#炉和泗阳4#锅炉产能贡献",
-    "短期借款和一年内到期非流动负债",
-    "定增注册进展和发行价格",
-    "现金分红率是否保持20%以上"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

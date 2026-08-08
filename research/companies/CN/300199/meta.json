@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:300199",
-  "market": "CN",
-  "ticker": "300199",
-  "name": "翰宇药业",
-  "company_name": "翰宇药业",
-  "status": "active",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "watch",
-  "current_thesis": "翰宇药业具备多肽平台、GLP-1链条和海外制剂获批带来的高弹性，2025年扭亏、2026Q1收入与扣非利润明显改善；但当前约220亿元市值已较充分反映乐观预期，资产负债表、订单持续性和海外商业化仍需验证，现阶段观察不追高。",
-  "current_rating": "watch",
-  "quality_rating": "B",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    16,
-    20
-  ],
-  "buy_zone": [
-    12,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    28
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "翰宇药业",
+    "security_status": "active",
+    "symbol": "CN:300199",
+    "ticker": "300199"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "e8011bda2d495d63852c0c7a09e8f98471944df391728368158ecbb83c744063"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前24-28元且无新增业绩验证",
-      "max_weight": 0.01,
-      "action": "观察或减仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证收入、扣非利润、经营现金流和负债率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "16-20元且收入、扣非利润、现金流继续改善",
-      "max_weight": 0.03,
-      "action": "小仓买入"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1高增长是否具备持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "12-15元且订单与债务风险未恶化",
-      "max_weight": 0.05,
-      "action": "提高到标准仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "跌入合理价值区间上沿，开始复核是否具备首笔仓位条件。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "9-11元且基本面未破坏",
-      "max_weight": 0.07,
-      "action": "强吸引区上限仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入安全买入区，若基本面未恶化可提高到3%-5%仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "明显超过不追高区上沿，若缺乏新增业绩验证应减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "跌入合理价值区间上沿，开始复核是否具备首笔仓位条件。"
-    },
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入安全买入区，若基本面未恶化可提高到3%-5%仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "明显超过不追高区上沿，若缺乏新增业绩验证应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证收入、扣非利润、经营现金流和负债率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1高增长是否具备持续性。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入是否连续高于2.5亿元",
-    "扣非归母净利润及扣非净利率",
-    "经营现金流与净利润匹配度",
-    "资产负债率、短期借款和利息费用变化",
-    "GLP-1及多肽订单新增、交付、验收和回款",
-    "格拉替雷醋酸盐注射液美国市场商业化进展",
-    "研发费用率和核心管线注册进展",
-    "大股东质押、减持、再融资或债务重组事项"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

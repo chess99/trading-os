@@ -1,92 +1,105 @@
 {
-  "symbol": "CN:301517",
-  "ticker": "301517",
-  "name": "陕西华达",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "current_thesis": "陕西华达具备航天、防务和商业卫星高可靠连接器供应链位置，标准、专利、客户认证和国资产业背景构成进入壁垒；但 2025 年量增价降、毛利率下滑并转亏，2026Q1 仍亏损，当前约 62.8 亿元市值已提前反映较多利润修复和商业航天期权，安全边际不足，宜观察等待盈利和现金流验证。",
-  "current_rating": "watch",
-  "rating": {
-    "current_rating": "watch",
-    "updated_at": "2026-07-16",
-    "rationale": "产业位置真实但亏损期估值偏贵，基准公允价值低于最新可取得延时行情。"
-  },
-  "fair_value_range": [
-    28,
-    36
-  ],
-  "buy_zone": [
-    24,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    50,
-    55
-  ],
-  "position_plan": [
-    {
-      "condition": "价格低于 30 元，且最近一期收入恢复同比增长、毛利率不再继续下滑",
-      "action": "建立跟踪仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于 24 元，且商业航天或防务订单未恶化、经营现金流改善",
-      "action": "提高至研究仓上限",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "价格高于 50 元且仍未恢复盈利，或毛利率继续低于 31%",
-      "action": "卖出或仅保留观察仓",
-      "max_weight": 0.005
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入基准公允价值区间下半部，可重新评估小仓位买入。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "接近悲观情景价值上沿，若基本面未恶化则安全边际明显改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 50,
-      "reason": "接近乐观情景估值，若没有盈利修复证据应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入、毛利率、订单和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-20",
-      "reason": "跟踪首发前限售股解除限售后的股东行为。"
-    },
-    {
-      "type": "date",
-      "date": "2026-11-15",
-      "reason": "复核 2026 年三季报及募投项目进度。"
-    }
-  ],
-  "valuation": {
+  "identity": {
     "currency": "CNY",
-    "reference_price": 41.5,
-    "reference_price_date": "2026-07-15",
-    "reference_market_cap_billion": 6.28,
-    "method_summary": "相对估值、DCF 和情景估值交叉验证；亏损期 PE 不适用，重点参考 PB、P/S 和中期 normalized earnings。"
+    "market": "CN",
+    "name": "陕西华达",
+    "security_status": "active",
+    "symbol": "CN:301517",
+    "ticker": "301517"
   },
-  "analyst_confidence": "medium"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "ccc8e9d6a8814b3f026762279dd2de867d47b64722860fa2d345676cca030dec"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入、毛利率、订单和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-20"
+      },
+      "reason": "跟踪首发前限售股解除限售后的股东行为。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-11-15"
+      },
+      "reason": "复核 2026 年三季报及募投项目进度。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入基准公允价值区间下半部，可重新评估小仓位买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "接近悲观情景价值上沿，若基本面未恶化则安全边际明显改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 50.0
+      },
+      "reason": "接近乐观情景估值，若没有盈利修复证据应降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

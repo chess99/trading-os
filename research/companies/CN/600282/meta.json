@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600282",
-  "ticker": "600282",
-  "name": "南钢股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "南钢股份是中高端板材与特钢长材驱动的高股息钢铁资产，2025年盈利和现金流稳健，分红率较高；但2026年钢价仍承压，当前价格约在合理价值中部，缺乏足够安全边际，适合观察等待更低买点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.6,
-    5.6
-  ],
-  "buy_zone": [
-    3.8,
-    4.3
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    6.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南钢股份",
+    "security_status": "active",
+    "symbol": "CN:600282",
+    "ticker": "600282"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "0501748f6b291313cecd4b3abc1c36b78bdff4e5e95248d7a95b3e8a44c45d16"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入3.80-4.10元且专用板材、特钢长材销量未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、专用板材吨毛利、印尼焦炭项目亏损是否收窄",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于4.10-4.30元且2026H1扣非利润保持韧性、分红政策未恶化",
-      "action": "提高至中低仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润中枢和分红能力",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.00元且焦炭项目扭亏或扣非利润改善未被验证",
-      "action": "停止加仓并考虑减仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和年度分红方案",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入买入区间上沿，需要复核钢价、季度扣非利润和分红预期",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入深度安全边际区间，可评估是否提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "超过基准合理价值，需要复核是否已由盈利上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "reason": "进入买入区间上沿，需要复核钢价、季度扣非利润和分红预期"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入深度安全边际区间，可评估是否提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "超过基准合理价值，需要复核是否已由盈利上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、专用板材吨毛利、印尼焦炭项目亏损是否收窄"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润中枢和分红能力"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和年度分红方案"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

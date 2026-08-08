@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:002663",
-  "market": "CN",
-  "ticker": "002663",
-  "name": "普邦股份",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "普邦股份具备园林景观工程资质、项目经验和城市运营转型方向，但 2024-2025 年连续大额亏损，2026Q1 收入继续下滑，且应收账款、合同资产、PPP 长期应收款减值仍是核心不确定性；当前约 1.45 元股价高于保守合理价值区间，安全边际不足。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    0.8,
-    1.2
-  ],
-  "buy_zone": [
-    0.65,
-    0.85
-  ],
-  "sell_or_reduce_zone": [
-    1.35,
-    1.6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "普邦股份",
+    "security_status": "active",
+    "symbol": "CN:002663",
+    "ticker": "002663"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "e1ab39518500ef9fcba9e96e5de4454fa904c8508cd30a065b8b9438dccf38f6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 0.65-0.85 元且 2026 中报显示经营现金流改善、应收账款和合同资产继续下降",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查收入、经营现金流、应收账款、合同资产和减值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期扣非盈利且经营现金流为正，城市运营收入占比继续提升",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认城市运营占比和现金回款趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 1.35 元且基本面未出现盈利和现金流拐点",
-      "action": "不买入或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报及审计意见，判断强调事项和 PPP 回收风险是否缓解",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.85
+      },
+      "reason": "进入买入观察区上沿，需要复核中报现金流和资产质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.65
+      },
+      "reason": "进入深度折价区，可重新评估净现金和应收资产折价后的安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.35
+      },
+      "reason": "高于合理价值区间且接近乐观情景，需要回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.6
+      },
+      "reason": "明显高于乐观估值上沿，除非基本面实质改善否则风险收益比恶化",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.85,
-      "reason": "进入买入观察区上沿，需要复核中报现金流和资产质量"
-    },
-    {
-      "type": "price_below",
-      "price": 0.65,
-      "reason": "进入深度折价区，可重新评估净现金和应收资产折价后的安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 1.35,
-      "reason": "高于合理价值区间且接近乐观情景，需要回避或减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 1.6,
-      "reason": "明显高于乐观估值上沿，除非基本面实质改善否则风险收益比恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查收入、经营现金流、应收账款、合同资产和减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认城市运营占比和现金回款趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报及审计意见，判断强调事项和 PPP 回收风险是否缓解"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

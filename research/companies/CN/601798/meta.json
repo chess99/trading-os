@@ -1,83 +1,95 @@
 {
-  "symbol": "CN:601798",
-  "ticker": "601798",
-  "name": "蓝科高新",
-  "exchange": "SSE",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "央企能源化工装备平台已在2025年扭亏，2026年完成中国空分51%股权过户带来工程能力和协同空间；但2026年上半年预增主要受非经常性损益拉动，扣非利润和现金流质量尚未证明，当前估值缺少安全边际，先观察扣非利润、订单和回款兑现。",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    3.8,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    9.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "蓝科高新",
+    "security_status": "active",
+    "symbol": "CN:601798",
+    "ticker": "601798"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "4dd941ef3b05e5cbf720dc26bfd82e724c608c5921be8bb31b61f5a39956681a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌破4.5元且2026年半年报确认扣非经营未继续恶化、经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、扣非利润、现金流、中国空分并表口径",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年报扣非净利润超过7000万元、经营性现金流为正且中国空分贡献清晰",
-      "action": "考虑提高配置",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报订单、毛利率和回款质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.5元但扣非利润和现金流未同步兑现",
-      "action": "不追高并减仓或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及中国空分全年贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入买入观察区，需复核半年报扣非利润与经营现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "高于基准估值上沿，若无扣非利润兑现应卖出或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入买入观察区，需复核半年报扣非利润与经营现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "高于基准估值上沿，若无扣非利润兑现应卖出或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、扣非利润、现金流、中国空分并表口径"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报订单、毛利率和回款质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及中国空分全年贡献"
-    }
-  ],
-  "key_metrics": {
-    "shares_outstanding": 354528198,
-    "reference_price_note": "2026-07-17可见公开行情约6.8-7.0元，非交易所官方实时源，置信度中等偏低",
-    "normalized_profit_rmb": [
-      50000000,
-      70000000
-    ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

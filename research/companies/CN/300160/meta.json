@@ -1,112 +1,114 @@
 {
-  "symbol": "CN:300160",
-  "market": "CN",
-  "ticker": "300160",
-  "name": "秀强股份",
-  "company_name": "江苏秀强玻璃工艺股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "家电玻璃深加工配套商，客户质量和现金资产提供保护，但行业成熟、客户议价强，2026Q1 收入和利润明显下滑。现价约处合理价值中上部，等待 3.6 元以下安全边际或经营拐点验证。",
-  "quality_rating": "中",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    3.7,
-    4.4
-  ],
-  "buy_zone": [
-    3.2,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "秀强股份",
+    "security_status": "active",
+    "symbol": "CN:300160",
+    "ticker": "300160"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "0f2a4941e3d8e6ce0843ebe8acb5bacc02f9677a5ceaac9b4cc8c816e1ab892d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 3.6 元，且最新季度收入降幅收窄、毛利率未继续恶化",
-      "max_weight": 0.03,
-      "action": "建立 2%-3% 观察仓"
-    },
-    {
-      "condition": "股价低于 3.2 元，且货币资金与交易性金融资产合计仍保持在 12 亿元以上、核心客户订单稳定",
-      "max_weight": 0.05,
-      "action": "可加仓至 5% 上限"
-    },
-    {
-      "condition": "2026 年扣非归母净利润低于 1.4 亿元或前五大客户订单明显流失",
-      "max_weight": 0.0,
-      "action": "停止加仓并复核估值，必要时退出"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "unit": "CNY/share",
-      "reason": "低于合理价值下沿并提供初步安全边际",
-      "action": "进入可买区，复核最新季度订单、毛利率和现金资产"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "unit": "CNY/share",
-      "reason": "接近深度折价区，现金资产提供更强下行保护",
-      "action": "进入深度安全边际区，若基本面未破坏可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "unit": "CNY/share",
-      "reason": "价格高于当前合理价值区间，若无业绩修复支撑则风险收益转弱",
-      "action": "进入减仓复核区，关注是否由业绩修复支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露 2026 年半年报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026Q1 收入和利润明显下滑，需要用半年报确认是否只是短期波动",
-      "action": "复核收入降幅、毛利率和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "泰国项目从试生产转入稳定量产并披露订单或利润贡献",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "泰国项目是海外配套能力和未来增长的重要变量",
-      "action": "上修或下修海外配套增长假设"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "前五大客户结构、出口毛利率或汇率损益出现重大变化",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "客户集中和出口利润率决定盈利稳定性",
-      "action": "复核客户集中和出口利润风险"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "货币资金和交易性金融资产合计较 2026Q1 明显下降且未形成高回报资产",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "现金资产是当前估值安全边际的核心来源",
-      "action": "复核安全边际和资本配置质量"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "低于合理价值下沿并提供初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "接近深度折价区，现金资产提供更强下行保护",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "价格高于当前合理价值区间，若无业绩修复支撑则风险收益转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "单季营业收入同比增速",
-    "综合毛利率和出口毛利率",
-    "扣非归母净利润及 TTM 扣非净利润",
-    "经营活动现金流量净额",
-    "前五大客户收入占比",
-    "货币资金加交易性金融资产余额",
-    "泰国项目产能爬坡和订单贡献",
-    "每股分红和现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

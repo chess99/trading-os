@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688588",
-  "market": "CN",
-  "ticker": "688588",
-  "name": "凌志软件",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "凌志软件是对日金融IT现金流业务加国内证券IT产品化尝试的轻资产公司，具备长期客户粘性、现金分红和回购注销支撑，但第一大客户集中、日元汇率暴露和2026Q1利润转亏削弱安全边际；当前8.60元处于合理价值区间中上部，宜观察而非追买。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.2,
-    9.4
-  ],
-  "buy_zone": [
-    0,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凌志软件",
+    "security_status": "active",
+    "symbol": "CN:688588",
+    "ticker": "688588"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "4a296e7cc5c47d1ffd03b067a0117aa348b12435473dae74a16064f4194ab00a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于6.8元，且JPY/CNY企稳、2026中报扣非利润恢复为正",
-      "action": "试探建仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，确认Q1汇兑冲击是否修复、国内业务是否延续增长",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于6.0元，且对日业务收入和现金流未恶化",
-      "action": "提高到小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，观察全年利润恢复程度和经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "国内行业应用软件解决方案连续两个报告期收入同比增长20%以上，且客户集中度下降",
-      "action": "提高到观察仓上限",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新归母利润、分红、客户集中度和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入基准估值下沿并提供初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "若基本面未恶化，静态PE和现金流估值均明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "超过乐观预期开始兑现，若无利润上修证据应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入基准估值下沿并提供初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "若基本面未恶化，静态PE和现金流估值均明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "超过乐观预期开始兑现，若无利润上修证据应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，确认Q1汇兑冲击是否修复、国内业务是否延续增长"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，观察全年利润恢复程度和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新归母利润、分红、客户集中度和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

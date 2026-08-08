@@ -1,145 +1,124 @@
 {
-  "symbol": "CN:002846",
-  "market": "CN",
-  "ticker": "002846",
-  "name": "英联股份",
-  "company_name": "广东英联包装股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "主业金属易开盖在2025年和2026Q1修复，但ROE和净利率仍低；复合集流体仍处小批量试产和客户验证阶段，当前股价9元以上已经计入较多新能源期权，安全边际不足。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.8,
-    6.8
-  ],
-  "buy_zone": [
-    4.2,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    9.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "英联股份",
+    "security_status": "active",
+    "symbol": "CN:002846",
+    "ticker": "002846"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "9149e086f3b0289546422fe115a61cae5d43d788dfd1b9b826a7bc77ae1b69a1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于9.0元，且复合集流体仍无可核验批量收入和毛利转正",
-      "action": "不买",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价在6.8元至9.0元之间，等待2026中报或三季报验证",
-      "action": "观察或极小仓跟踪",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价在5.0元至6.8元之间，且金属包装毛利率和经营现金流继续改善",
-      "action": "小仓试错",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于5.0元，资产负债率未恶化且复合集流体资本开支可控",
-      "action": "分批买入",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价低于4.2元，且主业没有结构性下滑",
-      "action": "提高到观察组合上限",
-      "max_weight": 0.06
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入可买区间上沿，主业估值开始接近合理",
-      "action": "复核2026最新财报后考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "接近偏保守主业价值，复合集流体期权成本较低",
-      "action": "若基本面未恶化，评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "高于合理价值区间上沿，需确认新能源期权是否有证据支撑",
-      "action": "若未有复合集流体商业化证据，避免追高并考虑降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "估值主要由复合集流体期权驱动，安全边际不足",
-      "action": "无批量订单和毛利验证时不买"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年度报告后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报将验证2025年修复是否延续，以及复合集流体是否开始贡献收入",
-      "action": "复核主业毛利率、经营现金流、负债率和复合集流体收入"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "披露2026年三季度报告后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可观察旺季主业利润率、经营现金流和扩产现金消耗",
-      "action": "复核复合集流体收入是否开始放量、经营现金流是否覆盖扩产"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "披露2026年年度报告后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年度数据是重估正常化利润、净资产质量和新能源期权价值的关键节点",
-      "action": "完整重估主业正常化利润、PB约束和复合集流体期权价值"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-31",
-      "condition": "披露2027年半年度报告前后",
+      "active": true,
+      "condition": {
+        "date": "2027-07-31"
+      },
       "reason": "经过多个报告期后应判断复合集流体是否具备第二主业雏形",
-      "action": "检查1-3年跟踪指标是否需要下调评级"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入可买区间上沿，主业估值开始接近合理",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "接近偏保守主业价值，复合集流体期权成本较低",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "高于合理价值区间上沿，需确认新能源期权是否有证据支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "估值主要由复合集流体期权驱动，安全边际不足",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    {
-      "metric": "复合集流体收入",
-      "target": "2026年收入显著高于5000万元，且出现单季放量迹象"
-    },
-    {
-      "metric": "复合集流体毛利率",
-      "target": "由小批量试产阶段转为毛利转正"
-    },
-    {
-      "metric": "金属制造业毛利率",
-      "target": "从2025年的12.51%提升至14%以上"
-    },
-    {
-      "metric": "出口收入及毛利率",
-      "target": "出口收入保持双位数增长，毛利率维持18%以上"
-    },
-    {
-      "metric": "经营现金流/净利润",
-      "target": "持续大于1，且不是主要依赖账期拉长"
-    },
-    {
-      "metric": "资产负债率",
-      "target": "降至55%以下或至少不继续上升"
-    },
-    {
-      "metric": "实控人及一致行动人质押比例",
-      "target": "质押规模下降，避免股价下跌引发融资压力"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

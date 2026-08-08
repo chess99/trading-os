@@ -1,115 +1,115 @@
 {
-  "symbol": "CN:300321",
-  "market": "CN",
-  "ticker": "300321",
-  "name": "同大股份",
-  "company_name": "山东同大海岛新材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司是超细纤维合成革细分企业，资产负债表稳健、现金充足、技术资质和客户资源有一定价值，但收入规模小、净利率和ROE偏低、客户集中度高，2026Q1收入和利润明显下滑。当前价格主要反映事件预期而非主营基本面，安全边际为负。",
-  "quality_rating": "中",
-  "valuation_rating": "低",
-  "fair_value_range": [
-    8,
-    14
-  ],
-  "buy_zone": [
-    0,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    18,
-    9999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "同大股份",
+    "security_status": "active",
+    "symbol": "CN:300321",
+    "ticker": "300321"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "2aeb085b45096b1143c476ae6e001923dc63506fd780dc24774e11624e37d2ae"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于9.5元且最近两个季度收入未继续下滑、经营现金流改善",
-      "action": "建立1%观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、扣非净利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于7.5元且毛利率稳定在16%以上、扣非净利润恢复增长",
-      "action": "提高至2%-3%仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否验证经营恢复或继续下滑",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于18元且没有可持续利润增厚公告",
-      "action": "不新增并逐步降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、客户集中度和资本运作结果",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于30元且仍仅由事件预期驱动",
-      "action": "降至0%-0.5%事件观察仓",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "公告重大资产注入或新业务，且可持续净利润路径超过5000万元",
-      "action": "重新建模估值后再决定是否提高仓位",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
       "reason": "进入基本面可买区间上沿，安全边际开始出现",
-      "action": "进入可买观察区，复核最新季度经营质量"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 7.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
       "reason": "低于账面价值附近，若经营未恶化则赔率改善",
-      "action": "若基本面未恶化，可评估2%-3%仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 18.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
       "reason": "明显高于基本面合理价值上沿",
-      "action": "估值高于主营可解释区间，停止新增并考虑降低"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 30.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
       "reason": "价格主要由事件预期驱动，基本面安全边际为负",
-      "action": "仅按事件股处理，基本面仓位降至极低"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、扣非净利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否验证经营恢复或继续下滑"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、客户集中度和资本运作结果"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季营业收入是否恢复到1亿元以上",
-    "综合毛利率是否稳定高于16%",
-    "扣非净利润是否恢复增长并有3000万元以上路径",
-    "经营活动现金流是否全年为正",
-    "第一大客户收入占比是否下降或订单锁定是否增强",
-    "汽车内饰和低碳超纤材料是否形成批量收入",
-    "控制权变化、资产注入或重大资产购买是否带来真实利润增厚"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

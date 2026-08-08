@@ -1,80 +1,110 @@
 {
-  "symbol": "CN:603185",
-  "market": "CN",
-  "ticker": "603185",
-  "name": "弘元绿能",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "2026H1预告归母亏损5.9—6.9亿元、扣非亏损4—5亿元，倒推Q2扣非亏损3.43—4.43亿元，已证伪Q1亏损收窄可持续；7月中旬硅料、硅片、电池和组件仍同步下跌，一体化尚未体现价差与现金流优势。13.20元虽仅约0.77倍PB，但库存、减值和受限资金未获中报验证，当前不可买，仅在更深折价且扣非、库存、自由现金流同时改善后低仓位参与。",
-  "fair_value_range": [
-    9,
-    14
-  ],
-  "buy_zone": [
-    7.5,
-    10
-  ],
-  "sell_or_reduce_zone": [
-    16,
-    20
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "弘元绿能",
+    "security_status": "active",
+    "symbol": "CN:603185",
+    "ticker": "603185"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "df77afd7079b622229384fdb3ed3857d912d3632ae3b945102477990098e2322"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "1dcff47fa46f15d0ffd687a6abcb2c62fb1bf5a1ef65b70625f73f9d5e576d3c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于10-15元，正式中报尚未证明库存见顶、现金流安全",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后核对预告落点、存货与减值、受限资金、资本开支及经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于7.5-10元，且中报确认现金与可变现理财覆盖有息债务、库存未继续加速",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后确认Q2扣非恶化是否逆转及自由现金流是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.5元，且单季扣非亏损收窄至1亿元以内、存货环比下降、经营现金流覆盖资本开支",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "光伏强制能耗标准实施前复核落后产能实际退出、行业库存和公司产能利用率",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "正式H1亏损差于预告下限、存货或应收继续上升、受限资金扩大、被迫股权融资或追加重大资产减值",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入下调后的买入区上沿，先做中报资产质量、库存与流动性专项复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入深度折价区，仍需扣非、库存和自由现金流同时改善，禁止机械补仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "进入下调后的减仓区，若扣非仍亏损或ROE低于6%应退出",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露后核对预告落点、存货与减值、受限资金、资本开支及经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后确认Q2扣非恶化是否逆转及自由现金流是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "光伏强制能耗标准实施前复核落后产能实际退出、行业库存和公司产能利用率"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入下调后的买入区上沿，先做中报资产质量、库存与流动性专项复核"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入深度折价区，仍需扣非、库存和自由现金流同时改善，禁止机械补仓"
-    },
-    {
-      "type": "price_above",
-      "price": 16,
-      "reason": "进入下调后的减仓区，若扣非仍亏损或ROE低于6%应退出"
-    }
-  ],
-  "updated_at": "2026-07-18T09:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

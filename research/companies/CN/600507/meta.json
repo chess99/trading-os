@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:600507",
-  "ticker": "600507",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "方大特钢",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "区域长材资产叠加弹簧扁钢细分优势，2025年盈利和分红修复，但2026Q1利润明显回落，当前价格接近合理区间，需等待更低价格或连续季度扣非利润与经营现金流改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    4.0,
-    4.8
-  ],
-  "buy_zone": [
-    3.2,
-    3.7
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    5.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "方大特钢",
+    "security_status": "active",
+    "symbol": "CN:600507",
+    "ticker": "600507"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "90a842cc906ba674ad09c6f0e5c1dd702afc58b57c9e4dbb4e13996fdd27e111"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.70元，且最近季度扣非净利润为正、经营现金流未显著恶化",
-      "action": "试仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复盘2026年中报，确认扣非利润、经营现金流和弹簧扁钢毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.20元，且弹簧扁钢毛利率保持在15%以上、钢价企稳",
-      "action": "加仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复盘2026年三季报，判断Q1利润下滑是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于5.20元但ROE未连续两个季度恢复到10%以上",
-      "action": "减仓或退出",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复盘2026年年报与分红方案，更新中周期ROE和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.7
+      },
+      "reason": "进入买入观察区，约对应0.85倍以下PB，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入深度价值区，若基本面未破坏可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "超过基准合理价值上沿，若盈利未恢复则风险收益比转差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.7,
-      "reason": "进入买入观察区，约对应0.85倍以下PB，安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入深度价值区，若基本面未破坏可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "超过基准合理价值上沿，若盈利未恢复则风险收益比转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复盘2026年中报，确认扣非利润、经营现金流和弹簧扁钢毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复盘2026年三季报，判断Q1利润下滑是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复盘2026年年报与分红方案，更新中周期ROE和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920627",
-  "market": "CN",
-  "ticker": "920627",
-  "name": "力王股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "公司有正自由现金流和低有息负债，但核心锌锰业务下滑、锂电盈利脆弱、ROE低于资本成本，当前估值已过度透支第二增长曲线。",
-  "fair_value_range": [7.5, 10.0],
-  "buy_zone": [6.0, 7.5],
-  "sell_or_reduce_zone": [12.5, 15.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "力王股份",
+    "security_status": "active",
+    "symbol": "CN:920627",
+    "ticker": "920627"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "36b251169a115b7feb71baab1c7cf5c690b4f8cd7f3203b55e181b35a81dc818"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于10元或锂电盈利、自由现金流和应收质量尚未验证",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的分产品毛利、经营现金流、应收账款和锂电盈利",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于7.0至7.5元且核心锌锰毛利止跌、锂电持续盈利、自由现金流转正",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入有安全边际的观察性买入区间，仍须重新核验基本面",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价处于6.0至7.0元且重新验证长期商业价值未受损、ROIC改善；不得因单纯下跌机械加仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的分产品毛利、经营现金流、应收账款和锂电盈利"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入有安全边际的观察性买入区间，仍须重新核验基本面"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-15T23:40:15.1709099+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

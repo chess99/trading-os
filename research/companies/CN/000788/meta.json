@@ -1,99 +1,96 @@
 {
-  "symbol": "CN:000788",
-  "market": "CN",
-  "ticker": "000788",
-  "name": "北大医药",
-  "company_name": "北大医药",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "北大医药账上现金较厚且2025年扣非利润为正，但2026Q1收入同比大幅下降、仿制药集采压力、北大/方正系历史治理和重庆合成仲裁等风险仍需验证；当前价格仅适合观察，等待半年报确认收入恢复和利润质量后再考虑小仓位。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.6,
-    5.8
-  ],
-  "buy_zone": [
-    3.8,
-    4.4
-  ],
-  "sell_or_reduce_zone": [
-    6.3,
-    8.7
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北大医药",
+    "security_status": "active",
+    "symbol": "CN:000788",
+    "ticker": "000788"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "19e5fcb6085b6553ea7e15148d707021a46ad5cd31195527e4bd35f6ef837fdc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约5.23元且2026Q1收入同比下降57.17%尚未解释清楚",
-      "action": "暂不买入，仅观察",
-      "max_weight": 0,
-      "reason": "收入断崖式下降、治理折价和诉讼历史风险使当前风险收益不突出"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，确认收入下滑是否收窄、扣非利润和应收存货质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至4.40元以下且2026H1扣非净利仍为正",
-      "action": "建立观察仓",
-      "max_weight": 0.005,
-      "reason": "估值进入买入区上沿，但仍需等待收入恢复和应收存货复查"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，跟踪新品商业化、现金流和诉讼预计负债变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至4.00元以下且Q2单季收入恢复至3亿元以上、经营现金流不转负",
-      "action": "小幅加仓",
-      "max_weight": 0.015,
-      "reason": "价格提供一定安全边际，同时基本面恶化风险初步缓解"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "进入买入区上沿，复查2026H1收入、扣非利润和现金流后可考虑观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "核心新品形成可核验订单且扣非利润上修至1.3亿元以上",
-      "action": "提高上限但仍保持非核心仓",
-      "max_weight": 0.02,
-      "reason": "新品放量可改善估值弹性，但公司仍有仿制药集采和治理折价"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入买入区下沿，若无新增诉讼或经营恶化，安全边际明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.3
+      },
+      "reason": "超过减持/不追价区，若无利润上修则估值对2025扣非净利偏高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.4,
-      "reason": "进入买入区上沿，复查2026H1收入、扣非利润和现金流后可考虑观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入买入区下沿，若无新增诉讼或经营恶化，安全边际明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 6.3,
-      "reason": "超过减持/不追价区，若无利润上修则估值对2025扣非净利偏高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，确认收入下滑是否收窄、扣非利润和应收存货质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，跟踪新品商业化、现金流和诉讼预计负债变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1营业收入和Q2单季收入恢复程度",
-    "扣非归母净利润及扣非ROE",
-    "经营现金流净额和销售商品收到现金/营业收入",
-    "应收账款、应收票据和存货周转",
-    "销售费用率和研发费用率",
-    "帕利哌酮缓释片挂网、中标、订单和收入",
-    "枸橼酸托法替布原料药客户订单和毛利率",
-    "重庆合成仲裁及预计负债变化",
-    "西南合成和北大医疗持股、司法处置、减持进展",
-    "核心品种集采纳入、价格降幅和中标结果"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

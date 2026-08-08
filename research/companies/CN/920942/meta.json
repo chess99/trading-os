@@ -1,60 +1,86 @@
 {
-  "symbol": "CN:920942",
-  "market": "CN",
-  "ticker": "920942",
-  "name": "XD恒立钻",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "技术和央企客户卡位尚可，但应收占用、毛利下滑和自由现金流弱使当前高估值缺乏安全边际。",
-  "fair_value_range": [10.0, 13.0],
-  "buy_zone": [8.0, 10.0],
-  "sell_or_reduce_zone": [15.0, 18.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "XD恒立钻",
+    "security_status": "active",
+    "symbol": "CN:920942",
+    "ticker": "920942"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "23926d3b1fadf5e6da79ec27f9fd0927b81f29d024d54d958de0ffc2ac8821bd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在10至13元且订单兑现、应收周转不再恶化，仅建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报的毛利率、应收回款、订单兑现和自由现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于8至10元买入区间，且毛利率企稳、自由现金流转正、基本面未恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报及硬质合金成本传导效果",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于8元，重新验证客户、坏账和技术假设后赔率进一步改善；不得因下跌机械补仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入有一定安全边际的买入区间，但需先确认基本面未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于15元而盈利和现金流未同步上修，或核心投资逻辑被证伪",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "进入减仓或不应追高区间，估值要求乐观情景兑现",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报的毛利率、应收回款、订单兑现和自由现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报及硬质合金成本传导效果"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入有一定安全边际的买入区间，但需先确认基本面未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "进入减仓或不应追高区间，估值要求乐观情景兑现"
-    }
-  ],
-  "updated_at": "2026-07-14T07:15:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

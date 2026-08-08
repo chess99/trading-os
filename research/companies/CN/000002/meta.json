@@ -1,103 +1,115 @@
 {
-  "symbol": "CN:000002",
-  "market": "CN",
-  "ticker": "000002",
-  "name": "万 科Ａ",
-  "company_name": "万 科Ａ",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "万科A仍处地产下行和信用化险周期，品牌、交付、经营服务资产和深铁支持提供底部价值，但普通股权益价值高度依赖债务展期、销售回款、资产减值收敛和经营性现金流修复。当前不主动买入，仅在2.00-2.40元且融资支持与现金流改善得到验证时考虑小仓位观察。",
-  "quality_rating": "low_to_mid",
-  "valuation_rating": "distressed_discount",
-  "fair_value_range": [
-    2.2,
-    4.2
-  ],
-  "buy_zone": [
-    2.0,
-    2.4
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    5.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万 科Ａ",
+    "security_status": "active",
+    "symbol": "CN:000002",
+    "ticker": "000002"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "2a75f58e97e877deec5b78d0d44910845e53eb2f1682d471e8500e7cb6f6844f"
+      }
+    ],
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-6e5795930ef1.md",
+        "report_id": "CN-000002-2026-07-30-rapid-triage-6e5795930ef1",
+        "report_type": "rapid_triage",
+        "sha256": "8c6e49849adb453c2b4fa7f035fe4904c88578f6e80bccee9b37afecbd3409f4"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-6e5795930ef1.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-6e5795930ef1.md"
+    }
+  },
+  "research": {
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T04:53:00+08:00",
+      "report_id": "CN-000002-2026-07-30-rapid-triage-6e5795930ef1",
+      "report_path": "reports/2026-07-30-rapid-triage-6e5795930ef1.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000002/20260730T045300+0800.triage.json",
+      "source_package_sha256": "6e5795930ef1f6f0317b183fce28b87b128d2cf9aae3a9435badd1231d3cc988"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-09-28T03:03:20+08:00"
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于2.40元，且经营性现金流尚未连续转正",
-      "action": "不建仓，保持观察",
-      "max_weight": 0,
-      "reason": "当前权益价值主要取决于债务化险和资产减值收敛，安全边际不足"
+      "active": true,
+      "condition": {
+        "description": "披露2026年半年度报告或更晚的定期报告"
+      },
+      "reason": "重建现金、受限资金、债务到期、经营现金流、减值和归母权益。",
+      "trigger_id": "000002-next-interim-filing",
+      "type": "filing"
     },
     {
-      "condition": "价格进入2.00-2.40元，且公开债展期继续推进、融资支持未弱化",
-      "action": "可建立观察仓",
-      "max_weight": 0.01,
-      "reason": "困境折价开始提供赔率，但仍需限制单一信用风险暴露"
+      "active": true,
+      "condition": {
+        "description": "任何公开债偿付或展期失败、重大非公开债重组、深铁支持条款重大变化，或新增大额资产质押融资"
+      },
+      "reason": "这些事件会直接改变生存概率与普通股债后剩余价值。",
+      "trigger_id": "000002-debt-support-event",
+      "type": "event"
     },
     {
-      "condition": "价格进入2.00-2.40元，且连续两个季度经营性现金流转正、亏损明显收窄",
-      "action": "可提高至最高仓位",
-      "max_weight": 0.02,
-      "reason": "现金流修复和信用风险下降同时出现，权益期权价值改善"
+      "active": true,
+      "condition": {
+        "description": "可动用现金继续显著下降、经营现金流未改善且未来12个月刚性偿付缺口扩大，或新增减值使归母权益快速收缩"
+      },
+      "reason": "核心的化险与剩余价值假设失效。",
+      "trigger_id": "000002-liquidity-thesis-break",
+      "type": "thesis"
     },
     {
-      "condition": "价格升至4.20元以上但基本面未同步修复",
-      "action": "减仓或不追涨",
-      "max_weight": 0,
-      "reason": "估值先于资产负债表修复反弹，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.5
+      },
+      "reason": "更低价格可能显著改变压力情景下的残值赔率，但必须同时复核信用与减值。",
+      "trigger_id": "000002-distress-price",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-09-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使无显性事件，也需在60天后更新偿债与中报事实。",
+      "trigger_id": "000002-triage-ttl",
+      "type": "date"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入初步买入观察区，需要复核债务展期、现金流和最新销售"
-    },
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "进入深度困境折价区，需要判断是否为信用恶化导致的价值陷阱"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "达到合理价值上沿，需要复核基本面是否足以支撑继续持有"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "超过减仓区上沿，除非现金流和债务风险显著改善，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查亏损、现金流、债务展期和归母净资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和销售去化，判断是否调整评级和价格区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度合同销售金额及同比变化",
-    "销售回款率和核心城市去化率",
-    "经营活动现金流净额",
-    "货币资金和短期有息债务",
-    "净负债率和资产负债率",
-    "公开债展期进度和融资综合成本",
-    "深铁集团股东借款金额、利率和展期安排",
-    "开发业务毛利率和新增减值准备",
-    "经营服务业务收入、出租率和增长率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-30T04:53:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

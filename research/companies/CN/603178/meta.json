@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603178",
-  "ticker": "603178",
-  "name": "圣龙股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "圣龙股份处于汽车动力系统零部件盈利修复期，2025年大额亏损后2026年已扭亏但二季度隐含表现偏弱；当前约14.48元股价接近乐观情景，安全边际不足，等待半年报、订单和现金流确认。",
-  "fair_value_range": [
-    9.5,
-    12.5
-  ],
-  "buy_zone": [
-    8.0,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "圣龙股份",
+    "security_status": "active",
+    "symbol": "CN:603178",
+    "ticker": "603178"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "592be9413f9c89170f2f9af047604e1b01207197a811766ed9ec7673f4f00e67"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于9.5元，且2026年半年报确认扣非盈利、经营现金流为正、无新增重大减值",
-      "action": "watchlist_entry",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、扣非净利润、经营现金流和二季度盈利波动原因",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.0元，且泵类/新能源相关产品收入继续增长、客户订单未恶化",
-      "action": "small_buy",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及新能源泵类/热管理业务放量情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于15.0元但未证明年化归母净利润可持续超过1亿元",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认减值是否出清及盈利修复是否可持续",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入基准估值下沿附近，可结合半年报质量复核是否具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入悲观情景上沿，可重新评估小仓位买入条件",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "接近乐观情景估值，若无利润和订单超预期证据应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入基准估值下沿附近，可结合半年报质量复核是否具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入悲观情景上沿，可重新评估小仓位买入条件"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "接近乐观情景估值，若无利润和订单超预期证据应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、扣非净利润、经营现金流和二季度盈利波动原因"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及新能源泵类/热管理业务放量情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认减值是否出清及盈利修复是否可持续"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

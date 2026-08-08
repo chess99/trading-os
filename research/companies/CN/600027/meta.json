@@ -1,100 +1,96 @@
 {
-  "symbol": "CN:600027",
-  "market": "CN",
-  "ticker": "600027",
-  "name": "华电国际",
-  "company_name": "华电国际",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华电国际是煤价下行、容量电价托底和分红支撑下具备赔率的火电龙头，但当前仍需等待更好的买入价和2026中报验证。",
-  "quality_rating": "B+",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    5.6,
-    6.8
-  ],
-  "buy_zone": [
-    4.8,
-    5.3
-  ],
-  "sell_or_reduce_zone": [
-    7.0,
-    7.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华电国际",
+    "security_status": "active",
+    "symbol": "CN:600027",
+    "ticker": "600027"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "7aea1e751a1bf93db1fa19b19aef44c53821505f3baa06580baa03c5e20bb162"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "A股价格低于或等于5.30元，且动力煤价格没有重新上行",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "进入买入区间上沿，估值具备初步安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的煤价、电价、利用小时、现金流和资产负债率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "A股价格低于或等于4.80元，且2026中报未显示电价和利用小时显著恶化",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "接近悲观估值下沿，股息率和均值回归赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和迎峰度夏后的发电量、盈利韧性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026中报确认煤价下降、容量电价稳定、资产负债率下降",
-      "action": "允许提高至满仓上限",
-      "max_weight": 0.05,
-      "reason": "关键经营变量验证后可提高持仓置信度"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.3
+      },
+      "reason": "进入首笔观察仓买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "A股价格高于或等于7.00元，且盈利预测没有上修",
-      "action": "减仓或暂停买入",
-      "max_weight": 0.02,
-      "reason": "股价进入合理价值上沿以上，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入加仓区间，需同步复核煤价和电价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.0
+      },
+      "reason": "进入减持观察区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.3,
-      "reason": "进入首笔观察仓买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入加仓区间，需同步复核煤价和电价"
-    },
-    {
-      "type": "price_above",
-      "price": 7.0,
-      "reason": "进入减持观察区间"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的煤价、电价、利用小时、现金流和资产负债率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和迎峰度夏后的发电量、盈利韧性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "秦皇岛5500大卡动力煤价格",
-    "公司入炉标煤单价",
-    "季度发电量和上网电量",
-    "平均上网电价",
-    "火电利用小时",
-    "容量电价和辅助服务收入",
-    "新能源控股装机和利用率",
-    "资产负债率",
-    "经营现金流",
-    "每股分红和分红率",
-    "A/H股折价"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

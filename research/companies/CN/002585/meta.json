@@ -1,115 +1,105 @@
 {
-  "symbol": "CN:002585",
-  "market": "CN",
-  "ticker": "002585",
-  "name": "双星新材",
-  "company_name": "江苏双星彩塑新材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "规模型 BOPET/功能膜制造商，2026Q1 会计利润转正且现金流改善，但 2025 全年扣非亏损、主营毛利率为负，且存在控股股东及关联方非经营性资金占用历史；当前价格接近合理区间上沿，等待扣非盈利和治理稳定性验证。",
-  "quality_rating": "C+",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    7.5,
-    10.5
-  ],
-  "buy_zone": [
-    6.2,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    99
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "双星新材",
+    "security_status": "active",
+    "symbol": "CN:002585",
+    "ticker": "002585"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "851affc73e3cdec7bab3ba3877980fddbb3a17c9c2aeaaa011fbe3103093a1b5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌至 6.2-7.2 元，且扣非亏损未扩大、无新增治理风险",
-      "price_range": [
-        6.2,
-        7.2
-      ],
-      "action": "小仓试买",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格跌至 6.2 元以下，且经营现金流为正、关联方资金占用无复发",
-      "price_range": [
-        0,
-        6.2
-      ],
-      "action": "强吸引力分批买入",
-      "target_position": "5%-6%",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "价格升至 11.5 元以上，且未验证连续两个季度扣非盈利",
-      "price_range": [
-        11.5,
-        99
-      ],
-      "action": "不追高/考虑减仓",
-      "target_position": "0%或降仓",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "价格接近 1 倍 BVPS，安全边际开始出现。",
-      "action": "复核 2026 半年报或最新季报，若扣非亏损未扩大且无新增治理风险，可试探买入。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "价格低于资产折价区间，周期修复期权较便宜。",
-      "action": "若经营现金流为正且关联方资金占用无复发，可提高至 5%-6% 仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "价格超过合理区间上沿，需要连续扣非盈利支持。",
-      "action": "除非已验证连续扣非盈利，否则不新增并考虑降仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证 2026Q1 修复是否持续的第一个关键节点。",
-      "action": "2026 半年报披露后，复查扣非净利润、主营毛利率、库存、现金流和关联方资金往来。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可观察连续两个季度扣非盈利和毛利率趋势。",
-      "action": "2026 三季报披露后，确认周期修复是否延续、扣非是否连续转正。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整检验周期修复、资产减值和治理整改。",
-      "action": "2026 年报披露后，重新评估全年盈利质量、治理整改和估值区间。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "价格接近 1 倍 BVPS，安全边际开始出现。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "价格低于资产折价区间，周期修复期权较便宜。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "价格超过合理区间上沿，需要连续扣非盈利支持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "主营业务毛利率",
-    "聚酯功能膜毛利率",
-    "光学材料收入及毛利率",
-    "可变信息材料收入及毛利率",
-    "存货金额及周转",
-    "经营活动现金流量净额",
-    "有息负债和货币资金",
-    "关联方非经营性资金占用是否复发"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

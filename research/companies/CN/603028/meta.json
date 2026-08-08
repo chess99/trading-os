@@ -1,93 +1,105 @@
 {
-  "symbol": "CN:603028",
-  "ticker": "603028",
-  "market": "CN",
-  "name": "赛福天",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "赛福天是钢丝绳现金流底盘叠加光伏电池反转期权的高波动资产。2025年亏损收窄但2026Q1和2026H1预告显示修复不稳，当前约3.9倍PB已提前计入较多反转预期，缺少买入安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    3.0,
-    4.8
-  ],
-  "buy_zone": [
-    2.6,
-    3.4
-  ],
-  "sell_or_reduce_zone": [
-    5.8,
-    7.0
-  ],
-  "position_plan": [
-    {
-      "condition": "当前价格高于基准公允价值且2026H1仍预亏，不建立仓位。",
-      "action": "avoid_new_position",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "价格跌入3.4元以下，且光伏分部现金毛利转正、经营现金流连续两个季度为正。",
-      "action": "watchlist_probe_only",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于2.8元，且负债率下降、年度亏损停止扩大。",
-      "action": "small_position_after_recheck",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "进入基准买入观察区，需要复核光伏毛利、经营现金流和负债变化。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "接近压力情景估值，可重新评估资产负债表安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.8,
-      "reason": "高于基准公允价值上沿，若无盈利拐点应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际亏损、现金流、光伏毛利率和负债率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现经营现金流和利润拐点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，决定是否继续观察或移出研究池。"
-    }
-  ],
-  "valuation": {
+  "identity": {
     "currency": "CNY",
-    "method": "relative_pb_absolute_asset_scenario_cross_check",
-    "reference_price": 6.29,
-    "reference_price_date": "2026-07-17",
-    "market_cap_cny": 1805481600,
-    "key_assumptions": [
-      "传统钢丝绳业务按成熟制造业现金流估值。",
-      "光伏电池业务在负毛利阶段只给予反转期权价值。",
-      "高负债率和2026H1预亏需要估值折价。"
-    ]
+    "market": "CN",
+    "name": "赛福天",
+    "security_status": "active",
+    "symbol": "CN:603028",
+    "ticker": "603028"
   },
-  "decision": "不买",
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f697c96310ec251ea2d8976f88e9ee6b8c2107c6997d31c73e0f4928a71ec837"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际亏损、现金流、光伏毛利率和负债率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现经营现金流和利润拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，决定是否继续观察或移出研究池。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "进入基准买入观察区，需要复核光伏毛利、经营现金流和负债变化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "接近压力情景估值，可重新评估资产负债表安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.8
+      },
+      "reason": "高于基准公允价值上沿，若无盈利拐点应回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

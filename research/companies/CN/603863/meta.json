@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:603863",
-  "market": "CN",
-  "ticker": "603863",
-  "name": "松炀资源",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "松炀资源仍处于持续亏损和资产利用率修复阶段，2025年收入下降、毛利为负、扣非大额亏损，2026H1预告仍亏损；当前可核验价格对应约10倍PB，显著高于持续亏损小型纸企的合理估值，除非扣非利润与经营现金流连续改善，否则不具备买方安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    2.0,
-    4.0
-  ],
-  "buy_zone": [
-    1.8,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    8.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "松炀资源",
+    "security_status": "active",
+    "symbol": "CN:603863",
+    "ticker": "603863"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "7b1b9d9ed60b8ef909782274ad2d7341a5282d597c1d4454ccfd302c7fb5d272"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格显著高于公允价值且扣非仍亏损，保持0仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、扣非亏损、经营现金流和停产资产进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于2.8元且连续两个季度扣非亏损收窄、至少一个季度经营现金流转正，可观察性试错。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认高强瓦楞纸开工率和经营现金流是否持续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价低于2.0元且扣非经营性盈亏平衡得到半年报或季报确认，可小仓位配置。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，评估监管整改后收入确认、关联交易披露和全年扣非盈利能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入买入观察区，需要结合扣非亏损和经营现金流复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "接近净资产折价后的安全边际区，但仍需确认主业止血。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "高于基准公允价值上沿，若经营未转正应继续回避或减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "显著高于乐观情景估值，基本面安全边际为负。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入买入观察区，需要结合扣非亏损和经营现金流复核。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "接近净资产折价后的安全边际区，但仍需确认主业止血。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "reason": "高于基准公允价值上沿，若经营未转正应继续回避或减持。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "显著高于乐观情景估值，基本面安全边际为负。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、扣非亏损、经营现金流和停产资产进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认高强瓦楞纸开工率和经营现金流是否持续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，评估监管整改后收入确认、关联交易披露和全年扣非盈利能力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

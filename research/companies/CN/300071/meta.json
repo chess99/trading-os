@@ -1,66 +1,95 @@
 {
-  "symbol": "CN:300071",
-  "ticker": "300071",
-  "name": "福石控股",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "营销服务底盘仍承压，2026Q1 收入大幅下滑且扣非仍亏；AI 营销平台和控股股东补偿款有期权价值，但当前约 43.95 亿元市值已反映过高乐观预期，缺乏买入安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [1.7, 2.8],
-  "buy_zone": [0, 1.8],
-  "sell_or_reduce_zone": [4, 999],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "福石控股",
+    "security_status": "active",
+    "symbol": "CN:300071",
+    "ticker": "300071"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "5b51e66aff41568870d5c7ea0552647a291ddad02862665f92779aad1d71a736"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 1.80 元，且无新增治理风险、补偿款回收风险未恶化",
-      "action": "可建立观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年度报告，重点看收入降幅、扣非利润、经营现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非归母净利润转正，收入同比恢复正增长，应收账款余额下降",
-      "action": "重新评估并考虑提高仓位",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季度报告，验证是否出现连续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 4.00 元但扣非仍未转正或收入仍同比下降",
-      "action": "不买入，已有仓位应降低或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年度报告，重新评估 AI 平台商业化、补偿款回收和治理风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入基础情景合理价值下沿附近，若基本面未恶化可重新评估安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "价格高于合理价值区间且接近乐观情景，需要扣非转正和收入恢复验证，否则风险收益不对称。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入基础情景合理价值下沿附近，若基本面未恶化可重新评估安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 4,
-      "reason": "价格高于合理价值区间且接近乐观情景，需要扣非转正和收入恢复验证，否则风险收益不对称。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年度报告，重点看收入降幅、扣非利润、经营现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季度报告，验证是否出现连续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年度报告，重新评估 AI 平台商业化、补偿款回收和治理风险。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

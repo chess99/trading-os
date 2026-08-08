@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:300819",
-  "ticker": "300819",
-  "name": "聚杰微纤",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司现有超细纤维主业具备工艺和客户壁垒，现金流质量尚可，但 2026-07-15 股价主要定价高端电子布与新材料期权；在项目收入和利润未被财报验证前，当前价格安全边际不足。",
-  "current_rating": "watch",
-  "rating": {
-    "current_rating": "watch",
-    "decision": "观察",
-    "confidence": "中",
-    "rationale": "估值已接近乐观情景，等待高端电子布项目、无尘洁净制品和汽车材料订单兑现。"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "聚杰微纤",
+    "security_status": "active",
+    "symbol": "CN:300819",
+    "ticker": "300819"
   },
-  "fair_value_range": [
-    30,
-    42
-  ],
-  "buy_zone": [
-    24,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    65
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "3f254cf7123b5f3d87d7cea7fe5fd34c430e2755e438ac6daa5d3af308b6af78"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间，且高端电子布尚未形成财报验证收入",
-      "action": "不建仓，仅跟踪",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报，重点看无尘洁净制品、汽车材料、资本开支和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 32 元且 2026 中报或三季报显示经营现金流健康、高端电子布项目按计划推进",
-      "action": "建立观察仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报及高端电子布项目进度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于 28 元且主业利润止跌、电子布或洁净制品有可验证订单",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报、定增进展和新材料业务实际贡献。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入买入观察区，需要复核高端电子布项目、现金流和客户订单。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入较高安全边际区，需要重新评估是否可建小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "超过乐观情景上沿，若无明确订单和利润验证，应回避估值风险。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入买入观察区，需要复核高端电子布项目、现金流和客户订单。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入较高安全边际区，需要重新评估是否可建小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "超过乐观情景上沿，若无明确订单和利润验证，应回避估值风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报，重点看无尘洁净制品、汽车材料、资本开支和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报及高端电子布项目进度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报、定增进展和新材料业务实际贡献。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,103 +1,105 @@
 {
-  "symbol": "CN:300679",
-  "market": "CN",
-  "ticker": "300679",
-  "name": "电连技术",
-  "company_name": "电连技术",
-  "status": "active",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "observe",
-  "current_thesis": "电连技术是汽车高频高速连接器与安卓消费电子射频连接器的细分优质制造商，汽车连接器收入已成为第一大业务且仍在高增，但2025年利润受减值、扩产折旧和毛利率下行冲击，2026Q1利润率尚未修复。当前价格已反映较多利润修复预期，适合观察等待更好安全边际。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    45,
-    55
-  ],
-  "buy_zone": [
-    35,
-    42
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    96
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "电连技术",
+    "security_status": "active",
+    "symbol": "CN:300679",
+    "ticker": "300679"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "69f557c908ba5af5774dc104b6847ea7423510933936d80a626129d9cb61cda2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于32元且汽车连接器收入未明显失速",
-      "action": "分批买入",
-      "max_weight": 0.08,
-      "reason": "估值接近悲观区间，成长选择权有较好赔率"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报，重点验证汽车连接器增速、毛利率和应收存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于35-42元且未出现新增重大减值",
-      "action": "建立观察仓或低吸",
-      "max_weight": 0.06,
-      "reason": "具备安全边际，但仍需等待利润率修复证据"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报，确认旺季利润率和经营现金流修复情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价位于45-55元",
-      "action": "观察或仅保留轻仓",
-      "max_weight": 0.03,
-      "reason": "处于合理价值区间，风险收益比一般"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报，评估扩产折旧、减值尾部和高速互连订单兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于60元且未披露利润率修复或高速互连订单兑现",
-      "action": "不新增并考虑减仓",
-      "max_weight": 0.01,
-      "reason": "乐观预期计入较充分，回撤风险上升"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入有安全边际的买入观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入强吸引力买入区，需复核基本面是否恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "进入不应追高或减仓区，需要业绩兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入有安全边际的买入观察区"
-    },
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入强吸引力买入区，需复核基本面是否恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "进入不应追高或减仓区，需要业绩兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报，重点验证汽车连接器增速、毛利率和应收存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报，确认旺季利润率和经营现金流修复情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报，评估扩产折旧、减值尾部和高速互连订单兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "汽车连接器收入增速",
-    "汽车连接器毛利率",
-    "综合毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款周转和存货增速",
-    "固定资产转固和折旧摊销",
-    "AI/服务器高速连接产品量产订单",
-    "海外收入增速和海外毛利率",
-    "非主业投资减值或信用减值"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

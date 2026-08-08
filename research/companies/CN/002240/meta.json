@@ -1,179 +1,120 @@
 {
-  "symbol": "CN:002240",
-  "market": "CN",
-  "ticker": "002240",
-  "name": "盛新锂能",
-  "company_name": "盛新锂能",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "updated_at": "2026-07-17T16:30:00+08:00",
-  "conclusion": "2026H1预告归母净利10-12亿元、扣非13-15亿元，印尼产能和锂价修复已兑现为利润；2026-07-17收盘28.88元重新进入24-29元买入区。考虑电碳回落及最高53亿元定增的潜在摊薄，评级上调为谨慎买入，只适合分批建仓、等待半年报现金流与定增条款验证。",
-  "current_rating": "buy",
-  "current_thesis": "盛新锂能的投资主线是印尼6万吨锂盐产能放量、木绒锂矿建设和锂价紧平衡；H1盈利兑现提高基本面确定性，但电碳从高位回落、定增扩容和资本开支使每股价值仍有较大波动，当前仅适合安全边际区内分批买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    30,
-    39
-  ],
-  "fair_value_detail": {
+  "identity": {
     "currency": "CNY",
-    "low": 30,
-    "high": 39,
-    "method": "以2026H1业绩预告为锚，采用周期调整利润、情景估值并计入最高53亿元定增的潜在摊薄"
+    "market": "CN",
+    "name": "盛新锂能",
+    "security_status": "active",
+    "symbol": "CN:002240",
+    "ticker": "002240"
   },
-  "current_price": {
-    "price": 28.88,
-    "currency": "CNY",
-    "as_of": "2026-07-17",
-    "source": "东方财富行情快照与腾讯行情双源交叉核验",
-    "confidence": "high"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "129c3f6a5a550dec983ea2bd5e550cab1c6ba4f6558b60e25647cd035b1b97b3"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "ffdf2cf34b6ad971558252b69d232a4638c48116ec787c989bcb3c73f66cdae5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "market_cap": {
-    "value_cny_bn": 26.434,
-    "as_of": "2026-07-17",
-    "source": "东方财富行情快照，按最新总股本口径",
-    "confidence": "high"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "buy_zone": [
-    24,
-    29
-  ],
-  "buy_zone_detail": {
-    "currency": "CNY",
-    "safety_margin_price_below": 29,
-    "strong_buy_price_below": 24,
-    "description": "29元以下可分批建第一笔，24元以下若锂价、现金流和项目进度未坏化具备强吸引力。"
-  },
-  "sell_or_reduce_zone": [
-    39,
-    48
-  ],
-  "sell_or_reduce_zone_detail": {
-    "currency": "CNY",
-    "no_chase_price_above": 39,
-    "reduce_price_above": 48,
-    "description": "39元以上不新增主动仓，48元以上若盈利预期未继续上修应减仓或止盈。"
-  },
-  "position_plan": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价24-29元且基本面未坏化",
-      "max_weight": 0.06,
-      "starter_weight": 0.015,
-      "normal_weight": 0.04,
-      "description": "当前28.88元可建1.5%-2%第一笔；半年报和定增条款清晰前总仓位不超过6%。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "复查2026年半年报：印尼出货、现金流、短债、套保损益和定增进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至26元以下且锂价、现金流和印尼产销未恶化",
-      "max_weight": 0.07,
-      "starter_weight": 0.03,
-      "normal_weight": 0.05,
-      "description": "安全边际进一步扩大，可把仓位提高到4%-5%，验证充分后上限7%。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报：利润持续性和木绒建设节点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至24元以下且基本面未坏化",
-      "max_weight": 0.08,
-      "starter_weight": 0.04,
-      "normal_weight": 0.06,
-      "description": "进入强吸引力区，若经营证伪未出现可提高到6%-8%。"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复查2026年年报：全年盈利质量、资源项目进展和资本配置。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 29.0
+      },
+      "reason": "进入分批买入区，可建立1.5%-2%第一笔并复核锂价和定增。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "若基本面未坏化，进入强吸引力买入区。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 39.0
+      },
+      "reason": "达到基准合理区间上沿，不新增主动仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "乐观情景被较多计入，若利润预期未上修应减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "watch": [
-    "电池级碳酸锂现货均价能否稳定在13万-16万元/吨，12万元/吨为逻辑警戒线",
-    "印尼盛拓季度出货量、产能利用率、单位成本和海外客户拓展",
-    "木绒锂矿施工节点、工程矿产出、资本开支、投产时间和品位验证",
-    "萨比星出口稳定性、税费和物流成本",
-    "经营现金流、存货、应收账款和短期借款变化",
-    "最高53亿元定增的审核进度、发行价、实际募资额、摊薄比例和木绒资本开支",
-    "扣非净利是否连续2-3个季度为正"
-  ],
-  "tracking_indicators": [
-    {
-      "name": "电池级碳酸锂价格",
-      "thresholds": "12万/13万/16万/18万元每吨",
-      "reason": "直接决定锂盐利润率和市场风险偏好。"
-    },
-    {
-      "name": "印尼盛拓产能利用率",
-      "thresholds": "季度出货持续增长且单位成本下降",
-      "reason": "是2026年利润弹性的核心变量。"
-    },
-    {
-      "name": "经营现金流",
-      "thresholds": "连续两个季度大幅为负需警惕",
-      "reason": "检验利润是否转化为现金，防止库存和应收占用放大。"
-    },
-    {
-      "name": "短期借款",
-      "thresholds": "若继续较2026Q1显著上升需复盘",
-      "reason": "反映资本开支和营运资金压力。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 29,
-      "currency": "CNY",
-      "reason": "进入分批买入区，可建立1.5%-2%第一笔并复核锂价和定增。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "currency": "CNY",
-      "reason": "若基本面未坏化，进入强吸引力买入区。"
-    },
-    {
-      "type": "price_above",
-      "price": 39,
-      "currency": "CNY",
-      "reason": "达到基准合理区间上沿，不新增主动仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "currency": "CNY",
-      "reason": "乐观情景被较多计入，若利润预期未上修应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "复查2026年半年报：印尼出货、现金流、短债、套保损益和定增进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报：利润持续性和木绒建设节点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复查2026年年报：全年盈利质量、资源项目进展和资本配置。"
-    }
-  ],
-  "review_plan": "半年报后重点复查印尼盛拓放量、经营现金流、短期借款、存货应收、套保损益和定增；三季报后复查扣非净利持续性与木绒建设；若碳酸锂价格跌破12万元/吨或突破18万元/吨，提前重估。",
-  "key_risks": [
-    "碳酸锂价格快速回落导致利润重新承压",
-    "木绒锂矿建设进度、成本、审批或实际资源转化低于预期",
-    "津巴布韦出口政策、税费和物流成本影响萨比星经济性",
-    "印尼项目爬坡不及预期或海外客户拓展低于预期",
-    "短期借款、汇率、套保损益和营运资金压力放大波动",
-    "最高53亿元定增折价发行造成约20%-23%发行后股本摊薄，叠加关联交易、股权质押及治理风险",
-    "新能源车和储能需求低于预期或技术路线降低单位锂耗"
-  ],
-  "sources": [
-    "盛新锂能《2026年半年度业绩预告》，公告编号2026-052，2026-07-09",
-    "盛新锂能《关于调整公司2025年度向特定对象发行A股股票方案的公告》，公告编号2026-054，2026-07-15",
-    "盛新锂能《募集资金使用可行性分析报告（修订稿）》，2026-07-15",
-    "东方财富与腾讯盛新锂能行情快照，2026-07-17",
-    "上海有色网SMM电池级碳酸锂价格，2026-07-17",
-    "上海有色网SMM《2026H1碳酸锂市场深度复盘与H2展望》，2026-07-10",
-    "上海有色网SMM《7月17日碳酸锂现货价格震荡上涨》，2026-07-17"
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

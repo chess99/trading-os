@@ -1,109 +1,114 @@
 {
-  "symbol": "CN:002962",
-  "market": "CN",
-  "ticker": "002962",
-  "name": "五方光电",
-  "company_name": "湖北五方光电股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "传统滤光片主营仍有收入基础且现金类资产充足，但 2025 年和 2026Q1 利润显著承压，ROE 偏低；TGV、CPO、微棱镜等新业务仍处验证或小批量阶段，尚未形成公告级利润验证。13.38 元附近估值已包含较多期权，安全边际不足。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [8.0, 10.5],
-  "buy_zone": [0, 8.5],
-  "sell_or_reduce_zone": [15.5, 999],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "五方光电",
+    "security_status": "active",
+    "symbol": "CN:002962",
+    "ticker": "002962"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "93ae7aaf57165a99509060d39462849b64fec49c047902768eb3b22e6e08a442"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 10.5 元或 2026 年扣非净利润未恢复为正且无新业务量产验证",
-      "action": "不新买；已有仓位按主题波动仓管理",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格低于 8.5 元，经营现金流继续为正，现金类资产未显著消耗",
-      "action": "可建 0.5%-1.0% 观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格低于 7.5 元，且微棱镜/TGV/WLO 等新产品出现公告级订单或收入验证",
-      "action": "可提高到 1.5%-2.0% 仓位",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格高于 15.5 元但新业务收入占比和利润贡献仍未验证",
-      "action": "减仓或不参与",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "currency": "CNY",
-      "reason": "进入估算合理价值下沿附近，现金类资产提供一定下行保护",
-      "action": "进入可买观察区，复核中报、现金和毛利率"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "currency": "CNY",
-      "reason": "价格接近保守买入区，安全边际明显改善",
-      "action": "若基本面未恶化，可评估加到小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "currency": "CNY",
-      "reason": "价格明显高于合理价值区间且可能包含过多新业务期权",
-      "action": "缺乏新业务利润验证时减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露 2026 年中报后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证 2026Q1 利润承压是否延续",
-      "action": "复核收入、毛利率、扣非净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "披露 2026 年三季报后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证全年利润修复趋势和新业务导入节奏",
-      "action": "复核扣非净利润率、现金类资产和新业务进展"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "披露 2026 年年度报告后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年度数据足以重估质量、估值和安全边际",
-      "action": "重估合理价值、买入区间和仓位计划"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-31",
-      "condition": "复核微棱镜、TGV、WLO、CPO 或 AR/VR 光学产品是否出现公告级订单、量产或单独收入披露",
+      "active": true,
+      "condition": {
+        "date": "2027-07-31"
+      },
       "reason": "新业务期权是当前估值分歧的主要来源",
-      "action": "重估新业务期权价值和仓位上限"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入估算合理价值下沿附近，现金类资产提供一定下行保护",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "价格接近保守买入区，安全边际明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "价格明显高于合理价值区间且可能包含过多新业务期权",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "红外截止滤光片毛利率",
-    "生物识别滤光片毛利率",
-    "扣非归母净利润率",
-    "经营现金流净额/归母净利润",
-    "货币资金+交易性金融资产+其他流动资产",
-    "前五大客户销售占比",
-    "微棱镜/TGV/WLO/AR-VR 新业务收入或订单披露",
-    "ROE"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

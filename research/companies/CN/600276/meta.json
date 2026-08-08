@@ -1,88 +1,115 @@
 {
-  "symbol": "CN:600276",
-  "market": "CN",
-  "ticker": "600276",
-  "name": "恒瑞医药",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "恒瑞医药是国内创新药平台型龙头，2025年创新药销售占药品销售收入约58%，2026Q1继续保持25%+增长，现金流和资产负债表强；但按2026-07-06股价57.54元和约3670亿元市值，市场已较充分定价国内创新药增长和海外BD期权，当前更适合跟踪或极小仓观察，安全边际买点在42-48元以下。",
-  "fair_value_range": [
-    45,
-    60
-  ],
-  "buy_zone": [
-    34,
-    48
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    85
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恒瑞医药",
+    "security_status": "active",
+    "symbol": "CN:600276",
+    "ticker": "600276"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "64f978de73b0c1c5a9954cafc7fa4e2e694a8a7b5f4c89118389cac509c1dfc4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价55-65元：只跟踪或最多观察仓，等待业绩继续兑现或价格回落",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "跟踪2026年中报，重点核验创新药销售增速、BD收入、研发投入和费用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "48元以下且创新药销售仍保持25%+增长、BD未显著恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "跟踪2026年三季报及医保谈判/核心管线进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "42元以下且研发、现金流和政策逻辑未破",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "跟踪2026年年报，重估2027-2028年利润中枢和海外权益价值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "34-38元且下跌来自市场风险偏好而非基本面恶化",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入安全边际观察区，若基本面未破可建立小仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "65元以上且未出现利润中枢上修或海外权益超预期兑现",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入安全边际买入区，可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入强吸引力买入区，需复核是否为基本面恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "超过不应追高区，若无利润中枢上修应控制仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "跟踪2026年中报，重点核验创新药销售增速、BD收入、研发投入和费用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "跟踪2026年三季报及医保谈判/核心管线进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "跟踪2026年年报，重估2027-2028年利润中枢和海外权益价值"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入安全边际观察区，若基本面未破可建立小仓"
-    },
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入安全边际买入区，可考虑提高仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入强吸引力买入区，需复核是否为基本面恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "超过不应追高区，若无利润中枢上修应控制仓位"
-    }
-  ],
-  "updated_at": "2026-07-07T21:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

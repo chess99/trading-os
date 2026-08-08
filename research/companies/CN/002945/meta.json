@@ -1,88 +1,86 @@
 {
-  "symbol": "CN:002945",
-  "market": "CN",
-  "ticker": "002945",
-  "name": "华林证券",
-  "company_name": "华林证券",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华林证券是具备券商 beta 和数字化转型标签的中小券商，但当前约 4.8 倍 PB 已接近乐观情景，ROE 与分红不足以提供安全边际；等待股价回到 7.5-9.5 元或盈利能力明显上修后再考虑小仓位买入。",
-  "quality_rating": "medium",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    8.7,
-    11.4
-  ],
-  "buy_zone": [
-    7.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华林证券",
+    "security_status": "active",
+    "symbol": "CN:002945",
+    "ticker": "002945"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "7184c4a28d27178c4121f1186d3ad5081be31b432caa7b915ebfec711f1200fd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 7.5-9.5 元且 2026 半年报未显示 ROE 与合规风控恶化",
-      "action": "建立观察性首笔仓位",
-      "max_weight": 0.01,
-      "reason": "估值回到基准合理区间下沿附近，具备券商 beta 期权价值"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报，验证收入、ROE、自营收益、经纪与财富管理修复情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 8.0 元，行业成交额和两融余额连续改善，华林证券 ROE 年化高于 7%",
-      "action": "分批加仓",
-      "max_weight": 0.02,
-      "reason": "价格提供安全边际且基本面开始验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报和行业交易活跃度变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 13.0 元但盈利与 ROE 未明显上修",
-      "action": "不追买并考虑减仓",
-      "max_weight": 0.0,
-      "reason": "当前估值接近乐观情景，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入买入区间上沿，需要复核半年报、行业成交额和 PB 安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "接近乐观情景估值上沿，若基本面未上修应评估减仓或下调评级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入买入区间上沿，需要复核半年报、行业成交额和 PB 安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "接近乐观情景估值上沿，若基本面未上修应评估减仓或下调评级"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年报，验证收入、ROE、自营收益、经纪与财富管理修复情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报和行业交易活跃度变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "沪深两市日均成交额",
-    "两融余额",
-    "公司经纪业务净手续费收入",
-    "投资收益及公允价值变动收益",
-    "投行业务承销规模与项目质量",
-    "净资本与风险覆盖率",
-    "归母净利润和 ROE",
-    "分红率和股息率",
-    "分类评级、监管处罚与信息系统稳定性",
-    "数字化平台客户数、客户资产和财富管理产品销售"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

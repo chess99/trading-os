@@ -1,114 +1,95 @@
 {
-  "symbol": "CN:603200",
-  "ticker": "603200",
-  "name": "上海洗霸",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "水处理主业可提供现金流底盘，但扣非盈利很薄；固态电池材料提供期权价值，尚未形成可核验的规模化收入、客户和毛利闭环。当前约59亿元市值已反映较乐观的新材料预期，安全边际不足，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "不买",
-  "confidence": "中",
-  "fair_value_range": [
-    12,
-    20
-  ],
-  "buy_zone": [
-    10,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    36
-  ],
-  "position_plan": [
-    {
-      "condition": "现价高于28元且未披露可核验的新材料量产订单、收入规模和毛利率",
-      "action": "不新开仓；已有持仓降至跟踪仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价回落至10-15元且水处理主业扣非盈利未继续恶化",
-      "action": "允许建立观察仓并复核半年度和三季度数据",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "披露头部客户量产订单且新材料业务年化收入超过1亿元、毛利率具备可审计证据",
-      "action": "重新估值，可提升为核心观察或小仓位买入",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入买入区间上沿，需要重算水处理主业加新材料期权的赔率。"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "价格超过乐观情景下沿且若无订单验证，估值回撤风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、经营现金流、折旧摊销和诉讼预计负债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认扣非利润和新材料业务进展是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证先进材料投入是否转化为收入和利润。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 33.68,
-    "market_cap_cny_billion": 5.91,
-    "revenue_2025_cny_million": 502.849,
-    "net_profit_2025_cny_million": 89.9631,
-    "deducted_net_profit_2025_cny_million": 12.7065,
-    "h1_2026_net_profit_forecast_cny_million": [
-      -7.5,
-      -5
-    ],
-    "h1_2026_deducted_net_profit_forecast_cny_million": [
-      2,
-      3
-    ]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海洗霸",
+    "security_status": "active",
+    "symbol": "CN:603200",
+    "ticker": "603200"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b383a1461555af25df0dd8ac32c84832ea3b8ee91c76f75681bd97fa433ab9b6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "title": "上海洗霸科技股份有限公司2025年年度报告",
-      "date": "2026-04-29",
-      "url": "https://stockmc.xueqiu.com/202604/603200_20260429_30XE.pdf"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、经营现金流、折旧摊销和诉讼预计负债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "title": "上海洗霸科技股份有限公司2026年第一季度报告",
-      "date": "2026-04-29",
-      "url": "https://file.finance.sina.com.cn/211.154.219.97%3A9494/MRGG/CNSESH_STOCK/2026/2026-4/2026-04-29/12242359.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认扣非利润和新材料业务进展是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "title": "上海洗霸科技股份有限公司2026年半年度业绩预亏公告",
-      "date": "2026-07-15",
-      "url": "https://dataclouds.cninfo.com.cn/shgonggao/hsomarket/2026/20260714/e2dd016611da4f85b749ab176419bf1a.PDF"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证先进材料投入是否转化为收入和利润。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "title": "腾讯行情接口603200",
-      "date": "2026-07-17",
-      "url": "https://qt.gtimg.cn/q=sh603200"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入买入区间上沿，需要重算水处理主业加新材料期权的赔率。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "价格超过乐观情景下沿且若无订单验证，估值回撤风险上升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

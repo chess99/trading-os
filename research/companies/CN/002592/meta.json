@@ -1,93 +1,115 @@
 {
-  "symbol": "CN:002592",
-  "market": "CN",
-  "ticker": "002592",
-  "name": "ST八菱",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "主业处于汽车热管理修复周期，2025年利润显著改善，但ST源于历史4.66亿元违规担保事项仍未彻底解决，2026Q1经营现金流为负且投资收益高基数回落。当前5.90元已隐含摘帽和盈利延续预期，安全边际不足，等待4.5元以下或ST解除确定性提升。",
-  "fair_value_range": [
-    4.4,
-    5.4
-  ],
-  "buy_zone": [
-    3.8,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    6.6,
-    7.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST八菱",
+    "security_status": "active",
+    "symbol": "CN:002592",
+    "ticker": "002592"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "f0f2858ebfc532f6cb7d9ca7ddedb74878021eab28f78370edc9216db384e957"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基础合理价值上沿且ST事项未解除",
-      "action": "观察，不建仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、扣非净利、毛利率、经营现金流、应收账款和ST事项进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入3.8-4.5元且未新增担保、诉讼败诉、资金占用或非标审计",
-      "action": "试探仓，等待半年度经营现金流确认",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1投资收益高基数后真实盈利能力和现金回款。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "ST事项实质解除或撤销申请明确推进，且最近一期经营现金流转正",
-      "action": "提高为小仓位事件加基本面跟踪",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、审计意见、担保诉讼解决情况和是否满足撤销ST条件。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "出现担保赔付落地、监管问询暴露新占用、审计意见非标或现金流持续恶化",
-      "action": "回避或清仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入可买区上沿，需重新核验ST事项未恶化后评估试探仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入深度安全边际区，若现金流改善且ST处置推进，可提高小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.6
+      },
+      "reason": "进入减仓区，若ST未解除或盈利未超预期，价格可能透支摘帽预期。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "高于基础估值上沿较多，除非ST解除和利润超预期同时兑现，否则退出。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、扣非净利、毛利率、经营现金流、应收账款和ST事项进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1投资收益高基数后真实盈利能力和现金回款。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、审计意见、担保诉讼解决情况和是否满足撤销ST条件。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入可买区上沿，需重新核验ST事项未恶化后评估试探仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入深度安全边际区，若现金流改善且ST处置推进，可提高小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.6,
-      "reason": "进入减仓区，若ST未解除或盈利未超预期，价格可能透支摘帽预期。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "高于基础估值上沿较多，除非ST解除和利润超预期同时兑现，否则退出。"
-    }
-  ],
-  "updated_at": "2026-07-19",
-  "notes": [
-    "2026-07-17收盘价5.90元来自腾讯行情接口，非交易所原始行情，置信度中等。",
-    "ST核心风险为历史违规担保事项，截至2026-07-01公司仍披露不满足撤销其他风险警示条件。",
-    "当前评级为watch而非buy，原因是价格高于基础合理价值上沿且ST事项尚未解除。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

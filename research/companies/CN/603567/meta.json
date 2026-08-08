@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603567",
-  "market": "CN",
-  "ticker": "603567",
-  "name": "珍宝岛",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "珍宝岛具备中药制剂、心脑血管/呼吸品类和中药材交易平台等资产基础，但2025年巨亏、审计保留意见、资金占用疑虑和2026H1继续预亏使其只能按困境资产折价评估；当前价格接近基准价值上沿，需等待治理整改、回款和毛利率恢复证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    3.8,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    7.0,
-    9.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "珍宝岛",
+    "security_status": "active",
+    "symbol": "CN:603567",
+    "ticker": "603567"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e333ee982e14dfe6f2ae3a8d09511cb80bce606571a8de652660b43018c88ae3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅跟踪观察；在审计保留意见、资金占用和应收账款风险未实质化解前不建正式仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告正式数据、应收账款、资金占用和毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入3.8-4.5元且资金占用整改、应收款回款或毛利率恢复至少出现两项可验证改善后，可建立研究仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报收入恢复、经营现金流和减值风险。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "审计意见转为标准无保留、2027年收入和经营现金流恢复、核心中药制剂毛利率正常化后，才考虑提高仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见、治理整改和全年业绩。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入研究买入区间上沿，需要复核治理整改和半年报/三季报经营质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入深度安全边际区间，需要判断是否为坏账/治理恶化导致的价值陷阱。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.0
+      },
+      "reason": "超过基准估值上沿，若无业绩和审计改善证据应降低关注或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入研究买入区间上沿，需要复核治理整改和半年报/三季报经营质量。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入深度安全边际区间，需要判断是否为坏账/治理恶化导致的价值陷阱。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.0,
-      "reason": "超过基准估值上沿，若无业绩和审计改善证据应降低关注或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告正式数据、应收账款、资金占用和毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报收入恢复、经营现金流和减值风险。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见、治理整改和全年业绩。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

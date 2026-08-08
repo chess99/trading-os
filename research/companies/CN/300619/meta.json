@@ -1,113 +1,120 @@
 {
-  "symbol": "CN:300619",
-  "market": "CN",
-  "ticker": "300619",
-  "name": "金银河",
-  "company_name": "佛山市金银河智能装备股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司处于设备主业修复与金德锂铷铯盐材料期权验证期。2025年收入、现金流改善，2026Q1收入继续增长且合同负债上升，但净利率、ROE、应收账款、存货和负债压力仍未彻底修复。26元附近已包含部分未来兑现预期，需等待更低价格或中报验证。",
-  "quality_rating": "中等偏弱，改善中",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    22,
-    32
-  ],
-  "buy_zone": [
-    18,
-    21
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    45
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金银河",
+    "security_status": "active",
+    "symbol": "CN:300619",
+    "ticker": "300619"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8dbe392160166f85a37eed3f21587879be86fefce9861e14143b7afa9fb0077c"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-chatgpt.md",
+        "sha256": "a43349903fe70cfd8ea7619759fb9c1d41e11ba17f4666c870d2abf703dc22b7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在21元以上且未看到2026年中报验证经营现金流、金德锂毛利率和合同负债转收入",
-      "action": "观察或维持0-2%试验仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报：收入、毛利率、经营现金流、应收账款、存货、合同负债、金德锂利润贡献",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至18-21元且应收账款、存货、负债没有新增恶化",
-      "action": "建立3%-5%研究仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：合同负债转收入和铷盐/铯盐商业化是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元且2026年中报显示经营现金流为正、金德锂毛利率改善、订单预收正常转收入",
-      "action": "提高到5%-8%核心观察仓",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：设备主业是否稳定修复，材料业务是否形成可持续利润",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于38元但铷盐/铯盐持续订单、毛利率和净利润未兑现",
-      "action": "减至观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入报告定义的可买区上沿，需要复核基本面是否未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入更有安全边际的买入区，需要确认现金流和金德锂毛利率",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "价格超过基准合理价值区间，需要检查利润兑现是否支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "进入乐观情景估值区，若铷铯盐和净利润未兑现则赔率转差",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 21,
-      "currency": "CNY",
-      "action": "重新评估建仓",
-      "reason": "进入报告定义的可买区上沿，需要复核基本面是否未恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "currency": "CNY",
-      "action": "若基本面未恶化，评估提高仓位",
-      "reason": "进入更有安全边际的买入区，需要确认现金流和金德锂毛利率"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "currency": "CNY",
-      "action": "检查兑现程度并考虑减仓",
-      "reason": "价格超过基准合理价值区间，需要检查利润兑现是否支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "currency": "CNY",
-      "action": "若利润未兑现，倾向卖出或大幅降低仓位",
-      "reason": "进入乐观情景估值区，若铷铯盐和净利润未兑现则赔率转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报：收入、毛利率、经营现金流、应收账款、存货、合同负债、金德锂利润贡献"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：合同负债转收入和铷盐/铯盐商业化是否持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：设备主业是否稳定修复，材料业务是否形成可持续利润"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026年中报营业收入、归母净利润、扣非净利润",
-    "经营活动现金流净额是否连续为正",
-    "锂电池生产设备收入增速和毛利率",
-    "锂云母全元素高值化综合利用产品毛利率是否转正",
-    "铷盐/铯盐订单吨数、客户数量、单价、毛利率和回款",
-    "合同负债是否转化为收入",
-    "应收账款余额、账龄和信用减值损失",
-    "存货余额、存货跌价准备和周转",
-    "短期借款、长期借款、受限货币资金",
-    "前五大客户销售占比和第一大客户占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

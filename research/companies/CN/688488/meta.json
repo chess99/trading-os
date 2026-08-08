@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:688488",
-  "market": "CN",
-  "ticker": "688488",
-  "name": "艾迪药业",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "艾迪药业已从抗 HIV 创新药研发叙事进入商业化验证期，HIV 新药收入快速增长、人源蛋白业务提供第二曲线，但盈利稳定性、定增摊薄和 ACC017/ACC085 临床不确定性仍需观察；只有在价格跌入安全边际或 2026H2 经营拐点进一步确认后才适合提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    13.0,
-    18.5
-  ],
-  "buy_zone": [
-    8.8,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "艾迪药业",
+    "security_status": "active",
+    "symbol": "CN:688488",
+    "ticker": "688488"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "cf193841f959055f74736f30f039b858cb4ac72ade010bdf851a0e004a0c4fe1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅作为研究观察仓，等待 2026H1/H2 HIV 新药收入和定增价格验证",
-      "action": "watchlist_or_tracking_position",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年度报告，重点检查 HIV 新药收入、费用率、现金流和 ACC017 入组进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入 8.8-11.5 元且无 ACC017 临床、医保续约或重大治理负面事件",
-      "action": "accumulate",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，判断商业化增长是否恢复以及定增进展是否改变每股价值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "ACC017 III 期失败、医保价格显著下调或定增低价造成超预期摊薄",
-      "action": "reduce_to_zero_or_research_only",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年报和医保续约、海外注册、南大药业整合进度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入买入区上沿，需要复核经营和临床进展后考虑建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入乐观情景估值区，需要确认是否已有 ACC017 或 ACC085 明确突破支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "超过乐观估值上沿，若无超预期临床或收入证据应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入买入区上沿，需要复核经营和临床进展后考虑建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "进入乐观情景估值区，需要确认是否已有 ACC017 或 ACC085 明确突破支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 26.0,
-      "reason": "超过乐观估值上沿，若无超预期临床或收入证据应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年度报告，重点检查 HIV 新药收入、费用率、现金流和 ACC017 入组进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，判断商业化增长是否恢复以及定增进展是否改变每股价值"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年报和医保续约、海外注册、南大药业整合进度"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,119 +1,119 @@
 {
-  "symbol": "CN:002387",
-  "market": "CN",
-  "ticker": "002387",
-  "name": "维信诺",
-  "company_name": "维信诺科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "2026H1 预告收入 38.03-41.03 亿元、归母亏损 14.02-19.70 亿元，隐含 Q2 亏损 8.74-14.42 亿元；产品降价、毛利减少和存货跌价准备增加证伪此前温和减亏基线。2026-07-17 收盘 6.29 元、约 87.9 亿元市值仍高于 4.2-5.5 元合理价值，现价不值得买，等待半年报确认现金流、库存和归母权益。",
-  "quality_rating": "C-",
-  "valuation_rating": "偏贵/盈利预期显著下修",
-  "fair_value_range": [
-    4.2,
-    5.5
-  ],
-  "buy_zone": [
-    3.5,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    6.3,
-    7.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "维信诺",
+    "security_status": "active",
+    "symbol": "CN:002387",
+    "ticker": "002387"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "0e0212807fe5efbe42f2377af1ce3ba21b67dec3c23101dd3f34940a8a572678"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "a1dcb3d1922ee241b9a77169566f07c97f7445b5f9d9c08411461c22745f18ff"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 3.5 且连续两个季度毛利改善、亏损收窄",
-      "action": "分批建立高风险验证仓",
-      "position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证 Q2 恶化程度及资产负债表安全垫",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "3.5 < price <= 4.2 且现金流、库存与权益未进一步恶化",
-      "action": "小额验证仓",
-      "position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "确认 Q2 是否为低点以及经营修复能否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "4.2 < price <= 5.5",
-      "action": "仅观察，等待报表验证",
-      "position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "判断基准估值假设是否需要重估",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price > 5.5",
-      "action": "不买；已有仓位减持或退出",
-      "position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "验证中期盈亏平衡路径",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入下调后的买入区，但价格触发不等于自动买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "价格保护增强，但公司仍属高风险重资产亏损标的",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.3
+      },
+      "reason": "高于新合理价值上沿，仍隐含下半年快速修复预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "direction": "below",
-      "action": "触发基本面复核；仅在现金流、库存与权益未继续恶化时建不超过 1% 验证仓",
-      "reason": "进入下调后的买入区，但价格触发不等于自动买入"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "direction": "below",
-      "action": "若连续两个季度毛利改善、亏损收窄，可分批提高至最多 2%",
-      "reason": "价格保护增强，但公司仍属高风险重资产亏损标的"
-    },
-    {
-      "type": "price_above",
-      "price": 6.3,
-      "direction": "above",
-      "action": "不追高；基本面未改善则减持或退出",
-      "reason": "高于新合理价值上沿，仍隐含下半年快速修复预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 半年报披露后核对预告落点、毛利率、存货减值、经营现金流、短债和归母权益",
-      "reason": "验证 Q2 恶化程度及资产负债表安全垫"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 三季报后复查产品价格、毛利率、单季亏损、现金流和融资进展",
-      "reason": "确认 Q2 是否为低点以及经营修复能否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年报后复查全年收入、毛利率、归母净利润和资本结构",
-      "reason": "判断基准估值假设是否需要重估"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027 半年报后判断扭亏路径是否被验证",
-      "reason": "验证中期盈亏平衡路径"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入增速及单季环比",
-    "产品价格和毛利率",
-    "归母净利润及单季亏损收窄幅度",
-    "经营活动现金流量净额",
-    "归母所有者权益",
-    "存货跌价准备与存货周转",
-    "现金余额与短期债务压力",
-    "主要客户和高端产品导入进展",
-    "定增及摊薄进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

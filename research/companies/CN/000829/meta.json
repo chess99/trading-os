@@ -1,115 +1,115 @@
 {
-  "symbol": "CN:000829",
-  "name": "天音控股",
-  "company_name": "天音通信控股股份有限公司",
-  "market": "CN",
-  "ticker": "000829",
-  "exchange": "SZSE",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "current_price": 7.56,
-  "price_as_of": "2026-07-12",
-  "currency": "CNY",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    10.5
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "current_thesis": "天音控股具备智能终端全渠道分销规模、深圳国资背景、彩票软硬件和手机后市场期权，但 2025 年扣非亏损、核心分销毛利率过薄、供应商集中和高周转资金需求限制估值；在股价回到足够安全边际或扣非利润连续转正前，仅保持观察。",
-  "key_metrics": {
-    "revenue_2025_cny": 90569996478.41,
-    "net_profit_attributable_2025_cny": -21529960.11,
-    "deducted_net_profit_2025_cny": -65392771.38,
-    "operating_cash_flow_2025_cny": 489831898.53,
-    "equity_attributable_2025_cny": 2930995015.67,
-    "revenue_2026_q1_cny": 29215715181.7,
-    "net_profit_attributable_2026_q1_cny": -25381102.17
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天音控股",
+    "security_status": "active",
+    "symbol": "CN:000829",
+    "ticker": "000829"
   },
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "15116fe19d4b8f97d32ed5dbad54f03fa74aa306a1c828c27ff53124462b0865"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 5.6 元，且最近一个季度扣非亏损没有扩大、经营现金流未明显恶化，可建立研究性观察仓。",
-      "action": "research_entry",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看扣非利润、通信/电商毛利率、库存、应收和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非归母净利润转正，通信分销毛利率稳定在 2.0% 以上，且彩票或维修业务利润贡献开始披露，可提高配置。",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断收入高增长是否转化为利润改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 8.8 元但扣非利润仍未转正，或收入增长伴随库存和应收显著恶化，降低或不建立仓位。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估彩票海外项目、易修哥门店扩张和全年净利率。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入买入区上沿，需要复核扣非利润、现金流和库存后决定是否建立研究性仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "价格低于买入区下沿，若基本面未恶化，安全边际显著改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "进入减持/回避区下沿，若没有利润兑现，估值风险上升。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过情景估值上沿，需要强制复核是否由主题交易驱动。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入买入区上沿，需要复核扣非利润、现金流和库存后决定是否建立研究性仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "价格低于买入区下沿，若基本面未恶化，安全边际显著改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "进入减持/回避区下沿，若没有利润兑现，估值风险上升。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过情景估值上沿，需要强制复核是否由主题交易驱动。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看扣非利润、通信/电商毛利率、库存、应收和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断收入高增长是否转化为利润改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估彩票海外项目、易修哥门店扩张和全年净利率。"
-    }
-  ],
-  "watch_items": [
-    "通信产品销售毛利率是否稳定高于 2.0%",
-    "零售电商毛利率是否维持 4% 以上",
-    "扣非归母净利润是否连续两个季度转正",
-    "南非国家彩票项目是否上线并贡献可持续服务收入",
-    "库存、应收账款和经营现金流是否随收入增长恶化",
-    "前五大供应商采购占比及核心品牌渠道政策变化"
-  ],
-  "risk_flags": [
-    "扣非亏损",
-    "低毛利分销",
-    "供应商集中",
-    "高周转资金需求",
-    "主题估值波动",
-    "海外彩票项目执行风险"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

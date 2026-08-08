@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301182",
-  "ticker": "301182",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "凯旺科技",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "主业收入修复但仍未稳定盈利，液冷/AI服务器相关外延预期尚未被正式财务和订单验证；当前价格显著透支乐观情景，仅适合观察，等待盈利拐点、并购落地和估值回落。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    22,
-    32
-  ],
-  "buy_zone": [
-    15,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凯旺科技",
+    "security_status": "active",
+    "symbol": "CN:301182",
+    "ticker": "301182"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "981ac19ca8fd88a2063e27e198801ccb1c90512dcdd6e68a80329da1c0d1014b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格显著高于可验证基本面估值且公司仍亏损",
-      "action": "不建仓，仅跟踪半年报、并购正式协议和订单验证",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、毛利率、扣非利润、经营现金流、应收和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至20元以下，且最近两个季度扣非利润和经营现金流同步转正",
-      "action": "可重新评估试探仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及液冷并购进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "液冷资产完成收购并披露可审计利润，合并后净利率和订单质量优于预期",
-      "action": "在估值不高于合理区间上沿时考虑提高观察仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认主业是否真正扭亏和新业务贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入保守买入观察区，需同步复核盈利和现金流拐点",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "高于当前可验证基本面合理价值，除非液冷业务实质兑现，否则应回避或降低风险暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入保守买入观察区，需同步复核盈利和现金流拐点"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "高于当前可验证基本面合理价值，除非液冷业务实质兑现，否则应回避或降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、毛利率、扣非利润、经营现金流、应收和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及液冷并购进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认主业是否真正扭亏和新业务贡献"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

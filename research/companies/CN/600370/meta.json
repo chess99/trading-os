@@ -1,89 +1,105 @@
 {
-  "symbol": "CN:600370",
-  "market": "CN",
-  "ticker": "600370",
-  "name": "*ST三房",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "*ST三房是带有审计无法表示意见、内控否定意见、大额关联应收、债务逾期、诉讼和控股股东股份冻结风险的困境资产；当前股价更多反映保壳和周期修复预期，缺乏买方安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.55,
-    1.05
-  ],
-  "buy_zone": [
-    0.45,
-    0.75
-  ],
-  "sell_or_reduce_zone": [
-    1.25,
-    1.68
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST三房",
+    "security_status": "active",
+    "symbol": "CN:600370",
+    "ticker": "600370"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "245dbe84bd182cd95c1f7507d8ce5455ded3ac3e777453429dd86acefac709aa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于1.25元且审计、内控、债务和关联回款风险未解除",
-      "action": "不买；已有仓位减至观察仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、扣非利润、经营现金流和关联方回款进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在0.75元至1.25元之间，且只出现业绩小幅扭亏但风险未实质解除",
-      "action": "继续跟踪，不新增仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核债务展期、诉讼、担保逾期和审计事项整改进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于0.75元，且至少出现关联方回款或债务展期的硬证据",
-      "action": "可建立小额观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见、内控意见和退市风险是否解除",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于0.45元，未触发退市不可逆，且债务/控制权未进一步恶化",
-      "action": "仅按事件驱动试错",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.75
+      },
+      "reason": "进入有安全边际观察区，但仍需关联方回款或债务展期证据配合",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.45
+      },
+      "reason": "进入强吸引力事件驱动区，可重新评估极小仓位试错",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.25
+      },
+      "reason": "风险未解除时价格已脱离保守资产折价区，应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.75,
-      "reason": "进入有安全边际观察区，但仍需关联方回款或债务展期证据配合"
-    },
-    {
-      "type": "price_below",
-      "price": 0.45,
-      "reason": "进入强吸引力事件驱动区，可重新评估极小仓位试错"
-    },
-    {
-      "type": "price_above",
-      "price": 1.25,
-      "reason": "风险未解除时价格已脱离保守资产折价区，应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、扣非利润、经营现金流和关联方回款进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核债务展期、诉讼、担保逾期和审计事项整改进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见、内控意见和退市风险是否解除"
-    }
-  ],
-  "notes": [
-    "2026-07-20收盘价1.68元来自Yahoo Finance图表接口600370.SS，市值按约40.23亿股估算。",
-    "报告采用资产/清算折价为主，EPV和相对估值为辅；由于公司为*ST且存在非标审计，估值应保守。",
-    "关键低置信度变量包括关联应收最终损失率、诉讼赔付比例、担保代偿比例和债务展期结果。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,122 +1,114 @@
 {
-  "market": "CN",
-  "ticker": "301043",
-  "symbol": "CN:301043",
-  "name": "绿岛风",
-  "company_name": "广东绿岛风空气系统股份有限公司",
-  "exchange": "SZSE",
-  "status": "active",
-  "coverage_status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "last_researched": "2026-07-15",
-  "rating": "watch",
-  "current_rating": "watch",
-  "rating_label": "谨慎关注",
-  "current_thesis": "小市值室内通风系统公司，产品矩阵和经销渠道较完整，现金资产与分红提供一定保护；但2025年主业收入和扣非利润下滑，理财收益占比偏高，2026Q1修复质量仍需观察，当前估值缺乏充分安全边际。",
-  "fair_value_range": [
-    20,
-    28
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    35,
-    50
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "绿岛风",
+    "security_status": "active",
+    "symbol": "CN:301043",
+    "ticker": "301043"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "03c35b4f9d5e20170af97a44fe15fa195741ef5787f41584a7ee5d51a0e3b2f9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "observe",
-      "condition": "价格高于30元或估值缺乏安全边际",
-      "price_range": [
-        30,
-        999
-      ],
-      "action": "仅跟踪不主动加仓",
-      "max_weight": 0
-    },
-    {
-      "zone": "research_build",
-      "condition": "价格回到22-28元且季度扣非利润和现金流改善",
-      "price_range": [
-        22,
-        28
-      ],
-      "action": "复核现金资产和季度扣非利润后小仓位建仓",
-      "max_weight": 0.01
-    },
-    {
-      "zone": "buy",
-      "condition": "价格低于20元且现金资产质量未恶化",
-      "price_range": [
-        0,
-        20
-      ],
-      "action": "具备更好安全边际，仍需控制总权重",
-      "max_weight": 0.02
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露后复核收入、扣非利润、经营现金流和应收账款",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "确认2026Q1弱修复是否延续到中报",
-      "action": "更新评级与合理价值区间"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后复核新风系列毛利率和产能爬坡",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "确认新品、产能和渠道信用是否改善主业质量",
-      "action": "评估增长质量是否改善"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后复核全年分红、扣非利润和理财收益占比",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "确认全年主业利润与高分红可持续性",
-      "action": "复核主业与资产安全垫"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
-      "condition": "近端复核正式行情源；若股价进入22-28元可研究建仓区或跌破20元安全边际区则更新估值",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "本次行情快照置信度低，需要正式行情源确认估值",
-      "action": "更新估值并考虑仓位计划"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入可研究建仓区，需要更新正式行情与估值"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入安全边际较好区，需要复核资产质量和仓位上限"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入可研究建仓区，需要更新正式行情与估值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 50,
-      "reason": "接近乐观情景估值，需要评估减仓或继续观察"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入安全边际较好区，需要复核资产质量和仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 50.0
+      },
+      "reason": "接近乐观情景估值，需要评估减仓或继续观察",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "max_weight": 0.02,
-  "currency": "CNY",
-  "tags": [
-    "A股",
-    "创业板",
-    "室内通风系统",
-    "新风系统",
-    "风幕机",
-    "小市值",
-    "高分红"
-  ],
-  "updated_at": "2026-07-15"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

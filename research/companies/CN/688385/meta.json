@@ -1,90 +1,106 @@
 {
-  "symbol": "CN:688385",
-  "market": "CN",
-  "ticker": "688385",
-  "name": "复旦微电",
-  "status": "active",
-  "updated_at": "2026-07-18T18:00:00+08:00",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md",
-    "reports/2026-07-12-followup.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "current_rating": "watch",
-  "current_thesis": "复旦微电是国产FPGA稀缺平台型公司，7月18日战略新品发布会增强了高端FPGA、FPAI、RFSoC及Agent开发平台的产品路线证据，2026H1扣非利润修复方向也由业绩预告支持；但发布会未披露订单和财务兑现，正式半年报尚未验证分部毛利率、现金流、存货和应收质量。7月17日收盘51.96元已进入45-55元买入观察区，维持watch；当前最多1%观察仓，标准仓等待半年报验证。",
-  "fair_value_range": [
-    50,
-    65
-  ],
-  "buy_zone": [
-    45,
-    55
-  ],
-  "sell_or_reduce_zone": [
-    75,
-    90
-  ],
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "复旦微电",
+    "security_status": "active",
+    "symbol": "CN:688385",
+    "ticker": "688385"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "f258702ebe3aa26f303be7d1c60eeafb26f33efe21c4e2beaa82340cfa57e8c6"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-followup.md",
+        "sha256": "786194bf17c86c9f3dff803ecb7b48d409efe165cc5b4dfbff4ab12984c5da29"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "05905ea132d723fde5f03656338c9f4d6ee455cf17af8a9f25ed76fd0448f4ed"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于48-55元，但2026H1正式半年报尚未披露",
-      "action": "基准建议等待；高风险账户仅可持有事件前观察仓",
-      "max_weight": 0.01,
-      "reason": "价格已进入合理价值下部，但经营质量验证仍未完成，发布会不能替代财报"
+      "active": true,
+      "condition": {
+        "date": "2026-08-18"
+      },
+      "reason": "按预约披露日复查2026年半年报正式数据、扣非净利质量、产品线毛利率、经营现金流、存货和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于48-55元，且2026H1正式半年报确认扣非净利润、FPGA收入和毛利率、经营现金流同步改善",
-      "action": "建立验证后的首笔仓位",
-      "max_weight": 0.015,
-      "reason": "进入合理价值下沿附近，同时经营修复得到正式财报验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报，确认FPGA、非挥发存储器、智能电表MCU修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于48元，且FPGA订单、综合毛利率、存货周转同步改善",
-      "action": "提高至核心跟踪仓位",
-      "max_weight": 0.03,
-      "reason": "国产FPGA稀缺性与安全边际同时具备"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "已进入买入观察区；复查2026H1正式财报、FPGA毛利率与经营现金流后决定是否建立标准仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价处于55-75元，且经营利润预期没有上修",
-      "action": "不新增，仅保留低成本观察仓",
-      "max_weight": 0.01,
-      "reason": "价格接近或超过合理价值上沿，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入更有安全边际的建仓区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价高于75元，或估值主要由一次性公允价值收益驱动",
-      "action": "不新增并降至极小观察仓",
-      "max_weight": 0.005,
-      "reason": "价格进入减仓区且没有新增经营硬证据，经营利润兑现要求高"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "接近减仓区，需检查是否由一次性利润或情绪推动",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 55,
-      "reason": "已进入买入观察区；复查2026H1正式财报、FPGA毛利率与经营现金流后决定是否建立标准仓"
-    },
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入更有安全边际的建仓区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "接近减仓区，需检查是否由一次性利润或情绪推动"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-18",
-      "reason": "按预约披露日复查2026年半年报正式数据、扣非净利质量、产品线毛利率、经营现金流、存货和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报，确认FPGA、非挥发存储器、智能电表MCU修复是否延续"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

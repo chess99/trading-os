@@ -1,110 +1,105 @@
 {
-  "symbol": "CN:300284",
-  "market": "CN",
-  "ticker": "300284",
-  "name": "苏交科",
-  "company_name": "苏交科集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "低 PB 有资产安全垫，但 2025 年扣非亏损、ROE 偏低、应收回款和收入确认可比性风险尚未出清；只有在价格低于 4.30 元且经营现金流和扣非利润持续改善时才适合小仓位试错。",
-  "quality_rating": "中低",
-  "valuation_rating": "中性偏低",
-  "fair_value_range": [
-    4.7,
-    5.8
-  ],
-  "buy_zone": [
-    4.0,
-    4.3
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "苏交科",
+    "security_status": "active",
+    "symbol": "CN:300284",
+    "ticker": "300284"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "923a44d21bc97f98bd06acd7983ddaf6bf350c013ce37c723a33fa0bae184d25"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 5.80 元且扣非净利未连续两个季度同比改善",
-      "action": "不买",
-      "target_position": "0%",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报的扣非净利、经营现金流、应收账款和合同资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于 4.70-5.80 元且收入恢复但回款仍弱",
-      "action": "观察或仅保留跟踪仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报是否出现连续两个季度扣非利润改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格处于 4.00-4.30 元且经营现金流 TTM 为正、应收压力下降",
-      "action": "试探买入",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报、审计意见、收入确认和资产减值风险是否出清",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于 3.80 元且扣非利润、回款、资产减值均改善",
-      "action": "加至事件驱动仓位",
-      "target_position": "3%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "价格低于合理价值下沿约 20%，具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于 6.20 元但 ROE 仍低于 3% 或回款恶化",
-      "action": "减仓或退出",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "价格低于每股净资产折价较深，若利润和回款改善则风险收益比提升",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "价格高于合理价值区间上沿，若 ROE 未恢复则缺乏安全边际",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "action": "进入可买区，结合现金流和应收指标复核",
-      "reason": "价格低于合理价值下沿约 20%，具备初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "action": "若基本面同步改善，可考虑提高至 3%-4%",
-      "reason": "价格低于每股净资产折价较深，若利润和回款改善则风险收益比提升"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "action": "若利润未恢复，减仓或不参与",
-      "reason": "价格高于合理价值区间上沿，若 ROE 未恢复则缺乏安全边际"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报的扣非净利、经营现金流、应收账款和合同资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报是否出现连续两个季度扣非利润改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报、审计意见、收入确认和资产减值风险是否出清"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营现金流 TTM",
-    "扣非归母净利同比增速",
-    "应收账款和合同资产合计占收入比例",
-    "信用减值损失",
-    "ROE",
-    "EPC 和垫资型项目占比",
-    "检测、养护、智慧交通和城市更新业务订单占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

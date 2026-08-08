@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688558",
-  "market": "CN",
-  "ticker": "688558",
-  "name": "国盛智科",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "国盛智科是现金流和分红质量较好的中高端数控机床公司，高档数控机床增长和纵向一体化提供中期弹性，但当前价格已接近合理价值区间，安全边际不足，适合观察等待回撤或订单、毛利率继续验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    29,
-    36
-  ],
-  "buy_zone": [
-    22,
-    25.5
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    46
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国盛智科",
+    "security_status": "active",
+    "symbol": "CN:688558",
+    "ticker": "688558"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "3a8131674d48454f0f6c8c94e59d0442cd07592db84d2dd14af9a1900ad3c3cb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于25.5元，且高档数控机床收入增速、主营毛利率和全年经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中的订单、毛利率、现金流和高档机床增长",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于23元，且经营现金流/归母净利润全年回到0.9倍以上",
-      "action": "分批加仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1现金流转负是否只是季节性波动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于40元且未来两年利润预测未上修",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重估中期盈利和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.5
+      },
+      "reason": "进入初始买入区间上沿，重新核验订单、毛利率和现金流后可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入更有安全边际的加仓区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "超过合理价值区间上方，需要检查利润上修是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25.5,
-      "reason": "进入初始买入区间上沿，重新核验订单、毛利率和现金流后可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入更有安全边际的加仓区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "超过合理价值区间上方，需要检查利润上修是否足以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的订单、毛利率、现金流和高档机床增长"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1现金流转负是否只是季节性波动"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重估中期盈利和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

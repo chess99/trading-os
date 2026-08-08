@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:001330",
-  "ticker": "001330",
-  "name": "博纳影业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "博纳影业是A股稀缺的民营电影全产业链标的，具备头部内容项目经验和院线闭环，但2025年亏损扩大、2026年上半年仍预亏，当前价格已透支较多修复预期。维持观察，等待盈利和现金流连续验证后再考虑加仓。",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "fair_value_range": [
-    4.2,
-    5.4
-  ],
-  "buy_zone": [
-    3.2,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    7.0,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博纳影业",
+    "security_status": "active",
+    "symbol": "CN:001330",
+    "ticker": "001330"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "3ed89542510b1580a2fcf46724955d18fa8adf43dc7b00d78c20c97fe2e13af4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于4.0元，且2026年半年报确认经营现金流为正、未出现新增重大资产减值",
-      "action": "建立观察仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、业绩预告兑现情况、经营现金流和资产减值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.2元，且后续片单票房验证改善、资产负债率没有继续上升",
-      "action": "提高至小仓位",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报、暑期档和国庆档片单表现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于7.0元但公司仍未连续两个半年度盈利",
-      "action": "不新增买入并逐步降低敞口",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、全年盈利修复和AI影视业务商业化进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入买入观察区，需要复核半年报现金流、减值和片单进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可评估小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.0
+      },
+      "reason": "价格高于基准估值上沿，需要确认是否已有连续盈利修复支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "价格进入明显透支区，若无盈利兑现应考虑回避或减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入买入观察区，需要复核半年报现金流、减值和片单进展"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入深度安全边际区，若基本面未恶化可评估小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.0,
-      "reason": "价格高于基准估值上沿，需要确认是否已有连续盈利修复支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "价格进入明显透支区，若无盈利兑现应考虑回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、业绩预告兑现情况、经营现金流和资产减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报、暑期档和国庆档片单表现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、全年盈利修复和AI影视业务商业化进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

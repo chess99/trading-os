@@ -1,97 +1,115 @@
 {
-  "symbol": "CN:600583",
-  "ticker": "600583",
-  "name": "海油工程",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "国内稀缺海洋油气EPCI总承包平台，受益于中国海油高资本开支和海外中东、东南亚大单，但2026Q1收入利润下滑显示订单转收入和项目毛利仍需验证；当前估值偏低但安全边际尚不充足。",
-  "fair_value_range": [
-    6.0,
-    7.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    7.3,
-    8.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海油工程",
+    "security_status": "active",
+    "symbol": "CN:600583",
+    "ticker": "600583"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "d303f81e92a996ae362b7cd5da0ff8f00cd712c279bc8e503b8a233b2a5901b5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于5.20元且未出现重大海外项目亏损、订单取消或中国海油资本开支明显下修",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查收入确认、毛利率、经营现金流、合同资产和海外项目进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于4.80元且基本面未恶化，2026年订单和毛利率验证仍正常",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和新签订单，确认卡塔尔BH及PTTEP项目转化节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于7.30元但盈利仍停留在20亿至22亿元附近",
-      "action": "降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和中国海油新年度资本开支计划，更新估值区间和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入买入区上沿，若基本面无恶化则安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入深度买入区，需要复核项目执行和中国海油资本开支后可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.3
+      },
+      "reason": "接近合理价值上沿，若利润未上台阶应考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "超过基准估值区间，除非海外项目利润显著超预期，否则应大幅减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入买入区上沿，若基本面无恶化则安全边际改善"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入深度买入区，需要复核项目执行和中国海油资本开支后可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.3,
-      "reason": "接近合理价值上沿，若利润未上台阶应考虑降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "超过基准估值区间，除非海外项目利润显著超预期，否则应大幅减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查收入确认、毛利率、经营现金流、合同资产和海外项目进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和新签订单，确认卡塔尔BH及PTTEP项目转化节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和中国海油新年度资本开支计划，更新估值区间和仓位上限"
-    }
-  ],
-  "key_metrics": {
-    "valuation_price_cny": 5.35,
-    "valuation_price_date": "2026-07-17",
-    "valuation_price_confidence": "medium",
-    "revenue_2025_cny_billion": 27.165,
-    "net_profit_2025_cny_billion": 2.084,
-    "eps_2025_cny": 0.47,
-    "roe_2025_percent": 8.31,
-    "revenue_2026q1_cny_billion": 4.988,
-    "net_profit_2026q1_cny_billion": 0.438,
-    "dividend_2025_cny_per_share": 0.196
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

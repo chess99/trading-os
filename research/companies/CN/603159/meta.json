@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603159",
-  "ticker": "603159",
-  "name": "上海亚虹",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "上海亚虹主业为精密塑料模具、注塑和SMT配套，资产负债表尚可，但2025年收入和毛利率下滑、归母和扣非亏损，2026Q1及2026H1预告继续亏损；当前市场价格相当于5倍以上PB，主要依赖未核验的控制权/重组预期，基本面缺少安全边际。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    3.0,
-    5.5
-  ],
-  "buy_zone": [
-    0.0,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海亚虹",
+    "security_status": "active",
+    "symbol": "CN:603159",
+    "ticker": "603159"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "46c19231775d69b828d55230e266461082fdb0a08df908a92dede1183d973748"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于7.5元且未出现已公告、可量化、可审计的新资产注入或主业连续改善证据",
-      "action": "不买；已有仓位应减仓或退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、毛利率、经营现金流和客户结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至3.0元附近，同时连续两个季度收入同比转正、主营毛利率回到20%以上、扣非净利润转正",
-      "action": "重新研究后可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现收入和扣非利润拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.8元，且半年报确认经营现金流转正、客户订单恢复、控制权风险无新增不利事项",
-      "action": "可考虑小仓位试错",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报并重新校准绝对估值和相对估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入基本面估值区间下沿附近，需要复核是否出现安全边际和经营改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "明显高于基本面公允价值上沿，应检查是否仅由未核验的控制权或题材预期推动",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入基本面估值区间下沿附近，需要复核是否出现安全边际和经营改善"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "明显高于基本面公允价值上沿，应检查是否仅由未核验的控制权或题材预期推动"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、毛利率、经营现金流和客户结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现收入和扣非利润拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报并重新校准绝对估值和相对估值"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

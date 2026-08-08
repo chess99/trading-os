@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603701",
-  "market": "CN",
-  "ticker": "603701",
-  "name": "德宏股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "德宏股份的商用车发电机主业具备客户认证和细分龙头基础，电子真空泵与储能业务带来收入增长弹性，但当前盈利能力、经营现金流和资产负债率尚未证明转型质量；以2026-07-17收盘价17.52元估算，市值已提前定价乐观情景，当前仅适合观察，等待现金流修复或估值回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    9.5,
-    14.0
-  ],
-  "buy_zone": [
-    0,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德宏股份",
+    "security_status": "active",
+    "symbol": "CN:603701",
+    "ticker": "603701"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e81755f47abd97ee3e4a7c42b6490215a7886a228488f580a5c04a939d4ee01e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于10元，且2026H1扣非净利同比增长、经营现金流缺口明显收窄后，允许研究性试错仓位。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查分产品收入、毛利率、经营现金流和资产负债率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8元，且储能业务回款和项目收益率经半年报或公告验证良好，可提高但仍保持小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1高增长是否延续以及张宏保减持计划执行结果。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于17.5元且TTM归母净利润未超过5000万元，不新增仓位；若已持有，逐步降至观察仓。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，判断储能业务是否形成可持续盈利和现金回款。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入买入区间上沿，需要复核半年报现金流和分产品毛利率后决定是否试错。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "估值提供较大安全边际，若基本面未恶化可重新评估上调仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "价格高于合理价值区间且接近乐观情景上沿，若利润未显著兑现应避免追高或降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入买入区间上沿，需要复核半年报现金流和分产品毛利率后决定是否试错。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "估值提供较大安全边际，若基本面未恶化可重新评估上调仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "价格高于合理价值区间且接近乐观情景上沿，若利润未显著兑现应避免追高或降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查分产品收入、毛利率、经营现金流和资产负债率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1高增长是否延续以及张宏保减持计划执行结果。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，判断储能业务是否形成可持续盈利和现金回款。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

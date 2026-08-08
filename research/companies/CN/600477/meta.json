@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:600477",
-  "ticker": "600477",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "杭萧钢构",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "杭萧钢构具备钢结构总包/EPC资质、全国产能和海外增长亮点，但2025-2026Q1收入利润仍下行、扣非ROE和经营现金流尚未稳定修复。当前价格接近合理区间上沿，安全边际不足，先观察中报现金流、海外收入和订单质量。",
-  "fair_value_range": [
-    1.8,
-    2.3
-  ],
-  "buy_zone": [
-    1.45,
-    1.75
-  ],
-  "sell_or_reduce_zone": [
-    2.75,
-    3.2
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "杭萧钢构",
+    "security_status": "active",
+    "symbol": "CN:600477",
+    "ticker": "600477"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "63a8d1fd700f1049145875713ef8e7cf8ec8d5853b259112d4838ac274ec4a31"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于买入区且2026Q1收入利润仍下滑，仅保留观察名单。",
-      "action": "watch",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-17"
+      },
+      "reason": "跟踪2026年中报预约披露或实际披露，重点复核收入、扣非利润、经营现金流、海外收入和应收/合同资产。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至1.45-1.75元且未出现新增重大回款、减值或治理风险。",
-      "action": "initial_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "跟踪2026年三季报，判断2026Q1下滑是否已扭转。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年中报或三季报确认收入恢复增长、扣非净利润改善、经营现金流持续为正且海外业务保持高毛利。",
-      "action": "add_after_confirmation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.75
+      },
+      "reason": "进入安全边际买入区，需复核回款、订单和减值风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.75
+      },
+      "reason": "超过乐观情景估值中枢，若基本面未同步改善应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.75,
-      "reason": "进入安全边际买入区，需复核回款、订单和减值风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.75,
-      "reason": "超过乐观情景估值中枢，若基本面未同步改善应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-17",
-      "reason": "跟踪2026年中报预约披露或实际披露，重点复核收入、扣非利润、经营现金流、海外收入和应收/合同资产。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "跟踪2026年三季报，判断2026Q1下滑是否已扭转。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

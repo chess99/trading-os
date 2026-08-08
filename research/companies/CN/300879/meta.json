@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:300879",
-  "ticker": "300879",
-  "name": "大叶股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "大叶股份通过 AL-KO 并购显著放大全球园林机械收入、品牌和渠道，但 2025 年亏损、2026Q1 利润同比大降且资产负债率接近 79%。当前股价约 15.27 元已接近合理价值上沿，需等待整合质量、现金流和负债率改善后再考虑买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.5,
-    15.5
-  ],
-  "buy_zone": [
-    0,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    20.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大叶股份",
+    "security_status": "active",
+    "symbol": "CN:300879",
+    "ticker": "300879"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "d938ef39e03fab86bf19830c5dd84201d02f722cf93cf2cc4fc0e30a8e3e4353"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 11.5 元，且最近一期扣非净利润为正、经营现金流为正、资产负债率未继续上升",
-      "action": "可建立观察性小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计 2026 年中报披露后复核 AL-KO 整合、利润率、现金流和负债率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 中报显示扣非净利率高于 3%、经营现金流持续为正、资产负债率较 2026Q1 回落",
-      "action": "复核后可提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "预计 2026 年三季报披露后复核旺季后收入质量、存货和费用率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 17.5 元但未出现利润率和现金流同步改善",
-      "action": "不追高，已有仓位减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "预计 2026 年年报披露后重估正常化盈利和绝对估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入估算合理价值下沿并提供约 25% 安全边际，需要复核基本面是否仍完整",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "超过当前整合质量可支持的估值上沿，若无中报验证应考虑卖出或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入估算合理价值下沿并提供约 25% 安全边际，需要复核基本面是否仍完整"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "超过当前整合质量可支持的估值上沿，若无中报验证应考虑卖出或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计 2026 年中报披露后复核 AL-KO 整合、利润率、现金流和负债率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "预计 2026 年三季报披露后复核旺季后收入质量、存货和费用率"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "预计 2026 年年报披露后重估正常化盈利和绝对估值"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

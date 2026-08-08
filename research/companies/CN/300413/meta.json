@@ -1,95 +1,105 @@
 {
-  "symbol": "CN:300413",
-  "market": "CN",
-  "ticker": "300413",
-  "name": "芒果超媒",
-  "company_name": "芒果超媒股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "芒果超媒是A股稀缺的盈利型长视频与内容IP平台，具备湖南广电内容工业化、综艺IP、年轻女性用户、IPTV/OTT牌照和国资媒体资源优势；但2025年利润继续下滑、2026Q1归母净利同比下降47.37%，内容投入回报和会员广告修复仍需确认。合理价值区间15.5-19.5元，13.5元以下才开始具备建仓意义。",
-  "quality_rating": "B+",
-  "valuation_rating": "B",
-  "fair_value_range": [15.5, 19.5],
-  "buy_zone": [10.5, 13.5],
-  "sell_or_reduce_zone": [22.0, 25.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "芒果超媒",
+    "security_status": "active",
+    "symbol": "CN:300413",
+    "ticker": "300413"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "cb64048e6ef7323fd37d1323fbb01d4af9e170a994a14ac62292b2b304e45be7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于13.5元且2026年后续季度广告收入继续回暖、芒果TV会员规模未明显跌破7200万",
-      "max_weight": 0.02,
-      "action": "建立1%-2%试探仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报：广告收入、会员收入、互联网视频毛利率和经营现金流是否改善。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于12.0元且互联网视频毛利率未继续恶化、全年经营现金流预期不低于8亿元",
-      "max_weight": 0.04,
-      "action": "加仓至3%-4%"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：确认Q1利润压力是否缓解，以及短剧/IP衍生是否带来实际利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于10.5元且公司仍保持净现金/低杠杆、核心平台MAU和会员基本盘稳定",
-      "max_weight": 0.05,
-      "action": "可提高至5%上限仓位"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：重新测算可持续利润、分红能力和合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于22元且2026-2027年归母净利润中枢未上修至16亿元以上",
-      "max_weight": 0.01,
-      "action": "降低仓位或仅保留观察仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
       "reason": "进入初始可买区间，价格相对合理价值中枢有约20%以上折价。",
-      "action": "复核半年报或最近季度经营数据，若无恶化则启动建仓评估"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 12.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
       "reason": "进入较好安全边际区间，价格已接近每股净资产附近并显著低于合理价值区间。",
-      "action": "复核现金流、毛利率和会员规模，满足条件则提高仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 22.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
       "reason": "高于当前合理价值上沿，除非利润中枢上修，否则风险收益比下降。",
-      "action": "复核估值与盈利预测，若无上修则减仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报：广告收入、会员收入、互联网视频毛利率和经营现金流是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：确认Q1利润压力是否缓解，以及短剧/IP衍生是否带来实际利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：重新测算可持续利润、分红能力和合理价值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "芒果TV有效会员数及会员收入",
-    "广告收入及广告客户恢复情况",
-    "芒果TV互联网视频业务毛利率",
-    "经营活动现金流量净额",
-    "投资收益和公允价值变动占利润总额比例",
-    "小芒电商GMV、盈利能力和IP衍生品收入质量",
-    "短剧、剧集、综艺的爆款率与会员转化",
-    "移动端MAU、用户时长和大屏运营商收入"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

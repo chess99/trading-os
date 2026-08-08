@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600611",
-  "ticker": "600611",
-  "name": "大众交通",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "大众交通具备上海本地交通资产、数据算力业务和较厚净资产支撑，但2025年扣非亏损、2026Q1及2026H1预告亏损显示经营拐点尚未确认；当前价格约等于净资产，适合观察，只有在显著低于净资产且亏损收窄被验证时才小仓位参与。",
-  "fair_value_range": [
-    3.6,
-    4.4
-  ],
-  "buy_zone": [
-    0.0,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.1,
-    6.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大众交通",
+    "security_status": "active",
+    "symbol": "CN:600611",
+    "ticker": "600611"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "dbda2d605e367cb4fbf5d0f32f79a3e57424f87601e6c805082e80f1be1263d6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.20元，且2026H2扣非亏损较2026H1明显收窄、经营现金流保持为正",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非亏损、经营现金流、车辆利用率和数据算力分部",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.60元，且数据算力分部披露机柜利用率和毛利率改善",
-      "action": "可增持至小仓位上限",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认H2亏损是否收窄以及净资产是否稳定",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.10元但扣非利润和ROE未明显修复",
-      "action": "减仓或不参与",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估分部资产质量、资本配置和长期ROE",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "低于约0.8倍2026Q1归母净资产，资产折价开始提供安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.1
+      },
+      "reason": "高于基准公平价值区间且需经营拐点兑现，否则风险收益不佳",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "低于约0.8倍2026Q1归母净资产，资产折价开始提供安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 5.1,
-      "reason": "高于基准公平价值区间且需经营拐点兑现，否则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非亏损、经营现金流、车辆利用率和数据算力分部"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认H2亏损是否收窄以及净资产是否稳定"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估分部资产质量、资本配置和长期ROE"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

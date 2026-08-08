@@ -1,66 +1,86 @@
 {
-  "symbol": "CN:688168",
-  "market": "CN",
-  "ticker": "688168",
-  "name": "安博通",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "安博通传统网络安全策略管理与安全运维能力有细分价值，但2025年表观收入受非传统业务影响较大，扣除后收入和经营现金流仍弱；AI/再制造相关业务提供向上期权，但可持续性、回款和披露透明度尚需验证。当前价格接近合理价值区间上沿，安全边际不足，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    31,
-    45
-  ],
-  "buy_zone": [
-    24,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    70
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安博通",
+    "security_status": "active",
+    "symbol": "CN:688168",
+    "ticker": "688168"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "608c2eea05f0787d44029e78888b22fdd4e7589cfe63b172f6843bd4184b24e7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于32元且2026H1扣非亏损收窄、经营现金流改善、非主营收入占比下降后，才允许建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣除后收入、扣非利润、经营现金流、客户一回款及新业务持续性。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格位于24-28元且核心安全主业未继续恶化、应收和现金流未失控，可把观察仓上限提高。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1利润改善是否可持续以及全年估值区间是否需要调整。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于55元且缺少连续订单、现金流和扣除后收入验证时，不追高并减持既有仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入买入观察区，需要复核2026H1扣非利润、现金流和收入质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "进入减仓区，若基本面未兑现AI/再制造持续性，应降低风险暴露。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入买入观察区，需要复核2026H1扣非利润、现金流和收入质量。"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "进入减仓区，若基本面未兑现AI/再制造持续性，应降低风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣除后收入、扣非利润、经营现金流、客户一回款及新业务持续性。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1利润改善是否可持续以及全年估值区间是否需要调整。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

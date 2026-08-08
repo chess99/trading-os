@@ -1,124 +1,123 @@
 {
-  "symbol": "CN:002952",
-  "market": "CN",
-  "ticker": "002952",
-  "name": "亚世光电",
-  "company_name": "亚世光电（集团）股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "电子纸收入快速增长并带动2026年利润修复，但2025年ROE、扣非利润、经营现金流和电子纸毛利率偏弱；当前18.96元已隐含较强修复预期，安全边际不足，等待价格回落或利润质量连续验证。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    10.5,
-    14.5
-  ],
-  "buy_zone": [
-    0,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "亚世光电",
+    "security_status": "active",
+    "symbol": "CN:002952",
+    "ticker": "002952"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "7b18e09de33df33531a5031177a7afec21ad06eb8ee4313e42adbd4e8a4589f4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约18.96元且2026年修复尚未被连续季度验证",
-      "max_weight": 0,
-      "action": "不买入，保持0仓位，仅跟踪"
-    },
-    {
-      "condition": "股价低于11.0元，且2026中报确认扣非净利润和经营现金流均改善",
-      "max_weight": 0.01,
-      "action": "可建立1%以内观察仓"
-    },
-    {
-      "condition": "股价低于9.5元，电子纸毛利率提升至8%以上且客户集中度未恶化",
-      "max_weight": 0.03,
-      "action": "可提高至2%-3%仓位"
-    },
-    {
-      "condition": "连续两个季度经营现金流显著低于净利润，或电子纸毛利率回落至5%以下",
-      "max_weight": 0,
-      "action": "退出观察仓或暂停买入计划"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "currency": "CNY",
-      "reason": "进入估算合理价值下沿附近，具备初步安全边际",
-      "action": "进入可买观察区，复核中报/季报利润质量"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "currency": "CNY",
-      "reason": "低于保守买入区，若基本面未恶化则安全边际较充分",
-      "action": "若基本面未恶化，可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "currency": "CNY",
-      "reason": "高于估算合理价值区间，除非利润质量明显超预期，否则风险收益比偏差",
-      "action": "估值缺少安全边际，已有仓位应减仓或不追买"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年半年报应已披露，需要验证业绩预告兑现情况",
-      "condition": "披露2026年半年报",
-      "action": "复核预告兑现度、电子纸毛利率、经营现金流和存货跌价准备"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报应已披露，需要检查电子纸增长和毛利率持续性",
-      "condition": "电子纸收入增速低于20%或毛利率低于5%",
-      "action": "下调质量评级并暂停买入计划"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报应已披露，需要检查客户集中和回款风险",
-      "condition": "第一大客户收入占比继续上升或应收账款增速显著高于收入增速",
-      "action": "复核客户集中和回款风险"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核主要股东和董事高管减持进展",
-      "condition": "持股5%以上股东或董事高管继续减持",
-      "action": "复核治理和市场供给压力"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报应已披露，需要检查海外资产和海外毛利率",
-      "condition": "越南孙公司亏损扩大或海外收入毛利率下滑",
-      "action": "复核海外产能利用率和汇率风险"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入估算合理价值下沿附近，具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "低于保守买入区，若基本面未恶化则安全边际较充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "高于估算合理价值区间，除非利润质量明显超预期，否则风险收益比偏差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "电子纸收入及毛利率",
-    "扣非归母净利润",
-    "经营现金流净额/净利润",
-    "第一大客户和前五大客户收入占比",
-    "应收账款增速与账龄",
-    "存货余额、存货跌价准备计提与转回",
-    "越南孙公司收益",
-    "汇兑损益和套期保值效果"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

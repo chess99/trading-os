@@ -1,102 +1,106 @@
 {
-  "symbol": "CN:002204",
-  "market": "CN",
-  "ticker": "002204",
-  "name": "大连重工",
-  "company_name": "大连重工",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "大连重工受益于重型装备、海外订单和风电核心零部件增长，但当前估值处于合理区间中部，经营现金流、应收回款和订单毛利率仍需半年报验证，因此以观察为主，等待4.20-4.80元买入区间或基本面进一步确认。",
-  "quality_rating": "B",
-  "valuation_rating": "neutral",
-  "fair_value_range": [
-    4.8,
-    5.8
-  ],
-  "buy_zone": [
-    4.2,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    6.3,
-    7.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大连重工",
+    "security_status": "active",
+    "symbol": "CN:002204",
+    "ticker": "002204"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "ffb1f97935f1717ad36c6061a3f2cffb9a85dd0d6624f3d190c4a525d441e15e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入4.20-4.80元且无重大回款恶化或订单恶化公告",
-      "action": "首笔试仓",
-      "max_weight": 0.02,
-      "reason": "估值进入安全边际区间，但重装周期和现金流仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报正式披露后的毛利率、现金流、应收和订单质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "半年报或后续季报验证毛利率稳定、经营现金流修复、海外和风电订单质量良好",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.05,
-      "reason": "利润增长得到现金流和订单结构共同验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认利润增长是否延续且经营现金流是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价超过6.30元但利润、ROE和经营现金流未同步上台阶",
-      "action": "减仓",
-      "max_weight": 0.03,
-      "reason": "周期制造估值可能提前透支"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入首笔买入观察区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "应收账款和合同资产显著恶化、毛利率连续下滑或订单明显低于预期",
-      "action": "退出",
-      "max_weight": 0,
-      "reason": "投资假设失效"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入较强安全边际区间，需复核是否由基本面恶化导致",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.3
+      },
+      "reason": "超过基准合理价值上沿，若基本面未上修应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "接近乐观估值区间，需要利润和现金流强验证",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入首笔买入观察区间"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入较强安全边际区间，需复核是否由基本面恶化导致"
-    },
-    {
-      "type": "price_above",
-      "price": 6.3,
-      "reason": "超过基准合理价值上沿，若基本面未上修应考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "接近乐观估值区间，需要利润和现金流强验证"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报正式披露后的毛利率、现金流、应收和订单质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认利润增长是否延续且经营现金流是否改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新签订单总额及大客户订单占比",
-    "海外订单金额、交付进度和回款",
-    "风电齿轮箱及核心零部件收入和毛利率",
-    "综合毛利率与期间费用率",
-    "经营现金流量净额/归母净利润",
-    "应收账款+合同资产/营业收入",
-    "存货周转和合同负债变化",
-    "归母净利润和扣非归母净利润增速"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

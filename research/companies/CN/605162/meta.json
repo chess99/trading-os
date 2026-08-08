@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:605162",
-  "market": "CN",
-  "ticker": "605162",
-  "name": "新中港",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "新中港是嵊州园区热电联产与供热管网型资产，具备区域管网壁垒、较好现金流和转债转股降杠杆改善，但2025年和2026Q1收入利润继续下滑，7.15元附近估值已接近合理区间，缺少足够安全边际，需等待蒸汽销量和浦口片区新客户放量验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.2,
-    7.8
-  ],
-  "buy_zone": [
-    5.2,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    10.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新中港",
+    "security_status": "active",
+    "symbol": "CN:605162",
+    "ticker": "605162"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c8a0d2d8f81973cecfbb6aaf794a41c9dc66ffab8b4bf7c511a71658bb97a0cc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.8元，且最新季度蒸汽销量同比改善、经营现金流保持为正时，可建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点验证浦口片区供汽、2号机组投产后的毛利率和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.2元，且煤价未大幅反弹、蒸汽毛利率稳定在25%以上时，可提高配置。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断2026全年利润是否能恢复至1.3亿元以上。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.8元但TTM归母净利润未恢复至1.7亿元以上时，不追高并逐步降低仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与分红方案，重新评估长期自由现金流和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入初始买入区间，需要复核蒸汽销量、煤价和现金流是否支持安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入深度安全边际区间，若基本面未恶化可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "接近乐观情景估值，若业绩未兑现应减仓或放弃追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入初始买入区间，需要复核蒸汽销量、煤价和现金流是否支持安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入深度安全边际区间，若基本面未恶化可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "接近乐观情景估值，若业绩未兑现应减仓或放弃追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点验证浦口片区供汽、2号机组投产后的毛利率和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断2026全年利润是否能恢复至1.3亿元以上。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与分红方案，重新评估长期自由现金流和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

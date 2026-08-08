@@ -1,102 +1,96 @@
 {
-  "symbol": "CN:000650",
-  "market": "CN",
-  "ticker": "000650",
-  "name": "仁和药业",
-  "company_name": "仁和药业",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "仁和药业具备妇炎洁、仁和可立克、优卡丹、闪亮等OTC与大健康品牌矩阵，集采直接暴露相对较低，现金和理财资产厚、负债低、分红稳定；但2025年收入和扣非利润下滑，2026Q1收入修复尚需验证，当前应观察等待4.60-4.90元买入区分批建仓。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "neutral_to_slightly_cheap",
-  "fair_value_range": [
-    5.5,
-    6.6
-  ],
-  "buy_zone": [
-    4.6,
-    4.9
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "仁和药业",
+    "security_status": "active",
+    "symbol": "CN:000650",
+    "ticker": "000650"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "ee1cf084bb5af87af0d46b280422a35cc2a197920b161ad773326fd343d71ae7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至4.90元以下，且无重大药品质量、广告合规或治理风险",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "进入买入区上沿，现金和理财资产提供下行缓冲，但增长仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，确认收入修复、应收回款、扣非利润和经营现金流质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至4.60元以下，且2026H1收入维持增长、经营现金流健康",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "接近悲观情景估值，若基本面未破坏则赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认OTC旺季前渠道和费用投放趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度药品收入恢复且扣非净利率回到9%以上",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05,
-      "reason": "验证品牌和渠道修复并非单季度补库存，允许更高仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.9
+      },
+      "reason": "进入初始买入区，适合复核后建立小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于7.20元但盈利预测未上修",
-      "action": "减仓",
-      "max_weight": 0.02,
-      "reason": "价格进入减持区，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "接近悲观情景价值，可在基本面未破坏时加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "达到减持区下沿，除非利润中枢上修否则应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.9,
-      "reason": "进入初始买入区，适合复核后建立小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "接近悲观情景价值，可在基本面未破坏时加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "达到减持区下沿，除非利润中枢上修否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，确认收入修复、应收回款、扣非利润和经营现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认OTC旺季前渠道和费用投放趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "药品收入同比增速",
-    "健康相关产品收入同比增速",
-    "药品毛利率",
-    "健康相关产品毛利率",
-    "销售费用率",
-    "扣非归母净利润率",
-    "经营现金流净额/扣非归母净利润",
-    "应收账款余额及周转",
-    "存货余额及周转",
-    "货币资金、交易性金融资产和理财收益",
-    "现金分红率",
-    "妇炎洁、仁和可立克、优卡丹、闪亮品牌动销",
-    "药品安全、广告合规和监管处罚"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

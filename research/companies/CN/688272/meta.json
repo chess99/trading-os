@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:688272",
-  "market": "CN",
-  "ticker": "688272",
-  "name": "富吉瑞",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "富吉瑞具备红外热成像定制化、军民两用和国产替代属性，但2025年收入下滑、亏损扩大、经营现金流为负，2026Q1仍未验证订单和利润拐点；当前股价按亏损状态约5倍PB、约10倍PS，缺乏安全边际，适合观察等待收入、毛利率、回款同步修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12,
-    18
-  ],
-  "buy_zone": [
-    10,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    30
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "富吉瑞",
+    "security_status": "active",
+    "symbol": "CN:688272",
+    "ticker": "688272"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "fd7c9ecf68cb9bed3d21c9f474d65dc61626c401d0da22564f1032aca7a9369e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入10-14元且未出现重大违规、退市风险或现金流断裂，同时最新季度收入同比转正或经营现金流明显改善",
-      "action": "建立观察性小仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、现金流、应收账款和存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比增长、毛利率回到38%以上、经营现金流转正或应收账款明显下降",
-      "action": "可加至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现连续改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24元但没有重大订单、现金流和盈利修复证据",
-      "action": "不买入并减仓或退出已有仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和全年经营现金流是否兑现修复",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入买入观察区，需要复核最新订单、现金流和坏账情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "价格可能反映悲观情景，可在无流动性和治理恶化前提下重新评估深度价值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过基准价值上沿，若没有基本面验证则风险收益恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "接近乐观情景估值，需要重大订单和利润拐点支撑，否则应规避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入买入观察区，需要复核最新订单、现金流和坏账情况"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "价格可能反映悲观情景，可在无流动性和治理恶化前提下重新评估深度价值"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "超过基准价值上沿，若没有基本面验证则风险收益恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "接近乐观情景估值，需要重大订单和利润拐点支撑，否则应规避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、现金流、应收账款和存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现连续改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和全年经营现金流是否兑现修复"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

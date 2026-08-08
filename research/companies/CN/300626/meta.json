@@ -1,103 +1,105 @@
 {
-  "symbol": "CN:300626",
-  "market": "CN",
-  "ticker": "300626",
-  "name": "华瑞股份",
-  "company_name": "华瑞电器股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司在换向器细分领域有真实客户和制造基础，但2025年净利率约1.21%、ROE仅1.91%、经营现金流弱，康泽药业投资继续拖累利润。2026-07-13收盘价29.70元对应约53.5亿元市值，显著透支空心杯电机/机器人预期，而相关收入、订单和利润贡献尚未核验。",
-  "quality_rating": "中低",
-  "valuation_rating": "极贵",
-  "fair_value_range": [
-    5.0,
-    8.0
-  ],
-  "buy_zone": [
-    0,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华瑞股份",
+    "security_status": "active",
+    "symbol": "CN:300626",
+    "ticker": "300626"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "fbc44ac52c96376fec4aa880906d1d8a34554898d8c5a02e0a2cf32c40aec5de"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于12元，且未披露空心杯换向器可核验订单或扣非净利年化低于4000万元",
-      "action": "不买；已有仓位减至0",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看扣非净利、经营现金流、汽车电机收入和空心杯换向器进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在5至8元，且2026年扣非净利改善、经营现金流转正、汽车电机收入继续增长",
-      "action": "仅建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润改善是否可持续以及估值是否需要调整",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于5元，且没有新增重大减值、主营订单和现金流未恶化",
-      "action": "可建立小仓位并等待基本面验证",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理价值区间和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "年化扣非净利超过5000万元、经营现金流稳定高于净利润、空心杯换向器形成可核验收入",
-      "action": "重新估值后再决定是否提高仓位",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
       "reason": "低于合理价值上沿，值得复核基本面是否已经支撑观察仓",
-      "action": "进入估值复核区，检查利润和现金流是否同步改善"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 5.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
       "reason": "进入测算买入区间，若基本面未恶化则可能具备安全边际",
-      "action": "进入潜在买入区，前提是基本面未恶化"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 12.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
       "reason": "高于合理价值区间且需要显著利润兑现才能支撑",
-      "action": "若无利润兑现，视为高估减仓区"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看扣非净利、经营现金流、汽车电机收入和空心杯换向器进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润改善是否可持续以及估值是否需要调整"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理价值区间和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "汽车电机收入及毛利率",
-    "扣非净利润和扣非净利率",
-    "经营活动现金流净额及自由现金流",
-    "空心杯电机换向器订单、客户验证、收入和毛利率",
-    "其他业务收入占比和毛利质量",
-    "康泽药业投资损失或减值",
-    "应收账款、存货相对营业收入的增速"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

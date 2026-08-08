@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300660",
-  "ticker": "300660",
-  "name": "江苏雷利",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "江苏雷利是家电微特电机基本盘叠加汽车、工控和机器人执行器期权的零部件平台型公司；2025年收入增长质量改善但利润弹性被汽车爬坡、研发与海外投入压制，2026Q1扣非利润下滑显示短期仍需等待毛利率与费用率拐点。当前估值已计入较多机器人预期，适合观察，低位再配置。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    23.0,
-    30.0
-  ],
-  "buy_zone": [
-    18.0,
-    22.0
-  ],
-  "sell_or_reduce_zone": [
-    34.0,
-    40.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江苏雷利",
+    "security_status": "active",
+    "symbol": "CN:300660",
+    "ticker": "300660"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "3d55406436c2028f64ad103602acad106f9cac41581e8f5b3fa0350a9b7a3465"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入18-22元区间，同时汽车零部件和工控业务收入继续双位数增长、扣非净利率不再恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的分业务增速、毛利率、现金流和机器人订单进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报或三季报验证毛利率环比改善、经营现金流与净利润匹配，并出现机器人客户批量订单",
-      "action": "提高到核心小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1利润下滑是否已修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣非净利润连续两个季度同比下滑且汽车业务毛利率继续下行",
-      "action": "不加仓并复核 thesis",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报并重估中长期利润中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入基础业务估值较有安全边际的买入观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "超过乐观情景中枢，机器人期权定价过满，需减仓或重新估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22.0,
-      "reason": "进入基础业务估值较有安全边际的买入观察区"
-    },
-    {
-      "type": "price_above",
-      "price": 34.0,
-      "reason": "超过乐观情景中枢，机器人期权定价过满，需减仓或重新估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的分业务增速、毛利率、现金流和机器人订单进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1利润下滑是否已修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报并重估中长期利润中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,86 +1,115 @@
 {
-  "symbol": "CN:301376",
-  "ticker": "301376",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "致欧科技",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "current_thesis": "跨境家居自有品牌和大件履约能力具备长期价值，但当前股价大致处于合理区间，2026年美线修复、VC模式、汇兑压力缓解和新品占比仍需半年报验证；以观察为主，等待更厚安全边际或经营连续兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    18.0,
-    24.0
-  ],
-  "buy_zone": [
-    14.5,
-    16.2
-  ],
-  "sell_or_reduce_zone": [
-    27.0,
-    32.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "致欧科技",
+    "security_status": "active",
+    "symbol": "CN:301376",
+    "ticker": "301376"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "e49fcce096bc07f09f5de213dd32792a7b4cd6418a2eaa61f7a384026156a9aa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入14.5-16.2元且2026H1未出现收入失速、库存异常或汇兑继续显著侵蚀利润",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：收入增速、净利率、汇兑损益、美线恢复、存货和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1和2026Q3连续验证美线恢复、欧洲增长延续、净利率修复且经营现金流质量正常",
-      "action": "提高到核心跟踪仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：股权激励触发值达成概率和全年利润修复质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于27元且利润兑现仍停留在基准情形，或2026年利润低于4亿元且非一次性因素导致",
-      "action": "减仓或退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：验证VC模式、区域增长、新品占比和估值假设。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.2
+      },
+      "reason": "进入买入区间上沿，若基本面未恶化可重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入高安全边际区间，需要快速复核关税、汇率、库存和平台费用。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "接近乐观情形估值，需要检视是否已有足够业绩兑现支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "明显高于当前合理价值区间，除非业绩上修否则应考虑减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.2,
-      "reason": "进入买入区间上沿，若基本面未恶化可重新评估建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入高安全边际区间，需要快速复核关税、汇率、库存和平台费用。"
-    },
-    {
-      "type": "price_above",
-      "price": 27.0,
-      "reason": "接近乐观情形估值，需要检视是否已有足够业绩兑现支撑。"
-    },
-    {
-      "type": "price_above",
-      "price": 32.0,
-      "reason": "明显高于当前合理价值区间，除非业绩上修否则应考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：收入增速、净利率、汇兑损益、美线恢复、存货和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：股权激励触发值达成概率和全年利润修复质量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：验证VC模式、区域增长、新品占比和估值假设。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

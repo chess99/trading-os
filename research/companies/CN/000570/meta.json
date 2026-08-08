@@ -1,87 +1,86 @@
 {
-  "symbol": "CN:000570",
-  "market": "CN",
-  "ticker": "000570",
-  "name": "苏常柴Ａ",
-  "company_name": "苏常柴Ａ",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "苏常柴Ａ是常州国资背景的中小功率柴油机周期资产，净资产提供一定底线，但扣非盈利薄、存货和行业价格竞争仍需验证；现价不追买，等待低PB安全边际或2026年中报确认毛利率、现金流和扣非利润改善。",
-  "quality_rating": "B-",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    4.1,
-    5.0
-  ],
-  "buy_zone": [
-    3.4,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    6.3
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "苏常柴Ａ",
+    "security_status": "active",
+    "symbol": "CN:000570",
+    "ticker": "000570"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "b6b257206b63cf2c80d27b9494a23d96acf4439a634d3345a3dfe56377829f1c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于4.10元且未看到2026年中报毛利率、扣非利润和经营现金流同时改善",
-      "action": "不新建仓位，仅观察",
-      "max_weight": 0,
-      "reason": "当前更像低PB周期资产，盈利质量和安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、扣非利润、经营现金流和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至3.80元以下，且无重大负面公告或存货恶化信号",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "低于0.8倍左右PB后资产安全边际改善，可用小仓位跟踪"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认周期修复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年中报确认毛利率改善、扣非利润改善且经营现金流转正",
-      "action": "可将仓位提高至上限",
-      "max_weight": 0.02,
-      "reason": "只有基本面确认后才值得从资产折价交易升级为周期修复交易"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入观察买入区，需复核存货、现金流和公告风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "进入减持区，若基本面没有同步改善应考虑兑现估值修复",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入观察买入区，需复核存货、现金流和公告风险"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "reason": "进入减持区，若基本面没有同步改善应考虑兑现估值修复"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、扣非利润、经营现金流和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认周期修复是否持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "综合毛利率",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "存货金额和周转天数",
-    "单缸柴油机、多缸柴油机和汽油机收入结构",
-    "出口收入占比",
-    "国四产品销售和售后质量费用",
-    "应收账款及票据占收入比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

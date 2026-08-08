@@ -1,86 +1,120 @@
 {
-  "symbol": "CN:920260",
-  "market": "CN",
-  "ticker": "920260",
-  "name": "中寰股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "中寰股份是天然气采集与输配控制设备细分供应商，具备客户准入、专精特新、专利和现金资产缓冲，但客户集中、项目制波动、2026Q1利润大幅下滑和新基地扩产风险削弱安全边际。2026-07-17收盘7.81元约对应8.09亿元市值，已接近乐观情景，不适合追高，等待5.8元以下或利润与回款修复后再评估。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.0,
-    7.2
-  ],
-  "buy_zone": [
-    5.1,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    7.6,
-    9.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中寰股份",
+    "security_status": "active",
+    "symbol": "CN:920260",
+    "ticker": "920260"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "5f197b6adb97729c491351270d22fb44317d8a63eecafb608079628d0e2455b2"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "a73deb62c1a0e88a05fbf826a3a405eeb9ad62d3964082b09c7c16ff19c8da3c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "7.6元以上或未验证2026利润修复，不新增仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026中报收入恢复、扣非净利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "5.8元以下且2026中报收入、扣非净利率、经营现金流未继续恶化，可买第一笔研究仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报订单节奏、合同负债、回款和新基地投入",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "5.1元以下且应收回款改善、合同负债回升或海外订单转化得到验证，可提高到上限",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、海外订单转化、现金分红和资本开支回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "出现核心客户流失、应收账款恶化、新基地显著超预算或治理风险，不因下跌补仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入安全边际买入区，需同步复核2026利润和回款",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.1
+      },
+      "reason": "进入强吸引力区，可在基本面未破坏时提高研究仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.6
+      },
+      "reason": "进入不追高区，除非海外订单和利润率显著上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.2
+      },
+      "reason": "超过乐观情景上沿，已有仓位应复核减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入安全边际买入区，需同步复核2026利润和回款"
-    },
-    {
-      "type": "price_below",
-      "price": 5.1,
-      "reason": "进入强吸引力区，可在基本面未破坏时提高研究仓"
-    },
-    {
-      "type": "price_above",
-      "price": 7.6,
-      "reason": "进入不追高区，除非海外订单和利润率显著上修"
-    },
-    {
-      "type": "price_above",
-      "price": 9.2,
-      "reason": "超过乐观情景上沿，已有仓位应复核减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026中报收入恢复、扣非净利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报订单节奏、合同负债、回款和新基地投入"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、海外订单转化、现金分红和资本开支回报"
-    }
-  ],
-  "notes": "2026-07-19初始研究：2025年收入3.08亿元、归母净利4203万元、经营现金流3307万元；2026Q1收入3553万元、归母净利317万元。质量评级B-，估值评级偏贵，今天决策不买。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

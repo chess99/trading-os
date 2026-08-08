@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688118",
-  "market": "CN",
-  "ticker": "688118",
-  "name": "普元信息",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "普元信息是资产负债表较强、研发投入较高的基础软件与信创平台公司，但 2025 年收入下滑且扣非仍亏损，2026Q1 继续承压；当前更适合等待价格进入显著折价区或看到收入、扣非利润、经营现金流同步改善后再买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.0,
-    18.0
-  ],
-  "buy_zone": [
-    10.0,
-    13.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "普元信息",
+    "security_status": "active",
+    "symbol": "CN:688118",
+    "ticker": "688118"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c10baf202044a6d3ddc6ed2762b0bcde9ed7b2a12e1b30f35f2fd215a750dd15"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 10.0-13.5 元区间，且现金及类现金资产未明显下降、无重大客户或回款恶化迹象",
-      "action": "可建立观察性底仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入、扣非利润、经营现金流和订单恢复情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比转正，扣非亏损明显收窄或转正，经营活动现金流改善",
-      "action": "可加至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报是否出现收入同比转正和现金流改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "收入恢复到 4.5 亿元以上年化水平，扣非净利率接近 8%，经营现金流持续为正",
-      "action": "验证反转后再提高配置上限",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断反转是否成立或是否应下调估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入买入区上沿，现金垫提供更明确安全边际，需要复核基本面是否恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入悲观情景估值区间，若资产负债表仍稳健可重新评估风险收益比",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "进入乐观情景估值下沿，若扣非利润和经营现金流未同步验证应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入买入区上沿，现金垫提供更明确安全边际，需要复核基本面是否恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入悲观情景估值区间，若资产负债表仍稳健可重新评估风险收益比"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "进入乐观情景估值下沿，若扣非利润和经营现金流未同步验证应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入、扣非利润、经营现金流和订单恢复情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报是否出现收入同比转正和现金流改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断反转是否成立或是否应下调估值"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:603285",
-  "market": "CN",
-  "ticker": "603285",
-  "name": "键邦股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "键邦股份是高分子材料环保助剂细分龙头，客户认证和产品稳定性构成真实壁垒，但2025年和2026Q1利润仍下滑，当前可见价格已接近乐观情景估值，基础情景下安全边际不足，宜等待价格回落或利润拐点验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    27,
-    34
-  ],
-  "buy_zone": [
-    22,
-    27
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    48
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "键邦股份",
+    "security_status": "active",
+    "symbol": "CN:603285",
+    "ticker": "603285"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b0b72beb0aa3e49898049570b288699d81deb29ba2e3e0503475eda5f5f6a3f7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于27元且最近一期扣非净利润恢复正增长、经营现金流与净利润匹配",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的利润拐点、毛利率、经营现金流和募投进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于24元且毛利率连续两个季度改善、募投项目未显著拖累ROIC",
-      "action": "提高至中等仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入恢复是否传导到扣非净利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于42元且归母净利润年化仍低于1.6亿元",
-      "action": "不追买并考虑降低暴露",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及2027年一季报，重新评估产能兑现和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 27.0
+      },
+      "reason": "进入基础情景合理价值下沿并开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "若基本面未恶化，进入可考虑提高仓位的深度价值区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "高于基础估值区间，需乐观情景利润兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "接近乐观情景估值，若无2亿元以上年化利润证据应减持或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 27,
-      "reason": "进入基础情景合理价值下沿并开始具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "若基本面未恶化，进入可考虑提高仓位的深度价值区"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "高于基础估值区间，需乐观情景利润兑现支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "接近乐观情景估值，若无2亿元以上年化利润证据应减持或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的利润拐点、毛利率、经营现金流和募投进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入恢复是否传导到扣非净利润"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及2027年一季报，重新评估产能兑现和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

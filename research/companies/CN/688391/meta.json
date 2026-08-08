@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688391",
-  "market": "CN",
-  "ticker": "688391",
-  "name": "钜泉科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "智能电网计量、MCU与载波通信芯片细分龙头，现金和净资产提供下行保护，BMS提供第二增长曲线；但2025年至2026Q1主营盈利仍在低谷，当前价格缺少足够安全边际，等待扣非利润、现金流和存货出清信号。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24.0,
-    32.0
-  ],
-  "buy_zone": [
-    18.0,
-    21.5
-  ],
-  "sell_or_reduce_zone": [
-    35.0,
-    43.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "钜泉科技",
+    "security_status": "active",
+    "symbol": "CN:688391",
+    "ticker": "688391"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "546d8e7059a2b41ef9557bcfe5f52189d7f6850705f5de18983824c92de796f0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于21.5元，且没有新增经营恶化公告，可建立跟踪仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报：收入增速、扣非净利润、经营现金流、存货和BMS进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于19.0元，同时最近一个季度经营现金流转正且存货继续下降，可加至研究仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断智能电表芯片价格和库存周期是否见底。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于35.0元但扣非净利润和经营现金流未连续两个季度改善，减仓或不追高。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，更新恢复利润、分红和估值中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.5
+      },
+      "reason": "进入初步买入区，需要复核Q2/Q3经营现金流、存货和毛利率。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "接近悲观情景资产价值区间，若基本面未恶化可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "超过基准估值上沿，需要确认扣非利润和BMS订单是否支撑重估。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 21.5,
-      "reason": "进入初步买入区，需要复核Q2/Q3经营现金流、存货和毛利率。"
-    },
-    {
-      "type": "price_below",
-      "price": 19.0,
-      "reason": "接近悲观情景资产价值区间，若基本面未恶化可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 35.0,
-      "reason": "超过基准估值上沿，需要确认扣非利润和BMS订单是否支撑重估。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报：收入增速、扣非净利润、经营现金流、存货和BMS进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断智能电表芯片价格和库存周期是否见底。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，更新恢复利润、分红和估值中枢。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

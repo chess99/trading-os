@@ -1,97 +1,96 @@
 {
-  "symbol": "CN:000607",
-  "market": "CN",
-  "ticker": "000607",
-  "name": "华媒控股",
-  "company_name": "华媒控股",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "low_to_medium",
-  "valuation_rating": "expensive",
-  "current_thesis": "杭州区域国资传媒资产具备资源价值，但2025年大额亏损、减值和诉讼尾部风险尚未完全出清，2026Q1仍处亏损状态；当前股价高于基准合理价值区间，适合跟踪而非买入。",
-  "fair_value_range": [
-    2.1,
-    2.7
-  ],
-  "buy_zone": [
-    0.0,
-    1.8
-  ],
-  "sell_or_reduce_zone": [
-    3.2,
-    99.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华媒控股",
+    "security_status": "active",
+    "symbol": "CN:000607",
+    "ticker": "000607"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "010184c4a8394a3d676a3a0ddcd96f93c2e5e26216e3106c0c2f50f464a8f186"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026-07-10 close at 3.28 CNY and company remains loss-making on 2026Q1 trailing evidence",
-      "action": "do_not_buy",
-      "max_weight": 0.0,
-      "reason": "Current price is above fair value range while 2025 and 2026Q1 earnings are still negative and impairment/litigation tail risks remain."
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "Review after 2026 interim report for recurring loss trend, advertising revenue, education growth, cash flow, and impairment updates.",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price below 1.80 CNY with no new material impairment, no additional litigation provision, and quarterly adjusted loss continuing to narrow",
-      "action": "research_position_only",
-      "max_weight": 0.01,
-      "reason": "Only a small tracking position is justified before recurring profitability is proven."
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "Review after 2026 third-quarter report for delivery outsourcing cost impact and whether adjusted earnings are approaching breakeven.",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "two consecutive quarters of positive recurring earnings, operating cash flow improvement, and evidence that newspaper delivery outsourcing lowers cost",
-      "action": "reassess_for_watch_or_hold",
-      "max_weight": 0.03,
-      "reason": "A higher weight requires proof that restructuring has converted local media resources into sustainable cash earnings."
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "Enter valuation review zone for a possible 0.5%-1% research position if fundamentals have not deteriorated.",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.2
+      },
+      "reason": "Price is above base fair value range and should trigger reduce/avoid review.",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.8
+      },
+      "reason": "Optimistic scenario price requires fresh proof of recurring profit recovery; otherwise risk/reward is poor.",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "Enter valuation review zone for a possible 0.5%-1% research position if fundamentals have not deteriorated."
-    },
-    {
-      "type": "price_above",
-      "price": 3.2,
-      "reason": "Price is above base fair value range and should trigger reduce/avoid review."
-    },
-    {
-      "type": "price_above",
-      "price": 3.8,
-      "reason": "Optimistic scenario price requires fresh proof of recurring profit recovery; otherwise risk/reward is poor."
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "Review after 2026 interim report for recurring loss trend, advertising revenue, education growth, cash flow, and impairment updates."
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "Review after 2026 third-quarter report for delivery outsourcing cost impact and whether adjusted earnings are approaching breakeven."
-    }
-  ],
-  "key_tracking_metrics": [
-    "quarterly_revenue_growth",
-    "recurring_net_profit",
-    "operating_cash_flow",
-    "advertising_and_planning_revenue",
-    "advertising_and_planning_gross_margin",
-    "education_revenue_growth",
-    "education_gross_margin",
-    "newspaper_distribution_cost",
-    "credit_impairment_loss",
-    "asset_impairment_loss",
-    "goodwill_balance",
-    "litigation_provision",
-    "accounts_receivable",
-    "asset_liability_ratio"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

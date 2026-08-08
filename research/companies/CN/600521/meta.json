@@ -1,102 +1,105 @@
 {
-  "symbol": "CN:600521",
-  "market": "CN",
-  "ticker": "600521",
-  "name": "华海药业",
-  "company_name": "华海药业",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_thesis": "华海药业具备特色原料药、海外制剂注册和 API+制剂一体化能力，2026 年中报预增显示 2025 年低利润后的修复可能正在发生；但当前股价已反映较多修复预期，FDA 合规、API 价格、集采和汇率仍约束估值，适合等待 13.5 元以下安全边际。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "中性略贵",
-  "fair_value_range": [
-    14.0,
-    18.0
-  ],
-  "buy_zone": [
-    0.0,
-    13.5
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华海药业",
+    "security_status": "active",
+    "symbol": "CN:600521",
+    "ticker": "600521"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "414ce62f993050f6114f8d390d1c5fc4582d9017521d56904939f23f67b8fc88"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_12_and_no_new_fda_negative",
-      "action": "分两笔买入",
-      "max_weight": 0.06,
-      "reason": "接近悲观估值区间，主业修复或海外制剂兑现任一出现都有较好赔率。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报，验证扣非利润、经营现金流、毛利率和海外制剂进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_12_and_13_5_with_h1_results_confirmed",
-      "action": "建立首笔仓位",
-      "max_weight": 0.03,
-      "reason": "对 2026 年扣非利润修复给予折价，安全边际开始出现。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，判断利润修复是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_13_5_and_16",
-      "action": "观察或保留小仓跟踪",
-      "max_weight": 0.02,
-      "reason": "估值赔率一般，需要半年报现金流、毛利率和 FDA 合规进展继续验证。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查 2026 年年报，重估 normalized earnings 和自由现金流。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_above_18_5_without_incremental_fundamental_evidence",
-      "action": "不追高并考虑减仓",
-      "max_weight": 0.01,
-      "reason": "价格高于合理区间上沿，缺少安全边际。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入有安全边际的买入区，可结合半年报和合规状态建立首笔仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "高于不应追高区，除非海外制剂、FDA 合规和扣非利润继续超预期，否则应控制仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入有安全边际的买入区，可结合半年报和合规状态建立首笔仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "高于不应追高区，除非海外制剂、FDA 合规和扣非利润继续超预期，否则应控制仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年报，验证扣非利润、经营现金流、毛利率和海外制剂进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，判断利润修复是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查 2026 年年报，重估 normalized earnings 和自由现金流。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026 年半年报扣非归母净利润是否达到预告区间",
-    "经营性现金流与净利润匹配程度",
-    "API 毛利率和主要品种价格",
-    "美国 ANDA 获批、上市、供货恢复和销售放量",
-    "FDA 检查、483、警告信或进口限制状态",
-    "国内集采品种价格和销量",
-    "汇兑损益对利润的影响",
-    "研发费用、资本开支和自由现金流"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

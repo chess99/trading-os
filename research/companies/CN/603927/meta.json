@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603927",
-  "market": "CN",
-  "ticker": "603927",
-  "name": "中科软",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "中科软是保险IT垂直龙头，具备客户黏性、行业Know-how、中科院软件所股东背景和净现金支撑；但2025年利润与现金流明显承压，2026Q1仍未确认修复，且内控强调事项降低信任度。现价接近中性公允价值下半区但安全边际不足，等待中报验证或更低价格。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.5,
-    15.0
-  ],
-  "buy_zone": [
-    9.5,
-    11.2
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    18.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中科软",
+    "security_status": "active",
+    "symbol": "CN:603927",
+    "ticker": "603927"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "bd9ca7a7c7c625cb144bae5f8a42a422a4a02941198e6aa2cc9b078b0500e19a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于11.2元，且2026年中报显示保险领域收入保持正增长、扣非利润降幅显著收窄、内控事项无新增负面",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看保险业务收入、扣非利润、现金流和内控事项进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于10.0元，且经营现金流和应收账款未继续恶化",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复斜率和全年现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于16.5元但扣非利润未恢复到年化4亿元以上，或2026年中报显示现金流继续恶化",
-      "action": "不加仓或减仓复核",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和内控审计意见，决定是否从观察转为买入或下调评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.2
+      },
+      "reason": "进入买入区间上沿，若基本面无新增恶化可启动小仓位建仓复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入具备较高安全边际区间，需要复核现金流与内控事项后考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过基准公允价值上沿，若利润修复未达乐观情景需减仓或重新估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.2,
-      "reason": "进入买入区间上沿，若基本面无新增恶化可启动小仓位建仓复核"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入具备较高安全边际区间，需要复核现金流与内控事项后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "超过基准公允价值上沿，若利润修复未达乐观情景需减仓或重新估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看保险业务收入、扣非利润、现金流和内控事项进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复斜率和全年现金流趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和内控审计意见，决定是否从观察转为买入或下调评级"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

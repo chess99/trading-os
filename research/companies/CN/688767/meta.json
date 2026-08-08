@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688767",
-  "market": "CN",
-  "ticker": "688767",
-  "name": "博拓生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "博拓生物具备POCT产品矩阵、海外注册渠道和厚现金资产，但2025年利润大幅下滑、2026Q1扣非亏损，当前估值已要求经营修复兑现；在看到收入和扣非利润连续改善前只观察，买入需等待24-28元安全边际或明确基本面拐点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    28,
-    38
-  ],
-  "buy_zone": [
-    24,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    46,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博拓生物",
+    "security_status": "active",
+    "symbol": "CN:688767",
+    "ticker": "688767"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "58c6157ce1fc1999321fcb37770adf2c8828cd9e5dfabb8e4050d86b0e00282d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入24-28元，且最新半年报或季报显示扣非亏损收窄/转正、经营现金流未恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增速、扣非净利润、经营现金流、对美出口和研发注册进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比增长且扣非净利率恢复至8%以上，同时毛利率维持45%以上",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断经营拐点是否连续两个季度成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于46元但未出现收入双位数增长、微流控或海外毒检订单兑现",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期利润中枢、分红回购和产业投资回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入初始买入区，需复核最新财报中的扣非利润、现金流和订单修复情况。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入深度安全边际区，若现金资产和治理未恶化，可重新评估提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 46.0
+      },
+      "reason": "高于基准估值上沿，若基本面没有同步兑现，应考虑减仓或继续观望。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入初始买入区，需复核最新财报中的扣非利润、现金流和订单修复情况。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入深度安全边际区，若现金资产和治理未恶化，可重新评估提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 46,
-      "reason": "高于基准估值上沿，若基本面没有同步兑现，应考虑减仓或继续观望。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增速、扣非净利润、经营现金流、对美出口和研发注册进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断经营拐点是否连续两个季度成立。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期利润中枢、分红回购和产业投资回报。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

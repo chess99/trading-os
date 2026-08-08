@@ -1,31 +1,101 @@
 {
-  "symbol": "CN:002156",
-  "market": "CN",
-  "ticker": "002156",
-  "name": "通富微电",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "2026年半年度业绩预告确认AI算力、存储景气和中高端产品已推动通富微电主业加速，H1扣非归母净利润预计7-8亿元；但H1归母净利润16-18亿元中约9-10亿元为非经常性收益，不能简单年化并给予封测主业估值倍数。2026-07-17收盘价68.36元仍高于45-60元合理价值，且定增摊薄、重资产扩产和高杠杆风险未消除，维持观察与0仓位。",
-  "fair_value_range": [45, 60],
-  "buy_zone": [38, 48],
-  "sell_or_reduce_zone": [68, 95],
-  "position_plan": [
-    {"condition": "当前价格高于合理价值上沿，且半年报尚未验证投资收益质量、经营现金流和定增摊薄，维持0仓位观察。", "max_weight": 0},
-    {"condition": "股价低于48元，且半年报确认扣非利润、毛利率和经营现金流同步改善，可试探建仓。", "max_weight": 0.02},
-    {"condition": "股价低于42元，资产负债率未突破70%且定增摊薄可控，可提高至中小仓位。", "max_weight": 0.05},
-    {"condition": "股价低于36元，AI/HPC封测需求和主要客户份额未恶化，可提高仓位。", "max_weight": 0.08}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "通富微电",
+    "security_status": "active",
+    "symbol": "CN:002156",
+    "ticker": "002156"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "729e78b43239582e19012f19e589ff9fbcdc2aa0722309bf43d2a8a177cbd30d"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "af1c9d2c6d69489bba4f2241db7506041a7b77eeddad5a9683e864f3db9f57ee"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "复核2026半年报，重点检查投资收益明细、Q2毛利率、经营现金流、资本开支、有息负债和定增摊薄。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认Q2扣非利润高点能否延续，并检查AI/HPC与存储景气传导。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入有安全边际买入区上沿，需结合半年报验证利润质量和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入更有吸引力区间，若定增摊薄可控且基本面未恶化可评估3%-5%仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 68.0
+      },
+      "reason": "高于合理价值上沿，进入减仓或不应追高区间。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": ["reports/2026-07-08-initial.md", "reports/2026-07-17-memory-cycle-followup.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-26", "reason": "复核2026半年报，重点检查投资收益明细、Q2毛利率、经营现金流、资本开支、有息负债和定增摊薄。"},
-    {"type": "date", "date": "2026-10-31", "reason": "复核2026三季报，确认Q2扣非利润高点能否延续，并检查AI/HPC与存储景气传导。"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 48, "reason": "进入有安全边际买入区上沿，需结合半年报验证利润质量和现金流。"},
-    {"type": "price_below", "price": 42, "reason": "进入更有吸引力区间，若定增摊薄可控且基本面未恶化可评估3%-5%仓位。"},
-    {"type": "price_above", "price": 68, "reason": "高于合理价值上沿，进入减仓或不应追高区间。"}
-  ],
-  "updated_at": "2026-07-17"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

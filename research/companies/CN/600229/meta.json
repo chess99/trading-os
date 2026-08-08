@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:600229",
-  "ticker": "600229",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "城市传媒",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "城市传媒是区域出版发行资产，净资产和现金提供底部，但2025年大额减值和2026年美元基金公允价值波动削弱利润可预测性；当前价格高于以净资产和正常化扣非利润交叉验证的安全边际，适合观察等待更低价格或更明确的经营修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    3.6,
-    4.6
-  ],
-  "buy_zone": [
-    0,
-    3.4
-  ],
-  "sell_or_reduce_zone": [
-    5.4,
-    6.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "城市传媒",
+    "security_status": "active",
+    "symbol": "CN:600229",
+    "ticker": "600229"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "39ef67e9095c85f7c61a9f8c007acea4491aebd4b13d2ede93939cf663737a86"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.4元且2026年中报扣非归母净利润落在预告区间、未出现新增重大减值",
-      "action": "可建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报正式披露数据、减值和美元基金公允价值变动",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.1元且经营现金流改善、美元基金损失不再扩大",
-      "action": "可提高至防守型小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报扣非利润、经营现金流和资产质量变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.4元但扣非利润和现金流未持续修复",
-      "action": "不新增，已有仓位减持",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断2025年减值是否真正出清并更新估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "进入保守买入区间，隐含约0.8倍2026Q1每股净资产，具备重新评估价值的安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.4
+      },
+      "reason": "超过乐观情景下沿，若经营修复未同步验证则风险收益比恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "进入保守买入区间，隐含约0.8倍2026Q1每股净资产，具备重新评估价值的安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 5.4,
-      "reason": "超过乐观情景下沿，若经营修复未同步验证则风险收益比恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报正式披露数据、减值和美元基金公允价值变动"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报扣非利润、经营现金流和资产质量变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断2025年减值是否真正出清并更新估值"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,90 +1,96 @@
 {
-  "symbol": "CN:002255",
-  "market": "CN",
-  "ticker": "002255",
-  "name": "海陆重工",
-  "company_name": "海陆重工",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海陆重工2025年收入下滑但利润率改善，2026Q1延续高毛利和利润增长；核电、高端压力容器和余热锅炉订单提供中期弹性，但当前价格已部分反映主题预期，应等待6.8元以下或中报验证后再提高仓位。",
-  "quality_rating": "B-",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    7.0,
-    9.2
-  ],
-  "buy_zone": [
-    5.8,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    11.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海陆重工",
+    "security_status": "active",
+    "symbol": "CN:002255",
+    "ticker": "002255"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "b16900cf0831f65bfc7c6eac62b9f25aaa8bce3532f02915d5edda2760dc8ed7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至6.8元以下，且最新季度毛利率不低于28%、经营现金流为正、应收账款未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "低于基准买入价后，制造主业和核电订单提供赔率，但仍需控制项目型业务波动"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报：收入确认、毛利率、应收账款和订单结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至5.8元以下，且订单质量和回款继续验证",
-      "action": "加至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "接近保守情景估值下沿，安全边际较充分"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和第四代核电装备项目投产进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.0元或TTM市盈率高于22倍且无新增高质量核电订单验证",
-      "action": "暂停买入并减仓",
-      "max_weight": 0.0,
-      "reason": "估值已经计入较多核电和可控核聚变预期"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入基础买入区，复核订单和回款后可建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入深度安全边际区，若基本面未变坏可加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "进入减仓观察区，需要新增订单或利润上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入基础买入区，复核订单和回款后可建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入深度安全边际区，若基本面未变坏可加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "进入减仓观察区，需要新增订单或利润上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报：收入确认、毛利率、应收账款和订单结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和第四代核电装备项目投产进度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度新增订单和在手订单",
-    "锅炉及压力容器毛利率",
-    "核电产品收入占比和订单交付节奏",
-    "应收账款及合同资产占收入比例",
-    "经营活动现金流净额",
-    "资产减值和信用减值损失",
-    "第四代核电装备项目投产和达产进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

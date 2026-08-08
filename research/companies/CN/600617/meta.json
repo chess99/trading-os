@@ -1,77 +1,86 @@
 {
-  "symbol": "CN:600617",
-  "ticker": "600617",
-  "name": "国新能源",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "山西省属燃气平台具备区域管网和公共事业属性，但2025年仍亏损、2026Q1扣非盈利质量不足且永续债削弱普通股权益质量；现价相对可验证盈利缺少安全边际，需等待连续扣非修复或价格回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    1.9,
-    2.4
-  ],
-  "buy_zone": [
-    1.5,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    3.6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国新能源",
+    "security_status": "active",
+    "symbol": "CN:600617",
+    "ticker": "600617"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "afd6a56361e7d18596872da11eedc00eb920bdd69220894a671eeab056621750"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于合理价值上沿且2026Q1扣非利润尚不足以证明全年修复，保持观察，不建仓。",
-      "action": "watch",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非利润、政府补助占比、经营现金流和负债结构。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至2.00元以下，且连续两个季度扣非归母净利润为正、经营现金流保持正值，可小仓位试探。",
-      "action": "starter_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证盈利修复是否具备连续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣非归母净利润年化达到3亿元以上、有息负债和永续债压力下降，并且股价仍低于2.40元，可提高至观察仓上限。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "价格进入普通股权益PB约1.2倍附近，开始具备重新评估安全边际的条件。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.0
+      },
+      "reason": "若扣非利润未同步修复，价格高于乐观情景下沿时风险收益比恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "价格进入普通股权益PB约1.2倍附近，开始具备重新评估安全边际的条件。"
-    },
-    {
-      "type": "price_above",
-      "price": 3.0,
-      "reason": "若扣非利润未同步修复，价格高于乐观情景下沿时风险收益比恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非利润、政府补助占比、经营现金流和负债结构。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证盈利修复是否具备连续性。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 2.86,
-    "reference_price_date": "2026-07-16",
-    "ordinary_bvps_estimate": 1.66,
-    "ordinary_bvps_date": "2026-03-31"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

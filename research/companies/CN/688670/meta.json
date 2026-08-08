@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688670",
-  "market": "CN",
-  "ticker": "688670",
-  "name": "金迪克",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "金迪克是现金净资产支撑下的疫苗管线期权，但当前成人四价流感疫苗单品规模不足、销售费用率和研发费用率过高，14.54元附近已隐含部分恢复预期；等待2026年旺季销售、回款和三价流感/儿童四价/狂犬病疫苗注册节点验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.5,
-    15.4
-  ],
-  "buy_zone": [
-    8.5,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金迪克",
+    "security_status": "active",
+    "symbol": "CN:688670",
+    "ticker": "688670"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "944cb95aa52f0f9c4951cf976894ad9a097f84056bd1a6a8ab6318859258441e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于11.0元且未出现质量、监管或退市风险新增负面",
-      "action": "start_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看批签发后收入、应收账款、销售费用和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026Q3显示旺季收入、回款改善且销售费用率下降，股价仍不高于14.0元",
-      "action": "add_after_validation",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断流感疫苗旺季销售是否兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "三价流感、儿童四价流感或冻干人用狂犬病疫苗至少一项获批并形成可信商业化指引",
-      "action": "revalue_and_cap_position",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和三价流感、儿童四价、狂犬病疫苗注册进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "接近1.2倍PB以下，进入初始安全边际区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "基本面未兑现前估值已超过基准情景上沿，需减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "接近1.2倍PB以下，进入初始安全边际区"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "基本面未兑现前估值已超过基准情景上沿，需减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看批签发后收入、应收账款、销售费用和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断流感疫苗旺季销售是否兑现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和三价流感、儿童四价、狂犬病疫苗注册进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

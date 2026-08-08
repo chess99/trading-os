@@ -1,71 +1,96 @@
 {
-  "symbol": "CN:000816",
-  "ticker": "000816",
-  "name": "智慧农业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "fair_value_range": [
-    1.45,
-    1.85
-  ],
-  "buy_zone": [
-    1.2,
-    1.45
-  ],
-  "sell_or_reduce_zone": [
-    2.5,
-    3.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "智慧农业",
+    "security_status": "active",
+    "symbol": "CN:000816",
+    "ticker": "000816"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "d38840e76c26e4cc3351655481ec7aa1a706e60ef450da2d394a5ee83bc9aa30"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察，不主动建仓；若控股股东重整仍未获法院批准且扣非亏损未收窄，维持零仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非亏损、经营现金流、矿业复产和海外制造业务。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入1.20-1.45元且2026中报显示经营现金流改善、矿业恢复贡献，可试探性配置。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证矿业旺季贡献和控股股东重整进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "控股权重整完成、矿业复产超预期且连续两个季度扣非显著减亏后，重新评估上限。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.45
+      },
+      "reason": "进入基准公允价值下沿及观察买入区，需要复核治理和经营现金流是否同步改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入深度安全边际区，若无新增退市或治理风险，可升级为买入研究。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.5
+      },
+      "reason": "价格进入乐观情景区，若基本面未兑现，应回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.45,
-      "reason": "进入基准公允价值下沿及观察买入区，需要复核治理和经营现金流是否同步改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入深度安全边际区，若无新增退市或治理风险，可升级为买入研究。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.5,
-      "reason": "价格进入乐观情景区，若基本面未兑现，应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非亏损、经营现金流、矿业复产和海外制造业务。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证矿业旺季贡献和控股股东重整进展。"
-    }
-  ],
-  "current_thesis": "智慧农业当前是亏损的多元资产组合，价值主要来自西藏锌铜矿权、海外机械渠道和潜在控股权重整期权；但2025年收入下滑、归母亏损扩大、经营现金流转负，2026Q1亏损继续扩大，且控股股东股份全额质押/冻结和重整不确定性仍高。基准结论为观察，不买入，等待治理落地和经营拐点。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

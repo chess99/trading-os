@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688358",
-  "market": "CN",
-  "ticker": "688358",
-  "name": "祥生医疗",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "观察：公司具备专注超声、海外注册渠道、高毛利和高研发投入等优点，但2024-2025连续下滑、2026Q1扣非和经营现金流仍弱，当前价格接近合理价值中枢，等待更厚安全边际或2026H1经营确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    29,
-    36
-  ],
-  "buy_zone": [
-    22,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    48
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "祥生医疗",
+    "security_status": "active",
+    "symbol": "CN:688358",
+    "ticker": "688358"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "9cb2ea98b276ed3c69af8c89392bbb9d3135d85643adb338b34ccf214d21057f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于26元，且2026H1收入同比转正、扣非归母净利润不再下滑",
-      "action": "建立小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、海外订单和经营现金流是否改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于22元，且海外订单、毛利率和经营现金流未出现结构性恶化",
-      "action": "提高至标准观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年增长恢复和估值假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于42元，且2026年收入增速仍低于10%或扣非利润未恢复增长",
-      "action": "不追高或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，评估AI产品、MDR认证和海外本地化是否转化为收入增长",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入买入区间上沿，若基本面验证可建立小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "提供较厚安全边际，适合复核是否提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "接近乐观情景估值，需要检查增长是否足以支撑高倍数",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入买入区间上沿，若基本面验证可建立小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "提供较厚安全边际，适合复核是否提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "接近乐观情景估值，需要检查增长是否足以支撑高倍数"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、海外订单和经营现金流是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年增长恢复和估值假设"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，评估AI产品、MDR认证和海外本地化是否转化为收入增长"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

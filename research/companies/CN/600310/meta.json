@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600310",
-  "ticker": "600310",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "广西能源",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "广西能源处于2025年大额减值后的盈利修复阶段，2026年半年度预告显示主业扭亏，但当前约2.2倍PB已反映较多修复预期；需等待H1业绩兑现、现金流和定增摊薄细节确认后再考虑买入。",
-  "fair_value_range": [
-    3.2,
-    4.0
-  ],
-  "buy_zone": [
-    2.8,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广西能源",
+    "security_status": "active",
+    "symbol": "CN:600310",
+    "ticker": "600310"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "3e4718e4999b595a8ec9ba61d79abc13cc6ccf1ff4af2bea9afbd4c6e8bdc9a6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.2元且2026H1归母净利润落在1.0-1.4亿元预告区间、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际利润、现金流、资产减值和负债变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.8元且全年归母净利润中枢可见度提升至2.5亿元以上",
-      "action": "提高至中低配",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认丰水期发电利润和全年盈利中枢",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于4.8元但盈利预测、ROE或定增摊薄情况没有同步改善",
-      "action": "减仓或退出观察",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、定增进展和新能源项目资本开支",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入基准估值下沿，具备重新评估买入的安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "进入乐观情景上沿，需要验证盈利和ROE上修，否则风险收益转弱",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入基准估值下沿，具备重新评估买入的安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "进入乐观情景上沿，需要验证盈利和ROE上修，否则风险收益转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际利润、现金流、资产减值和负债变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认丰水期发电利润和全年盈利中枢"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、定增进展和新能源项目资本开支"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

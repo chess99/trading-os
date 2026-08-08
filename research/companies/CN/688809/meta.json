@@ -1,105 +1,115 @@
 {
-  "symbol": "CN:688809",
-  "market": "CN",
-  "ticker": "688809",
-  "name": "强一股份",
-  "company_name": "强一股份",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "强一股份是国内稀缺的高端晶圆测试探针卡资产，2025年和2026Q1已体现高增长、高毛利和高净利质量，但当前股价大幅透支未来多年成长，适合重点跟踪而非追高买入。",
-  "quality_rating": "high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    280,
-    390
-  ],
-  "buy_zone": [
-    220,
-    320
-  ],
-  "sell_or_reduce_zone": [
-    520,
-    650
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "强一股份",
+    "security_status": "active",
+    "symbol": "CN:688809",
+    "ticker": "688809"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "8c58705999e1f384c9a704470f043350508702296af736f8247e93f0fe720be2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于520元或估值仍高于基准合理区间上沿",
-      "action": "不新开仓，已有仓位仅保留观察仓",
-      "max_weight": 0.005,
-      "reason": "公司质量高但当前估值显著透支未来增长，风险收益不对称"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证收入增速、毛利率、应收账款、存货和客户结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入280-320元且收入增速、毛利率和客户验证未恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "进入合理价值区间下沿附近，可用小仓位跟踪国产替代兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1高增长是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于280元且2026年半年报或三季报继续验证高质量增长",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "价格进入安全边际区域，且基本面未破坏时具备中长期配置价值"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新盈利预测和合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 320.0
+      },
+      "reason": "进入首笔观察买入区，需同步复核收入增速、毛利率、应收账款和客户验证",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 280.0
+      },
+      "reason": "进入基准合理价值下沿，若基本面未恶化可评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 520.0
+      },
+      "reason": "高于合理价值区间较多，应停止追高并复核已有仓位风险收益",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 650.0
+      },
+      "reason": "估值极高，除非业绩显著超预期，否则倾向减仓或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 320,
-      "reason": "进入首笔观察买入区，需同步复核收入增速、毛利率、应收账款和客户验证"
-    },
-    {
-      "type": "price_below",
-      "price": 280,
-      "reason": "进入基准合理价值下沿，若基本面未恶化可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 520,
-      "reason": "高于合理价值区间较多，应停止追高并复核已有仓位风险收益"
-    },
-    {
-      "type": "price_above",
-      "price": 650,
-      "reason": "估值极高，除非业绩显著超预期，否则倾向减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证收入增速、毛利率、应收账款、存货和客户结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1高增长是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新盈利预测和合理价值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比增速",
-    "单季度归母净利润同比增速",
-    "综合毛利率",
-    "净利率",
-    "应收账款增速与收入增速差",
-    "存货周转与存货余额变化",
-    "MEMS探针卡收入占比",
-    "前五大客户集中度",
-    "研发费用率",
-    "核心技术人员稳定性",
-    "募投项目进度",
-    "主要海外和台系竞品价格策略"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

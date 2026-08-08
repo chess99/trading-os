@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301369",
-  "ticker": "301369",
-  "name": "联动科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "联动科技是国内后道半导体测试设备小而尖公司，功率半导体测试具备历史卡位，QT-9800 AI SoC 测试机和 Northstar 存储测试并购提供平台化上行期权；但以 2026-07-15 收盘价 189.47 元估算，市值已提前计入高端 ATE 成功放量，安全边际不足，当前仅观察。",
-  "fair_value_range": [
-    75,
-    105
-  ],
-  "buy_zone": [
-    55,
-    75
-  ],
-  "sell_or_reduce_zone": [
-    140,
-    220
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联动科技",
+    "security_status": "active",
+    "symbol": "CN:301369",
+    "ticker": "301369"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "164cc71fa44755bf1320471ec341cce40f84f4e1b5feeda570710fbbd61e0e3a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格回落至 55-75 元且 2026 年经营现金流改善、QT-9800 客户验证继续推进",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年度报告，重点检查收入、毛利率、经营现金流、合同负债和 QT-9800 进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格高于 140 元且未披露 QT-9800 量产订单或 2027 年净利润无法看到 1.5 亿元以上",
-      "action": "不新增并减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认订单和现金流是否支持 2027 年增长假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "QT-9800 获得多个客户量产订单、扣非净利率提升至 15% 以上且经营现金流持续转正",
-      "action": "重新评估价值区间后再决定是否提高仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年年报及 Northstar 并购整合进展，重新评估估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "进入合理价值区下沿，可结合订单、现金流和 QT-9800 验证进度复核是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 140.0
+      },
+      "reason": "价格进入乐观情景定价区，若缺乏高端 SoC 量产订单支撑，应卖出或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 75,
-      "reason": "进入合理价值区下沿，可结合订单、现金流和 QT-9800 验证进度复核是否建立观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 140,
-      "reason": "价格进入乐观情景定价区，若缺乏高端 SoC 量产订单支撑，应卖出或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年度报告，重点检查收入、毛利率、经营现金流、合同负债和 QT-9800 进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认订单和现金流是否支持 2027 年增长假设"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年年报及 Northstar 并购整合进展，重新评估估值区间"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

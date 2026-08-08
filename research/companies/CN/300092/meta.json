@@ -1,119 +1,115 @@
 {
-  "symbol": "CN:300092",
-  "market": "CN",
-  "ticker": "300092",
-  "name": "科新机电",
-  "company_name": "四川科新机电股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "高端压力容器和重型过程装备公司具备项目资质、客户履历和低有息负债优势，但2025年盈利与毛利率显著下滑，2026Q1仍承压，应收账款和合同资产占用偏高；2026-07-13价格10.64元已高于7.5-9.5元合理价值区间，缺少安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    7.5,
-    9.5
-  ],
-  "buy_zone": [
-    0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科新机电",
+    "security_status": "active",
+    "symbol": "CN:300092",
+    "ticker": "300092"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "28ec902c0fcdda557ee60e6a5e97682559ad82095149a3b337db1672c7f8eba2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于10.5元且未看到2026年收入、毛利率和回款改善",
-      "action": "不新增，已有仓位控制在0%-2%跟踪仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证收入、毛利率、应收账款和合同负债是否改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于8.0-9.5元且半年报确认利润和回款改善",
-      "action": "可建立2%-3%观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "验证前三季度盈利修复和经营现金流质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于7.0元且订单、现金流和毛利率未继续恶化",
-      "action": "分两笔买至4%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "重估正常化盈利、资本开支和安全边际",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于6.3元且合同负债、毛利率、经营现金流同步改善",
-      "action": "可加至6%-8%",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "价格进入可买区，需要确认基本面未继续恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于11.0元但盈利修复未被财报验证",
-      "action": "逐步减仓或不参与",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.3
+      },
+      "reason": "价格进入深度安全边际区，需要重估仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "价格高于合理价值区间，需要检查是否应降低风险",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "价格显著高于当前估值，需要重新评估卖出或减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "action": "进入买入区，复核半年报或最新季报后分批建仓",
-      "reason": "价格进入可买区，需要确认基本面未继续恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 6.3,
-      "action": "进入深度安全边际区，若基本面改善可提高仓位",
-      "reason": "价格进入深度安全边际区，需要重估仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "action": "进入降低风险区，除非盈利和回款已修复",
-      "reason": "价格高于合理价值区间，需要检查是否应降低风险"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "action": "进入卖出区，需重新估值",
-      "reason": "价格显著高于当前估值，需要重新评估卖出或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "复核2026年半年报",
-      "reason": "验证收入、毛利率、应收账款和合同负债是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "复核2026年三季报",
-      "reason": "验证前三季度盈利修复和经营现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "复核2026年年度报告",
-      "reason": "重估正常化盈利、资本开支和安全边际"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入",
-    "季度归母净利润",
-    "扣非净利润",
-    "经营活动现金流净额",
-    "高端过程装备制造业毛利率",
-    "应收账款",
-    "合同资产",
-    "合同负债",
-    "存货",
-    "前五大客户收入占比",
-    "研发投入占营业收入比例",
-    "募投项目进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

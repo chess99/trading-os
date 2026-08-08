@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:920112",
-  "market": "CN",
-  "ticker": "920112",
-  "name": "巴兰仕",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "巴兰仕是汽车维修保养设备制造商，受益于汽车保有量、车龄提升、新能源维保改造和海外渠道扩张；2025 年上市后资产负债表稳健，当前约 12 倍全股本口径 PE 未明显透支，但外销、贴牌、毛利率和 2026 年解禁压力要求小仓位分批买入并用中报验证。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    16.0,
-    21.0
-  ],
-  "buy_zone": [
-    13.5,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    23.0,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "巴兰仕",
+    "security_status": "active",
+    "symbol": "CN:920112",
+    "ticker": "920112"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "819b15ae09bcde1d74c22ad1277a50c4bfce4aeaa1a4f612767f75adb06318e8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 15.5 元且无重大负面公告时建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 中报、毛利率、经营现金流与 2026-08-28 解禁影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 13.5 元，且最近一期毛利率不低于 27%、经营现金流未显著恶化时加仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报和海外订单/汇率变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026 中报扣非净利增速低于 5%或毛利率低于 27%时停止加仓并复核评级",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报、募投投产进度和分红政策",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入较高安全边际区间，可复核基本面后加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "接近乐观估值区间下沿，若业绩未同步上修应考虑减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入较高安全边际区间，可复核基本面后加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 23.0,
-      "reason": "接近乐观估值区间下沿，若业绩未同步上修应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 中报、毛利率、经营现金流与 2026-08-28 解禁影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报和海外订单/汇率变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报、募投投产进度和分红政策"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

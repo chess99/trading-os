@@ -1,103 +1,106 @@
 {
-  "symbol": "CN:601456",
-  "market": "CN",
-  "ticker": "601456",
-  "name": "国联民生",
-  "company_name": "国联民生",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    9.8,
-    12.2
-  ],
-  "buy_zone": [
-    7.0,
-    8.2
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国联民生",
+    "security_status": "active",
+    "symbol": "CN:601456",
+    "ticker": "601456"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "2efe741c7c9e8cac2bfba92d05ba0ef74e9273c416659b1ab1017567d68f417a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 8.2 and no new material negative announcement",
-      "action": "build initial watch position",
-      "max_weight": 0.02,
-      "reason": "买入区开始提供整合重估的安全边际，但协同仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计 2026 年中报披露后复查 ROE、投行恢复、整合费用和风险指标",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 interim report confirms profit growth, stable risk indicators and improving ROE",
-      "action": "add position gradually",
-      "max_weight": 0.05,
-      "reason": "中报验证投行、资管和资本效率改善后，可提高组合权重"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后验证利润增长和净资本使用效率是否连续改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "ROE improvement is confirmed for two consecutive reporting periods",
-      "action": "upgrade to core cyclical financial holding",
-      "max_weight": 0.08,
-      "reason": "连续验证 ROE 修复后，PB 重估逻辑更可靠"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入初始买入区，适合评估首笔观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price >= 12.5 without corresponding ROE improvement",
-      "action": "reduce or stop adding",
-      "max_weight": 0.03,
-      "reason": "估值进入减仓区但基本面尚未兑现，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "跌入悲观估值区，需要复核是否为错杀或基本面恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "进入减仓区，需要 ROE 和整合协同验证支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "接近乐观估值上沿，若无牛市和盈利上修应主动降仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入初始买入区，适合评估首笔观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "跌入悲观估值区，需要复核是否为错杀或基本面恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "进入减仓区，需要 ROE 和整合协同验证支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "接近乐观估值上沿，若无牛市和盈利上修应主动降仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计 2026 年中报披露后复查 ROE、投行恢复、整合费用和风险指标"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后验证利润增长和净资本使用效率是否连续改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026 年中报营业收入、归母净利润和 ROE",
-    "投行业务收入、项目数量、撤否率和监管处罚",
-    "经纪业务客户资产、代理买卖证券业务净收入和市占率",
-    "资管规模、主动管理占比和资管净收入",
-    "自营投资收益、公允价值变动损益和权益敞口",
-    "净资本、风险覆盖率、资本杠杆率、流动性覆盖率和净稳定资金率",
-    "整合费用、人员流失、高管变动和分支机构调整",
-    "日均成交额、两融余额和券商板块 PB 中位数"
-  ],
-  "current_thesis": "国联民生是国联证券吸收合并民生证券后的券商整合重估标的，核心看点是投行补强、资本规模扩大和 ROE 修复。当前估值已部分反映协同预期，需等待 2026 年中报验证盈利质量、风控指标和资本效率。",
-  "research_summary": "国联民生是国联证券吸收合并民生证券后的券商整合重估标的，核心看点是投行补强、资本规模扩大和 ROE 修复。2025 年收入和利润高增已反映合并范围和市场改善，2026 年需要验证协同质量。当前 8.87 元附近估值合理略偏贵，适合观察，买入区为 7.0-8.2 元。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

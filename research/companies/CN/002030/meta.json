@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:002030",
-  "ticker": "002030",
-  "name": "达安基因",
-  "market": "CN",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "达安基因具备分子诊断资产、低负债资产底和广药体系整合预期，但2025年和2026Q1仍处亏损，主业尚未证明可持续恢复盈利；当前约1倍PB更适合观察，等待更低价格或经营改善确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.6,
-    6.3
-  ],
-  "buy_zone": [
-    3.8,
-    4.3
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    7.5
-  ],
-  "last_price": 5.05,
-  "last_price_date": "2026-07-13",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "达安基因",
+    "security_status": "active",
+    "symbol": "CN:002030",
+    "ticker": "002030"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "28cc0c7a6bfa7dd9fd34a7493d4d01649f886e66fc0ec6e9c494f98b97f7018a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.3元且未出现新增重大减值、控股权交易失败或经营现金流恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非净利润、经营现金流和应收账款变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入恢复增长、扣非亏损收窄且经营现金流转正",
-      "action": "可提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及广药资本股权收购交割进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.5元但盈利修复未被财报确认",
-      "action": "不追高，已有仓位减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断主业是否完成止亏和资产减值是否充分",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入0.86倍左右2026Q1每股净资产的买入观察区，安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "超过协议转让价附近且高于基准估值区间，若盈利未修复则风险收益转弱",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "reason": "进入0.86倍左右2026Q1每股净资产的买入观察区，安全边际改善"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "超过协议转让价附近且高于基准估值区间，若盈利未修复则风险收益转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非净利润、经营现金流和应收账款变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及广药资本股权收购交割进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断主业是否完成止亏和资产减值是否充分"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

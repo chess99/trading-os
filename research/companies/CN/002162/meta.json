@@ -1,99 +1,96 @@
 {
-  "symbol": "CN:002162",
-  "market": "CN",
-  "ticker": "002162",
-  "name": "悦心健康",
-  "company_name": "悦心健康",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "current_thesis": "公司仍以瓷砖建材为收入主体，康养转型尚未形成可核验利润；当前约4倍PB和高PE缺乏基本面安全边际，需等待价格回到资产价值附近或扣非盈利、经营现金流、康养收入占比持续改善后再评估。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "low",
-  "valuation_rating": "expensive",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    1.8,
-    2.4
-  ],
-  "buy_zone": [
-    1.6,
-    2.1
-  ],
-  "sell_or_reduce_zone": [
-    3.2,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "悦心健康",
+    "security_status": "active",
+    "symbol": "CN:002162",
+    "ticker": "002162"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "5a8db283e03f946f1f05b63cb28e5bd521ab261ba90b223837d45cb99a37512b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于3.20元且扣非利润仍未转正",
-      "action": "不买入或减仓至观察仓",
-      "max_weight": 0.0,
-      "reason": "当前估值主要由主题溢价支撑，基本面利润无法覆盖约4倍PB。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、康养业务收入和管理费用。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入1.80-2.20元且经营现金流改善",
-      "action": "仅建立试探仓",
-      "max_weight": 0.01,
-      "reason": "价格接近资产和SOTP合理区间下沿，但康养利润尚未验证。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认建材收入趋势和康养并购整合情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "康养收入占比超过20%且扣非归母净利润连续两年为正",
-      "action": "重新评估并考虑提高仓位",
-      "max_weight": 0.03,
-      "reason": "届时公司才可能从建材周期股转为可验证的康养运营平台。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.1
+      },
+      "reason": "进入买入观察区，可结合现金流和扣非利润复核是否试探建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "接近悲观资产价值区，若无新增治理和退市风险，可复核小仓位机会。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.2
+      },
+      "reason": "进入减仓区，若缺少扣非盈利和康养利润验证，应降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.1,
-      "reason": "进入买入观察区，可结合现金流和扣非利润复核是否试探建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "接近悲观资产价值区，若无新增治理和退市风险，可复核小仓位机会。"
-    },
-    {
-      "type": "price_above",
-      "price": 3.2,
-      "reason": "进入减仓区，若缺少扣非盈利和康养利润验证，应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、康养业务收入和管理费用。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认建材收入趋势和康养并购整合情况。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "建材收入增速",
-    "瓷砖销量",
-    "瓷砖平均售价",
-    "建材毛利率",
-    "大康养收入增速",
-    "大康养收入占比",
-    "养老项目入住率",
-    "经营活动现金流净额",
-    "扣非归母净利润",
-    "资产减值损失",
-    "存货余额和跌价准备",
-    "应收账款及坏账准备",
-    "管理费用率",
-    "有息负债和利息费用",
-    "关联方交易金额",
-    "控股股东质押数量"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

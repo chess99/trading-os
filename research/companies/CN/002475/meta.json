@@ -1,32 +1,115 @@
 {
-  "symbol": "CN:002475",
-  "market": "CN",
-  "ticker": "002475",
-  "name": "立讯精密",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "立讯精密是A股EMS龙头，深度绑定苹果供应链并积极向汽车电子和通讯互联领域拓展。2025年营收3323亿、净利166亿，年增速15-20%。当前PE 27.5x、PB 5.2x，估值合理偏低。主要风险为苹果客户集中度过高（收入占比70%+）和毛利率偏低（~12%）。建议在股价回调至55-58元区间开始建仓，当前价63.28元处于观察区间。",
-  "fair_value_range": [60, 75],
-  "buy_zone": [55, 58],
-  "sell_or_reduce_zone": [75, 85],
-  "position_plan": [
-    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.02},
-    {"condition": "股价处于50-55元区间", "max_weight": 0.04},
-    {"condition": "股价低于50元", "max_weight": 0.05}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "立讯精密",
+    "security_status": "active",
+    "symbol": "CN:002475",
+    "ticker": "002475"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "9fae7a3f9661d7f62390048e349a79e1bc58150c4d18e99e62344f8a83e965f4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后更新估值和逻辑",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-30"
+      },
+      "reason": "2026年三季报披露后复查",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报披露后全面复盘",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 58.0
+      },
+      "reason": "进入有安全边际的买入区间，可考虑开始建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入强吸引力买入区间，可积极加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "进入减仓区间，逐步减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 85.0
+      },
+      "reason": "进入清仓区间，应考虑全部卖出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": ["reports/2026-07-07-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026年中报披露后更新估值和逻辑"},
-    {"type": "date", "date": "2026-10-30", "reason": "2026年三季报披露后复查"},
-    {"type": "date", "date": "2027-04-30", "reason": "2026年年报披露后全面复盘"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 58, "reason": "进入有安全边际的买入区间，可考虑开始建仓"},
-    {"type": "price_below", "price": 50, "reason": "进入强吸引力买入区间，可积极加仓"},
-    {"type": "price_above", "price": 75, "reason": "进入减仓区间，逐步减仓"},
-    {"type": "price_above", "price": 85, "reason": "进入清仓区间，应考虑全部卖出"}
-  ],
-  "updated_at": "2026-07-07T20:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

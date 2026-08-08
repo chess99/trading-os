@@ -1,96 +1,105 @@
 {
-  "symbol": "CN:600717",
-  "ticker": "600717",
-  "name": "天津港",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "天津港是京津冀核心港口资产，现金流稳定、负债率低、PB 折价明显，但 ROE 偏低、增长慢、关联交易和 2026 年发行股份购买资产事项尚未定价；当前价格接近合理价值下沿，缺少足够安全边际，等待 3.70-3.95 元或资产注入明确增厚后再提高评级。",
-  "fair_value_range": [
-    4.3,
-    5.2
-  ],
-  "buy_zone": [
-    3.7,
-    3.95
-  ],
-  "sell_or_reduce_zone": [
-    5.3,
-    5.8
-  ],
-  "position_plan": [
-    {
-      "condition": "当前价格 4.0-4.8 元且资产注入细节未完全明确，仅保留观察仓。",
-      "action": "watch_position",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格低于 3.95 元，且二集司、汇盛公司交易估值未显示明显摊薄或利益输送。",
-      "action": "start_buy",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格低于 3.70 元，吞吐量、装卸毛利率和经营现金流未恶化。",
-      "action": "add",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "价格高于 5.30 元且资产注入仍未证明 EPS 增厚。",
-      "action": "reduce",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.95,
-      "reason": "进入买入区间上沿，低于合理价值下沿约 8%，可结合资产注入进展复核。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.7,
-      "reason": "达到较充分安全边际，若基本面未恶化可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.3,
-      "reason": "超过合理价值区间上沿，若资产注入未明确增厚应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查吞吐量、装卸毛利率、经营现金流和资产注入进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认一季度利润改善是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年报及二集司、汇盛公司交易最终落地情况，重估长期价值区间。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price_date": "2026-07-16",
-    "reference_price": 4.26,
-    "shares_outstanding_billion": 2.894,
-    "market_cap_billion": 12.33,
-    "book_value_per_share_2025": 6.95,
-    "pb_2025": 0.61,
-    "pe_2025": 12.6,
-    "dividend_per_share_2025": 0.102
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天津港",
+    "security_status": "active",
+    "symbol": "CN:600717",
+    "ticker": "600717"
   },
-  "source_quality": "经营、财务、股本和交易事项主要来自公司公告、上交所与交通运输部；股价参考 Investing.com 第三方行情，已在报告中标注非交易所一手数据。"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "7a6b703b52ad4d892a817466c6d2768ff31e67fd8fb2b3a8c14b1327c0dc681e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查吞吐量、装卸毛利率、经营现金流和资产注入进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认一季度利润改善是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年报及二集司、汇盛公司交易最终落地情况，重估长期价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.95
+      },
+      "reason": "进入买入区间上沿，低于合理价值下沿约 8%，可结合资产注入进展复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.7
+      },
+      "reason": "达到较充分安全边际，若基本面未恶化可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.3
+      },
+      "reason": "超过合理价值区间上沿，若资产注入未明确增厚应降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

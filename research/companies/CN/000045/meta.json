@@ -1,109 +1,101 @@
 {
-  "symbol": "CN:000045",
-  "market": "CN",
-  "ticker": "000045",
-  "name": "深纺织Ａ",
-  "company_name": "深纺织Ａ",
-  "status": "active",
-  "updated_at": "2026-07-18T18:00:00+08:00",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B-",
-  "valuation_rating": "C+",
-  "current_thesis": "深纺织Ａ是深圳国资旗下偏光片/显示材料平台，7月17日收盘8.93元已接近买入区，但旧报告后没有新增业绩或8号线盈利兑现证据；关联原料采购获股东会批准有助供应稳定，也增加预付款、关联定价和营运资金跟踪要求。维持watch，当前最多1%观察仓。",
-  "fair_value_range": [
-    9.0,
-    11.0
-  ],
-  "buy_zone": [
-    8.0,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    14.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深纺织Ａ",
+    "security_status": "active",
+    "symbol": "CN:000045",
+    "ticker": "000045"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "e1ad9e76c07e22b8c12d0d756ce15af7b03e605d0d1e57659e547797968a1ddd"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "2f1da56bd8c289efc2b00ef80770196b906b4eb6c98f35bccb65f1115887d9c9"
+      }
+    ],
+    "history": [
+      {
+        "as_of": "2026-07-29",
+        "path": "reports/2026-07-29-rapid-triage-96fbd8f853c3.md",
+        "report_id": "CN-000045-2026-07-29-rapid-triage-96fbd8f853c3",
+        "report_type": "rapid_triage",
+        "sha256": "664665e86d3eada8f1f1ee7bb598e6a45e25777a26de2b7da811b99787b57f8f"
+      }
+    ],
+    "latest": "reports/2026-07-29-rapid-triage-96fbd8f853c3.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-29-rapid-triage-96fbd8f853c3.md"
+    }
+  },
+  "research": {
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-29T17:50:00+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-29T17:50:00+08:00",
+      "published_at": "2026-07-29T18:01:00+08:00",
+      "report_id": "CN-000045-2026-07-29-rapid-triage-96fbd8f853c3",
+      "report_path": "reports/2026-07-29-rapid-triage-96fbd8f853c3.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-29-agent-first-pilot-001/000045/20260729T180100+0800.triage.json",
+      "source_package_sha256": "96fbd8f853c35da6961c759fc41c919bdd58656c5f8bfc84e6fae1fd16f04ac6"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": null
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格8.93元略高于买入区间且需要建立研究跟踪",
-      "action": "仅允许首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格已接近买入区，但扣非利润、经营现金流和关联采购资金占用仍需等待2026半年报确认"
+      "active": true,
+      "condition": {
+        "description": "公司披露 2026 年半年度报告，能够核验偏光片毛利率、扣非归母净利润、经营现金流、存货与预付款变化，以及 8 号线在建工程进度。"
+      },
+      "reason": "半年报是纠正旧基线后第一个可检验盈利连续性、关联采购占款和项目进度的完整时点。",
+      "trigger_id": "cn-000045-2026-half-year-filing",
+      "type": "filing"
     },
     {
-      "condition": "价格进入 8.00-8.80 元且半年报显示偏光片毛利率改善、经营现金流为正",
-      "action": "加仓至小仓位",
-      "max_weight": 0.02,
-      "reason": "买入价格提供安全边际，同时主业盈利质量出现初步改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.4
+      },
+      "reason": "约 7.40 元对应约 37.48 亿元市值和约 1.25 倍最新归母净资产，可重新检查资产折价是否开始补偿项目建设与低 ROE 风险；触发只表示复核，不代表自动晋级。",
+      "trigger_id": "cn-000045-price-lte-7-40",
+      "type": "price"
     },
     {
-      "condition": "8 号线产能利用率、客户认证、扣非利润和现金流连续两个季度改善",
-      "action": "提高至研究上限仓位",
-      "max_weight": 0.04,
-      "reason": "国产替代逻辑从期权转为可验证利润弹性"
-    },
-    {
-      "condition": "连续两个季度扣非净利润为负且经营现金流为负",
-      "action": "退出或降至零仓位",
-      "max_weight": 0.0,
-      "reason": "收入增长未转化为主业盈利，重资产产线可能成为折旧和现金流压力"
+      "active": true,
+      "condition": {
+        "description": "公司以公告、定期报告或正式投资者关系记录披露 8 号线主要设备到位、试生产、转固、核心客户认证或稳定订单中的至少一项，并给出可核验的时间或金额。"
+      },
+      "reason": "只有项目从建设假设进入可核验商业化阶段，新增折旧与毛利的盈亏平衡测算才可能显著改变判断。",
+      "trigger_id": "cn-000045-line8-commissioning-evidence",
+      "type": "event"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入买入观察区间，需要结合最新定期报告复核是否可建立 1%-2% 仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 7.4,
-      "reason": "跌入悲观估值区间，需要区分基本面恶化与市场错杀"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "接近减仓区间，若缺少毛利率和现金流兑现，应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "超过中性合理价值上沿较多，需要强基本面上修才能维持仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报中盛波光电产能利用率、毛利率、扣非利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，确认收入增长是否转化为持续盈利"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新评估 8 号线商业化验证和合理价值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "盛波光电 8 号线产能利用率",
-    "偏光片业务毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "政府补助和非经常损益占归母净利润比例",
-    "前五大客户销售占比",
-    "存货周转天数",
-    "大尺寸面板价格和面板厂稼动率",
-    "深圳国资资本运作或产业协同公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-29T18:01:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

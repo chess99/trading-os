@@ -1,86 +1,115 @@
 {
-  "symbol": "CN:600531",
-  "market": "CN",
-  "ticker": "600531",
-  "currency": "CNY",
-  "name": "豫光金铅",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "国内铅冶炼和白银生产龙头，2025-2026Q1受益金银铜价格与产量提升，但低毛利、重资产、原料自给率低和高存货使盈利强周期化；当前价格大致处于合理价值区间，安全边际不足，等待回落或业绩继续验证。",
-  "fair_value_range": [
-    9.5,
-    13.5
-  ],
-  "buy_zone": [
-    7.8,
-    9.2
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    18.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "豫光金铅",
+    "security_status": "active",
+    "symbol": "CN:600531",
+    "ticker": "600531"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "82172053e860d810cdb4de009171ddb94f7aa9cb9189337e3577e95d9be99113"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于9.2元，且金银价格未系统性崩塌、经营现金流和存货跌价未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "公司预约披露2026年半年度报告，需核验白银、黄金、铅产品目标兑现和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格接近8.0元，且公司仍维持10%以上ROE、2026产量目标兑现进度正常",
-      "action": "提高到核心周期仓上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、存货跌价、套保损益和经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于15.5元且半年度或三季度利润未显著超预期",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、2027经营目标和高纯金属产业化进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.2
+      },
+      "reason": "进入初始买入区间上沿，需要复核金银价格、存货和现金流后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.8
+      },
+      "reason": "进入安全边际较充分区间，需要复核周期是否恶化为结构性下行",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "进入减仓区间，需要业绩或白银价格继续上修才能支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "明显高于当前交叉估值区间，除非利润中枢显著抬升，否则风险收益不佳",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.2,
-      "reason": "进入初始买入区间上沿，需要复核金银价格、存货和现金流后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 7.8,
-      "reason": "进入安全边际较充分区间，需要复核周期是否恶化为结构性下行"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "进入减仓区间，需要业绩或白银价格继续上修才能支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "明显高于当前交叉估值区间，除非利润中枢显著抬升，否则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "公司预约披露2026年半年度报告，需核验白银、黄金、铅产品目标兑现和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报、存货跌价、套保损益和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、2027经营目标和高纯金属产业化进展"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

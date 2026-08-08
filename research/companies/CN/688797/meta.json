@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:688797",
-  "market": "CN",
-  "ticker": "688797",
-  "name": "臻宝科技",
-  "company_name": "臻宝科技",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "臻宝科技是高质量军工高可靠芯片与微系统新股，主营和财务已由招股书及上市公告核验；但上市初期价格若仍在数百元区间，对应估值显著透支2026-2028年增长，当前只适合观察，等待130元以下或业绩大幅上修后再评估首笔仓位。",
-  "quality_rating": "high",
-  "valuation_rating": "extremely_expensive",
-  "fair_value_range": [
-    110,
-    165
-  ],
-  "buy_zone": [
-    80,
-    130
-  ],
-  "sell_or_reduce_zone": [
-    220,
-    260
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "臻宝科技",
+    "security_status": "active",
+    "symbol": "CN:688797",
+    "ticker": "688797"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "f73e150b079ed5ca53ca67ba9dd152e2e2b1343a13d448d3737e7e00ffdf683a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于220元或仍处于上市初期情绪高估区",
-      "action": "不新增，仅保留观察仓",
-      "max_weight": 0.005,
-      "reason": "业务质量高但估值显著透支，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增长、毛利率、应收账款、存货和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至80-130元且2026年收入、利润和订单未恶化",
-      "action": "建立首笔仓位",
-      "max_weight": 0.01,
-      "reason": "进入合理买入区间后可用小仓位验证军工芯片成长逻辑"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及上市后交易结构变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于100元且半年报/年报验证收入增速25%以上、毛利率60%以上、现金流改善",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "价格、增长和利润质量同时满足时具备较好风险收益比"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 130.0
+      },
+      "reason": "进入首笔买入区间，复核半年报和订单后可考虑1%以内仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 100.0
+      },
+      "reason": "进入高安全边际区间，若基本面未破坏可评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 220.0
+      },
+      "reason": "超过基本面可解释上沿，已有仓位应评估减仓或停止加仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 130,
-      "reason": "进入首笔买入区间，复核半年报和订单后可考虑1%以内仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 100,
-      "reason": "进入高安全边际区间，若基本面未破坏可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 220,
-      "reason": "超过基本面可解释上沿，已有仓位应评估减仓或停止加仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增长、毛利率、应收账款、存货和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及上市后交易结构变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比增速",
-    "归母净利润同比增速",
-    "毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款增速与收入增速差",
-    "存货增速与收入增速差",
-    "研发费用率",
-    "募投项目进度",
-    "核心技术人员稳定性",
-    "限售股解禁安排"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

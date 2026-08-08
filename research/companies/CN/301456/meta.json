@@ -1,62 +1,95 @@
 {
-  "symbol": "CN:301456",
-  "ticker": "301456",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "盘古智能",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "风电集中润滑系统细分龙头，市占率高、客户认证壁垒较强，2025年并购众城石化后具备从润滑设备延伸到油脂耗材的潜力；但当前估值已接近合理区间上沿，经营现金流连续为负，需等待更好的安全边际和现金流改善。",
-  "fair_value_range": [18, 24],
-  "buy_zone": [0, 16],
-  "sell_or_reduce_zone": [28, 999],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盘古智能",
+    "security_status": "active",
+    "symbol": "CN:301456",
+    "ticker": "301456"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "01fea559580a947c30a6f5268d4f0c8b008bc41746d8c0c3d46e94dea5084abf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于16元，且2026H1扣非净利润同比增长、经营性现金流改善或转正后，允许建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入结构、扣非净利润、经营现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于14元，且应收账款增速低于收入增速、众城石化油脂业务出现规模化订单，可提高至核心观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年业绩兑现和众城石化协同进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026H1经营性现金流继续为负且应收账款快速增长，不新增仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期盈利中枢、分红能力和现金流质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入安全边际较清晰的买入观察区，需要复核现金流和半年报。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "估值明显高于基准合理区间，若无油脂耗材或海外业务超预期证据，应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入安全边际较清晰的买入观察区，需要复核现金流和半年报。"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "估值明显高于基准合理区间，若无油脂耗材或海外业务超预期证据，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入结构、扣非净利润、经营现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年业绩兑现和众城石化协同进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期盈利中枢、分红能力和现金流质量。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

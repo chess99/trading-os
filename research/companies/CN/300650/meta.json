@@ -1,102 +1,115 @@
 {
-  "symbol": "CN:300650",
-  "market": "CN",
-  "ticker": "300650",
-  "name": "太龙股份",
-  "company_name": "太龙电子股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司以半导体分销为主、商业照明为辅，2026Q1 收入高增但利润率和经营现金流未同步改善。当前价格已隐含较乐观复苏预期，缺少足够安全边际；等待价格回落或现金流、毛利率连续改善。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    7.0,
-    9.0
-  ],
-  "buy_zone": [
-    6.5,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    13.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "太龙股份",
+    "security_status": "active",
+    "symbol": "CN:300650",
+    "ticker": "300650"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1af59b09861b4f5a1b710e1e8d22c29fd2f1b08f0ba2f10ecdb76ac037d0a9e3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且经营现金流尚未修复，维持 0% 仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点验证经营现金流、应收账款、存货和半导体分销毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 7.5 元且没有新增重大坏账、库存跌价或业绩下修风险时，可建立不超过目标仓位 1/3 的观察仓。",
-      "max_weight": 0.33
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断收入高增长是否转化为利润和现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于 6.5 元，且连续两个季度经营现金流改善、半导体分销毛利率未低于 5% 时，可提高至目标仓位 2/3。",
-      "max_weight": 0.67
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估公司利润中枢、ROE 和合理估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "只有当年度归母净利润中枢接近 0.8-1.0 亿元、经营现金流/净利润接近或高于 1 倍时，才考虑满仓。",
-      "max_weight": 1.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "低于买入观察区上沿，估值开始接近恢复期合理价格。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "价格进入更明确安全边际区间，但仍需现金流改善确认。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "价格接近减仓区下沿，已高于基准合理价值区间。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "价格明显高于当前基本面可支撑区间，需要兑现收益或回避高估。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "action": "重新评估小仓位买入",
-      "reason": "低于买入观察区上沿，估值开始接近恢复期合理价格。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "action": "若现金流改善，评估提高仓位",
-      "reason": "价格进入更明确安全边际区间，但仍需现金流改善确认。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "action": "无基本面改善时不买或减仓",
-      "reason": "价格接近减仓区下沿，已高于基准合理价值区间。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "action": "若利润率和现金流未改善，卖出或显著减仓",
-      "reason": "价格明显高于当前基本面可支撑区间，需要兑现收益或回避高估。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点验证经营现金流、应收账款、存货和半导体分销毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断收入高增长是否转化为利润和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估公司利润中枢、ROE 和合理估值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营现金流净额及经营现金流/净利润",
-    "半导体分销收入增速和毛利率",
-    "综合毛利率与净利率",
-    "应收账款增速、账龄和坏账准备",
-    "存货规模、周转率和跌价准备",
-    "归母净利润是否恢复至 0.8-1.0 亿元中枢",
-    "商业照明业务收入占比和毛利率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

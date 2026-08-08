@@ -1,133 +1,132 @@
 {
-  "symbol": "CN:002664",
-  "market": "CN",
-  "ticker": "002664",
-  "name": "信质集团",
-  "company_name": "信质集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "信质集团具备电机定转子铁芯及总成制造能力、头部客户基础，以及新能源车、人形机器人、低空经济期权；但截至2025年报和2026年一季报，主业毛利率低、ROE低、资本开支重、有息负债和受限资金压力较大，17.71元附近估值已经提前反映较多主题预期，需等待价格回落或业绩/现金流强验证。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    12.0,
-    15.0
-  ],
-  "buy_zone": [
-    0.0,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "信质集团",
+    "security_status": "active",
+    "symbol": "CN:002664",
+    "ticker": "002664"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "55c03279d65ff660db51f4b0c4d832e719f92c9ccae9a5ad5888a79d7d73e627"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于15元，且2026年中报尚未验证扣非净利、毛利率、经营现金流同步改善",
-      "max_weight": 0.0,
-      "target_position": "0%",
-      "action": "仅跟踪，不买入"
-    },
-    {
-      "condition": "价格在12.5-14.0元，且2026H1扣非净利同比继续高增、制造业毛利率提升至12%以上、经营现金流转正",
-      "max_weight": 0.01,
-      "target_position": "0.5%-1.0%",
-      "action": "建立观察仓"
-    },
-    {
-      "condition": "价格低于或等于12.5元，且新能源定转子业务毛利率转正、资产减值压力下降",
-      "max_weight": 0.02,
-      "target_position": "1.0%-2.0%",
-      "action": "分批买入"
-    },
-    {
-      "condition": "价格低于或等于10.5元，且扣非净利年化接近2亿元、自由现金流改善",
-      "max_weight": 0.03,
-      "target_position": "最高3.0%",
-      "action": "提高至上限仓位但不重仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "currency": "CNY",
-      "reason": "进入安全边际较明确的可买区",
-      "action": "进入可买区，复核最近一期毛利率、扣非净利和经营现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "currency": "CNY",
-      "reason": "价格显著高于当前合理价值区间，需业绩兑现支撑",
-      "action": "若业绩未同步兑现，减仓或卖出"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "currency": "CNY",
-      "reason": "价格低于保守估值下沿，若基本面未恶化则具备更高安全边际",
-      "action": "若基本面未恶化，可提高至计划上限仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "复核2026年半年度报告，验证毛利率、扣非净利、现金流和新业务进展",
-      "condition": "发布2026年半年度报告"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核三季报，确认制造业毛利率是否修复以及电动车零部件毛利率是否转正",
-      "condition": "制造业毛利率连续两个报告期低于11%或电动车零部件毛利率继续为负"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核三季报现金流、存货和应收账款，确认增长质量",
-      "condition": "单季经营现金流继续为负且存货或应收账款明显上升"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核有息负债、受限资金和财务费用，确认杠杆压力是否缓解",
-      "condition": "有息负债、受限货币资金或财务费用继续上升"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "复核机器人和低空经济业务是否从测试或小批量进入可量化收入贡献",
-      "condition": "机器人或低空经济业务披露量产订单、收入占比或重大客户进展"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核存货跌价准备和资产减值损失，确认库存与产品迭代风险",
-      "condition": "存货跌价准备或资产减值损失显著扩大"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入安全边际较明确的可买区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "价格显著高于当前合理价值区间，需业绩兑现支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "价格低于保守估值下沿，若基本面未恶化则具备更高安全边际",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "制造业毛利率",
-    "汽车零部件毛利率",
-    "电动车零部件毛利率",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "购建固定资产等资本开支",
-    "存货余额与存货跌价准备",
-    "应收账款与前五大客户销售占比",
-    "短期借款、长期借款及一年内到期非流动负债",
-    "受限货币资金",
-    "财务费用",
-    "机器人和低空经济业务订单及收入贡献"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

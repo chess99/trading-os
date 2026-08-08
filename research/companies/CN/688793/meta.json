@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688793",
-  "market": "CN",
-  "ticker": "688793",
-  "name": "倍轻松",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "倍轻松仍有便携按摩器品牌资产和海外/新品修复期权，但2025年收入大幅下滑、扣非连续亏损、销售费用率过高且治理风险显性化；在销售费用率下降、经营现金流转正、监管整改完成前，当前价格缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    10,
-    14
-  ],
-  "buy_zone": [
-    8,
-    10
-  ],
-  "sell_or_reduce_zone": [
-    18,
-    22
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "倍轻松",
+    "security_status": "active",
+    "symbol": "CN:688793",
+    "ticker": "688793"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d082a370cf04e6713dedcddba610eabd3e4f70dec06c107db3db066fcfe169c9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "不建仓；等待2026半年度报告确认销售费用率降至45%以下、扣非亏损显著收窄且监管整改无新增负面后再评估。",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年度报告，重点跟踪收入、销售费用率、扣非利润、经营现金流和治理整改。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌入8-10元且经营现金流转正、治理事项完全落地，可建立小观察仓。",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认亏损是否收窄以及海外收入是否持续放量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若收入连续两个季度同比增长、销售费用率低于40%、单季度扣非转正，可提高至受限配置。",
-      "action": "add_after_turnaround",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重新评估公司是否走出高费用低效率和治理折价阶段。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入保守买入区间上沿，若经营和治理同步改善可重新估值。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "接近悲观情景价值，可能出现足够资产与品牌安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "高于当前合理价值区间且反映较多乐观预期，应减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入保守买入区间上沿，若经营和治理同步改善可重新估值。"
-    },
-    {
-      "type": "price_below",
-      "price": 8,
-      "reason": "接近悲观情景价值，可能出现足够资产与品牌安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 18,
-      "reason": "高于当前合理价值区间且反映较多乐观预期，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年度报告，重点跟踪收入、销售费用率、扣非利润、经营现金流和治理整改。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认亏损是否收窄以及海外收入是否持续放量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重新评估公司是否走出高费用低效率和治理折价阶段。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

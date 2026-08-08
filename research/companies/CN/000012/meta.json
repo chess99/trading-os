@@ -1,107 +1,123 @@
 {
-  "symbol": "CN:000012",
-  "market": "CN",
-  "ticker": "000012",
-  "name": "南 玻Ａ",
-  "company_name": "南 玻Ａ",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B-",
-  "valuation_rating": "B",
-  "current_thesis": "南玻A具备浮法玻璃、工程玻璃、电子玻璃、光伏玻璃和硅料资产组合，PB接近资产底但2025年扣非亏损、2026Q1扣非亏损扩大且库存上升，董事会延期换届带来治理折价；当前适合观察，等待行业价格止跌、库存下降、现金流改善和治理进展后再考虑买入。",
-  "fair_value_range": [
-    4.3,
-    5.3
-  ],
-  "buy_zone": [
-    3.6,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    6.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南 玻Ａ",
+    "security_status": "active",
+    "symbol": "CN:000012",
+    "ticker": "000012"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "571352c810c91cfdd7056330b3585be0b3f8f6de904119d90260e4ef81aeb442"
+      }
+    ],
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-29c146d33742.md",
+        "report_id": "CN-000012-2026-07-30-rapid-triage-29c146d33742",
+        "report_type": "rapid_triage",
+        "sha256": "059f3249ca003be228d864c5338646a3245058a6d993d4d59abda31964b7bd60"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-29c146d33742.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-29c146d33742.md"
+    }
+  },
+  "research": {
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T05:26:00+08:00",
+      "report_id": "CN-000012-2026-07-30-rapid-triage-29c146d33742",
+      "report_path": "reports/2026-07-30-rapid-triage-29c146d33742.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000012/20260730T052600+0800.triage.json",
+      "source_package_sha256": "29c146d33742363ebea632b3917c5015e63d6f4a056bc6a21cb39d3e2b9934c6"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-08-31T00:00:00+08:00"
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.00元，且浮法或光伏玻璃价格至少4周止跌，库存开始下降",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "PB折价足够且周期底部信号初现，但扣非亏损尚未修复"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证业绩预告区间、分部收入与毛利、经营现金流、存货跌价及新增资本开支。",
+      "trigger_id": "000012-h1-report-2026",
+      "type": "date"
     },
     {
-      "condition": "2026中报或三季报扣非亏损明显收窄，经营现金流同比改善，存货下降",
-      "action": "加仓",
-      "max_weight": 0.03,
-      "reason": "盈利底、现金流底和库存拐点同时出现，买入胜率提高"
+      "active": true,
+      "condition": {
+        "description": "公司披露浮法、工程、光伏、电子玻璃及硅料的销量、售价、单位成本、产能利用率、存货和分部现金流"
+      },
+      "reason": "决定亏损是局部周期冲击还是集团正常化所有者收益已永久受损。",
+      "trigger_id": "000012-segment-economics-filing",
+      "type": "filing"
     },
     {
-      "condition": "董事会完成换届，玻璃价格连续上涨，ROE修复趋势明确",
-      "action": "提升至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "治理折价收敛，资产重估和周期修复可同时发生"
+      "active": true,
+      "condition": {
+        "description": "连续两个披露期存货余额下降、跌价准备不再增加，且光伏玻璃及硅料售价与现金成本价差持续改善"
+      },
+      "reason": "验证资产减值接近尾声并开始释放营运资金。",
+      "trigger_id": "000012-inventory-reversal-thesis",
+      "type": "thesis"
     },
     {
-      "condition": "股价高于5.60元但扣非利润和库存未改善",
-      "action": "减仓或不追高",
-      "max_weight": 0.01,
-      "reason": "价格先于基本面透支，风险收益比恶化"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "更深账面折价可能提高研究赔率，但仍须同时核验扣非亏损收窄和存货下降。",
+      "trigger_id": "000012-price-margin-of-safety",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "公司完成董事会整体换届并披露稳定管理层、资本纪律和绩效约束，或股东会决议诉讼出现上诉或终审变化"
+      },
+      "reason": "延期换届和股东纠纷是当前治理折价的主要来源。",
+      "trigger_id": "000012-governance-reset",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "用三季报检验半年度亏损是否见底、现金流能否覆盖利息和资本开支。",
+      "trigger_id": "000012-q3-review-2026",
+      "type": "date"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入初始买入区，若同时出现玻璃价格止跌和库存下降，可建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "跌至净资产深折价区，适合重新评估悲观情景是否已充分反映"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "reason": "进入减仓区，若基本面未右侧确认，应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "高于当前合理区间上沿较多，除非扣非利润明显修复，否则风险收益比不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点核验扣非利润、经营现金流、存货和光伏玻璃/硅料资产"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和玻璃旺季价格走势，判断是否从观察转为可买"
-    }
-  ],
-  "key_tracking_metrics": [
-    "浮法玻璃5mm现货价格",
-    "浮法玻璃库存天数",
-    "浮法玻璃产能利用率和冷修日熔量",
-    "光伏玻璃2.0mm镀膜价格",
-    "光伏玻璃3.2mm镀膜价格",
-    "光伏玻璃库存和组件排产",
-    "高纯晶硅售价和青海基地产销量",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "存货余额",
-    "应收账款坏账和信用减值损失",
-    "董事会换届进展",
-    "回购股份用途和注销进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-30T05:26:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,67 +1,95 @@
 {
-  "symbol": "CN:600881",
-  "ticker": "600881",
-  "name": "亚泰集团",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "亚泰集团拥有建材、医药、地产和金融股权等真实资产，但归母净资产已被连续亏损压缩到极薄水平，2026H1 预亏约5亿元且担保余额远高于净资产。普通股缺乏安全边际，除非出现债务重组、资产处置和主业减亏的组合证据，否则应回避。",
-  "fair_value_range": [
-    0.5,
-    1.1
-  ],
-  "buy_zone": [
-    0.0,
-    0.5
-  ],
-  "sell_or_reduce_zone": [
-    1.3,
-    1.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "亚泰集团",
+    "security_status": "active",
+    "symbol": "CN:600881",
+    "ticker": "600881"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "5d96bb4e9688455523190f3c339865b309d00857d6ef300e1f60564561575ce4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "维持回避；仅在股价低于0.50元且正式财报显示归母净资产仍为正、担保和有息负债下降、建材与地产亏损明显收窄后，才允许重新评估事件驱动小仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据，重点确认归母净资产是否转负、债务和担保是否下降。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若公告出现实质性债务重组、地方国资资产注入、核心金融股权高价处置或财务费用明显下降，可重开研究，但在验证前最大仓位不超过0.5%。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认建材和地产亏损是否继续收窄以及经营现金流质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和审计意见，判断持续经营、资产减值和退市风险是否缓解。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.5
+      },
+      "reason": "进入保守观察区，需同时核验净资产和债务指标是否停止恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.3
+      },
+      "reason": "若无重组或资产负债表修复证据，已高于基准安全边际区间，应继续回避或减持。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.5,
-      "reason": "进入保守观察区，需同时核验净资产和债务指标是否停止恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 1.3,
-      "reason": "若无重组或资产负债表修复证据，已高于基准安全边际区间，应继续回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据，重点确认归母净资产是否转负、债务和担保是否下降。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认建材和地产亏损是否继续收窄以及经营现金流质量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和审计意见，判断持续经营、资产减值和退市风险是否缓解。"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

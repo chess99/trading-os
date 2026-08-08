@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:001212",
-  "ticker": "001212",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "中旗新材",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "现有业务仍以低毛利人造石英石板材和台面为主，2025年扣非亏损，高纯石英砂收入仍小且毛利为负；2026Q1虽恢复微利，但2026-07-13价格已隐含较高转型成功预期，安全边际不足。",
-  "fair_value_range": [
-    11,
-    17
-  ],
-  "buy_zone": [
-    8,
-    12
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中旗新材",
+    "security_status": "active",
+    "symbol": "CN:001212",
+    "ticker": "001212"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "d950e21146842f3e9b482d98c2e4616b48319915dd365c2c65db591ff8863f92"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于12元，且公司最近一期经营现金流为正、未出现大额关联交易或激进资本开支",
-      "action": "仅允许研究性小仓位观察",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入恢复、综合毛利率、高纯石英砂收入和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "高纯石英砂/粉连续两个季度收入超过2000万元且毛利率转正",
-      "action": "重新估值后再决定是否提高仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1改善是否延续以及新控股股东治理变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24元且高纯石英砂尚未实质性放量",
-      "action": "不参与或退出观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入基准公允价值下沿和买入观察区，需要复核季度数据与治理变化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过当前基本面可支撑区间，除非高纯石英砂已兑现，否则风险收益不佳。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入基准公允价值下沿和买入观察区，需要复核季度数据与治理变化。"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "超过当前基本面可支撑区间，除非高纯石英砂已兑现，否则风险收益不佳。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入恢复、综合毛利率、高纯石英砂收入和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1改善是否延续以及新控股股东治理变化。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

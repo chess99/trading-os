@@ -1,106 +1,105 @@
 {
-  "symbol": "CN:688478",
-  "market": "CN",
-  "ticker": "688478",
-  "name": "晶升股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "晶升股份具备半导体晶体生长设备技术资产和客户验证，但2025年至2026Q1收入、毛利率、利润和现金流显著恶化，当前价格已提前反映碳化硅回暖与并购预期，缺乏足够安全边际；仅在30元以下且订单、验收、毛利率同步改善时考虑小仓位试错。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    28,
-    40
-  ],
-  "buy_zone": [
-    22,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    65
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晶升股份",
+    "security_status": "active",
+    "symbol": "CN:688478",
+    "ticker": "688478"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c1284f265e180c75d77cf1a04b83beda5ee836130683375923573dd6516d54a5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于30元，且最新半年度或季度报告显示合同负债转收入、毛利率止跌、经营现金流未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入确认、合同负债转化、毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于22-26元，且现金类资产仍充足、并购事项未出现明显毁值或重大不利变化",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报订单、库存、现金消耗和并购进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于55元但公司仍亏损，或收入恢复低于预期且估值由题材驱动",
-      "action": "不买入或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断周期恢复是否兑现并重估长期盈利能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入买入观察区，需同时核验订单、验收收入和毛利率是否改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "接近资产和恢复期估值提供的安全边际，可重新评估是否提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "高于基准公允价值较多，若无利润兑现则风险收益比恶化。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入买入观察区，需同时核验订单、验收收入和毛利率是否改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "接近资产和恢复期估值提供的安全边际，可重新评估是否提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "高于基准公允价值较多，若无利润兑现则风险收益比恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入确认、合同负债转化、毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报订单、库存、现金消耗和并购进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断周期恢复是否兑现并重估长期盈利能力。"
-    }
-  ],
-  "sources": [
-    {
-      "title": "南京晶升装备股份有限公司2025年年度报告",
-      "url": "https://file.finance.sina.com.cn/211.154.219.97%3A9494/MRGG/CNSESH_STOCK/2026/2026-4/2026-04-30/12283344.PDF",
-      "date": "2026-04-30"
-    },
-    {
-      "title": "南京晶升装备股份有限公司2026年第一季度报告",
-      "url": "https://file.finance.sina.com.cn/211.154.219.97%3A9494/MRGG/CNSESH_STOCK/2026/2026-4/2026-04-30/12283339.PDF",
-      "date": "2026-04-30"
-    },
-    {
-      "title": "关于因申报文件财务资料更新收到上海证券交易所中止发行股份及支付现金购买资产并募集配套资金暨关联交易审核通知的公告",
-      "url": "https://www.sse.com.cn/assortment/stock/list/info/summary/index.shtml?COMPANY_CODE=688478",
-      "date": "2026-07-01"
-    },
-    {
-      "title": "晶升股份行情页",
-      "url": "https://cn.investing.com/equities/crystal-growth-energy-equipment",
-      "date": "2026-07-18"
-    },
-    {
-      "title": "SEMI: Global Semiconductor Equipment Sales Forecast to Reach a Record $229 Billion in 2028",
-      "url": "https://www.semi.org/en/semi-press-release/global-semiconductor-equipment-sales-forecast-to-reach-a-record-229-billion-dollars-in-2028-semi-reports",
-      "date": "2026-07-14"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

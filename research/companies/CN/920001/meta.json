@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:920001",
-  "market": "CN",
-  "ticker": "920001",
-  "name": "纬达光电",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "纬达光电是偏光片/防雾膜小而专的北交所公司，资产负债表稳健且车载显示、OLED偏光片、防雾膜具备细分成长性；但2025年和2026Q1仍处于三期项目产能爬坡和价格竞争压力期，毛利率修复尚未兑现，当前约2.54倍PB已反映部分复苏预期，适合观察等待更高安全边际或经营拐点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.0,
-    13.0
-  ],
-  "buy_zone": [
-    8.2,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "纬达光电",
+    "security_status": "active",
+    "symbol": "CN:920001",
+    "ticker": "920001"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "53b31622439347473ccb0fb2d6ab559ff255dde5c3b55f2f3ac36d25e39fb337"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入9.5元以下，且最新季度综合毛利率不低于15%，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点看毛利率、三期项目产能利用率、经营现金流和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入超过6500万元且综合毛利率超过18%，可提高到小仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认产能爬坡是否带来连续收入放量和亏损收窄。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于15元但毛利率仍低于18%或扣非利润未转正，减仓或不参与。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年度报告，判断三期项目全年资本回报和车载/OLED产品放量进度。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入买入区上沿，需要复核毛利率和产能爬坡后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入安全边际较充分区域，即使复苏较慢也接近保守PB估值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "进入乐观情景估值下沿，若基本面未同步兑现应降低风险敞口。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入买入区上沿，需要复核毛利率和产能爬坡后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入安全边际较充分区域，即使复苏较慢也接近保守PB估值。"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "进入乐观情景估值下沿，若基本面未同步兑现应降低风险敞口。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点看毛利率、三期项目产能利用率、经营现金流和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认产能爬坡是否带来连续收入放量和亏损收窄。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年度报告，判断三期项目全年资本回报和车载/OLED产品放量进度。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

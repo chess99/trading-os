@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:000538",
-  "market": "CN",
-  "ticker": "000538",
-  "name": "云南白药",
-  "company_name": "云南白药",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "云南白药具备中药保密品牌、OTC药品大单品、口腔护理消费品和高分红现金流属性，2025年工业业务占比提升、药品事业群增长较快，质量改善明确；但健康品成熟、医药商业低毛利、销售费用上行和投资收益波动限制估值上限。当前价格约48-49元处于合理但安全边际一般的位置，适合观察仓，主买区为43-47元。",
-  "quality_rating": "high",
-  "valuation_rating": "reasonable",
-  "fair_value_range": [
-    52,
-    60
-  ],
-  "buy_zone": [
-    43,
-    47
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    72
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "云南白药",
+    "security_status": "active",
+    "symbol": "CN:000538",
+    "ticker": "000538"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "82de56c23fe11cc17bcd7e2de6b68761e3b6031744df0bfa4036efcd62e64c31"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "48-49元附近且未跌入买入区间",
-      "action": "仅建立0.5%-1.0%观察仓，等待半年报验证工业增长和费用效率",
-      "max_weight": 0.01,
-      "reason": "当前估值合理但安全边际不足，股息率提供支撑，适合跟踪不适合重仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报披露后复核药品事业群、健康品事业群、销售费用率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至43-47元且药品、健康品和现金流未恶化",
-      "action": "分批买入至3%-5%",
-      "max_weight": 0.05,
-      "reason": "该区间对应更高股息率和低于基准合理价值的折价，品牌现金流资产具备配置价值"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后确认全年利润、分红能力和投资收益波动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至40-43元且基本面未出现治理、渠道或现金流风险",
-      "action": "加仓至5%-7%，之后等待半年报或三季报复核",
-      "max_weight": 0.07,
-      "reason": "悲观估值附近具备较高安全边际，但公司增长斜率有限，不宜突破红利资产仓位上限"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 47.0
+      },
+      "reason": "进入买入区间上沿，复核药品增长、健康品份额和销售费用率后可分批加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价上涨至65-72元而利润仍为低个位数至中个位数增长",
-      "action": "减仓至0.5%-1.5%观察仓",
-      "max_weight": 0.015,
-      "reason": "价格进入乐观估值区间后预期收益率不足，需用业绩高增长证明高估值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 43.0
+      },
+      "reason": "进入强买观察区，若基本面未坏可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "进入减仓区间下沿，若业绩增长未上台阶应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 72.0
+      },
+      "reason": "超过乐观估值上沿，除非工业业务持续超预期，否则风险回报恶化",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 47,
-      "reason": "进入买入区间上沿，复核药品增长、健康品份额和销售费用率后可分批加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 43,
-      "reason": "进入强买观察区，若基本面未坏可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "进入减仓区间下沿，若业绩增长未上台阶应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 72,
-      "reason": "超过乐观估值上沿，除非工业业务持续超预期，否则风险回报恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报披露后复核药品事业群、健康品事业群、销售费用率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后确认全年利润、分红能力和投资收益波动"
-    }
-  ],
-  "key_tracking_metrics": [
-    "工业销售收入增速及占营业收入比重",
-    "药品事业群收入增速及气雾剂、白药膏、胶囊、散剂、创可贴大单品表现",
-    "健康品事业群收入、云南白药牙膏市场份额、养元青收入增速",
-    "销售费用率及线上渠道投入产出效率",
-    "经营活动现金流量净额/归母净利润",
-    "投资收益与公允价值变动收益占利润总额比例",
-    "医药商业毛利率、应收账款周转和存货周转",
-    "年度及特别分红比例、回购动作和市值管理执行",
-    "大股东持股、可交换债换股及治理结构变化",
-    "中药材成本、核心原料供应和外延并购整合进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

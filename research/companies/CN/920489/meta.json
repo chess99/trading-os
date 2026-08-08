@@ -1,47 +1,77 @@
 {
-  "symbol": "CN:920489",
-  "market": "CN",
-  "ticker": "920489",
-  "name": "佳先股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "传统助剂低回报、电子材料尚未验证多客户和正自由现金流，当前价格已透支转型成功预期。",
-  "fair_value_range": [5.0, 8.0],
-  "buy_zone": [4.0, 5.5],
-  "sell_or_reduce_zone": [10.0, 12.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "佳先股份",
+    "security_status": "active",
+    "symbol": "CN:920489",
+    "ticker": "920489"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "1ba993549be060cf67a63e51dbadbc33cfa7ce8db96c967451c5d5f944f72d08"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于买入区间，且连续两个季度经营现金流为正、净债务下降、电子材料客户集中度改善且无新增监管问题",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、产能利用率、电子材料客户验证与自由现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "自由现金流继续为负、净债务上升、客户验证或回款恶化、发生减值或新增监管处分",
-      "max_weight": 0.0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、产能利用率、电子材料客户验证与自由现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入可能具备安全边际的观察买入区间，仍需重新验证基本面"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入可能具备安全边际的观察买入区间，仍需重新验证基本面",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "进入减仓或不应追高区间，除非现金流和电子材料转型已得到验证"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "进入减仓或不应追高区间，除非现金流和电子材料转型已得到验证",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-17T13:10:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

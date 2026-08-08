@@ -1,149 +1,130 @@
 {
-  "symbol": "CN:000762",
-  "market": "CN",
-  "ticker": "000762",
-  "name": "西藏矿业",
-  "company_name": "西藏矿业",
-  "status": "active",
-  "updated_at": "2026-07-17T21:52:34+08:00",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "扎布耶二期产能释放与锂盐涨价已推动2026年上半年扭亏，Q2归母净利润约0.31亿-0.47亿元、经营改善得到部分确认；但单季利润尚未跨过0.5亿元右侧阈值，产销量、单位成本和毛利率仍待半年报验证。2026-07-17收盘价20.73元接近16-20元买入区，可用不超过1%观察仓跟踪，不宜重仓。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_near_lower_bound",
-  "fair_value_range": [
-    20,
-    28
-  ],
-  "buy_zone": [
-    16,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    36
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "西藏矿业",
+    "security_status": "active",
+    "symbol": "CN:000762",
+    "ticker": "000762"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "a1d63d9bf7a5de7cd7d92489278b23ee528b1cff898cb9c563d3afe84594292b"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "feaa8d82556834a8a60c0148296cd1baceafd5b15280c8b67ea95a3283aa1213"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于20-28元合理价值区，二期连续产销和毛利尚未验证",
-      "zone": "current",
-      "price_range": [
-        20,
-        28
-      ],
-      "action": "watch",
-      "target_weight": 0,
-      "max_weight": 0.01,
-      "notes": "现价20.73元接近买入区，可选择不买等待；若需要跟踪产业变化，观察仓不超过1%。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报预告落点、碳酸锂和氯化钾产销量、分产品毛利率、库存、经营现金流和财务费用。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入18-20元且半年报未出现预告下修、现金流恶化或二期重大问题",
-      "zone": "buy",
-      "price_range": [
-        18,
-        20
-      ],
-      "action": "buy",
-      "target_weight": 0.01,
-      "max_weight": 0.02,
-      "notes": "进入有安全边际买入区，分批建立1%-2%观察仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q2改善是否延续、单季利润是否跨过0.5亿元右侧确认线。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入16-18元且下跌主要来自周期情绪、二期经营继续改善",
-      "zone": "strong_buy",
-      "price_range": [
-        16,
-        18
-      ],
-      "action": "buy",
-      "target_weight": 0.02,
-      "max_weight": 0.03,
-      "notes": "资源价值折价较充分，可逐步提高至2%-3%。"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年报，验证扎布耶二期全年达产率、单位成本、毛利和资产回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度碳酸锂产销增长、毛利率转正且单季归母净利润超过0.5亿元",
-      "zone": "right_side_confirmation",
-      "action": "buy",
-      "target_weight": 0.03,
-      "max_weight": 0.05,
-      "notes": "扎布耶二期由资源故事转为可验证现金流后，允许右侧加仓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入有安全边际买入区上沿，复核半年报预告落点和二期产销后可建立1%-2%观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于30元且没有稳定达产和利润中枢上修证据",
-      "zone": "reduce",
-      "price_range": [
-        30,
-        36
-      ],
-      "action": "reduce",
-      "target_weight": 0,
-      "max_weight": 0.01,
-      "notes": "估值开始充分计入锂价和达产乐观预期，逐步减仓或回避追高。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入买入区中部，若基本面未恶化可逐步提高至2%-3%。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "跌入悲观价值区，需先排除项目运行、现金流或锂价结构性恶化。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "高于基准合理价值区，除非二期稳定达产和利润中枢明显上修，否则考虑减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "乐观预期较充分兑现，不应追高。",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入有安全边际买入区上沿，复核半年报预告落点和二期产销后可建立1%-2%观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入买入区中部，若基本面未恶化可逐步提高至2%-3%。"
-    },
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "跌入悲观价值区，需先排除项目运行、现金流或锂价结构性恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "高于基准合理价值区，除非二期稳定达产和利润中枢明显上修，否则考虑减仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "乐观预期较充分兑现，不应追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报预告落点、碳酸锂和氯化钾产销量、分产品毛利率、库存、经营现金流和财务费用。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q2改善是否延续、单季利润是否跨过0.5亿元右侧确认线。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年报，验证扎布耶二期全年达产率、单位成本、毛利和资产回报。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "电池级碳酸锂现货均价",
-    "扎布耶二期碳酸锂季度产量",
-    "扎布耶二期碳酸锂季度销量",
-    "碳酸锂产品毛利率",
-    "碳酸锂单位成本与回收率",
-    "氯化钾产量、销量与库存",
-    "铬铁矿产量、销量与毛利率",
-    "单季扣非归母净利润",
-    "经营活动现金流净额",
-    "财务费用",
-    "长期借款和长期应付款",
-    "罗布莎南部改扩建进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:000906",
-  "market": "CN",
-  "ticker": "000906",
-  "name": "浙商中拓",
-  "company_name": "浙商中拓",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "浙江国资控股的大宗商品供应链平台具备信用、网络和规模优势，但2025年扣非亏损、ROE偏低、杠杆较高，需等待2026年扣非利润和经营现金流持续修复后再提高仓位。",
-  "quality_rating": "watch",
-  "valuation_rating": "hold",
-  "fair_value_range": [
-    5.5,
-    7.2
-  ],
-  "buy_zone": [
-    4.5,
-    5.1
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    8.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙商中拓",
+    "security_status": "active",
+    "symbol": "CN:000906",
+    "ticker": "000906"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "702f9cd6b1aa5aadfbf937ff0ae557926bb3fbb215f579fb0f5cccd33529c94f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入4.50-5.10元，且2026年半年报未出现信用减值恶化、经营现金流未显著偏离利润",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "当前估值接近净资产大幅折价，但2025年利润质量偏弱，先小仓验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、应收预付存货和信用减值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年扣非利润连续两个报告期为正，经营现金流改善，资产负债率未继续上行",
-      "action": "逐步加仓",
-      "max_weight": 0.03,
-      "reason": "低毛利高周转模式需要用利润质量和现金流确认风控有效"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1利润修复是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "出现大额坏账、套保错配亏损、资产负债率显著高于78%或股价高于7.50元但基本面未同步改善",
-      "action": "减仓或退出",
-      "max_weight": 0,
-      "reason": "供应链平台风险暴露时净资产折价保护会迅速减弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.1
+      },
+      "reason": "进入初始买入区间上沿，可结合半年报质量评估首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入更有安全边际的净资产折价区间，若信用风险未恶化可提高跟踪优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "达到减持区间下沿，若ROE和扣非利润未修复需控制仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.1,
-      "reason": "进入初始买入区间上沿，可结合半年报质量评估首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入更有安全边际的净资产折价区间，若信用风险未恶化可提高跟踪优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "达到减持区间下沿，若ROE和扣非利润未修复需控制仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、应收预付存货和信用减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1利润修复是否可持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款及预付款项增速",
-    "存货周转和货权风险",
-    "资产负债率",
-    "有息债务成本",
-    "信用减值损失",
-    "衍生品公允价值变动及套保匹配情况",
-    "政府补助占利润比例",
-    "钢铁、有色、能源化工和新能源链条价差",
-    "浙江交通集团持股和融资支持变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,52 +1,86 @@
 {
-  "symbol": "CN:920896",
-  "market": "CN",
-  "ticker": "920896",
-  "name": "XD旺成科",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "现金流和资本回报改善，但客户与控制权高度集中、2026Q1增长降速，当前约19倍TTM PE仅在公允价值内，等待9.8元以下并复核基本面。",
-  "fair_value_range": [10.0, 12.5],
-  "buy_zone": [8.8, 9.8],
-  "sell_or_reduce_zone": [14.5, 16.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "XD旺成科",
+    "security_status": "active",
+    "symbol": "CN:920896",
+    "ticker": "920896"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "e2366d3615486c32fb73687e431bd3f5d7573ac8cc708cd6e61b4661f1de16c9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入9.3至9.8元且收入仍增长、毛利率不低于23%、核心客户与现金流未恶化",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报的增长、毛利率、客户集中度与现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入8.8至9.3元，重新验证下跌并非订单、质量、回款或治理恶化后",
-      "max_weight": 0.025
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报的增长、毛利率、客户集中度与现金流"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、募投进度和年度分红",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、募投进度和年度分红"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.8,
-      "reason": "进入有安全边际的买入区间，但须先确认基本面未恶化"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.8
+      },
+      "reason": "进入有安全边际的买入区间，但须先确认基本面未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "进入减仓或不应追高区间，需有更高可核验自由现金流才能维持"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "进入减仓或不应追高区间，需有更高可核验自由现金流才能维持",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-14T07:53:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

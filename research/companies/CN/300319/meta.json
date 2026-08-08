@@ -1,96 +1,96 @@
 {
-  "symbol": "CN:300319",
-  "market": "CN",
-  "ticker": "300319",
-  "name": "麦捷科技",
-  "company_name": "麦捷科技",
-  "updated_at": "2026-07-08",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "观察/等待回落",
-  "current_thesis": "麦捷科技具备磁性元器件、射频器件和显示模组平台能力，AI服务器功率电感/TLVR与汽车电子提供成长弹性；但截至2026-07-08，股价已显著反映AI供应链期权，而公司披露口径仍显示相关合作未形成规模化供货，当前应等待财报验证或估值回落。",
-  "current_rating": "hold",
-  "quality_rating": "B",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    14.5,
-    18.0
-  ],
-  "buy_zone": [
-    10.5,
-    14.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    28.0
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "麦捷科技",
+    "security_status": "active",
+    "symbol": "CN:300319",
+    "ticker": "300319"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "219696c65e7d3b8afc8540b416252a0bede21b6dffa9cf7d1bd22a478804711b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于18元且未披露AI/TLVR规模化供货",
-      "action": "仅观察或极小跟踪仓",
-      "max_weight": 0.04,
-      "target_weight": 0.005,
-      "notes": "当前21.39元不追高；14元以下小仓，10.5-12元且基本面未恶化时才提高仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026中报，重点看扣非利润、毛利率、AI/TLVR订单、应收存货和越南工厂亏损。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入14元以下且中报扣非利润、现金流、应收存货未恶化",
-      "action": "分批建立小仓",
-      "max_weight": 0.04,
-      "target_weight": 0.015,
-      "notes": "以财报验证为前提，不因价格下跌机械补仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报，确认AI和车载放量是否进入利润表。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入10.5-12元且AI/车载增长逻辑仍成立",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04,
-      "target_weight": 0.03,
-      "notes": "单票上限4%，需要后续公告或财报确认订单兑现。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入安全买入区，复核中报、订单和现金流后可建立1%-1.5%仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入强吸引区，若AI/车载逻辑未破坏可考虑提升至3%-4%上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入减仓/不追高区，除非有规模化供货或利润兑现公告，否则风险收益不佳。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入安全买入区，复核中报、订单和现金流后可建立1%-1.5%仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入强吸引区，若AI/车载逻辑未破坏可考虑提升至3%-4%上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "进入减仓/不追高区，除非有规模化供货或利润兑现公告，否则风险收益不佳。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026中报，重点看扣非利润、毛利率、AI/TLVR订单、应收存货和越南工厂亏损。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报，确认AI和车载放量是否进入利润表。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1营业收入增速",
-    "2026H1扣非归母净利润增速",
-    "毛利率与期间费用率",
-    "AI/TLVR及功率电感规模化供货证据",
-    "汽车电子收入与认证进展",
-    "应收账款周转",
-    "存货周转",
-    "经营活动现金流净额",
-    "越南工厂亏损/盈利状态",
-    "资本开支与在建工程转固"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

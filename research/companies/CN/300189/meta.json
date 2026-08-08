@@ -1,138 +1,142 @@
 {
-  "symbol": "CN:300189",
-  "market": "CN",
-  "ticker": "300189",
-  "name": "神农种业",
-  "company_name": "海南神农种业科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "神农种业处在种业振兴和油菜、水稻品种推广的政策方向上，但 2025 年归母利润主要受非经常性收益拉动，扣非利润仅 434 万元，2026Q1 仍亏损。按 2026-07-13 附近约 4.12 元股价测算，当前 PB 约 6.1 倍、扣非 PE 极高，尚无足够安全边际。",
-  "quality_rating": "C+",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    1.5,
-    2.4
-  ],
-  "buy_zone": [
-    1.3,
-    1.8
-  ],
-  "sell_or_reduce_zone": [
-    3.2,
-    4.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "神农种业",
+    "security_status": "active",
+    "symbol": "CN:300189",
+    "ticker": "300189"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8feef48f0f84f9eabcc00d4b0c39a7b06f56bf5f5c491699760093402ad1a488"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 3.2 元且扣非利润未连续改善",
-      "action": "不买；已有仓位考虑减仓",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价回到 1.8-2.4 元且连续两个季度收入增长、扣非亏损明显收窄",
-      "action": "只建立观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价进入 1.3-1.8 元且经营现金流为正、存货和应收未恶化",
-      "action": "分批小仓位买入",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于 1.3 元且不存在退市、治理、融资失败等新增硬伤",
-      "action": "可提高到逆向仓位上限",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "currency": "CNY",
-      "reason": "进入估算合理价值区上沿",
-      "action": "重新评估是否进入合理价值区"
-    },
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "currency": "CNY",
-      "reason": "进入可买区上沿，需要结合主业改善验证",
-      "action": "检查扣非利润和现金流，若改善可考虑观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 3.2,
-      "currency": "CNY",
-      "reason": "超过减仓观察区下沿，估值重新偏贵",
-      "action": "若基本面未改善，维持不买或减仓判断"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "currency": "CNY",
-      "reason": "接近或高于当前高估状态，安全边际不足",
-      "action": "估值显著透支，除非主业利润上修，否则不参与"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是检验 2026 年主业恢复的第一个完整窗口",
-      "condition": "发布 2026 年半年度报告或年度报告",
-      "action": "复核收入结构、扣非利润和现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "定增会影响摊薄、资金约束和油菜项目兑现概率",
-      "condition": "定增方案获得注册、发行或终止",
-      "action": "复核摊薄比例和募投项目资金约束"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "油菜项目是未来增长假设的重要来源",
-      "condition": "油菜良种良法项目披露实质性订单、推广面积或收入贡献",
-      "action": "复核增长假设"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "扣非利润决定公司是否从主题资产转为可盈利资产",
-      "condition": "连续两个季度扣非归母净利润转正或亏损扩大",
-      "action": "上调或下调主业质量判断"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "存货和应收会揭示收入增长是否健康",
-      "condition": "存货、应收账款、合同负债出现异常变化",
-      "action": "复核收入质量和渠道库存风险"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "核心品种变化会直接影响护城河和销售前景",
-      "condition": "核心品种审定、推广、退市或重大质量纠纷公告",
-      "action": "复核护城河和风险敞口"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入估算合理价值区上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入可买区上沿，需要结合主业改善验证",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.2
+      },
+      "reason": "超过减仓观察区下沿，估值重新偏贵",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "接近或高于当前高估状态，安全边际不足",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入及水稻、油菜、玉米、水产品分项收入",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "毛利率和销售净利率",
-    "存货周转与存货跌价准备",
-    "应收账款及回款周期",
-    "定增发行价格、募资额和摊薄比例",
-    "核心品种推广面积、复购率和渠道库存"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

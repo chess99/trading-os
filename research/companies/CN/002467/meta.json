@@ -1,81 +1,95 @@
 {
-  "symbol": "CN:002467",
-  "ticker": "002467",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "二六三",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备跨境网络、企业邮箱、AICC 和虚拟运营商等真实通信服务资产，全球化网络业务在 2025 年逆势增长，经营现金流仍为正；但 2025 年商誉减值导致亏损、2026H1 预告归母转亏且扣非利润偏弱，现价约 4.41 元对应估值已反映较多 AI/出海预期，缺乏足够安全边际，暂列观察。",
-  "fair_value_range": [
-    3.2,
-    4.0
-  ],
-  "buy_zone": [
-    2.8,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "二六三",
+    "security_status": "active",
+    "symbol": "CN:002467",
+    "ticker": "002467"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "80b8231a002344bfa107436a55532671de4ac4cc8761eda07aedce2a6198b408"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 2.80-3.20 元区间，且 2026 年中报确认主营扣非利润改善、全球化网络收入继续增长、无新增重大减值",
-      "action": "建立观察性小仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报正式数据、扣非利润、经营现金流、全球化网络毛利率和商誉减值风险。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入增速接近或超过 10%，扣非净利率回到 5% 以上，经营现金流持续为正，AICC/企业邮箱/跨境网络有可核验商业化进展",
-      "action": "验证后加仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认国际专线增长是否可持续及智能化通信收入是否止跌。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 5.20 元但扣非利润仍缺乏验证，或再现大额商誉/长期资产减值",
-      "action": "不追高并降低仓位或移出优先观察",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和 2027 年一季报，更新估值、分红能力和长期资产减值判断。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入基准公允价值下沿和买入评估区，需要结合半年报复核是否具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "超过减仓/回避区下沿，若无扣非利润和 AI 商业化验证，估值透支风险上升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入基准公允价值下沿和买入评估区，需要结合半年报复核是否具备安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "超过减仓/回避区下沿，若无扣非利润和 AI 商业化验证，估值透支风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报正式数据、扣非利润、经营现金流、全球化网络毛利率和商誉减值风险。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认国际专线增长是否可持续及智能化通信收入是否止跌。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和 2027 年一季报，更新估值、分红能力和长期资产减值判断。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price_date": "2026-07-14",
-    "reference_price": 4.41,
-    "shares_outstanding": 1375371873,
-    "market_cap_cny_billion": 6.065,
-    "source_confidence": "medium"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

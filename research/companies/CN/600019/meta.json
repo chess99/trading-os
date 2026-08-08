@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:600019",
-  "market": "CN",
-  "ticker": "600019",
-  "name": "宝钢股份",
-  "company_name": "宝钢股份",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "观察，可小仓试探",
-  "current_thesis": "宝钢股份是A股钢铁行业中资产质量、产品结构、分红纪律和资产负债表相对领先的核心标的，但仍受钢铁周期、铁矿石成本和下游需求约束。当前价格处于合理区间下半段，具备配置观察价值，真正有安全边际的买点在5.0元以下，强吸引力买点在4.5元以下。",
-  "current_rating": "watch",
-  "status": "active",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏低估",
-  "fair_value_range": [
-    5.3,
-    6.4
-  ],
-  "buy_zone": [
-    4.5,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    6.6,
-    7.6
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宝钢股份",
+    "security_status": "active",
+    "symbol": "CN:600019",
+    "ticker": "600019"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "6f81a27b63ec2f1cdfabfa9d96f88e7ef96bcf40f8f60346f4436197cfd03f56"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格不高于4.5元，且吨钢利润、经营现金流和分红政策未恶化",
-      "action": "强吸引力买入",
-      "max_weight": 0.08,
-      "reason": "接近0.47倍2026Q1归母净资产，股息率和账面价值同时提供安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证吨钢盈利、经营现金流、资本开支和分红能力",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在4.5元至5.0元之间，且半年报未显示基本面恶化",
-      "action": "分批买入",
-      "max_weight": 0.05,
-      "reason": "低于合理价值区间，适合作为高股息周期核心资产底仓"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断钢铁行业供需再平衡和公司盈利趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格在5.0元至5.8元之间",
-      "action": "观察或小仓试探",
-      "max_weight": 0.02,
-      "reason": "估值不贵但安全边际一般，需要等待吨钢利润修复证据"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报和年度分红方案，重估股息锚和合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于6.6元且利润预期没有同步上修",
-      "action": "不新增或减仓",
-      "max_weight": 0.0,
-      "reason": "超过合理区间上沿，周期股继续上涨依赖景气超预期"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入有安全边际买入区间，需要复核吨钢盈利、分红和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入强吸引力买入区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.6
+      },
+      "reason": "超过合理区间上沿，若利润没有上修应考虑减仓或停止加仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入有安全边际买入区间，需要复核吨钢盈利、分红和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入强吸引力买入区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.6,
-      "reason": "超过合理区间上沿，若利润没有上修应考虑减仓或停止加仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证吨钢盈利、经营现金流、资本开支和分红能力"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断钢铁行业供需再平衡和公司盈利趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报和年度分红方案，重估股息锚和合理价值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "当前股价与P/B",
-    "季度营业收入",
-    "季度归母净利润",
-    "季度扣非归母净利润",
-    "经营现金流净额",
-    "资本开支",
-    "每股分红",
-    "吨钢利润",
-    "热轧和冷轧价差",
-    "汽车板和硅钢销量",
-    "铁矿石价格",
-    "焦煤价格",
-    "粗钢产量调控执行情况",
-    "资产负债率",
-    "净有息负债"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

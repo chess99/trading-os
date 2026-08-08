@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603011",
-  "ticker": "603011",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "合锻智能",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "智能分选业务具备较高毛利和真实竞争力，但高端成形机床拖累利润，2026H1预告亏损且当前市值已充分反映PCB、AI服务器、核聚变等题材期权；在可核验订单和利润拐点出现前，不适合作为买方长期建仓标的。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    9,
-    13
-  ],
-  "buy_zone": [
-    6,
-    9
-  ],
-  "sell_or_reduce_zone": [
-    16,
-    22
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "合锻智能",
+    "security_status": "active",
+    "symbol": "CN:603011",
+    "ticker": "603011"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "3417d4f1f414654dfcf2646b5026786d820114930f6cf071381531a6f8c0df89"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基本面合理价值且2026H1预告亏损，维持零仓位，仅跟踪正式半年报和新业务订单。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查分部毛利率、存货跌价和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价回落至9元以下，且智能分选毛利率维持40%以上、成形机床亏损明显收窄，可考虑试探仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断亏损是否收窄及智能分选是否维持高毛利。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价回落至6元附近，且经营现金流连续两个季度为正、无新增大额减值，可提高至观察仓上限。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证成形机床修复和新业务订单利润贡献。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入合理价值下沿附近，若基本面未恶化可重新评估试探仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入保守安全边际区间，需要结合现金流和减值情况评估是否建仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "高于合理价值区间，若无新业务利润验证应降低或避免仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9,
-      "reason": "进入合理价值下沿附近，若基本面未恶化可重新评估试探仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 6,
-      "reason": "进入保守安全边际区间，需要结合现金流和减值情况评估是否建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 16,
-      "reason": "高于合理价值区间，若无新业务利润验证应降低或避免仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查分部毛利率、存货跌价和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断亏损是否收窄及智能分选是否维持高毛利。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证成形机床修复和新业务订单利润贡献。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

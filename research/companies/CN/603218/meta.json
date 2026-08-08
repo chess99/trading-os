@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603218",
-  "market": "CN",
-  "ticker": "603218",
-  "name": "日月股份",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "风电大型铸件龙头，2025年收入和扣非利润修复，当前估值接近净资产且股息率有支撑；但行业价格竞争、重资产折旧和汇兑/减值扰动仍需限制仓位。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    12.0,
-    15.5
-  ],
-  "buy_zone": [
-    0.0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    19.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "日月股份",
+    "security_status": "active",
+    "symbol": "CN:603218",
+    "ticker": "603218"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f523df1dd3aa16d30adfdfd71ce10c615e8cbfa0024b49f94a78173dc0caa7ea"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于10.5元且2026年中报未显示扣非净利率、经营现金流或订单结构恶化",
-      "action": "分批建立基础仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、扣非净利率、现金流和产能利用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于9.5元且风电需求、应收账款和存货周转未恶化",
-      "action": "补充加仓但保持周期股仓位纪律",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报以及风电招标价格和订单质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于16元且ROE未回到8%以上或自由现金流未同步改善",
-      "action": "逐步减仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报并重新测算正常化ROE和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入深度安全边际区，需复核基本面后考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "超过基准估值上沿，若ROE和现金流未改善应减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入深度安全边际区，需复核基本面后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "超过基准估值上沿，若ROE和现金流未改善应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、扣非净利率、现金流和产能利用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报以及风电招标价格和订单质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报并重新测算正常化ROE和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

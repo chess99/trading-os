@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:603182",
-  "ticker": "603182",
-  "name": "嘉华股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "嘉华股份是资产负债表稳健、分红积极的大豆蛋白加工企业，山东国资入主改善治理和信用预期；但2026Q1收入增长而利润下滑，行业竞争和成本传导压力仍在，当前估值接近合理区间上半段，需等待更低价格或利润率修复后再买入。",
-  "fair_value_range": [
-    9.0,
-    12.5
-  ],
-  "buy_zone": [
-    8.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    17.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "嘉华股份",
+    "security_status": "active",
+    "symbol": "CN:603182",
+    "ticker": "603182"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "d8188501e880a2d0393399fedfd5b7bf18c7f72bab7f95ef303eb03eef91a894"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入8.5-9.5元且无新的食品安全、治理或利润塌陷风险",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报毛利率、现金流和定增进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报或三季报显示毛利率回到13%以上、经营现金流持续覆盖净利润",
-      "action": "可提高到核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报利润是否恢复同比增长",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于15元且滚动归母净利润仍低于1.1亿元",
-      "action": "减仓或不追买",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红持续性和国资入主后的经营兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入买入观察区，赔率开始改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "显著低于基准估值中枢，可复核是否加到3%仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "接近乐观情景估值，若利润未同步修复应降低风险敞口",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入买入观察区，赔率开始改善"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "显著低于基准估值中枢，可复核是否加到3%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "接近乐观情景估值，若利润未同步修复应降低风险敞口"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报毛利率、现金流和定增进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报利润是否恢复同比增长"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红持续性和国资入主后的经营兑现"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "大豆蛋白收入增速和毛利率",
-    "综合毛利率是否回到13%以上",
-    "经营活动现金流净额与归母净利润匹配度",
-    "定增注册、发行价格和土地集团最终持股比例",
-    "分红金额和分红率是否由经营现金流支撑"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

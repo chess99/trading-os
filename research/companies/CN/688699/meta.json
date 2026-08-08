@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688699",
-  "market": "CN",
-  "ticker": "688699",
-  "name": "明微电子",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "明微电子处在LED显示/照明驱动芯片周期修复阶段，2026Q1收入和利润显著改善，但业务护城河中等偏弱、利润波动大，2026-07-17收盘价51.30元已隐含较强复苏预期，当前安全边际不足，适合观察而非追高买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    35,
-    45
-  ],
-  "buy_zone": [
-    28,
-    36
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "明微电子",
+    "security_status": "active",
+    "symbol": "CN:688699",
+    "ticker": "688699"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f1ac8f069f166226dd62d80403a5af85bf3c3a3c74a04ef24a03ca19d2e5593e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于36元，且2026H1扣非归母净利润持续为正、毛利率不低于23.5%时，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、毛利率、库存和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若2026年收入运行率达到9亿元以上、TTM扣非归母净利润达到8000万元以上、经营现金流同步改善，可加至小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证Q1复苏是否延续到淡旺季切换。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于55元且TTM PE仍高于80倍，或2026H2收入/毛利率环比转弱，应降至零仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期盈利中枢和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入买入区上沿，需要结合半年报验证是否有安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入悲观情景价值区，可重新评估是否出现深度价值机会。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "接近乐观情景估值，若利润未同步兑现则风险收益不佳。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入买入区上沿，需要结合半年报验证是否有安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入悲观情景价值区，可重新评估是否出现深度价值机会。"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "接近乐观情景估值，若利润未同步兑现则风险收益不佳。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、毛利率、库存和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证Q1复苏是否延续到淡旺季切换。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期盈利中枢和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

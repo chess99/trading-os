@@ -1,106 +1,115 @@
 {
-  "symbol": "CN:300503",
-  "market": "CN",
-  "ticker": "300503",
-  "name": "昊志机电",
-  "company_name": "昊志机电",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "观察",
-  "current_thesis": "昊志机电受益于AI PCB加工主轴高景气，主轴业务具备细分龙头属性和较强利润弹性；但2026-07-08收盘价已按乐观情景定价，当前更适合观察而非建仓。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    52,
-    65
-  ],
-  "buy_zone": [
-    35,
-    52
-  ],
-  "sell_or_reduce_zone": [
-    75,
-    95
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "status": "active",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "昊志机电",
+    "security_status": "active",
+    "symbol": "CN:300503",
+    "ticker": "300503"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "7e6a9a8bd02232eee048cba810af248f577c89439611990b3043de601b43b0b6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_above_75",
-      "action": "不买或减仓，只保留事件型观察仓位",
-      "max_weight": 0.02,
-      "reason": "价格已反映乐观增长情景，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看主轴收入、毛利率、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_52_and_65",
-      "action": "小仓试探，等待半年报验证主轴增长和现金流",
-      "max_weight": 0.03,
-      "reason": "接近合理价格区间但仍需基本面确认"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证AI PCB主轴需求是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_42_and_52",
-      "action": "分批买入",
-      "max_weight": 0.06,
-      "reason": "进入有安全边际的买入区间"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报和股权激励目标兑现基础",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_between_35_and_42",
-      "action": "加到计划上限",
-      "max_weight": 0.08,
-      "reason": "对应较低情景估值，赔率明显改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 65.0
+      },
+      "reason": "回到合理估值上沿，启动复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 52.0
+      },
+      "reason": "进入安全边际买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入强吸引力买入区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "估值重新进入不应追高区域",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 65,
-      "reason": "回到合理估值上沿，启动复核"
-    },
-    {
-      "type": "price_below",
-      "price": 52,
-      "reason": "进入安全边际买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入强吸引力买入区间"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "估值重新进入不应追高区域"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看主轴收入、毛利率、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证AI PCB主轴需求是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报和股权激励目标兑现基础"
-    }
-  ],
-  "key_tracking_metrics": [
-    "主轴类产品收入增速和毛利率",
-    "AI PCB相关订单和扩产进度",
-    "机器人及商业航天业务收入占比",
-    "经营现金流净额/归母净利润",
-    "应收账款、应收票据和存货周转",
-    "资产减值和信用减值金额",
-    "资本开支和新增产能利用率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

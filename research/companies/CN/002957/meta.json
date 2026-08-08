@@ -1,108 +1,105 @@
 {
-  "symbol": "CN:002957",
-  "market": "CN",
-  "ticker": "002957",
-  "name": "科瑞技术",
-  "company_name": "深圳科瑞技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "科瑞技术具备移动终端、新能源、精密零部件和半导体/光模块高精度设备的真实工程能力，但2026-07-13约44元附近价格已提前反映较强成长预期。合理价值约28-36元，30元以下才有较好安全边际；若半导体/光模块设备连续放量并兑现利润，可重新上调价值区间。",
-  "quality_rating": "中上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    28,
-    36
-  ],
-  "buy_zone": [
-    24,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    60
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科瑞技术",
+    "security_status": "active",
+    "symbol": "CN:002957",
+    "ticker": "002957"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "6f5a0f5af6205faa5254b57ada2254390d020f1e951bf27812d4cc6787fb2705"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于30元，且最近一期半导体/光模块设备收入继续增长、自动化设备毛利率未明显低于30%",
-      "action": "建立观察仓",
-      "target_position": "30%",
-      "max_weight": 0.3
-    },
-    {
-      "condition": "价格低于26元，且经营现金流/归母净利润保持大于1，存货未继续异常上升",
-      "action": "加至核心候选仓",
-      "target_position": "50%",
-      "max_weight": 0.5
-    },
-    {
-      "condition": "价格高于45元，且没有新增订单、客户、产能或利润兑现证据",
-      "action": "减仓或维持极小仓位",
-      "target_position": "0%-10%",
-      "max_weight": 0.1
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "currency": "CNY",
-      "reason": "进入可买区，安全边际相对当前价格明显改善",
-      "action": "review_for_initial_buy"
-    },
-    {
-      "type": "price_below",
-      "price": 26,
-      "currency": "CNY",
-      "reason": "进入强买候选区，可用较低价格获得传统业务和新业务期权",
-      "action": "review_for_add"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "currency": "CNY",
-      "reason": "超过降仓复核区，价格开始显著依赖乐观成长兑现",
-      "action": "review_for_reduce"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "复核2026年半年报，重点看半导体/光模块设备收入、毛利率、存货和经营现金流",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证新业务放量和利润质量的第一组关键证据",
-      "action": "更新收入结构、利润质量和估值区间"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "复核2026年三季报，确认新业务是否连续放量",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可判断半导体/光模块设备增长是否具备连续性",
-      "action": "决定是否从观察转为买入或继续等待"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "复核2026年年报，重新计算正常化利润和合理价值区间",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整评估全年收入结构、现金流、客户集中度和资本配置",
-      "action": "更新完整深度报告"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入可买区，安全边际相对当前价格明显改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入强买候选区，可用较低价格获得传统业务和新业务期权",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "超过降仓复核区，价格开始显著依赖乐观成长兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "半导体及光模块设备收入及占比",
-    "海外半导体和光模块客户收入及客户数量",
-    "自动化设备毛利率",
-    "出口收入占比和出口毛利率",
-    "存货账面价值及存货跌价准备",
-    "经营现金流/归母净利润",
-    "前五大客户销售占比",
-    "研发费用率及光芯片精密耦合、六自由度亚微米堆叠、晶圆自动测试等项目进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

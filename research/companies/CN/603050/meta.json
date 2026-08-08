@@ -1,67 +1,86 @@
 {
-  "symbol": "CN:603050",
-  "ticker": "603050",
-  "name": "科林电气",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "科林电气受益于十五五电网投资、配网升级、数据中心供配电和海信入主后的潜在协同，但2026Q1利润和现金流明显承压，说明议价力和盈利韧性尚未验证；当前估值缺少足够安全边际，等待中报确认毛利率、订单和现金流改善。",
-  "fair_value_range": [
-    18,
-    23
-  ],
-  "buy_zone": [
-    0,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科林电气",
+    "security_status": "active",
+    "symbol": "CN:603050",
+    "ticker": "603050"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "40dca7ef64d977e5136aa988f340015280fc860c1fd454d01a1dbd537b09f879"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价低于16元且最新财报显示毛利率企稳、经营现金流改善或高质量订单增长时建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证收入、毛利率、经营现金流、订单和海信协同进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若2026H1或2026Q3确认利润恢复、数据中心订单持续增长且经营现金流转正，可提高仓位但仍按中小市值设备股控制风险。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年净利润能否回到2.3亿元以上。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若毛利率继续下行、经营现金流连续两个季度显著为负或海信协同未体现为订单，不新增仓位并考虑退出。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入买入观察区，需要结合中报毛利率、订单和现金流确认是否具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过乐观情景估值上沿，若利润恢复和数据中心订单未同步兑现，应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入买入观察区，需要结合中报毛利率、订单和现金流确认是否具备安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 25,
-      "reason": "超过乐观情景估值上沿，若利润恢复和数据中心订单未同步兑现，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证收入、毛利率、经营现金流、订单和海信协同进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年净利润能否回到2.3亿元以上。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,108 +1,105 @@
 {
-  "symbol": "CN:300447",
-  "market": "CN",
-  "ticker": "300447",
-  "name": "全信股份",
-  "company_name": "南京全信传输科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备军工光电传输和高速网络配套壁垒，但2025年收入下滑、2026Q1利润继续承压，13.12元已隐含较强复苏预期。除非订单和利润恢复得到中报/三季报验证，否则当前价格不具备足够安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    8.0,
-    11.0
-  ],
-  "buy_zone": [
-    0,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "全信股份",
+    "security_status": "active",
+    "symbol": "CN:300447",
+    "ticker": "300447"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1e98f4cf1ac72fc407b3eeab12ef698bd466649b35f0994b1346d84d4c9b4fb0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于11.0元且未见2026年订单/利润恢复证据",
-      "action": "不新开仓，仅观察",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、毛利率、应收账款、经营现金流和可转债进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至8.5元以下，且最近一期收入同比转正或扣非净利润同比改善",
-      "action": "试探性建仓1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断订单恢复是否足以支撑全年利润修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至7.5元以下，且应收账款未继续恶化、经营现金流TTM为正",
-      "action": "可提高到3%以内",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证归母净利润是否恢复至8000万元以上",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "2026年收入恢复到9亿元以上、归母净利润恢复到8000万元以上、经营现金流连续为正",
-      "action": "重新评估是否提高到5%以内",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入需结合基本面验证的小仓位观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于13.5元但利润仍低于8000万元或订单未改善",
-      "action": "已有持仓降至观察仓或退出",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "接近资产收益法给出的防守买点",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "估值重新高于当前合理区间，需要复核是否过度反映复苏",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "currency": "CNY",
-      "reason": "进入需结合基本面验证的小仓位观察区"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "currency": "CNY",
-      "reason": "接近资产收益法给出的防守买点"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "currency": "CNY",
-      "reason": "估值重新高于当前合理区间，需要复核是否过度反映复苏"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、毛利率、应收账款、经营现金流和可转债进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断订单恢复是否足以支撑全年利润修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证归母净利润是否恢复至8000万元以上"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款/营业收入",
-    "存货余额及存货跌价准备",
-    "高性能传输线缆和组件毛利率",
-    "光电系统和FC产品毛利率",
-    "前五大客户收入占比",
-    "已签订未履约合同对应收入",
-    "可转债募投项目进展和摊薄影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

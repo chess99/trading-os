@@ -1,124 +1,87 @@
 {
-  "symbol": "CN:002138",
-  "market": "CN",
-  "ticker": "002138",
-  "currency": "CNY",
-  "name": "顺络电子",
-  "company_name": "顺络电子",
-  "priority": "P2",
-  "status": "active",
-  "analyst": "codex-subagent-002138",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "last_researched": "2026-07-08",
-  "research_type": "initial",
-  "current_rating": "watch",
-  "current_thesis": "顺络电子是国内高质量被动元件平台，受益于汽车电子、AI服务器和国产替代，但2026Q1利润承压且现价约61元已透支乐观预期，当前以观察为主。",
-  "quality_rating": "A-",
-  "valuation_rating": "expensive",
-  "current_price": 61.03,
-  "current_market_cap_cny": 49209609144.62,
-  "fair_value_range": [
-    42,
-    50
-  ],
-  "buy_below_cny": 38,
-  "buy_zone": [
-    32,
-    38
-  ],
-  "strong_buy_below_cny": 32,
-  "do_not_chase_above_cny": 55,
-  "sell_or_reduce_zone": [
-    55,
-    70
-  ],
-  "max_weight": 0.05,
-  "first_position_weight": 0.01,
-  "position_plan": [
-    {
-      "condition": "price <= 32",
-      "action": "strong_buy",
-      "target_weight": 0.05,
-      "max_weight": 0.05
-    },
-    {
-      "condition": "32 < price <= 38",
-      "action": "buy",
-      "target_weight": 0.04,
-      "max_weight": 0.04
-    },
-    {
-      "condition": "38 < price <= 50",
-      "action": "watch_or_hold",
-      "target_weight": 0.02,
-      "max_weight": 0.02
-    },
-    {
-      "condition": "price > 55",
-      "action": "do_not_chase_or_reduce",
-      "target_weight": 0.01,
-      "max_weight": 0.01
-    }
-  ],
-  "confidence": "medium",
-  "as_of": "2026-07-08",
-  "source_snapshot": {
-    "as_of": "2026-07-06",
-    "price": 61.03,
-    "market_cap_cny": 49209609144.62,
-    "pe_ttm": 46.946,
-    "pb": 7.745,
-    "turnover_cny": 3435601358.0,
-    "turnover_rate_pct": 7.29251,
-    "source": "Sina Market_Center.getHQNodeData hs_a"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "顺络电子",
+    "security_status": "active",
+    "symbol": "CN:002138",
+    "ticker": "002138"
   },
-  "tags": [
-    "电子元器件",
-    "被动元件",
-    "片式电感",
-    "汽车电子",
-    "AI服务器",
-    "消费电子"
-  ],
-  "key_risks": [
-    "估值透支",
-    "消费电子周期",
-    "原材料价格",
-    "AI服务器收入占比低",
-    "存货与应收上升",
-    "资本开支回报不确定"
-  ],
-  "review_triggers": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "7c9caf683086c8041c961a637a5a75cc1ff19e0f5af4b648bedc7e8367aee5dd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "等待2026年半年报验证增长质量和AI/汽车电子兑现程度",
-      "action": "2026H1财报披露后复核毛利率、净利润、现金流、数据中心收入占比、应收账款和存货"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 38,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
       "reason": "进入安全边际买入价",
-      "action": "复核基本面后考虑加仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 32,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
       "reason": "进入强吸引力买入价",
-      "action": "若竞争力未破坏，考虑加至上限"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 55,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
       "reason": "高于不应追高价",
-      "action": "不新增或逐步降仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-08"
-  ,
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

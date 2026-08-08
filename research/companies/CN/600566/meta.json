@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:600566",
-  "ticker": "600566",
-  "name": "济川药业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "济川药业是高现金、高分红、低负债的中药品牌现金牛，但2025年至2026Q1核心单品仍在下滑；小儿豉翘清热颗粒进入2026版国家基药目录提供真实修复期权，当前价格处于合理价值区间中部，安全边际不足，需观察基药目录实施后的放量和费用率变化。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    20,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    38
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "济川药业",
+    "security_status": "active",
+    "symbol": "CN:600566",
+    "ticker": "600566"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "943087ecadb6a575492e7c2e470e27c2e3f4fb252a73744060bba8cf7591d710"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于23元，且最近一期财报显示归母净利润降幅收窄、经营现金流/归母净利润不低于0.8倍",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "复核2026年半年报，重点看小儿豉翘、清热解毒类和儿科类收入及现金流质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于21元，且小儿豉翘进入基药目录后的销售未出现价格失控或费用率大幅反弹",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，观察基药目录实施后的初步基层放量和费用率变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于34元且收入或利润尚未连续两个季度恢复增长",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及2027年一季报，判断利润是否真正触底恢复",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入初始买入区，需要复核安全边际和最新财报质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入深度价值区，需要判断是否为基本面恶化导致的价值陷阱",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "超过合理价值上沿，需要检查是否已有基本面上修证据",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入初始买入区，需要复核安全边际和最新财报质量"
-    },
-    {
-      "type": "price_below",
-      "price": 21,
-      "reason": "进入深度价值区，需要判断是否为基本面恶化导致的价值陷阱"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "超过合理价值上沿，需要检查是否已有基本面上修证据"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-30",
-      "reason": "复核2026年半年报，重点看小儿豉翘、清热解毒类和儿科类收入及现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，观察基药目录实施后的初步基层放量和费用率变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及2027年一季报，判断利润是否真正触底恢复"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

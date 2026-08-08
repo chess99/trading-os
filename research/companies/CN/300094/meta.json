@@ -1,77 +1,86 @@
 {
-  "symbol": "CN:300094",
-  "ticker": "300094",
-  "name": "国联水产",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "国联水产具备水产加工、全球采购和预制菜渠道基础，但2025年巨额亏损使净资产极薄，2026Q1仅小幅扣非盈利，现阶段更像资产负债表和毛利率修复标的；当前价格缺乏买方安全边际，等待连续扣非盈利、短债下降和质押风险缓释。",
-  "fair_value_range": [
-    1.4,
-    2.2
-  ],
-  "buy_zone": [
-    1.0,
-    1.5
-  ],
-  "sell_or_reduce_zone": [
-    2.8,
-    3.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国联水产",
+    "security_status": "active",
+    "symbol": "CN:300094",
+    "ticker": "300094"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "117dbb38b0539045f40f29acd8f9e3a7a46d38dc6c817a29b3d6aa9edcf1184f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于1.50元，且未出现新增流动性风险或大额减值预告",
-      "action": "research_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的扣非利润、毛利率、存货和短期借款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非归母净利润为正，水产食品毛利率恢复至8%以上，短期借款低于8亿元",
-      "action": "increase_after_validation",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于2.80元但扣非盈利和债务下降尚未被验证",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "进入研究型买入区间，需要复核流动性和半年报质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.8
+      },
+      "reason": "超过基准合理价值区间上沿，若无盈利修复证据应减持或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "进入研究型买入区间，需要复核流动性和半年报质量"
-    },
-    {
-      "type": "price_above",
-      "price": 2.8,
-      "reason": "超过基准合理价值区间上沿，若无盈利修复证据应减持或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的扣非利润、毛利率、存货和短期借款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认修复是否连续"
-    }
-  ],
-  "key_monitoring_items": [
-    "扣非归母净利润",
-    "水产食品毛利率",
-    "存货余额及跌价准备",
-    "短期借款和货币资金",
-    "控股股东质押比例",
-    "国内与海外收入占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

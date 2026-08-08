@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688489",
-  "market": "CN",
-  "ticker": "688489",
-  "name": "三未信安",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "三未信安是商用密码基础设施稀缺标的，云密码、金融信创、关基商密合规和抗量子密码带来中期增长空间；但当前仍处亏损修复期，费用率和应收回款尚未连续验证，22元附近安全边际不足，适合观察并等待报表确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    19.0,
-    27.0
-  ],
-  "buy_zone": [
-    0.0,
-    18.5
-  ],
-  "sell_or_reduce_zone": [
-    32.0,
-    42.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三未信安",
+    "security_status": "active",
+    "symbol": "CN:688489",
+    "ticker": "688489"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "43710bd1207d3967bac4ba1fe3c41c8bfa7e0541a12f51fcaebe561db414eb99"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于18.5元，且2026H1收入同比不低于15%、经营现金流或应收账款改善趋势延续时，建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、费用率、应收账款和云密码增长。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026全年收入超过6.5亿元、归母净利润转正，且云密码或金融客户收入继续增长时，提高至核心小仓。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报订单兑现、现金流和全年转正概率。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1收入低于3.0亿元，或应收账款重新明显恶化，或商誉继续大额减值时，维持零仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，确认亏损修复、并购整合和商誉风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
+      "reason": "进入买入观察区，估值对亏损修复失败留出较好缓冲。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "进入乐观情景估值区，若利润和现金流尚未兑现应减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.5,
-      "reason": "进入买入观察区，估值对亏损修复失败留出较好缓冲。"
-    },
-    {
-      "type": "price_above",
-      "price": 32.0,
-      "reason": "进入乐观情景估值区，若利润和现金流尚未兑现应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、费用率、应收账款和云密码增长。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报订单兑现、现金流和全年转正概率。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，确认亏损修复、并购整合和商誉风险。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

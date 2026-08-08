@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:605507",
-  "market": "CN",
-  "ticker": "605507",
-  "name": "国邦医药",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "国邦医药是多品种原料药、中间体和动物保健品制造平台，资产负债表稳健、分红友好、全球客户与工程化制造能力构成中长期价值底座；但2026Q1收入和利润同比下滑，当前16元附近仅处于合理价值区间内，安全边际不足，宜观察等待15元以下或业绩恢复证据。",
-  "fair_value_range": [
-    15.0,
-    18.5
-  ],
-  "buy_zone": [
-    13.5,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    20.5,
-    23.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国邦医药",
+    "security_status": "active",
+    "symbol": "CN:605507",
+    "ticker": "605507"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "2307e7cd9f27ecc413173776dd51d3f0150dc2daebcd4a690013e2bf217b16d8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于15.0元，且2026H1或后续季度扣非净利润同比降幅收窄至10%以内，无重大环保、安全生产或质量合规负面事件",
-      "action": "build_watch_position",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非净利润、毛利率、经营现金流和存货应收变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于13.5元，且利润下滑主要来自周期价格而非客户流失、质量事故或资本开支失控",
-      "action": "add",
-      "max_weight": 0.07
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润下滑是否收窄以及全年盈利中枢",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于20.5元且TTM归母净利润仍低于8.5亿元，或毛利率继续下行",
-      "action": "trim",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年经营计划，重新评估ROE、分红与合理估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入初始买入区间，需要复核2026H1/Q3利润和现金流是否企稳",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入高安全边际区间，若基本面无永久性恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.5
+      },
+      "reason": "高于基准合理价值上沿，需要确认利润是否上台阶，否则应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入初始买入区间，需要复核2026H1/Q3利润和现金流是否企稳"
-    },
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入高安全边际区间，若基本面无永久性恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 20.5,
-      "reason": "高于基准合理价值上沿，需要确认利润是否上台阶，否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非净利润、毛利率、经营现金流和存货应收变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润下滑是否收窄以及全年盈利中枢"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年经营计划，重新评估ROE、分红与合理估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

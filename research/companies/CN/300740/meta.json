@@ -1,95 +1,115 @@
 {
-  "symbol": "CN:300740",
-  "ticker": "300740",
-  "name": "水羊股份",
-  "exchange": "SZSE",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "水羊股份的高端化和全球品牌矩阵正在改善收入结构，但销售费用率仍高、2026Q1利润同比下滑，当前约55倍TTM PE已反映较多预期；等待价格回到16元以下或财报证明费用率下降和扣非利润恢复后再考虑小仓位。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    16.0,
-    21.0
-  ],
-  "buy_zone": [
-    13.5,
-    16.0
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    28.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "水羊股份",
+    "security_status": "active",
+    "symbol": "CN:300740",
+    "ticker": "300740"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "5a5696dbd184eedf2272a7f50f34e588a22817e1ef0bc2a448211a1588f81504"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于16元，且最近一期财报显示销售费用率环比或同比下降、扣非归母净利润恢复同比正增长",
-      "action": "观察仓或小仓位试错",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看销售费用率、扣非净利增速、自有品牌收入占比和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于13.5元，且自有品牌收入占比继续提升、存货和商誉未出现明显恶化",
-      "action": "可提高至研究组合核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认高端化是否开始转化为利润弹性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24元但TTM归母净利润仍低于2亿元",
-      "action": "不追高，已有仓位减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和商誉减值、可转债转股、股权质押变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入公平价值下沿并具备初步安全边际，可结合最新财报复核买入条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入深度安全边际区间，若基本面未恶化应重新评估仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过基准估值区间，若利润兑现不足则风险收益比恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "接近乐观情景估值，除非净利率和自有高端品牌增长显著超预期，否则应卖出或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入公平价值下沿并具备初步安全边际，可结合最新财报复核买入条件"
-    },
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入深度安全边际区间，若基本面未恶化应重新评估仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "超过基准估值区间，若利润兑现不足则风险收益比恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "接近乐观情景估值，除非净利率和自有高端品牌增长显著超预期，否则应卖出或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看销售费用率、扣非净利增速、自有品牌收入占比和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认高端化是否开始转化为利润弹性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和商誉减值、可转债转股、股权质押变化"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "销售费用率是否下降到48%以下",
-    "扣非归母净利润是否恢复同比正增长",
-    "自有品牌收入占比是否继续提升",
-    "EDB/RV/PA收入和利润贡献",
-    "存货周转与资产减值损失",
-    "商誉减值迹象",
-    "控股股东质押比例",
-    "水羊转债转股进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

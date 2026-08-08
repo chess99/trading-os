@@ -1,92 +1,96 @@
 {
-  "symbol": "CN:000419",
-  "market": "CN",
-  "ticker": "000419",
-  "name": "通程控股",
-  "company_name": "通程控股",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "通程控股是区域零售、商业物业和金融资产叠加的低增长折价资产股；当前吸引力主要来自低于净资产的估值、长沙银行股权、金信典当利润和长银五八股权转让现金回收，但主业成长性不足，适合等待更深折价后小仓位配置。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "slightly_undervalued",
-  "fair_value_range": [
-    5.2,
-    6.2
-  ],
-  "buy_zone": [
-    4.2,
-    4.6
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    7.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "通程控股",
+    "security_status": "active",
+    "symbol": "CN:000419",
+    "ticker": "000419"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "b4c0e90455bb7bc16779585bc3efc9cdb250a4e4600815090deccfc0012c82c9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.60元，且2026年中报未显示主业现金流继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "低于买入区间上沿，资产折价开始具备安全边际，但主业低增长限制仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、长银五八股权转让收益确认、经营现金流和投资收益结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.20元，长银五八股权转让收益和现金回收按公告落地",
-      "action": "加仓至低配",
-      "max_weight": 0.03,
-      "reason": "价格接近悲观情景上沿，且资产端兑现降低估值折价风险"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断一次性收益之外的主业盈利和现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.50元，扣非利润和经营现金流未同步改善",
-      "action": "减仓或退出",
-      "max_weight": 0.005,
-      "reason": "资产折价修复基本完成，继续持有需要经营改善的新证据"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入初始买入区间，复核中报与现金流后可建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "达到更强安全边际，可在资产兑现正常时加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "接近减仓区间，若经营未改善应锁定资产折价修复收益",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入初始买入区间，复核中报与现金流后可建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "达到更强安全边际，可在资产兑现正常时加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "接近减仓区间，若经营未改善应锁定资产折价修复收益"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、长银五八股权转让收益确认、经营现金流和投资收益结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断一次性收益之外的主业盈利和现金流趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "投资收益中长沙银行分红金额",
-    "金信典当净利润和风险暴露",
-    "长银五八股权转让价款到账及税后收益",
-    "商业零售毛利率和费用率",
-    "酒店入住率和平均房价",
-    "分红率和现金用途"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

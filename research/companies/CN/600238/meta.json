@@ -1,92 +1,115 @@
 {
-  "symbol": "CN:600238",
-  "market": "CN",
-  "ticker": "600238",
-  "name": "*ST椰岛",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "当前价格4.11元已经较充分反映撤销退市风险警示和经营修复预期，但公司仍存在持续经营重大不确定性、连续扣非亏损、诉讼债务、关联交易追认和现金流不稳等问题。适合作为高风险困境反转观察标的，不适合在当前价格建立普通消费股仓位。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.8,
-    2.8
-  ],
-  "buy_zone": [
-    1.5,
-    2.2
-  ],
-  "sell_or_reduce_zone": [
-    3.2,
-    4.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST椰岛",
+    "security_status": "active",
+    "symbol": "CN:600238",
+    "ticker": "600238"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "f7babbef0e49fd98721e7b51b924c4f65ebcb39d75b6e4ee898341dbd4522211"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于3.2元或退市/其他风险警示仍未清晰解除",
-      "action": "不买入，已有仓位降至观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报，重点看关联客户收入、经营现金流、短债和亏损收窄质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至1.5-2.2元且交易所撤销退市风险警示或经营现金流改善",
-      "action": "仅可小仓试错，等待半年报和三季报验证",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报，验证收入增长是否持续且现金流改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于1.5元且未出现终止上市、现金流断裂或审计意见恶化",
-      "action": "可作为困境反转事件仓分批建立",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报审计意见、内控意见、风险警示状态和持续经营段落是否消除",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
+      "reason": "进入有安全边际观察区，但仍需配合退市风险缓释和现金流改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "进入强吸引力事件仓区间，前提是未触发终止上市或持续经营恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.2
+      },
+      "reason": "价格高于合理区间上沿，缺少新增证据时不应追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "接近或超过乐观修复交易区，已有仓位应考虑降风险",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.2,
-      "reason": "进入有安全边际观察区，但仍需配合退市风险缓释和现金流改善"
-    },
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "进入强吸引力事件仓区间，前提是未触发终止上市或持续经营恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 3.2,
-      "reason": "价格高于合理区间上沿，缺少新增证据时不应追高"
-    },
-    {
-      "type": "price_above",
-      "price": 4.0,
-      "reason": "接近或超过乐观修复交易区，已有仓位应考虑降风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报，重点看关联客户收入、经营现金流、短债和亏损收窄质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报，验证收入增长是否持续且现金流改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报审计意见、内控意见、风险警示状态和持续经营段落是否消除"
-    }
-  ],
-  "notes": [
-    "2026-07-20新浪行情显示收盘价4.11元，按4.482亿股估算市值约18.42亿元。",
-    "2025年审计报告为带持续经营重大不确定性及强调事项段的无保留意见。",
-    "公司已申请撤销退市风险警示，但截至2026-05-25公告仍处于补充材料阶段，且预计继续实施其他风险警示。",
-    "2026半年度业绩预告预计归母净利润-730万元、扣非归母净利润-470万元，说明扭亏尚未稳定。",
-    "2026年7月公司披露追认日常关联交易、预计2026年度关联销售不超过8000万元，收入质量需继续跟踪。",
-    "行业规模、非上市竞品数据和终端动销未独立核验，置信度低。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

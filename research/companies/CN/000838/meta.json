@@ -1,81 +1,86 @@
 {
-  "symbol": "CN:000838",
-  "market": "CN",
-  "ticker": "000838",
-  "name": "*ST发展",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "不买/回避：公司处于退市风险警示和其他风险警示状态，2025年归母净资产为负且扣后收入低于3亿元，2026年仍预亏；预重整尚未正式受理，债务逾期、失信执行、担保和存货减值风险未解除，当前2.16元价格缺乏安全边际。",
-  "fair_value_range": [
-    0.55,
-    1.15
-  ],
-  "buy_zone": [
-    0.3,
-    0.6
-  ],
-  "sell_or_reduce_zone": [
-    1.4,
-    2.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST发展",
+    "security_status": "active",
+    "symbol": "CN:000838",
+    "ticker": "000838"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "103fe1b14ac8d31d05554c0eef600812778b50eac98ae4412d793f6c305604c3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "预重整未正式受理、退市风险和债务风险未解除",
-      "action": "不买，保持零仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-08"
+      },
+      "reason": "债权申报截止后复核债权规模、重整受理和投资人报名情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "法院正式受理重整且披露合格产业投资人，净资产转正路径和股本稀释清晰，价格低于0.80元",
-      "action": "可建立事件观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核净资产、扣后收入、现金链和退市风险指标",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "重整计划获法院批准并执行，退市风险解除路径明确，价格低于1.00元",
-      "action": "可提升至小仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.6
+      },
+      "reason": "进入风险调整买入观察区，但仍需重整实质进展确认",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于1.40元但重整受理、投资人、债权和稀释方案未明朗",
-      "action": "不追高，已有仓位减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.4
+      },
+      "reason": "高于风险调整合理价值上沿，未解除退市风险前不应追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.6,
-      "reason": "进入风险调整买入观察区，但仍需重整实质进展确认"
-    },
-    {
-      "type": "price_above",
-      "price": 1.4,
-      "reason": "高于风险调整合理价值上沿，未解除退市风险前不应追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-08",
-      "reason": "债权申报截止后复核债权规模、重整受理和投资人报名情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核净资产、扣后收入、现金链和退市风险指标"
-    }
-  ],
-  "notes": [
-    "2026-07-17收盘价2.16元，总市值23.77亿元，来源为腾讯行情接口。",
-    "2025年经审计归母净资产-2.00亿元、扣后营业收入2.82亿元，已触及退市风险警示。",
-    "2026-07-06法院完成预重整备案登记，但不等于正式受理重整申请。",
-    "2026-06公告显示控股子公司融资逾期且公司及控股子公司被纳入失信被执行人名单并限制消费。",
-    "当前决策为不买/回避，第一笔仓位为0。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

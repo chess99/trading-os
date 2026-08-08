@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000401",
-  "market": "CN",
-  "ticker": "000401",
-  "name": "金隅冀东",
-  "company_name": "金隅冀东",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "京津冀水泥熟料龙头处于行业底部亏损期，账面资产折价显著，但需要2026年中报和三季报验证价格协同、亏损收窄与经营现金流改善；适合小仓跟踪，不适合在盈利修复前重仓。",
-  "quality_rating": "B-/中低",
-  "valuation_rating": "B+/偏低估",
-  "fair_value_range": [
-    4.2,
-    5.2
-  ],
-  "buy_zone": [
-    3.2,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    6.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金隅冀东",
+    "security_status": "active",
+    "symbol": "CN:000401",
+    "ticker": "000401"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "486bcad303b7abd133eab743e101bb68283dc0a9c1af2709ca4ec5ddb8072404"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格位于3.20-3.50元且2026年中报亏损明显收窄、京津冀水泥价格维持回升",
-      "action": "建立或增加观察仓",
-      "max_weight": 0.02,
-      "reason": "估值处于深度折价区，但需要利润和价格证据确认周期底部修复"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报亏损收窄、现金流和京津冀价格执行情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格位于3.50-3.60元且尚未披露中报改善证据",
-      "action": "仅保留首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格有安全边际但基本面仍处亏损期，不适合提前重仓"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及旺季价格协同是否兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度确认吨毛利和经营现金流改善",
-      "action": "把组合上限提高至策略仓",
-      "max_weight": 0.03,
-      "reason": "盈利修复得到验证后，低P/B折价收敛概率提高"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入更高安全边际买入区，需同步复核中报、价格和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "接近减仓区，若盈利尚未确认修复，应降低仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.9
+      },
+      "reason": "触发价格和逻辑复核，若基本面未改善则停止加仓并考虑退出",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入更高安全边际买入区，需同步复核中报、价格和现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "reason": "接近减仓区，若盈利尚未确认修复，应降低仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 2.9,
-      "reason": "触发价格和逻辑复核，若基本面未改善则停止加仓并考虑退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报亏损收窄、现金流和京津冀价格执行情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及旺季价格协同是否兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "京津冀P.O42.5水泥价格",
-    "熟料价格及水泥熟料价差",
-    "季度水泥熟料销量",
-    "吨收入和吨毛利",
-    "经营活动现金流净额",
-    "有息负债和短债规模",
-    "资产负债率",
-    "房地产新开工和施工面积",
-    "基建投资实物工作量",
-    "错峰生产和产能置换政策执行"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

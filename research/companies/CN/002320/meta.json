@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:002320",
-  "market": "CN",
-  "ticker": "002320",
-  "name": "海峡股份",
-  "company_name": "海峡股份",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海峡股份是琼州海峡客滚运输和海南进出岛港口服务的稀缺区域垄断资产，受益于海南自贸港封关、车客流增长和港航一体化，但当前股价已反映较多乐观预期，需等待更低价格或2026年利润兑现后再买入。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    4.2,
-    5.4
-  ],
-  "buy_zone": [
-    3.6,
-    4.6
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海峡股份",
+    "security_status": "active",
+    "symbol": "CN:002320",
+    "ticker": "002320"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "f17167ff3d5504bc737d21414a124507052395b1e08590bedb1057ab857ee495"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于4.60元，且最近一季琼州海峡车客流同比为正、归母利润未继续下滑",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格开始接近合理价值区间，但仍需确认流量能转化为归母利润"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看Q2利润、车客流、油价成本和渤海湾整合",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于4.20元，且油价稳定、票价政策无负面变化",
-      "action": "加至核心观察仓",
-      "max_weight": 0.02,
-      "reason": "区域垄断资产进入更有安全边际的位置"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认旺季后归母利润是否维持",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.60元，且海南自贸港货客流兑现、分红率维持在40%以上",
-      "action": "加至上限仓位",
-      "max_weight": 0.03,
-      "reason": "现金回报、政策期权和估值安全边际同时具备吸引力"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和分红，判断封关后全年经营兑现程度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于6.80元，且TTM归母净利润未超过3.0亿元",
-      "action": "不追高或减仓",
-      "max_weight": 0.01,
-      "reason": "估值重新进入高预期区，赔率不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入首笔观察仓买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入合理价值区间下半段，可复核是否加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "若利润未同步上修，估值过高，应考虑减持或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入首笔观察仓买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入合理价值区间下半段，可复核是否加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "若利润未同步上修，估值过高，应考虑减持或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看Q2利润、车客流、油价成本和渤海湾整合"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认旺季后归母利润是否维持"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和分红，判断封关后全年经营兑现程度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "琼州海峡经营港口进出口客流量",
-    "琼州海峡经营港口进出口车流量",
-    "货车量和新能源车占比",
-    "单车收入和单客收入",
-    "船舶利用率和停航天数",
-    "燃油单价和单位燃料成本",
-    "毛利率",
-    "归母净利率",
-    "少数股东损益占比",
-    "经营现金流",
-    "应收账款周转",
-    "中远海运客运并表收入和利润贡献",
-    "徐闻港整合进展",
-    "海南自贸港二线口岸通关效率",
-    "年度分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

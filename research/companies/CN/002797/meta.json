@@ -1,142 +1,151 @@
 {
-  "symbol": "CN:002797",
-  "market": "CN",
-  "ticker": "002797",
-  "name": "第一创业",
-  "company_name": "第一创业证券股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "第一创业具备固定收益、资管和基金平台特色，2025年收入创高、2026Q1利润高增，但证券业务强周期、ROE仍不高，当前约1.5倍PB已反映部分修复预期；等待5.60元以下再分层买入更合适。",
-  "quality_rating": "中",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    5.8,
-    6.8
-  ],
-  "buy_zone": [
-    5.2,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    8.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "第一创业",
+    "security_status": "active",
+    "symbol": "CN:002797",
+    "ticker": "002797"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e875c4d61c34854ccd5f53f2d31c26035cfd3e334465089c05096ee628c16c16"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在6.20-6.80元且未出现ROE持续上行证据",
-      "action": "观察或维持轻仓，不新增",
-      "target_weight": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价跌破5.60元，且行业成交额、两融余额、公司经纪和资管收入未恶化",
-      "action": "试探建仓",
-      "target_weight": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价跌破5.20元，且无监管处罚、重大自营亏损或投资逻辑破坏",
-      "action": "提高到中等观察仓",
-      "target_weight": "3%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于7.50元但ROE仍未稳定高于6.5%",
-      "action": "减仓并等待估值回落",
-      "target_weight": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "currency": "CNY",
-      "reason": "进入初始可买区，约对应1.3倍2026E PB",
-      "action": "进入可买区，复核行业景气和季度收入结构"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "currency": "CNY",
-      "reason": "进入更高安全边际区，约对应1.2倍2026E PB",
-      "action": "进入安全边际区，若基本面未破坏可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "currency": "CNY",
-      "reason": "超过减仓观察区，若ROE未改善则风险收益不佳",
-      "action": "检查是否高估，ROE未改善则减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "currency": "CNY",
-      "reason": "进入明显高估区，需要强制复核卖出或大幅减仓",
-      "action": "强制复核卖出或大幅减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "复核2026年半年报或年度报告披露后的收入结构和ROE变化",
-      "condition": "发布2026年半年报或年度报告"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核单季归母净利润是否同比下滑超过30%",
-      "condition": "单季归母净利润同比下滑超过30%"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核加权ROE是否连续两个季度低于5%",
-      "condition": "加权ROE连续两个季度低于5%"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核固定收益、自营投资或资管业务是否出现重大亏损",
-      "condition": "固定收益、自营投资或资管业务出现重大亏损"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核是否收到重大监管处罚或投行业务资格受限",
-      "condition": "收到重大监管处罚或投行业务资格受限"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核行业股基日均成交额或两融余额是否连续两个月明显下行",
-      "condition": "行业股基日均成交额或两融余额连续两个月明显下行"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "复核北京国管股东协同、管理层变动或资本补充计划的兑现情况",
-      "condition": "北京国管股东协同、管理层变动或资本补充计划发生重大变化"
+      "trigger_id": "legacy-review-7",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入初始可买区，约对应1.3倍2026E PB",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入更高安全边际区，约对应1.2倍2026E PB",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "超过减仓观察区，若ROE未改善则风险收益不佳",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "进入明显高估区，需要强制复核卖出或大幅减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "行业股基日均成交额",
-    "两融余额和公司信用业务收入",
-    "经纪业务手续费净收入",
-    "资产管理及基金管理业务手续费净收入",
-    "投资收益及公允价值变动收益",
-    "固定收益业务收入和债券交易/销售排名",
-    "归母净资产、BVPS和加权ROE",
-    "现金分红率和每股分红"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

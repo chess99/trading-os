@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:001386",
-  "market": "CN",
-  "ticker": "001386",
-  "name": "马可波罗",
-  "company_name": "马可波罗",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "马可波罗是建筑陶瓷龙头，品牌、经销网络、现金流和资产负债表质量优于多数同业；但地产后周期需求仍在收缩，2026Q1收入利润继续下滑，当前14.33元缺少足够安全边际，暂列watch，等待11.5元以下或半年报验证毛利率、应收和现金流韧性后再考虑小仓买入。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_expensive",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    9.5,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    22.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "马可波罗",
+    "security_status": "active",
+    "symbol": "CN:001386",
+    "ticker": "001386"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "2d9258a418f28b251d893a62846eec39d42bbf2f9a562577cbf6daff3bce86c7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current_price_above_buy_zone_or_no_margin_of_safety",
-      "action": "watch_without_new_position",
-      "max_weight": 0.0,
-      "reason": "2026-07-10 price 14.33 CNY is within fair value range but above the preferred buy zone, while revenue and profit are still declining."
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "Review after 2026 interim report for revenue decline, gross margin, operating cash flow, receivables and inventory.",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_at_or_below_12_and_receivables_cash_flow_stable",
-      "action": "open_tracking_position",
-      "max_weight": 0.005,
-      "reason": "A small tracking position is acceptable only when price approaches the lower half of fair value and cash collection remains healthy."
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "Review after 2026 third-quarter report for whether Q1 weakness has narrowed and whether valuation assumptions still hold.",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_at_or_below_11_5_and_2026_results_confirm_margin_and_cash_flow_resilience",
-      "action": "accumulate_to_small_position",
-      "max_weight": 0.03,
-      "reason": "A larger but still non-core position requires both valuation discount and evidence that the brand/channel moat is holding through the property downcycle."
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "Review for first tracking buy if receivables, inventory and gross margin have not deteriorated.",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "Enter preferred buy zone; reassess whether margin of safety is sufficient for a 1%-3% small position.",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "Above the fair value range upper half; reduce unless earnings recovery has been confirmed.",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "Review for first tracking buy if receivables, inventory and gross margin have not deteriorated."
-    },
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "Enter preferred buy zone; reassess whether margin of safety is sufficient for a 1%-3% small position."
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "Above the fair value range upper half; reduce unless earnings recovery has been confirmed."
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "Review after 2026 interim report for revenue decline, gross margin, operating cash flow, receivables and inventory."
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "Review after 2026 third-quarter report for whether Q1 weakness has narrowed and whether valuation assumptions still hold."
-    }
-  ],
-  "key_tracking_metrics": [
-    "quarterly_revenue_yoy",
-    "gross_margin",
-    "operating_cash_flow_to_net_profit",
-    "accounts_receivable_balance",
-    "top_five_receivables_concentration",
-    "inventory_balance_and_write_downs",
-    "capacity_utilization",
-    "dealer_count_and_channel_health",
-    "engineering_sales_mix",
-    "glazed_tile_average_selling_price"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

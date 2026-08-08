@@ -1,110 +1,111 @@
 {
-  "symbol": "CN:600956",
-  "market": "CN",
-  "ticker": "600956",
-  "name": "新天绿能",
-  "company_name": "新天绿能",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "current_thesis": "新天绿能是河北国资控股的风电、光伏和天然气运营商，风电资产现金流和分红具备吸引力，但2026年一季度利润下滑、上网电价下降和天然气售气量承压使A股当前价格缺乏足够安全边际。A股维持观察，低于6.0元并看到发电量和电价边际改善后再建立首笔仓位。",
-  "fair_value_range": [
-    6.0,
-    7.4
-  ],
-  "buy_zone": [
-    5.3,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    9.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新天绿能",
+    "security_status": "active",
+    "symbol": "CN:600956",
+    "ticker": "600956"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial-2.md",
+        "sha256": "b228dbd6ce4d704e6fa8c1df171dcf3231facda37e8f4402a3a12e9ef41cce04"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "8c5b03b9057d29499c47f68d1a5560e0650afd92df8a16573beebc8e0533cde7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "A股价格低于6.0元，且最新月度发电量同比转正、平均上网电价降幅未扩大",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理偏低区，但2026年利润和售气量仍需确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、上网电价、售气量和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "A股价格处于5.3至5.6元，且2026H1归母净利润同比降幅收窄至15%以内",
-      "action": "加仓至小仓位",
-      "max_weight": 0.025,
-      "reason": "股息率、PE和基本面修复同时提供安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和迎峰度冬前天然气需求",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "A股价格低于5.0元，经营现金流仍覆盖分红且应收账款未继续失控",
-      "action": "提高至策略仓位上限",
-      "max_weight": 0.04,
-      "reason": "进入公用事业折价区，可承受电价和资本开支不确定性"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入首笔观察仓买入区，需要同步检查月度发电量和电价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "A股价格高于8.2元，但电价、售气量和利用小时没有趋势改善",
-      "action": "减仓或不新买",
-      "max_weight": 0.01,
-      "reason": "估值透支稳定性，赔率不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.3
+      },
+      "reason": "进入深度买入区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "进入减仓区，除非利润和电价均超预期改善",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.2
+      },
+      "reason": "明显高于中性估值，应复核是否存在未计入的增长",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入首笔观察仓买入区，需要同步检查月度发电量和电价"
-    },
-    {
-      "type": "price_below",
-      "price": 5.3,
-      "reason": "进入深度买入区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "进入减仓区，除非利润和电价均超预期改善"
-    },
-    {
-      "type": "price_above",
-      "price": 9.2,
-      "reason": "明显高于中性估值，应复核是否存在未计入的增长"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、上网电价、售气量和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和迎峰度冬前天然气需求"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度发电量同比增速",
-    "月度上网电量同比增速",
-    "平均上网电价",
-    "风电控股装机容量",
-    "光伏新增装机容量",
-    "天然气输/售气量",
-    "天然气批发、零售、LNG、CNG结构",
-    "天然气单位毛差",
-    "应收账款",
-    "可再生能源补贴回款",
-    "经营活动现金流净额",
-    "投资活动现金流净额",
-    "资产负债率",
-    "财务费用",
-    "分红率",
-    "A/H估值差"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

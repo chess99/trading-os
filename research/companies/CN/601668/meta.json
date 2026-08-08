@@ -1,105 +1,96 @@
 {
-  "symbol": "CN:601668",
-  "market": "CN",
-  "ticker": "601668",
-  "name": "中国建筑",
-  "company_name": "中国建筑",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "中国建筑是低估值高股息建筑央企，房建与地产拖累估值上限，但现金流纪律、基建与工业厂房订单、稳定分红使其在4.1-4.8元区间具备较好赔率。",
-  "quality_rating": "B+",
-  "valuation_rating": "A-",
-  "fair_value_range": [
-    5.2,
-    6.1
-  ],
-  "buy_zone": [
-    4.1,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    6.4
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国建筑",
+    "security_status": "active",
+    "symbol": "CN:601668",
+    "ticker": "601668"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "706be3d0cca75b41ea704e9beebf6b3f2b7ee90e1ce0747bcdf53283bf21d6d1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于4.10元，且经营性现金流与分红政策未恶化",
-      "action": "积极买入",
-      "max_weight": 0.1,
-      "reason": "接近悲观估值区间，安全边际最充分。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "按第三方行情页披露的下一财报日复查2026年中报、现金流和减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在4.10-4.50元之间",
-      "action": "继续加仓",
-      "max_weight": 0.07,
-      "reason": "仍处于明显低估区，股息率和PB提供支撑。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季度订单结构、地产销售和海外业务进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在4.50-4.80元之间",
-      "action": "试探建仓",
-      "max_weight": 0.05,
-      "reason": "已具备安全边际，但需要保留对地产和回款风险的余地。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入更有安全边际的买入区间，可评估加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价在4.80-5.20元之间",
-      "action": "观察为主",
-      "max_weight": 0.03,
-      "reason": "逐步接近内在价值中枢，赔率下降。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "进入强吸引力买点，可提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价大于5.60元",
-      "action": "不追高或小幅减仓",
-      "max_weight": 0.02,
-      "reason": "需要更强的订单质量、现金流和地产出清证据才能支撑更高估值。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "进入不应追高区间，需要复核基本面是否支持进一步上修估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入更有安全边际的买入区间，可评估加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.1,
-      "reason": "进入强吸引力买点，可提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "reason": "进入不应追高区间，需要复核基本面是否支持进一步上修估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "按第三方行情页披露的下一财报日复查2026年中报、现金流和减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季度订单结构、地产销售和海外业务进展。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "建筑业务新签合同额增速",
-    "工业厂房新签合同额增速",
-    "基建业务新签合同额及其中能源/水利/市政占比",
-    "地产业务合约销售额与销售面积",
-    "土地储备与新购地强度",
-    "经营活动产生的现金流量净额",
-    "应收账款余额与合同资产余额",
-    "年度减值准备规模",
-    "海外新签合同额与海外收入",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

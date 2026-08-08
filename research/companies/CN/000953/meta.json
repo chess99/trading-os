@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:000953",
-  "market": "CN",
-  "ticker": "000953",
-  "name": "中哲精化",
-  "company_name": "中哲精化",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中哲精化当前是控制权变更后的精细化工/医药中间体转型观察标的，存量盈利主要来自南松医药但利润体量很小，现价缺乏现有利润安全边际；只有在股价回落或新业务、资产注入、盈利修复经公告和财报验证后，才适合小仓位参与。",
-  "quality_rating": "B-",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    3.2,
-    4.2
-  ],
-  "buy_zone": [
-    2.6,
-    3.3
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中哲精化",
+    "security_status": "active",
+    "symbol": "CN:000953",
+    "ticker": "000953"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "786d53cdc708e47d880864d4da3f9c21c8bbdd97a46611e5ffee3547de5fca0f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.30元，且无新增治理或重组失败风险",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "现有利润不足以支撑高估值，只适合在安全边际出现时小仓位跟踪"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看南松医药收入、扣非利润、现金流和客户集中度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报显示南松医药收入和扣非利润恢复，经营现金流为正，且新业务有公告级订单或资产落地",
-      "action": "加至研究仓",
-      "max_weight": 0.03,
-      "reason": "盈利修复与中哲体系转型同时验证后，才具备提高仓位的条件"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报及中哲入主后的新业务进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.20元但未出现可核验利润上修或优质资产注入",
-      "action": "不追买并降低仓位",
-      "max_weight": 0.005,
-      "reason": "当前市值主要反映题材和控制权溢价，缺乏现有盈利支撑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "进入买入观察区上沿，可重新核验经营和治理风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可评估首笔仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "高于减持区下沿且缺乏利润支撑时，需防止题材估值回落",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "明显高于基准合理价值，除非重大资产注入已公告并可量化，否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "进入买入观察区上沿，可重新核验经营和治理风险"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "进入深度安全边际区，若基本面未恶化可评估首笔仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "高于减持区下沿且缺乏利润支撑时，需防止题材估值回落"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "明显高于基准合理价值，除非重大资产注入已公告并可量化，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看南松医药收入、扣非利润、现金流和客户集中度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报及中哲入主后的新业务进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "南松医药单体营业收入",
-    "南松医药单体净利润",
-    "医药中间体毛利率",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "前五大客户收入占比",
-    "海外收入占比",
-    "尿素委托加工收入和毛利",
-    "关联方借款余额、利率和用途",
-    "广西中哲资源控股有限责任公司订单、资产和利润贡献"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

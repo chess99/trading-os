@@ -1,78 +1,86 @@
 {
-  "symbol": "CN:300271",
-  "ticker": "300271",
-  "name": "华宇软件",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华宇软件具备法律科技垂直场景和司法客户积累，2026年订单、收入和亏损收窄出现修复迹象，但持续亏损、项目验收波动、现金流待验证以及2026年7月收入确认相关监管事项使估值必须打折；当前价格接近保守公允价值中枢，缺少足够安全边际，先观察。",
-  "fair_value_range": [
-    4.1,
-    5.4
-  ],
-  "buy_zone": [
-    3.6,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.3
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华宇软件",
+    "security_status": "active",
+    "symbol": "CN:300271",
+    "ticker": "300271"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "9a7c24a48673e449dfd06925ff9c81529b0cee9e11280fc28286675442aa9edd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入3.6-4.2元，且2026年三季报验证收入增长、亏损继续收窄、经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报收入、亏损、合同、现金流和监管事项",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年全年经营现金流转正，扣非亏损低于5000万元或接近盈亏平衡，且无新增监管/审计负面事项",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、经营现金流、内控审计和AI产品化进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2027年净利率恢复至4%以上，法律AI产品形成可量化订单和复购，且内控风险解除",
-      "action": "考虑核心仓上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入安全边际观察区，需要结合三季报和现金流决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "达到乐观情景下沿，若利润和现金流未同步验证应减仓或避免追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入安全边际观察区，需要结合三季报和现金流决定是否建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "达到乐观情景下沿，若利润和现金流未同步验证应减仓或避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报收入、亏损、合同、现金流和监管事项"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、经营现金流、内控审计和AI产品化进展"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "2026年三季报收入是否达到9.5-10.5亿元以上",
-    "2026年全年经营现金流是否转正",
-    "新签合同额是否维持15%以上增长",
-    "毛利率是否稳定在35%以上",
-    "是否再出现收入确认、监管函、警示函或审计保留事项"
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688088",
-  "market": "CN",
-  "ticker": "688088",
-  "name": "虹软科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "虹软科技具备高毛利视觉 AI 算法授权、厚净现金和手机/车载/新硬件多场景复用优势，但当前估值已计入较多第二曲线预期；在车载 AI 增速和 AI 眼镜商业化未重新验证前，31.90 元附近安全边际不足，适合观察，等待 24-30 元买入区或业绩上修确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    32,
-    40
-  ],
-  "buy_zone": [
-    24,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    46,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "虹软科技",
+    "security_status": "active",
+    "symbol": "CN:688088",
+    "ticker": "688088"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "52e234995ad40019d453142ddb9752f6359a578cf0b4142e5db46aa8fa2ff579"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于或等于30元，且最近一期收入同比增速不低于10%、扣非净利润同比增速不低于收入增速",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看车载AI收入增速、手机业务稳定性和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于或等于24元，且手机基本盘未恶化、车载AI收入仍保持正增长",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入增速是否回到基准情景",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于46元，且车载AI或AI眼镜收入未出现可核验加速",
-      "action": "不追高并考虑降低仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期增长率、净利率和安全边际",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入买入观察区，需要结合最新中报或季报复核增长质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入高安全边际区，但需确认下跌不是由基本面破坏导致",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 46.0
+      },
+      "reason": "超过基准估值上沿，需要车载AI或新硬件收入上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入买入观察区，需要结合最新中报或季报复核增长质量"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入高安全边际区，但需确认下跌不是由基本面破坏导致"
-    },
-    {
-      "type": "price_above",
-      "price": 46,
-      "reason": "超过基准估值上沿，需要车载AI或新硬件收入上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看车载AI收入增速、手机业务稳定性和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入增速是否回到基准情景"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期增长率、净利率和安全边际"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

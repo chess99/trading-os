@@ -1,65 +1,86 @@
 {
-  "symbol": "CN:600684",
-  "ticker": "600684",
-  "name": "珠江股份",
-  "company_name": "广州珠江发展集团股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司已由传统房地产开发转向城市服务和文体运营，国资背景与文体场馆运营提供一定差异化；但2025年利润质量受非经常因素影响，2026Q1已转亏且经营现金流承压。当前约3元以上股价对应估值明显高于可验证主业盈利与净资产，安全边际不足，结论为不买/回避。",
-  "fair_value_range": [
-    1.2,
-    1.8
-  ],
-  "buy_zone": [
-    0.9,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    2.4,
-    3.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "珠江股份",
+    "security_status": "active",
+    "symbol": "CN:600684",
+    "ticker": "600684"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "cb62509f7ee416d5b7bb890083238cf6a3f6a3b1e3739c84de873976fa304876"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于1.20元，且连续两个季度扣非归母净利润为正、经营活动现金流同比改善、文体运营毛利率维持在28%以上时，仅建立观察仓。",
-      "action": "watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非净利润、经营现金流、应收账款和文体运营毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于2.40元且半年报或三季报未证明扣非利润和经营现金流同步改善。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入基准公允价值下沿并开始具备安全边际，可重新评估观察仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1亏损是否为季节性以及全年盈利中枢。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 2.4,
-      "reason": "超过审慎估值上沿较多，如基本面未同步改善应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非净利润、经营现金流、应收账款和文体运营毛利率。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入基准公允价值下沿并开始具备安全边际，可重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1亏损是否为季节性以及全年盈利中枢。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.4
+      },
+      "reason": "超过审慎估值上沿较多，如基本面未同步改善应回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

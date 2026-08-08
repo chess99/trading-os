@@ -1,120 +1,135 @@
 {
-  "symbol": "CN:300475",
-  "market": "CN",
-  "ticker": "300475",
-  "name": "香农芯创",
-  "company_name": "香农芯创科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-13-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "观察 / 可建0.5%首笔研究仓",
-  "current_rating": "watch",
-  "current_thesis": "香农芯创2026年上半年利润预告已验证存储景气和海普存储放量方向，2026-07-17收盘价174.10元进入既定160-210元买入区，构成有估值支撑的首笔试探买点；但正式半年报尚未验证现金流和存货质量，累计子公司担保仍达116.37亿元、占2025年净资产325.51%，因此维持观察评级，只允许0.5%研究仓。",
-  "quality_rating": "B-",
-  "valuation_rating": "B-",
-  "fair_value_range": [
-    220,
-    300
-  ],
-  "buy_zone": [
-    160,
-    210
-  ],
-  "sell_or_reduce_zone": [
-    360,
-    420
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "香农芯创",
+    "security_status": "active",
+    "symbol": "CN:300475",
+    "ticker": "300475"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "ba0483a81ad2e574d160b77308d13a84c0ea8967a171ec4edb0005adffdcab9e"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "3deed8afe677316e71fa2ff78f7f6b6f868c560aab4ce4053e70199b52abf187"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "bd3472ae846f55feba10cac354c631d52ac16f5f23c438ffa99fd953515893fb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026-07-17收盘价174.10元已进入既定160-210元买入区，但正式半年报尚未验证经营现金流、存货和海普存储收入质量。",
-      "action": "starter_research_position",
-      "target_weight": 0.005,
-      "max_weight": 0.005,
-      "notes": "可以买首笔研究仓，但不因单日大跌直接建立标准仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证归母净利润是否落在35-40亿元区间、经营现金流、存货、应收应付和海普存储放量质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于160-180元，且2026年半年报确认利润落在预告区间、经营现金流为正、存货未异常恶化。",
-      "action": "start_or_add",
-      "target_weight": 0.01,
-      "max_weight": 0.02,
-      "notes": "质量条件验证后才可从研究仓提高至1%-2%标准仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断存储景气是否延续、Q3利润是否相对Q2回落以及全年盈利中枢是否需要上修或下修。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至160元以下，且SK海力士授权、核心客户、海普存储订单和资产负债表未出现实质恶化。",
-      "action": "accumulate",
-      "target_weight": 0.02,
-      "max_weight": 0.03,
-      "notes": "强周期资产最大仓位仍不超过3%。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年利润、分销毛利率、海普存储利润贡献、存货跌价准备和关联交易/担保实际风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价升至360元以上且2027年盈利中枢没有继续上修证据。",
-      "action": "reduce",
-      "target_weight": 0.005,
-      "max_weight": 0.01,
-      "notes": "高位应降低峰值盈利外推风险。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 160.0
+      },
+      "reason": "进入强吸引区；若现金流、存货、授权、客户和担保链条未实质恶化，可评估提高仓位，否则不得机械加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 140.0
+      },
+      "reason": "安全边际进一步扩大；仅在正式半年报质量合格且存储景气未反转时评估接近2%-3%仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 220.0
+      },
+      "reason": "回到合理价值区间下沿；若盈利中枢未继续上修则停止加仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 360.0
+      },
+      "reason": "进入减仓观察区，除非2027年利润中枢继续上修，否则估值可能透支峰值景气。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 420.0
+      },
+      "reason": "进入乐观峰值区，应强制复核存储价格、海普存储复购和库存风险。",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 160,
-      "reason": "进入强吸引区；若现金流、存货、授权、客户和担保链条未实质恶化，可评估提高仓位，否则不得机械加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 140,
-      "reason": "安全边际进一步扩大；仅在正式半年报质量合格且存储景气未反转时评估接近2%-3%仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 220,
-      "reason": "回到合理价值区间下沿；若盈利中枢未继续上修则停止加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 360,
-      "reason": "进入减仓观察区，除非2027年利润中枢继续上修，否则估值可能透支峰值景气。"
-    },
-    {
-      "type": "price_above",
-      "price": 420,
-      "reason": "进入乐观峰值区，应强制复核存储价格、海普存储复购和库存风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证归母净利润是否落在35-40亿元区间、经营现金流、存货、应收应付和海普存储放量质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断存储景气是否延续、Q3利润是否相对Q2回落以及全年盈利中枢是否需要上修或下修。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年利润、分销毛利率、海普存储利润贡献、存货跌价准备和关联交易/担保实际风险。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1正式营业收入、归母净利润和扣非归母净利润",
-    "2026Q3营业收入、归母净利润和扣非归母净利润环比变化",
-    "经营活动现金流净额与净利润匹配度",
-    "存货余额、周转天数和跌价准备",
-    "海普存储收入、毛利率、客户认证、复购和订单能见度",
-    "SK海力士授权、供货、账期和价格政策稳定性",
-    "服务器DDR5、HBM、企业级SSD价格趋势",
-    "云服务商和ODM客户采购节奏",
-    "短期借款、应付票据、应付账款、担保和抵质押额度使用情况",
-    "境外收入占比、汇率和外汇衍生品风险"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

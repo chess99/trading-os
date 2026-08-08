@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600962",
-  "ticker": "600962",
-  "market": "CN",
-  "name": "国投中鲁",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "当前股价主要反映电子院注入预期，果汁主业 2026 年上半年已显著下行，重组仍处于中止审核状态；即便重组成功，按现价测算的重组后隐含估值也偏高，安全边际不足。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    5.0,
-    12.0
-  ],
-  "buy_zone": [
-    0.0,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国投中鲁",
+    "security_status": "active",
+    "symbol": "CN:600962",
+    "ticker": "600962"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f83ab06fd9ed96204725a4c1a08b31e2f772f015ef8eb9328a8ec7d8661f49c6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "重组仍处于中止审核或未披露更新财务资料，且股价高于 15 元",
-      "action": "不建仓，维持观察",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "公司预约披露 2026 年半年报，核验正式利润、扣非、存货、经营现金流和短债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至 8 元以下，且重组恢复审核或果汁主业中报显示扣非和现金流改善",
-      "action": "重新建模后可小仓位事件观察",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后更新榨季、库存、销售节奏、汇兑和重组进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "重组获批且电子院更新财务显示利润承诺和经营现金流均可兑现",
-      "action": "按重组后摊薄股本重新估值，再决定是否提升仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "检查重组是否恢复审核/过会/注册，以及电子院更新审计数据。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入重组基准情景估值下沿附近，可重新评估风险收益。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "高于乐观前的合理估值区间，若重组仍未完成应继续回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入重组基准情景估值下沿附近，可重新评估风险收益。"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "高于乐观前的合理估值区间，若重组仍未完成应继续回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "公司预约披露 2026 年半年报，核验正式利润、扣非、存货、经营现金流和短债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后更新榨季、库存、销售节奏、汇兑和重组进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "检查重组是否恢复审核/过会/注册，以及电子院更新审计数据。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600758",
-  "ticker": "600758",
-  "name": "辽宁能源",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "区域冶金煤和煤电一体化资产具备修复期权，但2026年上半年仍预亏、Q1商品煤毛利率转负、担保和融资需求偏高；当前估值未给足产量和煤价恢复不确定性的安全边际。",
-  "fair_value_range": [
-    2.1,
-    2.7
-  ],
-  "buy_zone": [
-    1.8,
-    2.2
-  ],
-  "sell_or_reduce_zone": [
-    3.3,
-    3.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "辽宁能源",
+    "security_status": "active",
+    "symbol": "CN:600758",
+    "ticker": "600758"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "999063e991c48809eca9c90e33883146081a670300eb5754cbfa521adbe31ae3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于2.20元，且后续季度商品煤毛利率转正、无新增重大安全或债务风险",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际亏损、煤炭产销量、商品煤毛利率和债务结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.80元，且产量恢复趋势明确、担保和短债未继续恶化",
-      "action": "提高至逆周期小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现产量和毛利率修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于3.30元但商品煤毛利率仍未转正",
-      "action": "不追高或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、资产减值、担保余额和经营现金流",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
+      "reason": "进入基准买入观察区，需复核商品煤毛利率和产量恢复情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入深度折价区，若无新增债务或安全风险可考虑小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.3
+      },
+      "reason": "超出基准合理价值上沿，若盈利未修复应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.2,
-      "reason": "进入基准买入观察区，需复核商品煤毛利率和产量恢复情况"
-    },
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入深度折价区，若无新增债务或安全风险可考虑小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 3.3,
-      "reason": "超出基准合理价值上沿，若盈利未修复应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际亏损、煤炭产销量、商品煤毛利率和债务结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现产量和毛利率修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、资产减值、担保余额和经营现金流"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

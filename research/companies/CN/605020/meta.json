@@ -1,101 +1,105 @@
 {
-  "symbol": "CN:605020",
-  "market": "CN",
-  "ticker": "605020",
-  "name": "永和股份",
-  "company_name": "永和股份",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "永和股份受益于HFCs制冷剂配额约束和价格上行，2025-2026年盈利拐点明确，但2026-07-09股价37.75元已较充分反映景气预期，当前观察，等待28元以下或盈利显著上修后的再评估机会。",
-  "quality_rating": "B+",
-  "valuation_rating": "neutral_to_expensive",
-  "fair_value_range": [
-    28.0,
-    34.0
-  ],
-  "buy_zone": [
-    22.0,
-    28.0
-  ],
-  "sell_or_reduce_zone": [
-    40.0,
-    48.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永和股份",
+    "security_status": "active",
+    "symbol": "CN:605020",
+    "ticker": "605020"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "83a793592fe0ed0edfc2ac0d3c24e3d4b9e1ddb08ac0d1b22a2b0138058922a3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于28元且HFCs主流品种价差仍维持高位，2026年扣非利润年化不低于8亿元",
-      "action": "建立观察仓",
-      "max_weight": 0.03,
-      "reason": "进入合理价值下沿附近，但仍需验证制冷剂景气持续性和新材料爬坡质量"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看制冷剂毛利率、销量和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于24元且制冷剂配额政策未松动，资产负债率保持35%以下",
-      "action": "提高至标准小仓",
-      "max_weight": 0.06,
-      "reason": "相当于对2026年周期盈利给约15倍以内估值，安全边际开始可见"
+      "active": true,
+      "condition": {
+        "date": "2026-11-15"
+      },
+      "reason": "复核三季报和2027年度HFCs配额政策信号",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于22元且没有安全环保事故、重大扩产失误或配额政策反转",
-      "action": "强吸引力买入",
-      "max_weight": 0.08,
-      "reason": "悲观情景下回撤风险与基准情景回报比更均衡"
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核2027年制冷剂配额、价格、出口和含氟材料订单",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于40元或市值超过200亿元且盈利预期未同步上修",
-      "action": "不追高或减仓",
-      "max_weight": 0.02,
-      "reason": "估值已提前反映制冷剂上行周期，后续赔率依赖价格继续上涨"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入合理价值区间下沿，复核是否满足首仓条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入强吸引力买入区，需确认基本面未恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "进入不应追高区，需复核是否由盈利上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28.0,
-      "reason": "进入合理价值区间下沿，复核是否满足首仓条件"
-    },
-    {
-      "type": "price_below",
-      "price": 22.0,
-      "reason": "进入强吸引力买入区，需确认基本面未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 40.0,
-      "reason": "进入不应追高区，需复核是否由盈利上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看制冷剂毛利率、销量和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-11-15",
-      "reason": "复核三季报和2027年度HFCs配额政策信号"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核2027年制冷剂配额、价格、出口和含氟材料订单"
-    }
-  ],
-  "key_tracking_metrics": [
-    "R32/R125/R134a等HFCs价格与价差",
-    "公司氟碳化学品销量、单吨毛利和配额利用率",
-    "含氟高分子材料收入、毛利率和高端PFA/PTFE等放量进度",
-    "萤石、无水氢氟酸、氯仿等原料价格",
-    "资产负债率、经营现金流、在建工程转固后的折旧压力",
-    "生态环境部HFCs配额政策和行业新增供给约束",
-    "安全环保事故、装置检修和重大资本开支进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:300772",
-  "ticker": "300772",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "运达股份",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "风电整机订单充足、行业位置靠前，但风机销售毛利率低、经营现金流连续承压，当前只适合观察；等待股价进入安全边际区或毛利率与现金流改善后再提高评级。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    11.0,
-    15.0
-  ],
-  "buy_zone": [
-    8.5,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    18.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "运达股份",
+    "security_status": "active",
+    "symbol": "CN:300772",
+    "ticker": "300772"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "46afd741dbb0038bd69c01e6503c6a6bfd148cf2a1b4e0bcb35b2df8d4726779"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未持仓且股价跌入买入区间，同时未出现订单流失、质量事故或现金流恶化",
-      "action": "start_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查毛利率、经营现金流和在手订单",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度风机毛利率高于7%且经营现金流改善为正或接近转正",
-      "action": "add_on_confirmation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入兑现和现金流修复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入减持区间但盈利质量未明显改善",
-      "action": "reduce_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入买入观察区，需要复核订单、毛利率和现金流是否恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "接近乐观情景估值，需要评估是否降低仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入买入观察区，需要复核订单、毛利率和现金流是否恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "接近乐观情景估值，需要评估是否降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查毛利率、经营现金流和在手订单"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入兑现和现金流修复是否持续"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

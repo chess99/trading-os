@@ -1,92 +1,105 @@
 {
-  "symbol": "CN:300783",
-  "ticker": "300783",
-  "name": "三只松鼠",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "三只松鼠仍有坚果品牌心智、线上运营和供应链价值，2026Q1 扣非利润明显修复；但 2025 年扣非利润和经营现金流大幅走弱，当前价格已经隐含修复预期，需等待 Q2-Q3 验证全年盈利质量或价格回到更大安全边际。",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    12,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    30
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三只松鼠",
+    "security_status": "active",
+    "symbol": "CN:300783",
+    "ticker": "300783"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "a22befe7d027463af4040dba7216684b206905f46e470a333aedc124a8eec898"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 15 元且无食品安全、现金流恶化或生活馆盲目扩张信号，可建立观察仓。",
-      "action": "watchlist_entry",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看扣非净利率、经营现金流和生活馆投入。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1 或 2026Q3 扣非净利率稳定高于 3%，经营现金流/归母净利润高于 0.8，且价格仍不高于 18 元。",
-      "action": "small_buy",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，验证 Q2-Q3 非旺季盈利是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 25 元但生活馆单店模型、全年净利率和现金流未被验证。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，判断全年利润修复是否真实。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入初始安全边际区间，可重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入熊市情景估值下沿，若基本面未恶化，风险收益比显著改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过当前合理价值区间上沿，若利润质量未同步验证，应减仓或不追。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入初始安全边际区间，可重新评估观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入熊市情景估值下沿，若基本面未恶化，风险收益比显著改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 25,
-      "reason": "超过当前合理价值区间上沿，若利润质量未同步验证，应减仓或不追。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看扣非净利率、经营现金流和生活馆投入。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，验证 Q2-Q3 非旺季盈利是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，判断全年利润修复是否真实。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 17.16,
-    "last_price_date": "2026-07-15",
-    "market_cap_cny_billion": 6.893,
-    "ttm_pe": 36.3,
-    "pb": 2.18,
-    "2025_revenue_cny_billion": 10.189,
-    "2025_net_profit_cny_billion": 0.155,
-    "2025_ex_nonrecurring_net_profit_cny_billion": 0.049,
-    "2026q1_revenue_cny_billion": 3.835,
-    "2026q1_net_profit_cny_billion": 0.273,
-    "2026q1_ex_nonrecurring_net_profit_cny_billion": 0.246
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

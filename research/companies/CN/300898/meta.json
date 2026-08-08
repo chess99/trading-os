@@ -1,92 +1,95 @@
 {
-  "symbol": "CN:300898",
-  "ticker": "300898",
-  "name": "熊猫乳品",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "炼乳细分龙头具备品牌、B端客户和轻资产负债表优势，但2025年扣非利润与经营现金流走弱，椰品第二曲线仍低毛利，2026Q1改善尚需中报确认；2026-07-15约19.75元价格已接近乐观情景，安全边际不足，维持观察。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    0.0,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    999.0
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于12元，且最新财报显示扣非归母净利润同比增长、经营现金流/扣非净利润比例回到0.8以上",
-      "action": "small_watch_buy",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价处于12-16元，且浓缩乳制品毛利率回升至34%以上、椰品毛利率连续改善",
-      "action": "research_only_or_add_after_confirmation",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于22元，或扣非利润增长但经营现金流继续显著弱于利润",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入有安全边际的买入观察区，可结合中报现金流和毛利率复核。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "价格接近乐观情景估值，若基本面未显著超预期，应回避追高或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报：收入、扣非利润、经营现金流、浓缩乳毛利率和椰品毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：确认Q1改善是否延续以及库存/预付款是否消化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报：验证第二曲线利润质量、分红可持续性和经营现金流。"
-    }
-  ],
-  "key_metrics": {
-    "last_price_date": "2026-07-15",
-    "last_price": 19.75,
-    "market_cap_cny_billion": 2.449,
-    "2025_revenue_cny_million": 811.08,
-    "2025_net_profit_cny_million": 108.01,
-    "2025_deducted_net_profit_cny_million": 75.25,
-    "2025_operating_cash_flow_cny_million": 56.84,
-    "2026_q1_revenue_cny_million": 204.13,
-    "2026_q1_deducted_net_profit_cny_million": 13.73
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "熊猫乳品",
+    "security_status": "active",
+    "symbol": "CN:300898",
+    "ticker": "300898"
   },
-  "tags": [
-    "乳制品",
-    "炼乳",
-    "食品饮料",
-    "中华老字号",
-    "观察"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "5a7de042df697414d2808bfa882f3903834d730bc3c1e7eef30e8212ae7e041a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报：收入、扣非利润、经营现金流、浓缩乳毛利率和椰品毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：确认Q1改善是否延续以及库存/预付款是否消化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报：验证第二曲线利润质量、分红可持续性和经营现金流。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入有安全边际的买入观察区，可结合中报现金流和毛利率复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "价格接近乐观情景估值，若基本面未显著超预期，应回避追高或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

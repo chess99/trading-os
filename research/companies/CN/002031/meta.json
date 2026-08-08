@@ -1,100 +1,105 @@
 {
-  "symbol": "CN:002031",
-  "market": "CN",
-  "ticker": "002031",
-  "name": "巨轮智能",
-  "company_name": "巨轮智能",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "当前不买。公司仍处亏损，经营现金流为负，2025年财报为保留意见且内控为否定意见；股价已明显反映机器人和智能装备期权，但订单、利润和现金流兑现不足。",
-  "quality_rating": "low",
-  "valuation_rating": "expensive",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    1.6,
-    2.4
-  ],
-  "buy_zone": [
-    1.2,
-    1.8
-  ],
-  "sell_or_reduce_zone": [
-    4.0,
-    5.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "巨轮智能",
+    "security_status": "active",
+    "symbol": "CN:002031",
+    "ticker": "002031"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "f1ea4227fc76f0e176935588d897630c4bb8398bc1aa38e468aefe0dbf312921"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "审计保留意见和内控否定意见未消除，股价高于合理价值上沿",
-      "action": "不建仓",
-      "max_weight": 0,
-      "reason": "亏损、现金流为负且财务可验证性不足，当前价格更多反映机器人概念期权"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的经营现金流、应收回款、机器人智能装备收入和审计整改进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.40元且2026中报显示经营现金流转正、毛利率稳定、审计整改有进展",
-      "action": "加入观察名单，等待第二个季度验证",
-      "max_weight": 0.005,
-      "reason": "估值进入合理区间但仍需确认盈利和治理修复"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报的扣非亏损收窄、订单交付和营运资本变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.80元，扣非亏损连续两个季度收窄，轮胎模具和智能装备订单回款改善",
-      "action": "允许首笔试错仓",
-      "max_weight": 0.01,
-      "reason": "价格补偿足够且基本面出现边际改善"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见和内部控制意见是否修复",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入合理价值区间上沿，需要复核中报现金流和审计整改",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入进攻性买入区，但仍需配合亏损收窄和回款改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "若基本面未改善，价格已高于保守估值，应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入合理价值区间上沿，需要复核中报现金流和审计整改"
-    },
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入进攻性买入区，但仍需配合亏损收窄和回款改善"
-    },
-    {
-      "type": "price_above",
-      "price": 4.0,
-      "reason": "若基本面未改善，价格已高于保守估值，应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的经营现金流、应收回款、机器人智能装备收入和审计整改进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报的扣非亏损收窄、订单交付和营运资本变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见和内部控制意见是否修复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "审计保留意见是否消除",
-    "内部控制否定意见是否修复",
-    "应收账款和其他应收款逾期回款",
-    "信用减值损失和资产减值损失",
-    "经营活动现金流量净额",
-    "销售商品收到的现金/营业收入",
-    "轮胎模具和液压式硫化机订单与毛利率",
-    "机器人智能装备和RV减速器收入占比",
-    "合同负债和在手订单",
-    "存货周转率",
-    "资产负债率和短期债务压力",
-    "股东质押、减持、关联交易和监管问询"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

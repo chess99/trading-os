@@ -1,101 +1,101 @@
 {
-  "symbol": "CN:688596",
-  "market": "CN",
-  "ticker": "688596",
-  "name": "正帆科技",
-  "company_name": "正帆科技",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "存储与半导体设备周期继续向上，正帆科技的新签订单和平台化布局具备跟踪价值；48.18元已回到42-52元合理价值区间，但仍高于32-38元安全边际买入区，且2026Q1亏损、回款与毛利率尚未修复，转债提前赎回后的股本摊薄也待确认，当前不买第一笔。",
-  "quality_rating": "B+",
-  "valuation_rating": "B-",
-  "fair_value_range": [
-    42,
-    52
-  ],
-  "buy_zone": [
-    32,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    70
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "正帆科技",
+    "security_status": "active",
+    "symbol": "CN:688596",
+    "ticker": "688596"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "3f9ff0dd25ed30492e34e7c0b662c289b0bf8246cf45f936c6aaf9f8875a40e3"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "b1dfac4b2497d756594103ec4cb9e84e34a4a030c17c49985900ac3f7cf0cb6c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价位于42-52元合理价值区间，但利润和现金流修复尚未验证",
-      "action": "新资金不买第一笔，已有低成本观察仓不超过1%",
-      "max_weight": 0.01,
-      "reason": "价格风险已部分释放，但2026Q1仍亏损且转债提前赎回后的股本摊薄待确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证Q2扭亏、毛利率、OPEX占比和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入38元以下，且订单、毛利率和现金流未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "价格接近买入观察区，开始具备一定安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断订单高增是否转化为利润修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入32元以下，且2026年中报显示利润和经营现金流同步修复",
-      "action": "提高至小仓位配置",
-      "max_weight": 0.03,
-      "reason": "估值回到可承受区间，并出现基本面兑现证据"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入买入观察区，需复核订单、毛利率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "OPEX业务占比提升、气体和先进材料毛利率回升、经营现金流连续改善",
-      "action": "复核后考虑上调仓位上限",
-      "max_weight": 0.04,
-      "reason": "商业模式从项目制向复购型平台迁移得到验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入更有安全边际的首笔买入区，需结合中报验证",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "重新进入透支乐观预期区，若利润未兑现应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入买入观察区，需复核订单、毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入更有安全边际的首笔买入区，需结合中报验证"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "重新进入透支乐观预期区，若利润未兑现应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证Q2扭亏、毛利率、OPEX占比和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断订单高增是否转化为利润修复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新签订单金额及同比增速",
-    "制程关键系统毛利率",
-    "气体和先进材料收入及毛利率",
-    "半导体设备零组件收入增速",
-    "专业运维管理服务收入占比",
-    "应收账款增速与账龄结构",
-    "经营现金流/归母净利润",
-    "合同负债和合同履约成本",
-    "汉京半导体产能利用率与商誉减值风险",
-    "高管及核心人员减持情况",
-    "正帆转债提前赎回后的转股数量、赎回金额与全面摊薄股本"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

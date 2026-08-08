@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:601019",
-  "ticker": "601019",
-  "name": "山东出版",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "山东出版是省级教材教辅和出版发行一体化现金流资产，财务稳健、类现金资产厚、分红可持续，但增长偏慢，当前价格约处于合理价值区间中部，尚未提供足够买入安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.8,
-    8.3
-  ],
-  "buy_zone": [
-    6.1,
-    6.6
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    9.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山东出版",
+    "security_status": "active",
+    "symbol": "CN:601019",
+    "ticker": "601019"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "bb722483b0e886333fa275f79a79b9f4c63329a10628bfc568d8f4c64541a70c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于6.6元且最新财报扣非归母净利润未明显恶化时，可建立观察型小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看扣非归母净利润、教材教辅毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于6.1元且经营现金流仍能覆盖年度归母净利润时，可提高到配置型仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润趋势和现金资产收益率。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于8.8元且盈利或分红没有同步上修时，降低或不新增仓位。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红方案，重新评估股东回报与合理估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "进入买入区间上沿，需要复核中报、扣非利润和经营现金流后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.1
+      },
+      "reason": "接近明显安全边际区间，若基本面未恶化可考虑提高配置权重。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "超过合理价值区间上沿，若盈利和分红未上修则风险收益比转弱。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "reason": "进入买入区间上沿，需要复核中报、扣非利润和经营现金流后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.1,
-      "reason": "接近明显安全边际区间，若基本面未恶化可考虑提高配置权重。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "超过合理价值区间上沿，若盈利和分红未上修则风险收益比转弱。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看扣非归母净利润、教材教辅毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润趋势和现金资产收益率。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红方案，重新评估股东回报与合理估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

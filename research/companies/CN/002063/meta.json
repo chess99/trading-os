@@ -1,104 +1,105 @@
 {
-  "symbol": "CN:002063",
-  "market": "CN",
-  "ticker": "002063",
-  "name": "远光软件",
-  "company_name": "远光软件",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "远光软件是电力能源行业管理软件垂直龙头之一，具备国网生态、行业know-how和较高毛利率，但当前价格对应约32倍PE，收入增速仍偏稳健，AI和云化收入贡献尚未充分核验，因此以观察为主，等待4.2元以内安全边际或中报确认基本面上修。",
-  "quality_rating": "B+",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    4.2,
-    5.6
-  ],
-  "buy_zone": [
-    3.6,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    6.3,
-    7.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "远光软件",
+    "security_status": "active",
+    "symbol": "CN:002063",
+    "ticker": "002063"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "ece229e9639e225138211e05fd2cf81f5bcada58fcdb03b63680e63cb333b7f0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于5.0元且未看到2026年中报确认收入和现金流改善",
-      "action": "仅允许观察仓或不买",
-      "max_weight": 0.01,
-      "reason": "估值约32倍PE，收入增速仍为中个位数，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、毛利率、研发费用率、经营现金流和应收质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入4.2元以内且基本面未恶化",
-      "action": "分两笔建立基础仓",
-      "max_weight": 0.03,
-      "reason": "进入基准合理价值下沿，垂直行业壁垒和现金流质量开始提供补偿"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报订单兑现、现金流季节性修复和全年业绩可见度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格进入3.6元以内且毛利率和经营现金流保持健康",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.05,
-      "reason": "估值安全边际充足，可等待电力数字化、信创和AI产品兑现"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，判断AI、云化、信创和电力数字化是否带来收入加速",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于6.3元但盈利预测没有上修",
-      "action": "逐步减仓",
-      "max_weight": 0.02,
-      "reason": "超过乐观估值下沿，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入买入区间上沿，复核中报订单、毛利率和现金流后可分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入强安全边际区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.3
+      },
+      "reason": "进入减仓区间，除非AI云化收入或订单显著上修，否则风险收益比偏低",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入买入区间上沿，复核中报订单、毛利率和现金流后可分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入强安全边际区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.3,
-      "reason": "进入减仓区间，除非AI云化收入或订单显著上修，否则风险收益比偏低"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、毛利率、研发费用率、经营现金流和应收质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报订单兑现、现金流季节性修复和全年业绩可见度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，判断AI、云化、信创和电力数字化是否带来收入加速"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "归母净利润同比增速",
-    "综合毛利率",
-    "数字企业管理业务收入和毛利率",
-    "研发费用率和研发投入资本化比例",
-    "经营活动现金流净额/归母净利润",
-    "应收账款和合同资产周转",
-    "国网及能源集团重大订单或中标公告",
-    "AI和云化产品收入占比",
-    "信创适配和国产化替换进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

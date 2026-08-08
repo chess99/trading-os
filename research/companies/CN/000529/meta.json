@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:000529",
-  "market": "CN",
-  "ticker": "000529",
-  "name": "广弘控股",
-  "company_name": "广弘控股",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "广弘控股当前更适合作为广东国资食品冷链资产折价标的观察，资产负债表和国资背景提供一定安全垫，但2025年扣非亏损、2026Q1毛利率为负，主业质量尚不足以支持追高或重仓。策略上等待3.6-4.1元区间小仓位介入，并以扣非转正、经营现金流改善和冷链项目进展作为加仓条件。",
-  "quality_rating": "low_to_mid",
-  "valuation_rating": "moderate_discount",
-  "fair_value_range": [
-    4.4,
-    5.4
-  ],
-  "buy_zone": [
-    3.6,
-    4.1
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    6.3
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广弘控股",
+    "security_status": "active",
+    "symbol": "CN:000529",
+    "ticker": "000529"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "3295a7f926affc9f5eba0bb5d329169a853fb45278889c654dddcd8a3327e6ba"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.10元且无新增大额亏损或食品安全公告",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入资产折价安全边际区，但扣非与现金流尚未验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、毛利率、经营现金流和金融资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.60元且2026中报显示资产负债表稳定",
-      "action": "加至小仓位",
-      "max_weight": 0.02,
-      "reason": "PB折价扩大，资产安全垫更足，适合等待主业修复或国资催化"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断主业修复是否具有连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非转正且经营现金流转正",
-      "action": "提高至策略仓位上限",
-      "max_weight": 0.03,
-      "reason": "主业从资产折价故事切换为可验证经营改善"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与分红方案，更新资产价值和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.60元但扣非未改善",
-      "action": "减仓或不追买",
-      "max_weight": 0.005,
-      "reason": "估值已修复至合理区上沿以上，经营质量不足以支持重仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "进入初始买入区，可评估0.5%-1.0%观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入深度折价区，若资产负债表未恶化可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "进入减仓区，除非扣非利润和经营现金流同步修复",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.3
+      },
+      "reason": "高于乐观区下沿，需严查国资改革或主业改善是否兑现",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.1,
-      "reason": "进入初始买入区，可评估0.5%-1.0%观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入深度折价区，若资产负债表未恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "reason": "进入减仓区，除非扣非利润和经营现金流同步修复"
-    },
-    {
-      "type": "price_above",
-      "price": 6.3,
-      "reason": "高于乐观区下沿，需严查国资改革或主业改善是否兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、毛利率、经营现金流和金融资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断主业修复是否具有连续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与分红方案，更新资产价值和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "毛利率",
-    "资产负债率",
-    "交易性金融资产余额",
-    "货币资金余额",
-    "冻品销售收入和毛利率",
-    "冷库出租率和配送客户数量",
-    "畜禽养殖出栏量和单位成本",
-    "食品智慧冷链基地项目进度",
-    "现金分红金额和分红率",
-    "广东国资改革或资产整合公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,76 +1,86 @@
 {
-  "symbol": "CN:600319",
-  "ticker": "600319",
-  "name": "亚星化学",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "亚星化学处于亏损重资产转型期，CPE和双氧水仍拖累利润，PVDC等新项目构成上行期权但尚未兑现；当前价格已计入较多改善预期，安全边际不足，适合观察等待半年度报告和PVDC订单验证。",
-  "decision": "观察",
-  "confidence": "中",
-  "last_price": 5.9,
-  "last_price_date": "2026-07-16",
-  "fair_value_range": [
-    3.8,
-    5.4
-  ],
-  "buy_zone": [
-    0.0,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    8.3
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "亚星化学",
+    "security_status": "active",
+    "symbol": "CN:600319",
+    "ticker": "600319"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "e187d6cd39515fa3ccee370e15f26a0c0f29f28b798910b9c51de5b039b2d6e9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "半年度或三季度报告显示PVDC开始实质收入确认、扣非亏损继续收窄、经营现金流改善，且股价低于3.6元",
-      "action": "建立小观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，验证亏损收窄、PVDC收入、现金流和财务费用",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "PVDC未形成订单或财务费用继续吞噬经营改善",
-      "action": "不买入，仅跟踪",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入中性估值下沿以下，若同时有PVDC和现金流改善证据，可重新评估买入"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断PVDC爬坡和主营毛利修复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "接近乐观情景估值，若无扣非转正和PVDC放量证据，应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，验证亏损收窄、PVDC收入、现金流和财务费用"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入中性估值下沿以下，若同时有PVDC和现金流改善证据，可重新评估买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断PVDC爬坡和主营毛利修复是否持续"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "接近乐观情景估值，若无扣非转正和PVDC放量证据，应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "key_monitoring_items": [
-    "PVDC客户验证、订单和收入确认",
-    "CPE与双氧水毛利率修复",
-    "经营现金流和财务费用变化",
-    "短期借款、其他应付款和一年内到期债务",
-    "重组、定增或关联融资安排"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

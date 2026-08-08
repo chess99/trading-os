@@ -1,114 +1,105 @@
 {
-  "symbol": "CN:300283",
-  "market": "CN",
-  "ticker": "300283",
-  "name": "温州宏丰",
-  "company_name": "温州宏丰电工合金股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "细分电接触及功能复合材料主业有客户认证、工艺和标准壁垒，硬质合金在改善，但铜箔仍亏损、高负债和银价库存收益扰动使利润质量需要继续验证。以2026-07-13约15.64元/股估算，价格显著高于7.5-10.5元/股合理价值区间，当前不追高。",
-  "quality_rating": "中上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    7.5,
-    10.5
-  ],
-  "buy_zone": [
-    0,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "温州宏丰",
+    "security_status": "active",
+    "symbol": "CN:300283",
+    "ticker": "300283"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "793b5c92fed7f8dc4199f6ebf007af2fd8949a2dbdb6ba23b0bac8a138506f22"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于13.5元/股，且TTM PE仍高于50倍",
-      "action": "不买；若已有仓位则减仓",
-      "max_weight": 0,
-      "target_position": "0%"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认白银价格变动、铜箔亏损、经营现金流和核心主业毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在8.5-13.5元/股之间",
-      "action": "只跟踪，不主动新增",
-      "max_weight": 0.005,
-      "target_position": "0-0.5%"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断一季度利润弹性是否具有持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格在6.8-8.5元/股，且最近一季经营现金流转正、铜箔亏损收窄",
-      "action": "小仓试探",
-      "max_weight": 0.01,
-      "target_position": "0.5-1.0%"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和定增进展，评估募投项目资本回报与稀释风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于6.8元/股，核心电接触及功能复合材料收入同比仍增长且毛利率不低于12%",
-      "action": "分批买入",
-      "max_weight": 0.025,
-      "target_position": "1.0-2.5%"
-    },
-    {
-      "condition": "价格低于6.0元/股，且非白银驱动的利润质量被连续两个季度确认",
-      "action": "加至上限",
-      "max_weight": 0.03,
-      "target_position": "最高3.0%"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
       "reason": "进入合理价值区间下半区，需要复核是否满足现金流和铜箔亏损收窄条件。",
-      "action": "进入重点跟踪，复核最近季度现金流、铜箔亏损和银价影响"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 6.8,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
       "reason": "低于主要买入区上限，若基本面未恶化则具备安全边际。",
-      "action": "若基本面未恶化，可开始分批买入"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 13.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
       "reason": "高于合理价值区间且对白银驱动利润持续性要求过高。",
-      "action": "不新增；已有仓位评估减仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认白银价格变动、铜箔亏损、经营现金流和核心主业毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断一季度利润弹性是否具有持续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和定增进展，评估募投项目资本回报与稀释风险。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "电接触及功能复合材料收入增速和毛利率",
-    "核心主业归母净利润是否持续增长",
-    "白银价格变化与毛利率/存货跌价的关系",
-    "铜箔板块毛利率和年度亏损额",
-    "经营活动现金流净额/归母净利润",
-    "资产负债率和财务费用",
-    "前五大客户收入占比和第一大客户占比",
-    "定增进展、发行价格、摊薄比例和募投项目投产后的ROIC"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

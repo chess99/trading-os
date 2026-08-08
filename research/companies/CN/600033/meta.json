@@ -1,76 +1,96 @@
 {
-  "symbol": "CN:600033",
-  "ticker": "600033",
-  "name": "福建高速",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "福建高速是福建沿海核心高速路产现金流资产，2025 年现金流和分红改善，但主业增长偏低、收费政策和路网分流约束估值弹性。当前价格接近合理价值下沿，缺少充分安全边际，宜观察等待 3.20-3.40 元买入区。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    3.6,
-    4.2
-  ],
-  "buy_zone": [
-    3.2,
-    3.4
-  ],
-  "sell_or_reduce_zone": [
-    4.4,
-    4.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "福建高速",
+    "security_status": "active",
+    "symbol": "CN:600033",
+    "ticker": "600033"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "50edce2f9c9b4cd43ad62e5dbdc564c9c43ca147793d0e91116d90cece1d3bd2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 3.20-3.40 元且未出现通行费收入连续下滑、收费政策不利变化或养护成本失控",
-      "action": "分批建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，重点看通行费收入、养护成本、经营现金流和分红预期",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 3.00 元且 2026 年通行费和经营现金流维持稳定",
-      "action": "提高至核心防御仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和利润分配方案，更新估值与安全边际",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 4.40 元且分红率或利润预期没有同步上修",
-      "action": "降低仓位或停止新增",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "进入初始买入区，需要复核通行费、分红和政策风险后分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入高安全边际区，若基本面未恶化可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.4
+      },
+      "reason": "超过基准合理价值区间，需要评估是否减仓或等待分红率上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "进入初始买入区，需要复核通行费、分红和政策风险后分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入高安全边际区，若基本面未恶化可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 4.4,
-      "reason": "超过基准合理价值区间，需要评估是否减仓或等待分红率上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，重点看通行费收入、养护成本、经营现金流和分红预期"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和利润分配方案，更新估值与安全边际"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

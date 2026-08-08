@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:301317",
-  "ticker": "301317",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "鑫磊股份",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "鑫磊股份处于节能空气动力设备赛道，2025年收入和现金流修复，但2026Q1再度亏损，盈利稳定性尚未验证；以2026-07-15收盘价55.78元估算，市值约87.8亿元，对2025年扣非利润约356倍，明显透支已验证基本面，当前只观察不买。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    16,
-    24
-  ],
-  "buy_zone": [
-    0,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鑫磊股份",
+    "security_status": "active",
+    "symbol": "CN:301317",
+    "ticker": "301317"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "e495e8dd12e8bc61ff9eb4e40fd9a8bfc893e85cd0bee8de14cae413e393789b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价附近或估值仍高于正常化利润50倍，且2026H1扣非利润未明确转正",
-      "action": "不建仓，仅跟踪半年报和订单质量",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、毛利率、经营现金流和订单质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至18-24元，且2026H1或2026Q3扣非利润转正、经营现金流改善",
-      "action": "允许建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1亏损是否为季节性波动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元，且收入增长、毛利率稳定、经营现金流改善三项至少满足两项",
-      "action": "分批买入",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常化利润和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利率超过8%、经营现金流为正，且估值低于30倍正常化利润",
-      "action": "重新出具报告后再考虑提高仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入合理价值区间上沿，需要复核是否具备小仓观察条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入买入区间，需要结合最新利润和现金流重新评估安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "若无扣非利润跃迁，估值进一步透支基本面，应强化回避或减仓判断",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入合理价值区间上沿，需要复核是否具备小仓观察条件"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入买入区间，需要结合最新利润和现金流重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "若无扣非利润跃迁，估值进一步透支基本面，应强化回避或减仓判断"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、毛利率、经营现金流和订单质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1亏损是否为季节性波动"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常化利润和估值区间"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

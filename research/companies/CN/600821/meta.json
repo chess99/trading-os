@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600821",
-  "market": "CN",
-  "ticker": "600821",
-  "name": "金开新能",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "金开新能具备国资背景、6GW级新能源电站资产和经营现金流基础，但电价市场化、限电损失、资产减值及联营投资收益下滑已显著压低ROE；当前价格接近乐观情景下沿，安全边际不足，等待电价和利润修复被半年报/三季报验证。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    4.2,
-    5.3
-  ],
-  "buy_zone": [
-    0,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金开新能",
+    "security_status": "active",
+    "symbol": "CN:600821",
+    "ticker": "600821"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "d05d4c02070ab9652543921b0d08c49f6d4bc2f1602d9eb3d567287306301532"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于4.2元，且2026H1正式报告确认扣非为正、平均上网电价和限电损失环比不再恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告、扣非利润、应收账款、联营投资收益和限电损失",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度归母净利恢复且年化ROE达到5%以上，应收账款周转改善，电价机制影响基本落地",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认电价市场化压力是否边际稳定",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.2元但盈利仍未验证修复，或再次出现重大资产减值/限电恶化",
-      "action": "不加仓或退出观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、资产减值、回购注销执行和2027年项目收益率假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入基准公允价值下沿并提供初步安全边际，可重新核验半年报和电价趋势",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "股价进入乐观情景区间，若利润修复未兑现则风险收益不佳",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入基准公允价值下沿并提供初步安全边际，可重新核验半年报和电价趋势"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "股价进入乐观情景区间，若利润修复未兑现则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告、扣非利润、应收账款、联营投资收益和限电损失"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认电价市场化压力是否边际稳定"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、资产减值、回购注销执行和2027年项目收益率假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

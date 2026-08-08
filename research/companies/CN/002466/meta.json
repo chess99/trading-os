@@ -1,152 +1,130 @@
 {
-  "symbol": "CN:002466",
-  "market": "CN",
-  "ticker": "002466",
-  "name": "天齐锂业",
-  "company_name": "天齐锂业",
-  "currency": "CNY",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "status": "active",
-  "updated_at": "2026-07-17T20:59:55+08:00",
-  "conclusion": "2026年7月17日收盘46.99元，腾讯与新浪双源一致；较7月8日下跌11.79%。半年业绩预告确认归母净利润28.5-42.5亿元，但Q2隐含利润区间宽、SQM贡献仍基于预测，且SMM电池级碳酸锂已回落至15.2万元/吨。现价位于40-47元买入区上沿，可建1%观察仓，半年报验证现金流后再决定是否加仓。",
-  "current_rating": "watch",
-  "current_thesis": "半年业绩预告确认利润反转，但不能把28.5-42.5亿元机械年化：Q2隐含归母净利润9.74-23.74亿元，SQM尚未披露Q2实绩，H1现金流也待验证。锂价从7月8日约16.4万元/吨回落至7月17日15.2万元/吨，现价46.99元对应约1.73倍归母PB，赔率改善但安全边际一般。",
-  "quality_rating": "B+",
-  "valuation_rating": "合理偏低（买入区上沿）",
-  "fair_value_range": [
-    42,
-    58
-  ],
-  "reasonable_price_range": {
+  "identity": {
     "currency": "CNY",
-    "low": 42,
-    "high": 58
+    "market": "CN",
+    "name": "天齐锂业",
+    "security_status": "active",
+    "symbol": "CN:002466",
+    "ticker": "002466"
   },
-  "buy_zone": [
-    40,
-    47
-  ],
-  "buy_zone_note": "40-47元为有条件买入区，46.99元位于上沿，只适合1%观察仓；43元以下安全边际更清楚，35-40元为强吸引力区，前提是锂价、格林布什和资产负债表未结构性恶化。",
-  "sell_or_reduce_zone": [
-    58,
-    68
-  ],
-  "sell_or_reduce_zone_note": "58元以上不追高，需要现金流和锂价共同支持；68元以上市场已计入偏乐观锂价，应分批减仓复核。",
-  "max_weight": 0.05,
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "af8b4a1787c6916a1424922ca388e6ca3fa4c4988f1aea350d798f1e599654a9"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "a734967daa2748041154fd3fbf1ca122f386ad4b34154aef7af6f58519812329"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "46-48",
-      "condition": "股价46-48元、SMM电池级碳酸锂指数不持续跌破14.5万元/吨，且无业绩下修",
-      "action": "观察仓",
-      "weight": 0.01,
-      "max_weight": 0.02,
-      "reason": "46.99元对应约1.73倍归母PB，赔率改善但仍处买入区上沿。先买验证权，等待半年报确认现金流和SQM实际贡献。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核半年业绩预告落点、经营现金流、SQM实际投资收益、存货应收和泰利森CGP3修复进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "42-46",
-      "condition": "股价42-46元，半年报利润在预告区间内或锂价仍在14万元/吨以上",
-      "action": "分批加仓",
-      "weight": 0.02,
-      "max_weight": 0.03,
-      "reason": "接近1.6倍归母PB，有较清楚的周期安全边际，可在证据未恶化时分批加仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报，判断H1利润反转能否跨季度持续，并核对锂价回落的实际影响。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "38-42",
-      "condition": "股价38-42元且资产负债表、格林布什和SQM未出现结构性恶化",
-      "action": "提高到中仓",
-      "weight": 0.04,
-      "max_weight": 0.04,
-      "reason": "接近1.4-1.5倍归母PB，进入强吸引力区，但仍需排除锂价趋势性下行。"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、分红、债务工具发行与SQM权益变化。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "zone": "35-38",
-      "condition": "股价35-38元且下跌主要来自周期恐慌、基本面未被证伪",
-      "action": "提高到目标仓",
-      "weight": 0.05,
-      "max_weight": 0.05,
-      "reason": "约1.3-1.4倍归母PB，若不是基本面证伪，可达到目标仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 47.0
+      },
+      "reason": "进入买入区上沿，复核锂价和业绩预告后可建立1%观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 43.0
+      },
+      "reason": "进入更清楚的安全边际区，若半年报和锂价未恶化可分步加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入强吸引力区，排除基本面证伪后可提高至目标仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "进入不追高区，需要现金流、SQM实绩和锂价共同支撑。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 68.0
+      },
+      "reason": "进入减仓复核区，除非锂价、矿端产量、现金流和SQM继续超预期。",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 47,
-      "currency": "CNY",
-      "reason": "进入买入区上沿，复核锂价和业绩预告后可建立1%观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 43,
-      "currency": "CNY",
-      "reason": "进入更清楚的安全边际区，若半年报和锂价未恶化可分步加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 38,
-      "currency": "CNY",
-      "reason": "进入强吸引力区，排除基本面证伪后可提高至目标仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "currency": "CNY",
-      "reason": "进入不追高区，需要现金流、SQM实绩和锂价共同支撑。"
-    },
-    {
-      "type": "price_above",
-      "price": 68,
-      "currency": "CNY",
-      "reason": "进入减仓复核区，除非锂价、矿端产量、现金流和SQM继续超预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核半年业绩预告落点、经营现金流、SQM实际投资收益、存货应收和泰利森CGP3修复进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报，判断H1利润反转能否跨季度持续，并核对锂价回落的实际影响。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、分红、债务工具发行与SQM权益变化。"
-    }
-  ],
-  "review_plan": "半年报重点复核利润预告落点、经营现金流/净利润、存货和应收、SQM实际投资收益及CGP3修复进度；SMM电池级碳酸锂指数跌破13万元或重新站稳16万元时提前触发估值复核。",
-  "key_risks": [
-    "电池级碳酸锂跌破13万元/吨并持续约20个交易日且库存上升，半年预告代表的盈利水平不可外推。",
-    "半年报实际归母净利润低于28.5亿元，或SQM实绩造成明显负向修正。",
-    "H1经营现金流/净利润仍低于30%且无法由季节性结算、存货或应收变化合理解释，利润质量存疑。",
-    "泰利森CGP3修复和爬产延迟超过一个季度，或格林布什产量指引下调。",
-    "H2国内产量、进口和海外资源释放快于需求，行业重新累库。",
-    "SQM权益收益、智利政策或处置节奏扰动净利润和净资产。",
-    "资产负债率升至35%以上，且新增融资主要用于高价并购或激进扩产。",
-    "汇率、海外监管和少数股东损益导致报表波动。"
-  ],
-  "sources": [
-    "https://static.cninfo.com.cn/finalpage/2026-03-28/1225044816.PDF",
-    "https://pdf.dfcfw.com/pdf/H2_AN202603271820811002_1.pdf",
-    "https://disc.static.szse.cn/disc/disk03/finalpage/2026-04-28/4a8892e0-e8b7-4f89-a187-feb60666b9c1.PDF",
-    "https://hq.smm.cn/h5/Li2CO3",
-    "https://np-cnotice-stock.eastmoney.com/api/content/ann?art_code=AN202606101823427210&client_source=web&page_index=1",
-    "https://np-cnotice-stock.eastmoney.com/api/content/ann?art_code=AN202607071826775492&client_source=web&page_index=1",
-    "https://emweb.eastmoney.com/PC_HSF10/NewFinanceAnalysis/ZyzbAjaxNew?type=0&code=SZ002466",
-    "https://www.futunn.com/stock/002466-SZ",
-    "https://www.news.cn/fortune/20260703/7413a1edcc9b4d6a88b703b41f62a5d6/c.html",
-    "https://pdf.dfcfw.com/pdf/H2_AN202607141826962118_1.pdf",
-    "https://np-cnotice-stock.eastmoney.com/api/content/ann?art_code=AN202607141826962118&client_source=web&page_index=1",
-    "https://qt.gtimg.cn/q=sz002466",
-    "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz002466,day,2026-07-08,2026-07-17,20,qfq",
-    "https://hq.sinajs.cn/list=sz002466",
-    "https://news.smm.cn/news/104008894",
-    "https://news.smm.cn/news/103999601"
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

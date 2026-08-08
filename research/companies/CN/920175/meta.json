@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:920175",
-  "market": "CN",
-  "ticker": "920175",
-  "name": "东方碳素",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "东方碳素具备特种石墨资产、专精特新资质和1.8万吨高端特种石墨碳材项目的周期弹性，但2025年及2026Q1仍亏损，毛利率低、存货与在建工程压力较高，当前约1.48倍PB缺乏足够安全边际，适合观察而非立即买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.0,
-    8.5
-  ],
-  "buy_zone": [
-    4.8,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东方碳素",
+    "security_status": "active",
+    "symbol": "CN:920175",
+    "ticker": "920175"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "c1b41c43962614dbe477b2ba88dbb1bac814b0355cbcd6fc7060683ac7edcfa8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入4.8-6.0元且连续两个季度毛利率高于12%、存货不再恶化、募投项目无新增延期时，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、毛利率、存货跌价、现金流和募投项目进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于6.0-8.5元但盈利尚未恢复时，仅保留观察，不主动加仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现连续改善，并检查项目年底投产概率。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.5元且基本面未同步恢复到年化净利润5000万元以上时，避免买入并考虑降低已有仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "核验1.8万吨高端特种石墨碳材项目是否按调整后日期达到预定可使用状态。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入买入观察区，需要复核毛利率、存货和募投项目进度。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入深度安全边际区，可重新测算PB折价和破产式下行情景。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "超过基准公允区间，需要确认是否有利润恢复支撑，否则风险收益比转差。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入买入观察区，需要复核毛利率、存货和募投项目进度。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入深度安全边际区，可重新测算PB折价和破产式下行情景。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "超过基准公允区间，需要确认是否有利润恢复支撑，否则风险收益比转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、毛利率、存货跌价、现金流和募投项目进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现连续改善，并检查项目年底投产概率。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "核验1.8万吨高端特种石墨碳材项目是否按调整后日期达到预定可使用状态。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

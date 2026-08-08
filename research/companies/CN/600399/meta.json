@@ -1,68 +1,95 @@
 {
-  "symbol": "CN:600399",
-  "ticker": "600399",
-  "name": "抚顺特钢",
-  "company_name": "抚顺特殊钢股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "老牌高端特钢资产具备技术和认证壁垒，但2025年巨亏、2026年上半年仍预亏，新增高端产线尚需认证和达产验证；当前仅适合观察，等待毛利率、订单结构、现金流和产线利用率同步改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.2,
-    4.8
-  ],
-  "buy_zone": [
-    0.0,
-    3.0
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    6.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "抚顺特钢",
+    "security_status": "active",
+    "symbol": "CN:600399",
+    "ticker": "600399"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "348dc422503e295860a13330e2d6056743a709b31b25a145414062aba59c433e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价低于3.0元且2026H2毛利率、经营现金流、核心产线认证进度至少两项改善时，允许研究仓试探。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看亏损区间、毛利率、存货、受限资金和短债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度扭亏且FJ20改-40或FJ22改-49形成稳定批量交付，可将观察仓提高但仍限制为周期材料小仓位。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证是否出现连续减亏、经营现金流改善和高端产线放量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断高端化资本开支是否转化为可持续盈利。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "低于约1.1倍2026Q1每股净资产，开始具备研究型安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "若基本面仍亏损或仅弱修复，估值已进入乐观情景，需要减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "低于约1.1倍2026Q1每股净资产，开始具备研究型安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "reason": "若基本面仍亏损或仅弱修复，估值已进入乐观情景，需要减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看亏损区间、毛利率、存货、受限资金和短债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证是否出现连续减亏、经营现金流改善和高端产线放量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断高端化资本开支是否转化为可持续盈利。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

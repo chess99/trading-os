@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:920037",
-  "market": "CN",
-  "ticker": "920037",
-  "name": "广信科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "广信科技是输变电绝缘纤维材料与成型件细分龙头，受益特高压、电网投资和国产替代；2025年与2026Q1增长质量较高，当前除权后估值已回到合理偏低区间，但需跟踪应收、现金流、木浆价格与解禁减持压力。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    42,
-    54
-  ],
-  "buy_zone": [
-    30,
-    36
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    68
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广信科技",
+    "security_status": "active",
+    "symbol": "CN:920037",
+    "ticker": "920037"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "2533e799af79a2cb3276601917a27ae41e5a3e9e3da2642e3f580d3ac608629d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于30-36元且未出现现金流持续恶化或重大减持公告",
-      "action": "分批买入",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入增速、成型件占比、应收账款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于36-42元且2026H1收入和净利润增速仍高于25%",
-      "action": "建立或维持观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及解禁后股东减持情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入58-68元且2027年盈利预期未明显上修",
-      "action": "逐步减仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、产能爬坡和2027年估值基准。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入研究设定的买入区间上沿，若基本面未恶化可分批加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入高安全边际区间，需复核是否由减持或现金流恶化驱动。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "进入减仓区间，除非2027年盈利预期上修到4亿元以上。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入研究设定的买入区间上沿，若基本面未恶化可分批加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入高安全边际区间，需复核是否由减持或现金流恶化驱动。"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "进入减仓区间，除非2027年盈利预期上修到4亿元以上。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入增速、成型件占比、应收账款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及解禁后股东减持情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、产能爬坡和2027年估值基准。"
-    }
-  ],
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

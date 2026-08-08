@@ -1,87 +1,96 @@
 {
-  "symbol": "CN:300123",
-  "market": "CN",
-  "ticker": "300123",
-  "name": "ST亚光",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST亚光处于其他风险警示、庭外重组、债务和票据逾期叠加阶段。公司军工电子资产具备产业价值，但2025年和2026Q1盈利、现金流、归母权益和债务结构均显示普通股安全边际不足。当前3.62元约37亿元市值已显著透支重整成功预期，普通基本面组合应规避。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.2,
-    2.2
-  ],
-  "buy_zone": [
-    0.8,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    2.2,
-    3.62
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST亚光",
+    "security_status": "active",
+    "symbol": "CN:300123",
+    "ticker": "300123"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "7c31870b6c5c4ba400cda909817456872cf4670e7d3b3ed48d5c32479a1de630"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于2.20元或重整方案未明确保护普通股",
-      "action": "不买入；已有仓位降至0或仅保留观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报、重整投资人遴选、债权申报审核和逾期债务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在1.20至2.20元且仅有庭外重组进展、未见可执行债务方案",
-      "action": "只观察，不做基本面买入",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报经营现金流、归母净资产和军工电子收入毛利率恢复情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于1.20元，且合格产业投资人、债权人支持和经营未中断均有公告证据",
-      "action": "可建立事件驱动小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入有安全边际买入观察区，但仍需重整和债务方案确认",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格低于0.80元，且退市风险未恶化、重整路径清晰、原股东稀释可量化",
-      "action": "可作为高风险困境反转仓位评估",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入强吸引力事件驱动观察区，前提是退市和破产风险未继续恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.2
+      },
+      "reason": "高于基准合理价值上沿，缺乏安全边际，应避免追高或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入有安全边际买入观察区，但仍需重整和债务方案确认"
-    },
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入强吸引力事件驱动观察区，前提是退市和破产风险未继续恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 2.2,
-      "reason": "高于基准合理价值上沿，缺乏安全边际，应避免追高或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报、重整投资人遴选、债权申报审核和逾期债务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报经营现金流、归母净资产和军工电子收入毛利率恢复情况"
-    }
-  ],
-  "notes": [
-    "2026-07-20收盘价3.62元，总市值约36.99亿元，行情来源为新浪和东方财富接口。",
-    "2025年审计报告为带持续经营重大不确定性段落的无保留意见，内部控制审计意见为财务报告内控有效。",
-    "2026-06-12公告披露逾期借款5,703.70万元及逾期应付票据、应付账款3,078.02万元。",
-    "2026-07-06公告披露新增票据逾期6,188.39万元，截至公告日票据逾期余额8,438.60万元。",
-    "2026-07-08公告披露公开招募和遴选重整投资人，庭外重组不代表已进入重整程序；若重整失败并被宣告破产，存在终止上市风险。",
-    "重整投资人质量、债务削减幅度、资产处置回收率和后续监管风险均为低置信度，需要复查。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,91 +1,86 @@
 {
-  "symbol": "CN:301327",
-  "ticker": "301327",
-  "name": "华宝新能",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "华宝新能具备 Jackery 品牌、海外渠道和充足现金安全垫，2025-2026Q1 收入恢复明显；但扣非利润尚未稳定转正，投资关键在于 2026 年费用率下降和利润率修复能否兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    50,
-    65
-  ],
-  "buy_zone": [
-    36,
-    42
-  ],
-  "sell_or_reduce_zone": [
-    68,
-    80
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华宝新能",
+    "security_status": "active",
+    "symbol": "CN:301327",
+    "ticker": "301327"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "cf1012e2f0aa16a4fd53f43c3c2de46f62c851527e995679de4f3a71b2913f3e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 38 元，且最新季度收入同比增长不低于 20%、经营现金流为正、毛利率不低于 39%",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点检查扣非利润、毛利率、销售费用率和库存",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于 38-42 元，且扣非归母净利润转正、销售费用率环比改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断收入增长和利润修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 50 元但未看到年化 3 亿元以上扣非利润能力",
-      "action": "不追价，仅跟踪",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入具备较高安全边际的买入复核区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 68.0
+      },
+      "reason": "估值进入减仓复核区，除非利润率修复显著超预期",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入具备较高安全边际的买入复核区"
-    },
-    {
-      "type": "price_above",
-      "price": 68,
-      "reason": "估值进入减仓复核区，除非利润率修复显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点检查扣非利润、毛利率、销售费用率和库存"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断收入增长和利润修复是否连续"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "2026H1/2026Q2 收入同比增速",
-    "扣非归母净利润是否转正",
-    "毛利率是否维持 39%-42%",
-    "销售费用率与线上投放效率",
-    "户用光储收入占比",
-    "经营现金流和库存周转",
-    "美国关税、汇率和海外渠道库存",
-    "大股东或高管减持、质押、股权激励"
-  ],
-  "sources": [
-    {
-      "title": "华宝新能 2025 年年度报告",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225185815.PDF"
-    },
-    {
-      "title": "华宝新能 2026 年第一季度报告",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225185827.PDF"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,82 +1,96 @@
 {
-  "symbol": "CN:300395",
-  "market": "CN",
-  "ticker": "300395",
-  "name": "菲利华",
-  "company_name": "菲利华",
-  "status": "active",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "观察 / 小仓位试探",
-  "current_thesis": "菲利华是高端石英材料、石英纤维和半导体石英制品稀缺平台，电子级石英纤维布提供中期产业化期权；但当前股价已较多定价 2026-2027 年高增长，适合小仓位跟踪，等待价格回落或订单、认证、产能良率等证据增强后再提高仓位。",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    82,
-    112
-  ],
-  "buy_zone": [
-    62,
-    75
-  ],
-  "sell_or_reduce_zone": [
-    125,
-    150
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "菲利华",
+    "security_status": "active",
+    "symbol": "CN:300395",
+    "ticker": "300395"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "0a1e489b9679182c5300669092c0936107761968909e5bc6ba46727c2f2c8902"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前估值位于合理区间上沿，仅小仓位跟踪；价格低于 75 元或基本面证据增强后再加仓。",
-      "action": "initial_watch_position",
-      "max_weight": 0.08,
-      "initial_weight": 0.005,
-      "add_weight_below": 75,
-      "strong_add_weight_below": 58,
-      "notes": "当前估值位于合理区间上沿，首笔仅作跟踪；75 元以下且基本面未恶化可提高至 3%-6%，58 元以下且电子布仍推进可提高至 6%-8%。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 75,
-      "reason": "进入安全买入区，若电子布、半导体石英和军工订单逻辑未破坏，可复核后加仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入恢复、毛利率、现金流、半导体石英和电子布进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_below",
-      "price": 58,
-      "reason": "进入强吸引买入区，若基本面无重大负面变化，可将电子布产业期权视为较低成本获得。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认全年利润是否能支撑当前估值。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 125,
-      "reason": "进入不追高和减仓观察区，若缺少订单、认证、良率或利润超预期证据，应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入恢复、毛利率、现金流、半导体石英和电子布进展。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "进入安全买入区，若电子布、半导体石英和军工订单逻辑未破坏，可复核后加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认全年利润是否能支撑当前估值。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 58.0
+      },
+      "reason": "进入强吸引买入区，若基本面无重大负面变化，可将电子布产业期权视为较低成本获得。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 125.0
+      },
+      "reason": "进入不追高和减仓观察区，若缺少订单、认证、良率或利润超预期证据，应降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "电子级石英纤维布客户认证进度",
-    "电子布批量订单、良率和产能利用率",
-    "半导体石英材料及制品收入增速",
-    "航空航天订单交付节奏",
-    "综合毛利率",
-    "经营现金流与归母净利润匹配度",
-    "应收账款和存货增速相对收入增速",
-    "在建工程、固定资产和折旧变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

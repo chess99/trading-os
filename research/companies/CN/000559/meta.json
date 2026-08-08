@@ -1,117 +1,133 @@
 {
-  "symbol": "CN:000559",
-  "market": "CN",
-  "ticker": "000559",
-  "name": "万向钱潮",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "公司是经营历史长、客户覆盖广、现金流较好的汽车基础零部件平台，2025年收入133.91亿元、归母净利10.36亿元、经营现金流15.94亿元；但2026Q1收入和利润同比下滑，历史低毛利贸易业务存在收入确认差错，且2026-07-06股价13.12元对应约435亿元市值、40倍以上利润倍数，已透支稳健制造和智能底盘预期。当前无安全边际，等待价格回到7.20元以下并验证经营修复。",
-  "fair_value_range": [
-    7.2,
-    9.8
-  ],
-  "buy_zone": [
-    0,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万向钱潮",
+    "security_status": "active",
+    "symbol": "CN:000559",
+    "ticker": "000559"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "90abe487de938ac3ddba1cbe597a646513736bb37fdb319345e00b3e3fca964a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price_range": [
-        10.5,
-        16.0
-      ],
-      "action": "avoid_or_reduce",
-      "condition": "????10.50???????????????16??????????",
-      "max_weight": 0.01,
-      "notes": "高于合理价值区，不追高；已有仓位复核减仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证2026年收入下滑是否只是季度节奏还是主业拐弱",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "price_range": [
-        7.2,
-        9.8
-      ],
-      "action": "watch_or_small_position",
-      "condition": "股价处于7.20-9.80元且2026H1/Q3收入、毛利率、经营现金流开始修复",
-      "max_weight": 0.03,
-      "notes": "处于合理区间，需等待2026H1/Q3收入、毛利率、经营现金流验证。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "主业毛利率决定制造护城河和估值上限",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "price_range": [
-        0,
-        7.2
-      ],
-      "action": "buy_if_fundamentals_hold",
-      "condition": "股价低于7.20元且汽车零部件主业、现金流、会计质量未恶化",
-      "max_weight": 0.06,
-      "notes": "进入安全边际区，若基本面未恶化可分批建仓；6.20元以下吸引力更强。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "现金流恶化会削弱分红和安全边际",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "历史会计差错要求持续跟踪低毛利贸易业务质量",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "防止资产负债表扩张没有带来真实盈利增长",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.8
+      },
+      "reason": "接近综合合理价值区间上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "低于综合合理价值区间下沿",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "悲观情景下也开始具备较强赔率",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "高于合理价值区间且当前基本面不足以支撑溢价",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026H1或2026Q3汽车零部件收入继续双位数下滑",
-      "reason": "验证2026年收入下滑是否只是季度节奏还是主业拐弱"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "汽车零部件毛利率跌破17%",
-      "reason": "主业毛利率决定制造护城河和估值上限"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "经营现金流连续两个季度为负且应收账款/票据明显扩张",
-      "reason": "现金流恶化会削弱分红和安全边际"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "铬铁购销相关业务占比回升或出现新的收入确认/关联交易问题",
-      "reason": "历史会计差错要求持续跟踪低毛利贸易业务质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "有息负债继续扩张但扣非利润不增长",
-      "reason": "防止资产负债表扩张没有带来真实盈利增长"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.8,
-      "message": "进入合理价值上沿，复核2026经营趋势",
-      "reason": "接近综合合理价值区间上沿"
-    },
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "message": "进入安全边际买入区，若基本面未恶化可开观察仓",
-      "reason": "低于综合合理价值区间下沿"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "message": "进入强吸引力区，复核行业和现金流后提高仓位",
-      "reason": "悲观情景下也开始具备较强赔率"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "message": "高于合理价值区，不追高；已有仓位复核减仓",
-      "reason": "高于合理价值区间且当前基本面不足以支撑溢价"
-    }
-  ],
-  "updated_at": "2026-07-07T23:20:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

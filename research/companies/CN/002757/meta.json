@@ -1,111 +1,123 @@
 {
-  "symbol": "CN:002757",
-  "market": "CN",
-  "ticker": "002757",
-  "name": "南兴股份",
-  "company_name": "南兴装备股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备板式家具智能装备全流程产品能力，并通过唯一网络形成IDC及云计算第二曲线；但2025年家具装备收入下滑、IDC毛利率低，2026Q1扣非净利仍下滑。18元附近估值已隐含AIDC/AI算力期权，当前利润和ROE不足以支持主动买入，等待13.5元以下或AIDC利润率兑现。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    14.0,
-    17.0
-  ],
-  "buy_zone": [
-    0.0,
-    13.5
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南兴股份",
+    "security_status": "active",
+    "symbol": "CN:002757",
+    "ticker": "002757"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4b4c23b306a7f96376d34af252dba26189be333419a2438ba6c54de264c95a29"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至13.5元以下，且未出现应收账款继续恶化、商誉减值或IDC毛利率下行",
-      "action": "建立1%-2%观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核家具装备复苏、IDC毛利率和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至12.0元以下，且家具装备收入恢复增长、经营现金流仍显著覆盖净利润",
-      "action": "提高至3%-4%核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "判断AI算力转型是否从叙事进入利润兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于22.0元且未来两个季度扣非利润和IDC毛利率没有同步上修",
-      "action": "减仓或回避新增买入",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "应收账款是当前财务质量的核心风险项",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核唯一网络和数据中心资产的账面质量",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核治理和资本市场信号",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "低于合理价值区间下沿并具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "股息率和PB均进入更有吸引力区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "当前利润和ROE难以支撑更高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "action": "进入可买区，复核应收账款、IDC毛利率和AIDC订单后考虑建仓",
-      "reason": "低于合理价值区间下沿并具备初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "action": "进入深度安全边际区，若基本面未恶化可提高仓位",
-      "reason": "股息率和PB均进入更有吸引力区间"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "action": "估值透支，若无业绩上修则减仓或保持空仓",
-      "reason": "当前利润和ROE难以支撑更高估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布2026年半年报或三季报",
-      "reason": "复核家具装备复苏、IDC毛利率和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "IDC/AIDC业务披露重大客户合同、算力规模、利用率或毛利率变化",
-      "reason": "判断AI算力转型是否从叙事进入利润兑现"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "应收账款增速连续两个季度高于收入增速",
-      "reason": "应收账款是当前财务质量的核心风险项"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "发生商誉减值、固定资产减值或重大资产开支",
-      "reason": "复核唯一网络和数据中心资产的账面质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "控股股东、实际控制人或高管披露减持计划",
-      "reason": "复核治理和资本市场信号"
-    }
-  ],
-  "key_tracking_metrics": [
-    "家具智能装备收入增速和毛利率",
-    "IDC及云计算收入增速和毛利率",
-    "AIDC订单、机柜/功率规模、利用率和单瓦收入",
-    "应收账款余额及应收账款/收入比例",
-    "经营现金流净额/归母净利润",
-    "ROE和扣非归母净利润增速",
-    "商誉及固定资产减值迹象",
-    "现金分红和资本开支强度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

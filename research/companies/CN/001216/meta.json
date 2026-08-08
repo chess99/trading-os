@@ -1,100 +1,96 @@
 {
-  "symbol": "CN:001216",
-  "market": "CN",
-  "ticker": "001216",
-  "name": "华瓷股份",
-  "company_name": "华瓷股份",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华瓷股份是具备国际大客户认证、色釉陶瓷工艺和较好现金流的日用陶瓷出口龙头，但当前价格处于合理价值区间内，2026Q1收入和利润同比下滑、欧盟反倾销、汇率和募投产能利用率仍需验证，因此维持watch，只在10.8-12.5元区间提高仓位。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    13.0,
-    16.5
-  ],
-  "buy_zone": [
-    10.8,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    20.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华瓷股份",
+    "security_status": "active",
+    "symbol": "CN:001216",
+    "ticker": "001216"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "7e5a426a0e1d729b32f3ed30598c08d9e3615f7b475f8dea4e3cdc4070121b84"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约13.94元，仍处合理价值区间内但安全边际不足",
-      "action": "仅建立观察仓",
-      "max_weight": 0.01,
-      "reason": "公司质量较好，但2026Q1收入和利润同比下滑，欧盟反倾销、汇率和产能利用率仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报：收入、外销、毛利率、现金流和募投项目进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入12.5元以下且半年报未显示客户流失或毛利率失控",
-      "action": "加仓至核心跟踪仓",
-      "max_weight": 0.02,
-      "reason": "进入买入区间上沿，估值对基准情景有安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报：确认Q1下滑是否只是短期波动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入10.8元以下且经营现金流仍覆盖利润",
-      "action": "提高至计划上限",
-      "max_weight": 0.03,
-      "reason": "接近悲观情景估值上沿，赔率明显改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入买入区间上沿，复核半年报和毛利率后可加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于17.5元或半年报继续双降且毛利率低于28%",
-      "action": "减仓或停止买入",
-      "max_weight": 0.005,
-      "reason": "估值进入乐观预期区间或基本面被证伪"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入深度安全边际区间，若现金流和订单未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "高于合理价值上沿，除非越南产能和利润率明显超预期，否则应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入买入区间上沿，复核半年报和毛利率后可加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入深度安全边际区间，若现金流和订单未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "高于合理价值上沿，除非越南产能和利润率明显超预期，否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报：收入、外销、毛利率、现金流和募投项目进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报：确认Q1下滑是否只是短期波动"
-    }
-  ],
-  "key_tracking_metrics": [
-    "外销收入增速",
-    "色釉陶瓷收入和毛利率",
-    "釉下五彩瓷收入和毛利率",
-    "前五大客户销售占比",
-    "第一大客户销售占比",
-    "经营活动现金流净额/归母净利润",
-    "存货周转和应收账款周转",
-    "越南及募投项目投产进度",
-    "产能利用率",
-    "人民币兑美元和欧元汇率",
-    "欧盟及美国陶瓷餐具贸易政策"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688276",
-  "market": "CN",
-  "ticker": "688276",
-  "name": "百克生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "百克生物具备水痘、鼻喷流感、带状疱疹疫苗和多技术平台积累，但2025年带状疱疹疫苗退货与降价、水痘受出生人口下降和竞争影响，导致收入和利润大幅下滑。当前需要等待带疱退货见底、流感鼻喷放量、销售费用率下降和关键管线兑现，估值需给足安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    16,
-    22
-  ],
-  "buy_zone": [
-    10,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "百克生物",
+    "security_status": "active",
+    "symbol": "CN:688276",
+    "ticker": "688276"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "000658f2fe1905f9af0a12e5eda5347549be2187476473d96f265f983ad2e48d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入10-12.5元且带状疱疹疫苗退货见底、经营现金流保持为正",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查带状疱疹疫苗退货、收入恢复、销售费用率和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H2收入恢复双位数增长、销售费用率下降且应收账款回落",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和流感接种季销售进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价超过24元但收入和利润未修复，或带疱继续退货",
-      "action": "不加仓或减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重估长期盈利能力和管线兑现概率",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入买入观察区，若基本面未恶化可重新评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入悲观情景估值下沿附近，安全边际显著改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过基准公允价值上沿，若业绩未修复应考虑降低风险敞口",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入买入观察区，若基本面未恶化可重新评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入悲观情景估值下沿附近，安全边际显著改善"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "超过基准公允价值上沿，若业绩未修复应考虑降低风险敞口"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查带状疱疹疫苗退货、收入恢复、销售费用率和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和流感接种季销售进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重估长期盈利能力和管线兑现概率"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

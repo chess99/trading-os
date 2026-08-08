@@ -1,125 +1,120 @@
 {
-  "symbol": "CN:688235",
-  "market": "CN",
-  "ticker": "688235",
-  "name": "百济神州",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "百济神州已验证全球创新药商业化能力，BRUKINSA海外放量、2026Q1经营杠杆和sonrotoclax获FDA加速批准共同确认长期价值；但260元附近已接近基准合理价值上沿，新增买入需要等待更低价格或后续业绩/管线超预期提供安全边际。",
-  "quality_rating": "A-",
-  "valuation_rating": "neutral_to_expensive",
-  "fair_value_range": [
-    215,
-    275
-  ],
-  "buy_zone": [
-    185,
-    225
-  ],
-  "sell_or_reduce_zone": [
-    320,
-    360
-  ],
-  "position_plan": [
-    {
-      "condition": "股价在250-285元，估值处于合理区间上半段或偏贵",
-      "price_range": [
-        250,
-        285
-      ],
-      "action": "observe_or_tiny_probe",
-      "target_weight": 0.005,
-      "max_weight": 0.015
-    },
-    {
-      "condition": "股价在185-225元，进入安全边际买入区",
-      "price_range": [
-        185,
-        225
-      ],
-      "action": "accumulate",
-      "target_weight": 0.03,
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价低于185元且未发生根本性坏消息",
-      "price_range": [
-        0,
-        185
-      ],
-      "action": "buy_with_margin_of_safety",
-      "target_weight": 0.05,
-      "max_weight": 0.07
-    }
-  ],
-  "latest_report": "reports/2026-07-09-followup.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-09-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026Q2或中期业绩、BRUKINSA/TEVIMBRA销售和经营利润率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核全年指引兑现、医保谈判/海外监管和核心管线进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-11-15",
-      "reason": "复核2026Q2/Q3业绩中BRUKINSA美国和欧洲增速、经营利润率、自由现金流与sonrotoclax商业化进展。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 225,
-      "reason": "进入可买区，复核基本面后可分批建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 185,
-      "reason": "进入强安全边际区，若无基本面恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 285,
-      "reason": "高于不应追高价，停止新增并复核是否需要降风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 320,
-      "reason": "进入减仓复核区，若无基本面上修证据应降低仓位风险。"
-    }
-  ],
-  "key_metrics": {
-    "current_price": 260.78,
-    "price_date": "2026-07-09",
-    "estimated_market_cap_cny": 401970000000,
-    "fy2025_revenue_usd": 5300000000,
-    "fy2025_brukinsa_sales_usd": 3900000000,
-    "fy2025_tevimbra_sales_usd": 737000000,
-    "q1_2026_revenue_usd": 1513438000,
-    "q1_2026_brukinsa_sales_usd": 1094843000,
-    "q1_2026_tevimbra_sales_usd": 206000000,
-    "q1_2026_gaap_operating_income_usd": 249902000,
-    "q1_2026_net_income_usd": 227357000,
-    "q1_2026_free_cash_flow_usd": 161000000,
-    "fy2026_revenue_guidance_usd": [
-      6300000000,
-      6500000000
-    ],
-    "fy2026_gaap_operating_income_guidance_usd": [
-      750000000,
-      850000000
-    ]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "百济神州",
+    "security_status": "active",
+    "symbol": "CN:688235",
+    "ticker": "688235"
   },
-  "analyst": "Codex subagent + GPT-5",
-  "research_type": "followup",
-  "updated_at": "2026-07-09T23:59:00+08:00"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "78f2ddf15032391cc3ddc056e1aa9339e5b13d6cfbd8ce63ab4fcfbec61b33f3"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-followup.md",
+        "sha256": "ea0435527e25717e36363a496e304d154d0682762d68c1f4d437ce6fde20ccc5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026Q2或中期业绩、BRUKINSA/TEVIMBRA销售和经营利润率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核全年指引兑现、医保谈判/海外监管和核心管线进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-11-15"
+      },
+      "reason": "复核2026Q2/Q3业绩中BRUKINSA美国和欧洲增速、经营利润率、自由现金流与sonrotoclax商业化进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 225.0
+      },
+      "reason": "进入可买区，复核基本面后可分批建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 185.0
+      },
+      "reason": "进入强安全边际区，若无基本面恶化可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 285.0
+      },
+      "reason": "高于不应追高价，停止新增并复核是否需要降风险。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 320.0
+      },
+      "reason": "进入减仓复核区，若无基本面上修证据应降低仓位风险。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

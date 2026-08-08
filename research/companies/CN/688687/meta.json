@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688687",
-  "market": "CN",
-  "ticker": "688687",
-  "name": "凯因科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "凯因科技拥有丙肝/干扰素成熟产品、较高毛利率和充足现金，但2026Q1收入与扣非利润下滑、集采降价、控股股东减持及乙肝功能性治愈管线早期化使当前16元附近缺少足够安全边际；维持观察，等待13.5元以下或经营恢复证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14,
-    18
-  ],
-  "buy_zone": [
-    11,
-    13.5
-  ],
-  "sell_or_reduce_zone": [
-    21,
-    24
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凯因科技",
+    "security_status": "active",
+    "symbol": "CN:688687",
+    "ticker": "688687"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "5db3cdbe140ea3f0a5863691556d2db4685ff07403d352ff30dc8de60767de8b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于13.5元，且2026年单季收入同比降幅收窄、扣非净利润恢复为正后建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、毛利率、扣非净利润、应收账款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于11元，且凯力唯或金舒喜经营未恶化、经营现金流保持为正，可提高仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1下滑是暂时波动还是趋势恶化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026年连续两个季度收入下滑超过10%、扣非亏损或控股股东继续大额减持，则不新增仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及研发管线进展，重新评估正常化利润和管线价值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入初步买入区，需要复核2026Q2/Q3收入、毛利率和扣非利润修复情况。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入较厚安全边际区，若基本面未恶化可考虑提高至上限仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.0
+      },
+      "reason": "超过估值上沿，除非有明确临床或业绩催化，否则应减仓或重新评估。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入初步买入区，需要复核2026Q2/Q3收入、毛利率和扣非利润修复情况。"
-    },
-    {
-      "type": "price_below",
-      "price": 11,
-      "reason": "进入较厚安全边际区，若基本面未恶化可考虑提高至上限仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 21,
-      "reason": "超过估值上沿，除非有明确临床或业绩催化，否则应减仓或重新评估。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、毛利率、扣非净利润、应收账款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1下滑是暂时波动还是趋势恶化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及研发管线进展，重新评估正常化利润和管线价值。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

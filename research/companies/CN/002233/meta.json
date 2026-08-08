@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:002233",
-  "market": "CN",
-  "ticker": "002233",
-  "name": "塔牌集团",
-  "company_name": "塔牌集团",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "塔牌集团是低杠杆、高分红、现金充足的粤东水泥龙头，但广东房地产和基建需求仍弱，主业扣非利润尚未确认反转；当前 7.47 元更适合观察或小仓跟踪，优先等待 7.0 元以下买点。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_slightly_cheap",
-  "fair_value_range": [
-    7.8,
-    8.8
-  ],
-  "buy_zone": [
-    6.4,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    10.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "塔牌集团",
+    "security_status": "active",
+    "symbol": "CN:002233",
+    "ticker": "002233"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "6cce7bca9046eb940cfac36b9c317503bce17260d72997a9a8179171ad45add3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current_price_around_7_47_without_confirmed_demand_recovery",
-      "action": "watch_or_keep_tracker_position",
-      "max_weight": 0.015,
-      "reason": "PB is low and dividend yield is attractive, but Guangdong cement demand and recurring earnings have not confirmed a turn."
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "Review after 2026 interim report and summer Guangdong cement demand data.",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_below_7_0_and_no_deterioration_in_recurring_profit_or_balance_sheet",
-      "action": "build_position_gradually",
-      "max_weight": 0.03,
-      "reason": "Dividend yield approaches 6.9% and PB falls below about 0.67x, improving margin of safety."
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "Review after 2026 third-quarter report for recurring earnings and cash-flow trend.",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_below_6_4_with_stable_dividend_and_regional_price_floor",
-      "action": "increase_to_full_normal_position",
-      "max_weight": 0.05,
-      "reason": "Asset discount becomes significant while the company remains net-cash-rich and low-leverage."
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "Review after 2026 annual report and next dividend proposal.",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_above_9_5_without_clear_cement_price_and_volume_recovery",
-      "action": "reduce_position",
-      "max_weight": 0.02,
-      "reason": "Valuation would approach 0.9x PB without enough evidence of a new earnings cycle."
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "Enter preferred buy zone with higher dividend yield and lower PB.",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.4
+      },
+      "reason": "Deep value zone if fundamentals and dividend policy remain intact.",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "Review for reduction unless Guangdong cement prices and recurring earnings have improved.",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "Enter preferred buy zone with higher dividend yield and lower PB."
-    },
-    {
-      "type": "price_below",
-      "price": 6.4,
-      "reason": "Deep value zone if fundamentals and dividend policy remain intact."
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "Review for reduction unless Guangdong cement prices and recurring earnings have improved."
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "Review after 2026 interim report and summer Guangdong cement demand data."
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "Review after 2026 third-quarter report for recurring earnings and cash-flow trend."
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "Review after 2026 annual report and next dividend proposal."
-    }
-  ],
-  "key_tracking_metrics": [
-    "Guangdong cement price and inventory",
-    "cement sales volume",
-    "cement plus clinker sales volume",
-    "cement average selling price",
-    "cement average cost per ton",
-    "cement gross margin",
-    "Guangdong fixed-asset investment",
-    "Guangdong real-estate development investment",
-    "coal and electricity cost trend",
-    "hazardous and solid waste disposal volume and margin",
-    "recurring net profit attributable to shareholders",
-    "operating cash flow",
-    "cash plus trading financial assets",
-    "asset-liability ratio",
-    "cash dividend per share"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

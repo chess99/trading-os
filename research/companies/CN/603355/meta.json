@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:603355",
-  "market": "CN",
-  "ticker": "603355",
-  "name": "莱克电气",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "莱克电气具备高速电机、精密制造、海外产能和汽车零部件第二曲线，但2025-2026年利润受关税、转产、汇率和高杠杆压制；当前约24元处于合理价值区间内，缺少足够安全边际，需等待价格回落或毛利率、汇兑损益、债务压力改善后再上调为买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    22.0,
-    30.0
-  ],
-  "buy_zone": [
-    18.0,
-    21.5
-  ],
-  "sell_or_reduce_zone": [
-    34.0,
-    38.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "莱克电气",
+    "security_status": "active",
+    "symbol": "CN:603355",
+    "ticker": "603355"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "ba3bcef9cfef631d68403507eea6ebb9b36e2ea647f7bf26ccac29fcc460ce67"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于22元且2026H1未出现新的经营恶化时，仅建立研究型观察仓。",
-      "action": "watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、汇兑损益、短期借款和海外工厂爬坡。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于21.5元，且毛利率修复、汇兑损失收敛、单季归母净利润恢复至2亿元以上三项至少满足两项。",
-      "action": "buy",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否连续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于34元但正常化归母净利润仍未回到10亿元级别，或资产负债率继续上升。",
-      "action": "reduce",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及2027年一季报，更新正常化盈利和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.5
+      },
+      "reason": "进入买入区上沿，若基本面未恶化则具备更好的安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入深度安全边际区，可重新评估更高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "超过基准估值上沿，需要核验利润恢复是否足以支撑估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 21.5,
-      "reason": "进入买入区上沿，若基本面未恶化则具备更好的安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "reason": "进入深度安全边际区，可重新评估更高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 34.0,
-      "reason": "超过基准估值上沿，需要核验利润恢复是否足以支撑估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、汇兑损益、短期借款和海外工厂爬坡。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否连续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及2027年一季报，更新正常化盈利和估值区间。"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

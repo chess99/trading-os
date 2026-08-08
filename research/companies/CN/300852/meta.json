@@ -1,87 +1,105 @@
 {
-  "symbol": "CN:300852",
-  "ticker": "300852",
-  "market": "CN",
-  "name": "四会富仕",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "高可靠中小批量 PCB 细分厂商，2026Q1 收入恢复较快，但利润率和 ROE 尚未验证拐点；当前估值已反映较多 AI/通信与泰国基地改善预期，等待安全边际或盈利兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    38,
-    52
-  ],
-  "buy_zone": [
-    28,
-    36
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    70
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "四会富仕",
+    "security_status": "active",
+    "symbol": "CN:300852",
+    "ticker": "300852"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "909579aec2a31084bb89530267b92e3beb0dd805ee51333110d8d25b4dca5d56"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅跟踪观察，未验证利润率拐点前不主动建重仓",
-      "action": "watchlist_or_probe",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点查看泰国基地爬坡、毛利率、净利率、经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入32-36元且2026H1或2026Q3显示毛利率、净利率、经营现金流同步改善",
-      "action": "accumulate",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断收入增长是否转化为利润和ROE修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入增长但利润率不修复，或经营现金流显著弱于净利润",
-      "action": "exit_or_avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常化盈利、资本开支回报和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入买入观察区，重新核验半年报或三季报利润率与现金流是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入强安全边际区，若基本面未恶化可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "高于合理价值区间，需要利润修复或AI订单兑现支撑，否则考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入买入观察区，重新核验半年报或三季报利润率与现金流是否改善"
-    },
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入强安全边际区，若基本面未恶化可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "高于合理价值区间，需要利润修复或AI订单兑现支撑，否则考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点查看泰国基地爬坡、毛利率、净利率、经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断收入增长是否转化为利润和ROE修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常化盈利、资本开支回报和估值区间"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 47.32,
-    "last_price_date": "2026-07-15",
-    "market_cap_cny_billion_est": 7.595,
-    "ttm_pe_est": 58.9,
-    "pb_est": 3.35,
-    "source_note": "价格来自新浪财经实时行情接口；股本、净利润和净资产来自2025年报摘要与2026一季报；估值为研究员测算。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

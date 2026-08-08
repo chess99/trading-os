@@ -1,82 +1,95 @@
 {
-  "symbol": "CN:002951",
-  "ticker": "002951",
-  "name": "金时科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司已从烟标印刷转向储能系统、储能消防、超级电容和多孔炭，但2025年和2026H1仍处亏损及扣非承压阶段，经营现金流、客户集中和新项目验证风险较高；当前股价已反映较多转型期权，等待订单、现金流和扣非利润验证。",
-  "fair_value_range": [
-    7.0,
-    10.0
-  ],
-  "buy_zone": [
-    0.0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金时科技",
+    "security_status": "active",
+    "symbol": "CN:002951",
+    "ticker": "002951"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "9292958358fec32a8da2a423c7875dc671e1a75edbdbe4e514aeeb3311b74f29"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未触发订单、现金流、扣非利润验证前仅观察，不建仓。",
-      "action": "watch_only",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告的收入、扣非亏损、经营现金流、应收账款和自建储能电站进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.5元且未出现新增减值、项目资金失控或重大治理风险时，可作为研究性仓位。",
-      "action": "starter_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及多孔炭产线建设、订单、客户验证进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "多孔炭核心客户订单、自建储能电站收益、扣非利润和经营现金流转正四项中至少两项被公告验证后，重新评估仓位上限。",
-      "action": "reassess",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，确认转型后业务是否形成扣非盈利和经营现金流改善。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入安全边际观察区，可复核基本面后考虑小仓位研究性买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于基准估值区间且接近乐观情景下沿，若无订单和现金流验证应避免追高或考虑减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入安全边际观察区，可复核基本面后考虑小仓位研究性买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "高于基准估值区间且接近乐观情景下沿，若无订单和现金流验证应避免追高或考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告的收入、扣非亏损、经营现金流、应收账款和自建储能电站进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及多孔炭产线建设、订单、客户验证进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，确认转型后业务是否形成扣非盈利和经营现金流改善。"
-    }
-  ],
-  "key_monitoring_items": [
-    "2026H1和2026Q3扣非净利润",
-    "经营活动现金流和应收账款周转",
-    "储能消防毛利率",
-    "自建储能电站投运收益和IRR",
-    "多孔炭产线建设、客户验证和订单",
-    "资产减值和信用减值变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

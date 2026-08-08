@@ -1,106 +1,96 @@
 {
-  "symbol": "CN:002487",
-  "market": "CN",
-  "ticker": "002487",
-  "name": "大金重工",
-  "company_name": "大金重工",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "current_rating": "watch",
-  "current_thesis": "欧洲海风基础出口交付能力和2026年订单兑现支撑利润弹性，但当前估值已接近合理区间上沿，需要等待半年报验证毛利率和现金流。",
-  "conclusion": "大金重工是已具备欧洲海风基础出口交付能力的海工制造公司，2026年处于订单兑现期；但当前股价已接近合理区间上沿，适合小仓观察或持有，不适合追高。",
-  "fair_value_range": [
-    38,
-    48
-  ],
-  "ratings": {
-    "company_quality": "A-",
-    "valuation": "中性偏贵",
-    "confidence": "中等"
-  },
-  "fair_value": {
+  "identity": {
     "currency": "CNY",
-    "range": "38-48",
-    "method_summary": "综合PE、PB和EV/EBITDA三种区间估值；使用H股发行后约7.4009亿股股本口径。"
+    "market": "CN",
+    "name": "大金重工",
+    "security_status": "active",
+    "symbol": "CN:002487",
+    "ticker": "002487"
   },
-  "buy_zone": [
-    31,
-    36
-  ],
-  "buy_zone_detail": {
-    "currency": "CNY",
-    "safety_margin_buy_below": 36,
-    "strong_buy_below": 31,
-    "notes": "36元以下具备安全边际，31元以下赔率明显改善。"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "8397a1f815290fcb320a36c74e0e9a0230806e0854db301711c877b68f7e0c0f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "sell_or_reduce_zone": [
-    48,
-    55
-  ],
-  "sell_or_reduce_zone_detail": {
-    "currency": "CNY",
-    "do_not_chase_above": 55,
-    "reduce_if_fundamentals_disappoint_above": 48,
-    "notes": "48元以上停止新增；55元以上不追高，若订单或利润兑现低于预期则减仓。"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "position_plan": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于合理区间上沿，尚未进入安全边际区时",
-      "max_weight": 0.05,
-      "initial_weight": 0.015,
-      "add_plan": "首笔不超过计划上限的20%-25%；只有海外订单、毛利率和经营现金流同时验证后再加仓。",
-      "positioning": "周期成长型观察仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入安全边际买入区，可分批提高仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查海外订单兑现、毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_below",
-      "price": 31,
-      "reason": "进入强吸引力买入区，若基本面未恶化可加至目标仓位上限附近。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润和现金流趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 55,
-      "reason": "超过不追高价，需检查估值是否脱离订单和利润兑现。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查海外订单兑现、毛利率和经营现金流。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入安全边际买入区，可分批提高仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润和现金流趋势。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 31.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可加至目标仓位上限附近。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "超过不追高价，需检查估值是否脱离订单和利润兑现。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_plan": "跟踪海外海工订单、毛利率、经营现金流、H股募集资金使用、产能利用率和欧洲海风项目进展；出现重大订单、业绩预告或项目延期公告时提前复查。",
-  "key_risks": [
-    "海外海风项目延期、取消或重新议价导致订单兑现不及预期。",
-    "原材料、运费、汇率和人工成本波动压缩毛利率。",
-    "大件海工产品质量、交付、索赔和保函风险。",
-    "H股融资后扩产过快导致产能利用率不足或资本回报下降。",
-    "欧洲贸易政策、关税、反补贴调查或本土供应链保护影响出口。",
-    "经营现金流持续弱于利润，应收款、存货和合同资产积压。"
-  ],
-  "sources": [
-    "https://static.cninfo.com.cn/finalpage/2026-03-06/1224997956.PDF",
-    "https://static.cninfo.com.cn/finalpage/2026-04-28/1225199920.PDF",
-    "https://static.cninfo.com.cn/finalpage/2026-07-03/1225407725.PDF",
-    "https://www.investing.com/equities/liaoning-dajin-heavy-industry-co",
-    "https://www.google.com/finance/quote/002487:SHE",
-    "https://www.dajin.cn/"
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "updated_at": "2026-07-08T00:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

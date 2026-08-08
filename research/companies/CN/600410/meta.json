@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:600410",
-  "ticker": "600410",
-  "name": "华胜天成",
-  "exchange": "SSE",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处在政企数字化、智算中心、云计算和企业级AI应用方向，收入仍有增长，但主业扣非亏损、毛利率低，且泰凌微/GDYN等金融资产和长期股权投资波动显著扰动利润。当前约3.7倍P/B、3倍以上P/S缺乏安全边际，需等待价格回落或连续扣非盈利验证。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    5.5,
-    8.0
-  ],
-  "buy_zone": [
-    5.0,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    12.0
-  ],
-  "position_plan": [
-    {
-      "condition": "当前价格高于公允价值上沿且2026H1预亏尚未正式落地，不建立长期仓位。",
-      "action": "watch_only",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价跌至6元以下，且2026H1正式报告未出现新增重大资产质量恶化，可建立跟踪仓位。",
-      "action": "starter_position",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价跌至5元以下，且连续两个季度扣非亏损收窄或转正、经营现金流为正，可重新评估买入。",
-      "action": "research_for_buy",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入买入观察区，需要复核2026H1正式报告和金融资产敞口。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "接近有安全边际的买入区，若扣非亏损和现金流改善可重新估值。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "超过乐观情景估值下沿，若扣非仍亏损应降低或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告正式数据、GDYN减值最终金额和扣非亏损情况。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度收入、扣非利润、经营现金流和金融资产公允价值影响。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认主业盈利质量与估值假设是否成立。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 14.55,
-    "reference_market_cap_billion_cny": 15.95,
-    "revenue_2025_billion_cny": 4.659,
-    "net_profit_2025_billion_cny": 0.0277,
-    "deducted_net_profit_2025_billion_cny": -0.1943,
-    "operating_cash_flow_2025_billion_cny": -0.1076,
-    "q1_2026_revenue_billion_cny": 1.018,
-    "q1_2026_net_profit_billion_cny": -0.0923,
-    "h1_2026_guided_revenue_billion_cny": 2.5,
-    "h1_2026_guided_net_profit_range_billion_cny": [
-      -0.33,
-      -0.22
-    ]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华胜天成",
+    "security_status": "active",
+    "symbol": "CN:600410",
+    "ticker": "600410"
   },
-  "risks": [
-    "主业低毛利和扣非亏损持续",
-    "泰凌微、GDYN等金融资产及长期股权投资波动",
-    "政企大项目回款和验收节奏不稳定",
-    "AI和智算业务未能转化为高毛利可复制收入",
-    "第一大股东持股比例低且质押比例高"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "21cbb37e65d770ff49f3c1ada2c33fb186d4bb8d717e0b4c4245c71ba7a3e7d3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告正式数据、GDYN减值最终金额和扣非亏损情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度收入、扣非利润、经营现金流和金融资产公允价值影响。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认主业盈利质量与估值假设是否成立。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入买入观察区，需要复核2026H1正式报告和金融资产敞口。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "接近有安全边际的买入区，若扣非亏损和现金流改善可重新估值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "超过乐观情景估值下沿，若扣非仍亏损应降低或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "sources": [
-    "https://stockmc.xueqiu.com/202604/600410_20260428_T971.pdf",
-    "https://stockmc.xueqiu.com/202604/600410_20260428_DWFV.pdf",
-    "https://stockmc.xueqiu.com/202607/600410_20260715_BRUQ.pdf",
-    "https://www.teamsun.com.cn/d/about/introduce",
-    "https://www.news.cn/fortune/20260130/d4744bf782d34fc6a48a10b6b95890de/c.html"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

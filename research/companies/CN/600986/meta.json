@@ -1,86 +1,115 @@
 {
-  "symbol": "CN:600986",
-  "ticker": "600986",
-  "name": "浙文互联",
-  "company_name": "浙文互联集团股份有限公司",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "浙文互联仍主要体现低利润数字营销代理业务属性，AI/算力转型尚未在可核验报表中形成足够利润贡献；当前约100亿元市值接近乐观情景，安全边际不足，适合观察等待半年报和现金流验证。",
-  "fair_value_range": [
-    4.2,
-    5.8
-  ],
-  "buy_zone": [
-    3.8,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    7.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙文互联",
+    "security_status": "active",
+    "symbol": "CN:600986",
+    "ticker": "600986"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f84c42ebe12be155587410270c41d8dd9f050adb949fef646ada8824c8d77090"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.8元，且2026H1扣非净利润落在预告区间、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计披露2026年半年报后，复核归母亏损来源、扣非修复和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.2元，且2026Q3继续验证扣非利润修复、应收账款周转无恶化",
-      "action": "小幅加仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后验证AI/算力业务是否形成可持续利润贡献。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.8元但未披露AI或算力业务可持续利润贡献",
-      "action": "不追高或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "年报后复核全年ROE、扣非净利率、治理和审计意见。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入初始买入观察区，需要复核半年报扣非利润和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "接近基准情景下沿，可在基本面验证后考虑小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "接近乐观情景价格，若无AI/算力利润兑现则安全边际不足。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "明显高于合理价值区间，应复核主题交易透支风险。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入初始买入观察区，需要复核半年报扣非利润和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "接近基准情景下沿，可在基本面验证后考虑小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "接近乐观情景价格，若无AI/算力利润兑现则安全边际不足。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "明显高于合理价值区间，应复核主题交易透支风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计披露2026年半年报后，复核归母亏损来源、扣非修复和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后验证AI/算力业务是否形成可持续利润贡献。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "年报后复核全年ROE、扣非净利率、治理和审计意见。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

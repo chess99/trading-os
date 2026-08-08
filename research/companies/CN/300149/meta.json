@@ -1,120 +1,123 @@
 {
-  "symbol": "CN:300149",
-  "market": "CN",
-  "ticker": "300149",
-  "name": "睿智医药",
-  "company_name": "睿智医药科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是小型综合 CXO 平台，2025 年收入止跌、经营现金流改善、海外客户基础较好，但扣非利润仍弱、ROE 很低、行业竞争和海外政策风险较高。2026-07-13 收盘价 8.64 元已提前计入较多修复预期，低于 5.5 元才具备较好安全边际。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    0,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "睿智医药",
+    "security_status": "active",
+    "symbol": "CN:300149",
+    "ticker": "300149"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "56b848fbd8ec3d5afcb21b8522e8a3ee79d95668286566e729233b5a84c647fa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 5.5 元，且扣非利润连续两个季度为正、经营现金流为正",
-      "action": "建立 1%-2% 小仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于 4.8 元，且未出现重大海外政策冲击或资产减值信号",
-      "action": "分批提高至 2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价处于 5.5-7.2 元，基本面仅温和恢复",
-      "action": "观察或维持 0%-1% 跟踪仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价高于 9.5 元，但 2026E 净利润未上修至 1.5 亿元以上",
-      "action": "减仓或不新增",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入估值买入区，需要复核基本面未恶化",
-      "action": "进入可买区，复核订单、扣非利润和现金流后建立小仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入更高安全边际区间，可考虑分批加仓",
-      "action": "若基本面未恶化，可分批加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "超过减仓区间，需确认盈利上修是否足以支撑估值",
-      "action": "若无盈利上修，减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年度报告可验证修复斜率",
-      "condition": "发布 2026 年半年度报告或三季度报告",
-      "action": "复核收入增速、扣非利润、毛利率和现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "定增进展会影响每股价值和资产负债表",
-      "condition": "定增获证监会注册、发行完成或方案终止",
-      "action": "复核摊薄比例、资金用途和资本配置质量"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "海外收入占比较高，需要跟踪政策与订单风险",
-      "condition": "海外客户订单、美国生物安全相关政策或贸易限制出现重大变化",
-      "action": "重估海外收入风险和估值折价"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证扣非利润和现金流质量",
-      "condition": "单季扣非净利润转负或经营现金流显著弱于净利润",
-      "action": "下调质量评级和合理价值区间"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "价格接近买入区或减仓区时需要重新核验基本面",
-      "condition": "股价跌破 5.5 元或突破 9.5 元",
-      "action": "重新检查买入或减仓条件"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入估值买入区，需要复核基本面未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入更高安全边际区间，可考虑分批加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "超过减仓区间，需确认盈利上修是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "单季收入同比增速是否连续高于 10%",
-    "扣非净利率和毛利率是否连续改善",
-    "经营活动现金流净额与净利润匹配度",
-    "新签订单、在手订单和 CDMO 产能利用率",
-    "境外收入占比及美国客户政策风险暴露",
-    "定增摊薄比例及募集资金投入产出",
-    "应收账款周转、存货和资产减值迹象"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,91 +1,95 @@
 {
-  "symbol": "CN:301439",
-  "ticker": "301439",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "泓淋电力",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "泓淋电力是具备全球认证、客户导入和海外交付能力的电源线组件及特种线缆制造商。公司基本面稳健，特种线缆、新能源和数据中心相关产品提供成长弹性，但当前估值已部分反映预期，且应收、现金流和铜价波动仍需验证，因此维持观察，等待更厚安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.5,
-    15.5
-  ],
-  "buy_zone": [
-    10.5,
-    11.8
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    23.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泓淋电力",
+    "security_status": "active",
+    "symbol": "CN:301439",
+    "ticker": "301439"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "16d41d3edc58c5479b543091662cf185f39e1958af6b6ef591990389ae26a6f9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入10.5-11.8元且收入未失速、经营现金流继续修复、应收账款增速不高于收入增速时，可建立观察性仓位。",
-      "action": "initial_buy",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点跟踪经营现金流、应收账款和特种线缆增长。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流/归母净利润大于0.8，特种线缆或新能源/数据中心相关收入占比提升，且前瞻PE不高于25倍时，可提高仓位。",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润和现金流趋势是否支持估值上修。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于18元且没有明确利润上修或高毛利新订单验证时，降低或不新增仓位。",
-      "action": "reduce_or_hold_cash",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估收入结构、利润率、分红和海外产能贡献。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.8
+      },
+      "reason": "进入买入观察区间，若基本面未恶化则安全边际开始具备吸引力。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "高于基准估值上沿较多，若缺少利润上修证据则风险收益比转弱。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.8,
-      "reason": "进入买入观察区间，若基本面未恶化则安全边际开始具备吸引力。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "高于基准估值上沿较多，若缺少利润上修证据则风险收益比转弱。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点跟踪经营现金流、应收账款和特种线缆增长。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润和现金流趋势是否支持估值上修。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估收入结构、利润率、分红和海外产能贡献。"
-    }
-  ],
-  "sources": [
-    {
-      "name": "2025年年度报告",
-      "date": "2026-04-28",
-      "url": "https://pdf.dfcfw.com/pdf/H2_AN202604271821631230_1.pdf"
-    },
-    {
-      "name": "2026年第一季度报告",
-      "date": "2026-04-28",
-      "url": "https://pdf.dfcfw.com/pdf/H2_AN202604271821631277_1.pdf"
-    },
-    {
-      "name": "2025年年度权益分派实施公告",
-      "date": "2026-05-26",
-      "url": "https://pdf.dfcfw.com/pdf/H2_AN202605251834192885_1.pdf"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

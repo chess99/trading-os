@@ -1,1 +1,106 @@
-{"buy_zone":[21,25],"currency":"CNY","current_rating":"watch","current_thesis":"玉龙铜矿驱动的高质量资源股+玉龙三期/茶亭铜矿成长期权，冶炼拖累与单一矿山权重大；2026-07-09收盘28.99元、PE TTM 15.63x、PB 3.46x已基本反映基准情景、相对紫金/洛钼无显著折价，安全边际不足，应观察等价。","fair_value_range":[27,33],"latest_report":"reports/2026-07-09-initial.md","market":"CN","name":"西部矿业","position_plan":[{"condition":"股价≤18元且玉龙铜矿与铜价逻辑未破坏","max_weight":0.25},{"condition":"股价在21-25元且中报未显示资本开支失控","max_weight":0.15},{"condition":"股价在25-27元","max_weight":0.05},{"condition":"股价在27-33元（接近合理价值中枢，不追加）","max_weight":0.03}],"price_triggers":[{"price":25,"reason":"进入安全边际初始区，重新评估是否建立底仓","type":"price_below"},{"price":18,"reason":"进入强吸引力区，若基本面未恶化可提高仓位","type":"price_below"},{"price":33,"reason":"接近基准估值上沿，检查是否需要减仓","type":"price_above"},{"price":40,"reason":"接近乐观情景估值区，原则上不追高并考虑显著减仓","type":"price_above"}],"report_history":["reports/2026-07-09-initial.md"],"review_triggers":[{"date":"2026-07-30","reason":"披露中报：复查玉龙产量、经营现金流、负债变化、冶炼子公司盈亏","type":"date"},{"date":"2026-12-31","reason":"年度跟踪：复查玉龙三期建设节奏、茶亭勘查与可研进展、全年铜价中枢、资本开支与净负债","type":"date"}],"sell_or_reduce_zone":[33,40],"status":"active","symbol":"CN:601168","ticker":"601168","updated_at":"2026-07-09T23:30:00+08:00"}
+{
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "西部矿业",
+    "security_status": "active",
+    "symbol": "CN:601168",
+    "ticker": "601168"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "b6a37df6c1238a914df7d509aa03c5880183fe2a6b5ceef38fcacd2e24085ac4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-07-30"
+      },
+      "reason": "披露中报：复查玉龙产量、经营现金流、负债变化、冶炼子公司盈亏",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "年度跟踪：复查玉龙三期建设节奏、茶亭勘查与可研进展、全年铜价中枢、资本开支与净负债",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入安全边际初始区，重新评估是否建立底仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入强吸引力区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 33.0
+      },
+      "reason": "接近基准估值上沿，检查是否需要减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "接近乐观情景估值区，原则上不追高并考虑显著减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
+}

@@ -1,96 +1,105 @@
 {
-  "symbol": "CN:600249",
-  "ticker": "600249",
-  "name": "两面针",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "两面针具备老品牌认知和较厚资产负债表，但日化主业盈利弹性尚未验证，2026H1预亏使经营拐点证据不足；当前价格缺少安全边际，适合观察等待更低价格或主业改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.6,
-    4.6
-  ],
-  "buy_zone": [
-    3.2,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    5.4,
-    6.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "两面针",
+    "security_status": "active",
+    "symbol": "CN:600249",
+    "ticker": "600249"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "7f50b7f336a380707bf316999af5f9a62c14c13bdb3ef7bb0a67ca79734ed493"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于4.6元且主业扣非盈利未连续改善时仅保留观察，不建仓",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看亏损来源、日化分部毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至3.8元以下，且半年报显示亏损主要为一次性或非现金因素，允许试探仓",
-      "action": "starter_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认主业扣非盈利是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至3.2元附近且账面资产未恶化，同时日化主业扣非亏损收窄，可提高到小仓位",
-      "action": "small_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和控股权整合后的经营计划",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入保守买入区间上沿，需要复核半年报和资产质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "接近悲观情景资产折价价格，若资产负债表稳定则安全边际改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.4
+      },
+      "reason": "进入乐观情景以上区间，若无主业盈利验证应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入保守买入区间上沿，需要复核半年报和资产质量"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "接近悲观情景资产折价价格，若资产负债表稳定则安全边际改善"
-    },
-    {
-      "type": "price_above",
-      "price": 5.4,
-      "reason": "进入乐观情景以上区间，若无主业盈利验证应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看亏损来源、日化分部毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认主业扣非盈利是否修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和控股权整合后的经营计划"
-    }
-  ],
-  "key_sources": [
-    {
-      "title": "两面针2025年年度报告",
-      "date": "2026-03-27",
-      "url": "https://stockmc.xueqiu.com/202603/600249_20260327_VD6L.pdf"
-    },
-    {
-      "title": "两面针2026年第一季度报告",
-      "date": "2026-04-29",
-      "url": "https://stockmc.xueqiu.com/202604/600249_20260429_2P41.pdf"
-    },
-    {
-      "title": "两面针2026年半年度业绩预告",
-      "date": "2026-07-15",
-      "url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

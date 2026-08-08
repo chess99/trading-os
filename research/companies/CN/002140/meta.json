@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:002140",
-  "market": "CN",
-  "ticker": "002140",
-  "name": "东华科技",
-  "company_name": "东华科技",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "央企化工工程设计/EPC平台，2025年订单恢复和2026Q1利润、现金流改善提供观察价值；但合同资产和应收账款规模高，需等待回款与订单转化验证后再提高仓位。",
-  "quality_rating": "B",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    9.5,
-    11.8
-  ],
-  "buy_zone": [
-    7.6,
-    8.4
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    14.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东华科技",
+    "security_status": "active",
+    "symbol": "CN:002140",
+    "ticker": "002140"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "506c1e6b3fe8d704eae4c25b1c511c187841cb027c6d8f5afcdb5b587b184433"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入7.6-8.4元且未出现重大项目减值、回款恶化或合同资产异常扩张",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "该价格相对中性合理价值有约12%-36%折价，能补偿EPC回款和合同资产风险"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看合同资产、应收账款、经营现金流和订单转化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流为正，合同资产/收入比下降，重大订单按进度转化",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "现金流和资产质量改善后，订单高增长的可信度提高"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认利润增长是否由现金流和回款支撑",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.5元但毛利率、现金流和回款没有同步改善",
-      "action": "减仓或停止新增买入",
-      "max_weight": 0.02,
-      "reason": "估值进入乐观区间，安全边际下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.4
+      },
+      "reason": "进入买入区间上沿，可评估首笔1.0%-1.5%仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.6
+      },
+      "reason": "进入深度安全边际区间，若基本面未恶化可提高建仓优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "进入减仓观察区间，需要重新评估订单兑现和现金流能否支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.4,
-      "reason": "进入买入区间上沿，可评估首笔1.0%-1.5%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 7.6,
-      "reason": "进入深度安全边际区间，若基本面未恶化可提高建仓优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "进入减仓观察区间，需要重新评估订单兑现和现金流能否支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看合同资产、应收账款、经营现金流和订单转化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认利润增长是否由现金流和回款支撑"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新签订单金额及总包/设计咨询结构",
-    "总承包毛利率",
-    "设计咨询及技术服务毛利率",
-    "应收账款余额",
-    "合同资产余额",
-    "经营活动现金流量净额",
-    "收现比",
-    "资产减值准备",
-    "重大EPC项目开工、结算和回款进度",
-    "盐湖锂、绿氨、氢能项目正式合同与执行进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

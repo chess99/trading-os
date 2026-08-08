@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000524",
-  "market": "CN",
-  "ticker": "000524",
-  "name": "岭南控股",
-  "company_name": "岭南控股",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "广州国资文旅平台现金充足、广之旅和核心酒店资产具备区域品牌力，但旅行社低毛利、酒店管理扩张费用和2026年重大资产重组未定价使当前位置安全边际不足，适合观察等待买入区间。",
-  "quality_rating": "B",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    7.0,
-    8.8
-  ],
-  "buy_zone": [
-    5.8,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "岭南控股",
+    "security_status": "active",
+    "symbol": "CN:000524",
+    "ticker": "000524"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "5014137ece37370b9e553a93c69efa855cc9d59963d8cf4c6a17cc1aed829521"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.80元且重大资产重组报告书未出现明显高估值、弱承诺或大比例摊薄",
-      "action": "建立观察仓",
-      "max_weight": 0.005,
-      "reason": "价格进入买入区间上沿以下，资产负债表现金充足，但重组不确定性仍需控制仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证扣非利润、现金流、旅行社毛利率和酒店管理利润",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报扣非归母净利同比增长超过15%，经营现金流继续改善，且重组作价和业绩承诺合理",
-      "action": "加仓至小仓位",
-      "max_weight": 0.015,
-      "reason": "主业盈利弹性和交易条款同时验证后，风险收益改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和重大资产重组最新进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.50元但未出现利润上修或重组条款超预期",
-      "action": "减仓或不追买",
-      "max_weight": 0.0,
-      "reason": "估值已反映较强复苏和国资整合预期，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入首笔观察仓买入区间，需要复核重组进展和半年报趋势",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入深度安全边际区间，若基本面未恶化可重新评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "进入减仓区间，需确认是否有利润或重组条款支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入首笔观察仓买入区间，需要复核重组进展和半年报趋势"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入深度安全边际区间，若基本面未恶化可重新评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "进入减仓区间，需确认是否有利润或重组条款支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证扣非利润、现金流、旅行社毛利率和酒店管理利润"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和重大资产重组最新进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "广之旅收入和归母净利",
-    "出境游收入及恢复速度",
-    "旅行社运营毛利率",
-    "酒店经营收入和毛利率",
-    "岭南酒店新增项目数量和净利润",
-    "经营活动现金流量净额",
-    "货币资金和资产负债率",
-    "重大资产重组交易作价、业绩承诺和摊薄比例",
-    "关联交易金额",
-    "广州会展和入境游需求"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

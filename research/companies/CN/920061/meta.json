@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:920061",
-  "market": "CN",
-  "ticker": "920061",
-  "name": "西磁科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "西磁科技是磁力过滤设备与磁性应用组件小型专精公司，受益于锂电和新材料除铁需求长期升级，但2025年至2026Q1扣非盈利仍处低位，当前股价已提前反映乐观复苏，缺乏安全边际；等待订单、扣非净利率和募投项目兑现后再评估。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.5,
-    10.5
-  ],
-  "buy_zone": [
-    5.5,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "西磁科技",
+    "security_status": "active",
+    "symbol": "CN:920061",
+    "ticker": "920061"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e1bd919645f124ebeb309f3e17344853c3d446accd06b7b9244aa804259e1cd9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于7.0元，且连续两个季度收入同比恢复至15%以上、扣非净利率回到8%以上时，才建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点检查收入增速、扣非净利率、合同负债、毛利率和减持进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于5.5元，且合同负债、在手订单或磁力过滤设备收入连续改善，同时无新增实控人减持压力，可提升至小仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认锂电需求温和复苏是否转化为订单和主营利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于14.0元且TTM扣非净利润仍低于1000万元时，不新增并将仓位降至零。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "检查募投项目达到预定可使用状态后的产能利用和费用摊销影响。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入初步安全边际区间，需要复核半年报和订单恢复质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入深度折价区间，若基本面未恶化可重新评估买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "估值重新接近乐观情景，若扣非利润未恢复应卖出或降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过当前乐观情景上沿，除非出现超预期大订单和利润拐点，否则风险收益不匹配。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入初步安全边际区间，需要复核半年报和订单恢复质量。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入深度折价区间，若基本面未恶化可重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "估值重新接近乐观情景，若扣非利润未恢复应卖出或降低仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "超过当前乐观情景上沿，除非出现超预期大订单和利润拐点，否则风险收益不匹配。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点检查收入增速、扣非净利率、合同负债、毛利率和减持进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认锂电需求温和复苏是否转化为订单和主营利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "检查募投项目达到预定可使用状态后的产能利用和费用摊销影响。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

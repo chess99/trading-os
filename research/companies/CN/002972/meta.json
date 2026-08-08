@@ -1,121 +1,123 @@
 {
-  "symbol": "CN:002972",
-  "market": "CN",
-  "ticker": "002972",
-  "name": "科安达",
-  "company_name": "深圳科安达电子科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "科安达在轨道交通计轴、防雷及智能诊断等细分领域有真实认证、案例和技术壁垒，资产负债表稳健，现金充裕；但收入规模小、前五大客户占比高、应收账款与信用减值压力明显，2026年中股价已透支较多增长。合理价值约10.5-13.5元，9.5元以下才具备足够安全边际。",
-  "quality_rating": "中高",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    10.5,
-    13.5
-  ],
-  "buy_zone": [
-    0,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科安达",
+    "security_status": "active",
+    "symbol": "CN:002972",
+    "ticker": "002972"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "12d82c8a4f651f5a21aaeb132314a7c6b77f6c784952989f1c9ff483a8d6e5e5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于16元，且未来12个月订单、利润、回款没有同步超预期",
-      "action": "不买；已有仓位降至0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价处于10.5-13.5元合理价值区，且经营现金流/净利润大于1、信用减值收敛",
-      "action": "可建立0%-2%观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于或等于9.5元，且核心轨交业务订单未恶化、应收账款/收入未继续上升",
-      "action": "建立2%-3%基础仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价低于或等于8.5元，且海外订单或防雷及智能诊断业务持续兑现",
-      "action": "可加至3%-5%上限仓位",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入有安全边际的可买区",
-      "action": "进入可买区，复核订单、应收账款和信用减值后考虑建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入深度折价区，赔率明显改善",
-      "action": "进入深度安全边际区，若基本面未恶化可加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "显著高于合理价值上沿，安全边际不足",
-      "action": "进入减仓/回避区，除非基本面显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证收入、利润、信用减值和现金流质量的第一个关键节点",
-      "action": "复核收入增速、归母净利润、信用减值损失和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "披露重大中标、海外订单或轨交信号核心产品批量应用公告",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "订单兑现决定当前高估值能否被未来增长消化",
-      "action": "评估订单质量、毛利率和交付周期"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "应收账款/营业收入连续两个报告期高于100%或信用减值损失继续扩大",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "应收和减值是公司利润质量的最大折价来源",
-      "action": "下调质量评级和合理估值"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "控股股东或核心高管新增大额减持计划",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "高位减持会降低估值容忍度并影响市场定价",
-      "action": "复核治理和估值容忍度"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "股价跌入9.5元以下或涨至16元以上",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "价格触及买入区或减仓区时需要重新校准仓位",
-      "action": "重新评估买入或减仓动作"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入有安全边际的可买区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入深度折价区，赔率明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "显著高于合理价值上沿，安全边际不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "新签订单和在手订单金额",
-    "计轴系统、防雷及智能诊断、系统集成分产品收入和毛利率",
-    "应收账款/营业收入",
-    "信用减值损失",
-    "经营现金流/归母净利润",
-    "境外收入占比和海外订单金额",
-    "前五大客户收入占比",
-    "控股股东减持进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

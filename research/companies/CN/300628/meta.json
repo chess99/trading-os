@@ -1,109 +1,106 @@
 {
-  "symbol": "CN:300628",
-  "market": "CN",
-  "ticker": "300628",
-  "name": "亿联网络",
-  "company_name": "亿联网络",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "亿联网络是高质量企业通信终端和会议产品出海公司，2025年毛利率、净利率、现金资产和分红质量突出，会议产品是主要增长引擎；但桌面通信终端成熟化、海外关税汇率、AI办公硬件竞争和平台生态依赖限制估值上限。当前估值合理偏不贵，适合33元以下首笔买入、30元附近加仓。",
-  "quality_rating": "high",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    37,
-    47
-  ],
-  "buy_zone": [
-    28,
-    33
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "亿联网络",
+    "security_status": "active",
+    "symbol": "CN:300628",
+    "ticker": "300628"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "62e2ce7e09a285aaf7c0ea0d830621d1a900de06a8cf18f611ede9b7aee1a18d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于33元且会议产品收入增速、综合毛利率和现金流未出现趋势性恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "进入买入区上沿，2025年估值约16倍PE以内，质量与分红提供安全垫"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看会议产品增速、美洲毛利率、经营现金流和库存",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于30元且后续季报显示经营现金流回补、会议产品继续双位数增长",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "安全边际扩大，现金资产和高ROE支撑中期回报"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证全年增长与分红回购逻辑是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于27元且基本面未破坏，或市场系统性下跌导致估值低于13倍2025年PE",
-      "action": "加至组合上限",
-      "max_weight": 0.06,
-      "reason": "高质量资产出现明显折价，适合承担海外与平台生态风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 33.0
+      },
+      "reason": "进入首笔买入区，适合建立2%以内观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于48元且会议产品或云办公终端未出现超预期加速",
-      "action": "逐步减仓",
-      "max_weight": 0.03,
-      "reason": "估值进入减持区，预期收益率下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "安全边际扩大，若基本面稳定可加仓至4%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "进入减持区，若增长未超预期应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "乐观估值区上沿，需显著超预期增长才可继续持有满仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 33,
-      "reason": "进入首笔买入区，适合建立2%以内观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "安全边际扩大，若基本面稳定可加仓至4%"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "进入减持区，若增长未超预期应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "乐观估值区上沿，需显著超预期增长才可继续持有满仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看会议产品增速、美洲毛利率、经营现金流和库存"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证全年增长与分红回购逻辑是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "会议产品收入增速",
-    "云办公终端收入增速",
-    "桌面通信终端收入增速",
-    "综合毛利率",
-    "美洲地区毛利率",
-    "经营现金流净额/归母净利润",
-    "存货周转与存货同比增速",
-    "应收账款同比增速",
-    "研发费用率",
-    "销售费用率",
-    "分红率",
-    "回购注销进展",
-    "微软/Zoom/Teams生态认证与新品节奏",
-    "美元兑人民币汇率",
-    "实控人一致行动人减持进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

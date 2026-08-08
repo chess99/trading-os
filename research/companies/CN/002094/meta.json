@@ -1,109 +1,115 @@
 {
-  "symbol": "CN:002094",
-  "market": "CN",
-  "ticker": "002094",
-  "name": "青岛金王",
-  "company_name": "青岛金王",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "当前不买入。公司主业为新材料蜡烛香薰及工艺品，化妆品业务仍在收缩和出清，2025年收入下滑、ROE低、2026Q1扣非利润和经营现金流转弱；控股股东质押比例高，当前约4.46元附近估值缺乏安全边际，需等待2.0-2.6元价格区间和现金流改善证据。",
-  "quality_rating": "low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    2.2,
-    3.2
-  ],
-  "buy_zone": [
-    2.0,
-    2.6
-  ],
-  "sell_or_reduce_zone": [
-    4.0,
-    5.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "青岛金王",
+    "security_status": "active",
+    "symbol": "CN:002094",
+    "ticker": "002094"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "99c70eff4312e39555c77732a18b13f5621ce77a30dfa12c83267c3e8fa9e2c7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约4.46元附近且未看到2026年现金流改善证据",
-      "action": "不买入，已有仓位仅保留观察仓",
-      "max_weight": 0.005,
-      "reason": "估值相对低ROE和弱扣非盈利偏贵，控股股东质押比例高"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点看扣非净利润、经营现金流、应收账款、存货和化妆品收缩效果",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入2.0-2.6元且2026H1或2026Q3经营现金流转正、应收和存货不扩张",
-      "action": "可建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格接近资产折价区，若现金流验证改善可给小仓位跟踪"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度报告，确认现金流改善是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣非净利润年化超过6000万元、经营现金流连续两个季度为正、控股股东质押率下降",
-      "action": "提高至小仓位持有",
-      "max_weight": 0.02,
-      "reason": "利润修复和治理风险下降同时出现，基本面拐点可信度提高"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告和商誉/存货/应收减值情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于4.0元但基本面未改善，或高于5.0元",
-      "action": "减仓或退出",
-      "max_weight": 0.0,
-      "reason": "当前盈利能力无法支撑高估值，缺乏安全边际"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入买入观察区，需同步复核半年报或三季报现金流与应收存货",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "进入深度折价区，可重新评估资产安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "达到减仓区下沿，若无盈利修复应降低或清空观察仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "估值明显脱离当前盈利质量，应退出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "进入买入观察区，需同步复核半年报或三季报现金流与应收存货"
-    },
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "进入深度折价区，可重新评估资产安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 4.0,
-      "reason": "达到减仓区下沿，若无盈利修复应降低或清空观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "reason": "估值明显脱离当前盈利质量，应退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点看扣非净利润、经营现金流、应收账款、存货和化妆品收缩效果"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度报告，确认现金流改善是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告和商誉/存货/应收减值情况"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新材料蜡烛香薰及工艺品收入增速",
-    "新材料蜡烛香薰及工艺品毛利率",
-    "化妆品收入和毛利率",
-    "经营活动现金流量净额",
-    "归母扣非净利润",
-    "应收账款余额和坏账准备",
-    "存货余额和跌价准备",
-    "短期借款和受限货币资金",
-    "控股股东质押比例",
-    "境外收入占比和汇率影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

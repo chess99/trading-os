@@ -1,94 +1,105 @@
 {
-  "symbol": "CN:920158",
-  "market": "CN",
-  "ticker": "920158",
-  "name": "长江能科",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "长江能科具备电脱设备细分技术、国际客户准入和净现金资产负债表，受益于油气保供、炼化装置更新和清洁能源装备需求；但公司收入规模小、客户集中、项目交付波动大，2026Q1仍亏损且经营现金流为负，当前8元附近处于合理价值区间内，缺少足够安全边际，先列为观察。",
-  "fair_value_range": [
-    7.5,
-    9.6
-  ],
-  "buy_zone": [
-    6.6,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.6
-  ],
-  "position_plan": [
-    {
-      "condition": "价格低于7.2元且2026H1收入、订单和回款未恶化",
-      "action": "建立研究仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于6.6元且2026H1归母净利润转正、经营现金流改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "价格高于10.5元且没有新增大订单或盈利上修",
-      "action": "减仓或暂停买入",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入初步买入区间，重新核验订单、回款和2026H1盈利质量"
-    },
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "reason": "进入较有安全边际区间，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过当前合理价值上沿，需要利润上修或新增大订单支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证收入、利润、经营现金流、应收账款和合同负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断海外订单交付和全年业绩确定性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期利润中枢和安全边际"
-    }
-  ],
-  "valuation": {
-    "as_of_price_date": "2026-07-17",
-    "last_close": 8.16,
-    "shares_outstanding": 142580000,
-    "market_cap": 1163488000,
-    "fair_value_method": "相对估值、绝对估值和情景估值交叉验证",
-    "confidence": "medium_low"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长江能科",
+    "security_status": "active",
+    "symbol": "CN:920158",
+    "ticker": "920158"
   },
-  "key_risks": [
-    "客户集中度高，2025年前五大客户收入占比55.05%",
-    "海外项目交付、汇率和地缘政治不确定",
-    "2025年高毛利率可能受产品结构和海外项目阶段性影响",
-    "2026Q1仍亏损且经营现金流为负，应收账款上升",
-    "氢能和海工新业务订单金额未充分核验"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "48b69a2e6b237597538feba2e751c81c47d6ca5894884cc66675692f73568936"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证收入、利润、经营现金流、应收账款和合同负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断海外订单交付和全年业绩确定性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期利润中枢和安全边际",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入初步买入区间，重新核验订单、回款和2026H1盈利质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "进入较有安全边际区间，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过当前合理价值上沿，需要利润上修或新增大订单支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

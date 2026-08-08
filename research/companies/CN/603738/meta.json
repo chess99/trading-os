@@ -1,89 +1,105 @@
 {
-  "symbol": "CN:603738",
-  "market": "CN",
-  "ticker": "603738",
-  "name": "泰晶科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "泰晶科技处在消费电子修复与高端频控国产替代的上行阶段，2026年业绩预告显示利润弹性恢复；但当前股价已显著透支光模块和AI链预期，基准估值与DCF均低于市价，缺少安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    16,
-    22
-  ],
-  "buy_zone": [
-    12,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    40
-  ],
-  "decision": "不买",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰晶科技",
+    "security_status": "active",
+    "symbol": "CN:603738",
+    "ticker": "603738"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "4813e7854e999684e13c673c5a2237fce4d2b6c1faef9c024c77e5e7dee4159c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至12-14元且2026年利润、毛利率、经营现金流未明显低于基准假设",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式财务数据、毛利率、现金流和光模块相关收入占比",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于14-18元且半年报确认净利率改善、高端产品收入占比提升",
-      "action": "小仓位试错",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认高端产品放量是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元且公司未将未来两年利润中枢上修至2.5亿元以上",
-      "action": "不新增，已有仓位减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及2027年一季报，更新估值和长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入买入区间上沿，需要复核半年报与订单质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "若基本面未恶化，安全边际开始明显",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "估值进一步透支，除非利润中枢显著上修，否则应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入买入区间上沿，需要复核半年报与订单质量"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "若基本面未恶化，安全边际开始明显"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "估值进一步透支，除非利润中枢显著上修，否则应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式财务数据、毛利率、现金流和光模块相关收入占比"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认高端产品放量是否持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及2027年一季报，更新估值和长期盈利中枢"
-    }
-  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
   "valuation": {
-    "as_of_price_date": "2026-07-17",
-    "reference_price": 34.02,
-    "reference_market_cap_cny_billion": 13.1,
-    "base_2026_net_profit_cny_million": 110,
-    "bear_2026_net_profit_cny_million": 75,
-    "bull_2026_net_profit_cny_million": 180
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

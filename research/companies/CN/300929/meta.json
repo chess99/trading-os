@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:300929",
-  "ticker": "300929",
-  "name": "华骐环保",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "小市值水环境治理公司，技术和运营资产有一定基础，但2025年及2026Q1盈利仍弱、应收和长期应收占用高，当前估值高于行业且缺乏安全边际，暂不买入。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    7.0,
-    10.5
-  ],
-  "buy_zone": [
-    0.0,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    100.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华骐环保",
+    "security_status": "active",
+    "symbol": "CN:300929",
+    "ticker": "300929"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "0f69926771b677871ee63b8fe57e2c0c6a95f37df4e2d56184cd2ee695bdde7f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于合理价值上沿且未看到连续两个季度扣非盈利和经营现金流改善",
-      "action": "avoid_new_position",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "公司预计披露2026年中报，复核利润、现金流、应收和新能源订单质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至7.5元以下，且应收账款、合同资产、长期应收款合计占收入比例开始下降",
-      "action": "watchlist_probe_only",
-      "max_weight": 0.005
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入基准情景买入观察区，需复核利润与回款质量。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认经营修复是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "高于乐观情景下沿，若基本面未同步改善应卖出或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "公司预计披露2026年中报，复核利润、现金流、应收和新能源订单质量。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入基准情景买入观察区，需复核利润与回款质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认经营修复是否可持续。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于乐观情景下沿，若基本面未同步改善应卖出或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

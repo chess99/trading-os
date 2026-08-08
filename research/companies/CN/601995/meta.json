@@ -1,106 +1,96 @@
 {
-  "symbol": "CN:601995",
-  "market": "CN",
-  "ticker": "601995",
-  "name": "中金公司",
-  "company_name": "中金公司",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "current_thesis": "中金公司具备头部券商中稀缺的高端投行、机构业务、跨境资本市场和高净值财富管理 franchise，长期值得跟踪；但截至2026-07-09，A股价格已基本反映景气修复与ROE改善预期，且A/H溢价偏高，当前以观察为主，等待31元以下更有安全边际的买点。",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    31,
-    36
-  ],
-  "buy_zone": [
-    29,
-    31
-  ],
-  "sell_or_reduce_zone": [
-    39,
-    45
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中金公司",
+    "security_status": "active",
+    "symbol": "CN:601995",
+    "ticker": "601995"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "435e2123bab95db46405f11e95863d4abf7e6fdb9e71b30df9d35224d9afef59"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于39元",
-      "action": "不买入，若已有仓位则以减仓为主",
-      "max_weight": 0.02,
-      "reason": "价格已透支乐观预期，A/H溢价过高，赔率不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，判断盈利质量、ROE中枢和资本占用变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在31-36元",
-      "action": "仅可小仓试错",
-      "max_weight": 0.12,
-      "reason": "接近合理价值区间，但安全边际一般"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认景气持续性与A/H溢价变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在29-31元",
-      "action": "分批买入",
-      "max_weight": 0.2,
-      "reason": "进入有安全边际的买入区间"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 31.0
+      },
+      "reason": "进入安全边际观察区，可考虑启动小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价在26-28元",
-      "action": "积极增持",
-      "max_weight": 0.3,
-      "reason": "接近悲观与基准情景之间，风险收益比显著改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入强吸引力区间，应重点复核并考虑提升仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价低于26元且基本面未破坏",
-      "action": "继续分批加仓至上限",
-      "max_weight": 0.35,
-      "reason": "估值已显著折价，若逻辑未坏则具备高赔率"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 39.0
+      },
+      "reason": "进入不应追高区间，应避免新增仓位或考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 31,
-      "reason": "进入安全边际观察区，可考虑启动小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入强吸引力区间，应重点复核并考虑提升仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 39,
-      "reason": "进入不应追高区间，应避免新增仓位或考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，判断盈利质量、ROE中枢和资本占用变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认景气持续性与A/H溢价变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "A股与港股日均成交额",
-    "A股IPO与再融资规模",
-    "港股IPO募资规模与跨境融资恢复程度",
-    "财富管理AUA与客户数",
-    "户均客户资产",
-    "股票业务收入与固定收益业务收入",
-    "归母净利润与加权平均ROE",
-    "母公司净资本与风险覆盖率",
-    "净稳定资金率与流动性覆盖率",
-    "A/H估值溢价",
-    "并购整合事项进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

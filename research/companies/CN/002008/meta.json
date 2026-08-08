@@ -1,31 +1,106 @@
 {
-  "symbol": "CN:002008",
-  "market": "CN",
-  "ticker": "002008",
-  "name": "大族激光",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "激光设备行业龙头，2025年营收创历史新高（187.6亿，+27%），PCB设备受益AI需求爆发，但扣非净利仅8.1亿，盈利能力远未恢复至2021年水平。当前PE(TTM)~99x、PB~6.6x，估值已大幅透支乐观预期，安全边际不足，建议等待回调或业绩兑现后再考虑建仓。",
-  "fair_value_range": [60, 100],
-  "buy_zone": [60, 75],
-  "sell_or_reduce_zone": [130, 200],
-  "position_plan": [
-    {"condition": "股价低于100元（进入合理偏低区间）且PCB设备订单无恶化迹象", "max_weight": 0.01},
-    {"condition": "股价低于75元（进入有安全边际买入区间）且基本面未恶化", "max_weight": 0.03},
-    {"condition": "股价低于60元（强吸引力区间）", "max_weight": 0.05}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大族激光",
+    "security_status": "active",
+    "symbol": "CN:002008",
+    "ticker": "002008"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "d65892e2437962a31b6cd9b6be5df2ccfb6d887cd1107da94002e9c795a3fe23"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报发布后复查，重点评估扣非净利润趋势和PCB设备增速",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复查，验证PCB设备订单持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 100.0
+      },
+      "reason": "进入合理偏低估值区间，可考虑小仓位试仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "进入有安全边际的买入区间，可加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入强吸引力买入区间，可积极建仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 130.0
+      },
+      "reason": "进入偏贵区间，不应追高",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026年半年报发布后复查，重点评估扣非净利润趋势和PCB设备增速"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报后复查，验证PCB设备订单持续性"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 100, "reason": "进入合理偏低估值区间，可考虑小仓位试仓"},
-    {"type": "price_below", "price": 75, "reason": "进入有安全边际的买入区间，可加仓"},
-    {"type": "price_below", "price": 60, "reason": "进入强吸引力买入区间，可积极建仓"},
-    {"type": "price_above", "price": 130, "reason": "进入偏贵区间，不应追高"}
-  ],
-  "updated_at": "2026-07-08T11:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

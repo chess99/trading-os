@@ -1,108 +1,105 @@
 {
-  "symbol": "CN:300525",
-  "market": "CN",
-  "ticker": "300525",
-  "name": "博思软件",
-  "company_name": "福建博思软件股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "博思软件在财政电子票据、非税收缴、预算管理一体化、电子凭证和数字采购等垂直场景有较强客户基础和业务理解，但 2025 年收入下降、归母净利润大幅下滑，2026 年一季度仍亏损，说明经营拐点尚未完全确认。7.4-7.6 元附近大体位于合理价值中枢，适合观察或极小仓位跟踪，等待 6.2-6.6 元以下安全边际或 2026 年中报确认收入、现金流和扣非利润改善。",
-  "quality_rating": "中上",
-  "valuation_rating": "中性略贵",
-  "fair_value_range": [
-    7.0,
-    8.8
-  ],
-  "buy_zone": [
-    6.2,
-    6.6
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博思软件",
+    "security_status": "active",
+    "symbol": "CN:300525",
+    "ticker": "300525"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ee7a94e4ccfcd4606decc8002036625282527b7c18dd2fe3022f552cbe65c070"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价 <= 6.2 元，且最近一期未出现应收账款/合同资产恶化或经营现金流明显转弱",
-      "action": "分批买入",
-      "target_position": "3%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报：收入增速、扣非利润、经营现金流、应收账款和电子凭证业务进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价 6.2-6.8 元，且 2026 年收入恢复正增长、扣非亏损收窄或转正",
-      "action": "试探建仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报：确认下半年项目验收和回款是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价 6.8-8.8 元，经营数据尚未确认拐点",
-      "action": "观察或保留小仓位",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报：验证正常化净利润能否恢复到 2.2 亿元以上，并重新估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价 > 10 元，且净利润、现金流、订单增速没有同步上修",
-      "action": "减仓或退出",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "低于基准合理价值下沿约 5%，并接近安全边际买入区上沿。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "对应约 47 亿元市值，较合理价值中枢有较明显折价。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "超过估值区间上沿，若盈利未同步修复则风险收益不佳。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "currency": "CNY",
-      "action": "进入可买区，复核最新季报现金流和应收后决定是否建仓",
-      "reason": "低于基准合理价值下沿约 5%，并接近安全边际买入区上沿。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "currency": "CNY",
-      "action": "进入有吸引力区，若基本面未恶化可分批加至 3%-4%",
-      "reason": "对应约 47 亿元市值，较合理价值中枢有较明显折价。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "currency": "CNY",
-      "action": "若盈利未明显修复，减仓至观察仓",
-      "reason": "超过估值区间上沿，若盈利未同步修复则风险收益不佳。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报：收入增速、扣非利润、经营现金流、应收账款和电子凭证业务进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报：确认下半年项目验收和回款是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报：验证正常化净利润能否恢复到 2.2 亿元以上，并重新估值。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026 年营业收入增速是否恢复正增长",
-    "归母净利润与扣非净利润是否恢复，2026 年归母净利润目标观察线为 2.2 亿元",
-    "经营活动现金流净额/归母净利润是否维持 1.2 倍以上",
-    "应收账款与合同资产占收入比例是否继续上升",
-    "可持续收入占比是否从约 60% 继续提高",
-    "电子凭证、公务支出智能服务平台、电子会计档案的落地省份、客户数量和续费情况",
-    "毛利率是否维持 60% 以上，费用率尤其研发费用率是否企稳",
-    "腾讯系股东、员工持股计划、实控人质押和回购注销后股本变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

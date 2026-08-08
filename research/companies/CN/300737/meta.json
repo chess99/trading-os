@@ -1,114 +1,95 @@
 {
-  "symbol": "CN:300737",
-  "ticker": "300737",
-  "name": "科顺股份",
-  "company_name": "科顺防水科技股份有限公司",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "地产信用风险在2025年集中减值后进入消化期，2026Q1收入、毛利和扣非利润恢复增长，5元附近对正常化盈利修复具备赔率，但需持续验证应收账款和经营现金流改善。",
-  "decision": "买入",
-  "confidence": "中",
-  "current_price": {
-    "price": 5.37,
-    "as_of": "2026-07-13",
-    "source": "新浪财经个股资讯/行情页"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科顺股份",
+    "security_status": "active",
+    "symbol": "CN:300737",
+    "ticker": "300737"
   },
-  "price_range": [
-    4.4,
-    7.8
-  ],
-  "buy_range": [
-    4.8,
-    5.5
-  ],
-  "buy_zone": [
-    4.8,
-    5.5
-  ],
-  "fair_value_range": [
-    6.5,
-    7.8
-  ],
-  "upside_range": [
-    8.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    9.5
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c847616da0ceed6416e857daf4f815afe2e16a2308c1526520bdc1e8fae7366a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "5.0-5.5元分批买入；2026H1扣非净利和经营现金流继续改善、应收账款收入比下降后，才允许加到上限。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026H1扣非净利润、经营现金流、应收账款和防水材料毛利率是否验证修复型买入假设。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026Q3收入、扣非净利、现金流和信用减值，判断是否维持买入评级。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重点检查全年经营现金流、减值计提、毛利率和资产负债率。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "若无新增重大减值或股权质押风险，5元以下对应较高修复赔率，可提高至计划仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "若盈利预测未同步上修，8.5元以上已接近乐观估值区间，应降低收益预期并考虑减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "若无新增重大减值或股权质押风险，5元以下对应较高修复赔率，可提高至计划仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "若盈利预测未同步上修，8.5元以上已接近乐观估值区间，应降低收益预期并考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026H1扣非净利润、经营现金流、应收账款和防水材料毛利率是否验证修复型买入假设。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026Q3收入、扣非净利、现金流和信用减值，判断是否维持买入评级。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重点检查全年经营现金流、减值计提、毛利率和资产负债率。"
-    }
-  ],
-  "watch_items": [
-    "2026H1营收和扣非净利润是否延续修复",
-    "防水材料毛利率是否维持28%以上",
-    "应收账款余额、账龄和信用减值是否继续改善",
-    "经营现金流是否全年为正且好于净利润",
-    "行业涨价落地与沥青等原材料价格",
-    "控股股东及一致行动人股权质押变化"
-  ],
-  "sources": [
-    {
-      "title": "科顺股份2025年年度报告",
-      "date": "2026-04-24",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225172695.PDF"
-    },
-    {
-      "title": "科顺股份2026年第一季度报告",
-      "date": "2026-04-24",
-      "url": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-04-24/dcef633a-03c3-4153-bf0a-4e50f05b88da.PDF"
-    },
-    {
-      "title": "住房城乡建设部GB55030-2022公告",
-      "date": "2022-09-27",
-      "url": "https://www.mohurd.gov.cn/gongkai/zc/wjk/art/2022/art_17339_768499.html"
-    },
-    {
-      "title": "2024中国建筑防水行业年度发展报告",
-      "date": "2025-01-01",
-      "url": "https://m.hzeyun.com/research/2609647.html"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

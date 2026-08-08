@@ -1,99 +1,96 @@
 {
-  "symbol": "CN:688818",
-  "market": "CN",
-  "ticker": "688818",
-  "name": "电科蓝天",
-  "company_name": "电科蓝天",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "电科蓝天主营宇航电源、特种电源和新能源应用，具备中国电科背景、高可靠电源技术壁垒和航天军工客户黏性，资产质量较高；但上市初期价格已将卫星互联网、商业航天和军工电子稀缺性预期充分定价，按2025年利润测算估值显著偏贵，当前仅适合研究跟踪，等待价格回落或订单利润超预期验证。",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    35,
-    50
-  ],
-  "buy_zone": [
-    25,
-    35
-  ],
-  "sell_or_reduce_zone": [
-    70,
-    90
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "电科蓝天",
+    "security_status": "active",
+    "symbol": "CN:688818",
+    "ticker": "688818"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "a0d57f2a6eeb6f7354df3088e40936e3916b0c2939249873d4edfa670bfb8d55"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于70元且缺乏订单和利润超预期验证",
-      "action": "不建仓；已有仓位以减仓或观察为主",
-      "max_weight": 0,
-      "reason": "当前市值对应2025年静态估值显著偏高，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的业务结构、毛利率、现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至35元以下且2026年半年报显示收入、毛利率、现金流未恶化",
-      "action": "可建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理价值下沿附近，允许用小仓位验证订单兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报以及上市后订单兑现节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至25-30元且宇航电源/特种电源订单持续增长、经营现金流改善",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "估值回到可解释区间，并且核心业务质量得到财务验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "进入合理价值区间下沿，重新评估首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入深度价值区间，若基本面未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 85.0
+      },
+      "reason": "价格高于乐观情景上沿，检查是否有减仓或回避必要",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "进入合理价值区间下沿，重新评估首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入深度价值区间，若基本面未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 85,
-      "reason": "价格高于乐观情景上沿，检查是否有减仓或回避必要"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的业务结构、毛利率、现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报以及上市后订单兑现节奏"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "归母净利润增速",
-    "扣非归母净利润增速",
-    "宇航电源收入占比",
-    "特种电源收入占比",
-    "新能源应用收入占比",
-    "综合毛利率",
-    "分业务毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款周转天数",
-    "合同资产规模",
-    "存货周转天数",
-    "前五大客户收入占比",
-    "关联交易收入占比",
-    "在手订单和重大合同",
-    "募投项目进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,62 +1,97 @@
 {
-  "symbol": "CN:600845",
-  "market": "CN",
-  "ticker": "600845",
-  "name": "宝信软件",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "宝信软件是钢铁工业软件和央企数字化稀缺标的，质量较高但2025年业绩承压；以2026-07-06核验价18.18元、PE_TTM约39.8倍、PB约4.55倍衡量，估值已计入较多乐观预期，应等待更好价格或2026年利润修复确认，15.5-17.5元方具备安全边际，当前仅适合小仓观察。",
-  "fair_value_range": [18, 23],
-  "buy_zone": [15.5, 17.5],
-  "sell_or_reduce_zone": [24, 28],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宝信软件",
+    "security_status": "active",
+    "symbol": "CN:600845",
+    "ticker": "600845"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "01d96af9e664b6265bea64ee75d9505e09b7ab764c1d0411993ee36273490061"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "实盘价格低于18.0元且2026年中报扣非净利润未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "实盘价格进入15.5-17.5元且经营现金流维持稳健",
-      "action": "分批加仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格高于24.0元但收入和扣非净利润未恢复增长",
-      "action": "暂停买入或降低仓位",
-      "max_weight": 0.005
-    }
-  ],
-  "price_triggers": [
-    {
-      "price": 17.5,
-      "reason": "进入买入区间上沿，复核中报和现金流后可考虑加仓",
-      "type": "price_below"
-    },
-    {
-      "price": 15.5,
-      "reason": "进入深度安全边际区间，若基本面未破坏可提高配置权重",
-      "type": "price_below"
-    },
-    {
-      "price": 24,
-      "reason": "超过合理价值上沿，若业绩未同步改善应减仓或等待",
-      "type": "price_above"
-    },
-    {
-      "price": 28,
-      "reason": "接近乐观情景上沿，需要兑现部分收益并重新估值",
-      "type": "price_above"
-    }
-  ],
-  "report_history": ["reports/2026-07-10-initial.md"],
-  "review_triggers": [
-    {
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "复查2026年半年报收入、扣非净利润、经营现金流、分业务毛利率和IDC利用率",
+      "trigger_id": "legacy-review-1",
       "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.5
+      },
+      "reason": "进入买入区间上沿，复核中报和现金流后可考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入深度安全边际区间，若基本面未破坏可提高配置权重",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过合理价值上沿，若业绩未同步改善应减仓或等待",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "接近乐观情景上沿，需要兑现部分收益并重新估值",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-10-initial.md",
-  "updated_at": "2026-07-10T21:15:27+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,99 +1,105 @@
 {
-  "symbol": "CN:300230",
-  "market": "CN",
-  "ticker": "300230",
-  "name": "永利股份",
-  "company_name": "上海永利带业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "永利股份是现金充足、低杠杆、高分红的细分制造业公司，轻型输送带业务质量较好，精密模塑短期受客户结构、汇率和存货跌价影响。4.14元附近估值不贵但安全边际一般，3.60-3.80元以下才更适合分批买入。",
-  "quality_rating": "中上",
-  "valuation_rating": "合理偏低",
-  "fair_value_range": [
-    4.3,
-    5.2
-  ],
-  "buy_zone": [
-    0,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    5.4,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永利股份",
+    "security_status": "active",
+    "symbol": "CN:300230",
+    "ticker": "300230"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "993665bfb99c1310903773e83ee7cc9dd5ad00a1ab004c535460afde59b23b87"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.60元，且轻型输送带毛利率维持33%以上、精密模塑没有客户流失迹象",
-      "action": "买入至3%-5%仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查轻型输送带增长、精密模塑毛利率、经营现金流和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于3.60-3.80元，且最近一个季度收入和扣非净利润仍同比增长",
-      "action": "分批买入至2%-4%仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1经营现金流低点是否修复以及全年分红能力。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格处于3.80-4.20元，基本面正常但安全边际不足",
-      "action": "仅保留0%-2%跟踪仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常化利润、ROE、分红和合理估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于5.40元，且没有明确利润上修或ROE改善证据",
-      "action": "减仓或不再加仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入可买区，需要复核最新季度利润、现金流和分红预期。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入强安全边际区，若基本面未恶化可提高目标仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.4
+      },
+      "reason": "超过减仓线，若没有盈利上修则风险收益比转弱。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "currency": "CNY",
-      "reason": "进入可买区，需要复核最新季度利润、现金流和分红预期。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "currency": "CNY",
-      "reason": "进入强安全边际区，若基本面未恶化可提高目标仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.4,
-      "currency": "CNY",
-      "reason": "超过减仓线，若没有盈利上修则风险收益比转弱。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查轻型输送带增长、精密模塑毛利率、经营现金流和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1经营现金流低点是否修复以及全年分红能力。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常化利润、ROE、分红和合理估值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "轻型输送带收入增速和33%以上毛利率维持情况",
-    "精密模塑业务毛利率、海外客户占比和泰国工厂利用率",
-    "经营现金流净额/归母净利润是否大于1",
-    "存货规模、存货跌价准备和前五大客户收入占比",
-    "智能单机、同步带、塑料链板及模组网带、电动滚筒等新兴业务收入增速",
-    "年度每股现金分红是否维持0.15-0.20元或更高"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

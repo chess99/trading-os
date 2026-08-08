@@ -1,114 +1,105 @@
 {
-  "symbol": "CN:300041",
-  "market": "CN",
-  "ticker": "300041",
-  "name": "回天新材",
-  "company_name": "湖北回天新材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "回天新材是国内工程胶粘剂综合型龙头之一，2025 年利润和现金流修复，汽车、电子、锂电用胶正在替代光伏成为更高质量的增长来源。但以 2026-07-13 约 12.34 元/股测算，TTM PE 约 31 倍、扣非 PE 约 37 倍，已反映部分修复预期；需要等待 10.5 元以下的安全边际，或用连续季度证明净利进入 3 亿元以上区间。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    11.5,
-    14.5
-  ],
-  "buy_zone": [
-    9.5,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "回天新材",
+    "security_status": "active",
+    "symbol": "CN:300041",
+    "ticker": "300041"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "be52362caaa0d7755f346f2f725887a96c1c2b6d8f4a8f5145b30e2e904e1b4d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 14.5 元且 2026 年盈利预测没有上修",
-      "action": "不买，保持观察",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "价格处于 11.5-14.5 元，且基本面没有超预期改善",
-      "action": "仅保留跟踪仓或等待",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格处于 10.5-11.5 元，且单季扣非净利同比为正",
-      "action": "小仓试错",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格处于 9.5-10.5 元，且经营现金流、应收账款、存货没有恶化",
-      "action": "分批买入",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "价格低于 9.5 元，且锂电、汽车电子、海外业务继续放量",
-      "action": "加至核心观察仓",
-      "max_weight": 0.08
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "currency": "CNY",
-      "reason": "进入初始买入区，估值开始具备安全边际",
-      "action": "进入买入区，复核最新季度现金流和应收账款后小仓"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "currency": "CNY",
-      "reason": "进入高安全边际区，价格已低于保守估值中枢",
-      "action": "进入高安全边际区，若基本面未恶化可分批加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "currency": "CNY",
-      "reason": "进入减仓区，价格需要显著盈利上修才能支撑",
-      "action": "进入减仓区，除非 2026 年净利上修至 3.5 亿元以上"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "预计 2026 年半年报披露后复核收入结构、扣非净利率、经营现金流",
-      "condition": "预计 2026 年半年报披露后复核收入结构、扣非净利率、经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "预计 2026 年三季报披露后复核电子、汽车、锂电用胶增长持续性",
-      "condition": "预计 2026 年三季报披露后复核电子、汽车、锂电用胶增长持续性"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "预计 2026 年年报披露后复核全年现金流、ROE、分红和估值区间",
-      "condition": "预计 2026 年年报披露后复核全年现金流、ROE、分红和估值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入初始买入区，估值开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入高安全边际区，价格已低于保守估值中枢",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "进入减仓区，价格需要显著盈利上修才能支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "电子电器收入增速和毛利率",
-    "交通运输设备制造和维修收入增速和毛利率",
-    "锂电用胶销量、收入增速及头部客户导入进展",
-    "可再生能源收入占比和毛利率",
-    "扣非归母净利率",
-    "经营现金流净额/归母净利润",
-    "应收账款、应收票据、应收款项融资合计/营业收入",
-    "研发费用率和新产品销售收入",
-    "海外收入占比和海外毛利率",
-    "有息负债、应付债券和货币资金变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

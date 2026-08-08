@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:001217",
-  "ticker": "001217",
-  "name": "华尔泰",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华尔泰具备区域基础化工与精细化工一体化平台价值，但2025年和2026Q1连续亏损，新增项目折旧、原料硫磺上涨和部分产品毛利下滑压制盈利。当前8.40元价格高于保守合理价值上沿，需等待苯二胺、合成氨技改、硝酸等项目达产后验证毛利率和现金流修复。",
-  "fair_value_range": [
-    5.8,
-    7.4
-  ],
-  "buy_zone": [
-    0,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    9.2,
-    12
-  ],
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华尔泰",
+    "security_status": "active",
+    "symbol": "CN:001217",
+    "ticker": "001217"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4f1501fe9c66bc442f619f8b0e5ff32b10587b001f8fb8fb8affa28c9e15de11"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约8.40元高于保守估值上沿且TTM亏损，不新建仓。",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看毛利率、苯二胺利用率、经营现金流和在建项目进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至5.8元以下，且最新季度综合毛利率回升至10%以上、经营现金流转正。",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入增长是否转化为净利润与现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至5.0元以下，且苯二胺利用率提升、无新增安全环保重大事项。",
-      "action": "deep_value_add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估新增项目折旧压力和归一化盈利能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入保守买入区，需要复核毛利率、苯二胺爬坡和经营现金流是否同步改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.2
+      },
+      "reason": "价格进入预期透支区，若利润仍未恢复，应考虑回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入保守买入区，需要复核毛利率、苯二胺爬坡和经营现金流是否同步改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.2,
-      "reason": "价格进入预期透支区，若利润仍未恢复，应考虑回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看毛利率、苯二胺利用率、经营现金流和在建项目进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入增长是否转化为净利润与现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估新增项目折旧压力和归一化盈利能力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,108 +1,97 @@
 {
-  "symbol": "CN:000568",
-  "market": "CN",
-  "ticker": "000568",
-  "name": "泸州老窖",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "泸州老窖是高质量浓香白酒龙头，品牌、窖池、利润率、净现金和高分红构成长期价值；但2025年收入、利润、经营现金流同时下滑，2026Q1收入和利润仍双位数下降，行业仍在库存和价格体系调整期。当前76.20元处于合理价值区间内，股息率有支撑但安全边际不厚，适合跟踪或小仓观察，等待合同负债、经营现金流和国窖批价企稳后再提高仓位。",
-  "fair_value_range": [
-    70,
-    90
-  ],
-  "buy_zone": [
-    60,
-    68
-  ],
-  "sell_or_reduce_zone": [
-    95,
-    105
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泸州老窖",
+    "security_status": "active",
+    "symbol": "CN:000568",
+    "ticker": "000568"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "7b1ad4575f6a45352ffb387203a404528a4aec81ed67bf2473861e65b368496c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格位于68-90元，且基本面尚未确认复苏",
-      "price_range": [
-        68,
-        90
-      ],
-      "action": "watch_or_hold_small",
-      "target_weight": 0.01,
-      "max_weight": 0.02,
-      "notes": "76元附近只适合0-1%观察仓，等待中报验证现金流、合同负债和批价。"
-    },
-    {
-      "condition": "价格跌入60-68元，且经营现金流、合同负债和国窖批价未继续恶化",
-      "price_range": [
-        60,
-        68
-      ],
-      "action": "accumulate_if_fundamentals_stable",
-      "target_weight": 0.03,
-      "max_weight": 0.04,
-      "notes": "进入有安全边际区，前提是经营现金流、合同负债和国窖批价未继续恶化。"
-    },
-    {
-      "condition": "价格跌入55-60元，且未出现食品安全、治理或价格体系崩坏",
-      "price_range": [
-        55,
-        60
-      ],
-      "action": "strong_buy_if_no_thesis_break",
-      "target_weight": 0.05,
-      "max_weight": 0.06,
-      "notes": "强吸引力区，需排除食品安全、治理、价格体系崩坏等逻辑破坏。"
-    },
-    {
-      "condition": "价格升至95-105元，但收入、利润、现金流未确认复苏",
-      "price_range": [
-        95,
-        105
-      ],
-      "action": "reduce_unless_recovery_confirmed",
-      "target_weight": 0.02,
-      "max_weight": 0.02,
-      "notes": "若收入、利润、现金流未确认复苏则不追高并减仓。"
-    }
-  ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报预计披露窗口结束",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证2025年以来的收入、利润和现金流下滑是否收窄",
-      "action": "复核收入降幅、经营现金流、合同负债、存货和国窖1573批价"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 68,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 68.0
+      },
       "reason": "进入估值安全边际区上沿",
-      "message": "进入有安全边际买入区上沿，结合中报/季报现金流和合同负债决定是否加仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 60,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
       "reason": "进入强吸引力买入区",
-      "message": "进入强吸引力买入区，若基本面未恶化可提高仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 95,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
       "reason": "价格超过合理区间上沿且需要复核追高风险",
-      "message": "进入减仓观察区，若收入、利润、现金流未确认复苏则不追高"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 55,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
       "reason": "跌入悲观情景价格区间",
-      "message": "跌破悲观区间上沿，复核是否存在未识别的价格体系或治理风险"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-07T23:59:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

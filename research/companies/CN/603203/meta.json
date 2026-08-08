@@ -1,109 +1,115 @@
 {
-  "symbol": "CN:603203",
-  "market": "CN",
-  "ticker": "603203",
-  "name": "快克智能",
-  "company_name": "快克智能",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "快克智能主业质地较好，受益于电子装联、机器视觉、汽车电子和AI数据中心制造升级，但2026-07-09股价已明显透支先进封装尤其TCB热压键合的高预期；在TCB尚未形成订单、封装收入占比仍低的阶段，更适合等待回调至42元以下再考虑建仓。",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    42,
-    52
-  ],
-  "buy_zone": [
-    34,
-    42
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    70
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "快克智能",
+    "security_status": "active",
+    "symbol": "CN:603203",
+    "ticker": "603203"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "817a21097da347dcca9e96dcb00ba68f972f9debb08072af9b93e09f41663eba"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于58元且无新增订单兑现",
-      "action": "不追高，仅保留观察仓或减仓",
-      "max_weight": 0.1,
-      "reason": "估值已提前计入AI服务器与先进封装高预期"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看视觉检测、封装设备、合同负债和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回到42元及以下且基本面未恶化",
-      "action": "建立试探底仓",
-      "max_weight": 0.15,
-      "reason": "进入合理价值下沿，赔率开始改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认AI数据中心与汽车电子订单持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回到38元及以下且半年报验证视觉/封装增长",
-      "action": "分批加仓",
-      "max_weight": 0.25,
-      "reason": "安全边际明显提升，主业现金流可提供支撑"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，验证TCB、光模块与海外扩张是否兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价跌至34元及以下且TCB仍未证伪",
-      "action": "积极配置",
-      "max_weight": 0.35,
-      "reason": "价格已对高预期做出较大修正，期权价值开始免费"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入合理价值下沿，开始复查建仓条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入强吸引力区间，可评估积极配置",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "接近或高于不追高区间，需检查是否纯题材驱动",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "明显偏离基准估值，除非订单兑现，否则应考虑减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入合理价值下沿，开始复查建仓条件"
-    },
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入强吸引力区间，可评估积极配置"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "接近或高于不追高区间，需检查是否纯题材驱动"
-    },
-    {
-      "type": "price_above",
-      "price": 70,
-      "reason": "明显偏离基准估值，除非订单兑现，否则应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看视觉检测、封装设备、合同负债和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认AI数据中心与汽车电子订单持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，验证TCB、光模块与海外扩张是否兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "固晶键合封装设备收入占比",
-    "TCB热压键合设备客户验证进度与订单落地",
-    "机器视觉制程设备收入增速",
-    "合同负债",
-    "应收账款周转",
-    "存货周转",
-    "综合毛利率",
-    "海外收入增速与海外毛利率",
-    "经营活动现金流净额",
-    "研发投入占营业收入比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:920119",
-  "market": "CN",
-  "ticker": "920119",
-  "name": "美德乐",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "美德乐是智能输送系统细分优质公司，2025年收入和利润保持20%+增长，高精度输送系统与工业组件构成主要利润来源；但客户集中、项目制存货和北交所流动性要求更高安全边际。当前46.47元接近公允价值下沿但未进入理想买入区，等待价格回落或2026H1订单、毛利率、现金流进一步验证。",
-  "fair_value_range": [
-    48,
-    65
-  ],
-  "buy_zone": [
-    36,
-    43
-  ],
-  "sell_or_reduce_zone": [
-    75,
-    90
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美德乐",
+    "security_status": "active",
+    "symbol": "CN:920119",
+    "ticker": "920119"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "4587292aae1b6678aab755e243d18bfbc970201e08136b334b1ea100fdaf2e38"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格回落至40-43元且2026H1订单、毛利率、经营现金流未恶化",
-      "action": "小仓建仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：收入增速、毛利率、客户集中度、存货和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至36-39元且收入仍保持15%以上增长、经营现金流/净利润不低于0.7",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及新能源电池/汽车零部件订单趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于55元但毛利率未恢复至33%以上或客户集中度未改善",
-      "action": "不追高",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证上市后首个完整年度盈利质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 43.0
+      },
+      "reason": "进入初始买入区，需复核订单、毛利率和现金流后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入高安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "超过基准估值上沿较多，需复核增长兑现度并考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 43,
-      "reason": "进入初始买入区，需复核订单、毛利率和现金流后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入高安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "超过基准估值上沿较多，需复核增长兑现度并考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：收入增速、毛利率、客户集中度、存货和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及新能源电池/汽车零部件订单趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证上市后首个完整年度盈利质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

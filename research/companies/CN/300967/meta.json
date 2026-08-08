@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300967",
-  "ticker": "300967",
-  "name": "晓鸣股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "蛋鸡制种龙头，2025年商品代雏鸡市占率约25%，受益于蛋价修复和补栏改善，但2026Q1已转亏且当前估值已包含部分周期修复预期，适合观察等待更低价格或业绩验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    13.0,
-    18.0
-  ],
-  "buy_zone": [
-    0.0,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晓鸣股份",
+    "security_status": "active",
+    "symbol": "CN:300967",
+    "ticker": "300967"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "3ee673c2abd67b5708db886adebd4aebb2c2cddbb911dd36fff749dd54342fc5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于12.5元且月度鸡产品均价未连续恶化，可建立研究型观察仓。",
-      "action": "starter_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认Q2毛利率、现金流和鸡产品均价修复情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "Q2或Q3毛利率回到18%以上、鸡产品均价连续改善，且股价仍低于合理价值中枢。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断蛋价上涨是否传导为公司利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于20元且没有2026/2027利润上修证据，或鸡产品均价连续两个月下滑。",
-      "action": "reduce_or_exit",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-01-15"
+      },
+      "reason": "复核2026年全年月度鸡产品销售数据和行业补栏周期。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入研究买入区间，估值安全边际改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "若基本面未恶化，价格接近中性估值下沿，可重新评估提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过减持观察区，需验证盈利是否足以支撑景气情景估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入研究买入区间，估值安全边际改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "若基本面未恶化，价格接近中性估值下沿，可重新评估提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "超过减持观察区，需验证盈利是否足以支撑景气情景估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认Q2毛利率、现金流和鸡产品均价修复情况。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断蛋价上涨是否传导为公司利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-15",
-      "reason": "复核2026年全年月度鸡产品销售数据和行业补栏周期。"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

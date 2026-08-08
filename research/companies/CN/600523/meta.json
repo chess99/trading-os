@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600523",
-  "ticker": "600523",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "贵航股份",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "贵航股份是航空工业体系内的传统汽车零部件制造平台，盈利修复和资产安全性尚可，但新能源结构升级、现金流质量和长期成长弹性仍需验证；当前公开行情约处合理价值带中上部，安全边际不足，适合观察等待。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    9.8,
-    12.6
-  ],
-  "buy_zone": [
-    0,
-    9.2
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "贵航股份",
+    "security_status": "active",
+    "symbol": "CN:600523",
+    "ticker": "600523"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "240a5e662729ae276b4e197000a855b33449bc3a19642b7aba2d2f0aaf5d12ec"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于9.2元，且最近一期扣非净利润未显著下滑、经营现金流没有明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点查看扣非利润、毛利率、现金流和新能源客户披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于8.0元，且年度扣非利润维持1.6亿元以上、经营现金流/归母净利润大于0.8",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否具备持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于14.5元，且没有新能源平台放量或盈利预测上修证据",
-      "action": "减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和分红方案，重新评估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.2
+      },
+      "reason": "进入估算买入区，安全边际接近20%以上，可复核基本面后考虑小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入深度安全边际区，若扣非利润与现金流稳定，可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "超过基准合理价值区间上沿较多，若基本面未上修应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.2,
-      "reason": "进入估算买入区，安全边际接近20%以上，可复核基本面后考虑小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入深度安全边际区，若扣非利润与现金流稳定，可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "超过基准合理价值区间上沿较多，若基本面未上修应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点查看扣非利润、毛利率、现金流和新能源客户披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否具备持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和分红方案，重新评估合理价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

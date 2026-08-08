@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:300075",
-  "ticker": "300075",
-  "name": "数字政通",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "current_thesis": "数字政通具备城市治理、运管服、城市生命线和城市更新数字化的长期场景壁垒，但 2025 年亏损和高应收说明商业兑现仍弱；当前位置反映较多扭亏预期，需等待 2026 年收入、扣非利润、经营现金流和回款连续验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    12.0
-  ],
-  "buy_zone": [
-    6.5,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "数字政通",
+    "security_status": "active",
+    "symbol": "CN:300075",
+    "ticker": "300075"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "6d142ed9c14db3c7650e0f2fda0198f93de65f1180f0bd84ea6730d8097f96b9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 8.0 元，且 2026 年中报显示扣非净利润为正或经营现金流明显改善",
-      "action": "建立观察仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报收入、扣非净利润、经营现金流和应收变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 年全年收入恢复至 7.5 亿元以上、扣非净利润转正、经营现金流转正且应收账款未继续恶化",
-      "action": "上调为小仓位配置",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报及城市更新项目转化节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 13.0 元但没有利润和现金流验证，或 2026 年中报收入继续下滑且应收继续上升",
-      "action": "不加仓并降低或退出观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报是否实现高质量扭亏和现金流改善",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入基准估值下沿，可重新评估是否具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "超过合理价值区间上沿，若缺乏业绩验证应考虑降低预期或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入基准估值下沿，可重新评估是否具备安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "超过合理价值区间上沿，若缺乏业绩验证应考虑降低预期或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报收入、扣非净利润、经营现金流和应收变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报及城市更新项目转化节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报是否实现高质量扭亏和现金流改善"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,62 +1,95 @@
 {
-  "symbol": "CN:301390",
-  "ticker": "301390",
-  "name": "经纬股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "经纬股份具备电力咨询设计、工程建设、运维、数智平台和综合能源服务的一体化能力，受益于电网投资、新能源并网、储能和工商业能效管理长期需求；但2025年扣非利润几乎盈亏平衡、2026Q1转亏，当前约1.8倍PB和接近基准估值上沿的价格缺乏安全边际，需观察毛利率和扣非利润修复。",
-  "fair_value_range": [22, 29],
-  "buy_zone": [17, 20],
-  "sell_or_reduce_zone": [34, 38],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "经纬股份",
+    "security_status": "active",
+    "symbol": "CN:301390",
+    "ticker": "301390"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "9acbe01680f6fc25ecf909fd1ab0b7b0ebaf4492945c2dd57f4b14124b4ebdad"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格接近合理价值上沿且2026Q1扣非亏损，仅保留观察或模拟跟踪。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的收入、毛利率、扣非利润、经营现金流和重大项目履约进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌入17-20元且未出现订单、回款或治理恶化，可建立不超过1%的跟踪仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否连续、现金流季节性压力是否缓解。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度扣非归母净利润转正、毛利率企稳、经营现金流未恶化，且价格不高于29元，可重新评估是否提升至2%-3%。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和股权激励考核兑现情况，重估正常化利润和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入买入观察区，约对应1.3倍PB以下，需复核基本面是否恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "进入乐观情景估值区，若利润和毛利率未兑现修复，应卖出或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入买入观察区，约对应1.3倍PB以下，需复核基本面是否恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "进入乐观情景估值区，若利润和毛利率未兑现修复，应卖出或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的收入、毛利率、扣非利润、经营现金流和重大项目履约进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否连续、现金流季节性压力是否缓解。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和股权激励考核兑现情况，重估正常化利润和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

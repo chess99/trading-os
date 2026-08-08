@@ -1,70 +1,105 @@
 {
-  "symbol": "CN:002799",
-  "ticker": "002799",
-  "name": "环球印务",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "公司主业从数字营销拖累中开始止血，2026H1预告扭亏，但收入仍处下台阶、领凯应收诉讼和内控尾部风险未完全出清；当前约1.5倍PB已反映较多修复预期，安全边际不足，先观察中报正式数、主业毛利率和经营现金流。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [4.3, 5.2],
-  "buy_zone": [0, 4.2],
-  "sell_or_reduce_zone": [6.5, 7.2],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "环球印务",
+    "security_status": "active",
+    "symbol": "CN:002799",
+    "ticker": "002799"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "79bca740a130f4cdbc211a6a67714cfe29d45b8a866b6d64727d8dec758965dc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026中报正式归母净利润落在预告区间内、扣非转正且股价低于4.20元",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告正式数据、医药及其他纸盒收入、毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026全年扣非净利润超过3000万元、经营现金流同步改善且领凯事项无新增负面",
-      "action": "重新评估是否上调至买入",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断扭亏是否延续至旺淡季之外。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.50元且未披露更强订单、利润或诉讼回款证据",
-      "action": "不新增，已有仓位减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、领凯诉讼进展、商誉减值和内部控制整改持续性。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "接近1.06倍2026Q1每股净资产，若中报确认扭亏，开始具备小仓观察价值。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "接近0.9倍PB，资产保护更明显，值得重新评估深度安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "接近乐观情景估值下沿，若基本面未进一步兑现，预期透支。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "接近1.06倍2026Q1每股净资产，若中报确认扭亏，开始具备小仓观察价值。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "接近0.9倍PB，资产保护更明显，值得重新评估深度安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "接近乐观情景估值下沿，若基本面未进一步兑现，预期透支。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告正式数据、医药及其他纸盒收入、毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断扭亏是否延续至旺淡季之外。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、领凯诉讼进展、商誉减值和内部控制整改持续性。"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

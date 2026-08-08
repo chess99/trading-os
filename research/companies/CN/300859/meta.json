@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300859",
-  "ticker": "300859",
-  "name": "西域旅游",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "西域旅游拥有新疆天山天池稀缺景区资源和景区交通/索道/游船等节点优势，但2026H1业绩预告显示客流波动、新项目培育期和折旧费用正在显著压低利润；按可核验最近行情估值约58倍TTM PE，明显透支乐观情景，当前观察、不买入，等待股价回落或新项目盈利拐点被财报验证。",
-  "fair_value_range": [
-    13.0,
-    18.0
-  ],
-  "buy_zone": [
-    12.0,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    23.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "西域旅游",
+    "security_status": "active",
+    "symbol": "CN:300859",
+    "ticker": "300859"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "ccd96152faa591021ea4192d46957db6515f539bf7cf52b93801e7be3e0cda60"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于14.5元，且最新财报显示2026H2或最近连续两个季度归母净利润run-rate恢复至年化7000万元以上",
-      "action": "初始观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看新项目亏损、折旧、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于13.0元，且新项目披露的收入、入住率或EBITDA改善，经营现金流转正",
-      "action": "分批加仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和暑期旺季经营恢复情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于23.0元且业绩未明显超出基准情景，或2026全年归母净利润低于6000万元",
-      "action": "不买入或降低已有仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与2027年一季报，判断新项目是否完成盈利爬坡",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入买入区间上沿，重新核验半年报/三季报后评估是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "接近合理价值中枢下沿，若经营未恶化可考虑更积极的安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "超过乐观情景前的回避区间，若无业绩超预期应维持观察或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入买入区间上沿，重新核验半年报/三季报后评估是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "接近合理价值中枢下沿，若经营未恶化可考虑更积极的安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 23.0,
-      "reason": "超过乐观情景前的回避区间，若无业绩超预期应维持观察或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看新项目亏损、折旧、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和暑期旺季经营恢复情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与2027年一季报，判断新项目是否完成盈利爬坡"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

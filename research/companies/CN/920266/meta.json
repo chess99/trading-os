@@ -1,76 +1,101 @@
 {
-  "symbol": "CN:920266",
-  "market": "CN",
-  "ticker": "920266",
-  "name": "生物谷",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "生物谷拥有灯盏花系列老品种、医保目录和一定品牌基础，但2025年收入下滑、亏损、销售费用率高、客户与区域高度集中，且原控股股东资金占用虽有回收进展但尚未完全解决。2026-07-17收盘8.43元对应约10.45亿元市值、1.19倍PB和2.4倍PS，已经计入治理修复和恢复盈利的乐观预期，当前不具备安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    4.5,
-    5.8
-  ],
-  "buy_zone": [
-    3.8,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "生物谷",
+    "security_status": "active",
+    "symbol": "CN:920266",
+    "ticker": "920266"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "cffed0d939cf39604a31a61a9a08ed00e9258caec2426d685befbf9b28957877"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "411d7374d43c90ae1e98b7873568030623fe4d922f868e578e8bd212e620a8d2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于6.2元，或扣除关联方还款后的经营现金流仍未转正",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看扣除关联方还款后的经营现金流、应收账款、灯盏生脉胶囊毛利率和剩余资金占用回收",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价4.8至5.8元，仅在占用资金继续回收且应收账款不再快于收入增长时观察或极小试探",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证收入修复是否来自真实终端需求而非渠道集中",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价3.8至4.8元，且灯盏生脉胶囊收入和毛利率企稳、无新增治理事件",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入安全边际买入价以下，复核资金占用回收、应收账款和核心产品毛利率后再决定第一笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于3.8元，且剩余资金占用有实质现金回收、剔除一次性项目后经营现金流转正",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入强吸引力价，但仍需确认没有新增治理或医保集采降价风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "高于不追高价，估值不再补偿亏损、客户集中和治理折价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入安全边际买入价以下，复核资金占用回收、应收账款和核心产品毛利率后再决定第一笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入强吸引力价，但仍需确认没有新增治理或医保集采降价风险"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "高于不追高价，估值不再补偿亏损、客户集中和治理折价"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看扣除关联方还款后的经营现金流、应收账款、灯盏生脉胶囊毛利率和剩余资金占用回收"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证收入修复是否来自真实终端需求而非渠道集中"
-    }
-  ],
-  "notes": "当前价格口径为2026-07-17收盘8.43元；今天2026-07-19为周日，采用最近交易日行情。第一笔仓位为0，只有在价格低于4.8元且现金流、应收账款、资金占用追偿同时改善后才考虑试探。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

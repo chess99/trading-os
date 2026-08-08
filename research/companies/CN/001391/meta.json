@@ -1,97 +1,96 @@
 {
-  "symbol": "CN:001391",
-  "market": "CN",
-  "ticker": "001391",
-  "name": "国货航",
-  "company_name": "国货航",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "hold",
-  "current_rating": "hold",
-  "current_thesis": "国货航是中航集团旗下稀缺航空货运平台，受益跨境电商和国际航空货运需求，但利润高度受运价、油价、汇率和运力供给周期影响；当前约20倍TTM PE接近合理价值上沿，适合持有观察，等待3.0-3.5元安全边际买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    3.4,
-    4.2
-  ],
-  "buy_zone": [
-    3.0,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国货航",
+    "security_status": "active",
+    "symbol": "CN:001391",
+    "ticker": "001391"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "6d6b28c8be05c29e75aa89bf8feadcc2b9effcf99b9943df795a8dab8cf471e2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.5元且2026H1航空货运毛利率未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "进入买入区上沿，若毛利率稳定则安全边际改善"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证毛利率、综合物流增长和机队利用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格接近3.0元且航空货运运价企稳、综合物流收入继续双位数增长",
-      "action": "加仓至核心小仓位",
-      "max_weight": 0.03,
-      "reason": "估值接近周期中枢低位，同时增长业务仍在兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及航空货运旺季运价表现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于4.8元且没有盈利预测上修",
-      "action": "减仓或停止新增",
-      "max_weight": 0.0,
-      "reason": "估值进入景气情景区间，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入首笔观察仓买入区，需要复核2026H1毛利率和行业运价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "连续两个季度航空货运毛利率下滑且综合物流增速放缓",
-      "action": "降仓复核",
-      "max_weight": 0.01,
-      "reason": "核心周期利润与转型增长同时走弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入更有安全边际的加仓区，需要确认航空货运价格未失速",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "进入减仓区，若盈利未上修则估值已偏乐观",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入首笔观察仓买入区，需要复核2026H1毛利率和行业运价"
-    },
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入更有安全边际的加仓区，需要确认航空货运价格未失速"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "进入减仓区，若盈利未上修则估值已偏乐观"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证毛利率、综合物流增长和机队利用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及航空货运旺季运价表现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "航空货运服务收入和毛利率",
-    "综合物流解决方案收入增速和毛利率",
-    "货邮周转量和货邮载运率",
-    "全货机可用架数和日利用率",
-    "上海/香港至欧美航空货运运价",
-    "Brent油价和人民币兑美元汇率",
-    "跨境电商政策与大客户合作变化",
-    "限售股解禁和分红方案"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

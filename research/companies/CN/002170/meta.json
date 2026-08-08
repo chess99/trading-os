@@ -1,112 +1,115 @@
 {
-  "symbol": "CN:002170",
-  "market": "CN",
-  "ticker": "002170",
-  "name": "芭田股份",
-  "company_name": "芭田股份",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "芭田股份从传统复合肥企业向磷矿资源、磷化工和复合肥一体化平台升级，2025年和2026Q1利润释放已经进入报表；当前适合以小仓位参与资源一体化兑现，但必须用磷矿价格、毛利率、现金流和安全环保事件控制周期风险。",
-  "quality_rating": "B+",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    11.5,
-    14.5
-  ],
-  "buy_zone": [
-    8.8,
-    10.6
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    17.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "芭田股份",
+    "security_status": "active",
+    "symbol": "CN:002170",
+    "ticker": "002170"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "e5c5f90676ab9f13f1377a7881a51c78d8c1938f7f3fe1762c67b80cfd0007b8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格不高于11.2元且无新增安全环保、业绩预告或监管问询负面公告",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "当前估值接近合理区间下沿，但仍需验证2026Q1高利润的可持续性"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证Q2利润、毛利率、现金流和贵州项目运行",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至9.5-10.2元且磷矿价格、毛利率和现金流未明显恶化",
-      "action": "分批加仓",
-      "max_weight": 0.04,
-      "reason": "进入买入区后安全边际改善，一体化资产仍有利润弹性"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断全年利润中枢和仓位上限是否需要调整",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报或三季报验证全年净利润中枢接近8亿元以上且经营现金流健康",
-      "action": "提高至目标仓位上限",
-      "max_weight": 0.06,
-      "reason": "业绩兑现后可给予资源化工一体化更高确定性权重"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，重估资源一体化长期资本回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格进入15.0-17.0元或利润逻辑被证伪",
-      "action": "减仓或退出",
-      "max_weight": 0.01,
-      "reason": "上行区间已反映乐观预期，周期下行或现金流背离时应优先保护本金"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入更有安全边际的加仓观察区，需要复核磷矿价格和Q2经营数据",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "跌破买入区下沿，若基本面未恶化可能出现深度价值机会",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "达到合理价值区间上沿，需要重新评估2026-2027年利润中枢",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "进入减仓区，需要防止周期股乐观预期过度定价",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入更有安全边际的加仓观察区，需要复核磷矿价格和Q2经营数据"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "跌破买入区下沿，若基本面未恶化可能出现深度价值机会"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "达到合理价值区间上沿，需要重新评估2026-2027年利润中枢"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "进入减仓区，需要防止周期股乐观预期过度定价"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证Q2利润、毛利率、现金流和贵州项目运行"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断全年利润中枢和仓位上限是否需要调整"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，重估资源一体化长期资本回报"
-    }
-  ],
-  "key_tracking_metrics": [
-    "磷矿石价格",
-    "硫磺和硫酸价格",
-    "合成氨价格",
-    "尿素和磷酸一铵价格",
-    "复合肥终端价格和经销商库存",
-    "磷酸铁价格和开工率",
-    "贵州基地开工率和产能利用率",
-    "季度毛利率",
-    "经营活动现金流量净额",
-    "存货和应收账款周转",
-    "有息负债和在建工程",
-    "安全环保处罚或停产公告",
-    "资本开支和分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

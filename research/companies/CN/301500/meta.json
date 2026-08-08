@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:301500",
-  "ticker": "301500",
-  "name": "飞南资源",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "飞南资源具备含金属危废资质规模、多基地资源化和2026年产能爬坡弹性，23元附近若2026Q1利润可持续则对应2026E约10-12倍PE，进入小仓位买入区间；但现金流、负债、存货和金属价格敞口较重，需分批并持续验证利润质量。",
-  "fair_value_range": [
-    30,
-    38
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    48
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "飞南资源",
+    "security_status": "active",
+    "symbol": "CN:301500",
+    "ticker": "301500"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "4feec7b4be54baf82871ede125779e2fc342043ad70f78ff6852c445d6dd6e24"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价位于20-24元且未出现重大环保安全事故，2026Q2扣非净利润不低于2亿元",
-      "action": "分两到三笔建立观察性核心仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、存货和债务",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于20元且经营现金流改善、存货未继续异常扩大",
-      "action": "可加至上限仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1高盈利是否进入稳定中枢",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于40元但2026E归母净利润无法上修至14亿元以上",
-      "action": "逐步减仓或停止加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重新计算正常化盈利和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "跌入深度安全边际区，若基本面未恶化需复核加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "超过基准公允价值上沿，需确认业绩是否足以支撑估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "跌入深度安全边际区，若基本面未恶化需复核加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "超过基准公允价值上沿，需确认业绩是否足以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、存货和债务"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1高盈利是否进入稳定中枢"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重新计算正常化盈利和估值区间"
-    }
-  ],
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

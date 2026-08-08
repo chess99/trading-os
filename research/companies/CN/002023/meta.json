@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:002023",
-  "ticker": "002023",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "海特高新",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海特高新具备航空维修资质、飞行培训、客改货和高端航空装备研制能力，2026Q1 主业盈利修复且高端核心装备增长较快；但 2025 年大额减值和产业投资拖累暴露资本配置风险，2026-07-13 股价已接近中性公允价值上沿，缺少足够安全边际，暂列观察。",
-  "fair_value_range": [
-    8.2,
-    11.0
-  ],
-  "buy_zone": [
-    6.5,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    14.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海特高新",
+    "security_status": "active",
+    "symbol": "CN:002023",
+    "ticker": "002023"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "af2c417e1626f13be3a6290eefda3889231c38408736083a4658ae8dd3efc10c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于8.0元且2026中报扣非归母净利润为正、经营现金流未显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看扣非利润、经营现金流、应收账款和高端核心装备收入。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于7.0元且高端核心装备收入继续高增长、毛利率维持30%以上",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断主业修复是否连续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于12.5元但利润兑现未跟上，或再次出现重大资产减值",
-      "action": "减持或退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认减值风险是否出清和利润中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入买入观察区，需要复核中报扣非盈利和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入较有吸引力的安全边际区，需要复核装备订单持续性。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "进入减持观察区，估值可能提前透支低空经济和装备增长预期。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入买入观察区，需要复核中报扣非盈利和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入较有吸引力的安全边际区，需要复核装备订单持续性。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "进入减持观察区，估值可能提前透支低空经济和装备增长预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看扣非利润、经营现金流、应收账款和高端核心装备收入。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断主业修复是否连续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认减值风险是否出清和利润中枢。"
-    }
-  ],
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "latest_report": "reports/2026-07-13-initial.md"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

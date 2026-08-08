@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:002206",
-  "market": "CN",
-  "ticker": "002206",
-  "name": "海利得",
-  "company_name": "海利得",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海利得具备涤纶工业丝、轮胎帘子布、塑胶材料和越南海外产能组合优势，当前估值偏低但2026Q1扣非利润下滑，适合在买入区小仓位观察，不宜追高重仓。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "attractive",
-  "fair_value_range": [
-    6.2,
-    7.4
-  ],
-  "buy_zone": [
-    4.6,
-    5.1
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海利得",
+    "security_status": "active",
+    "symbol": "CN:002206",
+    "ticker": "002206"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "18ad11e3264d20b20d7eebdcd5e1e592a8d9da0cb110466489f9bf286b9cef98"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 5.10 and 2026Q2扣非净利润未继续显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "当前估值偏低但2026Q1扣非下滑，需要用小仓位换取跟踪权。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看扣非利润、毛利率、越南基地和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price <= 4.80 and 经营现金流保持为正且越南基地利润稳定",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.025,
-      "reason": "进入更有安全边际的买入区，对应约10-11倍2025年利润和较高股息收益。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和原材料/汇率变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price >= 7.20 or 扣非利润连续两个季度同比下降超过25%",
-      "action": "减仓或退出",
-      "max_weight": 0.0,
-      "reason": "估值进入乐观区间或基本面逻辑失效，赔率下降。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.1
+      },
+      "reason": "进入首笔观察仓买入区。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入更高安全边际加仓区。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "接近基准合理价值上沿，应复核并考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.1,
-      "reason": "进入首笔观察仓买入区。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入更高安全边际加仓区。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "接近基准合理价值上沿，应复核并考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看扣非利润、毛利率、越南基地和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和原材料/汇率变化。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026Q2扣非归母净利润同比增速",
-    "涤纶工业丝收入、销量和毛利率",
-    "轮胎帘子布收入、客户认证和毛利率",
-    "越南公司净利润和二期建设进度",
-    "PTA、MEG、PX和原油价格",
-    "美元兑人民币汇率",
-    "经营活动现金流净额和自由现金流",
-    "资产负债率、在建工程和资本开支",
-    "分红与回购执行进度",
-    "LCP、PPS、PEEK新材料订单进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920857",
-  "market": "CN",
-  "ticker": "920857",
-  "name": "泓禧科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "行业需求复苏但公司收入、毛利率和现金流逆势恶化，当前价格已透支份额与盈利修复预期，缺乏安全边际。",
-  "fair_value_range": [5.5, 8.0],
-  "buy_zone": [4.5, 5.5],
-  "sell_or_reduce_zone": [9.5, 12.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泓禧科技",
+    "security_status": "active",
+    "symbol": "CN:920857",
+    "ticker": "920857"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "1e837f886020a89be49b84b9935cffd18c04f4944d2e25e0a69c2b0efb6e743a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于4.5至5.5元且连续两个季度经营现金流转正、微型扬声器毛利率转正",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的毛利率、经营现金流、客户集中度和境外业务盈利",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.5元且重新验证商业价值、净资产质量与客户关系均未恶化",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入有安全边际的条件性买入观察区间，仍需验证现金流与毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于12元或基本面继续恶化",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、经营现金流、客户集中度和境外业务盈利"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入有安全边际的条件性买入观察区间，仍需验证现金流与毛利率"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-14T04:14:22+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

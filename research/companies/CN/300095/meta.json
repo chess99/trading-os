@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300095",
-  "ticker": "300095",
-  "name": "华伍股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "细分工业制动系统龙头具备主业修复价值，但 2025 年大额亏损暴露商誉、投资损失、应收和非主业治理折价；按 2026-07-10 约 9.12 元股价估算，当前市值已接近乐观情景，需等待价格回落或连续两个季度现金流与利润同步修复。",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华伍股份",
+    "security_status": "active",
+    "symbol": "CN:300095",
+    "ticker": "300095"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "eed9809659a0d40cce5a94e1135b906fb4b4ea76a5fd6528f6f203979859fb7e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 5.8 元，且最近一期报告显示主业盈利为正、未出现新增重大减值",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入、毛利率、经营现金流、应收账款和减值风险",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 5.2 元，且连续两个季度经营现金流改善、应收账款增速低于收入增速",
-      "action": "提高至标准小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认主业利润修复是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 8.5 元且没有上调盈利假设的新增订单或现金流证据",
-      "action": "不追买或降低仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估商誉和非主业资产风险是否出清",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入估算合理价值下沿，风险收益比开始改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入买入区间中部，可结合现金流和减值情况复核建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "接近乐观情景估值，若缺少盈利上修证据应降低预期收益率",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入估算合理价值下沿，风险收益比开始改善"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入买入区间中部，可结合现金流和减值情况复核建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "接近乐观情景估值，若缺少盈利上修证据应降低预期收益率"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入、毛利率、经营现金流、应收账款和减值风险"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认主业利润修复是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估商誉和非主业资产风险是否出清"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

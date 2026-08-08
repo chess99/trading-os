@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688700",
-  "market": "CN",
-  "ticker": "688700",
-  "name": "东威科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "东威科技是高端PCB电镀设备龙头，受益AI服务器和高阶PCB扩产，2025年利润与现金流修复、2026Q1延续高增；但当前股价已反映较多牛市预期，安全边际不足，等待价格回落或订单、毛利率、现金流继续验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    45,
-    62
-  ],
-  "buy_zone": [
-    0,
-    45
-  ],
-  "sell_or_reduce_zone": [
-    85,
-    120
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东威科技",
+    "security_status": "active",
+    "symbol": "CN:688700",
+    "ticker": "688700"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d80b099cd9c02c9224b5902b2bbf8122a58f27cb03cdf4a273748e529c385ede"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未进入买入区或缺少2026年中报订单、毛利率、经营现金流三项验证时，仅保持观察，不建仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-10"
+      },
+      "reason": "公司预计8月披露2026年半年报后，复核收入、利润、现金流、订单和毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于45元且2026年中报收入、归母净利润、经营现金流均保持高质量增长，可建立试探仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报披露后复核全年利润中枢和营运资本质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期确认高端PCB/IC载板订单兑现、毛利率稳定且经营现金流匹配利润后，才考虑提高仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露后重估长期增长和新业务产业化进度。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入基准估值下沿并具备安全边际，触发重新评估买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 85.0
+      },
+      "reason": "价格进入牛市情景区间，如无新增订单和盈利上修支撑，应考虑回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入基准估值下沿并具备安全边际，触发重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 85,
-      "reason": "价格进入牛市情景区间，如无新增订单和盈利上修支撑，应考虑回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-10",
-      "reason": "公司预计8月披露2026年半年报后，复核收入、利润、现金流、订单和毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报披露后复核全年利润中枢和营运资本质量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报披露后重估长期增长和新业务产业化进度。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

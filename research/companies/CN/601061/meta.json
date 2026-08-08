@@ -1,90 +1,96 @@
 {
-  "symbol": "CN:601061",
-  "market": "CN",
-  "ticker": "601061",
-  "name": "中信金属",
-  "company_name": "中信金属",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中信金属兼具低毛利高周转金属贸易平台和优质矿业参股资产属性，核心价值来自艾芬豪、Las Bambas、CBMM、西部超导等权益资产及分销权；当前价格已计入部分铜周期和资产重估预期，适合等待回撤或半年报验证现金流与权益投资收益持续性。",
-  "quality_rating": "B+",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    11.5,
-    14.0
-  ],
-  "buy_zone": [
-    8.8,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中信金属",
+    "security_status": "active",
+    "symbol": "CN:601061",
+    "ticker": "601061"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "66bf22e6ed0287bfba7f4be7fd201c1420c64d24da5430f537201d06df6c40b7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于9.8元且铜价、铁矿石未出现共振下行，2026半年报前未见重大信用或套保损失",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "价格进入买入区上沿附近，资源权益和分销权提供一定安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-21"
+      },
+      "reason": "预计披露2026年半年报，复核Q1高盈利和现金流是否可持续",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.8元且半年报确认经营现金流为正、权益投资收益维持高位",
-      "action": "加仓至核心跟踪仓",
-      "max_weight": 0.03,
-      "reason": "估值回到悲观和基准情景之间，风险收益比改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报窗口，复核全年利润中枢、套保敞口和权益矿业贡献",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于15.5元且无铜价、Las Bambas、Kamoa-Kakula或CBMM利润进一步上修证据",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.01,
-      "reason": "价格进入乐观情景，需要用更强基本面验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.8
+      },
+      "reason": "进入首笔仓位观察区，复核铜价、经营现金流和套保敞口",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入高安全边际买入区，若基本面未恶化可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "进入减仓区，需要确认盈利上修，否则风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.8,
-      "reason": "进入首笔仓位观察区，复核铜价、经营现金流和套保敞口"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入高安全边际买入区，若基本面未恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "进入减仓区，需要确认盈利上修，否则风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-21",
-      "reason": "预计披露2026年半年报，复核Q1高盈利和现金流是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报窗口，复核全年利润中枢、套保敞口和权益矿业贡献"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026半年报营业收入、扣非归母净利润和经营现金流净额",
-    "Las Bambas产量、销量、分红和运营扰动",
-    "艾芬豪Kamoa-Kakula产量、冶炼进展和股价",
-    "CBMM铌产品销量、价格和中国大陆需求",
-    "商品衍生品期末账面价值、保证金占用和套保损益",
-    "应收账款、预付款、存货跌价和信用减值",
-    "铜价、铁矿石价格和美元兑人民币汇率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

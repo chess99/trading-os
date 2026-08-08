@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688697",
-  "market": "CN",
-  "ticker": "688697",
-  "name": "纽威数控",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "纽威数控是国内通用数控机床第一梯队企业，收入受益于国产替代和设备更新，但2025年毛利率与利润承压、2026Q1现金流仍弱；当前估值不贵但安全边际不足，适合观察，等待10.5元以下或毛利率/现金流改善后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    15.0
-  ],
-  "buy_zone": [
-    0.0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    99.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "纽威数控",
+    "security_status": "active",
+    "symbol": "CN:688697",
+    "ticker": "688697"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "2942bd9355956c9dc4c621154853670d5f5b0b5328d4651ca296ed8ea528d696"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于买入区但低于合理价值中枢，且毛利率和现金流尚未确认修复，仅保留观察仓",
-      "action": "watchlist_or_tracking_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查毛利率、经营现金流、存货与合同负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至10.5元以下，且最新季报未出现收入负增长、毛利率继续大幅下滑或经营现金流恶化",
-      "action": "accumulate",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入增长是否转化为利润和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度毛利率止跌回升且经营现金流转正，股价仍低于13元",
-      "action": "increase_selectively",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重新评估周期位置与合理估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入估算买入区，2026E PE约18-19倍，具备较好安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "高于当前合理价值区间，需要降低收益率预期或等待更强盈利证据",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入估算买入区，2026E PE约18-19倍，具备较好安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "高于当前合理价值区间，需要降低收益率预期或等待更强盈利证据"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查毛利率、经营现金流、存货与合同负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入增长是否转化为利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重新评估周期位置与合理估值"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

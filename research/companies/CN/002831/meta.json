@@ -1,105 +1,106 @@
 {
-  "symbol": "CN:002831",
-  "market": "CN",
-  "ticker": "002831",
-  "name": "裕同科技",
-  "company_name": "裕同科技",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "hold",
-  "current_rating": "hold",
-  "current_thesis": "裕同科技是消费电子高端包装龙头，具备大客户认证、全球交付、自动化制造、现金流和分红优势；但当前价格接近合理价值上沿，客户集中、消费电子周期、纸价和海外产能爬坡仍需折价，适合观察或小仓试探，等待25.5元以下或中报验证后再提高仓位。",
-  "quality_rating": "A-",
-  "valuation_rating": "B-",
-  "fair_value_range": [
-    25.5,
-    32.0
-  ],
-  "buy_zone": [
-    22.0,
-    25.5
-  ],
-  "sell_or_reduce_zone": [
-    36.0,
-    42.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "裕同科技",
+    "security_status": "active",
+    "symbol": "CN:002831",
+    "ticker": "002831"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "bb530735847acf20c1439eef8d51b8b0b1540fbf0073310a9ae3b7ffa92a1669"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约30-31元且未有仓位",
-      "action": "仅建立观察仓或等待更好价格",
-      "max_weight": 0.01,
-      "reason": "当前价格接近基准合理价值上沿，风险收益比一般"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的收入增速、毛利率、经营现金流和海外产能进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入25.5元以下且收入、毛利率、经营现金流未恶化",
-      "action": "分批买入",
-      "max_weight": 0.03,
-      "reason": "估值进入折价区，优质制造龙头的安全边际改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报旺季订单、客户结构和全年盈利兑现度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入22-24元且2026季报验证基本面稳定",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.05,
-      "reason": "对应盈利倍数更有吸引力，现金流和分红提供下行保护"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.5
+      },
+      "reason": "进入买入区上沿，复核中报和现金流后可分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于36元但盈利没有明显超预期",
-      "action": "逐步减持",
-      "max_weight": 0.02,
-      "reason": "乐观预期反映较充分，客户集中和周期风险的估值容错率下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入积极买入区，但需确认核心客户订单和经营现金流未恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "进入减持观察区，除非海外产能和盈利增速明显超预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "乐观情景估值上沿附近，应降低仓位并等待新证据",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25.5,
-      "reason": "进入买入区上沿，复核中报和现金流后可分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 22.0,
-      "reason": "进入积极买入区，但需确认核心客户订单和经营现金流未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 36.0,
-      "reason": "进入减持观察区，除非海外产能和盈利增速明显超预期"
-    },
-    {
-      "type": "price_above",
-      "price": 42.0,
-      "reason": "乐观情景估值上沿附近，应降低仓位并等待新证据"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的收入增速、毛利率、经营现金流和海外产能进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报旺季订单、客户结构和全年盈利兑现度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "毛利率",
-    "净利率",
-    "经营活动现金流量净额/归母净利润",
-    "应收账款周转",
-    "存货周转",
-    "海外收入及海外产能利用率",
-    "前五大客户收入占比",
-    "资本开支和折旧增速",
-    "分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

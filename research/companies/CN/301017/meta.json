@@ -1,95 +1,105 @@
 {
-  "symbol": "CN:301017",
-  "ticker": "301017",
-  "name": "漱玉平民",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "山东区域药房龙头具备门店密度、医保入口和供应链价值，但2025年利润高度受业绩补偿款影响，2026Q1扣非净利率仍低；当前价格已透支正常化盈利修复，暂列观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    10.5
-  ],
-  "buy_zone": [
-    7.2,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "漱玉平民",
+    "security_status": "active",
+    "symbol": "CN:301017",
+    "ticker": "301017"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "bdf078915fa3a4075c8037a1eda3b3a6eb2589b169206db54cdc7b8874d352bc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "无持仓时保持观察，只有股价进入买入区间且最近两个季度扣非净利率环比改善、经营现金流未恶化时，才建立跟踪仓。",
-      "action": "watch",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利率、门店优化、现金流和商誉。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于7.2元且扣非年化净利润超过1.2亿元、商誉未出现新增减值迹象，可提高至小仓位。",
-      "action": "accumulate_small",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断收入增长是否转化为可持续利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于13.0元且扣非净利率仍低于1.0%，已有持仓应降低风险暴露。",
-      "action": "reduce",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新估算正常化盈利和合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入买入观察区，需要复核扣非利润率、经营现金流和质押变化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入深度安全边际区，需要评估是否由基本面恶化导致下跌。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "超过减持/回避区，若扣非利润未同步修复则估值风险上升。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入买入观察区，需要复核扣非利润率、经营现金流和质押变化。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入深度安全边际区，需要评估是否由基本面恶化导致下跌。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "超过减持/回避区，若扣非利润未同步修复则估值风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利率、门店优化、现金流和商誉。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断收入增长是否转化为可持续利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新估算正常化盈利和合理价值区间。"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "扣非归母净利润与扣非净利率",
-    "直营门店数量、关店数量、单店销售和坪效",
-    "毛利率、销售费用率、财务费用率",
-    "经营现金流、库存周转、应付账款变化",
-    "商誉减值、并购补偿款和其他非经常性损益",
-    "控股股东及一致行动人质押和减持进度"
-  ],
-  "risk_flags": [
-    "扣非盈利能力薄",
-    "一次性补偿款影响2025年利润质量",
-    "医保监管和集采压制毛利",
-    "并购商誉减值风险",
-    "控股股东及一致行动人质押、减持带来治理折价"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600483",
-  "market": "CN",
-  "ticker": "600483",
-  "currency": "CNY",
-  "name": "福能股份",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "福建省属综合电力平台，风电、气电、热电联产与参股核电构成稳定现金流；新能源市场化电价和资本开支约束上行弹性，当前价格接近合理区间，等待更高股息率和半年报验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.5,
-    12.5
-  ],
-  "buy_zone": [
-    9.0,
-    9.6
-  ],
-  "sell_or_reduce_zone": [
-    13.2,
-    14.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "福能股份",
+    "security_status": "active",
+    "symbol": "CN:600483",
+    "ticker": "600483"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "cb4dd97bef7db769448bae6ed0aa7fb92fb200edb0f08a54cecc3d27076d7d68"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入9.0-9.6元且2026年半年报归母净利润不低于14.5亿元、上网结算电价未出现超预期下行",
-      "action": "建立观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报利润质量、上网电价、经营现金流和资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "半年报和三季报确认归母净利润稳定、年度分红能力维持且股价仍低于合理价值中枢",
-      "action": "提高至核心高股息仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报以及新能源市场化电价影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于13.2元但盈利预测未上修，或新能源电价下行导致ROE趋势性回落",
-      "action": "减仓或停止买入",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红方案和长期盈利假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.6
+      },
+      "reason": "进入买入区间上沿，静态股息率接近安全边际要求",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入强安全边际区间，可重新评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.2
+      },
+      "reason": "高于合理价值区间上沿，若盈利未上修应降低预期收益率假设",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.6,
-      "reason": "进入买入区间上沿，静态股息率接近安全边际要求"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入强安全边际区间，可重新评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 13.2,
-      "reason": "高于合理价值区间上沿，若盈利未上修应降低预期收益率假设"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报利润质量、上网电价、经营现金流和资本开支"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报以及新能源市场化电价影响"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红方案和长期盈利假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

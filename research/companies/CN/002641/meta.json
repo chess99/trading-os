@@ -1,189 +1,123 @@
 {
-  "ticker": "002641",
-  "symbol": "CN:002641",
-  "market": "CN",
-  "name": "公元股份",
-  "company_name": "公元股份有限公司",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "status": "active",
-  "sector": "建筑材料",
-  "industry": "塑料管道",
-  "research_status": "active",
-  "coverage": "initial",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "last_report_date": "2026-07-12",
-  "last_updated": "2026-07-12",
-  "updated_at": "2026-07-12",
-  "decision": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公元股份具备塑料管道龙头规模、品牌渠道和低 P/B 资产支撑，但 2025 年利润大幅下滑、2026Q1 仍亏损，盈利修复尚未确认；当前适合观察，等待 3.3-3.6 元安全边际区间或连续季度扣非利润、毛利率和现金流改善后再买入。",
-  "confidence": "中",
-  "analyst": "independent_buy_side_worker",
-  "summary": "国内塑料管道头部企业，资产端有一定安全垫，但 2025 年利润大幅下滑、2026Q1 仍亏损，当前更适合观察地产链与市政管网需求修复、毛利率和扣非利润改善。",
-  "business": [
-    "塑料管道产品研发、生产与销售，覆盖 PVC、PE、PP-R、CPVC、PE-RT 等系列。",
-    "产品应用于市政管网、建筑工程、全屋家装、燃气管网、消防保护、电力通讯、农业养殖、工业管网等领域。",
-    "同步推进太阳能光伏组件和新能源节能产品业务，但现阶段盈利贡献不稳定。"
-  ],
-  "thesis": [
-    "行业地位和生产渠道布局较强，低 P/B 提供资产端支撑。",
-    "2025 年利润已处低谷，若地产链企稳、市政和出口恢复，利润存在修复弹性。",
-    "当前盈利质量不足，买入需要更低价格或连续季度经营改善确认。"
-  ],
-  "key_financials": {
-    "revenue_2025_cny_bn": 6.176,
-    "net_profit_2025_cny_m": 62.49,
-    "operating_cash_flow_2025_cny_m": 291.69,
-    "revenue_2026_q1_cny_bn": 1.388,
-    "net_profit_2026_q1_cny_m": -31.9042,
-    "gross_margin_2026_q1_pct": 16.19,
-    "net_margin_2026_q1_pct": -2.31,
-    "book_value_per_share_2026_q1_cny": 4.42
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "公元股份",
+    "security_status": "active",
+    "symbol": "CN:002641",
+    "ticker": "002641"
   },
-  "valuation": {
-    "method_1_pb_asset": {
-      "bear_cny_per_share": 3.32,
-      "base_cny_per_share": 3.98,
-      "bull_cny_per_share": 4.86
-    },
-    "method_2_normalized_earnings": {
-      "bear_cny_per_share": 1.46,
-      "base_cny_per_share": 2.85,
-      "bull_cny_per_share": 4.39
-    },
-    "method_3_sotp": {
-      "bear_cny_per_share": 3.3,
-      "base_cny_per_share": 4.1,
-      "bull_cny_per_share": 4.5
-    },
-    "fair_value_range_cny_per_share": [
-      3.3,
-      4.5
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "29baba812dcd0302fd0ee834f4f91a5dc3cf46f06049d0d0b1f0cf71279fa1ef"
+      }
     ],
-    "buy_zone_cny_per_share": [
-      3.3,
-      3.6
-    ]
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "fair_value_range": [
-    3.3,
-    4.5
-  ],
-  "buy_zone": [
-    3.3,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.5
-  ],
-  "position_plan": [
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 3.55 元，且最近一期每股净资产仍高于 4.30 元、经营现金流没有明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "target_weight_pct": 1.5
-    },
-    {
-      "condition": "股价低于 3.30 元，且未出现大额减值、坏账或光伏业务亏损扩大",
-      "action": "提高仓位",
-      "max_weight": 0.035,
-      "target_weight_pct": 3.5
-    },
-    {
-      "condition": "连续两个季度扣非归母净利润转正、毛利率同比改善且经营现金流为正",
-      "action": "基本面确认后加仓",
-      "max_weight": 0.05,
-      "target_weight_pct": 5.0
-    },
-    {
-      "condition": "股价高于 4.80 元但扣非利润仍弱，或 P/B 超过 1.1 倍且没有盈利修复证据",
-      "action": "暂停加仓或降低仓位",
-      "max_weight": 0.0,
-      "target_weight_pct": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.55,
-      "reason": "进入初始观察仓安全边际区间"
-    },
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "接近 0.75 倍 P/B 的资产折价区间"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "若盈利未修复，估值已接近乐观资产法上沿"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "连续两个季度扣非归母净利润转正或继续亏损",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "中报后可验证盈利修复方向",
-      "action": "复核盈利修复假设和估值区间"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "经营活动现金流显著弱于净利润",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "现金流是资产折价投资的核心安全垫",
-      "action": "复核应收账款、票据、存货和收入质量"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "应收账款、票据和合同资产增速明显高于收入增速",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "工程和市政订单回款风险可能侵蚀净资产",
-      "action": "复核项目回款风险和坏账准备充足性"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "光伏业务出现大额亏损或资产减值",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "光伏业务是当前分部估值最大不确定项",
-      "action": "下调分部加总估值和买入区间"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "公司发布半年报、年报或重大资产处置公告",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "定期报告和重大事项会改变评级依据",
-      "action": "更新财务数据和投资评级"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.55
+      },
+      "reason": "进入初始观察仓安全边际区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "接近 0.75 倍 P/B 的资产折价区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "若盈利未修复，估值已接近乐观资产法上沿",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "watchlist": [
-    "管道主业收入增速和毛利率",
-    "扣非归母净利润是否连续转正",
-    "经营活动现金流与净利润匹配度",
-    "应收账款、票据和合同资产增速",
-    "光伏业务收入、毛利率、亏损额和减值风险",
-    "市政管网订单、出口订单和回款周期"
-  ],
-  "risks": [
-    "地产链需求继续下滑",
-    "管道行业价格竞争加剧",
-    "应收账款和坏账风险上升",
-    "原材料价格波动挤压毛利率",
-    "光伏业务继续亏损或发生资产减值",
-    "出口贸易摩擦和汇率波动"
-  ],
-  "sources": [
-    "https://www.era.com.cn/index.php/Home/about/index.html",
-    "https://www.era.com.cn/",
-    "https://static.cninfo.com.cn/finalpage/2026-04-24/1225159480.PDF",
-    "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-29/4fb66579-b8fc-4c26-a62b-3f9cff004ec9.PDF",
-    "https://finance.sina.cn/2026-04-28/detail-inhvzwqc1686684.d.html",
-    "https://data.eastmoney.com/stockdata/002641.html",
-    "https://pdf.dfcfw.com/pdf/H3_AP202605111822171863_1.pdf"
-  ],
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

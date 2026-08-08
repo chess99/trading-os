@@ -1,81 +1,114 @@
 {
-  "symbol": "CN:688253",
-  "market": "CN",
-  "ticker": "688253",
-  "name": "英诺特",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "英诺特是呼吸道病原体 POCT 联检细分龙头，产品注册、儿科急门诊场景和经销渠道有一定壁垒，资产负债表稳健且神经系统检测具备期权价值；但 2025 和 2026Q1 收入利润连续承压，当前约 57.82 元价格对应较高 TTM PE，已透支主业恢复和新业务放量预期，需等待估值回落或中报验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    38,
-    50
-  ],
-  "buy_zone": [
-    30,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    75
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "英诺特",
+    "security_status": "active",
+    "symbol": "CN:688253",
+    "ticker": "688253"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d67ac25957d15a307bca2716b7f977140c4236f014476830b59bf1a750be8424"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 38 元，且 2026H1 收入同比降幅收窄、经营现金流转正、呼吸道库存未继续恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核 2026 年半年报，重点看收入降幅、毛利率、经营现金流、库存和神经检测注册进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 30 元，且主业仍保持盈利、神经系统检测注册进度未明显延迟",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断呼吸道主业是否进入恢复周期",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 65 元但 2026H1 或 2026Q3 利润恢复未兑现",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和 2027Q1，重新校准正常化利润与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-07-28"
+      },
+      "reason": "跟踪共同实际控制人一致行动协议到期后的续签或控制权安排",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入基准合理价值下沿，可结合中报验证考虑观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入较高安全边际区，若基本面未恶化可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "高于基准价值上沿，若利润恢复未兑现需减持或避免追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入基准合理价值下沿，可结合中报验证考虑观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入较高安全边际区，若基本面未恶化可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "高于基准价值上沿，若利润恢复未兑现需减持或避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核 2026 年半年报，重点看收入降幅、毛利率、经营现金流、库存和神经检测注册进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断呼吸道主业是否进入恢复周期"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和 2027Q1，重新校准正常化利润与估值区间"
-    },
-    {
-      "type": "date",
-      "date": "2027-07-28",
-      "reason": "跟踪共同实际控制人一致行动协议到期后的续签或控制权安排"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

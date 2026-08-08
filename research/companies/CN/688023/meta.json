@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:688023",
-  "market": "CN",
-  "ticker": "688023",
-  "name": "安恒信息",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "安恒信息具备数据安全、云安全、安全运营和政企安全服务基础，2025年收入恢复且亏损收窄，但2026Q1仍亏损、现金流承压，当前估值不贵但经营拐点尚未充分验证，适合作为观察标的等待回款、费用率和盈利改善确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    34,
-    48
-  ],
-  "buy_zone": [
-    24,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安恒信息",
+    "security_status": "active",
+    "symbol": "CN:688023",
+    "ticker": "688023"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "59259186fed8fed3f8468a92bd5c3b8d1491a86b0dfb9945edd4aba2dea403ec"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前股价处于基础估值区间且2026年盈利、现金流尚未验证，维持观察仓位。",
-      "action": "watch",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、费用率、应收和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至30元以下，且2026H1收入增长、毛利率、经营现金流和应收质量未明显恶化。",
-      "action": "pilot_buy",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证下半年订单验收和现金流改善是否兑现。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H2经营现金流转正、全年亏损继续收窄并确认收入质量改善。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报，判断公司是否真正进入盈利修复周期。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入初步买入区间，需要复核半年报回款、毛利率和费用率后再决定是否试探建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入悲观情景估值下沿，若基本面未恶化，安全边际显著提高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "高于基础情景价值区间，若利润和现金流未兑现，应考虑减持或停止追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入初步买入区间，需要复核半年报回款、毛利率和费用率后再决定是否试探建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入悲观情景估值下沿，若基本面未恶化，安全边际显著提高。"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "高于基础情景价值区间，若利润和现金流未兑现，应考虑减持或停止追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、毛利率、费用率、应收和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证下半年订单验收和现金流改善是否兑现。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报，判断公司是否真正进入盈利修复周期。"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603535",
-  "market": "CN",
-  "ticker": "603535",
-  "name": "嘉诚国际",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "嘉诚国际拥有南沙高标仓、海南自贸港节点和跨境电商/制造业客户嵌入的资产期权，当前约1.2倍PB不贵；但2025-2026年会计差错、警示函、评级下调和利润下滑使财务可信度与执行风险较高，需等待整改、应收回款和海南项目投产兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.8,
-    8.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.4
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "嘉诚国际",
+    "security_status": "active",
+    "symbol": "CN:603535",
+    "ticker": "603535"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "9a963cde1a2aff9a7e6192a58a2d0b2f128694debdd709e925b6bd4cca4d2533"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在价格低于5.4元且未新增监管处罚、2026H1经营现金流为正时建立观察仓",
-      "action": "initial_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、应收账款、经营现金流和海南项目进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若整改完成、应收账款继续下降且综合物流收入恢复增长，再考虑提高仓位",
-      "action": "add_on_confirmation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-11-02"
+      },
+      "reason": "复核广东恒尚产业投资减持计划结束后的持股变化和股价影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若再次出现重大会计差错、经营现金流转负或海南项目明显延期，退出观察",
-      "action": "exit",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、监管整改效果、评级变化和项目投产兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.4
+      },
+      "reason": "进入买入观察区，需要复核监管整改、应收账款和现金流后再决策",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "超过基准估值区间上沿，若无利润兑现应降低或避免仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.4,
-      "reason": "进入买入观察区，需要复核监管整改、应收账款和现金流后再决策"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "超过基准估值区间上沿，若无利润兑现应降低或避免仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、应收账款、经营现金流和海南项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-11-02",
-      "reason": "复核广东恒尚产业投资减持计划结束后的持股变化和股价影响"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、监管整改效果、评级变化和项目投产兑现"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

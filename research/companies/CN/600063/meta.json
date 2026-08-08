@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600063",
-  "ticker": "600063",
-  "name": "皖维高新",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "PVA 龙头处于盈利修复期，2026H1 业绩预告显示周期弹性改善；海螺体系入主、定增和水泥资产剥离可能提升资产质量，但摊薄、项目回报和新材料放量仍需验证，当前股价接近合理区间下沿但安全边际不足。",
-  "fair_value_range": [
-    5.2,
-    6.8
-  ],
-  "buy_zone": [
-    4.4,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.2
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "皖维高新",
+    "security_status": "active",
+    "symbol": "CN:600063",
+    "ticker": "600063"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "61d7d70088fe05aca043708653a8e4aeda773aaf15f96f3dd5620e7a3089c574"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入4.4-5.0元，且2026半年报确认归母净利润不低于3亿元、经营现金流为正、定增条款无明显损害中小股东",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式披露的分产品毛利率、现金流和负债变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.0元，且PVA价格未明显恶化、新材料项目进度正常、治理整合继续推进",
-      "action": "可加仓但保持周期股仓位纪律",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报盈利持续性、定增进展和水泥资产剥离影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.2元，而新材料订单、毛利率或治理改善没有新增证据",
-      "action": "减仓或暂缓买入",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、募投项目进度和海螺体系整合效果",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入安全边际买入观察区，需要复核半年报和定增条款",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "低于估值下沿，可在基本面未恶化时重新评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "高于合理价值上沿，需要验证新材料放量和治理改善是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入安全边际买入观察区，需要复核半年报和定增条款"
-    },
-    {
-      "type": "price_below",
-      "price": 4.4,
-      "reason": "低于估值下沿，可在基本面未恶化时重新评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "高于合理价值上沿，需要验证新材料放量和治理改善是否足以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式披露的分产品毛利率、现金流和负债变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报盈利持续性、定增进展和水泥资产剥离影响"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、募投项目进度和海螺体系整合效果"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

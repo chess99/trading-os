@@ -1,81 +1,96 @@
 {
-  "symbol": "CN:300152",
-  "market": "CN",
-  "ticker": "300152",
-  "name": "*ST动力",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "avoid：公司处于退市风险警示状态，连续两年财务报告内部控制审计否定，2025年财务报告保留意见且持续经营存在重大不确定性；当前1.43元、约10.19亿元市值未充分反映退市、内控、监管和现金流风险。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.2,
-    0.6
-  ],
-  "buy_zone": [
-    0.2,
-    0.35
-  ],
-  "sell_or_reduce_zone": [
-    0.8,
-    1.43
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST动力",
+    "security_status": "active",
+    "symbol": "CN:300152",
+    "ticker": "300152"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "76b4870709c0c922f1822255e16e14d2c08a63813342f836b2a37c680aed5248"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于0.80元或退市/内控风险未解除",
-      "action": "不买入；已有仓位降至观察仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报、前期会计差错追溯、货币资金、经营现金流和内控整改进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于0.35元且2026半年报完成前期差错追溯、内控整改有可核验证据",
-      "action": "仅作为困境期权建立第一笔观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报和内部控制审计意见，判断是否触发终止上市路径。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年度内控审计转为标准无保留、证监会立案无重大处罚、经营现金流连续改善",
-      "action": "重新研究后再决定是否从观察仓提高",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.35
+      },
+      "reason": "进入保守安全边际观察区，但仍需确认内控和退市风险改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.2
+      },
+      "reason": "进入强吸引力困境期权区，可重新评估极小仓位试错。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 0.8
+      },
+      "reason": "价格高于基本面可支持区间，应回避追高或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.35,
-      "reason": "进入保守安全边际观察区，但仍需确认内控和退市风险改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 0.2,
-      "reason": "进入强吸引力困境期权区，可重新评估极小仓位试错。"
-    },
-    {
-      "type": "price_above",
-      "price": 0.8,
-      "reason": "价格高于基本面可支持区间，应回避追高或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报、前期会计差错追溯、货币资金、经营现金流和内控整改进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报和内部控制审计意见，判断是否触发终止上市路径。"
-    }
-  ],
-  "notes": [
-    "2026-07-20收盘价1.43元，总市值约10.19亿元，来源为新浪/东方财富行情接口。",
-    "2025年财务报告为保留意见；2025年内部控制审计为否定意见；公司2024年内控审计亦为否定意见。",
-    "公司因连续两年财务报告内控否定，自2026-04-30起被实施退市风险警示；若2026年度内控审计继续否定或无法表示，存在终止上市风险。",
-    "公司2025-09-19因涉嫌信息披露违法违规收到中国证监会立案告知书，结论截至本报告完成时未核验到。",
-    "清算回收率和同行实时估值为低置信度估算，报告采用保守折扣处理。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

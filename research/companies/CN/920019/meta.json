@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:920019",
-  "market": "CN",
-  "ticker": "920019",
-  "name": "铜冠矿建",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "铜冠矿建具备超深竖井和海外非煤矿山开发服务稀缺能力，2026年6-7月连续披露安哥拉、赞比亚、刚果（金）和贵州项目，订单能见度改善；但2025年利润受项目停工和汇兑拖累，2026Q1收入增长而利润下滑，经营现金流转负，应收账款和合同资产占比高，当前估值已接近基准合理价值上沿，暂以观察为主。",
-  "fair_value_range": [
-    11.5,
-    15.0
-  ],
-  "buy_zone": [
-    9.5,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "铜冠矿建",
+    "security_status": "active",
+    "symbol": "CN:920019",
+    "ticker": "920019"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "dce002c48ce98a533df8b69e11d7b4c1f0142301e6a401fe55290d037ee5883d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入9.5-11.5元且无新增重大安全、停工、回款恶化事件时，可建立观察仓。",
-      "action": "initial_buy",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、净利率、经营现金流、合同资产和主要项目履约情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026半年报确认收入增长、净利率回到4%以上、经营现金流明显改善且合同资产增速低于收入增速。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及海外项目汇兑、回款、订单执行变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于18元但利润率、回款和汇兑损益没有同步改善。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认大额订单是否转化为利润和现金流。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入基准估值下沿，可结合订单履约和现金流复核是否建立小仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入更有安全边际的买入区，若基本面未恶化可提高研究优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过乐观情景下沿，若利润质量未验证则估值风险上升。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入基准估值下沿，可结合订单履约和现金流复核是否建立小仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入更有安全边际的买入区，若基本面未恶化可提高研究优先级。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "超过乐观情景下沿，若利润质量未验证则估值风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、净利率、经营现金流、合同资产和主要项目履约情况。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及海外项目汇兑、回款、订单执行变化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认大额订单是否转化为利润和现金流。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

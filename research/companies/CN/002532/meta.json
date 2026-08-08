@@ -1,128 +1,111 @@
 {
-  "symbol": "CN:002532",
-  "market": "CN",
-  "ticker": "002532",
-  "name": "天山铝业",
-  "company_name": "天山铝业",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "status": "active",
-  "rating": "买入-第一笔小仓位",
-  "current_rating": "buy",
-  "current_thesis": "低成本电解铝一体化资源布局带来 2026 上半年景气兑现（H1 归母 42 亿同比+101.52%），2026-07-08 收盘 11.07 元静态 PE 约 10.6 倍；当前价位位于安全边际下沿，可买第一笔小仓位（3%），但需等待中报现金流转正、税率扰动明朗与 140 万吨项目达产节奏后再补仓。",
-  "quality_rating": "良好",
-  "valuation_rating": "合理偏低",
-  "fair_value_range": [
-    13.0,
-    16.0
-  ],
-  "buy_zone": [
-    9.5,
-    11.5
-  ],
-  "strong_attraction_zone": [
-    8.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    22.0
-  ],
-  "latest_report": "reports/2026-07-08-refresh.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-08-refresh.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天山铝业",
+    "security_status": "active",
+    "symbol": "CN:002532",
+    "ticker": "002532"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "b4e002ab690dbfe77521658f321707f999bae7de2c05383632c1f2141e827382"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-refresh.md",
+        "sha256": "bef00847717f5d84e2b885d9df91188d344542ba477661d98a207fb8aa8ef185"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 8.5 元",
-      "price_range": "8.5 元以下",
-      "action": "分批买入，但同步复核铝价和现金流",
-      "max_weight": 0.08,
-      "reason": "深度折价，已隐含较悲观周期假设"
+      "active": true,
+      "condition": {
+        "date": "2026-08-20"
+      },
+      "reason": "复核 2026 年半年报正式财务数据、现金流、税率和铝箔盈利",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在 8.5-9.5 元",
-      "price_range": "8.5-9.5 元",
-      "action": "积极建仓",
-      "max_weight": 0.07,
-      "reason": "强吸引力买入区，低成本资产具备较好赔率"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报、铝价价差和资源项目进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在 9.5-11.5 元",
-      "price_range": "9.5-11.5 元",
-      "action": "买入第一笔（当前 11.07 元位于此区间下沿）",
-      "max_weight": 0.05,
-      "reason": "具备安全边际，但仍需等待 2026 年中报验证现金流、税率和 140 万吨项目达产"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入强吸引力买入区，复核铝价和公司基本面后可提高仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价在 11.5-13.0 元",
-      "price_range": "11.5-13.0 元",
-      "action": "观察或小幅补仓",
-      "max_weight": 0.03,
-      "reason": "仍低于合理价值中枢，但赔率变薄，不被动追高"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入深度折价区，若非基本面恶化导致应评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价在 13.0-16.0 元",
-      "price_range": "13.0-16.0 元",
-      "action": "持有为主，不追涨",
-      "max_weight": 0.05,
-      "reason": "进入合理价值区，不适合追涨"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "进入合理价值上沿，停止新增买入",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "condition": "股价高于 16.0 元",
-      "price_range": "16.0 元以上",
-      "action": "停止追高并择机减仓",
-      "max_weight": 0.02,
-      "reason": "周期利润被较充分定价，对铝价回落敏感"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "偏贵区间，若铝价或盈利预期松动应考虑减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入强吸引力买入区，复核铝价和公司基本面后可提高仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入深度折价区，若非基本面恶化导致应评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "进入合理价值上沿，停止新增买入"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "偏贵区间，若铝价或盈利预期松动应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-20",
-      "reason": "复核 2026 年半年报正式财务数据、现金流、税率和铝箔盈利"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报、铝价价差和资源项目进度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "SHFE/LME 铝价及国内电解铝现货价",
-    "电解铝吨毛利和自备电覆盖比例（2025 年为 85%-90%）",
-    "氧化铝价格及公司氧化铝毛利率（2025 年为 9.7%）",
-    "140 万吨电解铝绿色低碳能效提升项目达产进度",
-    "铝箔及铝箔坯料产量、良品率、毛利率、订单饱满度",
-    "高纯铝销量和价格",
-    "经营现金流、资本开支、有息负债和资产负债率（目标 ≤50%）",
-    "几内亚、广西、印尼铝土矿/氧化铝项目进展",
-    "现金分红率（计划 2026 ≥50%）和回购执行情况（2026-07-02 公告回购 2-3 亿元，价格不超过 20 元/股）",
-    "公司所得税率 2026Q2 上调对净利率的传导",
-    "天富能源电费诉讼一审判决结果"
-  ],
-  "updated_at": "2026-07-08"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

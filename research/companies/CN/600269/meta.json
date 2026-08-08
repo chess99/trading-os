@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600269",
-  "ticker": "600269",
-  "name": "赣粤高速",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "赣粤高速是低估值省属高速公路平台，核心路产现金流稳定、融资成本低、PB 约0.47倍，但2026H1预减显示金融资产和折旧扰动较大，当前更适合作为观察型红利资产，等待扣非利润确认或价格进入更深安全边际。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    4.2,
-    5.1
-  ],
-  "buy_zone": [
-    3.3,
-    3.7
-  ],
-  "sell_or_reduce_zone": [
-    5.3,
-    6.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "赣粤高速",
+    "security_status": "active",
+    "symbol": "CN:600269",
+    "ticker": "600269"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "56d3a5d1c3f99851a011026e5fd9f328b4468f94333219338a72ffcccdfd4cb5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入3.30-3.50元且月度通行服务收入未连续三个月同比下滑超过3%",
-      "action": "建立红利型底仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-12"
+      },
+      "reason": "复核2026年半年报正式数据、扣非利润质量、经营现金流和樟吉改扩建折旧影响。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报扣非归母净利润接近预告上沿且经营现金流恢复，同时股价低于3.70元",
-      "action": "增加至中等观察仓位",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断扣非利润是否继续承压以及通行收入趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.30元但扣非ROE未明显改善或分红率未提升",
-      "action": "减仓或停止新增",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、分红方案、全年扣非ROE和资本开支纪律。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.7
+      },
+      "reason": "进入初始买入观察区间，需要复核通行收入、半年报扣非利润和经营现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "进入强安全边际区间，若基本面未恶化可考虑建立红利型底仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.3
+      },
+      "reason": "超过基准估值上沿，需要复核是否有ROE改善或分红率提升支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.7,
-      "reason": "进入初始买入观察区间，需要复核通行收入、半年报扣非利润和经营现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "进入强安全边际区间，若基本面未恶化可考虑建立红利型底仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.3,
-      "reason": "超过基准估值上沿，需要复核是否有ROE改善或分红率提升支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-12",
-      "reason": "复核2026年半年报正式数据、扣非利润质量、经营现金流和樟吉改扩建折旧影响。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断扣非利润是否继续承压以及通行收入趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、分红方案、全年扣非ROE和资本开支纪律。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

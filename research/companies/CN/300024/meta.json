@@ -1,79 +1,96 @@
 {
-  "symbol": "CN:300024",
-  "name": "机器人",
-  "market": "CN",
-  "ticker": "300024",
-  "company_name": "机器人",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "观望/减仓",
-  "current_thesis": "机器人是中国工业机器人与智能制造系统领域稀缺的平台型资产，但 2025 年仍亏损、毛利率偏低、经营现金流承压，2026-07-08 盘中约 250 亿元市值已经明显反映机器人主题预期。等待价格回到 8.5-11.0 元合理价值区或财务拐点被半年报验证后再考虑加仓。",
-  "current_rating": "watch",
-  "quality_rating": "B-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    8.5,
-    11.0
-  ],
-  "buy_zone": [
-    6.8,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    16.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "status": "active",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "机器人",
+    "security_status": "active",
+    "symbol": "CN:300024",
+    "ticker": "300024"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "1c6c1bf50854df07801f35e4cb26d77a639eac69f28c10b3b0977e0402dc46ac"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约 15.94-16.20 元",
-      "action": "不买入；若已有持仓，在 13.5 元以上以观察或减仓为主，等半年报验证毛利率、扣非亏损和经营现金流。",
-      "initial_weight": 0.0,
-      "watch_weight": 0.005,
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入合理价值区上沿，可开始复查基本面并考虑首笔观察仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年半年报披露期后复查收入增速、毛利率、扣非亏损、现金流和应收账款质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入强吸引区，若财务质量未恶化，可考虑提高到 1%-2% 仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报披露期后复查盈利拐点是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "高于保守合理价值较多，且公司尚未证明持续盈利，应停止加仓或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026 年半年报披露期后复查收入增速、毛利率、扣非亏损、现金流和应收账款质量。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入合理价值区上沿，可开始复查基本面并考虑首笔观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报披露期后复查盈利拐点是否延续。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入强吸引区，若财务质量未恶化，可考虑提高到 1%-2% 仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "高于保守合理价值较多，且公司尚未证明持续盈利，应停止加仓或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "综合毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款与合同资产增速",
-    "存货周转",
-    "高毛利机器人本体和核心装备订单占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:603129",
-  "market": "CN",
-  "ticker": "603129",
-  "name": "春风动力",
-  "company_name": "春风动力",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "春风动力是全球化休闲动力运动制造品牌，全地形车和中大排量摩托构成核心成长资产。公司质量较高、现金流较好，但2026年关税、汇率和毛利率压力仍需验证；当前价格安全边际不足，适合等待220-260元买入区间。",
-  "quality_rating": "A-",
-  "valuation_rating": "B-/C+",
-  "fair_value_range": [
-    290,
-    360
-  ],
-  "buy_zone": [
-    220,
-    260
-  ],
-  "sell_or_reduce_zone": [
-    380,
-    430
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "春风动力",
+    "security_status": "active",
+    "symbol": "CN:603129",
+    "ticker": "603129"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "dcb5da01e97cd07d575ee697f90986ed6ef75812f705b6c0f33f29aa0df7e9f2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于260元，且2026Q2/Q3综合毛利率不低于27%、北美和欧洲渠道未出现库存恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.03,
-      "reason": "进入买入区间上沿，质量较高但关税和汇率扰动仍需确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报毛利率、汇兑损益、经营现金流和海外收入",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于235元，且收入增速仍高于15%、经营现金流未连续弱于利润",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.05,
-      "reason": "估值安全边际提升，对应2026E约16倍PE以内"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报旺季出货、北美渠道库存和利润率修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于220元，且关税、汇率、库存三项风险未恶化",
-      "action": "提高至组合上限",
-      "max_weight": 0.08,
-      "reason": "价格接近熊市估值下沿，可用分散仓位承接高质量成长资产"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、全年现金流、分产品盈利和海外产能效果",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于380元且未来12个月盈利预测没有上修",
-      "action": "停止加仓并分批减仓",
-      "max_weight": 0.04,
-      "reason": "估值进入乐观区间，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 260.0
+      },
+      "reason": "进入初始买入区间，复核毛利率、现金流和北美库存后可建立3%首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 235.0
+      },
+      "reason": "安全边际明显改善，若基本面未破可加至5%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 380.0
+      },
+      "reason": "价格进入减持区间，除非盈利预测上修，否则应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 430.0
+      },
+      "reason": "接近乐观情景估值高位，需要兑现部分收益",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 260,
-      "reason": "进入初始买入区间，复核毛利率、现金流和北美库存后可建立3%首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 235,
-      "reason": "安全边际明显改善，若基本面未破可加至5%"
-    },
-    {
-      "type": "price_above",
-      "price": 380,
-      "reason": "价格进入减持区间，除非盈利预测上修，否则应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 430,
-      "reason": "接近乐观情景估值高位，需要兑现部分收益"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报毛利率、汇兑损益、经营现金流和海外收入"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报旺季出货、北美渠道库存和利润率修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、全年现金流、分产品盈利和海外产能效果"
-    }
-  ],
-  "key_tracking_metrics": [
-    "北美收入增速",
-    "欧洲收入增速",
-    "全地形车销量和ASP",
-    "全地形车毛利率",
-    "燃油摩托车收入和中大排量车型占比",
-    "电动两轮车收入和毛利率",
-    "综合毛利率",
-    "经营活动现金流净额",
-    "汇兑损益和财务费用",
-    "美国关税政策变化",
-    "海外经销商库存和终端折扣",
-    "研发费用率和新品上市节奏"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

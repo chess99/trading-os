@@ -1,94 +1,115 @@
 {
-  "symbol": "CN:300775",
-  "ticker": "300775",
-  "name": "三角防务",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备航空高端锻件设备、资质和型号嵌入壁垒，是值得长期跟踪的军工核心配套资产；但2026Q1订单减少、利润大幅下滑和信用减值上升削弱短期可见度，当前估值已隐含盈利修复，安全边际不足，维持观察。",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    13,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    26,
-    30
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三角防务",
+    "security_status": "active",
+    "symbol": "CN:300775",
+    "ticker": "300775"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "faa05b0b2ec48b81c7d78c4d80eb3e6e5bce688bc6fd44c62447978a1c7e8031"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未验证订单与利润修复前，仅允许观察性仓位",
-      "action": "watch_or_tracking_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点检查收入恢复、扣非净利、信用减值、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026半年报或三季报显示收入、扣非净利、经营现金流同步修复",
-      "action": "increase_after_validation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认Q1下滑是否为暂时性订单节奏扰动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入买入区且未出现订单持续恶化、应收大幅减值或治理恶化",
-      "action": "accumulate_with_margin_of_safety",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和全年订单交付，重新估算正常化利润和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入安全买入区上沿，需要结合最新订单、应收和现金流复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可重新评估买入评级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "进入减仓区下沿，若盈利未同步上修则风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "高于当前情景估值合理上沿，需要考虑卖出或显著降仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入安全买入区上沿，需要结合最新订单、应收和现金流复核"
-    },
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "进入深度安全边际区，若基本面未恶化可重新评估买入评级"
-    },
-    {
-      "type": "price_above",
-      "price": 26,
-      "reason": "进入减仓区下沿，若盈利未同步上修则风险收益比下降"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "高于当前情景估值合理上沿，需要考虑卖出或显著降仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点检查收入恢复、扣非净利、信用减值、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认Q1下滑是否为暂时性订单节奏扰动"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和全年订单交付，重新估算正常化利润和估值区间"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润",
-    "信用减值损失",
-    "应收账款占收入比例",
-    "经营活动现金流量净额",
-    "存货周转与库存量变化",
-    "重大销售合同待履行金额",
-    "前两大股东质押变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

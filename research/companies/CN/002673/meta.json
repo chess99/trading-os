@@ -1,132 +1,105 @@
 {
-  "market": "CN",
-  "ticker": "002673",
-  "symbol": "CN:002673",
-  "name": "西部证券",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "current_thesis": "陕西国资背景中型券商，2025年利润修复且国融证券并表带来规模弹性，但ROE仍偏低、整合和自营波动尚未充分验证，现价估值接近中枢，等待更深PB折价或ROE改善。",
-  "fair_value_range": [
-    5.5,
-    7.9
-  ],
-  "buy_zone": [
-    5.5,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    9.5
-  ],
-  "business": "陕西国资背景综合券商，覆盖财富管理、自营投资、投资银行、信用、资产管理、期货、私募投资基金和另类投资等业务。",
-  "thesis": [
-    "2025年归母净利润17.54亿元，同比增长24.97%，资产规模突破千亿，具备中型券商弹性。",
-    "财富管理和投行业务改善，国融证券整合若顺利，可能带来区域、网点和业务协同。",
-    "当前约0.97倍归母PB，估值不贵，但ROE仍在6%左右，安全边际不足以直接买入。"
-  ],
-  "risks": [
-    "权益和债券市场下行导致自营、公允价值和经纪收入承压。",
-    "国融证券整合费用、人员、系统、网点和监管协同不及预期。",
-    "业务及管理费增长过快，收入增量无法转化为利润增量。",
-    "投行、资管、信用和自营业务面临监管处罚或风控事件。"
-  ],
-  "watch_items": [
-    "2026年中报归母净利润和ROE是否恢复改善",
-    "业务及管理费/营业收入是否回落",
-    "国融证券整合方案、费用协同和收入贡献",
-    "自营投资收益、OCI配置和风控指标",
-    "经纪手续费净收入和机构客户资产规模"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露后",
-      "reason": "验证国融证券并表后的收入、费用和ROE表现",
-      "action": "复核ROE、费用率、国融证券贡献和估值区间"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后",
-      "reason": "观察前三季度利润趋势和整合费用是否收敛",
-      "action": "复核整合假设和仓位上限"
-    },
-    {
-      "type": "date",
-      "date": "2027-02-28",
-      "condition": "2026年年报预告或业绩快报披露后",
-      "reason": "评估全年盈利质量、资本指标和下一年度安全边际",
-      "action": "复核全年盈利、资本指标和下一年度评级"
-    }
-  ],
-  "valuation": {
-    "reference_price": 6.51,
-    "reference_price_date": "2026-07-10",
+  "identity": {
     "currency": "CNY",
-    "pb_base_value": 6.6,
-    "pe_base_value_range": [
-      6.2,
-      6.8
-    ],
-    "sotp_base_value": 7.0,
-    "margin_of_safety_buy_zone": [
-      5.5,
-      5.8
-    ]
+    "market": "CN",
+    "name": "西部证券",
+    "security_status": "active",
+    "symbol": "CN:002673",
+    "ticker": "002673"
   },
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "6c453f0c69e55bbf68db62630f5c5c7372c632393fdf4a339a1eae6008b6cc53"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.80元且没有新增重大监管处罚或风控事件",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证国融证券并表后的收入、费用和ROE表现",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.50元且2026年中报或三季报显示ROE和费用率改善",
-      "action": "提高到小仓配置",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "观察前三季度利润趋势和整合费用是否收敛",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.20元且ROE仍低于7%",
-      "action": "不追涨并考虑减仓",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
+      "active": true,
+      "condition": {
+        "date": "2027-02-28"
+      },
+      "reason": "评估全年盈利质量、资本指标和下一年度安全边际",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 5.8,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
       "reason": "进入0.85倍左右归母PB买点区",
-      "note": "进入0.85倍左右归母PB买点区，复核基本面后可小仓买入"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 5.5,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
       "reason": "进入强安全边际区",
-      "note": "进入强安全边际区，若无新增风险可提高仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 8.2,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
       "reason": "估值接近乐观情景上沿",
-      "note": "估值接近乐观情景上沿，若ROE未改善则降低赔率"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "next_review": "2026-08-31",
-  "sources": [
-    "https://www.west95582.com/2026/wsarticle/20260407/3c69c48c497c418180caae6f43013cfb.pdf",
-    "https://www.west95582.com/2026/wsarticle/20260424/e9059dd0753e436694091abc2a8ee351.pdf",
-    "https://www.west95582.com/",
-    "https://www.sac.net.cn/xxgk/hysj/jjsj/202603/t20260326_81468.html",
-    "https://www.deloitte.com/cn/zh/Industries/financial-services/perspectives//chinese-securities-sector-2025-review-and-2026-outlook.html",
-    "https://www.21jingji.com/article/20260402/herald/25c4221f09054695937f49daff591528.html"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

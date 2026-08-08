@@ -1,135 +1,142 @@
 {
-  "symbol": "CN:002755",
-  "market": "CN",
-  "ticker": "002755",
-  "name": "奥赛康",
-  "company_name": "北京奥赛康药业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "奥赛康处于高毛利成熟制剂现金流向创新药商业化迁移的早期阶段，利厄替尼医保后放量、ASKC202/ASKB589 管线进展和销售费用率下降是核心上行变量；但当前价格已计入部分创新药预期，安全边际不足，适合等待更低价格或后续季报验证。",
-  "quality_rating": "中上",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [13.0, 17.0],
-  "buy_zone": [10.5, 12.5],
-  "sell_or_reduce_zone": [18.0, 20.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥赛康",
+    "security_status": "active",
+    "symbol": "CN:002755",
+    "ticker": "002755"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "aa9c5ca5c7527fa66e9f34d7157320898328107ce6b81b5c1926d522b81e94f8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 10.5 元，且没有重大负面公告、利厄替尼商业化未证伪",
-      "max_weight": 0.05,
-      "action": "提高至 3%-5% 仓位，分两次买入"
-    },
-    {
-      "condition": "价格在 10.5-11.5 元，且经营现金流、现金资产和研发管线进度保持健康",
-      "max_weight": 0.03,
-      "action": "建立 2%-3% 仓位"
-    },
-    {
-      "condition": "价格在 11.5-12.5 元，且没有研发减值或医保/集采重大负面",
-      "max_weight": 0.02,
-      "action": "建立 1%-2% 初始仓位"
-    },
-    {
-      "condition": "价格在 12.5-13.5 元，且尚未看到利厄替尼放量数据",
-      "max_weight": 0.01,
-      "action": "仅保留 0.5%-1% 跟踪仓"
-    },
-    {
-      "condition": "价格高于 18.0 元，且商业化数据未显著超预期",
-      "max_weight": 0.0,
-      "action": "减仓或停止买入"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "unit": "CNY/share",
-      "reason": "低于合理价值区间下沿约 4%，开始接近初始买入安全边际",
-      "action": "进入初始可买区，复核最近季报和公告"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "unit": "CNY/share",
-      "reason": "相对 13-17 元合理区间形成明显折价，赔率改善",
-      "action": "进入深度安全边际区，检查是否存在基本面恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "unit": "CNY/share",
-      "reason": "高于合理价值区间上沿，需确认商业化和管线进展是否足以支持重估",
-      "action": "复核利厄替尼销售和管线催化，未验证则降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "unit": "CNY/share",
-      "reason": "显著高于当前风险调整估值区间，估值容错率下降",
-      "action": "触发重新估值和卖出/减仓审查"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布 2026 年半年报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年度报告将首次系统验证 2026 年医保执行后的经营表现",
-      "action": "复核收入增速、利润质量、利厄替尼放量和费用率"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "利厄替尼销售额、医保准入医院数或商业化合作出现重大更新",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报或经营更新可进一步验证利厄替尼放量斜率",
-      "action": "重估抗肿瘤业务增长曲线和合理估值区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "ASKC202、ASKB589、ASKC109 出现临床、注册或审批关键进展",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "核心在研项目进展会显著影响风险调整管线价值",
-      "action": "更新管线风险调整 NPV"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
-      "condition": "研发资本化项目出现减值迹象或大额减值公告",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "开发支出余额较大，减值会影响财务质量和估值底线",
-      "action": "下修财务质量评级和安全边际"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "销售费用率连续两个季度未改善且收入继续横盘",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "销售费用率是利润弹性和商业化效率的关键约束",
-      "action": "下修利润率假设"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-06-30",
-      "condition": "发生大额并购、授权交易、股权融资或关联交易",
+      "active": true,
+      "condition": {
+        "date": "2027-06-30"
+      },
       "reason": "资本配置变化可能改变净现金安全垫和股东回报假设",
-      "action": "重新评估资本配置质量"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "低于合理价值区间下沿约 4%，开始接近初始买入安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "相对 13-17 元合理区间形成明显折价，赔率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "高于合理价值区间上沿，需确认商业化和管线进展是否足以支持重估",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "显著高于当前风险调整估值区间，估值容错率下降",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "利厄替尼季度销售额和医保后放量斜率",
-    "抗肿瘤业务收入增速及占比",
-    "销售费用率和市场推广费变化",
-    "经营现金流/归母净利润比值",
-    "研发费用化与资本化金额、开发支出余额",
-    "ASKC202 临床 III 期/NDA 节点",
-    "ASKB589 临床 III 期进展",
-    "现金及交易性金融资产余额、短期借款余额",
-    "前五大客户收入占比和应收账款周转"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

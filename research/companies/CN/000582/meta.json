@@ -1,99 +1,106 @@
 {
-  "symbol": "CN:000582",
-  "market": "CN",
-  "ticker": "000582",
-  "name": "北部湾港",
-  "company_name": "北部湾港",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "区域港口资产质量较好，西部陆海新通道、平陆运河和钦州泊位扩建提供中长期增长，但当前估值已接近中性合理价值，需等待价格回落或业绩继续兑现后再提高仓位。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    9.8,
-    11.8
-  ],
-  "buy_zone": [
-    8.8,
-    9.8
-  ],
-  "sell_or_reduce_zone": [
-    13.2,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北部湾港",
+    "security_status": "active",
+    "symbol": "CN:000582",
+    "ticker": "000582"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "7915bee493b8d7e14511a259caf1d508fd548dc95eff501fb9be2985ccb43b4a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格在9.80元以下，且最近3个月累计货物吞吐量同比不低于5%、集装箱吞吐量同比不低于6%",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "价格进入买入区间且核心吞吐指标仍验证成长逻辑"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认收入、扣非利润、经营现金流和资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在8.80元以下，且没有重大安全事故、费率下调或资本开支失控",
-      "action": "提高至核心跟踪仓",
-      "max_weight": 0.06,
-      "reason": "估值具备安全边际，区域港口资产和新通道成长提供中期赔率"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和月度吞吐，判断平陆运河和西部陆海新通道预期是否继续兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于13.20元或TTM PE超过30倍，且未来两年利润未明显上修",
-      "action": "减仓至观察仓",
-      "max_weight": 0.02,
-      "reason": "估值超过中性情景合理区间，主题溢价大于基本面兑现"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.8
+      },
+      "reason": "进入基础买入区间，若吞吐和扣非利润同步验证可建首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入强买区间，若基本面未破坏可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.2
+      },
+      "reason": "接近乐观情景估值，需要减仓或等待业绩上修确认",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "超过当前三情景乐观价值中枢，若无盈利预测上调应显著降仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.8,
-      "reason": "进入基础买入区间，若吞吐和扣非利润同步验证可建首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入强买区间，若基本面未破坏可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 13.2,
-      "reason": "接近乐观情景估值，需要减仓或等待业绩上修确认"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "超过当前三情景乐观价值中枢，若无盈利预测上调应显著降仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认收入、扣非利润、经营现金流和资本开支"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和月度吞吐，判断平陆运河和西部陆海新通道预期是否继续兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度货物吞吐量累计同比",
-    "月度集装箱吞吐量累计同比",
-    "外贸吞吐量占比和同比",
-    "海铁联运班列量",
-    "西部陆海新通道货值和货量",
-    "单吨收入和毛利率",
-    "经营现金流与资本开支",
-    "在建工程和固定资产转固节奏",
-    "钦州大榄坪6-8号泊位项目进度和预算执行",
-    "每股分红和分红率",
-    "控股股东增持或资产注入进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

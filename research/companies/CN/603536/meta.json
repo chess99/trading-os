@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603536",
-  "market": "CN",
-  "ticker": "603536",
-  "name": "惠发食品",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "惠发食品处于主营修复早期，2026Q1和H1预告显示收入和归母利润改善，但扣非盈利仍未稳定，扭亏含非经常性损益，且当前估值约5倍以上PB、约1.3倍PS，已经反映较乐观反转预期。只有股价回落至安全边际区间且半年报/三季报验证扣非主业连续改善，才适合小仓位观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.0,
-    7.0
-  ],
-  "buy_zone": [
-    4.5,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "惠发食品",
+    "security_status": "active",
+    "symbol": "CN:603536",
+    "ticker": "603536"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "d68410f7b3973ab5be19ae088162357984eb9dc60ebdc44a19bccd030c726c94"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.2元，且2026半年报确认扣非亏损继续收窄、经营现金流为正、库存和短债没有恶化时，建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据，重点看扣非净利润、收入结构、毛利率、现金流和库存",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.5元，且2026三季报显示单季扣非净利润转正、主营毛利率改善、供应链低收益项目继续退出时，加到小仓位上限",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认单季扣非利润是否连续改善以及短债压力是否缓解",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣非净利润继续亏损、经营现金流转负、控股股东质押恶化或股价高于8.5元时，不持有或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断反转是否从非经常性扭亏转为主营盈利",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入买入观察区，需要复核半年报扣非改善和现金流质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "价格超过基准合理价值上沿较多，反转预期透支，应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入买入观察区，需要复核半年报扣非改善和现金流质量"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "价格超过基准合理价值上沿较多，反转预期透支，应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据，重点看扣非净利润、收入结构、毛利率、现金流和库存"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认单季扣非利润是否连续改善以及短债压力是否缓解"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断反转是否从非经常性扭亏转为主营盈利"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

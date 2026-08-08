@@ -1,71 +1,86 @@
 {
-  "symbol": "CN:603126",
-  "ticker": "603126",
-  "market": "CN",
-  "name": "中材节能",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "央企节能环保工程与清洁能源平台，2025年收入高增但利润率和现金流质量仍需验证；当前估值已反映较高盈利修复预期，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.2,
-    5.2
-  ],
-  "buy_zone": [
-    0,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    9
-  ],
-  "currency": "CNY",
-  "decision": "观察",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中材节能",
+    "security_status": "active",
+    "symbol": "CN:603126",
+    "ticker": "603126"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "68b5a909887c22a2fa460059005028f54a3aea34058f8142e4a136b7642258e5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.2元，且2026半年报未出现重大坏账、海外项目违约或经营现金流恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "公司预约披露2026年半年报，需复核预告兑现、毛利率、合同资产、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.5元，且扣非利润和经营现金流连续改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报披露后复核清洁能源项目收入连续性和利润率修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.8元但利润率修复没有兑现",
-      "action": "不追高并减持已有仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入基准合理价值区间下沿，允许重新评估观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "高于当前证据支持的估值区间，应检查是否过度定价盈利修复",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入基准合理价值区间下沿，允许重新评估观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "高于当前证据支持的估值区间，应检查是否过度定价盈利修复"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "公司预约披露2026年半年报，需复核预告兑现、毛利率、合同资产、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报披露后复核清洁能源项目收入连续性和利润率修复"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

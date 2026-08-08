@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:605319",
-  "market": "CN",
-  "ticker": "605319",
-  "name": "无锡振华",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "无锡振华受益于上汽、特斯拉、理想、小米等客户结构优化和廊坊/上海临港产能释放，2025年收入、利润和现金流同步改善；当前约15倍TTM PE低于基准合理价值，但客户集中、整车年降和2026Q1扣非下滑使置信度维持中等。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    24.0,
-    30.0
-  ],
-  "buy_zone": [
-    18.5,
-    21.5
-  ],
-  "sell_or_reduce_zone": [
-    32.0,
-    37.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "无锡振华",
+    "security_status": "active",
+    "symbol": "CN:605319",
+    "ticker": "605319"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "54f155c6ec2aa768740f9e85e8ceffbd5cc0632ff85d2513a5571cb8c16dd46a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于21.5元以下且未出现客户订单或利润率恶化信号，可建立初始仓位。",
-      "action": "buy_initial",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、冲压零部件毛利率和廊坊项目收入兑现。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1扣非归母净利润恢复正增长、廊坊项目收入兑现清晰且经营现金流保持健康。",
-      "action": "add",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1扣非下滑是否为短期波动。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入32元以上且盈利预测未同步上修，或连续两个季度利润率下滑。",
-      "action": "reduce",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年订单展望，重新评估合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
+      "reason": "低于安全买入区下沿，若基本面未恶化，隐含较充分安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "高于基准合理价值上沿，除非2026-2027年盈利预测上修，否则风险收益比下降。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.5,
-      "reason": "低于安全买入区下沿，若基本面未恶化，隐含较充分安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 32.0,
-      "reason": "高于基准合理价值上沿，除非2026-2027年盈利预测上修，否则风险收益比下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、冲压零部件毛利率和廊坊项目收入兑现。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1扣非下滑是否为短期波动。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年订单展望，重新评估合理价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

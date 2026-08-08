@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920855",
-  "market": "CN",
-  "ticker": "920855",
-  "name": "浙江大农",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "现金和负债结构稳健，但利润连续下滑、2026Q1订单与毛利承压，当前估值已反映较充分恢复预期，等待更大安全边际。",
-  "fair_value_range": [9.5, 11.5],
-  "buy_zone": [8.2, 9.2],
-  "sell_or_reduce_zone": [12.5, 14.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江大农",
+    "security_status": "active",
+    "symbol": "CN:920855",
+    "ticker": "920855"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "b1033b8babb51b506b798950d4bd2079f1d12f5fe469ea35d68059979a8c12d3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于8.8-9.2元且收入、毛利率和主要客户订单未继续恶化",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、毛利率、客户订单和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于8.2-8.8元，核心假设复核通过且正常化自由现金流仍不低于3500万元",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-06-30"
+      },
+      "reason": "复核高压柱塞泵及泵组系统扩产项目是否按延期后计划完成",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "即使股价低于8.2元，只要客户流失、毛利率坍塌或募投逻辑被证伪，就不加仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.2
+      },
+      "reason": "进入可复核基本面的观察买入区间，不代表机械加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "进入减仓或不应追高区间，除非盈利预测已显著上调",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、毛利率、客户订单和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-06-30",
-      "reason": "复核高压柱塞泵及泵组系统扩产项目是否按延期后计划完成"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.2,
-      "reason": "进入可复核基本面的观察买入区间，不代表机械加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "进入减仓或不应追高区间，除非盈利预测已显著上调"
-    }
-  ],
-  "updated_at": "2026-07-14T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

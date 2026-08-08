@@ -1,131 +1,125 @@
 {
-  "symbol": "CN:002544",
-  "market": "CN",
-  "ticker": "002544",
-  "name": "普天科技",
-  "company_name": "中电科普天科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司具备央企 ICT、专网通信、高可靠 PCB 和行业数字化客户资源，但 2025 年扣非净利率仅约 0.11%，2026Q1 仍亏损，当前 18.87 元/股、约 128.42 亿元市值主要反映主题溢价而非可验证利润，缺乏安全边际。",
-  "quality_rating": "B-",
-  "valuation_rating": "D，高估",
-  "fair_value_range": [
-    6.5,
-    9.0
-  ],
-  "buy_zone": [
-    5.0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    14.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "普天科技",
+    "security_status": "active",
+    "symbol": "CN:002544",
+    "ticker": "002544"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "a70f65bf19c87d00dba1cf6831ba1fc9f66d6cb5f91ccf583c9166dd6a651bc8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "today",
-      "action": "不买",
-      "position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证 2026 年收入企稳和回款改善的第一个关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "<=5.0 CNY",
-      "action": "若回款和订单未恶化，可建仓或加仓",
-      "position": "4%-6%",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季度通常进入项目验收和收入确认旺季，需要观察利润修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "5.0-6.5 CNY",
-      "action": "小仓位买入",
-      "position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报可完整验证全年现金流、减值损失和新业务兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "6.5-9.0 CNY",
-      "action": "观察，不主动加仓",
-      "position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入合理价值区上沿，需要检查是否有基本面改善支撑",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": ">10.5 CNY",
-      "action": "不追高；>14.0 元回避或卖出",
-      "position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "价格低于基准合理价值区下沿，安全边际开始出现",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "价格接近悲观情景价值，若回款和订单未恶化则赔率改善",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "已高于基准估值区，需要利润明显修复才可支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "接近或超过乐观情景价值，主题溢价过高",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "action": "重算估值与仓位",
-      "reason": "进入合理价值区上沿，需要检查是否有基本面改善支撑"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "action": "进入有安全边际买入区，复核后可考虑首笔仓位",
-      "reason": "价格低于基准合理价值区下沿，安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "action": "进入强吸引力区，若基本面未恶化可提高仓位",
-      "reason": "价格接近悲观情景价值，若回款和订单未恶化则赔率改善"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "action": "不追高",
-      "reason": "已高于基准估值区，需要利润明显修复才可支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "action": "回避或卖出",
-      "reason": "接近或超过乐观情景价值，主题溢价过高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 半年报披露后",
-      "action": "复核收入、扣非净利率和经营现金流",
-      "reason": "半年报是验证 2026 年收入企稳和回款改善的第一个关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 三季报披露后",
-      "action": "复核应收、现金流和新业务订单",
-      "reason": "三季度通常进入项目验收和收入确认旺季，需要观察利润修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年报披露后",
-      "action": "复核估值区间和质量评级",
-      "reason": "年报可完整验证全年现金流、减值损失和新业务兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润率",
-    "经营现金流净额",
-    "经营现金流/归母净利润",
-    "应收账款+应收票据+合同资产/营业收入",
-    "公网通信毛利率",
-    "专网通信与智慧应用毛利率",
-    "智能制造毛利率",
-    "信用减值损失+资产减值损失/营业收入",
-    "低空经济、卫星通信、数据治理、北斗应急新增订单"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

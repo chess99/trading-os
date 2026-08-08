@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301383",
-  "ticker": "301383",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "天键股份",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "天键股份具备声学 ODM、全球交付和 AI 可穿戴新品导入期权，但 2025 年及 2026Q1 连续亏损，客户集中、海外产能爬坡、汇兑和存货跌价仍压制利润；当前价格接近合理价值上沿，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    16.0,
-    22.0
-  ],
-  "buy_zone": [
-    12.0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天键股份",
+    "security_status": "active",
+    "symbol": "CN:301383",
+    "ticker": "301383"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "e9b0717b03f8fef1fd12e76ac273965007fa5249cea5eba1eed558b8fe551ef3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于15元且2026H1收入、毛利率、扣非亏损未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，验证收入、毛利率、扣非亏损和海外产能效率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于13元且连续两个季度扣非亏损收窄或转正",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断AI可穿戴新品导入是否转化为利润拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于25元且扣非归母净利润仍为亏损",
-      "action": "减仓或不参与",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及泰国基地投产进展，重新评估长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入买入观察区，PB安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "若基本面未恶化，价格接近悲观情景估值下沿",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "若利润未修复，估值已提前反映AI可穿戴期权",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入买入观察区，PB安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "若基本面未恶化，价格接近悲观情景估值下沿"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "若利润未修复，估值已提前反映AI可穿戴期权"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，验证收入、毛利率、扣非亏损和海外产能效率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断AI可穿戴新品导入是否转化为利润拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及泰国基地投产进展，重新评估长期盈利中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

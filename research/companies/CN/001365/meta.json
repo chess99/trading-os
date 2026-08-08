@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:001365",
-  "market": "CN",
-  "ticker": "001365",
-  "name": "天海电子",
-  "company_name": "天海电子",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "汽车线束规模和客户认证壁垒真实，但线束低毛利、客户年降、应收账款和当前估值偏高限制安全边际；等待股价回到26-28元且半年报验证毛利率、现金流和连接器占比改善后再小仓位买入。",
-  "quality_rating": "B",
-  "valuation_rating": "C-",
-  "fair_value_range": [
-    26,
-    34
-  ],
-  "buy_zone": [
-    22,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    50
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天海电子",
+    "security_status": "active",
+    "symbol": "CN:001365",
+    "ticker": "001365"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "b83a6ba0eadc08a3dcb7db81a2010ece7b1b1dc12047b5036a3237bf48ac8d99"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于34元且未披露毛利率、现金流或连接器占比超预期改善",
-      "action": "不新买，已有仓位降至观察仓或兑现",
-      "max_weight": 0,
-      "reason": "当前估值接近乐观情景，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：分产品毛利率、应收账款、经营现金流和客户集中度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至26-28元且2026H1毛利率、应收账款周转和经营现金流未恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "价格进入合理区间中下沿，可用小仓位验证基本面"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：收入增长是否转化为利润和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于25元且连接器收入占比提升、经营现金流覆盖净利润",
-      "action": "加仓至研究仓上限",
-      "max_weight": 0.04,
-      "reason": "估值低于基准价值且质量指标改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入首笔观察仓买入区间，需要复核半年报和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入深度价值区间，若基本面未恶化可评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "接近乐观情景估值，上涨主要需由业绩超预期支撑，否则考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入首笔观察仓买入区间，需要复核半年报和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入深度价值区间，若基本面未恶化可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "接近乐观情景估值，上涨主要需由业绩超预期支撑，否则考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：分产品毛利率、应收账款、经营现金流和客户集中度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：收入增长是否转化为利润和现金流"
-    }
-  ],
-  "key_tracking_metrics": [
-    "汽车线束收入增速与毛利率",
-    "汽车连接器收入占比与毛利率",
-    "归母净利润和扣非归母净利润增速",
-    "经营活动现金流净额/归母净利润",
-    "应收账款余额、账龄结构和周转率",
-    "前五大客户收入占比",
-    "资产负债率和流动比率",
-    "研发投入占营业收入比例",
-    "核心客户奇瑞、吉利、理想等销量与项目进展",
-    "铜价及电线端子等主要原材料价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

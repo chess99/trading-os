@@ -1,101 +1,106 @@
 {
-  "symbol": "CN:600096",
-  "market": "CN",
-  "ticker": "600096",
-  "name": "云天化",
-  "company_name": "云天化",
-  "updated_at": "2026-07-09",
-  "status": "active",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "观察偏买入",
-  "current_thesis": "云天化具备磷矿资源、一体化磷肥现金流和资产负债表改善三重支撑，是磷化工周期中的高质量龙头；当前价格不贵但安全边际一般，适合小仓观察，等待25元以下更有吸引力的买点。",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    30,
-    36
-  ],
-  "buy_zone": [
-    22,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    45
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "云天化",
+    "security_status": "active",
+    "symbol": "CN:600096",
+    "ticker": "600096"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "c1709094beb230e3eef56f5cccad02178241e46b825415fc505827301b0813f7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价位于26-32元且磷肥、尿素价差稳定",
-      "action": "小仓买入或持有观察",
-      "max_weight": 0.02,
-      "reason": "当前附近估值不贵，但对周期回落的安全垫有限"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、分产品毛利率、现金流、分红和资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至22-26元且磷矿资源、资产负债表未恶化",
-      "action": "分批买入",
-      "max_weight": 0.04,
-      "reason": "进入有安全边际区域，可用中周期利润支撑估值"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及磷肥、尿素价格价差变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于22元且没有矿山、安全、债务硬伤",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.06,
-      "reason": "市场大概率低估资源价值和中周期现金流"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入有安全边际买入区间，复核磷肥价差和资产负债表后可分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于38元且利润或价格价差没有同步上修",
-      "action": "停止加仓并逐步减仓",
-      "max_weight": 0.02,
-      "reason": "周期股上行阶段容易透支高景气利润"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入强吸引力买入区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "进入不应追高区间，需要复核利润上修是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "进入高景气兑现区，若无新增资源或利润中枢上修应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入有安全边际买入区间，复核磷肥价差和资产负债表后可分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入强吸引力买入区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "进入不应追高区间，需要复核利润上修是否足以支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "进入高景气兑现区，若无新增资源或利润中枢上修应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、分产品毛利率、现金流、分红和资本开支"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及磷肥、尿素价格价差变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "磷矿原矿产量、精矿产量、外购矿比例和单位成本",
-    "磷酸一铵、磷酸二铵、尿素、硫磺、合成氨价格与价差",
-    "化肥出口政策、出口量和海外价格",
-    "资本开支、在建工程和固定资产转固节奏",
-    "经营现金流、自由现金流、资产负债率和有息负债",
-    "分红率和回购或再融资行为",
-    "新能源材料项目开工率、毛利率和客户认证情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

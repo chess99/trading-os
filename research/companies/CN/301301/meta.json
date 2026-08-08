@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:301301",
-  "ticker": "301301",
-  "name": "川宁生物",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "川宁生物具备大规模生物发酵、环保处理和抗生素中间体成本优势，合成生物学提供长期期权；但2025年以来利润下行、2026Q1仍承压，当前股价已反映部分修复预期，安全边际不足，等待2026H1验证传统产品价格修复和新品减亏。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    7.0,
-    9.5
-  ],
-  "buy_zone": [
-    6.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    13.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "川宁生物",
+    "security_status": "active",
+    "symbol": "CN:301301",
+    "ticker": "301301"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "d0cbc545d6739b4d46ae724502a01b263c251fe5623ffaa1de123bae2cd6050c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于7.0元且2026H1业绩修复未验证时，仅观察不新建仓。",
-      "action": "watch",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、经营现金流、应收存货和合成生物学亏损。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至7.0元以下，且6-APA、头孢类中间体价格企稳，经营现金流未恶化。",
-      "action": "starter_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认传统中间体价格修复是否传导到利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3显示毛利率环比回升、合成生物学亏损收窄且股价仍低于9.0元。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和分红方案，更新正常化盈利与估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入估值买入区，需要复核产品价格、现金流和半年报修复情况。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可重新评估仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "高于合理价值区间，若业绩未同步改善应考虑减仓或维持观察。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入估值买入区，需要复核产品价格、现金流和半年报修复情况。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入深度安全边际区，若基本面未恶化可重新评估仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "高于合理价值区间，若业绩未同步改善应考虑减仓或维持观察。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、经营现金流、应收存货和合成生物学亏损。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认传统中间体价格修复是否传导到利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和分红方案，更新正常化盈利与估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

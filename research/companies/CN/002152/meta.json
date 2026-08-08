@@ -1,91 +1,96 @@
 {
-  "symbol": "CN:002152",
-  "market": "CN",
-  "ticker": "002152",
-  "name": "广电运通",
-  "company_name": "广电运通",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "金融智能设备龙头和国资场景资源提供质量底盘，但传统ATM下行、城市智能毛利承压、AI和数据要素兑现仍需财报验证；当前10.27元估值已不低，等待8.8元以下或中报确认后再建立仓位。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    9.0,
-    11.0
-  ],
-  "buy_zone": [
-    7.8,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    13.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广电运通",
+    "security_status": "active",
+    "symbol": "CN:002152",
+    "ticker": "002152"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "489f7a5bd6eb98acb27a03736dd69ae9000453543d6b7d00cc4671b7feb07659"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入7.8-8.8元，且最近一期扣非净利不低于同比持平、经营现金流没有继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03,
-      "reason": "该价格对应约23-26倍TTM扣非市盈率，能补偿传统ATM收缩和AI/数据要素兑现不确定性"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的收入结构、毛利率、应收与经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入增速高于10%、扣非净利增速高于8%，且城市智能毛利率止跌",
-      "action": "加至核心小仓位",
-      "max_weight": 0.06,
-      "reason": "证明金融科技基本盘以外的AI、城市智能和算力业务开始贡献可持续利润"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年订单完成度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12元但无订单、毛利率或利润兑现改善",
-      "action": "不追高并减仓",
-      "max_weight": 0.01,
-      "reason": "当前估值已经提前反映AI和数据要素主题，缺少业绩验证时赔率不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入首笔买入区间，重新核验最新季报和订单质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.8
+      },
+      "reason": "若基本面未变坏，赔率显著改善，可评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "进入减仓观察区，要求AI/数据要素业务兑现更强证据",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入首笔买入区间，重新核验最新季报和订单质量"
-    },
-    {
-      "type": "price_below",
-      "price": 7.8,
-      "reason": "若基本面未变坏，赔率显著改善，可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "进入减仓观察区，要求AI/数据要素业务兑现更强证据"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的收入结构、毛利率、应收与经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年订单完成度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "金融科技收入增速和智能金融设备中标情况",
-    "城市智能收入增速、毛利率和回款周期",
-    "维保服务规模和海外新签合同额",
-    "经营活动现金流量净额与扣非净利润匹配度",
-    "应收账款、合同资产、合同负债变化",
-    "研发投入占收入比例和AI产品商业化进度",
-    "控股股东持股质押变化",
-    "AI算力、数据要素项目的订单金额、验收和毛利率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

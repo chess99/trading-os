@@ -1,80 +1,95 @@
 {
-  "symbol": "CN:002789",
-  "market": "CN",
-  "ticker": "002789",
-  "name": "*ST建艺",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "不值得买：公司仍处于*ST和持续经营重大不确定性状态，2026H1继续预亏，净资产安全垫薄，当前价格显著高于困境资产可验证价值。",
-  "fair_value_range": [
-    0.8,
-    2.5
-  ],
-  "buy_zone": [
-    0.5,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    3.5,
-    20.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST建艺",
+    "security_status": "active",
+    "symbol": "CN:002789",
+    "ticker": "002789"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "70f6404e9a07cb61511a9ed239eac2be4e730dc6d6aeb8702382a9f94a326406"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约9.50元/股且仍处于*ST、持续经营重大不确定性、2026H1预亏状态",
-      "action": "不买入；已有仓位应减持或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、归母权益、现金流和庭外重组进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入1.20元/股以下，且债务重组正式落地、经营现金流连续两个季度为正、审计意见恢复标准无保留",
-      "action": "仅可作为困境反转观察仓，小额试错",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及风险警示变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于3.50元/股但风险警示、债务重组或持续经营问题未实质解决",
-      "action": "回避或减持",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见和持续经营重大不确定性是否消除",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入可重新研究的困境反转价格区间，但仍需同时满足重组和审计改善条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.5
+      },
+      "reason": "高于估算安全边际上限，应维持回避或减持",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入可重新研究的困境反转价格区间，但仍需同时满足重组和审计改善条件"
-    },
-    {
-      "type": "price_above",
-      "price": 3.5,
-      "reason": "高于估算安全边际上限，应维持回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、归母权益、现金流和庭外重组进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及风险警示变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见和持续经营重大不确定性是否消除"
-    }
-  ],
-  "notes": [
-    "本轮评级为avoid，不建议以正常建筑装饰公司估值买入。",
-    "核心风险包括*ST/退市风险、持续经营重大不确定性、债务重组不确定、现金链压力、应收及合同资产减值。",
-    "2026-07-17附近参考价约9.50元/股来自二级行情页，非交易所逐笔数据，置信度中等。",
-    "2026年半年度业绩预告原始PDF链接未完全稳定，公告摘要显示归母净利润预计亏损1.10-1.60亿元，置信度中等。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

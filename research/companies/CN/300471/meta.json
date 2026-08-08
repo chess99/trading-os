@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:300471",
-  "market": "CN",
-  "ticker": "300471",
-  "name": "厚普股份",
-  "company_name": "厚普清洁能源（集团）股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "2025年收入修复并扭亏，但净利率极薄，2026Q1收入增长同时归母和扣非再次转亏，当前约9.14元股价已经反映清洁能源装备和氢能期权，尚缺连续利润和现金流验证。合理价值约5.8-7.2元，5.5元以下才开始具备观察仓吸引力。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    0,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    10.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "厚普股份",
+    "security_status": "active",
+    "symbol": "CN:300471",
+    "ticker": "300471"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "04eedcf81d2a4d5857a0950e0b45b877a22e03b284682ef97bb302e6319369b0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.5元，且最新季度收入未明显下滑、毛利率未恶化、没有重大减值或诉讼风险新增",
-      "action": "建立1%-2%观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-05"
+      },
+      "reason": "公司预约披露2026年半年报，需复核收入、毛利率、扣非净利润、经营现金流和订单质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.8元，且经营现金流改善或订单结构改善得到验证",
-      "action": "提高至3%-4%上限仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后判断2026年全年是否能重新实现扣非盈利和现金流转正。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于5.5-7.2元，且尚未出现连续两个季度扣非盈利和正经营现金流",
-      "action": "仅观察，不主动加仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "2026年年报后复核LNG、海外、氢能和航空零部件业务是否形成可持续利润。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.0元，且TTM归母净利润仍接近盈亏线或经营现金流为负",
-      "action": "减仓或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入可买区上沿，估值相对资产和正常化收入开始有安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "低于更保守买入价，若订单和现金流未恶化，可提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "高于合理价值区间，且当前利润尚未稳定，主题溢价风险上升。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "显著高于基础情形估值，若没有扣非利润和现金流验证，应按过热处理。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "currency": "CNY",
-      "action": "复核基本面，考虑观察仓",
-      "reason": "进入可买区上沿，估值相对资产和正常化收入开始有安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "currency": "CNY",
-      "action": "若基本面未恶化，复核是否提高仓位",
-      "reason": "低于更保守买入价，若订单和现金流未恶化，可提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "currency": "CNY",
-      "action": "若无利润兑现，减仓或不参与",
-      "reason": "高于合理价值区间，且当前利润尚未稳定，主题溢价风险上升。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "currency": "CNY",
-      "action": "按主题过热复核卖出",
-      "reason": "显著高于基础情形估值，若没有扣非利润和现金流验证，应按过热处理。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-05",
-      "reason": "公司预约披露2026年半年报，需复核收入、毛利率、扣非净利润、经营现金流和订单质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后判断2026年全年是否能重新实现扣非盈利和现金流转正。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "2026年年报后复核LNG、海外、氢能和航空零部件业务是否形成可持续利润。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度收入增速与毛利率",
-    "扣非净利率是否连续两个季度为正并超过3%",
-    "经营活动现金流净额",
-    "应收账款、合同资产和存货周转",
-    "LNG/天然气加注设备新增订单",
-    "氢能装备订单和制加氢一体化项目落地",
-    "海外收入占比与回款质量",
-    "资本开支、资产减值和诉讼风险"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

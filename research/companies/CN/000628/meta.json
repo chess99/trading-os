@@ -1,102 +1,106 @@
 {
-  "symbol": "CN:000628",
-  "market": "CN",
-  "ticker": "000628",
-  "name": "高新发展",
-  "company_name": "高新发展",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "高新发展当前以成都高新区国资建筑施工业务为现金流底盘，数字能源和功率半导体提供转型期权，但华鲲振宇等算力资产重组截至2026-07-10未见确定性公告，当前估值主要反映乐观情景，适合观察而非追高买入。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    24.0,
-    32.0
-  ],
-  "buy_zone": [
-    18.0,
-    23.0
-  ],
-  "sell_or_reduce_zone": [
-    40.0,
-    55.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "高新发展",
+    "security_status": "active",
+    "symbol": "CN:000628",
+    "ticker": "000628"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "da2c3051c74fd578ce55921deef771ee8c959065f391dcaf9cf347059913578c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于40元且无正式公告确认高质量科技资产注入或科技业务利润显著改善",
-      "action": "不买入；已有仓位降至观察仓",
-      "max_weight": 0.005,
-      "reason": "当前估值主要反映题材和重组期权，建筑施工基本面无法单独支撑"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证收入、经营现金流、订单和科技业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至24-32元，经营现金流改善，数字能源订单继续增长",
-      "action": "小仓跟踪",
-      "max_weight": 0.01,
-      "reason": "接近合理价值区间，但科技转型仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认全年现金流和利润趋势是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格回落至18-23元，且未出现回款恶化、重大减值或并购预期彻底破灭",
-      "action": "分批买入",
-      "max_weight": 0.02,
-      "reason": "安全边际较好，可同时持有国资建筑底盘和科技转型期权"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入买入区间上沿，检查现金流和订单后可启动首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "正式公告确认高质量科技资产注入并完成关键审批，且交易作价合理",
-      "action": "重估后加仓",
-      "max_weight": 0.03,
-      "reason": "资产结构和盈利中枢可能改变，但需重新评估摊薄、商誉和盈利质量"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "跌入深度安全边际区，若基本面未恶化需重新评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "进入减仓区间，除非有正式公告支撑，否则估值过度依赖题材",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "显著高于基准估值，需按乐观情景兑现标准严格减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23.0,
-      "reason": "进入买入区间上沿，检查现金流和订单后可启动首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "reason": "跌入深度安全边际区，若基本面未恶化需重新评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 40.0,
-      "reason": "进入减仓区间，除非有正式公告支撑，否则估值过度依赖题材"
-    },
-    {
-      "type": "price_above",
-      "price": 55.0,
-      "reason": "显著高于基准估值，需按乐观情景兑现标准严格减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证收入、经营现金流、订单和科技业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认全年现金流和利润趋势是否改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "建筑业务新签订单金额",
-    "已签约未完工订单及未完工部分金额",
-    "经营活动现金流量净额",
-    "应收账款、合同资产和质保金余额",
-    "数字能源收入及虚拟电厂新增区域项目",
-    "功率半导体产能利用率、客户验证和存货跌价",
-    "华鲲振宇或其他科技资产重组正式公告",
-    "综合融资成本和一年内到期债务"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

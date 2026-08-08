@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:601033",
-  "market": "CN",
-  "ticker": "601033",
-  "name": "永兴股份",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "广州区域垃圾焚烧发电准公用事业资产，具备区域唯一性、高分红和稳健现金流，但当前价格接近合理价值，安全边际不足，适合观察等待更高股息率买点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.5,
-    17.0
-  ],
-  "buy_zone": [
-    10.8,
-    12.3
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    20.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永兴股份",
+    "security_status": "active",
+    "symbol": "CN:601033",
+    "ticker": "601033"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "adb47ec96cc072d140a365d71dd49bba662d04278e7010f2fb3e92490375e11d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于12.3元且2026年经营性现金流、应收账款和产能利用率未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "预约披露2026年中报附近，复核收入、利润、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格接近10.8元且分红率维持60%以上、产能利用率维持87%以上",
-      "action": "提高至核心防守仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报披露后复核全年盈利和分红预测",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于18.5元且盈利预测没有上修",
-      "action": "减仓或不新增",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "2026年年报窗口，复核产能利用率、分红率和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.3
+      },
+      "reason": "进入初始买入区间，股息率和PE安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入深度安全边际区间，可复核基本面后提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "超过基准合理价值上沿，需要复核是否有新增收益兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.3,
-      "reason": "进入初始买入区间，股息率和PE安全边际改善"
-    },
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入深度安全边际区间，可复核基本面后提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "超过基准合理价值上沿，需要复核是否有新增收益兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "预约披露2026年中报附近，复核收入、利润、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报披露后复核全年盈利和分红预测"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "2026年年报窗口，复核产能利用率、分红率和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

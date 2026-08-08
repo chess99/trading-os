@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:300301",
-  "market": "CN",
-  "ticker": "300301",
-  "name": "ST长方",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST长方当前主要是带债务重组期权的困境标的，连续亏损、净资产极薄、累计逾期债务显著高于净资产并伴随持续经营和诉讼风险；当前价格远高于资产和主营可支持区间，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.5,
-    1.1
-  ],
-  "buy_zone": [
-    0.3,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    1.2,
-    3.39
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST长方",
+    "security_status": "active",
+    "symbol": "CN:300301",
+    "ticker": "300301"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "95905b0c2a0a1f866e7c92733347ceff1f8ce839ff67e4a1dec9136418fa381d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于1.20元或债务重组结果不可评估",
-      "action": "不新开仓，已有仓位退出或降至观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报、净资产、现金流和收入扣除口径",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至0.30-0.80元且债务重组有债权人支持、逾期债务不再扩大",
-      "action": "仅允许困境重组策略小仓试错",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报及债务重组、诉讼、ST风险进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于0.30元且未进入明确退市执行阶段",
-      "action": "可重新评估清算价值和重组期权后小仓参与",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报审计意见、持续经营事项和是否具备撤销风险警示基础",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入安全边际观察区，但仍需债务重组进展配合",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.3
+      },
+      "reason": "进入强吸引力困境期权区，需确认未触发明确退市路径",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.2
+      },
+      "reason": "超过基本面可支持区间，不应追高或加仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入安全边际观察区，但仍需债务重组进展配合"
-    },
-    {
-      "type": "price_below",
-      "price": 0.3,
-      "reason": "进入强吸引力困境期权区，需确认未触发明确退市路径"
-    },
-    {
-      "type": "price_above",
-      "price": 1.2,
-      "reason": "超过基本面可支持区间，不应追高或加仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报、净资产、现金流和收入扣除口径"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报及债务重组、诉讼、ST风险进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报审计意见、持续经营事项和是否具备撤销风险警示基础"
-    }
-  ],
-  "notes": [
-    "当前股价3.39元为2026-07-20收盘快照，来源为中财网和腾讯行情接口。",
-    "2026-07-15公告显示累计逾期债务约3.15亿元，约为2025年经审计净资产的344.75%。",
-    "重大诉讼、庭外重组和未来审计意见对权益价值影响极大，相关数据置信度低于已披露财务报表。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

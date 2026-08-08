@@ -1,86 +1,96 @@
 {
-  "symbol": "CN:002199",
-  "market": "CN",
-  "ticker": "002199",
-  "name": "*ST东晶",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "退市风险警示撤销尚未获深交所核准，2026H1仍预亏且继续计提存货跌价；当前10.81元对应约26.31亿元市值、约14.5倍Q1净资产，明显透支保壳和锂盐转型成功预期，因此不买/avoid。",
-  "fair_value_range": [
-    4.0,
-    6.5
-  ],
-  "buy_zone": [
-    3.5,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    10.81
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST东晶",
+    "security_status": "active",
+    "symbol": "CN:002199",
+    "ticker": "002199"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "6ac6d466a58c67ee5895ae854e220069c8977d5e62789cd86ac88f62eacbcf62"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前10.81元且仍为*ST，撤销退市风险警示申请未获核准，2026H1预告仍亏损",
-      "action": "不买；已有仓位减至观察仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、深交所撤销退市风险警示审核进展、存货跌价与现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至3.50-4.50元，退市风险警示正式撤销，且连续两个季度经营现金流改善",
-      "action": "可建立第一笔试探仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否接近单季度扣非盈亏平衡",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至2.50-3.50元，无新增资金占用、违规担保、非标审计或退市风险",
-      "action": "困境反转期权仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入有安全边际买入观察区，但仍需等待摘帽和现金流确认",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "年度归母净利润转正、扣非利润接近转正且经营现金流转正",
-      "action": "重新评估是否上调为watch/hold",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入强吸引力困境反转期权区，需复核退市与资金风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "明显高于合理价值中枢，不应追高，已有仓位应减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入有安全边际买入观察区，但仍需等待摘帽和现金流确认"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入强吸引力困境反转期权区，需复核退市与资金风险"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "明显高于合理价值中枢，不应追高，已有仓位应减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、深交所撤销退市风险警示审核进展、存货跌价与现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否接近单季度扣非盈亏平衡"
-    }
-  ],
-  "notes": [
-    "2026-07-19决策：不买/avoid；当前10.81元无安全边际。",
-    "ST原因：2024年净利润为负且扣后营业收入低于3亿元，股票自2025-03-26被实施退市风险警示。",
-    "撤销申请：公司2026-04-27已提交撤销申请；2026-05-22和2026-07-14公告显示仍处补充材料/审核不确定阶段。",
-    "2025年报为标准无保留审计意见，内控审计为标准无保留；但2026H1仍预亏并拟计提存货跌价1500-2000万元。",
-    "控股股东无息借款缓解现金链，但也说明内生现金流不足。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

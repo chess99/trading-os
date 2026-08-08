@@ -1,106 +1,115 @@
 {
-  "symbol": "CN:000800",
-  "market": "CN",
-  "ticker": "000800",
-  "name": "一汽解放",
-  "company_name": "一汽解放",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "一汽解放处于重卡周期修复、新能源和天然气重卡结构改善的交叉点，品牌、渠道、动力总成和央企资源构成底层质量，但当前盈利能力仍薄、PE对恢复预期较敏感。当前价附近不追买，等待5.30元以下或2026中报证明扣非利润率和现金流同步改善后再分批配置。",
-  "quality_rating": "B-",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    5.5,
-    7.0
-  ],
-  "buy_zone": [
-    4.8,
-    5.3
-  ],
-  "sell_or_reduce_zone": [
-    7.4,
-    8.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "一汽解放",
+    "security_status": "active",
+    "symbol": "CN:000800",
+    "ticker": "000800"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "e41912306c331ced5cda4eb70fe0d2b6f5dfebcb3f60f5e6323ad38ece113af1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至5.30元及以下，且最近两个月中重卡份额未继续下滑",
-      "action": "开首笔观察仓",
-      "max_weight": 0.005,
-      "reason": "接近1倍PB，周期修复仍在，具备初步安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的毛利率、扣非利润率、经营现金流和库存",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于4.80-5.00元，且2026中报扣非利润率未恶化",
-      "action": "分批加仓",
-      "max_weight": 0.015,
-      "reason": "市值低于约250亿元，估值对低ROE和周期波动已有较充分折价"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报和7-9月重卡、新能源、天然气重卡份额变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "单季扣非净利率高于1.2%，新能源、天然气和出口份额同步改善",
-      "action": "确认后提高仓位",
-      "max_weight": 0.03,
-      "reason": "销量结构改善开始转化为利润质量，估值可从PB底部逻辑转向盈利修复逻辑"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年报，检验周期修复是否兑现为利润和分红",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.40元且未来12个月利润预期仍低于15亿元",
-      "action": "减持或不再加仓",
-      "max_weight": 0.005,
-      "reason": "当前盈利无法支撑更高估值，赔率转弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.3
+      },
+      "reason": "进入首笔买入区，接近1倍PB并具备周期修复赔率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入深度价值区，可复核中报后考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.4
+      },
+      "reason": "进入减持区，除非单车利润和出口增速明显超预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "超出乐观情景下沿，需要强制复核是否由基本面支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.3,
-      "reason": "进入首笔买入区，接近1倍PB并具备周期修复赔率"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入深度价值区，可复核中报后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 7.4,
-      "reason": "进入减持区，除非单车利润和出口增速明显超预期"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "超出乐观情景下沿，需要强制复核是否由基本面支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的毛利率、扣非利润率、经营现金流和库存"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报和7-9月重卡、新能源、天然气重卡份额变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年报，检验周期修复是否兑现为利润和分红"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度中重卡批发销量和终端上险份额",
-    "天然气中重卡销量、份额及LNG/柴油价差",
-    "新能源重卡销量、份额及单车盈利线索",
-    "海外出口销量、出口占比和出口均价",
-    "单车收入、毛利率、扣非净利率",
-    "存货、应收账款和经营现金流净额",
-    "分红、回购、股权激励和一汽集团资本运作"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

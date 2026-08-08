@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:002040",
-  "market": "CN",
-  "ticker": "002040",
-  "name": "南京港",
-  "company_name": "南京港",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "南京港是区域港口现金流资产，油品/液体化工和集装箱业务提供稳定性，但ROE约5%-6%、成长性有限；2026-07-10参考价7.74元处在合理价值区间中上部，当前以观察为主，等待6.2-6.8元买入区或半年报验证经营改善后再提高仓位。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    6.8,
-    8.2
-  ],
-  "buy_zone": [
-    6.2,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    9.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南京港",
+    "security_status": "active",
+    "symbol": "CN:002040",
+    "ticker": "002040"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "d4ebfd31b94f0ffae18773b71039d54907719aa4d2cfb053bca0a734d9cb00e0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_6.8_and_no_operating_deterioration",
-      "action": "open_or_add_watch_position",
-      "max_weight": 0.015,
-      "reason": "进入合理价值区间下沿附近，约对应17倍TTM PE和0.96倍PB，具备初步安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，验证Q1利润增长、经营现金流和资本开支执行。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_below_6.2_with_stable_cash_flow_and_throughput",
-      "action": "add_to_core_position",
-      "max_weight": 0.03,
-      "reason": "价格接近0.87倍PB和15倍左右TTM PE，若基本面未恶化，风险收益改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认吞吐量、毛利率和分红/投资节奏是否支持估值。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_above_8.8_without_profit_upgrade_or_asset_injection",
-      "action": "reduce_position",
-      "max_weight": 0.01,
-      "reason": "估值进入22倍TTM PE附近，低ROE港口资产缺乏继续扩张估值的证据。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入买入区上沿，可建立1%-1.5%观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入更有安全边际的加仓区，前提是吞吐量和经营现金流未恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "进入减仓观察区，除非业绩中枢或资产整合预期上修。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入买入区上沿，可建立1%-1.5%观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入更有安全边际的加仓区，前提是吞吐量和经营现金流未恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "进入减仓观察区，除非业绩中枢或资产整合预期上修。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，验证Q1利润增长、经营现金流和资本开支执行。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认吞吐量、毛利率和分红/投资节奏是否支持估值。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "货物吞吐量",
-    "集装箱吞吐量TEU",
-    "油品和液体化工品装卸量",
-    "综合毛利率",
-    "单吨和单箱收入",
-    "经营现金流净额",
-    "资本开支执行额",
-    "在建工程转固",
-    "现金分红率",
-    "关联交易和资产整合进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

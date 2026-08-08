@@ -1,87 +1,105 @@
 {
-  "symbol": "CN:601949",
-  "ticker": "601949",
-  "name": "中国出版",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中国出版拥有稀缺出版品牌、版权内容和稳健资产负债表，但2026年上半年扣非预亏显示大众出版主业承压明显；当前价格接近合理价值中枢，缺乏足够安全边际，等待半年报确认盈利修复或价格回落。",
-  "fair_value_range": [
-    4.6,
-    5.4
-  ],
-  "buy_zone": [
-    3.9,
-    4.3
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    6.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国出版",
+    "security_status": "active",
+    "symbol": "CN:601949",
+    "ticker": "601949"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "ed93b34e4e39c8c91f394eeaeeff82024bcf99196161514b5d3e008374c735de"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌至4.3元以下且2026年半年报未出现超预期存货跌价或经营现金流恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、存货跌价、扣非净利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026Q3扣非净利润转正且经营现金流较上半年明显改善",
-      "action": "可提高至小仓位持有",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现扣非盈利恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于6.2元但全年利润恢复低于4.5亿元",
-      "action": "减持或不追高",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红和全年盈利基准是否成立",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入买入区上沿，低于基准合理价值下沿约6%，需复核半年报质量后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "接近0.75倍左右账面保护估值，若无新增减值风险则安全边际改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "进入减持区，若盈利修复未兑现则估值对2026年恢复假设过度乐观",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "reason": "进入买入区上沿，低于基准合理价值下沿约6%，需复核半年报质量后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "接近0.75倍左右账面保护估值，若无新增减值风险则安全边际改善"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "进入减持区，若盈利修复未兑现则估值对2026年恢复假设过度乐观"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、存货跌价、扣非净利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现扣非盈利恢复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红和全年盈利基准是否成立"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "出版业务收入和毛利率",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "存货及发出商品跌价准备",
-    "应收账款和退货压力",
-    "内容电商与数字出版收入占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

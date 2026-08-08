@@ -1,1 +1,101 @@
-{"buy_zone": [32, 40], "currency": "CNY", "current_rating": "watch", "current_thesis": "中复神鹰是中国高性能碳纤维国产替代核心工程化平台，2025 年收入 +40.87% 至 21.94 亿元并扭亏、2026Q1 收入 +41.09%、经营现金流 +168.91% 转正，连云港 3 万吨项目首期三条线 2026-06-27 试生产；但 2026-07-10 收 49.67 元/447 亿市值、PB 9.47 倍已基本反映产能爬坡+周期修复+高端放量预期，当前不具安全边际，等待 32-40 元买入区或 2026 半年报二次确认。", "fair_value_range": [38, 52], "latest_report": "reports/2026-07-11-initial.md", "market": "CN", "name": "中复神鹰", "position_plan": [{"condition": "股价处于 32-40 元买入区间且 2026 半年报确认毛利率、经营现金流、高端订单改善", "max_weight": 0.03}, {"condition": "股价处于 40-52 元合理区间且缺少新增高端订单或利润超预期", "max_weight": 0.01}, {"condition": "股价高于 62 元且业绩未明显超出基准情景", "max_weight": 0}, {"condition": "股价低于 32 元进入极端悲观区且核心假设未被证伪（行业错杀而非基本面恶化）", "max_weight": 0.05}], "price_triggers": [{"price": 40, "reason": "进入买入观察区，结合 2026 半年报重新评估首笔仓位", "type": "price_below"}, {"price": 32, "reason": "进入极端悲观区，需判断行业错杀 vs 基本面恶化", "type": "price_below"}, {"price": 62, "reason": "进入减仓区，若无高端订单和利润超预期支撑应降低仓位", "type": "price_above"}], "report_history": ["reports/2026-07-10-initial.md", "reports/2026-07-11-initial.md"], "review_triggers": [{"date": "2026-08-31", "reason": "复查 2026 年半年报，重点验证收入增速延续、毛利率、经营现金流、库存周转、连云港首期产线商业化收入贡献与高端订单披露", "type": "date"}, {"date": "2026-10-31", "reason": "复查 2026 年三季报，判断盈利修复是否连续、连云港量产爬坡节奏", "type": "date"}], "sell_or_reduce_zone": [62, 75], "status": "active", "symbol": "CN:688295", "ticker": "688295", "updated_at": "2026-07-11T08:15:00+08:00"}
+{
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中复神鹰",
+    "security_status": "active",
+    "symbol": "CN:688295",
+    "ticker": "688295"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "1f59e71daa417f060ba8ec854335cbc806f5e5a4c8fe52dc0422d406cdaf2346"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "e21ead05ec8d6f9545f0f33f49cc2f335d36d69be5b78126c903503d8ecb160d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报，重点验证收入增速延续、毛利率、经营现金流、库存周转、连云港首期产线商业化收入贡献与高端订单披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，判断盈利修复是否连续、连云港量产爬坡节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "进入买入观察区，结合 2026 半年报重新评估首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入极端悲观区，需判断行业错杀 vs 基本面恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 62.0
+      },
+      "reason": "进入减仓区，若无高端订单和利润超预期支撑应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
+}

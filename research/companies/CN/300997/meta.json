@@ -1,66 +1,86 @@
 {
-  "symbol": "CN:300997",
-  "ticker": "300997",
-  "name": "欢乐家",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "欢乐家有真实品类和渠道资产，但2025年收入与利润大幅下滑，2026Q1利润修复尚未证明收入拐点；当前价格已隐含乐观利润恢复，安全边际不足。",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    18
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "欢乐家",
+    "security_status": "active",
+    "symbol": "CN:300997",
+    "ticker": "300997"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "5e0121171ee66fec99222b48880da70577a16dab7fd9c6f6024b6b810ffdd533"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基础情景估值上限，且2025年利润塌陷后的收入修复证据不足，不主动建仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复盘2026年半年报，重点检查传统经销收入、毛利率、经营现金流和泰国项目进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌至8.5元以下，且最近一期财报显示毛利率不低于36%、经营现金流为正，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-11-10"
+      },
+      "reason": "复盘2026年三季报，判断2026全年利润修复是否足以支撑估值。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度营业收入恢复正增长、净利率回到9%以上，且价格仍低于11.5元，可提高至小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入基础情景估值下沿，可重新评估买入安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "价格明显进入乐观情景上半区，若利润中枢未提升至2.5亿元以上，应保持回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入基础情景估值下沿，可重新评估买入安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 18,
-      "reason": "价格明显进入乐观情景上半区，若利润中枢未提升至2.5亿元以上，应保持回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复盘2026年半年报，重点检查传统经销收入、毛利率、经营现金流和泰国项目进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-11-10",
-      "reason": "复盘2026年三季报，判断2026全年利润修复是否足以支撑估值。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

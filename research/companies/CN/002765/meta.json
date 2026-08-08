@@ -1,125 +1,123 @@
 {
-  "symbol": "CN:002765",
-  "market": "CN",
-  "ticker": "002765",
-  "name": "蓝黛科技",
-  "company_name": "蓝黛科技集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "2025年双主业修复明显，但2026Q1收入、利润、扣非利润和经营现金流均显著转弱；当前约7.3-7.5元价格已反映部分新能源传动、触控显示修复和机器人期权，需等待Q2-Q3毛利率和现金流验证。",
-  "quality_rating": "中等偏低",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    0,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    9.2,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "蓝黛科技",
+    "security_status": "active",
+    "symbol": "CN:002765",
+    "ticker": "002765"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4453a2f0002ad1a729c940f9062662a3ac7d2c0a75f3a56314bc5d7bfd280826"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于7.2元，且2026Q2-Q3尚未证明毛利率和现金流修复",
-      "max_weight": 0.01,
-      "action": "不新买，仅保留0%-1%观察仓"
-    },
-    {
-      "condition": "股价在6.2-7.2元，且单季毛利率回到15%以上、经营现金流转正",
-      "max_weight": 0.02,
-      "action": "可建立1%-2%试探仓"
-    },
-    {
-      "condition": "股价在5.5-6.2元，且收入止跌、扣非净利润恢复",
-      "max_weight": 0.03,
-      "action": "可提高到2%-3%仓位"
-    },
-    {
-      "condition": "股价低于5.5元，且订单恢复、现金流改善、无大额减值",
-      "max_weight": 0.05,
-      "action": "可作为核心观察仓配置3%-5%"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "currency": "CNY",
-      "reason": "低于合理价值区间下沿，开始具备安全边际",
-      "action": "进入买入复核区"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "currency": "CNY",
-      "reason": "相对基准合理价值具备约20%以上折价",
-      "action": "若基本面同步改善，可考虑核心观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.2,
-      "currency": "CNY",
-      "reason": "高于当前证据支持的合理估值，需业绩兑现支撑",
-      "action": "若无业绩兑现，减仓或不追"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026Q2或2026中报发布",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证2026Q1利润和现金流下滑是否为短期扰动",
-      "action": "复核收入、毛利率、扣非净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "新能源汽车传动业务披露重大客户或订单变化",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "新能源汽车传动业务是公司最重要的增长来源之一",
-      "action": "重估增长来源和利润弹性"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "触控显示业务毛利率连续两个季度低于14%或重新出现减值迹象",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "触控显示业务处于周期修复阶段，低毛利或减值会压低估值",
-      "action": "下调质量评级和合理价值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "机器人一体化关节披露量产客户、收入或毛利率",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "机器人业务目前只按期权处理，量产数据会改变估值上限",
-      "action": "评估是否给予新业务期权价值"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "资产负债率明显高于58%或出现大额资本开支",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "公司为重资产制造模式，财务杠杆和扩产纪律决定安全边际",
-      "action": "复核财务风险和仓位上限"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "低于合理价值区间下沿，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "相对基准合理价值具备约20%以上折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.2
+      },
+      "reason": "高于当前证据支持的合理估值，需业绩兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "单季度收入是否恢复到8.5亿元以上",
-    "毛利率是否回到15%以上并连续两个季度保持",
-    "扣非归母净利润是否恢复到单季4000万元以上",
-    "经营活动现金流是否连续两个季度为正",
-    "动力传动总成和零部件收入占比及主要客户订单",
-    "触控显示业务毛利率和车载触摸屏订单",
-    "机器人一体化关节的量产客户、收入和毛利率",
-    "资产负债率是否维持在55%左右",
-    "分红率和资本开支纪律"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

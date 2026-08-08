@@ -1,94 +1,106 @@
 {
-  "symbol": "CN:300498",
-  "market": "CN",
-  "ticker": "300498",
-  "name": "温氏股份",
-  "company_name": "温氏股份",
-  "updated_at": "2026-07-08",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "观察/小仓位跟踪",
-  "current_rating": "watch",
-  "current_thesis": "温氏股份是肉猪和黄羽鸡双主业养殖龙头，具备公司+农户网络、产业链配套和现金流韧性，但2026Q1已转亏且猪价仍弱，当前价格处于合理价值带中下沿，适合观察或小仓位，不宜追高。",
-  "quality_rating": "B+",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    12.5,
-    16.5
-  ],
-  "buy_zone": [
-    9.5,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    20.0
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "温氏股份",
+    "security_status": "active",
+    "symbol": "CN:300498",
+    "ticker": "300498"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "b3a67bcc1638074578e07b810c75db4b7d5c6f6c45b07d425c6fff85540dbaf4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "13.12元附近仅观察仓；12元以下分批买入；10.8元以下逆周期加仓；16.5元以上停止新增；18元以上考虑减仓。",
-      "max_weight": 0.05,
-      "initial_weight": 0.01,
-      "add_below": 12.0,
-      "strong_add_below": 10.8,
-      "reduce_above": 18.0,
-      "notes": "当前仅适合研究仓；12元以下分批，10.8元以下逆周期加仓，16.5元以上不新增，18元以上结合基本面兑现。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复查2026年半年报、7-8月主产品销售简报和猪价/鸡价趋势。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认经营现金流、资产负债率和肉猪亏损是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入安全买入区，复核猪价、现金流和债务后可加至1.5%-2.5%。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入强吸引买入区，若无重大疫情、流动性或治理风险，可加至3%-4%。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过合理价值上沿，停止新增，要求利润修复验证。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "进入减仓观察区，若猪价和盈利未同步上修，应逐步兑现周期估值。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入安全买入区，复核猪价、现金流和债务后可加至1.5%-2.5%。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入强吸引买入区，若无重大疫情、流动性或治理风险，可加至3%-4%。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "超过合理价值上沿，停止新增，要求利润修复验证。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "进入减仓观察区，若猪价和盈利未同步上修，应逐步兑现周期估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复查2026年半年报、7-8月主产品销售简报和猪价/鸡价趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认经营现金流、资产负债率和肉猪亏损是否改善。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "肉猪销量",
-    "肉猪销售收入",
-    "毛猪销售均价",
-    "肉猪完全成本",
-    "肉鸡销量",
-    "肉鸡销售收入",
-    "毛鸡销售均价",
-    "经营活动现金流净额",
-    "资产负债率",
-    "一年内到期债务",
-    "货币资金",
-    "存货及生物资产跌价准备",
-    "合作农户数量",
-    "全国能繁母猪存栏",
-    "玉米和豆粕价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

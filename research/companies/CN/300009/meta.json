@@ -1,129 +1,114 @@
 {
-  "symbol": "CN:300009",
-  "market": "CN",
-  "ticker": "300009",
-  "name": "安科生物",
-  "company_name": "安徽安科生物工程（集团）股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是现金流较强的生长激素和基因工程药平台，2025年利润和现金流质量较好，但2026Q1收入与利润双降，生长激素行业处于政策、支付和长效竞品重估阶段。当前价格大致在合理价值下沿附近，安全边际不足，等待6.5-7.0元区间或后续季度基本面修复后再提高仓位。",
-  "quality_rating": "中上",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    7.2,
-    8.8
-  ],
-  "buy_zone": [
-    6.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    10.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安科生物",
+    "security_status": "active",
+    "symbol": "CN:300009",
+    "ticker": "300009"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "57132aca8e4bd0d13373eb59168899e0aed1bf6982c241bb4be9d65b3fb89358"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.5元，且生物制品收入没有连续两个季度同比下滑超过10%，经营现金流/归母净利润维持在90%以上",
-      "action": "买入",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证2026Q1下滑是否为短期波动",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于6.5-7.0元，且Q2/Q3扣非归母净利润降幅收窄至个位数或转正",
-      "action": "分批买入",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "决定是否上修合理价值或维持观察",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价位于7.0-8.8元，且尚未看到收入和利润修复",
-      "action": "观察或仅保留观察仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "政策与价格体系是核心估值风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.5元，且未来12个月利润增长预期仍低于10%",
-      "action": "减仓或不新增",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "用全年数据确认长期仓位上限",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "价格进入估算买入区上沿，需要确认基本面没有继续恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "价格达到安全边际区间，隐含PE和股息率具备防守性",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "价格高于当前合理价值区间，需用利润修复证明估值合理",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "currency": "CNY",
-      "action": "进入可买区，复核最近季度收入、毛利率和现金流",
-      "reason": "价格进入估算买入区上沿，需要确认基本面没有继续恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "currency": "CNY",
-      "action": "若基本面未恶化，可提高至2%-3%目标仓位",
-      "reason": "价格达到安全边际区间，隐含PE和股息率具备防守性"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "currency": "CNY",
-      "action": "进入减仓/不新增区，除非后续季度利润恢复双位数增长",
-      "reason": "价格高于当前合理价值区间，需用利润修复证明估值合理"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后复核生物制品收入增速、基因工程药毛利率和扣非归母净利润趋势",
-      "reason": "验证2026Q1下滑是否为短期波动"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后复核Q2/Q3收入利润是否修复，并检查AK2017、HuA21、HK010、安赛汀新增生产线或生长激素卡式瓶/预充式产线节点",
-      "reason": "决定是否上修合理价值或维持观察"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "condition": "复核国家或地方生长激素、曲妥珠单抗、辅助生殖相关产品集采/医保/基药政策变化",
-      "reason": "政策与价格体系是核心估值风险"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年报披露后复核经营现金流/归母净利润、销售费用率、分红率和新产品销售贡献",
-      "reason": "用全年数据确认长期仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    {
-      "metric": "生物制品收入增速",
-      "target": "恢复到正增长；若全年低于0%则下修估值"
-    },
-    {
-      "metric": "基因工程药毛利率",
-      "target": "维持在80%左右；低于78%需警惕价格体系恶化"
-    },
-    {
-      "metric": "经营现金流/归母净利润",
-      "target": "持续高于90%；连续两个季度低于70%需复盘渠道质量"
-    },
-    {
-      "metric": "2026年扣非归母净利润同比",
-      "target": "Q2/Q3降幅收窄至个位数或转正"
-    },
-    {
-      "metric": "长效生长激素与辅助生殖产品商业化",
-      "target": "维臻高、晟诺娃、阿托西班等贡献可量化新增收入"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

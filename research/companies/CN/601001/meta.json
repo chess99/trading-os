@@ -1,1 +1,110 @@
-{"buy_zone":[11,14],"current_rating":"watch","current_thesis":"山西动力煤核心资源+50%分红率+低杠杆高现金，但17.08元已隐含2026年利润反弹的乐观预期，赔率不利，等14元以下或2026中报盈利拐点确认后再分批建仓。","fair_value_range":[12.8,16.2],"latest_report":"reports/2026-07-11-initial.md","market":"CN","name":"晋控煤业","position_plan":[{"condition":"股价≤14.00元，2026中报扣非归母环比企稳，秦港5500大卡动力煤≥600元/吨","max_weight":0.015},{"condition":"股价≤12.50元，2026中报经营现金流覆盖分红与资本开支，吨煤成本≤270元/吨，分红率维持≥50%","max_weight":0.03},{"condition":"股价≤11.50元且基本面未恶化，煤价未破580元/吨","max_weight":0.04},{"condition":"2026年报验证机构预期（归母≥24亿）且煤价站稳700元/吨，分红率维持50%","max_weight":0.05},{"condition":"股价≥18.50元且无盈利上修证据，或静态股息率跌破3.0%","max_weight":0.01}],"price_triggers":[{"price":14,"reason":"进入首笔买入区，需复核煤价、Q2毛利率和现金流后决定建仓","type":"price_below"},{"price":12.5,"reason":"进入加仓区，若基本面未恶化可提高仓位至3%","type":"price_below"},{"price":18.5,"reason":"进入减仓区，除非盈利和煤价同步上修，否则风险回报偏弱","type":"price_above"}],"report_history":["reports/2026-07-10-initial.md","reports/2026-07-11-initial.md"],"review_triggers":[{"date":"2026-08-28","reason":"2026年中报披露，重点核查Q2归母、吨煤售价/成本、毛利率环比、经营现金流、投资收益、分红表述","type":"date"},{"date":"2026-10-31","reason":"2026三季报+旺季煤价，判断盈利底是确认还是证伪","type":"date"},{"date":"2027-04-28","reason":"2026年报+2027一季报，更新正常化盈利与分红路径","type":"date"}],"sell_or_reduce_zone":[18.5,22],"status":"active","symbol":"CN:601001","ticker":"601001","currency":"CNY","updated_at":"2026-07-11T10:30:00+08:00"}
+{
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晋控煤业",
+    "security_status": "active",
+    "symbol": "CN:601001",
+    "ticker": "601001"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "abfcb972198fab6d4f9d1a9721752fc2506b1efc0e82f9c5cf5b361ea0d6e8bc"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "b2aeff9caed160b6f28273a1e88bd47dcb037daba1c698473b0b2d41c01a90d1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "2026年中报披露，重点核查Q2归母、吨煤售价/成本、毛利率环比、经营现金流、投资收益、分红表述",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报+旺季煤价，判断盈利底是确认还是证伪",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-28"
+      },
+      "reason": "2026年报+2027一季报，更新正常化盈利与分红路径",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入首笔买入区，需复核煤价、Q2毛利率和现金流后决定建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入加仓区，若基本面未恶化可提高仓位至3%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "进入减仓区，除非盈利和煤价同步上修，否则风险回报偏弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
+}

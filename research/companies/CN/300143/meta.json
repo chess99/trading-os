@@ -1,110 +1,123 @@
 {
-  "symbol": "CN:300143",
-  "market": "CN",
-  "ticker": "300143",
-  "name": "盈康生命",
-  "company_name": "盈康生命科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是肿瘤专科医疗服务与医疗器械设备耗材并行的平台型小公司，2025年收入、扣非利润和经营现金流改善，但ROE仍低、商誉高，2026Q1收入增长未转化为利润增长。2026-07-13收盘价6.89元高于4.8-6.2元合理价值区间，当前赔率不足，等待价格回落或利润加速验证。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盈康生命",
+    "security_status": "active",
+    "symbol": "CN:300143",
+    "ticker": "300143"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8c3920736a63d66d06d7f0d77176230a1d9416877961e6244cc63bdf23596009"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.8元，且最近一期扣非利润没有继续恶化，经营现金流保持为正",
-      "action": "建立0.5-1.0单位观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点看扣非利润、经营现金流、长沙珂信和苏州广慈爬坡",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于4.8-5.4元，且2026H1或后续报告显示收入增长同时扣非利润恢复20%以上同比增长",
-      "action": "可试探买入0.5单位，等待下一期验证后再加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度报告，重点看财务费用、商誉、医疗器械海外收入",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.2元但低于7.5元，且利润尚未明显加速",
-      "action": "不新增仓位，已有仓位以跟踪指标决定是否持有",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告，重点看ROE是否接近5%、商誉是否减值、全年扣非利润是否达标",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.5元，或动态PE维持65倍以上但ROE仍低于5%",
-      "action": "减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "复核2027年半年度报告，重点看医院扩建和并购资产是否贡献利润",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
+      "reason": "复核2027年年度报告，重新评估长期合理估值和仓位上限",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "低于合理价值区间下沿，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.4
+      },
+      "reason": "接近合理价值中下部，若经营改善可小仓位跟踪",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "显著高于合理价值区间，当前盈利质量难以支撑高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "action": "进入可买区，复核最近一期扣非利润、经营现金流和商誉风险",
-      "reason": "低于合理价值区间下沿，安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 5.4,
-      "action": "进入试探区，仅在利润恢复证据明确时小仓位参与",
-      "reason": "接近合理价值中下部，若经营改善可小仓位跟踪"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "action": "进入减仓区，若无利润加速证据则降低仓位",
-      "reason": "显著高于合理价值区间，当前盈利质量难以支撑高估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点看扣非利润、经营现金流、长沙珂信和苏州广慈爬坡"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度报告，重点看财务费用、商誉、医疗器械海外收入"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告，重点看ROE是否接近5%、商誉是否减值、全年扣非利润是否达标"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "reason": "复核2027年半年度报告，重点看医院扩建和并购资产是否贡献利润"
-    },
-    {
-      "type": "date",
-      "date": "2028-04-30",
-      "reason": "复核2027年年度报告，重新评估长期合理估值和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润同比增速",
-    "经营活动现金流净额/扣非归母净利润",
-    "长沙珂信和苏州广慈收入、床位利用率、手术量、三四级手术占比",
-    "医疗器械海外收入增速及海外收入占器械板块比例",
-    "商誉余额及减值测试结论",
-    "财务费用、有息债务和租赁负债变化",
-    "ROE是否提升至5%以上"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

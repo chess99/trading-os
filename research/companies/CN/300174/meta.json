@@ -1,116 +1,133 @@
 {
-  "symbol": "CN:300174",
-  "market": "CN",
-  "ticker": "300174",
-  "name": "元力股份",
-  "company_name": "福建元力活性炭股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "木质活性炭细分龙头，碳硅循环、白炭黑和新能源碳材料提供增长期权；但以2026-07-13附近约21元股价测算，TTM PE约34倍，已经计入较多成长预期，安全边际不足，等待14-16元或业绩兑现后再买。",
-  "quality_rating": "B+",
-  "valuation_rating": "C",
-  "fair_value_range": [16.0, 19.0],
-  "buy_zone": [14.0, 16.0],
-  "sell_or_reduce_zone": [24.0, 28.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "元力股份",
+    "security_status": "active",
+    "symbol": "CN:300174",
+    "ticker": "300174"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "608803065f63ce014b86572dcc39c08d272fe4270680243efa58c0e2c61b716e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于19元且未看到白炭黑或新能源碳材料利润兑现",
-      "action": "保持观察或最多1%观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价进入16-19元且活性炭毛利率维持稳定、经营现金流接近净利润",
-      "action": "可建立0.5%-1.5%跟踪仓",
-      "max_weight": 0.015
-    },
-    {
-      "condition": "股价进入14-16元且2026半年度或年度数据未显示基本面恶化",
-      "action": "分批买入至1%-2%基础仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "白炭黑毛利率改善且新能源碳材料出现可核验订单或收入，同时股价不高于合理价值上沿",
-      "action": "可提高至3%-5%核心观察仓",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入买入区间上沿，估值接近保守合理价值下限",
-      "action": "复核半年报/季报后考虑建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "明显低于合理价值区间，若基本面稳定则安全边际较好",
-      "action": "若基本面未恶化，复核安全边际并加速分批买入"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "超过合理价值区间较多，除非利润上修否则赔率下降",
-      "action": "若业绩没有上修，减仓或不再买入"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "估值进入主题溢价区，需要重大基本面兑现支撑",
-      "action": "若无重大利润兑现，卖出或降至观察仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证白炭黑放量、利润压力和现金流质量的最近节点",
-      "condition": "发布2026年半年度报告或年度报告",
-      "action": "复核收入利润、现金流、毛利率和估值区间"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "并购同晟会影响股本摊薄、资本配置和成长假设",
-      "condition": "同晟股份并购恢复审核、过会、终止或披露交易价格/业绩承诺变化",
-      "action": "重估并购对每股价值、股本摊薄和资本配置质量的影响"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "新材料业务是当前估值能否成立的主要变量",
-      "condition": "公司披露白炭黑、新能源碳材料重大订单、客户认证或产能投产进展",
-      "action": "更新成长假设和合理估值倍数"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "毛利率下滑会削弱公司细分龙头的质量判断",
-      "condition": "活性炭或硅化物毛利率连续两个季度明显下滑",
-      "action": "下调质量评级并检查是否退出观察"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "现金流和短债变化会影响安全边际和仓位上限",
-      "condition": "经营现金流显著低于净利润或短期借款继续快速上升",
-      "action": "复核财务质量和仓位上限"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入买入区间上沿，估值接近保守合理价值下限",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "明显低于合理价值区间，若基本面稳定则安全边际较好",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过合理价值区间较多，除非利润上修否则赔率下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "估值进入主题溢价区，需要重大基本面兑现支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "活性炭销量、吨毛利和库存",
-    "二氧化硅/白炭黑收入、销量和毛利率",
-    "新能源碳材料订单、客户认证、收入占比和毛利率",
-    "ROE、经营现金流/净利润、自由现金流",
-    "短期借款、货币资金、资本开支和在建工程转固节奏",
-    "回购执行价格和累计回购金额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

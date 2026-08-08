@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:600133",
-  "ticker": "600133",
-  "name": "东湖高新",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "东湖高新具备武汉东湖高新区区域资源、园区资产和环保运营基础，但2025年收入与利润下滑、ROE偏低、经营现金流为负，且2026年半年度预亏显示园区销售结转节奏仍是核心风险。当前价格接近基准估值上沿，等待更低价格或中报/三季报验证基本面修复。",
-  "fair_value_range": [
-    6.2,
-    7.8
-  ],
-  "buy_zone": [
-    5.2,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    8.3,
-    10.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东湖高新",
+    "security_status": "active",
+    "symbol": "CN:600133",
+    "ticker": "600133"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "34f42bbbec4b5beca60ca0f7988ee29a215af0e3ef429d787e599171e160f950"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于5.8元，且2026年半年报正式披露后未出现重大资产减值、资产负债率未明显恶化，可建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、经营现金流、园区结转和资产减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于5.2元，且园区销售结转恢复、经营现金流改善、环保业务毛利率稳定，可提高至中低仓位。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认H2园区销售结转和环保业务毛利率是否修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于8.3元且ROE、经营现金流、园区去化没有同步改善，应减仓或回避新增买入。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估归一化盈利、分红和资产折价。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入买入观察区，PB折价开始覆盖低ROE和2026H1预亏风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入更有吸引力的资产折价区，若基本面未恶化可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.3
+      },
+      "reason": "高于基准估值上沿，若盈利和现金流未改善，安全边际不足。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入买入观察区，PB折价开始覆盖低ROE和2026H1预亏风险。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入更有吸引力的资产折价区，若基本面未恶化可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.3,
-      "reason": "高于基准估值上沿，若盈利和现金流未改善，安全边际不足。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、经营现金流、园区结转和资产减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认H2园区销售结转和环保业务毛利率是否修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估归一化盈利、分红和资产折价。"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

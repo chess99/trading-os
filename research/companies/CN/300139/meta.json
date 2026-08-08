@@ -1,120 +1,105 @@
 {
-  "symbol": "CN:300139",
-  "market": "CN",
-  "ticker": "300139",
-  "name": "晓程科技",
-  "company_name": "北京晓程科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "晓程科技已从传统芯片公司转为以加纳黄金矿山为核心的小型海外黄金弹性股。2025 年黄金销售占收入 82.06%，经营现金流明显好于利润，2026Q1 继续高增；但当前 35.56 元价格对应约 97 亿元市值，已经计入金价高位、FGM 顺利投产和小盘黄金估值溢价，安全边际不足。等待 20 元以下或 FGM 产量、现金流明确兑现后再考虑提高仓位。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    20.0,
-    28.0
-  ],
-  "buy_zone": [
-    18.0,
-    22.0
-  ],
-  "sell_or_reduce_zone": [
-    35.0,
-    45.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晓程科技",
+    "security_status": "active",
+    "symbol": "CN:300139",
+    "ticker": "300139"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5544f7979aba05cc90926e832cf0592fd31a1bf906356f5376f527b11e3f2f8d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 35 元，且 FGM 尚未贡献可验证产量和现金流",
-      "action": "不新增；已有仓位降至观察仓",
-      "target_position_pct": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报将验证黄金业务高增是否延续",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在 28-35 元之间，且季度经营现金流继续为正",
-      "action": "观察，不主动加仓",
-      "target_position_pct": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报可判断全年利润和 FGM 进度是否支撑估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格在 22-28 元之间，且黄金销量、回款、费用率连续两个季度稳定",
-      "action": "建立小仓位",
-      "target_position_pct": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报可完整验证矿山产量、现金流和资本开支",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格在 18-22 元之间，且金价未崩、矿山运营正常、应收账款未恶化",
-      "action": "分批买入",
-      "target_position_pct": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "接近估算买入区上沿，风险收益开始改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格低于 18 元，且基本面没有被证伪",
-      "action": "提高至资源股上限仓位",
-      "target_position_pct": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "低于基准合理价值区间下沿，安全边际较充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "高于合理价值区间较多，估值已反映乐观预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22.0,
-      "currency": "CNY",
-      "action": "进入买入观察区，复核最新季报和金价",
-      "reason": "接近估算买入区上沿，风险收益开始改善"
-    },
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "currency": "CNY",
-      "action": "若基本面未恶化，可开始分批建仓",
-      "reason": "低于基准合理价值区间下沿，安全边际较充分"
-    },
-    {
-      "type": "price_above",
-      "price": 35.0,
-      "currency": "CNY",
-      "action": "除非 FGM 放量被验证，否则减仓或不新增",
-      "reason": "高于合理价值区间较多，估值已反映乐观预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年半年报披露后复核产量、现金流、应收账款和费用率",
-      "reason": "半年报将验证黄金业务高增是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 年三季报披露后复核 FGM 进度和全年利润中枢",
-      "reason": "三季报可判断全年利润和 FGM 进度是否支撑估值"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年年报披露后完整重估矿山产量、FGM 投产、现金流和估值",
-      "reason": "年报可完整验证矿山产量、现金流和资本开支"
-    }
-  ],
-  "key_tracking_metrics": [
-    "黄金销售量与生产量",
-    "AKROMA 与 AKOASE 出矿量、品位、选厂处理量",
-    "FGM 投产进度、月处理量、销售收入",
-    "黄金业务毛利率与单位成本",
-    "经营活动现金流量净额",
-    "应收账款余额与账龄",
-    "前五大客户销售占比",
-    "管理费用、矿证更新费、咨询费、安保费",
-    "汇兑损益与美元/加纳塞地敞口",
-    "货币资金、短期借款、应交税费",
-    "国际金价与人民币金价"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

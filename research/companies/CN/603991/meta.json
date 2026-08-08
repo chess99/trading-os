@@ -1,1 +1,115 @@
-{"buy_zone": [60, 80], "currency": "CNY", "current_rating": "watch", "current_thesis": "领先股份（原至正股份）经2025年11月30日完成重大资产重组置入AAMI（原ASMPT剥离的半导体引线框架业务，2025年全球引线框架收入跃居全球第二）99.97%股权并彻底置出原线缆材料业务，转型为半导体引线框架曲线借壳股；当前167.06元/255亿市值隐含PS约7倍、PB7.26倍、PE(TTM)1371倍已将成长故事过度定价，不追高，仅在80-110元合理价值区间且中报确认AAMI业绩兑现、经营性现金流连续两季转正后小仓位试探。", "fair_value_range": [80, 130], "latest_report": "reports/2026-07-10-initial.md", "market": "CN", "name": "领先股份", "position_plan": [{"condition": "股价≥150元且2026中报尚未披露、AAMI业绩未在前季报充分兑现", "max_weight": 0, "reason": "估值先于业绩6-9个月兑现，赔率不足以补偿整合+商誉尾部风险"}, {"condition": "股价80-110元且2026中报确认AAMI半年正贡献、经营性现金流连续两季转正", "max_weight": 0.015, "reason": "进入合理价值区间下沿，仅给小试探仓保留跟踪"}, {"condition": "股价60-80元且2026中报正常推进、限售解禁未出现大批量抛压", "max_weight": 0.03, "reason": "接近悲观情景中位、赔率转正、属半导体周期+并购整合合理风险敞口"}, {"condition": "股价<60元且AAMI业绩未本质恶化、苏州桔云仲裁已有合理会计处理", "max_weight": 0.05, "reason": "进入有显著安全边际的买入区间，接近交易对价价值锚定"}, {"condition": "股价≥180元且2026中报后净利年化不足5亿元", "max_weight": 0, "reason": "估值过度溢价且业绩无法兑现，应兑现或回避"}], "price_triggers": [{"price": 110, "reason": "进入合理价值区间上沿，需复核AAMI业绩兑现情况后再考虑小仓位", "type": "price_below"}, {"price": 60, "reason": "进入深度买入区间，需判断是否有未被识别的基本面恶化导致的价值陷阱", "type": "price_below"}, {"price": 150, "reason": "进入减仓/不追高区间，需复核估值是否仍被成长故事过度支撑", "type": "price_above"}, {"price": 180, "reason": "超过减仓区上沿，除非AAMI业绩年化超5亿元否则应降低或止损", "type": "price_above"}], "report_history": ["reports/2026-07-10-initial.md"], "review_triggers": [{"date": "2026-08-31", "reason": "复核2026年半年报，重点确认AAMI半年度并表贡献明细、营收环比、毛利率、扣非净利、经营性现金流是否连续两季转正、是否出现商誉减值迹象", "type": "date"}, {"date": "2026-10-31", "reason": "复核2026三季报及AAMI季度出货均价/产能利用率，判断是否调整评级与价格区间", "type": "date"}, {"date": "2027-05-31", "reason": "复核配套募集机构限售股解禁前后股东减持节奏及ASMPT Holding减持意愿", "type": "date"}], "sell_or_reduce_zone": [150, 180], "status": "active", "symbol": "CN:603991", "ticker": "603991", "updated_at": "2026-07-10T18:00:00+08:00"}
+{
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "领先股份",
+    "security_status": "active",
+    "symbol": "CN:603991",
+    "ticker": "603991"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "246be9a5fc0c7283ee44b65f09576511bb496e8fb7c0e80592415a6ebee8f680"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认AAMI半年度并表贡献明细、营收环比、毛利率、扣非净利、经营性现金流是否连续两季转正、是否出现商誉减值迹象",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报及AAMI季度出货均价/产能利用率，判断是否调整评级与价格区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-05-31"
+      },
+      "reason": "复核配套募集机构限售股解禁前后股东减持节奏及ASMPT Holding减持意愿",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 110.0
+      },
+      "reason": "进入合理价值区间上沿，需复核AAMI业绩兑现情况后再考虑小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入深度买入区间，需判断是否有未被识别的基本面恶化导致的价值陷阱",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 150.0
+      },
+      "reason": "进入减仓/不追高区间，需复核估值是否仍被成长故事过度支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 180.0
+      },
+      "reason": "超过减仓区上沿，除非AAMI业绩年化超5亿元否则应降低或止损",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
+}

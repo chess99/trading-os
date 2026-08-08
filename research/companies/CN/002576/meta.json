@@ -1,144 +1,115 @@
 {
-  "symbol": "CN:002576",
-  "market": "CN",
-  "ticker": "002576",
-  "name": "通达动力",
-  "company_name": "江苏通达动力科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "通达动力是电机定转子冲片和铁芯细分龙头，客户质量、外贸结构和一体化工艺有价值，但综合毛利率和ROE偏低，2026-07-10收盘价13.92元对应约26.9倍TTM PE，安全边际不足；等待9.5元以下或毛利率、外贸、成品定转子占比持续改善后再评估买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    10.5,
-    12.5
-  ],
-  "buy_zone": [
-    8.0,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    13.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "通达动力",
+    "security_status": "active",
+    "symbol": "CN:002576",
+    "ticker": "002576"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c269dda5dd915713c939e4a428279f72f70361dfe8075ee8ed55fe846be73a2d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格13.92元",
-      "max_weight": 0,
-      "action": "观察，不买"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报：收入、毛利率、外贸、成品定转子、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price < 8.0",
-      "max_weight": 0.06,
-      "action": "强吸引力区间，分两笔买入"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报：经营计划达成度、回购、客户集中度和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "8.0 <= price < 9.5",
-      "max_weight": 0.04,
-      "action": "有安全边际，可建观察仓"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报：外贸和深加工是否兑现利润改善",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "9.5 <= price < 10.5",
-      "max_weight": 0.02,
-      "action": "接近买入线但折扣不足，等待中报或更低价格"
-    },
-    {
-      "condition": "10.5 <= price < 12.5",
-      "max_weight": 0,
-      "action": "合理区间，观察"
-    },
-    {
-      "condition": "price >= 13.5",
-      "max_weight": 0,
-      "action": "不追高"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
       "reason": "进入合理区间下沿，重新评估中报和现金流",
-      "action": "进入合理区间下沿，重新评估中报和现金流"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 9.5,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
       "reason": "进入有安全边际买入区，考虑2%-4%观察仓",
-      "action": "进入有安全边际买入区，考虑2%-4%观察仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 8.0,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
       "reason": "进入强吸引力买入区，考虑4%-6%仓位",
-      "action": "进入强吸引力买入区，考虑4%-6%仓位"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 13.5,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
       "reason": "估值超过合理区间，不追高",
-      "action": "不追高"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报：收入、毛利率、外贸、成品定转子、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报：经营计划达成度、回购、客户集中度和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报：外贸和深加工是否兑现利润改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    {
-      "metric": "综合毛利率",
-      "baseline": "2025年13.80%，2026Q1约14.02%",
-      "watch": "低于12%为警戒，稳定高于15%才考虑上调估值"
-    },
-    {
-      "metric": "外贸收入",
-      "baseline": "2025年4.979亿元，占28.28%，同比+19.34%，毛利率19.72%",
-      "watch": "保持15%以上增长且毛利率18%以上"
-    },
-    {
-      "metric": "成品定转子收入占比",
-      "baseline": "2025年1.568亿元，占8.91%，同比+42.54%",
-      "watch": "占比继续提升且不稀释毛利率"
-    },
-    {
-      "metric": "前五大客户集中度",
-      "baseline": "2025年前五大客户销售占比50.30%",
-      "watch": "高于55%时提高估值折扣"
-    },
-    {
-      "metric": "应收账款",
-      "baseline": "2026Q1末6.617亿元，占总资产约32.5%",
-      "watch": "应收账款增速不应持续高于收入增速"
-    },
-    {
-      "metric": "经营现金流/净利润",
-      "baseline": "2025年经营现金流0.812亿元，归母净利润0.824亿元；2026Q1经营现金流0.128亿元，归母净利润0.219亿元",
-      "watch": "中长期应接近或高于1"
-    },
-    {
-      "metric": "研发投入率",
-      "baseline": "2025年研发投入0.554亿元，占收入3.15%",
-      "watch": "维持3%以上并转化为风电、新能源车和高效电机订单"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

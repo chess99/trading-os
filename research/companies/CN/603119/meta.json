@@ -1,108 +1,110 @@
 {
-  "symbol": "CN:603119",
-  "market": "CN",
-  "ticker": "603119",
-  "name": "浙江荣泰",
-  "company_name": "浙江荣泰电工器材股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "浙江荣泰是新能源车热失控防护云母绝缘件细分龙头，主业质量、客户粘性和现金流表现较好，机器人精密结构件提供第二增长曲线；但截至2026-07-17股价约50.60元，已接近乐观情景估值，安全边际不足，当前应观察而非追高买入。",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    34,
-    46
-  ],
-  "buy_zone": [
-    24,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    75
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江荣泰",
+    "security_status": "active",
+    "symbol": "CN:603119",
+    "ticker": "603119"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "66b1829312bcd6e7742a1763bc960c96a245a1374d6c49a74f6e3e45187fcb53"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "a72bd441e61d791bad9e8b3a08e69bd7830a4f751a3db9092e8bc5938a7a18d5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于或等于28元，且新能源产品毛利率未低于35%、经营现金流质量未恶化",
-      "action": "buy",
-      "max_weight": 0.1,
-      "reason": "进入强安全边际区，可以逆向建立核心观察仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证新能源业务毛利率、现金流、存货和精密结构件放量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于28元且低于或等于32元，同时2026年中报支持全年归母净利润不低于3.5亿元",
-      "action": "buy",
-      "max_weight": 0.08,
-      "reason": "估值已有一定折扣，若业绩兑现可分批配置。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年3.5亿元以上归母净利润的可实现性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于32元且低于或等于46元，且没有新增重大定点或盈利预测上修",
-      "action": "watch",
-      "max_weight": 0.03,
-      "reason": "处于合理价值区，只适合小仓位跟踪，不应重仓。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及2027年一季报，重新评估海外项目和机器人业务兑现情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于46元且低于或等于55元，且2026E归母净利润未上修至4亿元以上",
-      "action": "avoid",
-      "max_weight": 0.0,
-      "reason": "估值偏贵，缺乏新增买入赔率。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入有安全边际的初步买入区，重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于55元，且新业务或海外项目没有提供明确超预期证据",
-      "action": "avoid",
-      "max_weight": 0.0,
-      "reason": "进入乐观情景定价区，应回避追高或考虑减仓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可提高目标仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "进入乐观情景估值区，需停止加仓并评估减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入有安全边际的初步买入区，重新评估建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入强吸引力买入区，若基本面未恶化可提高目标仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "进入乐观情景估值区，需停止加仓并评估减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证新能源业务毛利率、现金流、存货和精密结构件放量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年3.5亿元以上归母净利润的可实现性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及2027年一季报，重新评估海外项目和机器人业务兑现情况。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新能源产品收入增速",
-    "新能源产品毛利率",
-    "经营活动现金流净额/归母净利润",
-    "存货周转天数",
-    "应收账款周转天数",
-    "海外客户定点转量产进度",
-    "泰国和墨西哥项目建设节奏",
-    "精密结构件收入、毛利率和客户数量"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

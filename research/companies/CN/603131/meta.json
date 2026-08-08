@@ -1,82 +1,105 @@
 {
-  "symbol": "CN:603131",
-  "ticker": "603131",
-  "name": "上海沪工",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "传统焊接设备品牌、海外渠道和现金资产有价值，但2025年亏损、2026Q1扣非仍亏损，高端装备配套仍拖累利润；14.05元附近缺少足够安全边际，等待价格回落或扣非利润与现金流同步修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    10.5,
-    14.5
-  ],
-  "buy_zone": [
-    8.5,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    20.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海沪工",
+    "security_status": "active",
+    "symbol": "CN:603131",
+    "ticker": "603131"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "afd62d9126b7f71b46f12ffedcf1f80855f224facd103a3dd3bb96c357568948"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于10.5元且2026年半年报未出现经营现金流显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、高端装备配套亏损和募投项目进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非归母净利润转正且高端装备配套亏损显著收窄",
-      "action": "可提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否具有连续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于16.5元但扣非利润和经营现金流未兑现",
-      "action": "不加仓并考虑降低暴露",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和精密数控激光切割装备扩产项目实际进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入买入区间上沿，传统焊机资产和现金缓冲开始提供安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入深度价值区间，可重新评估更高仓位，但需确认基本面没有结构性恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过合理价值区间上沿，若扣非利润未修复，估值主要依赖乐观预期。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入买入区间上沿，传统焊机资产和现金缓冲开始提供安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入深度价值区间，可重新评估更高仓位，但需确认基本面没有结构性恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "超过合理价值区间上沿，若扣非利润未修复，估值主要依赖乐观预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、高端装备配套亏损和募投项目进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否具有连续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和精密数控激光切割装备扩产项目实际进展。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,109 +1,115 @@
 {
-  "symbol": "CN:300540",
-  "market": "CN",
-  "ticker": "300540",
-  "name": "蜀道装备",
-  "company_name": "四川蜀道装备科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备深冷装备、LNG/空分、气体运营、氢能与商业航天配套的真实业务基础，背靠蜀道集团有资源优势；但2026-07-13收盘价41.74元对应约95亿元市值，显著高于以2025年利润、2026Q1财务质量和正常化增长假设交叉验证出的16-24元合理价值区间。当前不买，等待价格回落或订单、现金流、ROE共同验证。",
-  "quality_rating": "中等",
-  "valuation_rating": "显著高估",
-  "fair_value_range": [
-    16,
-    24
-  ],
-  "buy_zone": [
-    12,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    40
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "蜀道装备",
+    "security_status": "active",
+    "symbol": "CN:300540",
+    "ticker": "300540"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "aee5afc30f849942170b17c46b49387df9a57343fb3ae5b06dabab1b117bb2ff"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于30元，且没有正式披露大额运营项目合同收益机制和现金流改善。",
-      "action": "不买入；已有仓位按交易性仓位处理，原则上不超过1%。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报：收入、扣非净利润、经营现金流、合同负债、应收账款和合同资产变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至18-22元，且2026年中报显示经营现金流为正、合同负债改善、应收账款和合同资产没有异常扩张。",
-      "action": "可建立0-2%观察仓，等待订单和盈利质量继续验证。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及新疆庆华空分BOT项目合同落地和投资回报披露情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元，且新疆庆华或同类项目正式合同落地，同时扣非净利润和经营现金流趋势改善。",
-      "action": "分批建立3-5%基础仓；若ROE提升至8%以上再评估是否加仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：ROE是否提升、氢能合资公司是否贡献实质订单、商业航天配套是否复购。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于15元，且未出现项目亏损、坏账大幅计提或控股股东治理恶化。",
-      "action": "可提高至5-8%仓位，但需逐季复核重资产项目回报。",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入合理价值区间上沿，允许重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入可买区，若基本面未恶化可分批建仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "高于合理价值区间较多，已有仓位应考虑降至观察仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "估值明显透支，除非出现已核验的重大盈利跃迁，否则不新增。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "currency": "CNY",
-      "reason": "进入合理价值区间上沿，允许重新评估观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "currency": "CNY",
-      "reason": "进入可买区，若基本面未恶化可分批建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "currency": "CNY",
-      "reason": "高于合理价值区间较多，已有仓位应考虑降至观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "currency": "CNY",
-      "reason": "估值明显透支，除非出现已核验的重大盈利跃迁，否则不新增。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报：收入、扣非净利润、经营现金流、合同负债、应收账款和合同资产变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及新疆庆华空分BOT项目合同落地和投资回报披露情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：ROE是否提升、氢能合资公司是否贡献实质订单、商业航天配套是否复购。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026年收入是否恢复至9-10亿元以上",
-    "扣非归母净利润是否稳定超过8000万元并向1.2亿元爬坡",
-    "经营现金流净额是否持续为正",
-    "应收账款、合同资产、存货合计占收入比例是否下降",
-    "合同负债是否持续增加且对应真实订单",
-    "综合毛利率是否稳定在28%-32%",
-    "ROE是否从5%-6%提升至8%-10%",
-    "新疆庆华4*78870Nm3/h空分项目是否签署正式合同并披露关键商业条款",
-    "蜀道丰田氢能是否取得批量商业订单",
-    "液态甲烷和液空商业航天设备是否形成连续复购"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

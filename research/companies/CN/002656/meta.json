@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:002656",
-  "market": "CN",
-  "ticker": "002656",
-  "name": "*ST摩登",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "不买：撤销退市风险警示改善交易状态，但公司2025年和2026Q1仍亏损、经营现金流为负，沈鹏电力并购拉高收入但业绩承诺完成度低，当前2.83元对应约4.9倍PB和20亿元市值，明显高于可核验基本面价值。",
-  "current_price": 2.83,
-  "current_price_date": "2026-07-16",
-  "fair_value_range": [
-    0.75,
-    1.2
-  ],
-  "buy_zone": [
-    0.55,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    1.6,
-    2.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST摩登",
+    "security_status": "active",
+    "symbol": "CN:002656",
+    "ticker": "002656"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "d0424cd6880c3182d059b88e123085313d58397c15adad9dafe17297cb8a5200"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且2026H1仍预亏",
-      "action": "不买入，维持空仓观察",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、经营现金流、应收账款、存货和诉讼预计负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入0.55-0.80元且连续两个季度扣非亏损显著收窄、经营现金流转正",
-      "action": "仅允许特殊情况试验仓",
-      "max_weight": 0.5
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现扣非盈利和现金流拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年报仍亏损、沈鹏电力业绩承诺继续大幅低于节奏或出现新增资金占用/违规担保",
-      "action": "清零并移出可投资池",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报审计意见、退市风险是否重新出现、沈鹏电力承诺完成度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入可买观察区，需要结合现金流和半年报/三季报复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.6
+      },
+      "reason": "超过基本面合理估值，风险收益比恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.2
+      },
+      "reason": "明显依赖摘帽和壳溢价，应减持或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入可买观察区，需要结合现金流和半年报/三季报复核"
-    },
-    {
-      "type": "price_above",
-      "price": 1.6,
-      "reason": "超过基本面合理估值，风险收益比恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 2.2,
-      "reason": "明显依赖摘帽和壳溢价，应减持或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、经营现金流、应收账款、存货和诉讼预计负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现扣非盈利和现金流拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报审计意见、退市风险是否重新出现、沈鹏电力承诺完成度"
-    }
-  ],
-  "notes": [
-    "2026-07-19为周日，公司2026-07-17停牌，公告称2026-07-20复牌并撤销退市风险警示；本报告使用2026-07-16收盘价2.83元作为基准价。",
-    "2025年收入增长主要来自并购沈鹏电力并表，扣除后收入4.88亿元，但归母净利润和扣非归母净利润仍为负。",
-    "沈鹏电力2025年扣非归母净利润约184万元，仅为当年预测1100万元的16.73%，业绩承诺兑现是后续核心风险。",
-    "历史资金占用、违规担保、虚假陈述诉讼和控股股东股份冻结仍构成治理折价。",
-    "当前评级为avoid，不建议参与摘帽复牌后的事件交易。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

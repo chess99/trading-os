@@ -1,113 +1,106 @@
 {
-  "symbol": "CN:001211",
-  "market": "CN",
-  "ticker": "001211",
-  "name": "双枪科技",
-  "company_name": "双枪科技",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "expensive",
-  "current_thesis": "双枪科技具备竹木餐厨具品牌、砧板高毛利、线上和出口增长等真实业务基础，但2025年和2026Q1利润与现金流尚未证明费用效率改善。当前评级为watch，等待股价进入11-15元买入区或2026H1扣非净利率、销售费用率、经营现金流出现明确改善。",
-  "fair_value_range": [
-    14.0,
-    20.0
-  ],
-  "buy_zone": [
-    11.0,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    30.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "双枪科技",
+    "security_status": "active",
+    "symbol": "CN:001211",
+    "ticker": "001211"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "0bdac685565a87226cc7ef1fa4392d32b85bca590dbda28651df6314ac0b9231"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于21元且未看到2026H1费用率改善",
-      "action": "不买入，仅跟踪",
-      "max_weight": 0.0,
-      "reason": "当前市值已透支正常化利润修复，2025年和2026Q1盈利质量不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计2026年半年报披露后复核收入质量、销售费用率、扣非净利率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元但半年报尚未验证扣非净利率改善",
-      "action": "可建立观察仓",
-      "max_weight": 0.005,
-      "reason": "业务增长真实但费用效率未证实，只适合小仓位保持跟踪"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "预计2026年三季报披露后复核全年利润修复路径",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入11-15元且销售费用率下降、经营现金流不恶化",
-      "action": "首笔买入并等待半年报复核",
-      "max_weight": 0.01,
-      "reason": "价格进入安全边际区，且基本面出现利润修复迹象"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入买入区间，需要复核2026H1销售费用率、扣非净利率和经营现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于13元且扣非净利率回到2%以上、经营现金流转正",
-      "action": "加仓",
-      "max_weight": 0.02,
-      "reason": "估值与经营质量同时改善，可承担小市值波动"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入更有安全边际区间，若基本面改善可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价高于24元且没有可核验利润兑现",
-      "action": "减仓或不追高",
-      "max_weight": 0.0,
-      "reason": "市值需要更高正常化净利润支撑，新材料和渠道增长尚未兑现"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过合理价值上沿，需要检查是否已有新材料订单或利润率兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "进入高估区，若无业绩兑现应减仓或避免追高",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入买入区间，需要复核2026H1销售费用率、扣非净利率和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入更有安全边际区间，若基本面改善可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "超过合理价值上沿，需要检查是否已有新材料订单或利润率兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "reason": "进入高估区，若无业绩兑现应减仓或避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计2026年半年报披露后复核收入质量、销售费用率、扣非净利率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "预计2026年三季报披露后复核全年利润修复路径"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "归母净利润",
-    "扣非净利润率",
-    "销售费用率",
-    "线上收入增速和线上毛利率",
-    "境外收入增速和境外毛利率",
-    "砧板收入和毛利率",
-    "经营活动现金流量净额",
-    "存货余额和存货跌价损失",
-    "短期借款和利息费用",
-    "金钢瓷订单金额",
-    "竹基禾塑客户认证和批量订单进度",
-    "控股股东及实际控制人质押变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

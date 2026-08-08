@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:605296",
-  "market": "CN",
-  "ticker": "605296",
-  "name": "神农集团",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "神农集团具备区域生物安全、一体化和成本改善潜力，但2026年上半年处于猪价低迷和存货跌价压力期；当前约3.8倍PB已反映较多修复预期，缺乏买入安全边际，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "神农集团",
+    "security_status": "active",
+    "symbol": "CN:605296",
+    "ticker": "605296"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c970c98c77c26ccc636144bdf5205a2c52e390a42d15d7bf93aca371b3ae60a9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于24元，且最近一个月商品猪均价不低于10.5元/公斤",
-      "action": "建立观察仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、存货跌价、现金流和完全成本披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于21元，且公司可信完全成本低于12.2元/公斤",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及旺季前猪价修复幅度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2027年确认归母净利润中枢超过8亿元且市净率低于3倍",
-      "action": "上调为核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核2026年全年业绩预告、月度销量和行业产能去化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入初始买入区间上沿，需复核猪价与成本后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入具备较充分安全边际区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "超过乐观情景下沿，若盈利尚未恢复应考虑卖出或降低预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入初始买入区间上沿，需复核猪价与成本后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 21,
-      "reason": "进入具备较充分安全边际区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "超过乐观情景下沿，若盈利尚未恢复应考虑卖出或降低预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、存货跌价、现金流和完全成本披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及旺季前猪价修复幅度"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核2026年全年业绩预告、月度销量和行业产能去化"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

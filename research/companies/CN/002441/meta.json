@@ -1,115 +1,115 @@
 {
-  "symbol": "CN:002441",
-  "market": "CN",
-  "ticker": "002441",
-  "name": "众业达",
-  "company_name": "众业达电气股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是现金充裕、分红友好、全国网络较强的工业电气分销商，但毛利率薄、ROE低、供应商集中度高。2026-07-10收盘价7.61元对应总市值约41.44亿元，已高于安全边际买入区，当前不买，等待5.5元以下或经营质量明显改善。",
-  "quality_rating": "B-",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    6.0,
-    7.5
-  ],
-  "buy_zone": [
-    4.8,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    9.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "众业达",
+    "security_status": "active",
+    "symbol": "CN:002441",
+    "ticker": "002441"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "b85828e69035ab8ef4f597aef1de854590d7ae23a03f336fe129e7fe63883d87"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 4.8",
-      "action": "强吸引力买入",
-      "target_position": "8%-10%",
-      "max_weight": 0.1
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026中报披露后复查收入、扣非归母净利润、经营现金流、应收账款、应收款项融资和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "4.8 < price <= 5.5",
-      "action": "分批买入",
-      "target_position": "5%-8%",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报后复查工控产品增长、供应商集中度和毛利率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "5.5 < price <= 6.5",
-      "action": "小仓观察",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报后复查ROE、分红、资本配置和长期估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "6.5 < price <= 7.5",
-      "action": "观察或极小仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入合理偏低区，复核中报现金流和应收存货后再行动",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price > 7.5",
-      "action": "不新增",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入安全边际买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "悲观情景下也有较厚保护",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "不应追高，若经营质量无改善则考虑减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入合理偏低区，复核中报现金流和应收存货后再行动"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入安全边际买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "悲观情景下也有较厚保护"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "不应追高，若经营质量无改善则考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026中报披露后复查收入、扣非归母净利润、经营现金流、应收账款、应收款项融资和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026三季报后复查工控产品增长、供应商集中度和毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报后复查ROE、分红、资本配置和长期估值"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "工控产品分销收入增速和占比",
-    "综合毛利率及低压/中压/工控分项毛利率",
-    "扣非归母净利润",
-    "加权ROE",
-    "经营现金流净额/归母净利润",
-    "应收账款+应收款项融资+存货/营业收入",
-    "前五大供应商采购占比",
-    "每股现金分红",
-    "货币资金+交易性金融资产-有息负债"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

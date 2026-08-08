@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688479",
-  "market": "CN",
-  "ticker": "688479",
-  "name": "友车科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "友车科技是汽车营销与后市场数智化软件的小而专标的，具备用友生态、垂直行业经验、海外和AI应用弹性，但2025年收入利润下滑、2026Q1扣非改善很弱，当前估值已接近牛市情景，需等待更低价格和基本面验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18,
-    23
-  ],
-  "buy_zone": [
-    0,
-    17
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "友车科技",
+    "security_status": "active",
+    "symbol": "CN:688479",
+    "ticker": "688479"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d136caf25231bbebdf3d20c61284a6cde8310778ce287f05ffac5a8b919f6381"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于17元，且2026H1收入同比为正、扣非净利率回升至6%以上、合同负债较2025年末改善时，试探建仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，验证收入修复、扣非利润和合同负债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于14元，且收入未继续下滑、经营现金流转正或明显改善时，提高观察仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，并检查员工平台减持计划执行结果。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于28元且半年报未证明收入和扣非利润双改善时，不买入并考虑回避。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估海外、AI和汽车ERP业务兑现度。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入买入观察区，需要复核半年报收入、扣非净利率和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "高于减仓/回避区，若基本面未显著改善则风险收益比偏差。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "进入买入观察区，需要复核半年报收入、扣非净利率和现金流。"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "高于减仓/回避区，若基本面未显著改善则风险收益比偏差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，验证收入修复、扣非利润和合同负债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，并检查员工平台减持计划执行结果。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估海外、AI和汽车ERP业务兑现度。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

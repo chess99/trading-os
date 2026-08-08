@@ -1,144 +1,114 @@
 {
-  "ticker": "002651",
-  "symbol": "CN:002651",
-  "name": "利君股份",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "status": "active",
-  "decision": "观察",
-  "current_rating": "watch",
-  "confidence": "中",
-  "current_thesis": "公司具备粉磨装备技术积累和航空航天零部件第二曲线，现金充足且订单储备较强，但盈利修复尚未验证、当前估值缺乏足够安全边际，因此维持观察。",
-  "fair_value_range": [
-    4.2,
-    6.6
-  ],
-  "buy_zone": [
-    5.8,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    10.5
-  ],
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "last_report_date": "2026-07-12",
-  "updated_at": "2026-07-12",
-  "summary": "粉磨装备老主业叠加航空航天零部件第二曲线，资产负债表稳健、现金充足，但2025年和2026Q1盈利承压；当前估值已预支较多订单兑现预期，暂列观察。",
-  "thesis": [
-    "2025年新获取订单15.64亿元，显著高于当年7.29亿元收入，若高压辊磨机订单顺利交付，2026-2027年收入弹性较大。",
-    "2025年末货币资金18.74亿元且无短期/长期借款，资产负债表提供较强抗风险能力。",
-    "德坤航空2025年收入4.01亿元、净利润0.61亿元，是公司当前利润压舱石，但净利率仍需修复。"
-  ],
-  "risks": [
-    "订单交付、验收、收入确认和回款不及预期。",
-    "原材料价格和大型项目型号结构导致毛利率继续下行。",
-    "航空航天零部件业务受产业政策、型号节奏、客户集中度影响。",
-    "水泥、矿山资本开支周期下行影响粉磨装备需求。",
-    "当前市值相对已验证利润偏贵，利润修复慢会压制估值。"
-  ],
-  "watch_items": [
-    "高压辊磨机及配套订单新增、交付和收入确认节奏。",
-    "季度毛利率、扣非净利率是否修复。",
-    "合同负债、存货、预付款和经营现金流的匹配关系。",
-    "德坤航空收入增速和净利率。",
-    "境外收入占比、毛利率与回款质量。",
-    "现金分红、回购或其它资本配置动作。"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年报或三季报",
-      "reason": "半年报是验证2025年订单向收入和利润转化的首个关键节点",
-      "action": "复核订单转收入、毛利率和扣非净利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "披露重大高压辊磨机海外订单或订单取消",
-      "reason": "高压辊磨机订单是本轮利润弹性的核心变量",
-      "action": "更新订单兑现假设和估值区间"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "单季度毛利率较2025年主营制造业毛利率显著下滑",
-      "reason": "2026Q1利润承压主要来自成本端，毛利率是风险放大的领先指标",
-      "action": "复核成本压力是否结构性恶化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "股价触发买入区或减仓区",
-      "reason": "价格触发安全边际或估值风险区间时需要重新评估仓位",
-      "action": "重新评估交易计划"
-    }
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于6.20元，且下一季毛利率未继续明显恶化、经营现金流为正",
-      "action": "建立三分之一观察仓",
-      "max_weight": 0.33
-    },
-    {
-      "condition": "股价低于5.80元，且合同负债向收入转化、扣非净利率出现修复",
-      "action": "提高至二分之一标准仓",
-      "max_weight": 0.5
-    },
-    {
-      "condition": "连续两个季度收入同比增长超过15%且扣非净利率恢复至10%以上",
-      "action": "重新评估是否上调为买入",
-      "max_weight": 0.67
-    },
-    {
-      "condition": "股价高于8.80元但利润修复未兑现",
-      "action": "不追高，维持观察或降低关注优先级",
-      "max_weight": 0
-    },
-    {
-      "condition": "存货和预付款继续大幅增加，但收入、现金流和毛利率未改善",
-      "action": "降级为不买",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "低于观察仓区间上沿，估值对订单兑现的预支程度下降",
-      "note": "进入观察仓评估区间，需要同步复核下一季毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "低于重点研究区间，安全边际明显改善",
-      "note": "进入更有安全边际的重点研究区间"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "高于偏贵区间下沿，若利润未修复则风险收益比恶化",
-      "note": "若利润未连续修复，估值偏贵，避免追高"
-    }
-  ],
-  "valuation": {
-    "last_price": 7.56,
-    "price_date": "2026-07-10",
-    "market_cap_cny_billion": 7.813,
-    "fair_value_range_cny": [
-      4.2,
-      6.6
-    ],
-    "methods": [
-      "资产底估值",
-      "正常化利润估值",
-      "分部加总估值"
-    ]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "利君股份",
+    "security_status": "active",
+    "symbol": "CN:002651",
+    "ticker": "002651"
   },
-  "next_review": "2026-10-31"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "be8bbb27ed4b9c4502e08b499d9207e02200886a55f7aa9231806cb5a7adee25"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证2025年订单向收入和利润转化的首个关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "高压辊磨机订单是本轮利润弹性的核心变量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026Q1利润承压主要来自成本端，毛利率是风险放大的领先指标",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "价格触发安全边际或估值风险区间时需要重新评估仓位",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "低于观察仓区间上沿，估值对订单兑现的预支程度下降",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "低于重点研究区间，安全边际明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "高于偏贵区间下沿，若利润未修复则风险收益比恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

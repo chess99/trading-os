@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:300247",
-  "market": "CN",
-  "ticker": "300247",
-  "name": "融捷健康",
-  "company_name": "融捷健康科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "融捷健康 2025 年收入、利润和现金流明显修复，核心远红外理疗桑拿房和 Golden Designs 海外渠道具备价值，但收入高度依赖境外市场和少数大客户，2026 年一季度利润同比下滑已暴露汇率、新基地费用和可选消费波动风险。当前约 3.6-3.7 元价格高于保守合理价值，不追买，等待 2.3 元以下或利润中枢进一步验证。",
-  "quality_rating": "中等",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.6,
-    3.2
-  ],
-  "buy_zone": [
-    0,
-    2.3
-  ],
-  "sell_or_reduce_zone": [
-    4.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "融捷健康",
+    "security_status": "active",
+    "symbol": "CN:300247",
+    "ticker": "300247"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "47844e38479b9cbc13166739ff15a14e88bea03ccdcc2bf27ba633c9428db651"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 3.2 元，且 2026 年半年报尚未证明收入恢复和费用吸收",
-      "action": "不买；已有仓位以观察或减仓为主",
-      "max_weight": 0.01,
-      "target_position": "0%-1%"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报：收入是否恢复增长、新基地费用是否被收入吸收、经营现金流是否继续为正",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至 3.0-3.2 元，且 2026 年扣非利润没有继续大幅下滑、经营现金流为正",
-      "action": "仅建立跟踪仓",
-      "max_weight": 0.02,
-      "target_position": "1%-2%"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报：验证前三季度正常化归母净利润和扣非利润中枢",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于 2.3 元，且远红外理疗桑拿房收入、毛利率和现金流未恶化",
-      "action": "进入可买区，分批买入",
-      "max_weight": 0.03,
-      "target_position": "2%-3%"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报：判断 2025 年高增长是否可持续，以及客户集中度、境外收入占比和 Golden Designs 利润变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于 2.0 元，且新基地投产后费用吸收、Golden Designs 利润稳定、客户集中度未进一步上升",
-      "action": "提高到中等仓位",
-      "max_weight": 0.05,
-      "target_position": "4%-5%"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.3,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.3
+      },
       "reason": "低于可买区上限，开始具备相对合理价值的安全边际",
-      "action": "进入可买区，复核半年报或三季报后考虑初始仓位"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 2.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
       "reason": "低于强安全边际价格，若基本面未恶化可提高仓位",
-      "action": "触发强安全边际复核，若基本面未恶化可提高仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 4.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
       "reason": "价格超过减仓观察线，若利润中枢未显著上修则风险收益比转差",
-      "action": "除非利润中枢上修至 1.2 亿元以上，否则考虑减仓或退出"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报：收入是否恢复增长、新基地费用是否被收入吸收、经营现金流是否继续为正"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报：验证前三季度正常化归母净利润和扣非利润中枢"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报：判断 2025 年高增长是否可持续，以及客户集中度、境外收入占比和 Golden Designs 利润变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "远红外理疗桑拿房收入增速和毛利率",
-    "境外收入占比及 Golden Designs INC.(N.A.) 净利润",
-    "经销收入占比与 OEM 收入占比",
-    "前五大客户销售占比和第一大客户销售占比",
-    "存货金额、库存量和存货周转变化",
-    "经营活动现金流净额 / 归母净利润",
-    "汇兑损益和人民币兑美元汇率变化",
-    "新生产基地投产后的费用率和产能利用率",
-    "影联云享股权转让款到账和一次性投资收益确认情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

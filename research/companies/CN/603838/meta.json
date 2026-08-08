@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:603838",
-  "market": "CN",
-  "ticker": "603838",
-  "name": "*ST四通",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "现有业务连续亏损且自由现金流为负，当前近3倍PB已过度计入摘星和新材料高盈利预期，缺乏安全边际。",
-  "fair_value_range": [1.8, 2.8],
-  "buy_zone": [1.3, 1.8],
-  "sell_or_reduce_zone": [3.5, 8.2],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST四通",
+    "security_status": "active",
+    "symbol": "CN:603838",
+    "ticker": "603838"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "d0ee679820aa3a9334c357e9585ada1750f8594c00996d5ecca2030d4fbcce18"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于1.80元或退市风险警示、毛利率、现金流任一核心假设未改善",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核2026年半年报实际亏损、分业务毛利率、现金流、存货和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于1.30至1.80元且已摘星、连续两个季度经营现金流转正、主营毛利率超过8%并且存货下降",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季度经营现金流和新材料业务是否形成可持续利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.30元且重新核验无退市或治理风险、资产可回收价值未受损并出现持续自由现金流",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入有安全边际的条件观察区，但仅在摘星、毛利率和现金流假设均改善后考虑建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.5
+      },
+      "reason": "显著高于合理价值，进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核2026年半年报实际亏损、分业务毛利率、现金流、存货和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季度经营现金流和新材料业务是否形成可持续利润"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入有安全边际的条件观察区，但仅在摘星、毛利率和现金流假设均改善后考虑建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 3.5,
-      "reason": "显著高于合理价值，进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-20T18:04:50+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

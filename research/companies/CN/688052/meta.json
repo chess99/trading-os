@@ -1,76 +1,120 @@
 {
-  "symbol": "CN:688052",
-  "market": "CN",
-  "ticker": "688052",
-  "name": "纳芯微",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "汽车与泛能源驱动收入恢复，平台化与国产替代空间真实；但最新正式财务仍亏损、存货高且经营现金流为负。2026-07-15激励归属使总股本增加约0.54%，旧报告后无新增业绩预告或经营数据。2026-07-17收盘199.53元已回到170-210元合理价值区间，但仍高于140-175元买入区，评级维持watch，等待价格与现金流验证。",
-  "fair_value_range": [170, 210],
-  "buy_zone": [140, 175],
-  "sell_or_reduce_zone": [230, 280],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "纳芯微",
+    "security_status": "active",
+    "symbol": "CN:688052",
+    "ticker": "688052"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c40d009ee20242ec40af0731b3774fea1446f7f8b934688a180e28d77381a107"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "1476c2dd11d4d32ce8aea26e96381ace0f40647d6a984b815df3446b46be4a51"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于175元，或最新财务仍未验证存货与经营现金流改善",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-07-23"
+      },
+      "reason": "第二次临时股东会，核实A/H股激励最终条款与稀释",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "165-175元且收入同比高于25%、毛利率不低于33%、存货增速低于收入增速",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-06"
+      },
+      "reason": "第三次临时股东会，核实董事会换届和章程修订是否通过",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "140-165元且连续两个季度经营现金流改善、核心汽车项目未失效",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "预约披露2026年半年报，复核盈利、现金流、存货与新品放量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "低于140元后完成重新研究，确认商誉与库存风险可控且2027盈利路径成立",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 175.0
+      },
+      "reason": "进入观察仓候选区，需同步验证毛利率、库存与收入条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 140.0
+      },
+      "reason": "进入深度价值候选区，禁止机械补仓并重新研究基本面",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 230.0
+      },
+      "reason": "进入减仓或不追价区，复核市场隐含的远期盈利假设",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 280.0
+      },
+      "reason": "高于基准合理价值，除非基本面显著上修否则继续降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-07-23",
-      "reason": "第二次临时股东会，核实A/H股激励最终条款与稀释"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-06",
-      "reason": "第三次临时股东会，核实董事会换届和章程修订是否通过"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "预约披露2026年半年报，复核盈利、现金流、存货与新品放量"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 175,
-      "reason": "进入观察仓候选区，需同步验证毛利率、库存与收入条件"
-    },
-    {
-      "type": "price_below",
-      "price": 140,
-      "reason": "进入深度价值候选区，禁止机械补仓并重新研究基本面"
-    },
-    {
-      "type": "price_above",
-      "price": 230,
-      "reason": "进入减仓或不追价区，复核市场隐含的远期盈利假设"
-    },
-    {
-      "type": "price_above",
-      "price": 280,
-      "reason": "高于基准合理价值，除非基本面显著上修否则继续降低仓位"
-    }
-  ],
-  "updated_at": "2026-07-18"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

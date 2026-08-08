@@ -1,82 +1,115 @@
 {
-  "symbol": "CN:600449",
-  "ticker": "600449",
-  "name": "宁夏建材",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_thesis": "宁夏建材具备央企控股、区域水泥份额和净现金安全垫，但2025-2026Q1盈利仍受宁夏及西北水泥价格下行、需求疲弱和产能置换减值压力影响；当前价格约处公允区间中部偏上，安全边际不足，等待毛利率和现金流拐点确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "confidence": "中",
-  "fair_value_range": [
-    10.5,
-    14.0
-  ],
-  "buy_zone": [
-    8.8,
-    10.2
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宁夏建材",
+    "security_status": "active",
+    "symbol": "CN:600449",
+    "ticker": "600449"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "6385d1033673ded079ead606347a80d6c15cefcdaaf2ff32edf8de6fe1b430c0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于10.2元，且2026年中报显示基础建材毛利率环比改善、经营现金流转正时，可建立观察性仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看基础建材毛利率、经营现金流、数字物流减亏和现金余额。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于8.8元，且货币资金仍高于25亿元、无新增重大减值或治理风险时，可提高配置上限。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和旺季水泥价格表现，判断全年盈利是否有拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于14.5元但水泥价格、ROE和数字物流盈利未同步改善时，降低或不新增仓位。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报，重新估算正常化利润和PB中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入初步买入区，需复核水泥价格、毛利率和经营现金流是否改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "接近悲观情景资产底部，若现金安全垫仍在，可重新评估更高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "接近减持区，若基本面未显著改善则估值安全边际不足。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "超过乐观情景下沿，需严格复核盈利修复是否兑现。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入初步买入区，需复核水泥价格、毛利率和经营现金流是否改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "接近悲观情景资产底部，若现金安全垫仍在，可重新评估更高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "接近减持区，若基本面未显著改善则估值安全边际不足。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "超过乐观情景下沿，需严格复核盈利修复是否兑现。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看基础建材毛利率、经营现金流、数字物流减亏和现金余额。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和旺季水泥价格表现，判断全年盈利是否有拐点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报，重新估算正常化利润和PB中枢。"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

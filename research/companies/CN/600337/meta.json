@@ -1,81 +1,96 @@
 {
-  "symbol": "CN:600337",
-  "market": "CN",
-  "ticker": "600337",
-  "name": "ST美克",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST美克已从普通家居消费标的转为高风险债务重整/持续经营困境资产。2025年归母净亏损21.04亿元，2026Q1继续亏损2.12亿元，审计报告带持续经营重大不确定性段落，且存在逾期债务、控股股东担保逾期、诉讼、账户冻结和预重整不确定性。2026-07-20价格3.46元对应约49.7亿元市值和约12.7倍2026Q1 PB，明显高于资产折价和同行估值可支撑水平，当前应回避。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.35,
-    1.1
-  ],
-  "buy_zone": [
-    0.0,
-    0.6
-  ],
-  "sell_or_reduce_zone": [
-    1.2,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST美克",
+    "security_status": "active",
+    "symbol": "CN:600337",
+    "ticker": "600337"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "1372476f155bef00a332cf378b8dd6812b46386e810efdc68899368335b69110"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于1.20元或重整方案未明确保护普通股股东",
-      "action": "不买入，已有仓位降至零或仅保留观察性极小仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、净资产、现金流、债务逾期和天津子公司破产清算影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于0.60元且法院受理重整、债务削减方案清晰、控股股东担保责任封顶、未触发面值退市风险",
-      "action": "仅作为事件驱动观察仓，分批试错",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报经营现金流、预重整进展、担保责任和普通股稀释风险",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于0.35元且重整投资人方案明确保留普通股价值、经营现金流连续改善",
-      "action": "可提高至强吸引力观察仓，但仍按困境资产管理",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.2
+      },
+      "reason": "超过困境估值上沿，应减仓或回避追高",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.0
+      },
+      "reason": "接近面值退市风险区，必须复核连续收盘、重整进度和交易规则风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.6
+      },
+      "reason": "进入理论安全边际区，但只有在重整方案保护普通股且未触发退市风险时才可观察",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_above",
-      "price": 1.2,
-      "reason": "超过困境估值上沿，应减仓或回避追高"
-    },
-    {
-      "type": "price_below",
-      "price": 1.0,
-      "reason": "接近面值退市风险区，必须复核连续收盘、重整进度和交易规则风险"
-    },
-    {
-      "type": "price_below",
-      "price": 0.6,
-      "reason": "进入理论安全边际区，但只有在重整方案保护普通股且未触发退市风险时才可观察"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、净资产、现金流、债务逾期和天津子公司破产清算影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报经营现金流、预重整进展、担保责任和普通股稀释风险"
-    }
-  ],
-  "notes": [
-    "当前结论为avoid，第一笔仓位0%。",
-    "2026-07-20新浪实时行情显示价格3.46元，总市值按总股本粗算约49.7亿元。",
-    "估值主方法为清算/重整折价和相对PB校验，盈利法权重很低。",
-    "低价区间不等同于买入建议，跌破1元会引入面值退市风险。",
-    "清算和重整回收价值对法院、债权人、资产处置和潜在投资人方案高度敏感，置信度低于财务事实判断。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

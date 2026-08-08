@@ -1,107 +1,105 @@
 {
-  "symbol": "CN:300549",
-  "market": "CN",
-  "ticker": "300549",
-  "name": "优德精密",
-  "company_name": "优德精密工业（昆山）股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司具备精密模具零部件、自动化设备零部件和医疗/制药零部件制造能力，资产负债表稳健、经营现金流尚可；但2025年和2026Q1扣非利润显著走弱，当前股价隐含过高盈利修复预期，安全边际不足。",
-  "quality_rating": "中低",
-  "valuation_rating": "高估",
-  "fair_value_range": [
-    5.0,
-    7.0
-  ],
-  "buy_zone": [
-    4.2,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "优德精密",
+    "security_status": "active",
+    "symbol": "CN:300549",
+    "ticker": "300549"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "812a927e14554558320ab44878c8478485089e56066584a7468a47bb12b8e6c4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于9.0元，且扣非净利率仍低于3%",
-      "action": "不买；已有持仓则减仓",
-      "max_weight": 0.0,
-      "target_position": "0%"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、医疗/制药零部件收入和自动化设备零部件是否修复。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于5.0-7.0元，且订单和毛利率尚未恢复",
-      "action": "观察，不主动买入",
-      "max_weight": 0.01,
-      "target_position": "0%-1%"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入、毛利率和经营现金流是否连续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.0元，且最近两个季度经营现金流为正、毛利率稳定",
-      "action": "小仓试探",
-      "max_weight": 0.02,
-      "target_position": "1%-2%"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理价值区间和仓位上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.2元，且扣非净利率恢复到5%以上",
-      "action": "提高仓位",
-      "max_weight": 0.05,
-      "target_position": "3%-5%"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
       "reason": "低于估算合理价值区间下沿，且接近小仓观察买入区。",
-      "action": "进入买入复核"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 4.2,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
       "reason": "低于每股净资产附近并提供更充分安全边际。",
-      "action": "若基本面同步改善，评估提高仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 9.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
       "reason": "显著高于合理价值区间，若扣非利润未修复则估值风险较高。",
-      "action": "若基本面未明显改善，减仓或不参与"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、医疗/制药零部件收入和自动化设备零部件是否修复。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入、毛利率和经营现金流是否连续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理价值区间和仓位上限。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入是否重新站上9000万元并连续两个季度同比增长",
-    "扣非净利率是否恢复到5%以上",
-    "经营活动现金流净额是否持续为正",
-    "医疗/制药模具及医疗器械零部件收入占比是否提升到18%-20%",
-    "自动化设备零部件收入是否结束两位数下滑",
-    "前五大客户销售占比是否稳定在25%以内",
-    "研发投入是否转化为高毛利产品收入"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

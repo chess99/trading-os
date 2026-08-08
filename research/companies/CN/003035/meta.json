@@ -1,104 +1,105 @@
 {
-  "symbol": "CN:003035",
-  "market": "CN",
-  "ticker": "003035",
-  "name": "南网能源",
-  "company_name": "南方电网综合能源股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "南网能源具备南方电网体系资源、综合能源服务场景和融资优势，但当前仍是重资产能源运营与服务混合模式，2025年ROE仅5.11%，2026年一季度利润同比下降，当前约58倍PE和2.8倍PB已透支转型预期。等待资本开支下降、自由现金流转正、服务业务利润兑现后再上调评级。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [3.7, 4.6],
-  "buy_zone": [3.0, 3.6],
-  "sell_or_reduce_zone": [6.0, 999.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南网能源",
+    "security_status": "active",
+    "symbol": "CN:003035",
+    "ticker": "003035"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "161ffa39b86ea9188db1acd356033564a1dc38cd59dd400f3870604fb43c03cc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.6元，且最新报告显示扣非净利润未继续恶化、资本开支同比下降",
-      "action": "试买",
-      "target_position": "0.5-1.0单位",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格低于3.2元，且经营现金流保持正值、智慧能源毛利率未跌破45%",
-      "action": "加仓",
-      "target_position": "1.5-2.0单位",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于3.0元，且无重大减值、政策或信用风险新增",
-      "action": "提高上限",
-      "target_position": "最高2.5单位",
-      "max_weight": 0.025
-    },
-    {
-      "condition": "价格高于6.0元，且ROE仍低于8%或自由现金流仍为负",
-      "action": "减仓或不参与",
-      "target_position": "0-0.5单位",
-      "max_weight": 0.005
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入估算买入区上沿，具备初步安全边际",
-      "action": "进入试买观察"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "较合理价值中枢有明显折价，适合复核后加仓",
-      "action": "复核中报后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "价格显著高于合理价值区间，且当前ROE和自由现金流难以支撑",
-      "action": "若缺乏盈利加速证据则减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证收入增长是否转化为利润增长，并检查资本开支是否下降",
-      "action": "复核收入、利润、现金流、资本开支和智慧能源毛利率"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "确认2026年前三季度扣非利润、自由现金流和项目收益趋势",
-      "action": "复核扣非利润是否恢复增长、自由现金流是否改善"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计2026年年报及2027年一季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "完整复盘年度转型效果、ROE、分红和资产减值情况",
-      "action": "复核转型成效、ROE和估值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入估算买入区上沿，具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "较合理价值中枢有明显折价，适合复核后加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "价格显著高于合理价值区间，且当前ROE和自由现金流难以支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "ROE",
-    "经营现金流净额",
-    "购建固定资产、无形资产和其他长期资产支付的现金",
-    "自由现金流",
-    "智慧能源项目毛利率",
-    "节能降碳项目收入和毛利率",
-    "新增服务业务合同额及外部合同额",
-    "南方电网关联销售占比",
-    "资产减值损失"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

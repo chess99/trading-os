@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:920116",
-  "market": "CN",
-  "ticker": "920116",
-  "name": "星图测控",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "星图测控是A股稀缺的太空管理、航天测控和航天数字仿真标的，商业航天占比提升带来长期弹性；但当前估值已反映较乐观预期，且2026-07-14军采资格暂停事项压制特种航天订单和估值溢价，需等待价格回落或订单/现金流验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    32,
-    42
-  ],
-  "buy_zone": [
-    26,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    65
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "星图测控",
+    "security_status": "active",
+    "symbol": "CN:920116",
+    "ticker": "920116"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "fdf5c257787b3a210a62d155a002a789a2fac0f4d050e91256a4069f1bdc5031"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于32元，且军采资格暂停事项有明确缓释进展，2026年收入增速恢复至25%以上",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看商业航天收入、扣非利润和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于28元，且扣非利润率维持20%以上、经营现金流明显改善",
-      "action": "提高至核心小仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及四季度订单/验收节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于55元但订单和现金流未超预期",
-      "action": "不新增并考虑减仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、军采事项进展和站网建设回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入合理价值区间下沿，可重新评估安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入深度买入区，若基本面未恶化则具备较好赔率",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "接近牛市情景估值下沿，需要验证订单和现金流是否支撑高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入合理价值区间下沿，可重新评估安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入深度买入区，若基本面未恶化则具备较好赔率"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "接近牛市情景估值下沿，需要验证订单和现金流是否支撑高估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看商业航天收入、扣非利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及四季度订单/验收节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、军采事项进展和站网建设回报"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

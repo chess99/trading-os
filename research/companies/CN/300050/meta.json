@@ -1,127 +1,142 @@
 {
-  "symbol": "CN:300050",
-  "market": "CN",
-  "ticker": "300050",
-  "name": "世纪鼎利",
-  "company_name": "珠海世纪鼎利科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处在扭亏修复期，资产负债表短期压力不大，但收入仍小、利润质量需要连续验证。写作日可见股价约5.38-5.39元，对应市值约29亿元，明显高于收入、扣非利润、净资产和现金流可支撑的价值区间；除非价格大幅回落或扣非利润持续跃迁，否则不适合基本面买入。",
-  "quality_rating": "低到中",
-  "valuation_rating": "显著高估",
-  "fair_value_range": [
-    1.4,
-    2.2
-  ],
-  "buy_zone": [
-    1.1,
-    1.4
-  ],
-  "sell_or_reduce_zone": [
-    3.2,
-    5.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "世纪鼎利",
+    "security_status": "active",
+    "symbol": "CN:300050",
+    "ticker": "300050"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "bd2b1604a977d1ca4bc9c03484e0646d6f7ab7d9db62b86630163c8a14a883c8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于3.20元且扣非净利没有连续两个季度明显改善",
-      "action": "不买或回避",
-      "max_weight": 0.001
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报收入、扣非净利和经营现金流是否改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在2.20-3.20元之间且收入恢复但经营现金流尚未稳定",
-      "action": "只跟踪，不建仓",
-      "max_weight": 0.001
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报经营改善是否兑现，重点看连续季度扣非净利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在1.40-2.20元之间，且扣非净利和经营现金流连续改善",
-      "action": "观察性建仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，确认年度经营现金流和应收账款账龄变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.40元，且无退市、控制权、重大诉讼或应收坏账恶化风险",
-      "action": "小仓买入",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "复查通信及物联网收入是否恢复到年化2亿元以上",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.10元，且年度自由现金流转正、职业教育或通信业务至少一项恢复增长",
-      "action": "提高配置",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-10-31"
+      },
+      "reason": "复查芯片业务单季收入和可持续客户证据",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
+      "reason": "复查是否发生控制权、重大并购、重大诉讼或退市风险提示",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
+      "reason": "价格进入合理价值区间上沿附近，需复核基本面是否支持观察",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.4
+      },
+      "reason": "价格低于可买区间上限，安全边际开始出现",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.2
+      },
+      "reason": "价格显著高于合理价值区间，需警惕估值回落",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "价格远高于基本面可支撑范围，主题交易风险较高",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.2,
-      "action": "进入重点跟踪区，重新核验最近两个季度收入、扣非净利和现金流",
-      "reason": "价格进入合理价值区间上沿附近，需复核基本面是否支持观察"
-    },
-    {
-      "type": "price_below",
-      "price": 1.4,
-      "action": "若基本面未恶化，可考虑小仓买入",
-      "reason": "价格低于可买区间上限，安全边际开始出现"
-    },
-    {
-      "type": "price_above",
-      "price": 3.2,
-      "action": "若业绩没有跃迁，维持不买或减仓",
-      "reason": "价格显著高于合理价值区间，需警惕估值回落"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "action": "估值主要依赖主题预期，基本面资金回避",
-      "reason": "价格远高于基本面可支撑范围，主题交易风险较高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报收入、扣非净利和经营现金流是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报经营改善是否兑现，重点看连续季度扣非净利润"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，确认年度经营现金流和应收账款账龄变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "reason": "复查通信及物联网收入是否恢复到年化2亿元以上"
-    },
-    {
-      "type": "date",
-      "date": "2027-10-31",
-      "reason": "复查芯片业务单季收入和可持续客户证据"
-    },
-    {
-      "type": "date",
-      "date": "2028-04-30",
-      "reason": "复查是否发生控制权、重大并购、重大诉讼或退市风险提示"
-    }
-  ],
-  "key_tracking_metrics": [
-    "通信及物联网收入及软件开发/技术服务收入增速",
-    "职业教育收入、毛利率和回款质量",
-    "芯片业务收入、毛利率、客户复购和库存风险",
-    "扣非净利润及扣非净利率",
-    "经营现金流净额/净利润",
-    "应收账款余额、账龄和坏账准备",
-    "研发投入占收入比例及研发人员变化",
-    "前五大客户销售占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

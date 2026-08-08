@@ -1,77 +1,86 @@
 {
-  "symbol": "CN:600683",
-  "ticker": "600683",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "京投发展",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "北京国资 TOD 轨道物业资源具备稀缺性，控股股东融资与项目支持真实存在；但公司连续亏损、高杠杆、永续债分流和跨界收购不确定性使普通股安全边际不足，当前应观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.0,
-    7.2
-  ],
-  "buy_zone": [
-    0.0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    10.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "京投发展",
+    "security_status": "active",
+    "symbol": "CN:600683",
+    "ticker": "600683"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "329e112cff91c14cb6d17bddb1cc815b3eee21f547f858b1c7ff09aadf75137e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.8元，且2026年经营现金流预期仍为正、H2销售金额未继续恶化时，允许试探性观察仓。",
-      "action": "start_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、毛利率、普通股亏损、经营现金流和西安奇芯收购进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "半年报或三季报显示项目毛利率修复、普通股亏损明显收窄、经营现金流持续为正，可提高但仍控制单票风险。",
-      "action": "increase_after_validation",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报销售结转、现金流、融资成本和全年盈利/现金流兑现度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.2元且无盈利拐点或西安奇芯交易高质量尽调支撑，降低或不建立仓位。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入安全边际区，约对应1.4倍2026Q1 P/B，可复核销售、现金流和收购进展后决定是否小仓位跟踪。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "超过基本面合理区上沿，若缺乏利润拐点，主要反映主题溢价，应回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入安全边际区，约对应1.4倍2026Q1 P/B，可复核销售、现金流和收购进展后决定是否小仓位跟踪。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "超过基本面合理区上沿，若缺乏利润拐点，主要反映主题溢价，应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、毛利率、普通股亏损、经营现金流和西安奇芯收购进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报销售结转、现金流、融资成本和全年盈利/现金流兑现度。"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "2026年H2签约销售金额与销售均价",
-    "房地产开发项目毛利率",
-    "经营活动现金流量净额",
-    "有息债务余额和平均融资成本",
-    "永续融资产品利息对普通股利润的影响",
-    "西安奇芯光电收购比例、估值、尽调和审批进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

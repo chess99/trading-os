@@ -1,95 +1,96 @@
 {
-  "symbol": "CN:000668",
-  "market": "CN",
-  "ticker": "000668",
-  "name": "荣丰控股",
-  "company_name": "荣丰控股",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "荣丰控股已撤销退市风险警示，但主营仍依赖房地产存量资产去化和资产处置，2026Q1收入下滑且亏损，当前价格明显高于保守净资产价值，主要反映壳溢价和重组预期，缺乏买入安全边际。",
-  "quality_rating": "weak",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    5.5,
-    8.5
-  ],
-  "buy_zone": [
-    4.5,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "荣丰控股",
+    "security_status": "active",
+    "symbol": "CN:000668",
+    "ticker": "000668"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "92b67a345a85825123f34c8acef6b6e37176669a6629d16f8e27fc965c31656d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于10元且缺乏确定资产注入或现金流拐点证据",
-      "action": "不买入，维持0%仓位",
-      "max_weight": 0,
-      "reason": "当前估值主要反映壳溢价，基本面安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报现金流、债务、存货和退市风险",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至6元以下，且最近一期经营现金流为正、无新增退市风险警示事项",
-      "action": "可建立研究仓",
-      "max_weight": 0.005,
-      "reason": "价格接近保守净资产价值，可用小仓位验证存货去化和现金流改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报收入、利润和经营现金流持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至4.5元以下，且净资产未较2025年末下降超过20%",
-      "action": "可提高至小仓位上限",
-      "max_weight": 0.01,
-      "reason": "价格低于保守估值下沿后，风险收益开始具备观察价值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入买入观察区，需要复核现金流、存货减值和退市风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入深度折价区，需要复核是否具备小仓位价值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "高于减持/回避区下沿，壳溢价过高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入买入观察区，需要复核现金流、存货减值和退市风险"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入深度折价区，需要复核是否具备小仓位价值"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "高于减持/回避区下沿，壳溢价过高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报现金流、债务、存货和退市风险"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报收入、利润和经营现金流持续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入",
-    "归母净利润",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "货币资金",
-    "存货余额与存货跌价准备",
-    "有息负债与短期债务",
-    "受限资产、担保和诉讼",
-    "审计意见和监管措施",
-    "控股股东质押、冻结或控制权变化",
-    "重大资产出售或重组公告",
-    "PB倍数"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

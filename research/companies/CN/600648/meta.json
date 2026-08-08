@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:600648",
-  "ticker": "600648",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "外高桥",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "外高桥是上海自贸试验区保税片区核心园区运营平台，资产折价和股息提供一定底部支撑；但2025年利润高度依赖持有型不动产ABS等一次性收益，2026Q1扣非利润仍弱，当前价格位于合理价值区间中部，需等待核心利润和出租率修复验证。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    7.8,
-    9.8
-  ],
-  "buy_zone": [
-    6.5,
-    7.3
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    11.7
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "外高桥",
+    "security_status": "active",
+    "symbol": "CN:600648",
+    "ticker": "600648"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "2314bb9e698849a3fdbcb351ad01c21028b62316a889e7351b080b437c4a54f7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于7.3元且2026H1出租率不低于80%、负债率未明显恶化时，可建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点验证扣非利润、出租率、租赁收入和有息负债变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于7.3元至8.6元且2026H1扣非归母净利润环比改善时，可维持小仓跟踪。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断ABS后经营性利润是否企稳。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于10.5元且扣非利润或出租率未同步改善时，应降低或不新增仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和年度分红，更新资产折价、股息和核心ROE假设。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.3
+      },
+      "reason": "进入基于2026Q1每股净资产约0.62倍PB的买入观察区，资产安全边际改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过基准合理价值区间上沿，若经营数据未改善则估值进入偏乐观状态。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.3,
-      "reason": "进入基于2026Q1每股净资产约0.62倍PB的买入观察区，资产安全边际改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过基准合理价值区间上沿，若经营数据未改善则估值进入偏乐观状态。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点验证扣非利润、出租率、租赁收入和有息负债变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断ABS后经营性利润是否企稳。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和年度分红，更新资产折价、股息和核心ROE假设。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

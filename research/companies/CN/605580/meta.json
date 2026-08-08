@@ -1,103 +1,105 @@
 {
-  "symbol": "CN:605580",
-  "market": "CN",
-  "ticker": "605580",
-  "name": "恒盛能源",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "恒盛能源主业为区域热电联产，现金流和ROE较好，具备园区管网和环保准入壁垒；但截至2026-07-17股价约16.92元，对应约29倍TTM PE，已明显高于传统热电资产的稳态估值。新材料业务仍缺少收入、订单和利润的充分核验，当前应观察而非追高，等待价格回到安全边际区或新业务兑现。",
-  "fair_value_range": [
-    12.0,
-    15.5
-  ],
-  "buy_zone": [
-    10.5,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    22.0
-  ],
-  "position_plan": [
-    {
-      "condition": "股价进入10.5-12.0元且最近季度扣非净利润不低于3500万元、经营现金流未显著弱于净利润时，可建立观察仓。",
-      "action": "starter_position",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "新材料业务在定期报告中披露可核验收入、订单和毛利，同时主业煤价压力可控，可提高仓位。",
-      "action": "add_after_validation",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于17.5元且无新材料利润兑现，或煤价上行导致季度毛利率明显下滑，应回避或降低仓位。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入安全边际买入区，需要复核煤价、季度现金流和热电主业利润稳定性。"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "超过基准合理价值上沿，若新材料业务未兑现，估值风险上升。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "需要强乐观情景支撑，若无正式订单和利润贡献，应视为显著高估。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认蒸汽销量、煤价成本、经营现金流和新材料业务披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1高利润是否具备全年可持续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红方案，重估稳态盈利与安全边际。"
-    }
-  ],
-  "valuation": {
-    "as_of": "2026-07-17",
-    "reference_price": 16.92,
-    "reference_price_source": "中财网行情页，2026-07-17 15:00；非公司公告，置信度中",
-    "base_case_value_per_share": [
-      12.0,
-      15.5
-    ],
-    "bear_case_value_per_share": [
-      6.3,
-      9.0
-    ],
-    "bull_case_value_per_share": [
-      19.0,
-      22.0
-    ]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恒盛能源",
+    "security_status": "active",
+    "symbol": "CN:605580",
+    "ticker": "605580"
   },
-  "key_monitoring_items": [
-    "季度蒸汽销量、供热均价、上网电量和电价",
-    "煤炭采购均价、单位燃料成本和毛利率",
-    "经营现金流与净利润匹配度",
-    "CVD金刚石、石墨烯等新材料业务的收入、订单、毛利、客户认证和产能利用率",
-    "资本开支、有息负债和分红率"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "9776f1124dc023f1fd16950ae3b205d9d9faa5acc10d1f6b28a251cc37eb10de"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认蒸汽销量、煤价成本、经营现金流和新材料业务披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1高利润是否具备全年可持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红方案，重估稳态盈利与安全边际。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入安全边际买入区，需要复核煤价、季度现金流和热电主业利润稳定性。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "超过基准合理价值上沿，若新材料业务未兑现，估值风险上升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "需要强乐观情景支撑，若无正式订单和利润贡献，应视为显著高估。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

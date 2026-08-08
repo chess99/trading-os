@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:688500",
-  "market": "CN",
-  "ticker": "688500",
-  "name": "慧辰股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "慧辰股份具备数据分析、AI应用和行业数字化方案的业务基础，2025年收入恢复增长且经营现金流转正；但公司仍处连续亏损状态，毛利率承压，历史信披违法记录严重，且2026-07-16实控人兼董事长总经理被刑事拘留，当前估值对治理修复和盈利反转定价过高，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    11,
-    17
-  ],
-  "buy_zone": [
-    8,
-    12
-  ],
-  "sell_or_reduce_zone": [
-    22,
-    28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "慧辰股份",
+    "security_status": "active",
+    "symbol": "CN:688500",
+    "ticker": "688500"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "49c49994d3320b2909da329996c7e0e145070d7b2f8b7cfa417cbd71aa0b184d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "在实控人刑事强制措施、历史信披违法后续影响、2026年扣非盈利路径均未出清前不建仓。",
-      "action": "avoid_new_position",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、扣非亏损、经营现金流和AI/算力业务收入质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若治理事件明确出清、连续两个季度经营现金流为正且扣非亏损显著收窄，同时股价低于12元。",
-      "action": "reopen_research_for_small_watch_position",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入买入区间上沿后，可重新核验治理出清和扣非亏损收窄是否成立。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及实控人刑事强制措施后续公告，判断治理风险是否出清。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 22,
-      "reason": "高于卖出/减仓区间下沿，估值再次脱离基本面和治理风险，需回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、扣非亏损、经营现金流和AI/算力业务收入质量。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入买入区间上沿后，可重新核验治理出清和扣非亏损收窄是否成立。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及实控人刑事强制措施后续公告，判断治理风险是否出清。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "高于卖出/减仓区间下沿，估值再次脱离基本面和治理风险，需回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

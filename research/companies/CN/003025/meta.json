@@ -1,127 +1,132 @@
 {
-  "symbol": "CN:003025",
-  "market": "CN",
-  "ticker": "003025",
-  "name": "思进智能",
-  "company_name": "思进智能成形装备股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "细分冷成形装备龙头，现金流和资产负债表质量较好，高工位、温热镦、军工和海外业务提供增长期权；但行业仍有周期性，2026Q1 利润和现金流偏弱，当前约 12.05 元处于合理价值区间中上部，安全边际不足。",
-  "quality_rating": "中高",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    10.0,
-    13.0
-  ],
-  "buy_zone": [
-    0.0,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "思进智能",
+    "security_status": "active",
+    "symbol": "CN:003025",
+    "ticker": "003025"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8f9bf2174257902d5b2aa86ccc044ba7c0d408fe7d622da01dec58daca7e3926"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 9.0 元且合同负债、毛利率、现金流没有明显恶化",
-      "max_weight": 0.06,
-      "action": "加至 5%-6% 组合仓位"
-    },
-    {
-      "condition": "价格在 9.0-10.0 元且 2026 年收入和扣非利润仍保持正增长",
-      "max_weight": 0.04,
-      "action": "分批建立 3%-4% 仓位"
-    },
-    {
-      "condition": "价格在 10.0-12.0 元且温热镦或高工位装备交付尚未显著放量",
-      "max_weight": 0.02,
-      "action": "仅保留 0%-2% 观察仓"
-    },
-    {
-      "condition": "价格高于 14.5 元但未来两年利润预期未上修",
-      "max_weight": 0.0,
-      "action": "减仓或不追买"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "低于合理价值区间下沿，具备初步安全边际",
-      "action": "进入可买区，复核订单和现金流后分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "相对保守 DCF 和 PB 估值均有折价",
-      "action": "进入高安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "超过基准 PE 估值上沿，需业绩上修支撑",
-      "action": "估值进入减仓区，除非业绩预测显著上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报披露后可验证 Q1 增速放缓是否延续",
-      "condition": "发布 2026 年半年报或年度报告",
-      "action": "更新盈利预测和估值区间"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "合同负债是订单景气的前瞻指标",
-      "condition": "合同负债连续两个季度低于 5000 万元",
-      "action": "下调订单景气假设"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "毛利率反映高工位产品占比、竞争和成本传导",
-      "condition": "冷成形设备毛利率低于 35%",
-      "action": "复核竞争格局和成本传导能力"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "现金流偏弱会削弱高质量盈利判断",
-      "condition": "经营现金流连续两个报告期显著低于净利润",
-      "action": "复核收入质量和营运资本压力"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "新品批量交付是估值上修的核心证据",
-      "condition": "温热镦、军工或高工位装备出现批量订单或重大交付",
-      "action": "上修成长性假设"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "存货减值扩大可能意味着需求或售价恶化",
-      "condition": "存货跌价准备明显扩大",
-      "action": "下调安全边际和仓位上限"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "低于合理价值区间下沿，具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "相对保守 DCF 和 PB 估值均有折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "超过基准 PE 估值上沿，需业绩上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "合同负债和在手订单",
-    "冷成形设备收入和毛利率",
-    "五工位及以上杆类冷成形装备销量",
-    "温热镦装备试运行、验收和收入确认进度",
-    "境外收入占比和境外毛利率",
-    "经营现金流/净利润",
-    "存货金额、周转和跌价准备"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

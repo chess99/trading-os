@@ -1,69 +1,95 @@
 {
-  "symbol": "CN:603222",
-  "market": "CN",
-  "ticker": "603222",
-  "name": "济民健康",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "济民健康拥有医疗服务、大输液和安全注射器三块真实资产，但截至2026-07-17仍处于收入下滑、连续亏损和审计持续经营不确定性压力之下；当前约4倍PB、约7倍2025年收入倍数缺乏安全边际，只有在股价大幅回落且经营现金流与毛利率连续修复后才值得重新评估。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "decision": "不买",
-  "confidence": "中",
-  "fair_value_range": [
-    2.8,
-    4.2
-  ],
-  "buy_zone": [
-    2.2,
-    3.0
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    9.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "济民健康",
+    "security_status": "active",
+    "symbol": "CN:603222",
+    "ticker": "603222"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "8e7d4e11b9bc01932d68b48020f4a783b874718fdd77cffbb77bd3aec6115f7e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间且公司仍未证明盈利拐点，不建立仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后复核亏损是否落在预告区间、现金流和分业务毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价进入3.0元以下且中报或三季报显示经营现金流连续为正、制造端毛利率修复，再重新评估小仓观察",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复核收入是否恢复增长及经营现金流是否连续转正",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报后复核审计意见、资产减值和持续经营不确定性是否改善",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入买入观察区，需要复核经营现金流、毛利率和亏损收窄质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "显著高于基准合理价值区间，在亏损未扭转前应维持回避或减仓判断",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入买入观察区，需要复核经营现金流、毛利率和亏损收窄质量"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "显著高于基准合理价值区间，在亏损未扭转前应维持回避或减仓判断"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露后复核亏损是否落在预告区间、现金流和分业务毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复核收入是否恢复增长及经营现金流是否连续转正"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报后复核审计意见、资产减值和持续经营不确定性是否改善"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

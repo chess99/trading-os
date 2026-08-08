@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:300397",
-  "ticker": "300397",
-  "name": "天和防务",
-  "company_name": "西安天和防务技术股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "天和防务处在低空安全、军工电子和通信电子交叉赛道，2026Q1收入与利润改善，但2025仍大幅亏损，单季改善尚不能证明盈利反转。当前约14元以上价格已接近牛市情景，缺乏安全边际，适合观察而非买入。",
-  "fair_value_range": [
-    8.0,
-    11.0
-  ],
-  "buy_zone": [
-    0.0,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天和防务",
+    "security_status": "active",
+    "symbol": "CN:300397",
+    "ticker": "300397"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "de140c267a274820ab781f55a731db553814cfb6ba1865a786b21bf84102cee9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌至8.0元以下，且2026H1扣非净利润为正、经营现金流为正、应收和存货未异常扩张",
-      "action": "watch_to_trial",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、扣非利润、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于8.0-11.0元且半年报尚未验证订单和现金流",
-      "action": "wait",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1改善是否具备连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于14.0元且无重大订单或盈利连续性证据",
-      "action": "do_not_buy_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与再融资进展，更新估值和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入有安全边际的观察买入区，可结合半年报验证小仓位试错",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "价格接近牛市情景估值，无新增业绩证据时风险收益比转差",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入有安全边际的观察买入区，可结合半年报验证小仓位试错"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "价格接近牛市情景估值，无新增业绩证据时风险收益比转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、扣非利润、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1改善是否具备连续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与再融资进展，更新估值和仓位上限"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

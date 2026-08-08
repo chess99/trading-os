@@ -1,103 +1,106 @@
 {
-  "symbol": "CN:002164",
-  "market": "CN",
-  "ticker": "002164",
-  "name": "宁波东力",
-  "company_name": "宁波东力",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "宁波东力具备齿轮箱和工业传动设备制造基础，但 2025 年利润受司法执行款显著抬升，扣非盈利规模不足以支撑当前约 60 亿元市值；当前不买，等待股价回到 6 元以内或连续季度扣非利润、毛利率、现金流同步改善。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    5.5,
-    7.5
-  ],
-  "buy_zone": [
-    4.8,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宁波东力",
+    "security_status": "active",
+    "symbol": "CN:002164",
+    "ticker": "002164"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "9ab6c9371c3e168d6e5d9d2a767d169967f89c86d0b6adc78ba866c94aeeab19"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 8 元且未看到连续两个季度扣非利润和经营现金流同步改善",
-      "action": "不建仓，仅观察",
-      "max_weight": 0,
-      "reason": "当前估值显著高于扣非盈利可支撑区间，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入、毛利率、扣非净利、现金流和订单质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入 6 元以内，且最新季度毛利率不低于 22%、扣非净利同比改善",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理价值区间下半部分，但仍需验证制造周期和利润质量"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年扣非盈利是否可上修",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入 5 元以内，且订单、毛利率、经营现金流同时改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.03,
-      "reason": "安全边际较足，可以承担中小制造企业周期波动"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入合理价值区间下半部分，重新评估是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于 10 元且无扣非盈利上修证据",
-      "action": "回避或减仓",
-      "max_weight": 0,
-      "reason": "市场支付主题溢价，风险收益比不合格"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "若基本面未恶化，具备小仓位研究买入的安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "高于基准合理价值，若已有仓位应复核减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "超过乐观情景估值上沿附近，需要强盈利兑现才能支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入合理价值区间下半部分，重新评估是否建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "若基本面未恶化，具备小仓位研究买入的安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "高于基准合理价值，若已有仓位应复核减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "超过乐观情景估值上沿附近，需要强盈利兑现才能支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入、毛利率、扣非净利、现金流和订单质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年扣非盈利是否可上修"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比增速",
-    "传动设备订单和重大合同",
-    "毛利率是否稳定在 22% 以上",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款和存货周转",
-    "非经常性损益占净利润比例",
-    "冶金、风电、工程机械下游需求",
-    "并购、诉讼、商誉和治理风险事件"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

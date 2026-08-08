@@ -1,161 +1,133 @@
 {
-  "symbol": "CN:002461",
-  "market": "CN",
-  "ticker": "002461",
-  "name": "珠江啤酒",
-  "company_name": "广州珠江啤酒股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华南区域龙头，品牌和渠道壁垒清晰，2025年收入58.78亿元、归母净利润9.04亿元，2026H1预告归母净利润同比增长5%-15%。资产负债表净现金厚、经营现金流质量好，但行业总量低增长，华南收入占比超过95%，全国化和高端化后续斜率仍需验证。当前7.79元处于合理价值下沿附近，缺乏足够安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏低估",
-  "fair_value_range": [
-    7.6,
-    9.0
-  ],
-  "buy_zone": [
-    6.2,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    9.2,
-    10.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "珠江啤酒",
+    "security_status": "active",
+    "symbol": "CN:002461",
+    "ticker": "002461"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "bd3bdbd88f858dbb465d5e6c1889386a8fe117a902406615efa692034ff4a316"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价<=6.20元",
-      "max_weight": 0.08,
-      "target_position_pct": "6-8",
-      "action": "强吸引力买入，分两笔完成"
-    },
-    {
-      "condition": "股价6.20-6.80元",
-      "max_weight": 0.05,
-      "target_position_pct": "3-5",
-      "action": "有安全边际，首笔买入"
-    },
-    {
-      "condition": "股价6.80-7.60元",
-      "max_weight": 0.03,
-      "target_position_pct": "0-3",
-      "action": "仅观察仓，需确认销量和吨价"
-    },
-    {
-      "condition": "股价7.60-9.20元",
-      "max_weight": 0,
-      "target_position_pct": "0新增",
-      "action": "观察为主"
-    },
-    {
-      "condition": "股价>=10.00元",
-      "max_weight": 0.03,
-      "target_position_pct": "0-3",
-      "action": "无基本面上修则减仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "股价<=6.80元",
-      "price": 6.8,
-      "reason": "较合理价值中枢约有20%折价",
-      "action": "进入有安全边际买入区"
-    },
-    {
-      "type": "price_below",
-      "condition": "股价<=6.20元",
-      "price": 6.2,
-      "reason": "对应约14倍2026E PE，安全边际较充分",
-      "action": "进入强吸引力买入区"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价>=9.20元",
-      "price": 9.2,
-      "reason": "已高于合理区间上沿，需更强增长证据",
-      "action": "不追高"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价>=10.00元",
-      "price": 10.0,
-      "reason": "若基本面未上修，风险收益转弱",
-      "action": "无基本面上修则减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证旺季前半段销量、吨价和高档化质量",
-      "action": "复核销量、吨价、高档产品收入占比和华南外收入变化"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026Q3旺季后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能验证旺季完整经营质量和全年利润趋势",
-      "action": "复核收入增速是否高于行业、毛利率是否稳定在49%-51%"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "连续两个报告期高档产品收入同比转负",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "高档化是核心增长来源，转弱将削弱估值中枢",
-      "action": "重新评估买入价和质量评级"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "经营现金流/归母净利润连续两年低于0.8",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "现金流恶化会降低利润质量和分红能力",
-      "action": "重新评估财务质量"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "大额资本开支、现金管理或关联交易削弱净现金安全垫",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "净现金是安全边际的重要组成部分",
-      "action": "重新估值"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "较合理价值中枢约有20%折价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "对应约14倍2026E PE，安全边际较充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.2
+      },
+      "reason": "已高于合理区间上沿，需更强增长证据",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "若基本面未上修，风险收益转弱",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    {
-      "metric": "啤酒销量增速",
-      "target": "连续两期高于行业"
-    },
-    {
-      "metric": "高档产品收入增速",
-      "target": ">=8%较好，转负需警惕"
-    },
-    {
-      "metric": "华南以外收入占比",
-      "target": "提升到7%以上"
-    },
-    {
-      "metric": "毛利率",
-      "target": "稳定在49%-51%"
-    },
-    {
-      "metric": "经营现金流/归母净利润",
-      "target": ">=1.0"
-    },
-    {
-      "metric": "分红率",
-      "target": "稳定45%-55%或提高"
-    },
-    {
-      "metric": "净现金/市值",
-      "target": "保持25%以上"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

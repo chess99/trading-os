@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603707",
-  "market": "CN",
-  "ticker": "603707",
-  "name": "健友股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "健友股份已从肝素原料药周期股转向国际化无菌注射剂平台，制剂和非肝素制剂增长具备长期价值；但2025年以来利润率和扣非利润承压，当前价格接近合理价值下沿但安全边际不足，需等待毛利率、扣非净利率和海外制剂放量连续验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.2,
-    10.8
-  ],
-  "buy_zone": [
-    0,
-    7
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "健友股份",
+    "security_status": "active",
+    "symbol": "CN:603707",
+    "ticker": "603707"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "597a17ca7d243effba78829247488406b41e39c11c21c4c50ce80e627036d976"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于7.00元且无FDA重大合规负面事件，可建立观察仓",
-      "action": "buy_watch_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认毛利率、扣非净利率、制剂收入和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度毛利率回到36%以上且扣非净利率回到12%以上，可提高到核心观察仓",
-      "action": "add_on_profitability_recovery",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润率修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于11.50元但利润率未同步修复，或出现FDA警告信/核心品种价格恶化",
-      "action": "reduce_or_exit",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估海外制剂平台和合理估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入买入区，需复核最新季度毛利率、扣非净利率和FDA合规状态",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "超过减持观察区，若盈利修复不足则估值安全边际下降",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7,
-      "reason": "进入买入区，需复核最新季度毛利率、扣非净利率和FDA合规状态"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "超过减持观察区，若盈利修复不足则估值安全边际下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认毛利率、扣非净利率、制剂收入和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润率修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估海外制剂平台和合理估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

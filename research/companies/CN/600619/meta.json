@@ -1,119 +1,95 @@
 {
-  "symbol": "CN:600619",
-  "ticker": "600619",
-  "name": "海立股份",
-  "company_name": "上海海立（集团）股份有限公司",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "industry": "家电零部件与汽车热管理",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "海立股份处在冷暖核心零部件稳固份额、汽车热管理减亏提利的修复阶段；2026H1 预增强化盈利拐点，但当前估值已反映较多修复预期，需等待半年报验证毛利率、汽零利润和现金流质量。",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.5,
-    13.5
-  ],
-  "buy_zone": [
-    8.8,
-    10.2
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    18.5
-  ],
-  "rating": {
-    "current_rating": "watch",
-    "updated_at": "2026-07-17",
-    "rationale": "经营修复可信度提升，但以 2026E 归母净利润估算当前市值对应估值偏满，安全边际不足。"
-  },
-  "valuation": {
+  "identity": {
     "currency": "CNY",
-    "fair_value_range": [
-      10.5,
-      13.5
-    ],
-    "buy_zone": [
-      8.8,
-      10.2
-    ],
-    "sell_or_reduce_zone": [
-      16.0,
-      18.5
-    ],
-    "method": "相对估值、简化绝对估值、情景估值交叉验证"
+    "market": "CN",
+    "name": "海立股份",
+    "security_status": "active",
+    "symbol": "CN:600619",
+    "ticker": "600619"
   },
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "5c1b5ef5878bfd090c14945f0b504c7984a77b06249a3897f7ba4482ab4a4533"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在 2026 半年报确认扣非利润、毛利率和经营现金流同步改善，且股价低于 10.2 元时分批建立观察仓。",
-      "action": "buy_basket",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查毛利率、汽零利润、经营现金流和应收存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价位于 10.2-13.5 元之间，等待半年报和三季报验证，不主动加仓。",
-      "action": "hold_watch",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断 H1 业绩修复是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于 16.0 元且 2026E 归母净利润未上修至 4.5 亿元以上，降低或不新增仓位。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和 2027 年一季报，更新完整周期盈利中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入买入区上沿，重新评估半年报验证后的风险收益比。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "进入减仓/不追区，除非盈利预测显著上修，否则估值安全边际不足。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入买入区上沿，重新评估半年报验证后的风险收益比。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "进入减仓/不追区，除非盈利预测显著上修，否则估值安全边际不足。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查毛利率、汽零利润、经营现金流和应收存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断 H1 业绩修复是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和 2027 年一季报，更新完整周期盈利中枢。"
-    }
-  ],
-  "sources": [
-    {
-      "name": "海立股份2025年年度报告",
-      "url": "https://www.highly.cc/column/83/",
-      "date": "2026-04-08"
-    },
-    {
-      "name": "海立股份2026年第一季度报告",
-      "url": "https://www.highly.cc/column/83/",
-      "date": "2026-04-30"
-    },
-    {
-      "name": "海立股份2026年半年度业绩预增公告转载",
-      "url": "https://www.stcn.com/article/detail/4018072.html",
-      "date": "2026-07-14"
-    },
-    {
-      "name": "海立集团官网关于海立",
-      "url": "https://www.highly.cc/About.html",
-      "date": "2026-07-17"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

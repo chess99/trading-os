@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:605378",
-  "market": "CN",
-  "ticker": "605378",
-  "name": "野马电池",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "野马电池是成熟锌锰电池出口制造商，收入和现金流具备一定韧性，但2025年以来毛利率和净利润明显下行，2026年上半年预计亏损，出口退税下调并取消后的利润修复尚未验证。当前价格缺少安全边际，适合观察，不适合追买。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.5,
-    11.0
-  ],
-  "buy_zone": [
-    7.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "野马电池",
+    "security_status": "active",
+    "symbol": "CN:605378",
+    "ticker": "605378"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "9fb5d6fef0fcb25823fd27d960aae6294a8b48ffeb653c9658c24e1d6dce86ac"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价低于8.5元且出口退税取消后的毛利率回到15%以上、经营现金流连续两个季度为正时建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "预计2026年中报披露窗口，复核半年度亏损、退税冲击、毛利率和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若2027年正常化归母净利润恢复至0.9亿元以上、净利率稳定在6%以上且估值低于20倍正常化利润，可提高配置。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "预计2026年三季报披露窗口，判断退税取消后一个完整季度的盈利修复情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026年中报或三季报继续亏损且提价无法落地，不建仓；已有仓位应降至零。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "预计2026年年报披露窗口，重估正常化利润中枢和长期安全边际。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入估算合理价值下沿且接近安全买入区，需要结合毛利率和现金流复核是否可试探建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "高于基准合理价值区间上沿，若盈利修复未验证，应避免追买或考虑减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入估算合理价值下沿且接近安全买入区，需要结合毛利率和现金流复核是否可试探建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "高于基准合理价值区间上沿，若盈利修复未验证，应避免追买或考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "预计2026年中报披露窗口，复核半年度亏损、退税冲击、毛利率和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "预计2026年三季报披露窗口，判断退税取消后一个完整季度的盈利修复情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "预计2026年年报披露窗口，重估正常化利润中枢和长期安全边际。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

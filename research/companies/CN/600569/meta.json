@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:600569",
-  "ticker": "600569",
-  "market": "CN",
-  "name": "安阳钢铁",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "高杠杆普钢困境反转期权，板带材和特钢转型方向存在但尚未兑现利润，2026H1预亏继续侵蚀归母权益；当前价格高于基于净资产和情景估值交叉验证后的安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.7,
-    1.2
-  ],
-  "buy_zone": [
-    0.5,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    1.5,
-    2.1
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安阳钢铁",
+    "security_status": "active",
+    "symbol": "CN:600569",
+    "ticker": "600569"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "2901595eed2447df2a5afe542086b216a582bcef27fd45cfd3ca18505752dd61"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于安全边际且2026H1预亏后归母权益继续承压，保持0仓位观察。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据，重点看归母权益、现金流和受限资金。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于0.80元且2026H2经营现金流转正、扣非亏损环比显著收窄，可重新评估小仓位试探。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证二季度环比改善是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "只有连续两个季度扣非归母转正且资产负债率降至88%以下，才允许提升至周期困境股上限仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报及行业供给收缩效果。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入买入观察区，需要结合现金流和扣非亏损收敛情况复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.1
+      },
+      "reason": "超过乐观情景估值上沿，若基本面未同步改善应回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入买入观察区，需要结合现金流和扣非亏损收敛情况复核。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.1,
-      "reason": "超过乐观情景估值上沿，若基本面未同步改善应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据，重点看归母权益、现金流和受限资金。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证二季度环比改善是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报及行业供给收缩效果。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

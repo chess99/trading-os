@@ -1,85 +1,105 @@
 {
-  "symbol": "CN:605298",
-  "market": "CN",
-  "ticker": "605298",
-  "name": "必得科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "必得科技是轨道交通车辆配套件细分供应商，2025年业绩与现金流改善，但客户高度集中、业务壁垒不属于轨交核心系统，当前约百倍以上TTM估值已显著透支设备更新和控制权变化预期。维持观察，等待价格回到可由中性增长解释的安全区间。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14,
-    22
-  ],
-  "buy_zone": [
-    12,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "必得科技",
+    "security_status": "active",
+    "symbol": "CN:605298",
+    "ticker": "605298"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e9bffb16caddcb4b6c20fb0c1a7bfe643cccb03206b357c2868fc9ccb56eae0d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于16元，且最新财报显示毛利率不低于40%、经营现金流未恶化、控制权变化无明显治理风险",
-      "action": "research_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、毛利率、经营现金流和控制权事项进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于12元，且订单、收入和现金流均保持稳定",
-      "action": "add_to_watch_buy_list",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入恢复和利润弹性是否兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元且无利润上修、重大订单或产业资源落地",
-      "action": "do_not_buy_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报及下一年度订单展望，重估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入安全边际观察买区，需要复核最新订单、毛利率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入深度价值复核区，若基本面未恶化可考虑小仓位研究型建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "高于合理估值上沿较多，需警惕主题溢价和估值回落",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入安全边际观察买区，需要复核最新订单、毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入深度价值复核区，若基本面未恶化可考虑小仓位研究型建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "高于合理估值上沿较多，需警惕主题溢价和估值回落"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、毛利率、经营现金流和控制权事项进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入恢复和利润弹性是否兑现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报及下一年度订单展望，重估合理价值区间"
-    }
-  ],
-  "key_risks": [
-    "客户集中度极高，中国中车体系收入占比较大",
-    "当前估值显著高于中性基本面可解释区间",
-    "控制权变化的产业资源兑现仍需公告验证",
-    "轨交车辆交付和检修排产导致收入季度波动"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

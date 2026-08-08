@@ -1,94 +1,105 @@
 {
-  "symbol": "CN:301665",
-  "ticker": "301665",
-  "name": "泰禾股份",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "泰禾股份具备核心农药品种规模工艺、海外登记和创制品种选择权，2025 年及 2026Q1 增长强劲；但当前估值已反映较多成长预期，自由现金流仍受扩产投入压制，需等待更好价格或新增产能兑现。",
-  "fair_value_range": [
-    21,
-    27
-  ],
-  "buy_zone": [
-    17,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    35
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰禾股份",
+    "security_status": "active",
+    "symbol": "CN:301665",
+    "ticker": "301665"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "f95725614d69ae98984fbc30bdafb85c6fdef270f030733ab1e6d8711ae1ad18"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 20 元且 2026 单季收入、毛利率、经营现金流未恶化时，建立观察仓。",
-      "action": "initiate_watch_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查收入增速、毛利率、存货和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 18 元且存货周转正常、肟菌酯/丙硫菌唑/嘧菌酯项目达产顺利时，提高至核心观察仓。",
-      "action": "add",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认新产能达产和海外需求延续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 30 元且未来 12 个月归母净利润无法上修至 6.5 亿元以上时，降低仓位或继续空仓观察。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新评估归母净利润、自由现金流和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入初始买入区间上沿，若基本面未恶化则安全边际改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入较有吸引力的买入区间，可结合季度经营质量考虑加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过基准公允价值上沿，若盈利未同步上修则风险收益比下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入初始买入区间上沿，若基本面未恶化则安全边际改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入较有吸引力的买入区间，可结合季度经营质量考虑加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "超过基准公允价值上沿，若盈利未同步上修则风险收益比下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查收入增速、毛利率、存货和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认新产能达产和海外需求延续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新评估归母净利润、自由现金流和估值区间。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 24.89,
-    "reference_price_date": "2026-07-16",
-    "market_cap_cny": 11200500000,
-    "pe_ttm": 20.89,
-    "pb": 3.15,
-    "revenue_2025_cny": 5368631680.78,
-    "net_profit_2025_cny": 465751823.61,
-    "operating_cash_flow_2025_cny": 601827751.15,
-    "revenue_2026q1_cny": 1377534846.84,
-    "net_profit_2026q1_cny": 134026258.38
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

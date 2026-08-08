@@ -1,101 +1,105 @@
 {
-  "symbol": "CN:601615",
-  "ticker": "601615",
-  "name": "明阳智能",
-  "company_name": "明阳智慧能源集团股份公司",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "明阳智能是国内风电整机第一梯队和海上风电重要厂商，2025年收入、出货和份额修复明显，但2026年上半年扣非利润接近盈亏平衡，盈利仍受电站销售节奏、风机毛利率和海外投入影响。当前估值处于合理区间中部，需等待利润质量和经营现金流改善后再升级。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    8.5,
-    12.5
-  ],
-  "buy_zone": [
-    7.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "明阳智能",
+    "security_status": "active",
+    "symbol": "CN:601615",
+    "ticker": "601615"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "4a8336969a8db6b050569b9e83d1009442405555996226a0cee39be6473a3696"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.5元且未出现重大质量事故、重大减值或治理负面公告时，仅建立观察仓。",
-      "action": "open_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、扣非利润、现金流、应收账款和风机毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.0元，且最新财报显示净资产质量、现金流和订单没有恶化。",
-      "action": "add_on_margin_of_safety",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否从电站节奏波动转向风机主业改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度风机毛利率改善、扣非归母净利润转正且经营活动现金流为正。",
-      "action": "review_for_upgrade",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年经营指引，重估合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入初始买入观察区间，需要复核基本面和负面公告。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入更强安全边际区间，可评估提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "超过合理价值上沿附近，如利润质量未改善应考虑减仓或不追。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入初始买入观察区间，需要复核基本面和负面公告。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入更强安全边际区间，可评估提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "超过合理价值上沿附近，如利润质量未改善应考虑减仓或不追。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、扣非利润、现金流、应收账款和风机毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否从电站节奏波动转向风机主业改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年经营指引，重估合理价值区间。"
-    }
-  ],
-  "key_metrics": [
-    "风机及相关配件毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款周转",
-    "海风订单和交付规模",
-    "海外订单履约进度",
-    "电站产品销售收入及利润率",
-    "控股股东及关联方质押比例"
-  ],
-  "sources": [
-    "https://www.sse.com.cn/assortment/stock/list/info/company/index.shtml?COMPANY_CODE=601615",
-    "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12263208&stockid=601615",
-    "https://stockmc.xueqiu.com/202607/601615_20260715_V8Y9.pdf",
-    "https://pdf.dfcfw.com/pdf/H22_AN202604301821827341_1.pdf",
-    "https://www.nea.gov.cn/20260129/6874f211acd0417eab7ac10c3061a7c2/c.html",
-    "https://www.nea.gov.cn/20260625/24f752fd199c4632b7dc7762462585de/c.html"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

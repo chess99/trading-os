@@ -1,139 +1,133 @@
 {
-  "symbol": "CN:688188",
-  "market": "CN",
-  "ticker": "688188",
-  "name": "柏楚电子",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "柏楚电子是激光切割控制系统龙头，具备高毛利、高现金流、轻资产和高经营ROIC特征；但2026-07-09约102元/股附近已隐含未来多年低双位数到中双位数增长和高利润率维持，安全边际不足。进入75-88元区间且订单、毛利率、现金流和竞争格局未恶化时，赔率转为有吸引力。",
-  "fair_value_range": [
-    90,
-    120
-  ],
-  "buy_zone": [
-    75,
-    88
-  ],
-  "sell_or_reduce_zone": [
-    135,
-    150
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "柏楚电子",
+    "security_status": "active",
+    "symbol": "CN:688188",
+    "ticker": "688188"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "6efbec0f5294f1108309a113f0b76391280993932a873f183db333b72af8966a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "watch",
-      "condition": "股价在88-120元且基本面没有明显上修",
-      "price_range": [
-        88,
-        120
-      ],
-      "max_weight": 0,
-      "action": "观察或持有，不主动建重仓；最大仓位6%。"
-    },
-    {
-      "zone": "buy",
-      "condition": "股价在75-88元且最近季报验证收入、扣非净利、毛利率和经营现金流未恶化",
-      "price_range": [
-        75,
-        88
-      ],
-      "max_weight": 0.03,
-      "action": "验证基本面后可建立2%-3%仓位。"
-    },
-    {
-      "zone": "strong_buy",
-      "condition": "股价低于75元且核心假设未破坏",
-      "price_below": 75,
-      "max_weight": 0.06,
-      "action": "重验核心假设后可逐步加至4%-6%。"
-    },
-    {
-      "zone": "reduce",
-      "condition": "股价在135-150元且基本面没有同步超预期上修",
-      "price_range": [
-        135,
-        150
-      ],
-      "max_weight": 0.02,
-      "action": "若基本面未同步上修，应减仓或退出战术仓。"
-    },
-    {
-      "zone": "discipline",
-      "condition": "任何加仓决策前",
-      "max_weight": 0.06,
-      "action": "价格下跌不能机械补仓；每次加仓前必须复核收入、扣非净利、毛利率、经营现金流和竞争格局。"
-    }
-  ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年度报告披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年度财报是验证2026年增长和利润率的第一轮关键数据",
-      "action": "复核收入增速、扣非净利增速、毛利率和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "毛利率跌破70%或净利率快速下行",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可观察硬件占比提升是否开始破坏高毛利模型",
-      "action": "重估商业模式和估值倍数"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "连续两个季度收入或扣非净利润同比下滑",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可验证全年经营现金流、分红、研发投入和利润质量",
-      "action": "重估评级并检查是否触发逻辑止损"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "设备厂商自研控制系统形成趋势或主要客户替代供应商",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "需要定期复核竞争格局、客户粘性和护城河是否弱化",
-      "action": "重估护城河和长期利润率假设"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2028-04-30",
-      "condition": "智能焊接、自动化、海外业务出现超预期放量",
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
       "reason": "年度复盘决定是否把新业务从期权上修为主增长曲线",
-      "action": "上修乐观情景和合理价值区间"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 75,
-      "direction": "below",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
       "reason": "低于强吸引力买入价，估值对悲观情景有较好安全边际",
-      "action": "强吸引力买入价，重验核心假设后可逐步加至4%-6%"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 88,
-      "direction": "below",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 88.0
+      },
       "reason": "进入买入区，长期赔率开始优于观察区",
-      "action": "进入买入区，验证基本面后可建立2%-3%仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 120,
-      "direction": "above",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 120.0
+      },
       "reason": "高于合理价值区间上沿，除非基本面上修否则安全边际不足",
-      "action": "不追高，除非盈利预测和新业务曲线明确上修"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 135,
-      "direction": "above",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 135.0
+      },
       "reason": "进入乐观情景估值区，若业绩未兑现则估值风险上升",
-      "action": "进入减仓评估区，若基本面未超预期应降低仓位"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-09"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

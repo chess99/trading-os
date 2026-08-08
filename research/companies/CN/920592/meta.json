@@ -1,43 +1,77 @@
 {
-  "symbol": "CN:920592",
-  "market": "CN",
-  "ticker": "920592",
-  "name": "华信永道",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "公积金数字化领域地位真实，但项目制业务的毛利、资本回报和自由现金流尚不稳定，当前价格已透支强劲修复预期。",
-  "fair_value_range": [8.0, 12.0],
-  "buy_zone": [6.5, 8.0],
-  "sell_or_reduce_zone": [15.0, 18.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华信永道",
+    "security_status": "active",
+    "symbol": "CN:920592",
+    "ticker": "920592"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "3e695f0d0209afa8dd67343268740890a18c8e7230af65d492021568b9a26cba"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于6.5至8.0元且半年报或三季报验证毛利率回升、存货不再恶化、经营现金流改善",
-      "max_weight": 0.015
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-09-15",
-      "reason": "复核2026年半年报、重大中标项目执行、存货减值和经营现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入可能具备安全边际的区间，但须先重新验证核心假设"
+      "active": true,
+      "condition": {
+        "date": "2026-09-15"
+      },
+      "reason": "复核2026年半年报、重大中标项目执行、存货减值和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "进入减仓或不应追高区间，除非自由现金流与资本回报显著上修"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入可能具备安全边际的区间，但须先重新验证核心假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "进入减仓或不应追高区间，除非自由现金流与资本回报显著上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-16T10:55:50+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

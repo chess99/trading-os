@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600838",
-  "ticker": "600838",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "上海九百",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "上海九百具备静安寺、南京西路核心商圈资产和久光百货等参股收益，但现有盈利主要依赖投资收益，ROE偏低，2026-07-16收盘价7.33元对应约1.9倍PB和高PE，已提前反映资产重估及南京西路1038号项目预期。当前安全边际不足，等待股价回落至5元以下或项目利润可核验后再评估。",
-  "fair_value_range": [
-    5.0,
-    6.4
-  ],
-  "buy_zone": [
-    4.2,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海九百",
+    "security_status": "active",
+    "symbol": "CN:600838",
+    "ticker": "600838"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "0501f9532f9ce6004bcd4ef6aa75ae3a2ba071f0a6734f3ab9fefdc05d04403e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入4.20-5.00元且2026半年报显示投资收益未同比下滑超过20%、经营现金流没有持续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、投资收益、经营现金流和南京西路1038号项目进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "南京西路1038号项目披露可核验盈利模型且预计年度归母贡献超过2000万元，同时股价不高于6.40元",
-      "action": "上调至中等观察仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及消费环境变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.20元且无新增可核验利润增量",
-      "action": "不买入或降低已有仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红政策和项目实际盈利贡献。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入基准买入区间上沿，PB接近1.3倍，开始具备资产折价安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入深度安全边际区间，可按2026半年报质量决定是否提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "高于估值上沿，若无1038项目利润兑现或资产重估公告，应回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入基准买入区间上沿，PB接近1.3倍，开始具备资产折价安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入深度安全边际区间，可按2026半年报质量决定是否提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "高于估值上沿，若无1038项目利润兑现或资产重估公告，应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、投资收益、经营现金流和南京西路1038号项目进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及消费环境变化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红政策和项目实际盈利贡献。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

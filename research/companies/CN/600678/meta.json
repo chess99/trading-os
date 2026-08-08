@@ -1,89 +1,105 @@
 {
-  "symbol": "CN:600678",
-  "market": "CN",
-  "ticker": "600678",
-  "name": "ST金顶",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST金顶主业为区域石灰石和钙基材料，盈利规模小、负债率高，且2025年财报被出具保留意见、内控被出具否定意见。当前约19亿元市值显著高于净资产和可持续盈利可支撑水平，除非审计/内控问题实质解除且价格大幅回落，否则不具备安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.8,
-    1.5
-  ],
-  "buy_zone": [
-    0,
-    0.9
-  ],
-  "sell_or_reduce_zone": [
-    1.8,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST金顶",
+    "security_status": "active",
+    "symbol": "CN:600678",
+    "ticker": "600678"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "6751af440fd2c01ee7e37483f09e9e430b599559a2f1961b31299aac77ea6d2b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current_price_above_1.8_or_audit_internal_control_issues_unresolved",
-      "action": "avoid_new_buying_or_reduce_existing_position",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报、审计保留事项、内控整改、异常预付款和现金流质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_0.9_and_1.5_with_no_material_new_risk",
-      "action": "watch_only",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报盈利连续性、债务压力和ST风险是否变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_below_0.9_and_audit_internal_control_remediation_has_substantive_evidence",
-      "action": "small_tracking_position_only",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-05-15"
+      },
+      "reason": "复查2026年年报审计意见、内控意见和是否具备摘帽基础。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_below_0.6_and_st_risk_substantially_reduced",
-      "action": "special_situation_position_after_recheck",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.9
+      },
+      "reason": "进入有安全边际观察区，但仍需审计和内控整改证据。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.6
+      },
+      "reason": "进入强吸引力价格区，需同步确认退市、债务和现金流风险未升级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.8
+      },
+      "reason": "超过不应追高价，估值脱离当前资产和盈利质量。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.9,
-      "reason": "进入有安全边际观察区，但仍需审计和内控整改证据。"
-    },
-    {
-      "type": "price_below",
-      "price": 0.6,
-      "reason": "进入强吸引力价格区，需同步确认退市、债务和现金流风险未升级。"
-    },
-    {
-      "type": "price_above",
-      "price": 1.8,
-      "reason": "超过不应追高价，估值脱离当前资产和盈利质量。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报、审计保留事项、内控整改、异常预付款和现金流质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报盈利连续性、债务压力和ST风险是否变化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-05-15",
-      "reason": "复查2026年年报审计意见、内控意见和是否具备摘帽基础。"
-    }
-  ],
-  "notes": [
-    "2026-07-20实时行情源存在分歧：雪球页面显示约5.55元、总市值约19.37亿元，另有行情源显示约5.73元、约20.00亿元；报告采用前者并提示需交易终端复核。",
-    "2025年财报保留意见和内控否定意见是核心风险，涉及子公司未经审批支付1800万元预付款、商业实质和可收回性无法充分核验。",
-    "诉讼、监管处罚和全部债务明细本次未逐项核验，低置信度；如出现新增重大事项，应立即重新评估。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

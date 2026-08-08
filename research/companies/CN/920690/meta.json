@@ -1,47 +1,77 @@
 {
-  "symbol": "CN:920690",
-  "market": "CN",
-  "ticker": "920690",
-  "name": "捷众科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "客户认证壁垒和稳健资产负债表真实，但客户集中、毛利率下行与自由现金流不足使14元以上缺乏安全边际。",
-  "fair_value_range": [10.5, 12.8],
-  "buy_zone": [8.5, 10.0],
-  "sell_or_reduce_zone": [14.5, 16.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "捷众科技",
+    "security_status": "active",
+    "symbol": "CN:920690",
+    "ticker": "920690"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "fc4c600a0d44a1f2fd3f754d1cf17909de32ae618d71e48fb34575a8f2e21643"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于9.5至10.0元且毛利率不低于32%、客户关系未恶化、滚动经营现金流与净利润之比不低于0.8",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的毛利率、资本开支、客户集中与自由现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于8.5至9.5元且重新验证长期商业价值未受损、自由现金流改善，不因价格下跌机械加仓",
-      "max_weight": 0.03
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、资本开支、客户集中与自由现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入有安全边际的首批买入观察区间，须先复核基本面"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入有安全边际的首批买入观察区间，须先复核基本面",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "进入减仓或不应追高区间，除非自由现金流与毛利率显著改善"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "进入减仓或不应追高区间，除非自由现金流与毛利率显著改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-15T19:25:14+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

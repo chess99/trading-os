@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688328",
-  "market": "CN",
-  "ticker": "688328",
-  "name": "深科达",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "公司正在从显示面板模组设备向半导体封测设备和核心零部件驱动切换，2026Q1及2026H1预告验证利润弹性；但当前估值已经反映较多乐观预期，且2026-07-16至2026-10-14处于实控人及大股东减持窗口，安全边际不足，宜观察等待更低价格或更多订单验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    62,
-    82
-  ],
-  "buy_zone": [
-    45,
-    60
-  ],
-  "sell_or_reduce_zone": [
-    100,
-    120
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深科达",
+    "security_status": "active",
+    "symbol": "CN:688328",
+    "ticker": "688328"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c484aaa66363da8e82f3dcdc9300131c3c3d4fbb064a98298803f3b7358a0f0e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价位于合理价值区间附近且减持窗口未结束，暂不建仓",
-      "action": "watch",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告正式数据、半导体设备收入占比、毛利率、合同负债和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入45-60元且2026H1正式报告不低于预告、半导体设备毛利率未显著回落",
-      "action": "starter_position",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和大股东减持执行情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026Q3继续验证半导体设备放量，单季度归母净利润高于3000万元且应收账款不恶化",
-      "action": "add",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，检验全年利润是否达到基准情景",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入买入区上沿，重新核验H1正式报告、半导体设备毛利率和合同负债后可考虑小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入高安全边际区，若基本面未恶化可提高至计划上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 100.0
+      },
+      "reason": "超过减仓区下沿，除非有明确新增大客户订单或2027利润上修，否则估值透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 60,
-      "reason": "进入买入区上沿，重新核验H1正式报告、半导体设备毛利率和合同负债后可考虑小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入高安全边际区，若基本面未恶化可提高至计划上限"
-    },
-    {
-      "type": "price_above",
-      "price": 100,
-      "reason": "超过减仓区下沿，除非有明确新增大客户订单或2027利润上修，否则估值透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告正式数据、半导体设备收入占比、毛利率、合同负债和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和大股东减持执行情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，检验全年利润是否达到基准情景"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

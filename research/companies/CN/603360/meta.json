@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603360",
-  "market": "CN",
-  "ticker": "603360",
-  "name": "百傲化学",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "百傲化学是异噻唑啉酮类工业杀菌剂细分龙头，并通过控股芯慧联切入半导体设备。2025年半导体业务贡献显著，但2026Q1收入和利润大幅下滑，同时存在前期会计差错更正和证监会立案调查，当前估值已经回落但安全边际不足。维持观察，等待监管结论、内控修复和芯慧联2026H2交付恢复验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.5,
-    14.5
-  ],
-  "buy_zone": [
-    8.5,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    19.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "百傲化学",
+    "security_status": "active",
+    "symbol": "CN:603360",
+    "ticker": "603360"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "d160f8250471f3769fb2f939f3cab86e51c8429fbba7d21453abe7c9dc988dad"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "证监会调查结论轻微或已落地、芯慧联2026H2订单交付恢复，且股价低于10.5元",
-      "action": "小仓位试错买入",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看芯慧联收入、利润、订单、存货和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.5元且未出现新增重大信披、收入确认或现金流恶化",
-      "action": "提高研究优先级，可分批加仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年业绩承诺完成概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "证监会处罚较重、芯慧联2026业绩承诺明显无法完成或再次出现收入确认差错",
-      "action": "避免买入或退出观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核2026年业绩预告或年度业绩快报，确认半导体第二曲线是否兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入买入观察区，需要复核监管进展和半导体订单兑现情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "若基本面未新增恶化，可能具备更高安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "超过基准估值区间上沿，需要验证半导体利润和治理折价是否已改善",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入买入观察区，需要复核监管进展和半导体订单兑现情况"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "若基本面未新增恶化，可能具备更高安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "超过基准估值区间上沿，需要验证半导体利润和治理折价是否已改善"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看芯慧联收入、利润、订单、存货和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年业绩承诺完成概率"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核2026年业绩预告或年度业绩快报，确认半导体第二曲线是否兑现"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

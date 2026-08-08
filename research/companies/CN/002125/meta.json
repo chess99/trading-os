@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:002125",
-  "market": "CN",
-  "ticker": "002125",
-  "name": "湘潭电化",
-  "company_name": "湘潭电化",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "neutral_to_expensive",
-  "current_thesis": "湘潭电化是锰系电池材料与污水处理的周期成长混合资产。电解二氧化锰提供细分制造和环保壁垒，锰酸锂提供需求弹性，污水处理提供现金流底座；但2026Q1利润修复主要由非扣非因素驱动，主营改善仍需中报验证。当前价格缺少足够安全边际，低于10元且主营毛利率/现金流改善后才适合首笔观察仓。",
-  "fair_value_range": [
-    10.0,
-    13.5
-  ],
-  "buy_zone": [
-    8.5,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    20.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "湘潭电化",
+    "security_status": "active",
+    "symbol": "CN:002125",
+    "ticker": "002125"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "32605b6efba85bff282893df6028039a245e6b249a4540d61e2d1142861e4a7d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于10.0元，且2026中报未出现经营现金流显著恶化、环保处罚或产能利用率恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "当前估值已反映部分修复预期，10元以下才有初步安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查扣非利润、毛利率、经营现金流、库存和投资收益占比",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价仍低于合理价值下沿，且电解二氧化锰或锰酸锂销量/毛利率连续两个季度改善",
-      "action": "加仓",
-      "max_weight": 0.03,
-      "reason": "主营改善被验证后，可提高仓位但仍需控制周期风险"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断主营恢复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "主营利润恢复、权益投资收益占比下降、现金流质量改善且估值仍低于合理区间中枢",
-      "action": "提高到策略上限",
-      "max_weight": 0.05,
-      "reason": "锰系材料周期弹性和污水处理底座同时成立时，允许中等仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入首笔观察仓买入区间上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入更有吸引力的安全边际区间，需复核基本面后考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "进入减仓观察区，若主营利润未同步上修应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "估值需要非常乐观情景支撑，应强制复核并考虑卖出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入首笔观察仓买入区间上沿"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入更有吸引力的安全边际区间，需复核基本面后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "进入减仓观察区，若主营利润未同步上修应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "估值需要非常乐观情景支撑，应强制复核并考虑卖出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查扣非利润、毛利率、经营现金流、库存和投资收益占比"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断主营恢复是否连续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "电解二氧化锰售价、销量、产能利用率和毛利率",
-    "锰酸锂售价、销量、客户结构、库存和产能释放节奏",
-    "锰矿、硫酸锰、电力等主要成本变化",
-    "经营现金流、存货、应收账款和资本开支",
-    "扣非归母净利润与归母净利润差距",
-    "湖南裕能等权益投资收益变化",
-    "污水处理水量、结算单价、回款和应收账款",
-    "环保处罚、安全事故、停产整改和排污许可证变化",
-    "可转债转股进度、转股价和股本稀释",
-    "下游两轮车、工具、储能和一次电池需求"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

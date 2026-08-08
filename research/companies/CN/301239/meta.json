@@ -1,73 +1,95 @@
 {
-  "symbol": "CN:301239",
-  "ticker": "301239",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "普瑞眼科",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "民营连锁眼科第二梯队公司，2025年仍亏损但现金流较好，2026Q1盈利修复明显；核心矛盾是新院爬坡和费用率下降能否连续兑现。当前估值接近合理区间，等待更厚安全边际或连续季度验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    30,
-    42
-  ],
-  "buy_zone": [
-    0,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    56
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "普瑞眼科",
+    "security_status": "active",
+    "symbol": "CN:301239",
+    "ticker": "301239"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "9fa0bd60420201bf5080f5edb48b747ef1748fa67f20807d8e29843bf6e3a558"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前仅观察或试探，2026Q2未披露前不因单季Q1拐点重仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看Q2收入、毛利率、期间费用率、经营现金流和新院爬坡。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元且2026Q2收入保持增长、毛利率约40%以上、归母净利润为正。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1盈利拐点是否具备持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026Q2-Q3连续验证费用率下降和新院亏损收窄，全年归母净利能见度高于1.7亿元。",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重估全年归母净利、自由现金流和资本开支节奏。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入估算买入区，若盈利修复未破坏则安全边际改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过核心合理价值上沿，若无连续季度盈利兑现应减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入估算买入区，若盈利修复未破坏则安全边际改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "超过核心合理价值上沿，若无连续季度盈利兑现应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看Q2收入、毛利率、期间费用率、经营现金流和新院爬坡。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1盈利拐点是否具备持续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重估全年归母净利、自由现金流和资本开支节奏。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

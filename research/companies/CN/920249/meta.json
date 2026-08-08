@@ -1,81 +1,110 @@
 {
-  "symbol": "CN:920249",
-  "market": "CN",
-  "ticker": "920249",
-  "name": "利尔达",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "利尔达的物联网模组业务在2025年和2026Q1明显恢复，但公司仍以低净利率IC分销为收入主体，且存在证监会立案、带强调事项段审计报告、应收账款和存货占用偏高、供应商集中等折价因素。2026-07-17收盘价8.96元对应约37.78亿元市值，已经高于基准和多数乐观估值，当前没有安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    3.2,
-    5.2
-  ],
-  "buy_zone": [
-    2.0,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    5.8,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "利尔达",
+    "security_status": "active",
+    "symbol": "CN:920249",
+    "ticker": "920249"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "e1183bbfe076a125b440909703b05caf8f59f0a537b93ef08b39aca340aed7be"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "e2852c9512439cae088e82e742b63efe74913e98003802d8a247c0cb0341d60e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于5.80元，估值高于合理区间上沿且监管风险未解除",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报，重点看归母净利润、扣非、经营现金流、应收账款、存货和模组毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在2.80至4.20元，且2026半年报经营现金流、应收账款和存货未恶化",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报，确认全年0.75至1.00亿元净利润假设是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在2.00至2.80元，证监会立案未造成重大不利结论，模组业务收入和毛利率延续改善",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复查证监会立案调查进展、审计意见风险和资本配置变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.00元，治理风险可控且没有退市风险，净现金流正常",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入安全边际买入价，需要复核监管立案、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "进入强吸引力价，但仍需确认无退市风险和重大财务造假结论",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.8
+      },
+      "reason": "进入不追高区间，除非2026E净利润上修至1.2亿元以上且监管风险解除",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入安全边际买入价，需要复核监管立案、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "进入强吸引力价，但仍需确认无退市风险和重大财务造假结论"
-    },
-    {
-      "type": "price_above",
-      "price": 5.8,
-      "reason": "进入不追高区间，除非2026E净利润上修至1.2亿元以上且监管风险解除"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报，重点看归母净利润、扣非、经营现金流、应收账款、存货和模组毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报，确认全年0.75至1.00亿元净利润假设是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复查证监会立案调查进展、审计意见风险和资本配置变化"
-    }
-  ],
-  "notes": "当前决策为不买、不开仓。合理价格区间3.20-5.20元，安全边际买入价2.80元以下，强吸引力价2.00元以下，不追高价5.80元以上。第一笔仓位0%，只有价格进入买入区且监管与财务质量风险可控后才考虑0.5%-1.0%试仓。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

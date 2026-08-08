@@ -1,81 +1,96 @@
 {
-  "symbol": "CN:603579",
-  "market": "CN",
-  "ticker": "603579",
-  "name": "荣泰健康",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "荣泰健康是按摩椅纯度较高、资产负债表稳健且具备品牌和研发积累的标的，2026Q1 已出现收入和利润修复，但 2025 年扣非利润偏弱、外销和汇率扰动仍大，当前价格接近合理价值下沿但安全边际不厚，适合观察或低位小仓试错。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18.0,
-    23.0
-  ],
-  "buy_zone": [
-    14.5,
-    17.0
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "荣泰健康",
+    "security_status": "active",
+    "symbol": "CN:603579",
+    "ticker": "603579"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "77fbbbbbc8daab0d606cc832506b83ce8b045952767f8f9450d09ffc460ea97e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于17.0元且2026H1扣非净利润、经营现金流确认改善",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、内外销恢复和应收库存",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于15.0元且外销订单未继续恶化、毛利率稳定",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润中枢和估值区间是否需要调整",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于25.0元且未看到2026全年利润超过2.3亿元的证据",
-      "action": "停止加仓并考虑降仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入买入安全边际上沿，若基本面同步验证可小仓试错",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入较强安全边际区，需复核外销、汇率和现金流",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过中性估值区间上沿，若利润未上修应考虑降仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.0,
-      "reason": "进入买入安全边际上沿，若基本面同步验证可小仓试错"
-    },
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入较强安全边际区，需复核外销、汇率和现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "超过中性估值区间上沿，若利润未上修应考虑降仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、内外销恢复和应收库存"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润中枢和估值区间是否需要调整"
-    }
-  ],
-  "key_risks": [
-    "外销订单和汇率波动导致利润下修",
-    "按摩椅价格竞争压缩毛利率",
-    "扣非净利润恢复弱于归母净利润",
-    "经营现金流和应收账款恶化",
-    "汽车按摩机芯、康复机器人等新业务商业化低于预期"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

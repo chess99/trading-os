@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:600215",
-  "ticker": "600215",
-  "name": "派斯林",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处在机器人系统集成与北美制造业自动化赛道，账面 PB 约 1.1 倍提供一定资产支撑；但 2025 年和 2026Q1 仍亏损、经营现金流承压，且存在财政部处罚相关内控风险，需等待盈利和现金流拐点验证。",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    3.8,
-    4.6
-  ],
-  "sell_or_reduce_zone": [
-    7.0,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "派斯林",
+    "security_status": "active",
+    "symbol": "CN:600215",
+    "ticker": "600215"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "93de1e6aa550f20d65694dad4601bb42e978b386aed74ff99fd5f7d82ed8e20a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 4.6 元，且 2026 年中报显示毛利率改善、亏损收窄、经营现金流改善",
-      "action": "建立观察性小仓位",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报的收入、毛利率、现金流和订单披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 3.8 元，且无新增治理或内控负面事项，订单质量改善得到公告验证",
-      "action": "提高至小比例配置",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报是否出现亏损收窄或现金流改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 7.0 元但公司仍未恢复持续盈利",
-      "action": "不追高并考虑降低仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入买入观察区，需要复核中报毛利、现金流和订单质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.0
+      },
+      "reason": "超过中性估值上沿，若盈利未转正则风险收益比下降",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入买入观察区，需要复核中报毛利、现金流和订单质量"
-    },
-    {
-      "type": "price_above",
-      "price": 7.0,
-      "reason": "超过中性估值上沿，若盈利未转正则风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报的收入、毛利率、现金流和订单披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报是否出现亏损收窄或现金流改善"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

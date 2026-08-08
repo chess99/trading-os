@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:601677",
-  "ticker": "601677",
-  "market": "CN",
-  "name": "明泰铝业",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "明泰铝业是铝板带箔规模龙头，2026年高端产品、出口毛利和再生铝低碳能力共同抬升盈利中枢；当前估值仍主要按周期加工股定价，若半年报和现金流验证，可给予更高估值。主要风险是铝价/出口价差回落和经营现金流弱于利润。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    19.0,
-    24.0
-  ],
-  "buy_zone": [
-    14.5,
-    17.0
-  ],
-  "sell_or_reduce_zone": [
-    24.5,
-    28.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "明泰铝业",
+    "security_status": "active",
+    "symbol": "CN:601677",
+    "ticker": "601677"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "17e26672b60b6b47e3a21eb5d6f60fea91d73f2167cdb58962ad2fffba5be18b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于17.0元且2026H1业绩预告未被下修，可建立或持有基础仓位。",
-      "action": "buy",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、分产品毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于14.5元且半年报确认毛利率改善、经营现金流未继续恶化，可加仓至上限。",
-      "action": "add",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证高端产品放量和现金流修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于24.5元但现金流/毛利率尚未连续验证，分批降低仓位。",
-      "action": "reduce",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估全年盈利中枢和分红能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入基础买入区间，估值相对2026年预期利润具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入深度安全边际区间，若基本面未恶化可加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.5
+      },
+      "reason": "接近合理价值上沿，需要以现金流和毛利率验证支撑，否则应减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.0,
-      "reason": "进入基础买入区间，估值相对2026年预期利润具备安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入深度安全边际区间，若基本面未恶化可加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.5,
-      "reason": "接近合理价值上沿，需要以现金流和毛利率验证支撑，否则应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、分产品毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证高端产品放量和现金流修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估全年盈利中枢和分红能力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

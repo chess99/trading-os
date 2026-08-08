@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688386",
-  "market": "CN",
-  "ticker": "688386",
-  "name": "泛亚微透",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "泛亚微透具备ePTFE微透膜、CMD气体管理和气凝胶等高壁垒材料平台能力，长期国产替代和高端应用拓展空间明确；但当前约70元附近已反映较多成长预期，2026Q1利润和经营现金流承压，天缘电工收购仍处意向阶段，安全边际不足，适合观察并等待更低价格或基本面确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    55,
-    70
-  ],
-  "buy_zone": [
-    45,
-    55
-  ],
-  "sell_or_reduce_zone": [
-    85,
-    100
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泛亚微透",
+    "security_status": "active",
+    "symbol": "CN:688386",
+    "ticker": "688386"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "63374722c67ab590e2f545bc24b62e37fc4bb43fde3b07a79231996fd5f420b1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至55元以下，且2026半年报显示核心业务毛利率稳定、经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查利润修复、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至50元以下，且天缘电工正式协议价格合理、业绩承诺清晰、未显著增加财务风险",
-      "action": "提高至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1利润下滑是否为暂时扰动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于85元且未来两个季度利润和现金流未同步上修",
-      "action": "减仓或不再新增",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-09-01"
+      },
+      "reason": "跟踪天缘电工收购意向协议45天排他期后的正式协议、交易价格和业绩承诺",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "进入合理价值区间下沿，开始具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入高安全边际区间，若基本面未恶化可重新评估买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 85.0
+      },
+      "reason": "高于合理估值区间，若业绩未明显上修应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 55,
-      "reason": "进入合理价值区间下沿，开始具备初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入高安全边际区间，若基本面未恶化可重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 85,
-      "reason": "高于合理估值区间，若业绩未明显上修应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查利润修复、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1利润下滑是否为暂时扰动"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-01",
-      "reason": "跟踪天缘电工收购意向协议45天排他期后的正式协议、交易价格和业绩承诺"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

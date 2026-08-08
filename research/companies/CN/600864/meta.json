@@ -1,85 +1,105 @@
 {
-  "symbol": "CN:600864",
-  "ticker": "600864",
-  "name": "哈投股份",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_rating": "watch",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": {
-    "current_rating": "watch",
-    "current_thesis": "哈投股份是哈尔滨供热资产与江海证券组成的地方国资金融/公用事业混合资产包，具备净资产和牌照底，但2025年ROE仅约2.7%、2026Q1利润同比下滑，当前估值接近合理区间中上沿，安全边际不足，暂以观察为主。"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "哈投股份",
+    "security_status": "active",
+    "symbol": "CN:600864",
+    "ticker": "600864"
   },
-  "current_thesis": "地方供热业务提供区域民生属性和资产底，江海证券提供市场弹性，但公司整体低ROE、证券业务周期性和供热成本约束使估值上限受限；需要价格低于0.70倍PB或盈利能力持续修复后才具备更明确买入价值。",
-  "fair_value_range": [
-    4.4,
-    5.8
-  ],
-  "buy_zone": [
-    4.0,
-    4.4
-  ],
-  "sell_or_reduce_zone": [
-    6.3,
-    7.0
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "323419f274f484b1d32e73347193c4104c5ed3601285fb1f62596166f0100b90"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入4.0-4.4元且未出现江海证券净资本恶化、供热业务大幅亏损或重大监管处罚时，可建立观察性小仓位。",
-      "action": "initiate",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查江海证券盈利、供热业务毛利率、净资本和ROE。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度合并ROE修复、江海证券净利润同比改善且股价仍低于5.0元时，可小幅提高配置。",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断证券业务景气度和全年盈利趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.3元且基本面未出现可持续ROE上台阶证据时，降低或不参与。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与分红方案，更新SOTP估值和安全边际。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "进入估算买入区间上沿，需要复核PB折价、江海证券经营和供热成本。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "接近悲观情景价值下沿，若基本面未恶化可能出现安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.3
+      },
+      "reason": "超过基准合理价值区间，若ROE未改善应考虑降低关注或减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.4,
-      "reason": "进入估算买入区间上沿，需要复核PB折价、江海证券经营和供热成本。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "接近悲观情景价值下沿，若基本面未恶化可能出现安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.3,
-      "reason": "超过基准合理价值区间，若ROE未改善应考虑降低关注或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查江海证券盈利、供热业务毛利率、净资本和ROE。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断证券业务景气度和全年盈利趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与分红方案，更新SOTP估值和安全边际。"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

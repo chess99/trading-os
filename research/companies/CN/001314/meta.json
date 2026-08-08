@@ -1,102 +1,120 @@
 {
-  "symbol": "CN:001314",
-  "market": "CN",
-  "ticker": "001314",
-  "name": "亿道信息",
-  "company_name": "深圳市亿道信息股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "亿道信息受益于AI PC、AIoT、加固智能终端和国产化业务放量，2026H1扣非利润预告显示主业明显改善；但2026H1归母利润中约8600万元税后投资收益属于非经常性损益，且2025年和2026Q1经营现金流均大幅流出，当前股价已接近基准合理价值上沿，适合观察而非追高。",
-  "quality_rating": "medium",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    48,
-    58
-  ],
-  "buy_zone": [
-    40,
-    48
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    75
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "亿道信息",
+    "security_status": "active",
+    "symbol": "CN:001314",
+    "ticker": "001314"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "5cd306f25e724182266452d882c6ebb8f575c0b1c50bd151ea79155c152fb152"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4b8701336276dd5920ab5733ef82d3c45e73fc340c4222092c4f3ebcc064a47c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入48元以下，且2026中报确认扣非净利润落在预告区间、经营现金流较2026Q1明显改善、存货未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理价值区间下沿，主业利润质量得到初步验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点验证扣非利润、经营现金流、存货、毛利率、AI PC和AIoT订单质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入40元以下，且AI PC、AIoT、加固智能终端收入继续增长，毛利率未低于2025年水平",
-      "action": "提高至小仓位",
-      "max_weight": 0.02,
-      "reason": "估值已对现金流和并购风险给出较充分折扣"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断H1非经常性投资收益后主业利润能否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026中报或三季报显示经营现金流转正、毛利率修复、非经常性损益占比下降，且成为信息并购顺利推进",
-      "action": "提高验证仓上限",
-      "max_weight": 0.03,
-      "reason": "增长从订单弹性转向可持续经营改善，可接受更高仓位"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和成为信息并购进展，重估全年扣非利润与现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入第一买入观察区间，需要同步复核中报扣非利润、现金流和存货",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "进入更有安全边际的加仓区间，前提是AI终端和加固终端基本面未恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "高于基准合理价值上沿，若缺少现金流和毛利率改善证据，应减仓或回避追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "进入乐观情景估值区间，只有连续季度证实主业高质量增长才有持有理由",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入第一买入观察区间，需要同步复核中报扣非利润、现金流和存货"
-    },
-    {
-      "type": "price_below",
-      "price": 40,
-      "reason": "进入更有安全边际的加仓区间，前提是AI终端和加固终端基本面未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "高于基准合理价值上沿，若缺少现金流和毛利率改善证据，应减仓或回避追高"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "进入乐观情景估值区间，只有连续季度证实主业高质量增长才有持有理由"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点验证扣非利润、经营现金流、存货、毛利率、AI PC和AIoT订单质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断H1非经常性投资收益后主业利润能否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和成为信息并购进展，重估全年扣非利润与现金流质量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1扣非净利润是否落在8860万元至1.194亿元预告区间",
-    "2026H1经营活动现金流是否较2026Q1的-5.06亿元明显改善",
-    "存货金额、存货周转天数和跌价准备是否恶化",
-    "综合毛利率是否从2025年的13.65%修复",
-    "AI PC出货量、单机毛利和客户复购是否继续改善",
-    "AIoT、加固智能终端、国产化业务收入增速是否高于公司总收入增速",
-    "成为信息并购审批、募集配套资金、业绩承诺和整合进度",
-    "前五大客户销售占比和海外收入占比变化",
-    "非经常性损益占归母净利润比例是否下降"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

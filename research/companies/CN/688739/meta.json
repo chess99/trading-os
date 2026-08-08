@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688739",
-  "market": "CN",
-  "ticker": "688739",
-  "name": "成大生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "成大生物具备狂犬病疫苗龙头基础、较强资产负债表和人二倍体狂犬病疫苗/流感疫苗新品期权，但2025年至2026年一季度盈利仍在下行，当前更适合作为资产支撑型观察标的，需等待主业止跌或更低价格提供安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    20.0,
-    26.0
-  ],
-  "buy_zone": [
-    0.0,
-    17.5
-  ],
-  "sell_or_reduce_zone": [
-    29.0,
-    38.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "成大生物",
+    "security_status": "active",
+    "symbol": "CN:688739",
+    "ticker": "688739"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "96498fd5e3084ce76cc6415ed8c2372e104a1261d5f023ca5af0a5fa896841f4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于17.5元且无质量、监管或财务恶化新增硬伤时，仅建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、利润、现金流、存货和新品商业化进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报或三季报确认收入环比改善、亏损收窄且新品批签发/销售兑现时，20元以下可提高仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现收入环比改善和亏损收窄",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若收入继续大幅下滑、亏损扩大或存货/应收恶化，维持零仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报及流感销售季、人二倍体狂犬病疫苗放量情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.5
+      },
+      "reason": "进入资产支撑型安全边际区间，可重新评估小仓位买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.0
+      },
+      "reason": "若利润恢复尚未兑现而股价升至乐观估值区，应考虑减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.5,
-      "reason": "进入资产支撑型安全边际区间，可重新评估小仓位买入"
-    },
-    {
-      "type": "price_above",
-      "price": 29.0,
-      "reason": "若利润恢复尚未兑现而股价升至乐观估值区，应考虑减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、利润、现金流、存货和新品商业化进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现收入环比改善和亏损收窄"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报及流感销售季、人二倍体狂犬病疫苗放量情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,104 +1,105 @@
 {
-  "symbol": "CN:300414",
-  "market": "CN",
-  "ticker": "300414",
-  "name": "中光防雷",
-  "company_name": "四川中光防雷科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是A股稀缺的防雷产品主业公司，技术、资质和现金资产有支撑，2026Q1收入和扣非利润恢复明显；但2026-07-13收盘价9.93元对应约32.37亿元市值和约3.23倍PB，显著高于当前ROE与正常利润可支撑区间，等待价格回落或连续业绩验证。",
-  "quality_rating": "中等",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.5,
-    7.0
-  ],
-  "buy_zone": [
-    0,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中光防雷",
+    "security_status": "active",
+    "symbol": "CN:300414",
+    "ticker": "300414"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "f73abeba186c971a0232bde75f126ec18b55199eb49f5796a3081c638caaa7b6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于8.5元，或市值高于约28亿元且扣非净利润未连续两个季度改善",
-      "action": "不买；已有仓位降至观察仓或等待业绩证明",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入结构、扣非利润、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在5.2-7.0元，且最近两个季度扣非归母净利润为正、经营现金流/归母净利润不低于0.8",
-      "action": "仅允许试探仓，等待中报或三季报确认",
-      "target_position": "0.5%",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1恢复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于5.2元，且收入增速保持正增长、毛利率不低于25%、应收账款未明显恶化",
-      "action": "开始建仓",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新计算正常利润、ROE和合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于4.5元，且全年扣非利润预期不低于3000万元、无新增大额减值或非主业投资",
-      "action": "提高至中小仓位",
-      "target_position": "1.0%-1.5%",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入可买区，需复核中报/三季报扣非利润与现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入更高安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "超过合理价值上沿，估值偏贵，应避免追高或考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入可买区，需复核中报/三季报扣非利润与现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入更高安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "超过合理价值上沿，估值偏贵，应避免追高或考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入结构、扣非利润、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1恢复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新计算正常利润、ROE和合理价值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "通信、能源、交通收入结构",
-    "扣非归母净利润",
-    "毛利率",
-    "经营现金流/归母净利润",
-    "应收账款余额和周转",
-    "前五大客户销售占比",
-    "研发费用率和有效专利数量",
-    "现金、交易性金融资产和非主业投资规模",
-    "凡维泰相关执行回款或新增减值"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

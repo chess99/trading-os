@@ -1,113 +1,104 @@
 {
-  "market": "CN",
-  "ticker": "301058",
-  "symbol": "CN:301058",
-  "name": "中粮科工",
-  "company_name": "中粮科工股份有限公司",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "latest_report_date": "2026-07-15",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "粮油冷链工程技术央企平台，订单和收入具韧性，但利润弹性、现金流和项目制属性约束估值，当前价格处于基准价值区间内，适合观察小仓位。",
-  "conviction": "medium",
-  "fair_value_range": [
-    7.8,
-    9.0
-  ],
-  "buy_zone": [
-    0,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.5
-  ],
-  "max_weight": 0.03,
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中粮科工",
+    "security_status": "active",
+    "symbol": "CN:301058",
+    "ticker": "301058"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "5c03a1676b66a16d6e17adf299109c11fdc3ff61398cb80f83a4f5712cd7a00d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于基准价值区间内",
-      "action": "观察或小仓位跟踪",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "6.0元以下且基本面未恶化",
-      "action": "逐步建仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "10.5元以上或利润、现金流验证不及预期",
-      "action": "减仓或重新评估",
-      "max_weight": 0
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年中报披露后复核利润增速、毛利率和现金流质量",
-      "condition": "2026年中报或三季报显示利润增速显著低于收入增速",
-      "action": "下修利润弹性假设"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "2026年年报披露前后复核全年经营现金流与归母净利润匹配度",
-      "condition": "全年经营现金流/归母净利润低于0.6倍",
-      "action": "降低估值倍数并复核应收风险"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报披露后复核新签合同、合同负债和收入增长持续性",
-      "condition": "新签合同额或合同负债明显下滑",
-      "action": "复核收入增长持续性"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "年末复核价格是否进入买入区或减仓区",
-      "condition": "股价跌破6.0元或升至10.5元以上",
-      "action": "重新评估买入或减仓动作"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "direction": "below",
-      "reason": "进入安全边际买入区，复核基本面是否恶化"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 10.5,
-      "direction": "above",
-      "reason": "进入牛市情景估值下沿，复核是否减仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入安全边际买入区，复核基本面是否恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "进入牛市情景估值下沿，复核是否减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-15",
-  "summary": "粮油冷链工程技术央企平台，订单和收入具韧性，但利润弹性、现金流和项目制属性约束估值；2026-07-15价格处于基准价值区间内，建议观察小仓位。",
-  "tags": [
-    "粮食安全",
-    "冷链物流",
-    "工程咨询",
-    "央企",
-    "项目制"
-  ],
-  "thesis": [
-    "粮油加工、仓储物流和冷链工程具政策韧性，公司在资质、案例、工艺和央企信用上有壁垒。",
-    "2025年新签合同额42.12亿元，同比增长8.81%，支撑未来收入转化。",
-    "当前估值约18倍2025年归母净利润，尚未给出明显安全边际。"
-  ],
-  "risks": [
-    "系统交付占比提升导致综合毛利率下行。",
-    "经营现金流和应收账款、合同资产表现弱于利润。",
-    "冷链、海外和技术产品化兑现不及预期。",
-    "关联交易和央企治理效率带来估值折价。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

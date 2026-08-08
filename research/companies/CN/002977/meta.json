@@ -1,103 +1,129 @@
 {
-  "symbol": "CN:002977",
-  "market": "CN",
-  "ticker": "002977",
-  "name": "*ST天箭",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md",
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "当前不买入。公司因2025年收入为负且亏损被实施退市风险警示，2026H1预告扣后收入仍仅约0.14-0.15亿元，距离保壳所需3亿元差距很大；虽然现金充足、无短期借款，但22.01元股价已明显透支摘帽和业务恢复预期。",
-  "fair_value_range": [
-    8.0,
-    12.0
-  ],
-  "buy_zone": [
-    7.0,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST天箭",
+    "security_status": "active",
+    "symbol": "CN:002977",
+    "ticker": "002977"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "26a94f85806439966d6a5fbe22976d4302b9e07e4e12bc8eef15f7c1061cba4a"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "534519f51c15cb3622e6fb4c571a38e2f013e23d17401f61f486cacc762b4598"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于14元，且公司仍处于退市风险警示、2026H1扣后收入仅约0.14-0.15亿元",
-      "action": "不买入，已有仓位应减仓或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报正式数据、现金余额、审价冲回和对下半年交付的表述",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入7-10元，且2026Q3单季收入达到0.8亿元以上、货币资金保持5亿元以上、无新增重大审价冲回",
-      "action": "观察性试仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026Q3是验证下半年交付恢复和全年扣后收入是否可能超过3亿元的关键节点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年扣后营业收入有较高把握超过3亿元，净利润亏损显著收窄或转正，撤销退市风险警示可见",
-      "action": "小仓位参与摘帽修复",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "年度业绩预告将初步决定是否存在终止上市风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "2026年再次亏损且扣后收入低于3亿元，或审计意见恶化为保留、否定、无法表示",
-      "action": "清仓并列入回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报、审计意见和撤销退市风险警示进展将决定投资结论是否改变",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入可买区间上沿，需结合Q3收入恢复和审价风险复核是否允许试仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "接近保守资产底，需要重新评估现金、应收、存货和退市风险折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "高于合理价值区间上沿，在摘帽和收入恢复未验证前应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "价格已明显透支保壳与业务恢复，风险收益比恶化",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入可买区间上沿，需结合Q3收入恢复和审价风险复核是否允许试仓"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "接近保守资产底，需要重新评估现金、应收、存货和退市风险折价"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "高于合理价值区间上沿，在摘帽和收入恢复未验证前应减仓或回避"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "价格已明显透支保壳与业务恢复，风险收益比恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报正式数据、现金余额、审价冲回和对下半年交付的表述"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026Q3是验证下半年交付恢复和全年扣后收入是否可能超过3亿元的关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "年度业绩预告将初步决定是否存在终止上市风险"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报、审计意见和撤销退市风险警示进展将决定投资结论是否改变"
-    }
-  ],
-  "notes": [
-    "2026-07-17深交所最新价22.01元，对应约26.44亿元市值，明显高于8-12元合理价值区间。",
-    "2025年收入为-1.714亿元、归母净亏损2.257亿元，ST原因是三项利润孰低为负且扣后收入低于3亿元。",
-    "2026H1预告修正后扣后收入仍仅1,375.66-1,542.68万元，和保壳所需3亿元差距很大。",
-    "资产负债表提供短期缓冲：2026Q1货币资金5.746亿元、无短期借款，但不能替代收入恢复。",
-    "2025年年报披露无重大诉讼、无破产重整、无违规担保、无非经营性资金占用；审计意见为带强调事项段的无保留意见。",
-    "控股股东和实际控制人筹划股份协议转让尚未签署正式协议，置信度低，暂不作为估值核心。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688613",
-  "market": "CN",
-  "ticker": "688613",
-  "name": "奥精医疗",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "奥精医疗拥有矿化胶原人工骨材料平台、高毛利产品和约9.6亿元净现金/理财资产，资产底较厚；但2025-2026Q1扣非盈利能力弱，收入尚未恢复，且2026年7月董事会换届与控制权相关治理不确定性较高。当前价格约14.44元处于基准价值区间中部，适合观察，等待治理落定和扣非经营拐点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    13,
-    19
-  ],
-  "buy_zone": [
-    0,
-    12
-  ],
-  "sell_or_reduce_zone": [
-    22,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥精医疗",
+    "security_status": "active",
+    "symbol": "CN:688613",
+    "ticker": "688613"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "3682c9695cf4d234e0219bba875596455cefb2114fef3f56f8189e3b80108bbd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "治理风险落定、2026H1扣非亏损明显收窄，且股价低于12元",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-07-21"
+      },
+      "reason": "复核2026年第一次临时股东大会、董事会换届和控制权相关公告",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "收入连续两个季度同比转正、扣非净利率转正、董事会和经营团队稳定",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、扣非利润、现金流和费用率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "控制权争议升级、收入继续下滑或扣非亏损扩大",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认经营拐点",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "低于买入区上沿，扣除净现金后的业务估值进入更有保护的试错区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "高于当前乐观情景下沿，若基本面无同步上修需复核减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "低于买入区上沿，扣除净现金后的业务估值进入更有保护的试错区间"
-    },
-    {
-      "type": "price_above",
-      "price": 22,
-      "reason": "高于当前乐观情景下沿，若基本面无同步上修需复核减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-07-21",
-      "reason": "复核2026年第一次临时股东大会、董事会换届和控制权相关公告"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、扣非利润、现金流和费用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认经营拐点"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688456",
-  "market": "CN",
-  "ticker": "688456",
-  "name": "有研粉材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "有研粉材是中国有研体系下的有色金属粉体平台，铜粉和锡粉具备龙头地位，散热铜粉、高端锡粉、3D打印粉体和电子浆料提供中期成长弹性；但2026-07-17收盘价82.99元对应约96倍TTM PE，已经透支较多成长，需等待业绩和现金流进一步兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    55,
-    75
-  ],
-  "buy_zone": [
-    45,
-    58
-  ],
-  "sell_or_reduce_zone": [
-    85,
-    105
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "有研粉材",
+    "security_status": "active",
+    "symbol": "CN:688456",
+    "ticker": "688456"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "50ceb0552bc5f72b2e601176c542babb39c9f792b5962f67a8015d365498bed3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至58元以下，且最新定期报告显示锡基焊粉毛利率维持22%以上、经营现金流未继续恶化",
-      "action": "分批试仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看高端产品毛利率、经营现金流和应收存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1归母净利润超过6000万元、经营现金流改善、散热铜粉或电子浆料披露明确放量证据",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1高增长是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于95元且没有业绩上修或订单兑现证据",
-      "action": "不加仓并评估减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "跟踪山东增材基地设备安装调试和2027年产能释放指引",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 58.0
+      },
+      "reason": "进入买入区上沿，重新评估安全边际和半年报兑现情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
+      "reason": "明显高于基准估值区间，需要检查是否由业绩兑现支撑，否则考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 58,
-      "reason": "进入买入区上沿，重新评估安全边际和半年报兑现情况"
-    },
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入深度安全边际区，若基本面未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 95,
-      "reason": "明显高于基准估值区间，需要检查是否由业绩兑现支撑，否则考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看高端产品毛利率、经营现金流和应收存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1高增长是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "跟踪山东增材基地设备安装调试和2027年产能释放指引"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

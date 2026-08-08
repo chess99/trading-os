@@ -1,114 +1,105 @@
 {
-  "symbol": "CN:300224",
-  "market": "CN",
-  "ticker": "300224",
-  "name": "正海磁材",
-  "company_name": "烟台正海磁性材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "正海磁材是高性能钕铁硼第一梯队公司，汽车电气化需求和净现金资产负债表提供中长期价值，但2025年及2026Q1利润率、现金流承压，当前约11.50元附近安全边际不足，等待10.5元以下或盈利修复确认。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性略低估",
-  "fair_value_range": [
-    11.0,
-    15.5
-  ],
-  "buy_zone": [
-    9.0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "正海磁材",
+    "security_status": "active",
+    "symbol": "CN:300224",
+    "ticker": "300224"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "6959c08fd882df44ff4aeb8630020e270cc7feead20ba9b97b26dc326e613695"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于12元，且2026年中报尚未证明毛利率和经营现金流修复",
-      "action": "不新增仓位，仅跟踪",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看汽车业务收入、综合毛利率、经营现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在10.5-12元，且新能源汽车订单稳定、综合毛利率不低于12%",
-      "action": "可建立很小跟踪仓",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润率和现金流是否连续修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于10.5元，且毛利率、应收账款和经营现金流没有继续恶化",
-      "action": "建立观察仓",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估南通基地爬坡、ROE和分红能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于9元，且公司基本面未破坏、经营现金流开始接近净利润",
-      "action": "提高至中等仓位",
-      "target_position": "5%-6%",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "价格进入可买区上沿，开始具备基础安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于16.5元，且未来两年盈利预期没有明显上修",
-      "action": "减仓或放弃追买",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "价格低于保守估值下沿，若基本面未破坏则赔率明显改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "价格超过合理价值区间上沿附近，需盈利上修才能支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "currency": "CNY",
-      "action": "复核中报和现金流，考虑建立2%-4%观察仓",
-      "reason": "价格进入可买区上沿，开始具备基础安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "currency": "CNY",
-      "action": "若基本面未恶化，考虑提高至5%-6%仓位",
-      "reason": "价格低于保守估值下沿，若基本面未破坏则赔率明显改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "currency": "CNY",
-      "action": "若盈利未同步上修，减仓或不追买",
-      "reason": "价格超过合理价值区间上沿附近，需盈利上修才能支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看汽车业务收入、综合毛利率、经营现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润率和现金流是否连续修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估南通基地爬坡、ROE和分红能力。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新能源汽车及汽车电气化收入增速和收入占比",
-    "综合毛利率及汽车业务毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款余额和应收账款周转",
-    "存货余额和跌价风险",
-    "南通基地18,000吨产能爬坡进度与利用率",
-    "前五大客户销售占比和海外收入占比",
-    "氧化镨钕等稀土原料价格变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

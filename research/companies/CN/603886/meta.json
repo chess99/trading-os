@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603886",
-  "market": "CN",
-  "ticker": "603886",
-  "name": "元祖股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "元祖股份仍有品牌、预收款和高现金流安全垫，但2025年收入和利润明显下滑，2026H1预亏显示盈利拐点尚未确认；现价接近合理区间下沿但安全边际不足，等待8.5-10.2元或中秋旺季数据确认后再小仓位介入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.0,
-    13.5
-  ],
-  "buy_zone": [
-    8.5,
-    10.2
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "元祖股份",
+    "security_status": "active",
+    "symbol": "CN:603886",
+    "ticker": "603886"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "bf56698ce900fa396edec47551cba46dabce22d6b529ae5b65cfb3ef7a17ba82"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入8.5-10.2元且2026H1正式报告显示合同负债未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度正式报告、合同负债和销售费用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.2元且中秋预售、线上收入或销售费用率至少一项出现改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和中秋旺季表现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于14.0元但利润和合同负债未恢复",
-      "action": "减仓或不追买",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、分红政策和全年现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入买入区间上沿，可结合中报和合同负债复核是否开仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入明显安全边际区间，可重新评估逆向买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "超过合理价值中枢上沿，若基本面未改善应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入买入区间上沿，可结合中报和合同负债复核是否开仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入明显安全边际区间，可重新评估逆向买入"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "超过合理价值中枢上沿，若基本面未改善应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度正式报告、合同负债和销售费用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和中秋旺季表现"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、分红政策和全年现金流质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

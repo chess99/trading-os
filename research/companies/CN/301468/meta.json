@@ -1,86 +1,115 @@
 {
-  "symbol": "CN:301468",
-  "ticker": "301468",
-  "name": "博盈特焊",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是工业防腐防磨堆焊细分龙头之一，具备工艺、资质、客户和海外布局优势，越南基地与HRSG链条提供增长期权；但2025年和2026Q1利润下滑、费用前置、TTM估值较高，当前更适合观察订单和扣非利润验证，不具备足够安全边际。",
-  "fair_value_range": [
-    25,
-    31
-  ],
-  "buy_zone": [
-    20,
-    25
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博盈特焊",
+    "security_status": "active",
+    "symbol": "CN:301468",
+    "ticker": "301468"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "dd04a4501315063665e58cc286487eb66d4c9abe1ad1b62f1300d9ae8b28b622"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入20-25元区间，且越南基地订单开始收入确认或扣非净利润连续两个季度同比改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、越南基地建设和海外订单进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年任一滚动四季度归母净利润年化超过1亿元，且经营现金流覆盖扣非净利润",
-      "action": "上调为核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认费用率、毛利率和经营现金流是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价超过36元但未出现订单、毛利率、扣非利润的同步超预期",
-      "action": "不追高或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断越南基地和新应用是否完成利润验证",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入合理价值下沿，可结合订单和扣非利润改善评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "接近悲观情景下的安全边际区，若基本面未恶化可重点复核",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "价格进入基准偏乐观区间，若缺乏业绩兑现应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "隐含较高HRSG和海外订单兑现预期，需要严格核验利润弹性",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入合理价值下沿，可结合订单和扣非利润改善评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "接近悲观情景下的安全边际区，若基本面未恶化可重点复核"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "价格进入基准偏乐观区间，若缺乏业绩兑现应降低风险暴露"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "隐含较高HRSG和海外订单兑现预期，需要严格核验利润弹性"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、越南基地建设和海外订单进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认费用率、毛利率和经营现金流是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断越南基地和新应用是否完成利润验证"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

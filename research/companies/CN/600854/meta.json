@@ -1,81 +1,96 @@
 {
-  "symbol": "CN:600854",
-  "market": "CN",
-  "ticker": "600854",
-  "name": "春兰股份",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "春兰股份更适合按资产折价股跟踪：2025年末现金、金融资产和长期投资占资产比重高，负债很低，具备一定资产安全边际；但空调主业规模小、利润高度依赖金融资产股利、地产存货去化不确定，缺少足够成长催化。股价低于资产折价区才考虑小仓位。",
-  "fair_value_range": [
-    3.8,
-    4.7
-  ],
-  "buy_zone": [
-    3.2,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "春兰股份",
+    "security_status": "active",
+    "symbol": "CN:600854",
+    "ticker": "600854"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "03292b635fe3ff4c1cd3091d2a23a9b798fdb03b23c46f11edad6a1ddd35ebb2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.6元，且最新公告未出现地产大额减值、金融资产分红明显恶化或主业现金流转负",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报空调收入、毛利率、经营现金流和地产存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.2元，且货币资金仍高于11亿元、每股净资产未明显下滑",
-      "action": "提高到资产折价仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、金融资产分红、现金分红政策和每股净资产",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于5.2元，且空调收入未持续恢复、分红率未提高或地产库存仍无去化",
-      "action": "减仓或退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入基准资产估值下沿以下，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "接近悲观情景估值下沿，可复核是否具备更高折价仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "超过基准价值区间且缺少成长催化时风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入基准资产估值下沿以下，安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "接近悲观情景估值下沿，可复核是否具备更高折价仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "超过基准价值区间且缺少成长催化时风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报空调收入、毛利率、经营现金流和地产存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、金融资产分红、现金分红政策和每股净资产"
-    }
-  ],
-  "key_monitoring_items": [
-    "空调业务收入和毛利率",
-    "经营活动现金流净额",
-    "江苏银行和厦门银行等金融资产分红",
-    "房地产存货销售或减值",
-    "现金分红率和资本配置动作"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

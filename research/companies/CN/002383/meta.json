@@ -1,129 +1,115 @@
 {
-  "symbol": "CN:002383",
-  "ticker": "002383",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "合众思壮",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "北斗/GNSS高精度与时空信息老牌资产，行业空间真实且产品线完整，但2025年和2026Q1扣非盈利仍弱、应收和减值压力较高，叠加大股东冻结/潜在被动减持风险；当前价格已反映较多主题预期，宜观察等待盈利与现金流验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.2,
-    5.8
-  ],
-  "buy_zone": [
-    3.4,
-    4.4
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    9.0
-  ],
-  "position_plan": [
-    {
-      "condition": "当前价格高于合理价值中枢且扣非盈利尚未稳定转正",
-      "action": "仅纳入观察名单",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价跌入3.40-4.40元且无新增重大减值、司法处置冲击或经营恶化",
-      "action": "可试探性建仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "连续两个季度扣非净利润为正且经营现金流同步转正，应收账款增速低于收入增速",
-      "action": "可提高至小仓位",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "盈利质量、现金流、治理风险均明显改善并通过下一次深度复核",
-      "action": "才考虑上调仓位上限",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.4,
-      "reason": "进入初始买入观察区，需要复核中报/三季报扣非利润、经营现金流和应收账款。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "进入深度安全边际区，若基本面未恶化可重新评估反转赔率。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "高于估值区间上沿，若盈利未兑现应减持或回避。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "主题溢价过高，除非扣非利润和现金流大幅超预期，否则风险收益不佳。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、应收账款和减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利修复是否连续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新完整估值和评级。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 6.67,
-    "last_price_date": "2026-07-14",
-    "market_cap_cny_billion": 4.938,
-    "pb": 3.29,
-    "pe_ttm": -30.77,
-    "revenue_2025_cny_billion": 1.36940707315,
-    "net_profit_2025_cny_million": -158.21940727,
-    "deducted_net_profit_2025_cny_million": -188.69674439,
-    "operating_cash_flow_2025_cny_million": 155.04466928,
-    "revenue_2026q1_cny_million": 313.01767633,
-    "deducted_net_profit_2026q1_cny_million": -1.26439071
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "合众思壮",
+    "security_status": "active",
+    "symbol": "CN:002383",
+    "ticker": "002383"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "661acdb72b2003ae527d613eacdf945b2d2bf4cd646831ae5e90c1265c1fb6b4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "name": "北京合众思壮科技股份有限公司2025年年度报告",
-      "date": "2026-04-23",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225151761.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、应收账款和减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "name": "北京合众思壮科技股份有限公司2026年第一季度报告",
-      "date": "2026-04-23",
-      "url": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-04-23/7f9ce994-5c99-4dcd-85bb-556995f836ec.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利修复是否连续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "name": "腾讯证券行情接口",
-      "date": "2026-07-14",
-      "url": "https://qt.gtimg.cn/q=sz002383,sz300627,sh688592,sz300036,sz300177"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新完整估值和评级。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "name": "新华网：去年我国卫星导航产业产值达5758亿元",
-      "date": "2025-05-19",
-      "url": "https://www.news.cn/tech/20250519/fde404fd73f74d53ac52916b4cc52616/c.html"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "进入初始买入观察区，需要复核中报/三季报扣非利润、经营现金流和应收账款。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "name": "人民日报：2025年我国卫星导航产业产值达6290亿元",
-      "date": "2026-05-20",
-      "url": "https://paper.people.com.cn/rmrb/pc/content/202605/20/content_30157855.html"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可重新评估反转赔率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "高于估值区间上沿，若盈利未兑现应减持或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "主题溢价过高，除非扣非利润和现金流大幅超预期，否则风险收益不佳。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

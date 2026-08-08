@@ -1,123 +1,115 @@
 {
-  "symbol": "CN:300644",
-  "market": "CN",
-  "ticker": "300644",
-  "name": "南京聚隆",
-  "company_name": "南京聚隆科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "南京聚隆是汽车和轨交改性工程塑料细分供应商，2025 年利润弹性强，但 2026Q1 增收不增利、经营现金流转负，当前 21.02 元附近已反映较多增长预期，等待 15.5 元以下安全边际或现金流质量改善后再买。",
-  "quality_rating": "中",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    17.0,
-    20.0
-  ],
-  "buy_zone": [
-    0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    23.0,
-    25.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南京聚隆",
+    "security_status": "active",
+    "symbol": "CN:300644",
+    "ticker": "300644"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "afce71f4855874711a150c395bf37999ec5e01c6224980b043e83c174801abc3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 15.5 元，且最新季度毛利率不低于 17%、未出现大额坏账或重大客户流失",
-      "action": "建立 1%-2% 观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看汽车材料收入、毛利率、应收账款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 14 元，且经营现金流没有连续恶化、汽车材料收入仍保持增长",
-      "action": "提高至 3%-4% 仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 2026Q1 的利润和现金流压力是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流/归母净利润大于 0.8，综合毛利率稳定高于 18%，汽车材料收入增速高于 15%",
-      "action": "可考虑提高至 5% 上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断海外收入、高性能材料和分红资本配置是否兑现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于 23 元且现金流质量未改善，或股价高于 25 元且缺少新增高确定性增长证据",
-      "action": "减仓或退出",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入可买区间，适合小仓位建仓复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入高安全边际区，若基本面未恶化可加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "高于合理价值上沿，需检查是否有足够基本面改善支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "估值对现金流质量容错过低，应考虑显著减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "unit": "CNY/share",
-      "reason": "进入可买区间，适合小仓位建仓复核。"
-    },
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "unit": "CNY/share",
-      "reason": "进入高安全边际区，若基本面未恶化可加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 23.0,
-      "unit": "CNY/share",
-      "reason": "高于合理价值上沿，需检查是否有足够基本面改善支撑。"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "unit": "CNY/share",
-      "reason": "估值对现金流质量容错过低，应考虑显著减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看汽车材料收入、毛利率、应收账款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 2026Q1 的利润和现金流压力是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断海外收入、高性能材料和分红资本配置是否兑现。"
-    }
-  ],
-  "key_tracking_metrics": [
-    {
-      "metric": "汽车材料收入增速",
-      "threshold": "低于 10% 下调成长假设，高于 20% 且毛利率不降则上调。"
-    },
-    {
-      "metric": "综合毛利率",
-      "threshold": "低于 16% 为危险信号，稳定高于 18% 为产品结构改善信号。"
-    },
-    {
-      "metric": "经营现金流/归母净利润",
-      "threshold": "连续两个季度低于 0.5 需下调质量评级，高于 0.8 可提高仓位上限。"
-    },
-    {
-      "metric": "应收账款及票据增速",
-      "threshold": "显著高于收入增速说明客户账期压力加大。"
-    },
-    {
-      "metric": "境外收入占比",
-      "threshold": "从 10.7% 提升至 15% 以上且订单可核验，估值可上调。"
-    },
-    {
-      "metric": "研发投入率",
-      "threshold": "保持 5% 以上是维持材料配方和认证壁垒的必要条件。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

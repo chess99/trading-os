@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000619",
-  "market": "CN",
-  "ticker": "000619",
-  "name": "海螺新材",
-  "company_name": "海螺新材",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海螺新材具备海螺集团背景和低PB资产折价，但2025年及2026Q1仍亏损，地产竣工链和低毛利铝型材压力未解除；需等待毛利率、经营现金流和环保材料利润贡献改善后再考虑小仓位试买。",
-  "quality_rating": "low_to_mid",
-  "valuation_rating": "neutral_to_slightly_cheap",
-  "fair_value_range": [
-    4.6,
-    5.4
-  ],
-  "buy_zone": [
-    3.7,
-    4.1
-  ],
-  "sell_or_reduce_zone": [
-    5.7,
-    6.4
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海螺新材",
+    "security_status": "active",
+    "symbol": "CN:000619",
+    "ticker": "000619"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "0bd9e5141cdec714d8c08de04c979a642e2a0b2485b772db40e555fd91ec7136"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入3.70-4.10元，且2026中报显示毛利率不低于8.5%、经营现金流改善或转正",
-      "action": "允许首笔试仓",
-      "max_weight": 0.01,
-      "reason": "低于约0.61倍2026Q1 PB后具备资产折价赔率，但仍需现金流验证避免价值陷阱"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后复查收入结构、毛利率、经营现金流和转型业务利润贡献",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.70元，且扣非亏损未扩大、应收和存货没有恶化",
-      "action": "可将仓位提高至上限",
-      "max_weight": 0.025,
-      "reason": "悲观资产折价已较充分，但仅适合小仓位周期修复交易"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后验证现金流改善是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.70元但扣非盈利和环保材料利润贡献未确认",
-      "action": "减仓或不追买",
-      "max_weight": 0.005,
-      "reason": "估值已接近0.85倍PB，若基本面未改善则风险收益不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "进入买入观察区上沿，检查2026中报现金流、毛利率和订单结构后再决定是否试仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.7
+      },
+      "reason": "进入悲观情景下沿，若基本面未继续恶化可评估小仓位加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.7
+      },
+      "reason": "进入减仓区，若仍无扣非盈利拐点应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.1,
-      "reason": "进入买入观察区上沿，检查2026中报现金流、毛利率和订单结构后再决定是否试仓"
-    },
-    {
-      "type": "price_below",
-      "price": 3.7,
-      "reason": "进入悲观情景下沿，若基本面未继续恶化可评估小仓位加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.7,
-      "reason": "进入减仓区，若仍无扣非盈利拐点应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露后复查收入结构、毛利率、经营现金流和转型业务利润贡献"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后验证现金流改善是否持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026中报营业收入和扣非净利润",
-    "综合毛利率及铝型材、塑料型材、环保材料分部毛利率",
-    "经营活动现金流净额",
-    "应收票据及应收账款、合同资产、存货周转",
-    "PVC SG-5和电石法PVC价格",
-    "铝棒价格及铝型材加工价差",
-    "全国房屋竣工面积和住宅竣工面积",
-    "光伏边框订单、产能利用率和单吨盈利",
-    "SCR脱硝催化剂订单、产能利用率和回收处置项目进展",
-    "关联交易规模和关联应收余额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

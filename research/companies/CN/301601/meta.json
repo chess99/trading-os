@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301601",
-  "ticker": "301601",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "惠通科技",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "惠通科技具备聚合物材料工程技术和高端化工装备一体化能力，但业务项目制属性强，2025收入和利润下滑、2026Q1亏损显示订单确认周期压力。当前估值已接近中性合理区间上沿，缺少足够安全边际，宜观察订单恢复与现金流改善后再买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.0,
-    15.5
-  ],
-  "buy_zone": [
-    10.5,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    15.8,
-    18.0
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "惠通科技",
+    "security_status": "active",
+    "symbol": "CN:301601",
+    "ticker": "301601"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "f68240e9232493dc850fc08d413280b3400948e3e416050b88ac81d57c1271a7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅作为观察仓，等待2026年中报或三季报验证订单恢复、收入回升和经营现金流改善。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入恢复、订单、毛利率、经营现金流和应收款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于12.5元，且单季度收入恢复至1.2亿元以上、经营现金流没有恶化，可提高到小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断2026Q1低点是否已经修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于10.5元，且资产负债表稳健、毛利率未明显下行、在手订单恢复明确，可作为逆周期配置。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认周期位置和中期盈利中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入初步买入观察区，需要复核订单、现金流和毛利率。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入较有安全边际区间，若基本面未继续恶化可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.8
+      },
+      "reason": "高于中性估值上沿，若缺少订单或利润修复证据应降低仓位或不买。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入初步买入观察区，需要复核订单、现金流和毛利率。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入较有安全边际区间，若基本面未继续恶化可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 15.8,
-      "reason": "高于中性估值上沿，若缺少订单或利润修复证据应降低仓位或不买。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入恢复、订单、毛利率、经营现金流和应收款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断2026Q1低点是否已经修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认周期位置和中期盈利中枢。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

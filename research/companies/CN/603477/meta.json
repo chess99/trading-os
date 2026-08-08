@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603477",
-  "market": "CN",
-  "ticker": "603477",
-  "name": "巨星农牧",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "巨星农牧已形成约500万头级别生猪销售规模，PSY、育肥成活率、料肉比和完全成本指标显示其有进入低成本梯队的潜力；在2026H1猪价低迷导致大额亏损后，若H2-2027猪价企稳并且完全成本降至6.0-6.1元/斤，当前市值对正常化利润具有较好弹性。但公司负债率偏高、猪周期和疫病风险大，适合小仓位周期反转配置。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    19.0,
-    25.0
-  ],
-  "buy_zone": [
-    12.0,
-    16.5
-  ],
-  "sell_or_reduce_zone": [
-    28.0,
-    36.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "巨星农牧",
+    "security_status": "active",
+    "symbol": "CN:603477",
+    "ticker": "603477"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "3c55d173a150b8a3775ad99bb7d26880e7628e5d4888f579650d36c1096951bb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价不高于16.5元，且未出现重大疫病、流动性恶化或半年报正式亏损超预告上限时，允许建立初始仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核2026年半年报正式数据、现金流、资产减值和成本指标。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H2月度猪价回到15元/公斤以上，且公司商品肥猪完全成本降至6.1元/斤以内，可在验证后加仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及H2猪价修复对利润和资产负债表的影响。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若完全成本高于6.6元/斤、资产负债率升至72%以上或经营现金流持续为负，暂停加仓并等待复核。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认周期底部亏损、出栏规模、完全成本和资本结构。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "跌入悲观情景估值区，若经营指标未恶化，应复核是否提高仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "进入乐观情景下沿，需减仓或重新验证猪价、成本和利润弹性是否足以支撑更高估值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "跌入悲观情景估值区，若经营指标未恶化，应复核是否提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "进入乐观情景下沿，需减仓或重新验证猪价、成本和利润弹性是否足以支撑更高估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核2026年半年报正式数据、现金流、资产减值和成本指标。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及H2猪价修复对利润和资产负债表的影响。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认周期底部亏损、出栏规模、完全成本和资本结构。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

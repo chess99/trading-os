@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:001218",
-  "market": "CN",
-  "ticker": "001218",
-  "name": "丽臣实业",
-  "company_name": "丽臣实业",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "丽臣实业是国内较纯粹的阴离子表面活性剂制造商，2026年上半年业绩高增来自表活涨价、毛利率改善、海外拓展和规模效应，但利润仍高度受脂肪醇、环氧乙烷、烷基苯等原料价差周期影响。当前股价接近合理区间中枢，适合重点跟踪而非追高买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    24.0,
-    31.0
-  ],
-  "buy_zone": [
-    18.0,
-    21.5
-  ],
-  "sell_or_reduce_zone": [
-    32.0,
-    36.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "丽臣实业",
+    "security_status": "active",
+    "symbol": "CN:001218",
+    "ticker": "001218"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "fab5ff617b16749da5748903208e49e51b3c73df29e3d2dff1e3d1377b88f374"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于21.5元且2026年中报尚未正式披露",
-      "action": "仅保留观察仓或不新开仓",
-      "max_weight": 0.01,
-      "reason": "2026H1高增已被市场部分定价，需确认毛利率和现金流质量"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，确认表面活性剂毛利率、外销毛利率、经营现金流和存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至18.0-21.5元且表面活性剂毛利率维持在12%左右",
-      "action": "分两笔建立基础仓",
-      "max_weight": 0.02,
-      "reason": "价格进入买入区，同时景气改善有财报验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，观察H2价差回落风险与利润持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于18.0元且经营现金流与利润匹配、价差未恶化",
-      "action": "提高至中等仓位",
-      "max_weight": 0.03,
-      "reason": "估值具备安全边际，但仍受原料周期约束"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断高景气利润是否可正常化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价进入32.0-36.0元且未出现可持续高端化利润证据",
-      "action": "逐步减仓",
-      "max_weight": 0.005,
-      "reason": "价格进入乐观估值区，需兑现3亿元以上可持续利润"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.5
+      },
+      "reason": "进入纪律买入区上沿，复核中报毛利率和现金流后可建基础仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入安全边际较强区域，若价差未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "进入减仓区，除非高端表活和外销利润持续兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "进入乐观估值上沿，原则上只保留观察仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 21.5,
-      "reason": "进入纪律买入区上沿，复核中报毛利率和现金流后可建基础仓"
-    },
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "reason": "进入安全边际较强区域，若价差未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 32.0,
-      "reason": "进入减仓区，除非高端表活和外销利润持续兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 36.0,
-      "reason": "进入乐观估值上沿，原则上只保留观察仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，确认表面活性剂毛利率、外销毛利率、经营现金流和存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，观察H2价差回落风险与利润持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断高景气利润是否可正常化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "表面活性剂收入和毛利率",
-    "AES、LAS、K12销量和平均售价",
-    "AOS及高端表活产品定量披露",
-    "C12-14脂肪醇价格",
-    "棕榈仁油CFR中国价格",
-    "环氧乙烷华东挂牌价",
-    "烷基苯采购价格",
-    "外销收入和外销毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款和存货周转",
-    "表面活性剂产能利用率",
-    "工业清洗剂收入占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

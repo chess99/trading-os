@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:301262",
-  "ticker": "301262",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "海看股份",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "山东 IPTV 区域独占平台，基础业务稳定、现金流和资产负债表较好，但 2025 年增值业务大幅下滑且 2026Q1 利润和经营现金流承压；当前估值高于最可比的新媒股份，需等待价格回落或增值业务企稳。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.0,
-    16.5
-  ],
-  "buy_zone": [
-    11.5,
-    13.5
-  ],
-  "sell_or_reduce_zone": [
-    19.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海看股份",
+    "security_status": "active",
+    "symbol": "CN:301262",
+    "ticker": "301262"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "ec63e3d9489efed9633975d44803515d58bb5924ea8f98a55b0256e5e09e4d31"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 13.5 元，且最新半年报显示 IPTV 基础业务收入同比降幅不超过 3%、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点验证增值业务、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 11.5 元，且增值业务收入止跌、经营现金流/归母净利润恢复至 0.8 倍以上",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年利润和现金流是否需要下修",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 19.0 元且 2026 年扣非利润仍同比下滑",
-      "action": "不买入或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估估值中枢和股东回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入基准估值下沿附近，开始具备观察仓安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入较充分安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 19.0
+      },
+      "reason": "接近或高于当前减仓区，需确认增值业务和现金流明显改善后才可继续持有",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入基准估值下沿附近，开始具备观察仓安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入较充分安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 19.0,
-      "reason": "接近或高于当前减仓区，需确认增值业务和现金流明显改善后才可继续持有"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点验证增值业务、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年利润和现金流是否需要下修"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估估值中枢和股东回报"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "山东 IPTV 基础业务有效用户数",
-    "IPTV 基础业务收入同比增速",
-    "IPTV 增值业务收入同比增速",
-    "经营现金流/归母净利润",
-    "应收账款余额、账龄和信用减值",
-    "与山东移动、山东联通、山东电信合作及计费规则变化",
-    "版权内容采购投入与用户活跃、留存、ARPU 的匹配度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

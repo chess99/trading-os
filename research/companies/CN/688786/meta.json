@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:688786",
-  "market": "CN",
-  "ticker": "688786",
-  "name": "悦安新材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "悦安新材是羰基铁粉和微纳金属粉体细分龙头，受益于AI算力电感、新能源车电源电子、磁流变悬挂等高端细粉需求，但2026-07-17收盘价已隐含较多成长预期，TLVR相关收入占比仍小，当前以观察为主，等待中报验证或价格回到安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    22,
-    32
-  ],
-  "buy_zone": [
-    18,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "悦安新材",
+    "security_status": "active",
+    "symbol": "CN:688786",
+    "ticker": "688786"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "0f425cd3f9289169bf20ea001bf50fae30d5b08d966af9af2ea91d88e4d71764"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察，不建仓，直到2026H1披露软磁粉和羰基铁粉收入增速、毛利率及宁夏示范线进度。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-24"
+      },
+      "reason": "Investing显示下一财报日为2026-08-24，需复核2026H1收入、毛利率、现金流和高端细粉放量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至22-24元且2026H1主营毛利率维持40%以上、经营现金流未恶化，可试探性建仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报披露期后复核全年盈利节奏、宁夏示范线进展和估值是否仍合理。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至18-22元且高端细粉订单、宁夏3000吨示范线或磁流变悬挂客户取得可验证进展，可提高配置。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露期后复盘成长兑现度和新一年度仓位上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "若2026H1或2026Q3净利润同比超过30%且估值回落至45倍TTM PE以内，可考虑上调至核心观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入初始买入区间上沿，需要复核2026H1毛利率、现金流和宁夏产能爬坡。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入较高安全边际区间，如基本面未恶化可重新评估中期赔率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "价格进入乐观情景定价区，若AI/TLVR相关收入未量化放大，应考虑降低暴露。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入初始买入区间上沿，需要复核2026H1毛利率、现金流和宁夏产能爬坡。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入较高安全边际区间，如基本面未恶化可重新评估中期赔率。"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "价格进入乐观情景定价区，若AI/TLVR相关收入未量化放大，应考虑降低暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-24",
-      "reason": "Investing显示下一财报日为2026-08-24，需复核2026H1收入、毛利率、现金流和高端细粉放量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报披露期后复核全年盈利节奏、宁夏示范线进展和估值是否仍合理。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报披露期后复盘成长兑现度和新一年度仓位上限。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

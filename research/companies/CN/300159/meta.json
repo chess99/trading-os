@@ -1,121 +1,114 @@
 {
-  "symbol": "CN:300159",
-  "market": "CN",
-  "ticker": "300159",
-  "name": "新研股份",
-  "company_name": "新疆机械研究院股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "2025 年司法重整显著修复资产负债表并撤销退市风险警示，但主营尚未修复：2025 年扣非归母净利润 -4.25 亿元、2026Q1 扣非仍亏损，当前 2.90 元对应约 95 亿元市值，主要交易国资重整和航空航天预期，安全边际不足。",
-  "quality_rating": "低",
-  "valuation_rating": "显著高估",
-  "fair_value_range": [
-    1.0,
-    1.4
-  ],
-  "buy_zone": [
-    0.8,
-    1.0
-  ],
-  "sell_or_reduce_zone": [
-    2.2,
-    99.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新研股份",
+    "security_status": "active",
+    "symbol": "CN:300159",
+    "ticker": "300159"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "35ea29f70a73e5aa962e25e2026270842c9ba15a77aaf483f435804472796dd9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约 2.90 元且扣非亏损、经营现金流为负",
-      "action": "不建仓",
-      "target_position": "0%",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价低于 1.40 元，且至少一个季度收入增长、扣非亏损明显收窄、无新增重大诉讼或退市风险",
-      "action": "观察性试探",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于 1.00 元，且连续两个季度经营现金流转正或扣非亏损收窄至接近盈亏平衡",
-      "action": "小仓位买入",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "年化收入超过 12 亿元、扣非净利率转正并稳定、航空航天板块毛利率超过 10%",
-      "action": "重新评估中等仓位",
-      "target_position": "5%-8%",
-      "max_weight": 0.08
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.4,
-      "currency": "CNY",
-      "reason": "进入估算合理价值区间上沿，值得复核经营证据",
-      "action": "进入重点观察，核验扣非利润、现金流和订单交付"
-    },
-    {
-      "type": "price_below",
-      "price": 1.0,
-      "currency": "CNY",
-      "reason": "接近保守买入区，市值接近重整后净资产水平",
-      "action": "若基本面未恶化，可考虑小仓位买入"
-    },
-    {
-      "type": "price_above",
-      "price": 2.2,
-      "currency": "CNY",
-      "reason": "明显高于安全边际区间，当前主营数据难以支撑",
-      "action": "估值缺乏安全边际，已有仓位减仓或不追买"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计已披露 2026 年半年报或业绩预告",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证重整后第一个完整中期的主营修复质量",
-      "action": "复核收入、扣非利润、经营现金流和航空航天毛利率"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计已披露 2026 年三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能验证扣非利润和经营现金流是否形成连续改善",
-      "action": "复核扣非利润是否连续改善、经营现金流是否转正"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计已披露 2026 年年度报告",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报能完整检验国资入主后的第一年经营结果",
-      "action": "重新评估主营修复质量、估值区间和仓位上限"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-13",
-      "condition": "距离本次研究满一年",
+      "active": true,
+      "condition": {
+        "date": "2027-07-13"
+      },
       "reason": "年度复盘用于防止重整叙事长期替代经营证据",
-      "action": "全面复盘国资协同、中亚订单、航空航天批量交付和安全边际"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.4
+      },
+      "reason": "进入估算合理价值区间上沿，值得复核经营证据",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.0
+      },
+      "reason": "接近保守买入区，市值接近重整后净资产水平",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.2
+      },
+      "reason": "明显高于安全边际区间，当前主营数据难以支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "单季扣非归母净利润",
-    "经营活动现金流量净额",
-    "农机板块收入和毛利率",
-    "航空航天板块收入和毛利率",
-    "应收账款/营业收入",
-    "存货/营业收入",
-    "货币资金和有息负债",
-    "中亚市场订单、交付和回款"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

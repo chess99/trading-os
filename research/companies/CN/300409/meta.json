@@ -1,105 +1,105 @@
 {
-  "symbol": "CN:300409",
-  "market": "CN",
-  "ticker": "300409",
-  "name": "道氏技术",
-  "company_name": "广东道氏技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司从陶瓷材料转向战略资源、正极相关材料、碳纳米管和负极材料平台，2025年利润与现金流显著恢复，但当前约18元附近已反映部分2026年改善预期。安全边际不足，等待13.5-15.0元或后续业绩证明CNT/硅碳负极和战略资源利润中枢上移。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "合理略贵",
-  "fair_value_range": [
-    16.0,
-    19.0
-  ],
-  "buy_zone": [
-    13.5,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    23.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "道氏技术",
+    "security_status": "active",
+    "symbol": "CN:300409",
+    "ticker": "300409"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5ab08530b8d48fc0b0b90b0e8ed57a15a064511f9a81b50c0c10a01b9e6f3d8d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格在18元附近且未出现新的业绩上修证据",
-      "action": "不买或仅保留观察仓",
-      "target_position_pct": 0.0,
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、战略资源毛利率、CNT/负极材料收入",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入13.5-15.0元且2026H1扣非净利润不低于2.5亿元、经营现金流为正、战略资源毛利率未坍塌",
-      "action": "分批试买",
-      "target_position_pct": 2.0,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润中枢和库存风险",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于13.5元且基本面未恶化，CNT/负极材料收入继续增长",
-      "action": "提高到中等仓位",
-      "target_position_pct": 4.0,
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证硅碳负极产业化和单壁CNT产能兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于23元但CNT/硅碳负极订单和资源利润中枢没有同步上修",
-      "action": "减仓或退出观察仓",
-      "target_position_pct": 0.0,
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入安全边际初始买区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "价格较合理价值下沿有约15%以上折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "估值进入需要强业绩兑现支撑的区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "action": "复核2026H1业绩和现金流，满足条件后小仓位买入",
-      "reason": "进入安全边际初始买区"
-    },
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "action": "若基本面未恶化，考虑加到3%-4%",
-      "reason": "价格较合理价值下沿有约15%以上折价"
-    },
-    {
-      "type": "price_above",
-      "price": 23.0,
-      "action": "若没有业绩和订单上修，逐步减仓",
-      "reason": "估值进入需要强业绩兑现支撑的区间"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、战略资源毛利率、CNT/负极材料收入"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润中枢和库存风险"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证硅碳负极产业化和单壁CNT产能兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1扣非净利润不低于2.5亿元",
-    "经营现金流/归母净利润维持大于1",
-    "战略资源毛利率不低于25%",
-    "战略资源库存量不再异常上升",
-    "正极相关材料产能利用率提升至35%-45%",
-    "碳材料及负极材料收入突破10亿元且毛利率上行",
-    "有息债务和财务费用不继续明显抬升",
-    "POSCO CHEMICAL等大客户合同履约和回款正常"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

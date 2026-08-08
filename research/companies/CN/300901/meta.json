@@ -1,63 +1,96 @@
 {
-  "symbol": "CN:300901",
-  "ticker": "300901",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "中胤时尚",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "公司鞋履设计与供应链整合业务收入已修复但利润率仍很薄，当前约14元以上股价隐含远超现有盈利能力的成长预期；在扣非净利和经营现金流连续改善前不具备安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    4.0,
-    6.0
-  ],
-  "buy_zone": [
-    0.0,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    14.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中胤时尚",
+    "security_status": "active",
+    "symbol": "CN:300901",
+    "ticker": "300901"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "a9eb1ee797d8f53597df3ef85d4080c4cc0707c6d314327614dfc07c6b25161d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前不建仓；仅当价格进入4元以下且扣非净利连续两个季度为正、经营现金流累计转正、设计业务收入恢复增长后，重新评估1%以内跟踪仓。",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入观察区，需要复核半年报和盈利修复质量。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非净利、经营现金流和设计业务修复。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入安全边际买入区，但仍需扣非利润和现金流确认。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年盈利修复能见度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "高于基准合理价值上沿，若盈利未同步显著改善应回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非净利、经营现金流和设计业务修复。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入观察区，需要复核半年报和盈利修复质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年盈利修复能见度。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入安全边际买入区，但仍需扣非利润和现金流确认。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "高于基准合理价值上沿，若盈利未同步显著改善应回避或减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688085",
-  "market": "CN",
-  "ticker": "688085",
-  "name": "三友医疗",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "三友医疗具备脊柱植入物创新、水木天蓬超声能量平台和Implanet海外渠道的组合期权，2025年已从集采低谷修复；但2026Q1扣非利润仍薄、海外业务仍需投入，当前约13.18元未提供足够安全边际，宜观察等待更低价格或中报验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    9.5,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三友医疗",
+    "security_status": "active",
+    "symbol": "CN:688085",
+    "ticker": "688085"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "b0c50e3c2bd667ca13fbbe596b237aab76fa79e7a18302d9645ecd364be15408"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入9.5-11.5元且2026年后续季度收入未失速、扣非利润率改善",
-      "action": "分两到三笔建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点跟踪扣非利润率、水木天蓬和Implanet表现",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度确认水木天蓬增长持续、Implanet亏损收窄、经营现金流改善",
-      "action": "允许从观察仓加至核心跟踪仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年盈利修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于18元但扣非利润和海外亏损未同步兑现",
-      "action": "减仓或暂停加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及2027Q1，重新评估估值区间和评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入买入观察区上沿，若基本面未恶化可启动小仓位建仓复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "接近悲观情景上沿，安全边际显著提高，需要复核是否由基本面恶化导致",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "进入减仓复核区，需确认利润和海外业务是否足以支撑估值扩张",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入买入观察区上沿，若基本面未恶化可启动小仓位建仓复核"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "接近悲观情景上沿，安全边际显著提高，需要复核是否由基本面恶化导致"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "进入减仓复核区，需确认利润和海外业务是否足以支撑估值扩张"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点跟踪扣非利润率、水木天蓬和Implanet表现"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年盈利修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及2027Q1，重新评估估值区间和评级"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

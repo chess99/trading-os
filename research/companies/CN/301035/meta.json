@@ -1,122 +1,123 @@
 {
-  "market": "CN",
-  "symbol": "CN:301035",
-  "ticker": "301035",
-  "name": "润丰股份",
-  "company_name": "山东潍坊润丰化工股份有限公司",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "sector": "基础化工",
-  "industry": "农化制品",
-  "status": "active",
-  "coverage_status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "last_updated": "2026-07-15",
-  "updated_at": "2026-07-15",
-  "rating": "watch_positive",
-  "current_rating": "watch",
-  "current_thesis": "润丰股份具备全球登记证、海外本地化运营和中国制造成本优势，Model C、高价值市场和产品结构升级有望推动中期增长；但当前估值已部分反映修复，且汇率、库存、拉美信用和跨国运营风险要求更高安全边际。",
-  "conviction": "medium",
-  "fair_value_range": [
-    41,
-    57
-  ],
-  "buy_zone": [
-    36,
-    41
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    79
-  ],
-  "max_weight": 0.03,
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "润丰股份",
+    "security_status": "active",
+    "symbol": "CN:301035",
+    "ticker": "301035"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "a129e96b4d395dace87b18f6f7df323dc86aea4e0c11ed5de488b5f4e3b566f1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "36-41 元且经营趋势未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "低于 36 元且主要风险来自短期汇率扰动而非经营恶化",
-      "action": "提高仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "高于 60 元且净利润未恢复到 12 亿元以上",
-      "action": "降低预期收益率或减仓",
-      "max_weight": 0.01
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026Q2 或 2026Q3 归母净利润重新跟上 EBITDA 改善",
-      "condition": "2026Q2 或 2026Q3 归母净利润重新跟上 EBITDA 改善",
-      "action": "复核盈利质量与估值上限"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "To C、欧盟北美、杀虫杀菌剂收入占比继续提升",
-      "condition": "To C、欧盟北美、杀虫杀菌剂收入占比继续提升",
-      "action": "复核成长确定性"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "存货、应收账款或经营现金流显著恶化",
-      "condition": "存货、应收账款或经营现金流显著恶化",
-      "action": "下调评级或降低仓位上限"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "汇兑损失或远期结售汇公允价值变动继续吞噬利润",
-      "condition": "汇兑损失或远期结售汇公允价值变动继续吞噬利润",
-      "action": "复核风险折价"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "股价跌入 36-41 元买入观察区或升入 60 元以上减仓区",
-      "condition": "股价跌入 36-41 元买入观察区或升入 60 元以上减仓区",
-      "action": "复核仓位动作"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 41,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 41.0
+      },
       "reason": "进入报告定义的买入观察区",
-      "condition": "股价进入 36-41 元买入观察区",
-      "action": "复核是否建立 1%-2% 观察仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 36,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
       "reason": "低于报告定义的更高安全边际区",
-      "condition": "股价低于 36 元且经营未恶化",
-      "action": "若经营未恶化，复核是否提高至 3%以内"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 60,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
       "reason": "进入报告定义的减仓复核区",
-      "condition": "股价高于 60 元且净利润未恢复到 12 亿元以上",
-      "action": "复核是否减仓或降低预期收益率"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "summary": "全球作物保护制剂出海平台，核心看点是登记证、Model C 本地化运营、高价值市场渗透和产品结构升级；当前估值已部分反映修复，等待更好安全边际或净利润重新跟上 EBITDA。",
-  "tags": [
-    "农化制品",
-    "作物保护",
-    "制剂出海",
-    "全球登记",
-    "Model C",
-    "汇率风险"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

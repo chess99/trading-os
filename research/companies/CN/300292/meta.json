@@ -1,104 +1,105 @@
 {
-  "symbol": "CN:300292",
-  "market": "CN",
-  "ticker": "300292",
-  "name": "吴通控股",
-  "company_name": "吴通控股集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "2025年利润和经营现金流改善，移动信息服务客户基础稳，智能电子利润修复；但主业毛利薄、客户和供应商高度集中，2026-07-13收盘价4.14元对应2025年归母PE约47倍，安全边际不足，现价不买。",
-  "quality_rating": "中等",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.6,
-    3.3
-  ],
-  "buy_zone": [
-    2.4,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "吴通控股",
+    "security_status": "active",
+    "symbol": "CN:300292",
+    "ticker": "300292"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "bde874e021cd82043ada2825fa6934471cb66f3e3ab1af46aebc05cbe997c0fc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于3.3元或2026年季度经营现金流/净利润低于0.8倍",
-      "max_weight": 0.0,
-      "action": "仅观察，不建仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：移动信息服务毛利率、智能电子利润、合同资产和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至2.4-2.8元且移动信息服务毛利率不低于6.5%、季度扣非净利润同比增长",
-      "max_weight": 0.01,
-      "action": "试探建仓0.5%-1.0%组合仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：扣非净利润是否支撑现有估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至2.4元以下且客户集中度、现金流、控股股东质押均未恶化",
-      "max_weight": 0.02,
-      "action": "提高至1.5%-2.0%组合仓位"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：客户集中度、供应商集中度、分红能力和资本配置",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于4.2元且没有利润台阶或毛利率改善证据",
-      "max_weight": 0.0,
-      "action": "减仓或停止新增"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
       "reason": "进入初始买入区间上沿，估值回到合理区间下半部",
-      "action": "进入可买观察区，复核最新季报现金流和毛利率"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 2.4,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
       "reason": "进入保守安全边际区，价格低于多种估值交叉的下沿",
-      "action": "进入安全边际区，若基本面未破坏可提高仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 4.2,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
       "reason": "价格高于乐观估值区，需有利润台阶支撑",
-      "action": "估值进入偏贵区，除非盈利上台阶否则减仓或不新增"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：移动信息服务毛利率、智能电子利润、合同资产和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：扣非净利润是否支撑现有估值"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：客户集中度、供应商集中度、分红能力和资本配置"
-    }
-  ],
-  "key_tracking_metrics": [
-    "移动信息服务收入增速和毛利率",
-    "前五大客户销售占比",
-    "前五大供应商采购占比及中国移动采购占比",
-    "经营现金流/净利润",
-    "合同资产+应收账款/营业收入",
-    "智能电子净利润",
-    "新能源连接件盈亏平衡进度",
-    "控股股东质押股份数量"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

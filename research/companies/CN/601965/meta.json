@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:601965",
-  "ticker": "601965",
-  "name": "中国汽研",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "汽车测试评价与认证服务的稀缺央企平台，受益于新能源、智能网联、软件与数据安全、出口认证等测试复杂度上升；当前约12倍2025年PE，估值低于质量资产合理区间，但2026年一季度收入下滑和行业内需压力要求分批小仓买入。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    14.0,
-    17.0
-  ],
-  "buy_zone": [
-    11.2,
-    12.8
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    20.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国汽研",
+    "security_status": "active",
+    "symbol": "CN:601965",
+    "ticker": "601965"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "44f686ae198d31cc68d76d3451146e494d433a87794456663abbff6b9872b143"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前股价处于12.8元以下且未出现半年报继续显著恶化信号时，可建立初始观察仓。",
-      "action": "buy_initial",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看技术服务收入、毛利率、经营现金流和资本开支。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至12.0元以下，且2026半年报显示技术服务收入恢复增长、经营现金流未恶化。",
-      "action": "add",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断一季度收入下滑是否已经修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于17.5元且利润预期没有同步上修，或2026收入连续两个报告期负增长。",
-      "action": "reduce",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和2027一季报，更新估值基准和分红假设。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入更有安全边际的分批加仓区，需要复核半年报和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.2
+      },
+      "reason": "跌至悲观情景附近，若基本面未变坏则风险收益比显著改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "进入减持区间，需要利润预期上修才能支撑继续持有。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入更有安全边际的分批加仓区，需要复核半年报和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 11.2,
-      "reason": "跌至悲观情景附近，若基本面未变坏则风险收益比显著改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "进入减持区间，需要利润预期上修才能支撑继续持有。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看技术服务收入、毛利率、经营现金流和资本开支。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断一季度收入下滑是否已经修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和2027一季报，更新估值基准和分红假设。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

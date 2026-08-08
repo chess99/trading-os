@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:688156",
-  "market": "CN",
-  "ticker": "688156",
-  "name": "路德科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "路德科技的白酒糟生物发酵饲料业务在2026Q1显示产能释放与盈利拐点，若毛利率和销量能延续，按2027年正常化利润估值具备上行空间；但行情源未完全核验、产能爬坡和应收账款仍是主要约束，需以18-22元买入区执行小仓位策略。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    24,
-    31
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    33,
-    38
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "路德科技",
+    "security_status": "active",
+    "symbol": "CN:688156",
+    "ticker": "688156"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "801df802b726fb9272fc303c12a0b72454572d4132c3aca7f1f7dc164de5b405"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "实际可成交价位于18-22元且2026Q2单季归母净利润不低于1000万元",
-      "action": "分批买入",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报销量、毛利率、应收账款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于18元且连续两个季度经营现金流为正、白酒糟发酵饲料毛利率不低于25%",
-      "action": "加仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证Q1盈利拐点是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于33元或2026Q2毛利率低于22%",
-      "action": "暂停买入并减仓复核",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可复核加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 33.0
+      },
+      "reason": "达到乐观情景估值下沿，需减仓或等待业绩上修。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入深度安全边际区，若基本面未恶化可复核加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 33,
-      "reason": "达到乐观情景估值下沿，需减仓或等待业绩上修。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报销量、毛利率、应收账款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证Q1盈利拐点是否可持续。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

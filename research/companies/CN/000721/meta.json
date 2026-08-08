@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:000721",
-  "market": "CN",
-  "ticker": "000721",
-  "name": "西安饮食",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "fair_value_range": [
-    2.2,
-    3.2
-  ],
-  "buy_zone": [
-    0,
-    2.2
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "西安饮食",
+    "security_status": "active",
+    "symbol": "CN:000721",
+    "ticker": "000721"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4e8947e35bf4f9313740fae7884e7f4880b2ad1f1a38aea6f75a04f963cb39f8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于估算公允价值且公司仍亏损，不建立仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看餐饮服务毛利率、食品工业增长和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.2元，且最近一期餐饮服务毛利率接近盈亏平衡、经营现金流为正，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和暑期旺季后经营表现。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比转正、餐饮毛利率转正、食品工业收入同比增长超过15%、经营现金流覆盖利息费用，可提升至小仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断全年扭亏路径和资产负债表压力是否缓解。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
+      "reason": "价格进入估算买入区间，开始补偿亏损和高负债风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "若经营仍未扭亏，价格高于该区间主要反映主题溢价，应继续回避或减持。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.2,
-      "reason": "价格进入估算买入区间，开始补偿亏损和高负债风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "若经营仍未扭亏，价格高于该区间主要反映主题溢价，应继续回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看餐饮服务毛利率、食品工业增长和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和暑期旺季后经营表现。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断全年扭亏路径和资产负债表压力是否缓解。"
-    }
-  ],
-  "current_thesis": "西安饮食拥有稀缺西安老字号和文旅入口资产，但2025年及2026Q1仍处亏损，餐饮服务毛利率为负，资产负债率高，当前约5元以上价格已透支经营修复预期。除非价格跌入2.2元以下或出现连续经营修复证据，否则不具备买方安全边际。",
-  "currency": "CNY"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

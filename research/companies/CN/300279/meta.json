@@ -1,95 +1,95 @@
 {
-  "symbol": "CN:300279",
-  "market": "CN",
-  "ticker": "300279",
-  "name": "和晶科技",
-  "company_name": "无锡和晶科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是以家电智能控制器为主的中小型智能制造企业，具备客户导入、认证体系和墨西哥基地等经营基础，但 2026Q1 收入和利润继续承压，汽车电子与海外增长尚未验证。以 2026-07-13 收盘价 5.28 元计，估值明显高于 3.0-4.2 元/股的合理价值区间，当前不具备足够安全边际。",
-  "quality_rating": "B-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.0,
-    4.2
-  ],
-  "buy_zone": [
-    0,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "和晶科技",
+    "security_status": "active",
+    "symbol": "CN:300279",
+    "ticker": "300279"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "6e332d567b175afa860cff8a6e6e84ecd11962d84591154801e3d8f93060d6f9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 3.2 元，且最近一期经营现金流为正、毛利率未低于 16%",
-      "action": "试探买入",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点看收入增速、毛利率、汽车电子收入、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于 3.2-4.2 元，且收入恢复正增长、汽车电子或海外业务出现明确改善",
-      "action": "观察后小幅加仓",
-      "target_position": "1.0%-1.5%",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年利润恢复是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 5.5 元，且收入、扣非净利和毛利率没有同步超预期",
-      "action": "不新买或降低仓位",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，更新长期合理价值区间和仓位上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "股价低于保守买入区间上限，可能具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "股价高于当前合理价值区间，若业绩未超预期则风险收益比偏低。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "unit": "CNY/share",
-      "action": "复核是否进入可买区间",
-      "reason": "股价低于保守买入区间上限，可能具备安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "unit": "CNY/share",
-      "action": "复核是否高估并考虑减仓",
-      "reason": "股价高于当前合理价值区间，若业绩未超预期则风险收益比偏低。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点看收入增速、毛利率、汽车电子收入、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年利润恢复是否成立。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，更新长期合理价值区间和仓位上限。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "主营毛利率是否稳定高于 18%",
-    "汽车电子类智能控制器收入及占比",
-    "出口及境外销售收入占比",
-    "经营现金流/净利润",
-    "应收账款和存货合计规模",
-    "前五大客户销售占比",
-    "短期借款和净现金变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

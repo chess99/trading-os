@@ -1,103 +1,105 @@
 {
-  "symbol": "CN:002061",
-  "market": "CN",
-  "ticker": "002061",
-  "name": "浙江交科",
-  "company_name": "浙江交科",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "浙江交科是浙江省交通投资集团控股的交通基建施工平台，化工历史包袱在2025年报口径下已不再是核心估值主线。当前约0.59倍PB、约9.8倍TTM PE，低估值和分红提供安全边际，浙江省内交通项目与在手合同提供收入可见度；但应收账款和合同资产规模高、2026Q1经营现金流为负，仓位应以回款改善为核心约束。",
-  "quality_rating": "B+",
-  "valuation_rating": "A-",
-  "fair_value_range": [
-    4.2,
-    5.0
-  ],
-  "buy_zone": [
-    3.1,
-    3.55
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.4
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江交科",
+    "security_status": "active",
+    "symbol": "CN:002061",
+    "ticker": "002061"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "379348faf406c292833349508043395f130fabfbbc8c262996b78530b5ea7ba8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格不高于3.55元，且无应收款、合同资产重大减值或订单显著恶化公告",
-      "action": "建立首笔观察型买入仓位",
-      "max_weight": 0.015,
-      "reason": "当前约0.59倍PB，估值具备安全边际，但现金流和回款仍需半年报确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点检查经营现金流、应收账款、合同资产、毛利率和订单质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.20元，且基本面未出现新增负面变化",
-      "action": "加仓至中等仓位",
-      "max_weight": 0.03,
-      "reason": "低于0.55倍PB时风险补偿更充分，适合用价格折扣覆盖施工回款不确定性"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认前三季度现金流是否改善以及全年利润区间是否需要下修",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026半年报或三季报显示经营现金流改善，合同资产增速低于收入增速，新签订单稳定",
-      "action": "提高至核心低估值仓位",
-      "max_weight": 0.05,
-      "reason": "若回款质量改善，低PB修复和分红收益可共同兑现"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报和分红预案，重新评估国企治理、分红稳定性和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入更有吸引力的加仓复核区，需确认下跌不是由回款、减值或订单恶化驱动",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "进入估值修复兑现区，若现金流未同步改善应考虑减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.4
+      },
+      "reason": "接近乐观估值上沿，除非利润和ROE显著上修，否则应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入更有吸引力的加仓复核区，需确认下跌不是由回款、减值或订单恶化驱动"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "进入估值修复兑现区，若现金流未同步改善应考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.4,
-      "reason": "接近乐观估值上沿，除非利润和ROE显著上修，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点检查经营现金流、应收账款、合同资产、毛利率和订单质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认前三季度现金流是否改善以及全年利润区间是否需要下修"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报和分红预案，重新评估国企治理、分红稳定性和估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新中标且签约金额",
-    "累计已签约未完工金额",
-    "浙江省内重大交通项目占比",
-    "经营活动现金流净额",
-    "应收账款",
-    "合同资产",
-    "合同负债",
-    "毛利率",
-    "归母净利率",
-    "ROE",
-    "信用减值损失",
-    "资产减值损失",
-    "年度现金分红率",
-    "股息率",
-    "大股东及重要股东持股变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

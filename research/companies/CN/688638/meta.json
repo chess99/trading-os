@@ -1,73 +1,95 @@
 {
-  "symbol": "CN:688638",
-  "market": "CN",
-  "ticker": "688638",
-  "name": "誉辰智能",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "誉辰智能具备20亿元以上在手订单和海外订单突破带来的周期反转期权，但2025年及2026Q1仍处亏损，存货、客户集中、验收周期和费用率尚未被利润表验证；当前价格接近公允区间中枢，宜观察等待毛利率、现金流和订单验收质量改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    25.0,
-    35.0
-  ],
-  "buy_zone": [
-    18.0,
-    22.0
-  ],
-  "sell_or_reduce_zone": [
-    38.0,
-    45.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "誉辰智能",
+    "security_status": "active",
+    "symbol": "CN:688638",
+    "ticker": "688638"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "93bee0f4375ddc1c6e81703ab248962652843628d2e4246e68bda839dffeecab"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入18-22元且未出现订单取消、重大减值或现金流显著恶化时，仅建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入确认、毛利率、存货、应收票据和嘉洋电池表现。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3单季收入超过2.5亿元、毛利率稳定高于20%、经营现金流改善后，可将观察仓提高。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断20亿元在手订单是否开始转化为利润和经营现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026年仍大额亏损、存货继续高增或海外订单验收明显拖延，则不新增并考虑退出观察。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，决定是否从观察转为买入、继续观察或回避。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入安全边际买入区，需复核订单、毛利率和现金流是否未恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "超过公允价值上沿附近，若利润和现金流未同步兑现，应考虑减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22.0,
-      "reason": "进入安全边际买入区，需复核订单、毛利率和现金流是否未恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 38.0,
-      "reason": "超过公允价值上沿附近，若利润和现金流未同步兑现，应考虑减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入确认、毛利率、存货、应收票据和嘉洋电池表现。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断20亿元在手订单是否开始转化为利润和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，决定是否从观察转为买入、继续观察或回避。"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

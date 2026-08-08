@@ -1,30 +1,101 @@
 {
-  "symbol": "CN:600066",
-  "market": "CN",
-  "ticker": "600066",
-  "name": "宇通客车",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "宇通客车具备海外高毛利与高分红价值，但2026Q1收入利润下降且上半年销量同比下降5.73%，28.40元略高于买入区间，等待半年报验证后再建仓。",
-  "fair_value_range": [30, 36],
-  "buy_zone": [24, 27],
-  "sell_or_reduce_zone": [38, 43],
-  "position_plan": [
-    {"condition": "24-27元且海外订单与毛利率未恶化", "max_weight": 0.02},
-    {"condition": "22-24元且分红和现金流可持续", "max_weight": 0.04},
-    {"condition": "22元以下经复核确认长期出口逻辑未受损", "max_weight": 0.06}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宇通客车",
+    "security_status": "active",
+    "symbol": "CN:600066",
+    "ticker": "600066"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "4877c7b30d20efa146cb6882e72055c139a3224c6126e2cbf7f421ac6f0d9159"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-deep-review.md",
+        "sha256": "64e236ee517c1daa6052225756ac13ad3d54f24f3fd8c8d7872c8d54a95449d7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查半年报海外收入、毛利率、现金流和订单结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报和月度销量是否恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 27.0
+      },
+      "reason": "进入首笔买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入高安全边际区间，复核分红持续性",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "超过当前合理价值上沿，评估减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-11-deep-review.md",
-  "report_history": ["reports/2026-07-10-initial.md", "reports/2026-07-11-deep-review.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "复查半年报海外收入、毛利率、现金流和订单结构"},
-    {"type": "date", "date": "2026-10-31", "reason": "复查三季报和月度销量是否恢复"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 27, "reason": "进入首笔买入区间"},
-    {"type": "price_below", "price": 24, "reason": "进入高安全边际区间，复核分红持续性"},
-    {"type": "price_above", "price": 38, "reason": "超过当前合理价值上沿，评估减仓"}
-  ],
-  "updated_at": "2026-07-11T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

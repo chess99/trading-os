@@ -1,79 +1,86 @@
 {
-  "symbol": "CN:000698",
-  "market": "CN",
-  "ticker": "000698",
-  "name": "ST沈化",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "ST沈化仍处其他风险警示，2025年归母亏损、2026Q1利润和现金流走弱，高负债与周期品低毛利压制质量；2026-07-17收盘3.16元对应约1.86x PB，较多数可比周期化工股不便宜，当前无安全边际。",
-  "fair_value_range": [
-    1.5,
-    2.1
-  ],
-  "buy_zone": [
-    1.05,
-    1.35
-  ],
-  "sell_or_reduce_zone": [
-    2.3,
-    3.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST沈化",
+    "security_status": "active",
+    "symbol": "CN:000698",
+    "ticker": "000698"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "d2476cf56e64d97a72cb7ec2cf6fe9e60b696187d5d9874e5aaa880a79557cb2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约3.16元且ST未撤销、盈利质量未验证",
-      "action": "不买，已有仓位减至观察仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报，重点看扣非利润、经营现金流、短债和应付票据。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于1.35元，且ST撤销条件清晰、无新增监管/诉讼/债务异常、连续两个季度扣非盈利",
-      "action": "允许第一笔观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-11-30"
+      },
+      "reason": "行政处罚决定满12个月后，复查是否申请撤销其他风险警示及交易所反馈。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于1.05元，且2026H1/2026Q3扣非利润、经营现金流和负债同步改善",
-      "action": "可提高为事件仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.35
+      },
+      "reason": "进入安全边际买区，需同时复核ST撤销和盈利现金流条件。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于2.30元且无新增基本面改善",
-      "action": "不追高，已有仓位减仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.3
+      },
+      "reason": "超过不应追高区，风险收益不对称。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报，重点看扣非利润、经营现金流、短债和应付票据。"
-    },
-    {
-      "type": "date",
-      "date": "2026-11-30",
-      "reason": "行政处罚决定满12个月后，复查是否申请撤销其他风险警示及交易所反馈。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.35,
-      "reason": "进入安全边际买区，需同时复核ST撤销和盈利现金流条件。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.3,
-      "reason": "超过不应追高区，风险收益不对称。"
-    }
-  ],
-  "updated_at": "2026-07-19",
-  "notes": [
-    "当前决策：不买/avoid；第一笔仓位为0。",
-    "ST原因：2018-2021年度报告财务指标虚假记载，2025-10-10起实施其他风险警示。",
-    "2025年审计意见和内控审计意见均为标准无保留，但撤销ST仍受行政处罚决定满12个月等条件约束。",
-    "合理价格区间1.50-2.10元，安全边际买入价1.05-1.35元，强吸引力买入价1.05元以下，不应追高价2.30元以上。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

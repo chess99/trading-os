@@ -1,98 +1,105 @@
 {
-  "symbol": "CN:301510",
-  "ticker": "301510",
-  "name": "固高科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "固高科技是稀缺的运动控制核心部件与高端装备国产替代标的，2025 年利润和现金流明显修复，但当前约 30 元附近的可见行情对应静态估值过高，需等待股价回到安全边际或 2026 年扣非利润和现金流继续超预期兑现。",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    22,
-    28
-  ],
-  "buy_zone": [
-    16,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    42
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于 20 元，且最近一期收入、扣非净利润和经营现金流没有同步恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价处于 16-18 元区间，且 2026 年扣非利润年化趋势高于 1.0 亿元、经营现金流为正",
-      "action": "加至核心跟踪仓",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于 36 元且未出现半导体、机器人或高端数控客户批量放量证据",
-      "action": "不追高并降低已有仓位",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入纪律性买入观察区，需要复核基本面是否未恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入悲观情景价值下沿，若现金流和利润未恶化可重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "进入乐观情景估值区，若业绩未超预期应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入、扣非净利润、毛利率、现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报并验证 Q1 高增长是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新校准长期估值和仓位上限"
-    }
-  ],
-  "valuation": {
+  "identity": {
     "currency": "CNY",
-    "shares_outstanding_assumption_mn": 400,
-    "base_case_equity_value_bn": [
-      8.8,
-      11.2
-    ],
-    "notes": "当前行情源在 2026-07-16 可见约 30 元附近但口径不一致，报告将其标为低置信度；估值以每股价值区间管理风险。"
+    "market": "CN",
+    "name": "固高科技",
+    "security_status": "active",
+    "symbol": "CN:301510",
+    "ticker": "301510"
   },
-  "key_monitoring": [
-    "2026 年收入增速是否超过 30%",
-    "扣非净利润是否向 1.0-1.2 亿元以上运行",
-    "经营现金流是否与利润同步改善",
-    "运动控制核心部件和驱控一体毛利率是否稳定",
-    "半导体、高端数控、机器人客户是否放量",
-    "限售股解禁和核心股东减持"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "bb8a30d93669d49d25e7e95f71fc2eeb05d51a965694b09bd5b95413678d2c9f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入、扣非净利润、毛利率、现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报并验证 Q1 高增长是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新校准长期估值和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入纪律性买入观察区，需要复核基本面是否未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入悲观情景价值下沿，若现金流和利润未恶化可重新评估买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "进入乐观情景估值区，若业绩未超预期应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

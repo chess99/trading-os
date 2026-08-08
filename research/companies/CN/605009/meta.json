@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:605009",
-  "market": "CN",
-  "ticker": "605009",
-  "name": "豪悦护理",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "豪悦护理具备吸收性卫生用品制造能力、客户基础和成人护理长期赛道价值，但2025年并表增收未转化为利润增长，ROE与现金流下行，且婴儿纸尿裤安全舆情最终结论未核验；当前价格处于公允区间中部，适合观察，等待20元以下安全边际或利润/现金流修复确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    21,
-    28
-  ],
-  "buy_zone": [
-    17,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    36
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "豪悦护理",
+    "security_status": "active",
+    "symbol": "CN:605009",
+    "ticker": "605009"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d8a7f354c2c19c0d91b962412a94bb6f0f7be02be2f7da00bd30b89ca97a28eb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于20元，且官方调查未显示公司核心产品存在重大质量责任，2026年经营现金流/净利润不低于0.8",
-      "action": "分批建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看丝宝整合、销售费用率、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于18元，且2026H1归母净利润同比转正、销售费用率回落",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润修复斜率和成人护理增长质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于32元但正常化归母净利润仍低于3.5亿元",
-      "action": "减仓或不再加仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报及分红政策，重新计算正常化盈利和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入买入区间上沿，若质量舆情和现金流无恶化，可重新评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "悲观情景附近，可能提供充分安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "超过基准公允价值上沿，需要利润修复证据支撑，否则应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入买入区间上沿，若质量舆情和现金流无恶化，可重新评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "悲观情景附近，可能提供充分安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "超过基准公允价值上沿，需要利润修复证据支撑，否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看丝宝整合、销售费用率、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润修复斜率和成人护理增长质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报及分红政策，重新计算正常化盈利和估值区间"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

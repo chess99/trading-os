@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603901",
-  "market": "CN",
-  "ticker": "603901",
-  "name": "永创智能",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "永创智能 2025 年利润和现金流修复，2026Q1 与 2026H1 业绩预告继续验证包装设备订单与利润弹性；当前约 9.3-9.8 元股价对应 2026E 约 19-23 倍 PE，处于合理价值下沿，适合小仓位买入并等待中报用订单、毛利率和经营现金流继续验证。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    10.5,
-    13.0
-  ],
-  "buy_zone": [
-    8.3,
-    9.8
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永创智能",
+    "security_status": "active",
+    "symbol": "CN:603901",
+    "ticker": "603901"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "dc32d05c99d54e128da42c9ead92e1749c806670cc527916fd8113c4ca0e03f8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 9.8 元且 2026H1 业绩落在预告区间内、毛利率和订单没有恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报的收入、毛利率、扣非净利润、经营现金流、合同负债和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 8.5 元且中报经营现金流、合同负债和应收账款未明显恶化",
-      "action": "提高到核心跟踪仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 H2 订单交付与利润修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026 中报确认收入、扣非利润、经营现金流和订单质量均改善",
-      "action": "提高最高仓位上限",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新校准全年盈利中枢、分红能力和 2027 年估值锚",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.3
+      },
+      "reason": "低于保守绝对估值下沿且基本面未恶化时安全边际显著提高",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "进入合理价值区间上沿，若缺少订单和利润上修证据应开始减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "明显依赖乐观情景定价，主营验证不足时风险收益比转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.3,
-      "reason": "低于保守绝对估值下沿且基本面未恶化时安全边际显著提高"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "进入合理价值区间上沿，若缺少订单和利润上修证据应开始减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "明显依赖乐观情景定价，主营验证不足时风险收益比转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报的收入、毛利率、扣非净利润、经营现金流、合同负债和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 H2 订单交付与利润修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新校准全年盈利中枢、分红能力和 2027 年估值锚"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

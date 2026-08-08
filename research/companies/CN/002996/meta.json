@@ -1,110 +1,114 @@
 {
-  "symbol": "CN:002996",
-  "market": "CN",
-  "ticker": "002996",
-  "name": "顺博合金",
-  "company_name": "重庆顺博铝合金股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司受益于再生铝长期扩张和低碳政策，但主业仍是低毛利、高周转、重营运资金的周期加工业务。当前 5.85 元接近合理区间上沿，缺少足够安全边际；等待低于 4.6 元且现金流改善后再小仓位介入。",
-  "quality_rating": "中低",
-  "valuation_rating": "合理偏高",
-  "fair_value_range": [
-    4.8,
-    6.0
-  ],
-  "buy_zone": [
-    0,
-    4.6
-  ],
-  "sell_or_reduce_zone": [
-    7.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "顺博合金",
+    "security_status": "active",
+    "symbol": "CN:002996",
+    "ticker": "002996"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "aaf6f0cc6935cfc432bf262d6728aafc1cef9045d95ebd1b34f28804c320818e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 4.6 元，且没有新增重大信用风险、定增项目风险或经营现金流恶化",
-      "action": "建立 0.5-1.0 单位观察仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价低于 4.2 元，且连续两个季度经营现金流为正、短期借款下降、单吨扣非利润改善",
-      "action": "加仓至 1.5-2.0 单位",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "股价高于 7.0 元，且利润改善主要来自铝价或一次性因素而非结构性毛利提升",
-      "action": "减仓或不追高",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "currency": "CNY",
-      "reason": "低于合理价值区间下沿并具备初步安全边际",
-      "action": "进入可买区，复核现金流、短债和铝价后考虑小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "currency": "CNY",
-      "reason": "价格明显低于保守 PB 锚，若基本面同步改善可提高赔率",
-      "action": "进入加仓观察区，要求基本面同步改善"
-    },
-    {
-      "type": "price_above",
-      "price": 7.0,
-      "currency": "CNY",
-      "reason": "价格高于合理区间上沿，容易反映过多周期乐观预期",
-      "action": "进入减仓区，复核估值是否已脱离周期中枢"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证一季报利润改善是否可持续",
-      "action": "复核收入、单吨利润、经营现金流和短期借款"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
-      "condition": "定增获批或募投项目投资节奏、预算、产能利用率发生重大变化",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "定增和募投项目会影响摊薄、折旧、资本开支和长期 ROE",
-      "action": "重估折旧、摊薄、项目回报和合理价格区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "铝价或废铝价单季度大幅波动导致毛利率明显偏离 2%-3% 区间",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "铝价和废铝价波动会直接影响库存、加工费和吨利润",
-      "action": "复核库存、套保、加工费和吨利润假设"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "应收账款超过 40 亿元或出现重大坏账、逾期票据、客户信用事件",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "公司营运资金占用高，应收风险会快速改变质量评级",
-      "action": "下调质量评级并重新评估仓位上限"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "低于合理价值区间下沿并具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "价格明显低于保守 PB 锚，若基本面同步改善可提高赔率",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.0
+      },
+      "reason": "价格高于合理区间上沿，容易反映过多周期乐观预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "铝合金锭（液）销量和单吨扣非利润",
-    "压延铝材收入占比与毛利率",
-    "经营现金流净额与归母净利润匹配度",
-    "应收账款余额、周转天数和坏账准备",
-    "短期借款、财务费用和授信稳定性",
-    "定增募投项目进度、折旧摊销、产能利用率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

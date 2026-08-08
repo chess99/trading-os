@@ -1,104 +1,115 @@
 {
-  "symbol": "CN:920207",
-  "market": "CN",
-  "ticker": "920207",
-  "name": "众诚科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "众诚科技是河南区域数字政府、产业数字化、信创集成和 ICT 服务商，2025 年收入和现金流改善但扣非仍亏，2026Q1 收入明显下滑；AI、数字孪生、具身智能是期权而非已验证利润来源，当前 23.29 元缺乏安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    12.0
-  ],
-  "buy_zone": [
-    7.0,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    20.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "众诚科技",
+    "security_status": "active",
+    "symbol": "CN:920207",
+    "ticker": "920207"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "a8860787e10ce665a6f490aec24c8ba3ae040349f43c05d8183809ea5fd30b25"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price review zone",
-      "action": "strong_buy_if_fundamentals_intact",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "starter_position_after_h1_or_q3_validation",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "watch_or_small_tracking_position",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "watch_only",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "review_for_first_1_to_2_percent_position",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price review zone",
-      "action": "avoid_chasing",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "review_for_up_to_5_percent_if_cash_flow_and_receivables_stable",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "do_not_chase_without_new_profit_evidence",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "reduce_or_avoid_unless_new_business_profit_is_verified",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "action": "review_for_first_1_to_2_percent_position",
-      "reason": "review_for_first_1_to_2_percent_position"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "action": "review_for_up_to_5_percent_if_cash_flow_and_receivables_stable",
-      "reason": "review_for_up_to_5_percent_if_cash_flow_and_receivables_stable"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "action": "do_not_chase_without_new_profit_evidence",
-      "reason": "do_not_chase_without_new_profit_evidence"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "action": "reduce_or_avoid_unless_new_business_profit_is_verified",
-      "reason": "reduce_or_avoid_unless_new_business_profit_is_verified"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "action": "review_2026_h1_revenue_margin_cash_flow_receivables_and_contract_liability_conversion",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "action": "review_2026_q3_order_delivery_deducted_net_profit_and_operating_cash_flow",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "action": "review_2026_annual_report_for_normalized_profit_and_ai_digital_twin_embodied_intelligence_revenue",
-      "reason": "???????"
-    }
-  ],
-  "notes": [
-    "Quality C+; valuation expensive. 2026-07-17 close 23.29 CNY, market cap about 2.147 billion CNY using 92.195 million shares. First position today 0 percent; logical stop is two consecutive reporting periods without deducted-net-profit turning positive and/or operating cash flow turning negative with receivables or inventory deterioration."
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

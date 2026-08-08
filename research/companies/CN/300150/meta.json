@@ -1,111 +1,105 @@
 {
-  "symbol": "CN:300150",
-  "market": "CN",
-  "ticker": "300150",
-  "name": "世纪瑞尔",
-  "company_name": "北京世纪瑞尔技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "轨交安全监控与铁路综合信息化细分公司，账面净现金和行业准入提供一定下限，但ROE低、应收账款高、2026Q1转亏，当前3.75元高于保守合理价值区间，安全边际不足。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.8,
-    3.4
-  ],
-  "buy_zone": [
-    2.6,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    4.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "世纪瑞尔",
+    "security_status": "active",
+    "symbol": "CN:300150",
+    "ticker": "300150"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "f673bbf8a976b0597c0935e10c852910e1e3aa1347550807e1ea8de82ffb2094"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于2.6元，且最近两个季度经营现金流为正、应收账款未继续扩大",
-      "action": "试仓",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格在2.6-2.8元，且2026年扣非净利润恢复同比增长",
-      "action": "小仓观察",
-      "target_position": "0.5%",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "价格高于3.2元且未出现订单、毛利率、回款同步改善",
-      "action": "不主动买入",
-      "target_position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格高于4.5元且利润预期未上修",
-      "action": "卖出或回避",
-      "target_position": "0%",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入可买区上沿",
-      "action": "复核是否进入可买区"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "达到试仓安全边际",
-      "action": "若基本面未恶化，可考虑试仓"
-    },
-    {
-      "type": "price_above",
-      "price": 4.5,
-      "reason": "价格明显高于保守合理价值",
-      "action": "若没有盈利上修，卖出或降低评级"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年半年报复核",
-      "condition": "披露2026年半年报后复核收入、扣非净利、经营现金流和应收账款"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报复核",
-      "condition": "披露2026年三季报后复核全年利润可持续性"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2026年年报复核",
-      "condition": "披露2026年年报后重估合理价值和仓位"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入可买区上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "达到试仓安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.5
+      },
+      "reason": "价格明显高于保守合理价值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "经营现金流/净利润",
-    "应收账款/营业收入",
-    "合同资产余额",
-    "铁路行业收入及毛利率",
-    "城轨乘客信息系统收入及毛利率",
-    "信用减值损失",
-    "商誉减值风险",
-    "新签订单和在手订单"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

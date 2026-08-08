@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603733",
-  "market": "CN",
-  "ticker": "603733",
-  "name": "仙鹤股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "仙鹤股份是特种纸第一梯队公司，品类平台化和林浆纸用一体化具备长期竞争力；但2025-2026年仍处重资产扩张与财务杠杆较高阶段，鹤21转债转股/赎回带来的股本和债务变化尚需落定。当前估值大致处于合理区间下沿到中部，缺少足够安全边际，适合观察，等待价格回落或连续报表验证毛利率、现金流和资产负债率改善后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18.0,
-    25.0
-  ],
-  "buy_zone": [
-    15.0,
-    17.5
-  ],
-  "sell_or_reduce_zone": [
-    27.0,
-    32.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "仙鹤股份",
+    "security_status": "active",
+    "symbol": "CN:603733",
+    "ticker": "603733"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "6840b5e46db655cef23734de45091489ee1d8ade09c1b365d82e9771f8e54fab"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入15.0-17.5元区间，且鹤21转债转股/赎回结果落定后资产负债率改善、经营现金流仍为正",
-      "action": "建立观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
+      "reason": "复核鹤21转债最终转股/赎回结果、总股本和资产负债率影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度毛利率不低于14.5%、扣非净利润同比增长且财务费用率不再上升",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.07
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的毛利率、扣非净利润、经营现金流和财务费用",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于27元且没有同步上修盈利预测或自由现金流改善证据",
-      "action": "降低仓位或不追高",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认广西/湖北基地达产、吨盈利和现金流趋势",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.5
+      },
+      "reason": "进入买入区间上沿，若转债事项和经营现金流未恶化，应重新评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入高安全边际区间，除非出现浆价、现金流或项目爬坡重大负面变化，应重点复核",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "高于合理价值区间上沿，若缺少业绩上修证据，应考虑减仓或等待",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.5,
-      "reason": "进入买入区间上沿，若转债事项和经营现金流未恶化，应重新评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入高安全边际区间，除非出现浆价、现金流或项目爬坡重大负面变化，应重点复核"
-    },
-    {
-      "type": "price_above",
-      "price": 27.0,
-      "reason": "高于合理价值区间上沿，若缺少业绩上修证据，应考虑减仓或等待"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-07-31",
-      "reason": "复核鹤21转债最终转股/赎回结果、总股本和资产负债率影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、扣非净利润、经营现金流和财务费用"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认广西/湖北基地达产、吨盈利和现金流趋势"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000505",
-  "market": "CN",
-  "ticker": "000505",
-  "name": "京粮控股",
-  "company_name": "京粮控股",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "北京国资粮油平台具备信用和区域资源优势，但油脂油料加工利润率薄、ROE偏低，当前只适合观察；需要价格低于4.20元并看到毛利率、存货和经营现金流改善后再试仓。",
-  "quality_rating": "B-",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    4.3,
-    5.4
-  ],
-  "buy_zone": [
-    3.6,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "京粮控股",
+    "security_status": "active",
+    "symbol": "CN:000505",
+    "ticker": "000505"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "3be914d7bb0c98a8177048262f2baf570720e500a4390f91c9954c59a29ef6b6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于4.20元，且中报显示扣非净利率环比改善、经营现金流不再明显恶化",
-      "action": "首笔试仓",
-      "max_weight": 0.005,
-      "reason": "当前ROE偏低且一季报利润下滑，需要价格安全边际和基本面改善共同确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看毛利率、存货、经营现金流和套保效果",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.80元，且未出现重大信披、食品安全或存货减值风险",
-      "action": "加仓至观察仓",
-      "max_weight": 0.015,
-      "reason": "接近或低于每股净资产折价区间，风险补偿改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度毛利率改善、经营现金流转正且ROE向5%以上修复",
-      "action": "提高上限但保持小仓位",
-      "max_weight": 0.03,
-      "reason": "只有盈利质量改善后，低估值修复逻辑才可升级为持有逻辑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入首笔试仓观察区，需要结合中报毛利率、现金流和存货确认",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "接近较好安全边际，可重新评估加仓至1.5%以内",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "若ROE和利润质量未同步改善，估值上行后应减持或放弃",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入首笔试仓观察区，需要结合中报毛利率、现金流和存货确认"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "接近较好安全边际，可重新评估加仓至1.5%以内"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "若ROE和利润质量未同步改善，估值上行后应减持或放弃"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看毛利率、存货、经营现金流和套保效果"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否连续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度毛利率",
-    "扣非净利率",
-    "存货余额与周转天数",
-    "经营活动现金流量净额",
-    "套期保值损益和有效性",
-    "油脂油料业务收入与毛利",
-    "休闲食品收入增速",
-    "分红率",
-    "关联交易规模",
-    "资产减值准备"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,112 +1,105 @@
 {
-  "symbol": "CN:300936",
-  "ticker": "300936",
-  "name": "中英科技",
-  "company_name": "常州中英科技股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于高频覆铜板、VC散热和引线框架等景气方向，但2025年扣非亏损、2026Q1继续亏损，行业景气尚未转化为公司利润；2026-07-15股价80.46元对应估值显著高于18-28元/股的可验证合理价值区间，当前不买，仅观察订单、毛利率、现金流和关联并购进展。",
-  "fair_value_range": [
-    18,
-    28
-  ],
-  "buy_zone": [
-    12,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    60
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于18元，且最近两个季度扣非净利润转正、经营现金流转正、通信材料毛利率回到23%以上后，才允许建立观察性仓位。",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于12元，且并购交易价格公允、无大额商誉减值风险、主业收入恢复增长后，可提高至小仓位。",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于40元或任一季度扣非继续亏损时，不新增仓位；若已有仓位应降至零。",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入合理价值区间上沿以下，重新核验订单、毛利率和现金流是否支持观察。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入买入观察区，但仍需基本面触发条件同时满足。"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "明显高于乐观情景估值，若持有需复核减持或退出。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看扣非净利润、经营现金流、通信材料毛利率和应收存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及英中电气并购进展，判断收入修复是否转化为利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新计算正常化盈利和估值区间。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 80.46,
-    "last_price_date": "2026-07-15",
-    "shares_outstanding": 75200000,
-    "market_cap_cny": 6050592000,
-    "revenue_2025_cny": 226131522.42,
-    "net_profit_2025_cny": 2125349.07,
-    "deducted_net_profit_2025_cny": -7023500,
-    "operating_cash_flow_2025_cny": 7202370.64,
-    "q1_2026_revenue_cny": 62781324.02,
-    "q1_2026_net_profit_cny": -1105400,
-    "q1_2026_deducted_net_profit_cny": -2854400
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中英科技",
+    "security_status": "active",
+    "symbol": "CN:300936",
+    "ticker": "300936"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "159c7ca2f36273818789da58f44afc721fe1fa3c4d9bf3f9443f64bdf639fbff"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "name": "中英科技2025年年度报告",
-      "date": "2026-04-22",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-22/1225134348.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看扣非净利润、经营现金流、通信材料毛利率和应收存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "name": "中英科技2026年第一季度报告摘要转载",
-      "date": "2026-04-22",
-      "url": "https://finance.sina.com.cn/stock/aigc/stockfs/2026-04-22/doc-inhvkiya9370691.shtml"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及英中电气并购进展，判断收入修复是否转化为利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "name": "中英科技重大资产重组进展公告转载",
-      "date": "2026-06-29",
-      "url": "https://www.zqrb.cn/gscy/ggkx/2026-06-29/A1782738713056.html"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新计算正常化盈利和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "name": "新浪行情接口",
-      "date": "2026-07-15",
-      "url": "https://hq.sinajs.cn/list=sz300936"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入合理价值区间上沿以下，重新核验订单、毛利率和现金流是否支持观察。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入买入观察区，但仍需基本面触发条件同时满足。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "明显高于乐观情景估值，若持有需复核减持或退出。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

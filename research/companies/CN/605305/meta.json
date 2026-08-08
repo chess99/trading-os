@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:605305",
-  "market": "CN",
-  "ticker": "605305",
-  "name": "中际联合",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "中际联合是风电高空安全作业设备细分龙头，2025 年和 2026Q1 业绩继续高增，外销占比过半且毛利率显著高于内销，低负债和现金理财资产提供下行缓冲；在 37.25 元附近约 14 倍 TTM PE，已进入具备安全边际的买入区间，但需要持续跟踪风电装机节奏、海外毛利率、应收账款和经营现金流。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    42,
-    50
-  ],
-  "buy_zone": [
-    32,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    65
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中际联合",
+    "security_status": "active",
+    "symbol": "CN:605305",
+    "ticker": "605305"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "ed779f19550990f59c61b37322938aa94885497c21175da18a7a5cd5d47d9e44"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格处于 36-38 元且 2026 年收入、利润、外销毛利率未出现明显恶化",
-      "action": "建立初始仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报的外销收入、毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至 34 元以下且经营现金流、应收账款、订单趋势核查后未恶化",
-      "action": "加仓至目标仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年 6.2 亿元基准净利假设是否需要调整",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 55 元且盈利预测未上修，或外销毛利率连续两个季度回落",
-      "action": "减仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和 2027 年一季报，重新评估风电装机周期与海外增长持续性",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入更高安全边际区间，需要复核现金流和订单后考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "超过合理价值区间上沿，若基本面未上修应考虑减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "进入乐观情景估值区间，需要海外高增和现金流改善支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入更高安全边际区间，需要复核现金流和订单后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "超过合理价值区间上沿，若基本面未上修应考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "进入乐观情景估值区间，需要海外高增和现金流改善支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报的外销收入、毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年 6.2 亿元基准净利假设是否需要调整"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和 2027 年一季报，重新评估风电装机周期与海外增长持续性"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

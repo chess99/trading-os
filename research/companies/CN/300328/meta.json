@@ -1,90 +1,86 @@
 {
-  "symbol": "CN:300328",
-  "market": "CN",
-  "ticker": "300328",
-  "name": "宜安科技",
-  "company_name": "东莞宜安科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司拥有镁铝合金压铸、非晶合金和医用镁等技术期权，但2025年和2026Q1仍亏损，毛利率和现金流未证明护城河；2026-07-13股价11.10元对应约76.64亿元市值，估值已显著透支盈利拐点。",
-  "quality_rating": "中低",
-  "valuation_rating": "昂贵",
-  "fair_value_range": [
-    4.0,
-    6.0
-  ],
-  "buy_zone": [
-    0,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宜安科技",
+    "security_status": "active",
+    "symbol": "CN:300328",
+    "ticker": "300328"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "0c34ff6a338f1e4d399af570980cda05d85ae3045f667b6b8814e6fd33b08ee7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价不高于3.8元，且最新季度扣非净利润转正、经营现金流没有继续恶化",
-      "action": "小仓位试买",
-      "max_weight": 0.01,
-      "target_position": "0.5%-1.0%"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查毛利率、扣非净利润、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在3.8元至6.0元之间，且尚未出现连续两个季度扣非盈利",
-      "action": "观察，不主动加仓",
-      "max_weight": 0.005,
-      "target_position": "0%-0.5%"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断盈利拐点是否连续出现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.5元，且盈利质量未明显改善",
-      "action": "不买或减仓",
-      "max_weight": 0,
-      "target_position": "0%"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
       "reason": "进入可买价格区，需要复核盈利质量后决定是否试买",
-      "action": "重新评估小仓位买入"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 8.5,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
       "reason": "价格显著高于合理价值上沿且安全边际不足",
-      "action": "降低关注优先级或减仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查毛利率、扣非净利润、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断盈利拐点是否连续出现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季收入同比增速",
-    "综合毛利率和轻合金业务毛利率",
-    "扣非净利润及扣非净利率",
-    "经营活动现金流量净额",
-    "应收账款和存货周转",
-    "液态金属/非晶合金收入恢复情况",
-    "医用镁注册与商业化进展",
-    "湖南基地投产进度、产能利用率和新订单毛利率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

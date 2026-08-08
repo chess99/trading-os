@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:002571",
-  "ticker": "002571",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "德力股份",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "current_thesis": "日用玻璃主业具备制造和渠道基础，但 2023-2025 年连续亏损、2026H1 预告继续亏损；出口退税取消和光伏玻璃停炉固定费用压制利润。当前约 10 元价格已提前反映控制权变化和修复期权，缺乏安全边际，先观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.8,
-    7.0
-  ],
-  "buy_zone": [
-    0.0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德力股份",
+    "security_status": "active",
+    "symbol": "CN:002571",
+    "ticker": "002571"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "b8dca47aebad88e29eec34026f3eb354d4242e2b329f16f36dc8ea1d0bae74c8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 4.8 元，且 2026H2 毛利率未继续恶化、光伏玻璃亏损有明确收敛路径",
-      "action": "research_buy",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-24"
+      },
+      "reason": "预约披露 2026 年半年度报告，需核验出口退税取消和光伏停炉亏损影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 3.5 元，且归母净资产未继续大幅减值、经营现金流恢复为正",
-      "action": "increase_research_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核毛利率、经营现金流和控制权变更进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 8.5 元且未出现经审计的持续盈利拐点",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年年报后重估持续盈利能力、资产减值和治理变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入基准公允价值下沿以下，可能出现研究性买入安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "超过乐观期权价值上沿，亏损状态下估值过高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入基准公允价值下沿以下，可能出现研究性买入安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "超过乐观期权价值上沿，亏损状态下估值过高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-24",
-      "reason": "预约披露 2026 年半年度报告，需核验出口退税取消和光伏停炉亏损影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核毛利率、经营现金流和控制权变更进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年年报后重估持续盈利能力、资产减值和治理变化"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

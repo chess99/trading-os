@@ -1,70 +1,77 @@
 {
-  "symbol": "CN:000826",
-  "market": "CN",
-  "ticker": "000826",
-  "name": "*ST启环",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "不买。公司处于退市风险警示和其他风险警示状态，归母净资产为负，审计意见非标，预重整尚未正式转入重整，债务、诉讼、担保和现金链风险未解除；当前1.48元股价已包含较强重整成功预期，缺乏安全边际。",
-  "fair_value_range": [
-    0.4,
-    1.1
-  ],
-  "buy_zone": [
-    0.0,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    1.2,
-    2.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST启环",
+    "security_status": "active",
+    "symbol": "CN:000826",
+    "ticker": "000826"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "827eece03488ee35503b3a4fdb39f004d265682777e39abe7adb2b8098af2f7e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "风险警示未撤销、法院未正式受理重整、重整投资人协议未落地",
-      "action": "不买；已有仓位降至0",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报、预重整进度、债务诉讼和退市风险",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "法院正式受理重整、重整投资人签约且净资产转正路径清晰，价格低于0.80元",
-      "action": "仅可考虑事件驱动观察首仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入重整期权观察区，但仍需先满足重整受理和投资人落地",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "重整完成、审计意见恢复标准无保留、经营现金流保持为正且价格低于1.10元",
-      "action": "重新研究是否提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.2
+      },
+      "reason": "高于本轮基准价值上沿，风险未解除时应减仓或不追",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入重整期权观察区，但仍需先满足重整受理和投资人落地"
-    },
-    {
-      "type": "price_above",
-      "price": 1.2,
-      "reason": "高于本轮基准价值上沿，风险未解除时应减仓或不追"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报、预重整进度、债务诉讼和退市风险"
-    }
-  ],
-  "notes": [
-    "2026-07-17收盘价1.48元，按股本1,425,353,248股计算总市值约21.10亿元。",
-    "2025年经审计归母净资产为-23.20亿元，2026Q1归母权益降至-25.01亿元。",
-    "公司已被实施退市风险警示和其他风险警示；预重整尚未正式转入重整。",
-    "当前结论为avoid；价格区间仅用于风险复核和触发再研究，不构成买入建议。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

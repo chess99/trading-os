@@ -1,84 +1,110 @@
 {
-  "symbol": "CN:688150",
-  "market": "CN",
-  "ticker": "688150",
-  "name": "莱特光电",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "OLED终端材料量产和高毛利证明公司质量较高，Red Host、Green Prime与8.6代线提供增长，但京东方收入占85.56%、2026Q1收入利润双降、存货与扩产资本开支上升；2026-07-17收盘47.51元仍高于32-42元合理价值且约93.6倍TTM PE，7月12日后无新增基本面证据，等待32元以下与半年报验证。",
-  "fair_value_range": [
-    32.0,
-    42.0
-  ],
-  "buy_zone": [
-    26.0,
-    32.0
-  ],
-  "sell_or_reduce_zone": [
-    46.0,
-    58.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "莱特光电",
+    "security_status": "active",
+    "symbol": "CN:688150",
+    "ticker": "688150"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "dc930f25a504cf07a834145dd1d02da972fe7223b21c66349da8555bc9e0bf77"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "23e7be466ee557a6b2ea180a00904075797d0808766d2ef73f2e59745aa2cbad"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于42元且2026年盈利预测未显著上修，或仍只有Q布建设进度而无客户验证；不新建仓，已有仓仅作跟踪",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的OLED终端材料收入、京东方占比、Red Host与Green Prime、毛利率、存货及经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入32-36元，半年报确认OLED收入恢复且存货不再加速",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、京东方8.6代线材料供货及Q布设备安装和正式客户送样",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入26-32元，京东方订单稳定、OLED收入恢复且存货增速不再高于收入",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、可转债募投进度、Q布客户认证和实际资本开支",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元，客户分散、新品量产和Q布客户验证三项至少兑现两项，经营现金流未恶化",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入买入区上沿，复核OLED收入、京东方订单和存货后可建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价进入46-58元但盈利预测未同步上修，或京东方份额、毛利率、存货和扩产纪律任一核心假设破坏",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入较高安全边际区，基本面和扩产纪律未破坏时复核是否加至战略上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 46.0
+      },
+      "reason": "进入减仓区，若盈利预测和客户验证未同步上修应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的OLED终端材料收入、京东方占比、Red Host与Green Prime、毛利率、存货及经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报、京东方8.6代线材料供货及Q布设备安装和正式客户送样"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、可转债募投进度、Q布客户认证和实际资本开支"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32.0,
-      "reason": "进入买入区上沿，复核OLED收入、京东方订单和存货后可建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 26.0,
-      "reason": "进入较高安全边际区，基本面和扩产纪律未破坏时复核是否加至战略上限"
-    },
-    {
-      "type": "price_above",
-      "price": 46.0,
-      "reason": "进入减仓区，若盈利预测和客户验证未同步上修应降低仓位"
-    }
-  ],
-  "updated_at": "2026-07-18"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

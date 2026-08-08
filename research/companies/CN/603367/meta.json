@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603367",
-  "market": "CN",
-  "ticker": "603367",
-  "name": "辰欣药业",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "辰欣药业资产负债表强、现金和理财资产厚，低杠杆为估值提供底部支撑；但 2025 年和 2026Q1 收入仍下滑，扣非利润质量与主营增长尚未确认拐点。当前更适合观察或持有，等待价格进入更深安全边际区间，或等待收入和扣非利润连续改善后再提升评级。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    15.5,
-    18.5
-  ],
-  "buy_zone": [
-    12.2,
-    13.2
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    23.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "辰欣药业",
+    "security_status": "active",
+    "symbol": "CN:603367",
+    "ticker": "603367"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "04c021997b985178f75662fe627400b7758b6697ae5bbfb3300c039dc6437237"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 12.2-13.2 元且未出现集采、质量或治理重大负面事件时，可建立观察性底仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查收入、扣非利润、经营现金流和现金配置。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "收入和扣非归母净利润连续两个季度同比转正，且经营性现金流匹配利润，可加至核心小仓位。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认主营是否出现连续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 20.0 元且主营增长仍未验证，或估值超过现金垫支撑的合理区间，应降低或不新增仓位。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和 2027 年一季报，重新评估长期盈利中枢与分红回购政策。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.2
+      },
+      "reason": "进入买入区间上沿，市值接近净现金折价加保守主营价值，安全边际改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.2
+      },
+      "reason": "进入深度安全边际区间，可复核是否建立更高权重观察仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过合理价值区间上沿附近，如主营拐点未验证，应考虑减仓或停止新增。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.2,
-      "reason": "进入买入区间上沿，市值接近净现金折价加保守主营价值，安全边际改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 12.2,
-      "reason": "进入深度安全边际区间，可复核是否建立更高权重观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "超过合理价值区间上沿附近，如主营拐点未验证，应考虑减仓或停止新增。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查收入、扣非利润、经营现金流和现金配置。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认主营是否出现连续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和 2027 年一季报，重新评估长期盈利中枢与分红回购政策。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

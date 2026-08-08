@@ -1,96 +1,106 @@
 {
-  "symbol": "CN:002195",
-  "market": "CN",
-  "ticker": "002195",
-  "name": "岩山科技",
-  "company_name": "岩山科技",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "low_to_medium",
-  "valuation_rating": "expensive",
-  "current_thesis": "岩山科技资产负债率低、账面净资产较厚，但2025年收入仍主要来自互联网信息服务，AI业务收入占比很小，当前市值更多反映题材期权而非已验证利润增长；在股价回到2.40元以下并看到AI收入、经营现金流和利润质量改善前，维持观察。",
-  "fair_value_range": [
-    2.2,
-    3.2
-  ],
-  "buy_zone": [
-    1.8,
-    2.4
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    6.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "岩山科技",
+    "security_status": "active",
+    "symbol": "CN:002195",
+    "ticker": "002195"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "ae335bbc780d2d00e7367546798435c81ee55c6e644e1bba09c9442055c8e912"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于2.40元，且2026年半年报显示经营现金流改善、AI或智能业务收入连续增长",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "仅在价格回到合理区间且新业务出现财务验证后，以小仓位验证假设"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看AI业务收入、经营现金流、投资收益和资产减值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于2.40元至3.20元，且主营收入稳定、投资收益占利润比重下降",
-      "action": "维持或小幅增加至轻仓",
-      "max_weight": 0.02,
-      "reason": "资产底线与业务期权的风险收益比开始接近均衡，但仍需控制题材波动"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断新业务是否连续放量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于4.20元且AI、机器人或智能硬件收入没有实质放量",
-      "action": "不买入或减仓",
-      "max_weight": 0,
-      "reason": "价格已明显透支乐观预期，基本面验证不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入买入观察区，需要结合半年报现金流和AI业务收入复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入深度价值复核区，若净资产未恶化可重新评估安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "超过减仓区下沿，若基本面未兑现应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "高于乐观估值区上沿，题材溢价过高",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入买入观察区，需要结合半年报现金流和AI业务收入复核"
-    },
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入深度价值复核区，若净资产未恶化可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "超过减仓区下沿，若基本面未兑现应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "高于乐观估值区上沿，题材溢价过高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看AI业务收入、经营现金流、投资收益和资产减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断新业务是否连续放量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "互联网信息服务收入及毛利率",
-    "AI业务收入、订单、客户和回款",
-    "机器人或智能硬件可审计收入",
-    "经营现金流净额",
-    "投资收益和公允价值变动损益",
-    "资产减值损失",
-    "货币资金和金融资产规模",
-    "前十大股东、董监高减持和监管问询"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

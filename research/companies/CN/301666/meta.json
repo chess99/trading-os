@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:301666",
-  "market": "CN",
-  "ticker": "301666",
-  "name": "大普微",
-  "company_name": "大普微",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "观察",
-  "current_thesis": "大普微是A股稀缺的企业级SSD全栈自研资产，受益AI服务器和国产替代，但当前约2932亿元市值显著透支未来增长，基本面买点应等待140元以下。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "极贵",
-  "fair_value_range": [
-    120,
-    220
-  ],
-  "buy_zone": [
-    80,
-    140
-  ],
-  "sell_or_reduce_zone": [
-    300,
-    672
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大普微",
+    "security_status": "active",
+    "symbol": "CN:301666",
+    "ticker": "301666"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "63c750de0ce9d885e40466c6aaa05c1e554cbd16514942254c9675f54016806f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于300元",
-      "action": "不买，若已持有则减仓或退出基本面仓位",
-      "max_weight": 0.01,
-      "reason": "市值超过1300亿元，已经显著透支未来两到三年业绩兑现。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看Q2收入、毛利率、存货、经营现金流和客户放量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在140元至220元且2026年收入、毛利率、现金流继续验证",
-      "action": "仅小仓试探并等待半年报确认",
-      "max_weight": 0.02,
-      "reason": "进入合理价值区但安全边际仍不足，需要财务持续性证据。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1盈利拐点是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于140元且订单、毛利率、存货未恶化",
-      "action": "分批买入",
-      "max_weight": 0.05,
-      "reason": "对应市值约611亿元以下，开始具备安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年盈利、产品结构和海外客户收入。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于80元且公司仍维持盈利和正经营现金流",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.08,
-      "reason": "估值进入悲观情景下沿，若基本面未破坏，风险收益显著改善。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 140.0
+      },
+      "reason": "进入有安全边际的买入区，需要复核半年报和订单质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 100.0
+      },
+      "reason": "进入强吸引力买入区，若盈利持续可考虑加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 300.0
+      },
+      "reason": "进入明显高估区，基本面仓位应降仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 500.0
+      },
+      "reason": "进入交易拥挤和题材溢价区，不应以基本面逻辑追高。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 140,
-      "reason": "进入有安全边际的买入区，需要复核半年报和订单质量。"
-    },
-    {
-      "type": "price_below",
-      "price": 100,
-      "reason": "进入强吸引力买入区，若盈利持续可考虑加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 300,
-      "reason": "进入明显高估区，基本面仓位应降仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 500,
-      "reason": "进入交易拥挤和题材溢价区，不应以基本面逻辑追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看Q2收入、毛利率、存货、经营现金流和客户放量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1盈利拐点是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年盈利、产品结构和海外客户收入。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入",
-    "毛利率",
-    "归母净利润",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "存货余额及存货跌价准备",
-    "PCIe 5.0和大容量QLC产品收入占比",
-    "海外客户收入占比",
-    "前五大客户收入占比",
-    "前五大供应商采购占比",
-    "研发费用率",
-    "自研主控芯片出货占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

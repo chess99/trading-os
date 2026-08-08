@@ -1,117 +1,105 @@
 {
-  "symbol": "CN:002434",
-  "market": "CN",
-  "ticker": "002434",
-  "name": "万里扬",
-  "company_name": "浙江万里扬股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "传统乘用车CVT承压，商用车AMT/电驱、EV减速器、农机CVT和机器人关节模组提供转型期权；但2025年扣非亏损、2026Q1收入和扣非利润继续下滑，现价6.00元缺乏安全边际。",
-  "quality_rating": "中等偏弱",
-  "valuation_rating": "偏贵/无安全边际",
-  "fair_value_range": [
-    4.2,
-    5.4
-  ],
-  "buy_zone": [
-    3.5,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    5.8,
-    7.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万里扬",
+    "security_status": "active",
+    "symbol": "CN:002434",
+    "ticker": "002434"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "00886b412fe6b6cccdcedaa12c947dbc136581021a29639c4fba95a1768a701c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "<=3.50",
-      "action": "可积极研究买入",
-      "position": "3%-5%",
-      "max_weight": 0.05,
-      "note": "强吸引力价格，前提是基本面未继续恶化"
-    },
-    {
-      "condition": "3.50-4.20",
-      "action": "可试探买入",
-      "position": "1%-3%",
-      "max_weight": 0.03,
-      "note": "有安全边际，需结合扣非利润和订单复核"
-    },
-    {
-      "condition": "4.20-5.40",
-      "action": "观察",
-      "position": "0%-1%",
-      "max_weight": 0.01,
-      "note": "当前研究结论对应首笔仓位0%"
-    },
-    {
-      "condition": ">5.80",
-      "action": "不追高/已有仓位降风险",
-      "position": "0%或减仓",
-      "max_weight": 0,
-      "note": "除非扣非利润、订单和自由现金流均明显改善"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "currency": "CNY",
-      "reason": "进入有安全边际区间，需结合扣非利润和订单复核",
-      "note": "进入有安全边际区间，需结合扣非利润和订单复核"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "currency": "CNY",
-      "reason": "进入强吸引力价格，前提是基本面未继续恶化",
-      "note": "强吸引力价格，前提是基本面未继续恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 5.8,
-      "currency": "CNY",
-      "reason": "高于合理价格上沿，不追高，除非业绩确认",
-      "note": "高于此价格不追，除非业绩确认"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证Q1下滑是否收窄",
-      "focus": "收入降幅、扣非净利率、经营现金流和资本开支"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证主业恢复是否具有连续性",
-      "focus": "传统乘用车变速器业务是否企稳，新业务商业化是否兑现"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "完整评估转型业务和全年现金流质量",
-      "focus": "全年扣非利润、自由现金流、客户集中度、万里扬能源权益法收益和担保余额"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入有安全边际区间，需结合扣非利润和订单复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入强吸引力价格，前提是基本面未继续恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.8
+      },
+      "reason": "高于合理价格上沿，不追高，除非业绩确认",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "汽车零部件毛利率",
-    "前五大客户销售占比和第一大客户占比",
-    "EV减速器、商用车AMT/电驱桥、农机CVT、机器人关节模组销量",
-    "经营现金流减资本开支后的自由现金流",
-    "应收账款周转和存货变化",
-    "万里扬能源权益法收益与担保余额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

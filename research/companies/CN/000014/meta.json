@@ -1,85 +1,122 @@
 {
-  "symbol": "CN:000014",
-  "market": "CN",
-  "ticker": "000014",
-  "name": "沙河股份",
-  "company_name": "沙河股份",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "沙河股份具备深圳国资小市值地产平台和资产重估/重组期权，但主营项目去化、存货减值、扣非盈利和现金流尚未支撑当前估值，当前以跟踪为主，等待价格回到6.50元以下或基本面改善后再考虑小仓位。",
-  "quality_rating": "low_to_medium",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    5.5,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "沙河股份",
+    "security_status": "active",
+    "symbol": "CN:000014",
+    "ticker": "000014"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "c105f398335f1559ea5f954dbc4639af515d191dec3f171251f52e4f969c1ff7"
+      }
+    ],
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-7e3ade998c45.md",
+        "report_id": "CN-000014-2026-07-30-rapid-triage-7e3ade998c45",
+        "report_type": "rapid_triage",
+        "sha256": "68adfee204b91c8430a7c2f95b33e58c550448a4057a4e71fd5aae8c8ba3b1a0"
+      },
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-fb15ce6c5645.md",
+        "report_id": "CN-000014-2026-07-30-rapid-triage-fb15ce6c5645",
+        "report_type": "rapid_triage",
+        "sha256": "57f4befe5eeb5e3bb345a20d3cc11e6fb651faaaedf9f471a246025d697e411e"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-fb15ce6c5645.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-fb15ce6c5645.md"
+    }
+  },
+  "research": {
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T08:54:00+08:00",
+      "report_id": "CN-000014-2026-07-30-rapid-triage-fb15ce6c5645",
+      "report_path": "reports/2026-07-30-rapid-triage-fb15ce6c5645.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001-correction-001/000014/20260730T085400+0800.triage.json",
+      "source_package_sha256": "fb15ce6c5645f5c3d8dd2f115333296cdd6d79d8e9af5d9c62d63216d65b76b3"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间且无新增重组或盈利改善公告",
-      "action": "不买入，仅保留研究跟踪",
-      "max_weight": 0,
-      "reason": "当前估值主要反映深圳国资平台和资产重估期权，经营利润与现金流尚未支撑"
+      "active": true,
+      "condition": {
+        "description": "披露2026年半年度报告并分别列示房地产与晶华电子的收入、毛利、扣非利润、经营现金流、应收、存货及减值。"
+      },
+      "reason": "首份较完整并表定期报告可检验业绩预告亏损来源与晶华盈利的现金含量。",
+      "trigger_id": "h1-full-report-2026",
+      "type": "filing"
     },
     {
-      "condition": "股价低于6.50元且2026中报未出现新增存货减值或现金流恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格接近净资产锚，资产底和国资平台期权的赔率改善"
+      "active": true,
+      "condition": {
+        "description": "披露深圳、长沙、新乡项目的权益比例、账面成本、可售货值、实际售价、回款、剩余投入、税费及项目级跌价准备。"
+      },
+      "reason": "13.55亿元存货的项目级净可实现价值决定地产资产安全边际。",
+      "trigger_id": "project-nav-disclosure",
+      "type": "filing"
     },
     {
-      "condition": "晶华电子并表后资产质量稳定且核心项目去化改善",
-      "action": "将仓位上限提高至小仓位",
-      "max_weight": 0.02,
-      "reason": "基本面开始验证资产整合和项目现金回收，但仍不适合作为核心仓"
+      "active": true,
+      "condition": {
+        "description": "会计师专项审核确认晶华电子2026年扣非归母净利润及3720.22万元承诺完成情况，并披露补偿和经营现金流。"
+      },
+      "reason": "承诺利润兑现且转化为现金将增强收购价值，未兑现或高营运资金占用则削弱价值。",
+      "trigger_id": "jinghua-commitment-audit",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "若资产质量未进一步恶化，价格降至接近1.23倍2026Q1归母净资产会显著改善研究赔率。",
+      "trigger_id": "price-nav-reset",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使无重大公告，也应复核价格、地产去化、晶华经营与资产减值。",
+      "trigger_id": "routine-90d-refresh",
+      "type": "date"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入买入观察区，需要复核中报资产质量和项目去化"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "高于基本面合理区间，若无明确资产注入或盈利改善应减仓或避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点确认晶华电子并表、存货减值、现金流和项目去化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和地产政策对深圳、长沙项目销售的影响"
-    }
-  ],
-  "key_tracking_metrics": [
-    "存货余额和存货跌价准备",
-    "深圳和长沙核心项目销售面积、销售金额、去化率",
-    "经营活动现金流净额",
-    "货币资金和有息负债",
-    "晶华电子并表后的收入、利润、现金流和资产减值",
-    "控股股东及深圳国资体系资产注入或重组公告",
-    "股价对应市净率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-30T08:54:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

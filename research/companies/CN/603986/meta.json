@@ -1,90 +1,101 @@
 {
-  "symbol": "CN:603986",
-  "market": "CN",
-  "ticker": "603986",
-  "name": "兆易创新",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "兆易创新2026H1预告收入约115亿元、归母净利约69亿元、扣非净利约48.5亿元，存储量价齐升与MCU需求增长显著抬高盈利基准，因此合理价值上调至300~390元；但约20.5亿元利润来自证券投资公允价值等非经常性项目，存储周期峰值也不能线性年化。2026-07-17收盘463.15元仍高于合理价值上沿，维持观察，现价不买，等待250~310元并复核半年报后分批建仓。",
-  "fair_value_range": [300, 390],
-  "buy_zone": [250, 310],
-  "sell_or_reduce_zone": [460, 620],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "兆易创新",
+    "security_status": "active",
+    "symbol": "CN:603986",
+    "ticker": "603986"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "a83927738a2e95a3423dd7c03e38c0b79c71fcb7327eb63e042766f52bf97ac3"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "db225477a02705bcdae8479d74e61b66febc805a7da9780954eedd20c27a4f57"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_above_460",
-      "price_range": [460, 620],
-      "action": "avoid_or_reduce",
-      "target_weight": 0,
-      "max_weight": 0.01,
-      "notes": "高于合理价值上沿，不追高；已有仓位降至0~1%观察仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，核验预告扣非利润、现金流、存货、毛利率及证券投资收益明细。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_310_and_460",
-      "price_range": [310, 460],
-      "action": "observe",
-      "target_weight": 0.01,
-      "max_weight": 0.02,
-      "notes": "接近或高于合理价值，保持跟踪，不主动加仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断存储周期拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_250_and_310",
-      "price_range": [250, 310],
-      "action": "accumulate",
-      "target_weight": 0.02,
-      "max_weight": 0.03,
-      "notes": "进入买入区，半年报确认扣非利润、现金流与存储景气后分批建仓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 310.0
+      },
+      "reason": "进入更新后的买入区上沿，启动半年报与存储景气复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_between_180_and_250",
-      "price_range": [180, 250],
-      "action": "buy",
-      "target_weight": 0.03,
-      "max_weight": 0.04,
-      "notes": "强吸引力区，若存储景气和扣非盈利基准未破坏可提高仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 250.0
+      },
+      "reason": "进入强吸引力区，若扣非盈利基准和存储景气未破坏可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "price_below_180",
-      "price_range": [0, 180],
-      "action": "strong_buy",
-      "target_weight": 0.04,
-      "max_weight": 0.05,
-      "notes": "极端低估区间；仅在基本面未破坏时提高至上限仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 460.0
+      },
+      "reason": "明显高于合理价值上沿，避免追高并考虑降至观察仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，核验预告扣非利润、现金流、存货、毛利率及证券投资收益明细。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断存储周期拐点。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 310,
-      "reason": "进入更新后的买入区上沿，启动半年报与存储景气复核。"
-    },
-    {
-      "type": "price_below",
-      "price": 250,
-      "reason": "进入强吸引力区，若扣非盈利基准和存储景气未破坏可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 460,
-      "reason": "明显高于合理价值上沿，避免追高并考虑降至观察仓。"
-    }
-  ],
-  "updated_at": "2026-07-17T19:20:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

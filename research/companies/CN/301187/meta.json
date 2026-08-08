@@ -1,83 +1,105 @@
 {
-  "symbol": "CN:301187",
-  "ticker": "301187",
-  "name": "欧圣电气",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "欧圣电气是北美导向的小型空压机和干湿两用吸尘器出口制造商，具备客户认证、垂直一体化和马来西亚产能布局优势；但2025年利润和现金流显著走弱，2026Q1尚未证明修复，当前价格接近合理价值上沿，需等待海外产能爬坡、费用率下降和现金流转正后再考虑买入。",
-  "current_rating": "watch",
-  "rating": {
-    "current_rating": "watch",
-    "as_of": "2026-07-16",
-    "rationale": "当前约14元价格隐含较强利润修复预期，而2025年归母净利润同比大幅下降、2026Q1经营现金流仍为负，安全边际不足。"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "欧圣电气",
+    "security_status": "active",
+    "symbol": "CN:301187",
+    "ticker": "301187"
   },
-  "fair_value_range": [
-    11.5,
-    15.5
-  ],
-  "buy_zone": [
-    9.0,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    17.0,
-    20.0
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "11a2bbc2af35d9fb0dc5245df0a4b46d8ace038566ae56df6bf27c7fe1017b78"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入9.0-11.0元且2026半年报未显示订单、现金流或马来西亚产能明显恶化时，可建立观察仓。",
-      "action": "start_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查归母净利润、扣非净利润、毛利率、费用率、经营现金流和马来西亚工厂爬坡。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在11.0-13.0元且连续两个季度经营现金流转正、归母净利率恢复至7%以上、马来西亚工厂爬坡成本下降时，可小幅加仓。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否具备连续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于17.0元但归母净利润未恢复至2亿元以上或经营现金流未同步改善时，降低或放弃仓位。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新估算稳定利润中枢和股东回报能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入买入区间上沿，需要复核2026H1利润率、现金流和马来西亚产能爬坡情况。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入较有安全边际的观察仓区间，若基本面未恶化可重新评估买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.0
+      },
+      "reason": "进入减仓或放弃区间，需要确认利润是否已恢复到2亿元以上且现金流同步转正。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入买入区间上沿，需要复核2026H1利润率、现金流和马来西亚产能爬坡情况。"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入较有安全边际的观察仓区间，若基本面未恶化可重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 17.0,
-      "reason": "进入减仓或放弃区间，需要确认利润是否已恢复到2亿元以上且现金流同步转正。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查归母净利润、扣非净利润、毛利率、费用率、经营现金流和马来西亚工厂爬坡。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否具备连续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新估算稳定利润中枢和股东回报能力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

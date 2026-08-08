@@ -1,91 +1,96 @@
 {
-  "symbol": "CN:000551",
-  "market": "CN",
-  "ticker": "000551",
-  "name": "创元科技",
-  "company_name": "创元科技",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "苏州国资控股的多元化工业平台，洁净环保设备和苏州电瓷受益于高端制造、特高压和海外订单，2025及2026Q1利润改善真实；但当前估值已较充分反映洁净室、输变电、国资重估和创投资产期权，需等待价格回落或中报验证现金流与应收质量。",
-  "quality_rating": "B+",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    12.5,
-    16.5
-  ],
-  "buy_zone": [
-    10.5,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "创元科技",
+    "security_status": "active",
+    "symbol": "CN:000551",
+    "ticker": "000551"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "fc15bdc73ebd12c0ebd29f43e731a5bbfd96d06466c2ecf317a7b4bc399c42f5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于18元且估值已反映洁净室、特高压和国资重估预期",
-      "action": "不新增仓位，仅保留研究观察",
-      "max_weight": 0.0,
-      "reason": "静态PE约33倍、PB约3.2倍，对多元化工业控股平台偏贵"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、分业务毛利率、应收账款和合同资产",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至13元以下且订单、扣非利润和经营现金流未恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "接近中性估值下沿，赔率开始改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1利润高增长是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至11元附近且2026中报验证现金流和应收质量",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "接近保守绝对估值区间，安全边际较充分"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入首笔买入区间，复核订单、现金流和应收账款后可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入高安全边际区间，若基本面未恶化可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过乐观估值上沿，若无新增业绩证据应减仓或避免追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入首笔买入区间，复核订单、现金流和应收账款后可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入高安全边际区间，若基本面未恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "超过乐观估值上沿，若无新增业绩证据应减仓或避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、分业务毛利率、应收账款和合同资产"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1利润高增长是否可持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "江苏苏净合同成交额和收入确认节奏",
-    "苏州电瓷国家电网中标金额和海外订单",
-    "应收账款+合同资产+应收票据合计增速",
-    "扣非归母净利润增速",
-    "经营现金流净额/归母净利润",
-    "分业务毛利率",
-    "创投资产退出和公允价值变化",
-    "分红率和资本开支"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688171",
-  "market": "CN",
-  "ticker": "688171",
-  "name": "纬德信息",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "纬德信息卡位电网工业物联网安全、数字化解决方案和党政军保密场景，资产负债表稳健且并表双洲科技带来增长弹性；但当前价格已反映牛市情景，经营现金流、应收账款、客户集中和并购商誉仍需验证，现阶段适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10,
-    15
-  ],
-  "buy_zone": [
-    9,
-    13
-  ],
-  "sell_or_reduce_zone": [
-    22,
-    28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "纬德信息",
+    "security_status": "active",
+    "symbol": "CN:688171",
+    "ticker": "688171"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "550d436c30dd0eee4e6c99064d539207ee70d6830ea51ad308a1a2cb051234d8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入13元以下，且最近一期收入同比增长超过50%、经营活动现金流为正、应收账款增速低于收入增速",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、经营现金流、应收账款和双洲科技整合进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于10元，且双洲科技并表后扣非净利率达到10%以上、商誉无减值迹象",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报订单节奏、收入确认和全年业绩可见度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于22元且未披露高质量订单或现金流验证",
-      "action": "不新增并减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、商誉减值、分红政策和2027年增长指引",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入初始买入区间，需要复核中报现金流和应收账款后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入绝对估值安全边际区间，可重新评估小仓位配置",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "高于基准合理价值，若缺乏利润和现金流兑现应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "进入初始买入区间，需要复核中报现金流和应收账款后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入绝对估值安全边际区间，可重新评估小仓位配置"
-    },
-    {
-      "type": "price_above",
-      "price": 22,
-      "reason": "高于基准合理价值，若缺乏利润和现金流兑现应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、经营现金流、应收账款和双洲科技整合进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报订单节奏、收入确认和全年业绩可见度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、商誉减值、分红政策和2027年增长指引"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

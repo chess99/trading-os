@@ -1,98 +1,115 @@
 {
-  "symbol": "CN:000615",
-  "market": "CN",
-  "ticker": "000615",
-  "name": "*ST??",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "司法重整已显著修复资产负债表并引入九州通体系控股股东，但公司仍处*ST状态，撤销风险警示截至本次研究未核验到获批；2026H1仍预亏且主业扣非尚未稳定盈利。当前3.09元约55亿元市值已透支脱帽和医美转型预期，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.0,
-    1.6
-  ],
-  "buy_zone": [
-    0.0,
-    1.0
-  ],
-  "sell_or_reduce_zone": [
-    1.8,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST??",
+    "security_status": "active",
+    "symbol": "CN:000615",
+    "ticker": "000615"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "69c47b5583e0e37df50655645ee230da90b04f7d83dca9a90e9eabe77cb7f2ab"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_above_1.80_or_ST_not_removed",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "??2026???????ST??????????????",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_1.20_to_1.80",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "??2026???????????????????????????",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_1.00_to_1.20_and_ST_removed_and_H1_koufei_loss_narrows",
-      "action": "tiny_tracking_position",
-      "max_weight": 0.003
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "??2026????????????????????",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_0.70_to_1.00_with_no_new_litigation_freeze_risk",
-      "action": "event_driven_tracking_position",
-      "max_weight": 0.008
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "??1.20???????????ST?????????????????????",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_below_0.70_and_delisting_risk_clearly_removed",
-      "action": "high_risk_turnaround_position",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.0
+      },
+      "reason": "??1.00????????????????????????????????",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.7
+      },
+      "reason": "??0.70????????????????????????????????????",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.8
+      },
+      "reason": "??1.80???????????????????",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "??1.20???????????ST?????????????????????"
-    },
-    {
-      "type": "price_below",
-      "price": 1,
-      "reason": "??1.00????????????????????????????????"
-    },
-    {
-      "type": "price_below",
-      "price": 0.7,
-      "reason": "??0.70????????????????????????????????????"
-    },
-    {
-      "type": "price_above",
-      "price": 1.8,
-      "reason": "??1.80???????????????????"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "??2026???????ST??????????????"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "??2026???????????????????????????"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "??2026????????????????????"
-    }
-  ],
-  "notes": [
-    "????????????????????????????????????????????3.09????????",
-    "????????????????????????????????"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,48 +1,86 @@
 {
-  "symbol": "CN:920719",
-  "market": "CN",
-  "ticker": "920719",
-  "name": "宁新新材",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "负毛利、91%资产负债率、净资产快速消耗与持续经营重大不确定性尚未缓解，8.81元已过度定价完整反转，应回避。",
-  "fair_value_range": [1.2, 3.0],
-  "buy_zone": [0.8, 1.2],
-  "sell_or_reduce_zone": [3.5, 5.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宁新新材",
+    "security_status": "active",
+    "symbol": "CN:920719",
+    "ticker": "920719"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "388f9c9a3ab81fcab7626b76be89ec014f5619b53cb9e2f5f4fbf17eb5452507"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于0.8至1.2元且连续两个季度毛利率转正、净有息债务下降、无新增逾期或抽贷并确认长期商业价值未恶化",
-      "max_weight": 0.005
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、净资产、净债务和持续经营风险"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的毛利率、净资产、净债务和持续经营风险",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现连续经营修复"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入条件式观察买入区；必须重新验证毛利率、净债务和持续经营假设，禁止机械买入"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现连续经营修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 3.5,
-      "reason": "进入减仓或不应追高区间，除非经营与偿债修复已被连续财报验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入条件式观察买入区；必须重新验证毛利率、净债务和持续经营假设，禁止机械买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.5
+      },
+      "reason": "进入减仓或不应追高区间，除非经营与偿债修复已被连续财报验证",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-15T15:32:16+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

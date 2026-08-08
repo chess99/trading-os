@@ -1,73 +1,95 @@
 {
-  "symbol": "CN:600567",
-  "ticker": "600567",
-  "name": "山鹰国际",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "山鹰国际具备工业包装纸规模和造纸包装一体化资产价值，但2025年和2026H1仍处亏损修复期，短债、受限资金和复杂交易披露压制估值；当前低PB仅支持观察，需等待主业连续转正和资产负债表改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    1.1,
-    1.6
-  ],
-  "buy_zone": [
-    0.9,
-    1.05
-  ],
-  "sell_or_reduce_zone": [
-    1.75,
-    2.05
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山鹰国际",
+    "security_status": "active",
+    "symbol": "CN:600567",
+    "ticker": "600567"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "81ee3fa565636156ae26466eca41ca097568c943e594841c21e048da271c86fb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察，不建仓；若价格跌入买入区间且连续两个季度扣非亏损收窄、经营现金流为正，可建立跟踪仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、受限资金、短债和问询回复后的财务变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若2026H2扣非归母净利润转正、短期借款和受限资金占比下降，可提高至小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否实现主业减亏和现金流改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价进入减持区间但盈利未达到2027年4.5亿元归母净利润修复路径，应退出或保持零仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及股权激励首年1亿元归母净利润目标是否实现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.05
+      },
+      "reason": "进入保守买入区间，需同步复核纸价、吨毛利和现金流是否改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.75
+      },
+      "reason": "进入减持区间，若盈利修复未兑现则估值风险上升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.05,
-      "reason": "进入保守买入区间，需同步复核纸价、吨毛利和现金流是否改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 1.75,
-      "reason": "进入减持区间，若盈利修复未兑现则估值风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、受限资金、短债和问询回复后的财务变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否实现主业减亏和现金流改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及股权激励首年1亿元归母净利润目标是否实现。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

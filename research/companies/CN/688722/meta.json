@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688722",
-  "market": "CN",
-  "ticker": "688722",
-  "name": "同益中",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "同益中是A股稀缺的UHMWPE纤维及复合材料平台，并通过控股超美斯扩展到间位芳纶和芳纶纸；战略材料属性、全产业链能力和高端应用期权值得跟踪，但2025至2026Q1利润率仍承压，当前价格缺少足够安全边际，适合观察或小仓跟踪。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    16.5
-  ],
-  "buy_zone": [
-    9.5,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    21.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "同益中",
+    "security_status": "active",
+    "symbol": "CN:688722",
+    "ticker": "688722"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d4237a998ff2a149550c515a0ba3f17843cf8ec1a9c88a89cd371ef5bc192adb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于合理价值区间内但未进入安全买区，仅允许跟踪仓观察2026半年报和订单质量。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复盘2026半年报，重点核验毛利率、经营现金流、超美斯并表质量和高端产品订单。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入11.5元以下，且2026半年报毛利率不低于30%、经营现金流为正，可提高到小仓配置。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复盘2026三季报，判断全年利润是否能从2025低基数恢复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "超美斯并表贡献清晰，归母净利润恢复增长，高端防护、芳纶纸或抗蠕变纤维订单得到公告或财报验证后，再考虑核心观察仓。",
-      "max_weight": 0.1
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复盘2026年报和分红方案，更新绝对估值与资本配置判断。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入安全买入区上沿，若基本面未恶化，风险收益显著改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "接近减仓区下沿，若利润恢复尚未兑现，估值主要由主题情绪驱动。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.0
+      },
+      "reason": "高于当前估值交叉验证的合理区间，应要求更强订单和利润证据。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入安全买入区上沿，若基本面未恶化，风险收益显著改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "接近减仓区下沿，若利润恢复尚未兑现，估值主要由主题情绪驱动。"
-    },
-    {
-      "type": "price_above",
-      "price": 21.0,
-      "reason": "高于当前估值交叉验证的合理区间，应要求更强订单和利润证据。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复盘2026半年报，重点核验毛利率、经营现金流、超美斯并表质量和高端产品订单。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复盘2026三季报，判断全年利润是否能从2025低基数恢复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复盘2026年报和分红方案，更新绝对估值与资本配置判断。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,43 +1,77 @@
 {
-  "symbol": "CN:605199",
-  "market": "CN",
-  "ticker": "605199",
-  "name": "ST葫芦娃",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "儿童药品牌无法抵消财务违规、高杠杆、收入毛利率骤降和现金流质量偏弱，当前价格隐含过度乐观的盈利修复。",
-  "fair_value_range": [1.5, 2.8],
-  "buy_zone": [1.2, 1.8],
-  "sell_or_reduce_zone": [3.5, 6.5],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST葫芦娃",
+    "security_status": "active",
+    "symbol": "CN:605199",
+    "ticker": "605199"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "3357be8ab6b6e741a875613d3fda0a2b4aac2b1e3a22abf887402633bf70575d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于1.2至1.8元，行政处罚和ST解除路径清晰，连续两个季度收入止跌且剔除营运资金波动后的自由现金流转正",
-      "max_weight": 0.005
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、收入毛利率、偿债和自由现金流质量"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入条件性买入观察区，但须重新验证治理、偿债和经营假设"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、收入毛利率、偿债和自由现金流质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 3.5,
-      "reason": "超过公允价值上沿，进入减仓或不应追高区间"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入条件性买入观察区，但须重新验证治理、偿债和经营假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.5
+      },
+      "reason": "超过公允价值上沿，进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-20T16:06:44+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

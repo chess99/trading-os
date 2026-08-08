@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:600751",
-  "ticker": "600751",
-  "name": "海航科技",
-  "exchange": "SSE",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海航科技是低ROE小体量干散货航运与低毛利商品贸易组合，资产负债表有缓冲但利润质量和治理折价仍重；当前价格缺少足够安全边际，等待低于账面明显折价或主业利润连续验证。",
-  "fair_value_range": [
-    2.3,
-    3.2
-  ],
-  "buy_zone": [
-    0,
-    2.2
-  ],
-  "sell_or_reduce_zone": [
-    3.6,
-    99
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海航科技",
+    "security_status": "active",
+    "symbol": "CN:600751",
+    "ticker": "600751"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "0c95bc02ec46355793c16e8aa28055eb916b7ec7d1d9a6332397f2c269a45cfc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于2.20元，且下一期经营现金流未继续恶化、无新增资金占用或违规担保",
-      "action": "start_watch_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看航运毛利率、贸易占款、经营现金流和船队更新进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.05元，且航运毛利率回升至10%以上或扣非净利润连续两个季度改善",
-      "action": "add",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证扣非利润是否连续改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于3.60元但扣非利润和经营现金流未同步改善",
-      "action": "reduce_or_exit",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估船队更新后的ROE和PB中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
+      "reason": "进入基准NAV估值下沿，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.05
+      },
+      "reason": "低于约0.8倍2026Q1每股净资产，若基本面未恶化可提高观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.6
+      },
+      "reason": "接近乐观情景估值上沿，若利润未兑现应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.2,
-      "reason": "进入基准NAV估值下沿，开始具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 2.05,
-      "reason": "低于约0.8倍2026Q1每股净资产，若基本面未恶化可提高观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 3.6,
-      "reason": "接近乐观情景估值上沿，若利润未兑现应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看航运毛利率、贸易占款、经营现金流和船队更新进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证扣非利润是否连续改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估船队更新后的ROE和PB中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

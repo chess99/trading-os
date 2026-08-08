@@ -1,133 +1,133 @@
 {
-  "market": "CN",
-  "symbol": "CN:301045",
-  "ticker": "301045",
-  "name": "天禄科技",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "last_researched": "2026-07-15",
-  "current_rating": "watch",
-  "current_thesis": "导光板主业现金流改善但成长性偏弱，TAC膜项目具备国产替代期权但仍处工程化验证阶段；当前估值已计入较乐观成功预期，安全边际不足。",
-  "rating": "watch",
-  "conviction": 0.28,
-  "fair_value_range": [
-    23,
-    36
-  ],
-  "buy_zone": [
-    20,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    80
-  ],
-  "max_weight": 0.01,
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天禄科技",
+    "security_status": "active",
+    "symbol": "CN:301045",
+    "ticker": "301045"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "cb065282b5657b69dd2842e9796c5d1b55df421a76c5a5ab95f208434a8252a0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前证据仅支持TAC膜处于送样和设备调试阶段",
-      "action": "不建仓或仅保留极小观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "TAC膜量产良率、客户认证、订单或收入确认至少出现两项可核验突破",
-      "action": "重新评估上调权重",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价处于60-80元且TAC证据仍停留在送样/调试阶段",
-      "action": "减仓或回避追高",
-      "max_weight": 0
-    }
-  ],
-  "summary": "导光板主业现金流改善但成长性偏弱，TAC膜项目具备国产替代期权但仍处工程化验证阶段；当前估值已计入较乐观成功预期，安全边际不足。",
-  "key_points": [
-    "2025年营收5.812亿元，同比下降11.14%；归母净利润3245.05万元，同比增长19.67%；经营现金流净额1.112亿元。",
-    "2026Q1营收1.323亿元，同比下降9.42%；归母净利润964.84万元，同比增长76.45%；扣非归母净利润646.39万元。",
-    "TAC膜项目厂房收尾、设备安装调试、实验室试制膜送样检测，但批量化生产能力未被公开资料证实。",
-    "2026-07-15第三方行情显示总市值约86.21亿元、TTM PE约235倍、PB约8.39倍，已接近牛市情景定价。"
-  ],
-  "risks": [
-    "TAC膜量产良率、客户认证和订单兑现不及预期",
-    "估值过高导致进展低于预期时回撤较大",
-    "前五大客户和供应商集中度高",
-    "原材料光学板材和粒子涨价压缩毛利率",
-    "重要股东股份冻结及控制权变更后的治理稳定性需跟踪"
-  ],
-  "watch_items": [
-    "安徽吉光TAC膜试生产、良率、认证和订单",
-    "导光板收入同比、毛利率、库存和销售量",
-    "投资现金流、在建工程和项目融资进展",
-    "陈凌冻结股份及主要股东持股变化",
-    "季度扣非净利润和经营现金流"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "event": "披露安徽吉光TAC膜试生产、量产良率、客户认证或批量订单",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "TAC膜期权从主题切换为商业化资产的关键证据",
-      "action": "重估TAC膜期权价值和仓位上限"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "event": "季度导光板收入或毛利率连续两个季度明显低于预期",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "主业现金流锚弱化",
-      "action": "下调主业估值和买入区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "event": "投资现金流或借款显著增加导致净现金恶化",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "TAC项目资金消耗可能超过预期",
-      "action": "复核融资风险和稀释风险"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "event": "陈凌冻结股份处置、主要股东减持或控制权安排发生重大变化",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "治理和股东供给风险变化",
-      "action": "复核治理折价"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "event": "股价进入20-30元买入区或60-80元减持区",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "价格进入预设操作区间",
-      "action": "重新核对最新基本面后调整组合动作"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 30,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
       "reason": "接近基准情景低端，开始出现风险补偿",
-      "action": "进入安全边际观察区，复核TAC进展和主业现金流后考虑小仓位"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 20,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
       "reason": "显著低于基准情景估值，主业和TAC期权均有折价",
-      "action": "进入较明显安全边际区，若基本面未恶化可重新评估买入"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 60,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
       "reason": "估值开始接近牛市情景，需要TAC硬证据支撑",
-      "action": "若TAC仍未出现量产证据，应减仓或回避追高"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 80,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 80.0
+      },
       "reason": "价格已反映较乐观TAC成功预期",
-      "action": "价格接近牛市情景，除非TAC商业化已验证，否则不提高仓位"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-15"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

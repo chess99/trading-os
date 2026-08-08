@@ -1,116 +1,115 @@
 {
-  "symbol": "CN:300097",
-  "ticker": "300097",
-  "name": "智云股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "智云股份具备OLED触控显示模组段自动化设备客户和工艺积累，但2025年至2026Q1仍处亏损与现金紧张状态；控制权变更、撤销ST和拟定增提供反转期权，当前约7.97元价格已计入较多修复预期，需等待定增落地、订单恢复和现金流改善后再考虑买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.2,
-    7.0
-  ],
-  "buy_zone": [
-    4.5,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.5
-  ],
-  "position_plan": [
-    {
-      "condition": "仅观察，不主动建仓；若价格低于5.5元且定增获实质推进、单季度收入恢复至5000万元以上、经营现金流未继续恶化，可建立跟踪仓。",
-      "action": "watch_or_probe",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "若2026H1或2026Q3显示订单恢复、毛利率回到25%以上且货币资金压力缓解，可复核是否提高至小仓位。",
-      "action": "review_for_small_position",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "若定增失败、货币资金低于2000万元且收入继续低迷，退出观察仓并降级为回避。",
-      "action": "avoid",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入买入观察区间，需要结合定增和订单进展复核安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入深度安全边际区间，若基本面未继续恶化可重新估值。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "高于基准合理价值，若无订单和利润验证应降低风险暴露。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "接近乐观情景上沿，若反转尚未兑现应回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查收入、毛利率、订单线索、货币资金和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断定增进度与经营恢复是否形成连续证据。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，决定是否从观察池移除或升级为可投资标的。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": {
-      "value": 7.97,
-      "as_of": "2026-07-14",
-      "source": "Investing.com"
-    },
-    "market_cap_cny_billion": {
-      "value": 2.3,
-      "as_of": "2026-07-14",
-      "source": "Investing.com"
-    },
-    "revenue_2025_cny_million": {
-      "value": 173.91,
-      "as_of": "2025-12-31",
-      "source": "2025年年度报告摘要"
-    },
-    "net_profit_2025_cny_million": {
-      "value": -275.24,
-      "as_of": "2025-12-31",
-      "source": "2025年年度报告摘要"
-    },
-    "equity_attributable_2026q1_cny_million": {
-      "value": 198.01,
-      "as_of": "2026-03-31",
-      "source": "2026年第一季度报告"
-    }
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "智云股份",
+    "security_status": "active",
+    "symbol": "CN:300097",
+    "ticker": "300097"
   },
-  "research_notes": [
-    "当前结论依赖2025年年报摘要、2026年一季报和2026-07-14行情数据。",
-    "总股本估值口径使用Investing.com显示的2.8855亿股近似，存在口径差异风险。",
-    "半导体业务、产业资源注入和新增大客户订单缺少可核验公告，暂记为低置信度期权。"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "3950b9f9edd02be689fcb2be18175c7205038741331e40a55bf9fb6494585c47"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查收入、毛利率、订单线索、货币资金和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断定增进度与经营恢复是否形成连续证据。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，决定是否从观察池移除或升级为可投资标的。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入买入观察区间，需要结合定增和订单进展复核安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入深度安全边际区间，若基本面未继续恶化可重新估值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "高于基准合理价值，若无订单和利润验证应降低风险暴露。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "接近乐观情景上沿，若反转尚未兑现应回避或减持。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

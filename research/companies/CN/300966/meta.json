@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:300966",
-  "ticker": "300966",
-  "name": "共同药业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "共同药业具备甾体起始物料-中间体-原料药一体化产能和技术储备，2026Q1 出现边际扭亏，但 2025 年亏损、毛利率下滑、财务费用高企和高端 API 商业化未充分验证。当前约 30 元/股附近价格已接近乐观情景，安全边际不足，适合观察等待 2026H1/后续认证与订单兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14,
-    20
-  ],
-  "buy_zone": [
-    10,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    26,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "共同药业",
+    "security_status": "active",
+    "symbol": "CN:300966",
+    "ticker": "300966"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "1c8809333ab42935e2928f136f5f46b14fe01025cc0869071c0612ce36538c59"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入 10-14 元且 2026H1 收入、毛利率、归母净利润和经营现金流均较 2025 年明显改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "公司预计披露 2026 年半年度报告，需验证 Q1 扭亏是否延续",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格位于 14-20 元但尚未披露高端 API 审批、认证、订单或毛利率持续修复证据",
-      "action": "仅跟踪，不新增仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-30"
+      },
+      "reason": "复核 2026 年三季报收入、毛利率、财务费用、存货和现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 26 元且 2026H1 净利润低于 1000 万元或毛利率未回升至 16% 以上",
-      "action": "不买入；已有仓位减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报中高端 API 商业化、产能利用率和全年盈利修复",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入基准估值上沿以下，若基本面同步改善，可能具备初始安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "接近熊市情景估值下沿，可重新评估深度价值机会",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "已进入乐观情景估值区，需要高端 API 放量和利润率修复支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "接近牛市情景上沿，若无业绩超预期应降低风险暴露",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入基准估值上沿以下，若基本面同步改善，可能具备初始安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "接近熊市情景估值下沿，可重新评估深度价值机会"
-    },
-    {
-      "type": "price_above",
-      "price": 26,
-      "reason": "已进入乐观情景估值区，需要高端 API 放量和利润率修复支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "接近牛市情景上沿，若无业绩超预期应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "公司预计披露 2026 年半年度报告，需验证 Q1 扭亏是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-30",
-      "reason": "复核 2026 年三季报收入、毛利率、财务费用、存货和现金流趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报中高端 API 商业化、产能利用率和全年盈利修复"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600645",
-  "ticker": "600645",
-  "name": "中源协和",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中源协和拥有细胞库、诊断试剂、科研试剂和细胞治疗研发等真实资产，现金流和资产负债表较稳，但成熟业务收入承压、扣非利润下滑、治理事项存在折价，当前股价已提前计入较多细胞治疗期权价值，安全边际不足，维持观察。",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    10.0,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中源协和",
+    "security_status": "active",
+    "symbol": "CN:600645",
+    "ticker": "600645"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "04a27e9a39fe7d5bf7db417b0202c0b85ea897400dc1637a5de9d35f74023cc7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于基准合理价值区间且2026Q1收入和扣非利润仍下滑，未持仓不追高，仅保留研究观察。",
-      "action": "watch_only",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、扣非净利润、经营现金流、商誉和新产品放量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入10-12元且半年报或三季报显示收入恢复增长、扣非利润同比转正、独董弃权相关治理风险无新增负面。",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和细胞治疗/伴随诊断商业化进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "VUM02/VUM03出现高质量有效性读数或核酸质谱伴随诊断产品实现明确商业放量，同时估值仍低于18元。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理价值区间和治理折价。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入买入区上沿，需要复核最新财报、治理进展和主业订单。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入熊市情景价值区域，若基本面未恶化，可重新评估安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过基准估值较多，除非临床或商业化超预期，否则需要减仓或回避追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入买入区上沿，需要复核最新财报、治理进展和主业订单。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入熊市情景价值区域，若基本面未恶化，可重新评估安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "超过基准估值较多，除非临床或商业化超预期，否则需要减仓或回避追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、扣非净利润、经营现金流、商誉和新产品放量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和细胞治疗/伴随诊断商业化进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理价值区间和治理折价。"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

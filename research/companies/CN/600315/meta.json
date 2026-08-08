@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:600315",
-  "ticker": "600315",
-  "name": "上海家化",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "老牌日化与国货美妆资产正在修复，2025年收入恢复、2026Q1扣非改善，但利润质量、Q4季节性亏损和线上投放效率仍需验证；当前价格接近公允价值中上部，安全边际不足，适合观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.5,
-    19.0
-  ],
-  "buy_zone": [
-    12.5,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    21.5,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海家化",
+    "security_status": "active",
+    "symbol": "CN:600315",
+    "ticker": "600315"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "d5d5fe6bde665375ab41fc65d492eaf76c58cd3c4f577495efc8bf55427bcb63"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅作为跟踪仓，等待2026H1确认扣非利润和经营现金流质量",
-      "action": "watch_or_starter",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认扣非利润、销售费用率、存货和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于14.5元且2026H1扣非利润继续同比改善、销售费用率未恶化",
-      "action": "start_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润兑现概率和Q4费用压力",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度证明扣非利润改善且全年正常化归母净利可达4亿元以上",
-      "action": "add_selectively",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报，验证Q4是否再次侵蚀全年利润",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入买入观察区，若基本面未恶化可重新评估小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "价格低于保守估值区，安全边际显著改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.5
+      },
+      "reason": "超过公允价值上沿，若利润质量未同步提升应考虑减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "进入乐观情景估值区，需强基本面兑现支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入买入观察区，若基本面未恶化可重新评估小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "价格低于保守估值区，安全边际显著改善"
-    },
-    {
-      "type": "price_above",
-      "price": 21.5,
-      "reason": "超过公允价值上沿，若利润质量未同步提升应考虑减持"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "进入乐观情景估值区，需强基本面兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认扣非利润、销售费用率、存货和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润兑现概率和Q4费用压力"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报，验证Q4是否再次侵蚀全年利润"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

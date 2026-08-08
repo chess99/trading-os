@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:600807",
-  "ticker": "600807",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "济高发展",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "济高发展是国资支持下的困境转型资产，体外诊断业务具备产品和资质储备，但2025年和2026H1仍处亏损，当前市值已反映较高转型期权，安全边际不足，暂不买入，仅在价格低于合理价值下沿且亏损收敛后观察建仓。",
-  "decision": "不买",
-  "confidence": "中",
-  "fair_value_range": [
-    1.6,
-    2.2
-  ],
-  "buy_zone": [
-    1.3,
-    1.6
-  ],
-  "sell_or_reduce_zone": [
-    2.6,
-    3.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "济高发展",
+    "security_status": "active",
+    "symbol": "CN:600807",
+    "ticker": "600807"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "46993e12545e16428737a6ddbfd88c1a563e29b2a57375a9ae37c7bf1489ceee"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于1.60元，且2026半年报显示扣非亏损未扩大、经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入、扣非亏损、经营现金流、应收账款和诉讼计提",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价接近1.30元，且体外诊断收入环比恢复、资产负债率下降",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断体外诊断收入和现金流是否出现连续改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于2.60元且无订单放量、资产注入或亏损收敛证据",
-      "action": "不追高并减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估国资支持、债务压力和转型业务商业化进度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "进入估值区间下沿，若基本面同步改善可重新评估观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.3
+      },
+      "reason": "接近悲观情形估值，若亏损收敛可能具备小仓位安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.6
+      },
+      "reason": "超过当前基本面可解释区间，需检查是否只是主题炒作",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "进入估值区间下沿，若基本面同步改善可重新评估观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 1.3,
-      "reason": "接近悲观情形估值，若亏损收敛可能具备小仓位安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 2.6,
-      "reason": "超过当前基本面可解释区间，需检查是否只是主题炒作"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入、扣非亏损、经营现金流、应收账款和诉讼计提"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断体外诊断收入和现金流是否出现连续改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估国资支持、债务压力和转型业务商业化进度"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

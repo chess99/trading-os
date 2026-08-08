@@ -1,90 +1,105 @@
 {
-  "symbol": "CN:300177",
-  "ticker": "300177",
-  "name": "中海达",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中海达具备北斗高精度定位、时空感知装备、智能驾驶定位和机器人IMU等技术资产，但2025年大幅亏损、2026Q1仍亏损且估值不低，当前只适合观察；需等待收入、毛利率、现金流和应收账款修复，或股价跌入安全边际后再考虑买入。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    4.2,
-    5.3
-  ],
-  "buy_zone": [
-    3.3,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    7.0,
-    8.5
-  ],
-  "position_plan": [
-    {
-      "condition": "仅观察，不建仓；等待2026H1或2026Q3证明收入恢复、扣非亏损显著收窄且经营现金流为正。",
-      "action": "watch",
-      "max_weight": 0
-    },
-    {
-      "condition": "若股价跌入3.3-4.0元且应收账款未恶化、毛利率止跌，可建立跟踪仓。",
-      "action": "starter_position",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "若连续两个季度经营现金流为正、扣非转正或接近转正，并披露智能驾驶/IMU业务可量化收入和毛利，可提高仓位。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入初步安全边际区间，若基本面未继续恶化可重新评估建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "接近熊市资产估值区间，若现金流和应收风险可控，赔率显著改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.0,
-      "reason": "若无利润和现金流验证而仅因北斗、低空或机器人题材上涨，应考虑回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入恢复、毛利率、扣非亏损、经营现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年扭亏概率和智能驾驶/IMU业务披露质量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证管理层现金流安全和运营提效是否兑现。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 5.88,
-    "reference_price_date": "2026-07-15",
-    "market_cap_cny_billion": 4.38,
-    "2025_revenue_cny_billion": 1.012,
-    "2025_net_profit_cny_billion": -0.233,
-    "2026_q1_revenue_cny_billion": 0.159,
-    "2026_q1_net_profit_cny_billion": -0.029
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中海达",
+    "security_status": "active",
+    "symbol": "CN:300177",
+    "ticker": "300177"
   },
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "678df535999e8c72a7421d719103a2f6fa34a8400bfc3863ab34294c7137bd49"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入恢复、毛利率、扣非亏损、经营现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年扭亏概率和智能驾驶/IMU业务披露质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证管理层现金流安全和运营提效是否兑现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入初步安全边际区间，若基本面未继续恶化可重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "接近熊市资产估值区间，若现金流和应收风险可控，赔率显著改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.0
+      },
+      "reason": "若无利润和现金流验证而仅因北斗、低空或机器人题材上涨，应考虑回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

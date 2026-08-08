@@ -1,98 +1,105 @@
 {
-  "symbol": "CN:603017",
-  "ticker": "603017",
-  "name": "中衡设计",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中衡设计具备长三角区域建筑设计咨询积累和现金流修复迹象，但2025年ROE与扣非利润率偏低，当前股价约按乐观修复定价，安全边际不足，适合等待估值回落或2026中报验证订单、利润和现金流同步改善。",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    5.5,
-    7.2
-  ],
-  "buy_zone": [
-    4.5,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    10.5
-  ],
-  "position_plan": [
-    {
-      "condition": "股价跌入5.6元以下且2026半年度扣非利润、经营现金流没有恶化时，允许建立观察仓。",
-      "action": "start_watch_position",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价跌入4.5-5.0元且订单、回款和资产负债表保持稳定时，允许提高到小仓位。",
-      "action": "increase_small_position",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于9.0元且未出现利润上修或订单明显改善时，不新增并考虑退出观察仓。",
-      "action": "reduce_or_exit",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入合理价值区间下沿，需要复核2026半年度利润和现金流后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "接近保守买入区间，若基本面未恶化，账面价值安全边际开始显现。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "高于基准估值区间，若无利润上修则风险收益比下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告中的收入结构、扣非利润、经营现金流和订单质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断现金流改善是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告，重新评估合理价值区间和分红可持续性。"
-    }
-  ],
-  "valuation": {
-    "as_of": "2026-07-17",
-    "last_price": 8.84,
-    "fair_value_method": "relative_pb_pe_absolute_owner_earnings_scenario_cross_check",
-    "base_case_fair_value": 6.3
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中衡设计",
+    "security_status": "active",
+    "symbol": "CN:603017",
+    "ticker": "603017"
   },
-  "key_metrics": {
-    "revenue_2025_cny_mn": 1177.0,
-    "net_profit_2025_cny_mn": 49.055,
-    "deducted_net_profit_2025_cny_mn": 27.092,
-    "operating_cash_flow_2025_cny_mn": 238.56,
-    "net_profit_2026q1_cny_mn": 20.953,
-    "operating_cash_flow_2026q1_cny_mn": 54.816,
-    "shares_outstanding_2026q1_mn": 276.190293,
-    "book_value_per_share_2026q1": 5.41
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "8ba83e6c6096e51cbc372d2afa1d369ef23fdd2108610cd8b46948f58da0ca66"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告中的收入结构、扣非利润、经营现金流和订单质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断现金流改善是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告，重新评估合理价值区间和分红可持续性。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入合理价值区间下沿，需要复核2026半年度利润和现金流后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "接近保守买入区间，若基本面未恶化，账面价值安全边际开始显现。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "高于基准估值区间，若无利润上修则风险收益比下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

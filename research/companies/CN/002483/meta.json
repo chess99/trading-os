@@ -1,135 +1,123 @@
 {
-  "symbol": "CN:002483",
-  "market": "CN",
-  "ticker": "002483",
-  "name": "润邦股份",
-  "company_name": "江苏润邦重工股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是外向型项目制高端装备制造商，2025年利润和现金流尚可，但2026Q1收入下滑且现金流转负；当前约5.00元处于合理价值下沿但安全边际不足，需等待订单、回款和毛利率验证。",
-  "quality_rating": "B",
-  "valuation_rating": "B-",
-  "fair_value_range": [
-    4.8,
-    6.0
-  ],
-  "buy_zone": [
-    3.8,
-    4.3
-  ],
-  "sell_or_reduce_zone": [
-    6.3,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "润邦股份",
+    "security_status": "active",
+    "symbol": "CN:002483",
+    "ticker": "002483"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "05cf86df217b28bdb31d665fdfbfb04f17b8da62a8f27abe0c60758083a7d4af"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价<=3.80元且无重大基本面破坏",
-      "action": "强吸引力，分批买入",
-      "max_weight": 0.08,
-      "position": "5%-8%"
-    },
-    {
-      "condition": "股价3.81-4.30元且订单、回款、毛利率未恶化",
-      "action": "有安全边际，可建仓",
-      "max_weight": 0.05,
-      "position": "3%-5%"
-    },
-    {
-      "condition": "股价4.31-5.20元，仍需等待订单和现金流确认",
-      "action": "观察/小仓跟踪",
-      "max_weight": 0.03,
-      "position": "0%-3%"
-    },
-    {
-      "condition": "股价5.21-6.30元，业绩或订单尚未充分确认",
-      "action": "等待业绩或订单确认",
-      "max_weight": 0.02,
-      "position": "0%-2%"
-    },
-    {
-      "condition": "股价>6.30元且基本面未同步改善",
-      "action": "不追高，已有仓位考虑降风险",
-      "max_weight": 0.01,
-      "position": "0%-1%"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "condition": "跌入有安全边际买入区，同时订单、回款、毛利率未恶化",
-      "reason": "低于合理价值中枢约20%-25%，开始补偿项目和现金流波动",
-      "action": "允许建立3%-5%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "condition": "跌入强吸引力买入区，且无重大基本面破坏",
-      "reason": "接近净资产折价并隐含较低正常利润倍数，赔率改善",
-      "action": "允许提高至5%-8%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.3,
-      "condition": "价格高于不应追高价且基本面未同步改善",
-      "reason": "超过合理价值上沿后需要利润恢复和订单兑现支撑",
-      "action": "不追高，已有仓位降风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证2026Q1收入下滑是否只是交付节奏问题",
-      "action": "复核收入下滑原因、订单交付和现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "公司披露重大海外订单、订单取消、重大诉讼或环保处罚",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "海外订单和合规事件会显著影响收入可见度和风险折价",
-      "action": "立即重估收入可见度和风险折价"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "连续两个季度经营现金流显著弱于净利润",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "项目型业务现金流若持续弱化会削弱估值基础",
-      "action": "下调质量评级并复核仓位上限"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "海工装备毛利率明显修复或继续低于15%",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "海工装备毛利率决定利润弹性和估值中枢",
-      "action": "重估利润中枢"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "发生高溢价并购、大额担保或资本开支明显超预期",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "资本配置变化可能改变股东回报和安全边际",
-      "action": "复核资本配置纪律"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "低于合理价值中枢约20%-25%，开始补偿项目和现金流波动",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "接近净资产折价并隐含较低正常利润倍数，赔率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.3
+      },
+      "reason": "超过合理价值上沿后需要利润恢复和订单兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "新签订单和在手订单",
-    "海外收入占比和海外毛利率",
-    "物料起重搬运装备收入与毛利率",
-    "海洋工程装备收入与毛利率",
-    "经营活动现金流净额/归母净利润",
-    "应收账款+合同资产/营业收入",
-    "合同负债",
-    "分红率",
-    "汇兑损益"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

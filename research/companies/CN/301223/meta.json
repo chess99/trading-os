@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301223",
-  "ticker": "301223",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "中荣股份",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中荣股份是现金流较好的纸制品牌包装制造商，具备大客户认证、多区域交付、研发设计和净现金优势；但 ROE 仅约 5%、议价权有限、客户集中和减值风险仍在，当前约 1.0-1.1 倍 PB/约 20 倍 TTM PE 只能算合理偏低，尚未提供充足安全边际。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    14.5,
-    19.0
-  ],
-  "buy_zone": [
-    12.0,
-    14.0
-  ],
-  "sell_or_reduce_zone": [
-    20.5,
-    23.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中荣股份",
+    "security_status": "active",
+    "symbol": "CN:301223",
+    "ticker": "301223"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "e0f70e1ebbf421ada45593b0d5d8ff8230be75545ffdd37c06edcae6e1892f43"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于14元且2026H1扣非净利润同比为正、经营现金流/净利润大于1时，允许建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增长、毛利率、经营现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于12.5元且毛利率稳定在20%左右、无新增治理风险、前五大客户占比未明显恶化时，可提高至小仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认订单修复是否延续以及减值风险是否扩大。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于20.5元或2026年扣非净利增长低于5%且估值仍高于1.2倍PB时，不新增并考虑降低暴露。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红回购、并购资产表现和治理事项后续。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入初始买入区间，接近保守净资产折价估值，需复核半年报现金流与毛利率。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入较强安全边际区间，若基本面未恶化可考虑提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.5
+      },
+      "reason": "超过基准估值上沿，低ROE制造属性下预期收益下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入初始买入区间，接近保守净资产折价估值，需复核半年报现金流与毛利率。"
-    },
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入较强安全边际区间，若基本面未恶化可考虑提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.5,
-      "reason": "超过基准估值上沿，低ROE制造属性下预期收益下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增长、毛利率、经营现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认订单修复是否延续以及减值风险是否扩大。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红回购、并购资产表现和治理事项后续。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

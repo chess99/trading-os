@@ -1,30 +1,86 @@
 {
-  "symbol": "US:SPCX",
-  "market": "US",
-  "ticker": "SPCX",
-  "name": "SpaceX / 太空探索技术公司",
-  "currency": "USD",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "极优秀的航天和卫星互联网平台，但当前公开市场估值已经计入太多成功，新增资金应等待估值回落或更多公开经营证据。",
-  "fair_value_range": [80, 120],
-  "buy_zone": [60, 90],
-  "sell_or_reduce_zone": [180, 230],
-  "position_plan": [
-    {"condition": "价格高于 120 美元，不新增仓位", "max_weight": 0.0},
-    {"condition": "价格在 90-120 美元，只保持研究观察，等待新的公开业绩证据", "max_weight": 0.0},
-    {"condition": "价格在 60-90 美元，且公开报告确认 Starlink 增长和利润率改善", "max_weight": 0.03},
-    {"condition": "价格低于 60 美元，且新一轮研究确认没有公司特定损害", "max_weight": 0.05}
+  "identity": {
+    "currency": "USD",
+    "market": "US",
+    "name": "SpaceX / 太空探索技术公司",
+    "security_status": "active",
+    "symbol": "US:SPCX",
+    "ticker": "SPCX"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-06-initial.md",
+        "sha256": "7a52c7d79a08d6182f2ea88b5daab0da93d0d4b8a16eb2f6a335d54075f67e4a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-15"
+      },
+      "reason": "复查上市后首份业绩更新或季度文件。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-11-15"
+      },
+      "reason": "复查 Starlink 增长、发射频率、利润率和资本开支。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 90.0
+      },
+      "reason": "可能进入买入观察区，需要重估估值和公开经营证据。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 180.0
+      },
+      "reason": "估值可能跑在证据前面，需要复查减仓纪律。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-06-initial.md",
-  "report_history": ["reports/2026-07-06-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-15", "reason": "复查上市后首份业绩更新或季度文件。"},
-    {"type": "date", "date": "2026-11-15", "reason": "复查 Starlink 增长、发射频率、利润率和资本开支。"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 90, "reason": "可能进入买入观察区，需要重估估值和公开经营证据。"},
-    {"type": "price_above", "price": 180, "reason": "估值可能跑在证据前面，需要复查减仓纪律。"}
-  ],
-  "updated_at": "2026-07-06T00:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

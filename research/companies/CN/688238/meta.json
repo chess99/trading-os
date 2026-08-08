@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688238",
-  "market": "CN",
-  "ticker": "688238",
-  "name": "和元生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "和元生物具备CGT CRO/CDMO平台、临港GMP产能和IND项目经验，若2026-2027年订单恢复、产线利用率提升并带动CDMO毛利率修复，经营杠杆较大；但截至2026-07-18，公司仍处亏损和现金流净流出阶段，当前估值已提前反映较多产能期权，缺乏足够安全边际，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.2,
-    5.6
-  ],
-  "buy_zone": [
-    3.6,
-    4.4
-  ],
-  "sell_or_reduce_zone": [
-    7.8,
-    9.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "和元生物",
+    "security_status": "active",
+    "symbol": "CN:688238",
+    "ticker": "688238"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d1950a4bff235cd7e675c1a6d4c4ae32d8e55f5479cacfa2502d0832b3290594"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价进入4.4元以下且2026年后续定报显示CDMO订单、毛利率和经营现金流同步改善时，允许小仓位试探。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入、CDMO毛利率、新增订单、经营现金流和债务变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价仍在5.0元以上而CDMO毛利率仍大幅为负、经营现金流继续大额流出，则保持零仓位观察。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认产能爬坡和现金流改善是否连续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于7.8元但收入和毛利率未兑现牛市情景，已有仓位应减至零。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估临港产能价值、资产减值风险和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "进入初步买入区间，需要结合最新订单、毛利率和现金流复核是否具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入深度安全边际区间，但仍需排除流动性恶化和持续减值风险。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "进入减持/回避区间，除非临床后期或商业化订单已明确兑现，否则估值风险较高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.4,
-      "reason": "进入初步买入区间，需要结合最新订单、毛利率和现金流复核是否具备安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入深度安全边际区间，但仍需排除流动性恶化和持续减值风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "进入减持/回避区间，除非临床后期或商业化订单已明确兑现，否则估值风险较高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入、CDMO毛利率、新增订单、经营现金流和债务变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认产能爬坡和现金流改善是否连续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估临港产能价值、资产减值风险和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

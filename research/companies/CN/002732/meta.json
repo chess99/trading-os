@@ -1,129 +1,124 @@
 {
-  "symbol": "CN:002732",
-  "market": "CN",
-  "ticker": "002732",
-  "name": "燕塘乳业",
-  "company_name": "广东燕塘乳业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "燕塘乳业是广东区域型乳制品品牌，资产负债表稳健、区域渠道和低温冷链有一定壁垒，但 2025 年盈利显著下滑，2026Q1 扣非几乎归零，当前 12.75 元附近估值已隐含利润修复，安全边际不足。等待 9.5 元以下且利润率修复信号出现。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    9.0,
-    12.0
-  ],
-  "buy_zone": [
-    8.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "燕塘乳业",
+    "security_status": "active",
+    "symbol": "CN:002732",
+    "ticker": "002732"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4fa25980fd210b23b242599695dc418294368bc3c4e89fb70f30a47bd231427e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约12.75元且2026Q1利润未修复",
-      "action": "不新开仓，保留观察池",
-      "target_position": "0%",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026Q1利润接近归零，半年报是判断全年盈利是否继续下台阶的关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于9.5元，且收入降幅收窄、销售费用率不再上行",
-      "action": "建立试探性仓位",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "产业集群项目会影响未来折旧、现金流和区域扩张能力",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于8.5元，且TTM扣非利润恢复到6000万元以上或连续两个季度利润率修复",
-      "action": "提高到小核心仓位",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "公司当前收入高度依赖广东，第二市场能否形成决定估值上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于15元但TTM归母净利润仍低于8000万元",
-      "action": "已有仓位分批减持或停止加仓",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "乳制品企业的品牌和质量风险会快速改变投资前提",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "接近每股净资产并进入保守买入区，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "低于约0.9倍PB，若利润未继续恶化则赔率显著改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "高于合理价值上沿较多，且当前盈利质量不足以支撑高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "该价格需要强利润复苏支撑，否则风险收益比明显恶化",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "currency": "CNY",
-      "action": "进入买入复核，检查最新季度收入、毛利率和销售费用率",
-      "reason": "接近每股净资产并进入保守买入区，安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "currency": "CNY",
-      "action": "若基本面未恶化，可考虑提高仓位",
-      "reason": "低于约0.9倍PB，若利润未继续恶化则赔率显著改善"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "currency": "CNY",
-      "action": "复核估值是否透支利润修复，已有仓位考虑减持",
-      "reason": "高于合理价值上沿较多，且当前盈利质量不足以支撑高估值"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "currency": "CNY",
-      "action": "若利润未恢复到2024年水平，原则上卖出或不持有",
-      "reason": "该价格需要强利润复苏支撑，否则风险收益比明显恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年度报告",
-      "action": "复核收入、毛利率、销售费用率和扣非净利润",
-      "reason": "2026Q1利润接近归零，半年报是判断全年盈利是否继续下台阶的关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "粤东日产600吨现代化乳制品加工厂一期投产或延期",
-      "action": "复核资本开支回报、折旧压力和产能利用率",
-      "reason": "产业集群项目会影响未来折旧、现金流和区域扩张能力"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "condition": "广东省外收入占比、学校和机团渠道出现显著变化",
-      "action": "复核增长假设和区域扩张质量",
-      "reason": "公司当前收入高度依赖广东，第二市场能否形成决定估值上限"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "发生食品安全、奶牛疫病、生物资产大额淘汰损失或监管处罚",
-      "action": "立即复核质量评级和持仓上限",
-      "reason": "乳制品企业的品牌和质量风险会快速改变投资前提"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "综合毛利率和乳酸菌乳饮料毛利率",
-    "销售费用率",
-    "TTM扣非归母净利润",
-    "经营现金流中政府补助和营运资本贡献",
-    "资本开支和在建工程进度",
-    "粤东日产600吨项目投产后的产能利用率",
-    "广东省外收入占比",
-    "ROE和每股分红"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

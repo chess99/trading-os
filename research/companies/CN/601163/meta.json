@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:601163",
-  "ticker": "601163",
-  "market": "CN",
-  "name": "三角轮胎",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "三角轮胎是资产负债表稳健、分红纪律较好、工程胎和商用车胎技术积累较深的国内轮胎企业；当前估值已偏低但ROE修复和海外增长仍需验证，适合观察，等待价格跌入安全边际或连续财报确认利润中枢上移。",
-  "fair_value_range": [
-    13.5,
-    16.5
-  ],
-  "buy_zone": [
-    10.8,
-    11.8
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    19.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三角轮胎",
+    "security_status": "active",
+    "symbol": "CN:601163",
+    "ticker": "601163"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "0404eeb9870d8b3b44a78a176270dfe1ffb4faf3531c7e11f84e7c442affe196"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入10.8-11.8元区间，且最近一期经营数据未显示销量、毛利率或现金流明显恶化",
-      "action": "建立观察性仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、轮胎销量价格、毛利率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比增长、毛利率稳定在19%以上、经营现金流/归母净利润达到0.9倍以上",
-      "action": "可提高至核心小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报以及全年盈利中枢能否恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价达到17.5元以上但ROE和盈利中枢未显著改善",
-      "action": "降低仓位或仅保留跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、分红、海外项目进展和长期ROE假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.8
+      },
+      "reason": "进入买入区间上沿，估值接近0.67倍PB且股息率具备吸引力",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入更高安全边际区间，可复核基本面后考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "接近减持观察区间，若业绩未同步改善则风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.8,
-      "reason": "进入买入区间上沿，估值接近0.67倍PB且股息率具备吸引力"
-    },
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入更高安全边际区间，可复核基本面后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "接近减持观察区间，若业绩未同步改善则风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、轮胎销量价格、毛利率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报以及全年盈利中枢能否恢复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、分红、海外项目进展和长期ROE假设"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "轮胎销量与产品均价",
-    "天然橡胶、合成橡胶、炭黑、钢帘线综合采购价格",
-    "轮胎业务毛利率",
-    "经营现金流/归母净利润",
-    "海外收入占比与柬埔寨项目进展",
-    "研发费用率与高性能轮胎订单转化",
-    "分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

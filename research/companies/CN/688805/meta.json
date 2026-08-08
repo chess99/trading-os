@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688805",
-  "market": "CN",
-  "ticker": "688805",
-  "name": "健信超导",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "健信超导是国内 MRI 超导磁体稀缺供应商，受益国产替代、无液氦 MRI 和 3.0T 升级，但 2026-07-17 约 39.50 元价格已反映较高成长预期，当前更适合观察，等待 28-34 元安全边际或半年报进一步验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    33,
-    43
-  ],
-  "buy_zone": [
-    28,
-    34
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    70
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "健信超导",
+    "security_status": "active",
+    "symbol": "CN:688805",
+    "ticker": "688805"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "ce1234ed56a3a7d7a58f6bed7ad6cbd53c18008d9111ed3942d2d5ac9e7e9241"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入 28-34 元且 2026H1 收入和归母净利润增速均高于 30%、经营现金流未明显恶化",
-      "action": "build_position",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报，重点看收入增速、无液氦占比、毛利率、现金流和客户集中度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格仍在 34-43 元区间但半年报验证无液氦和 3.0T 持续放量",
-      "action": "small_tracking_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，确认增长持续性和经营质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 55 元且无新增高置信度订单或利润上修",
-      "action": "reduce_or_avoid_new_buying",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新估算 2027 年利润和合理估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入买入区间上沿，需要复核半年报和订单后评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入较高安全边际区间，若基本面未恶化可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "进入乐观情景估值区间，需要评估是否估值透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入买入区间上沿，需要复核半年报和订单后评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入较高安全边际区间，若基本面未恶化可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "进入乐观情景估值区间，需要评估是否估值透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报，重点看收入增速、无液氦占比、毛利率、现金流和客户集中度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，确认增长持续性和经营质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新估算 2027 年利润和合理估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,114 +1,123 @@
 {
-  "symbol": "CN:002772",
-  "market": "CN",
-  "ticker": "002772",
-  "name": "众兴菌业",
-  "company_name": "天水众兴菌业科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是主业纯度较高的工厂化食用菌企业，2025 年盈利和现金流修复，2026Q1 景气延续；但行业仍具农产品价格周期属性，当前约 12.6 元/股估值接近合理区间中部，安全边际不足，等待价格回落或中报确认利润中枢上移。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    11.5,
-    15.0
-  ],
-  "buy_zone": [
-    10.8,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    99.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "众兴菌业",
+    "security_status": "active",
+    "symbol": "CN:002772",
+    "ticker": "002772"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "2d6cb0e7343de88843b2ad4700ac96c43d293365705676d60fa1b99db55ce30f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于或等于 11.5 元，且 2026H1 收入、扣非净利润继续同比增长，经营现金流为正",
-      "action": "建立观察仓",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年半年报披露后复核收入、扣非净利润、经营现金流和产品毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于或等于 10.2 元，且食用菌价格未明显反转向下，资产负债率未快速恶化",
-      "action": "加至标准仓",
-      "target_position": "4%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核金针菇或双孢菇价格是否连续 2 个季度明显下行",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于或等于 9.8 元，且中报或三季报验证经营现金流和扣非利润质量",
-      "action": "提高到上限仓位",
-      "target_position": "5%-7%",
-      "max_weight": 0.07
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核短期借款、一年内到期负债或在建工程是否继续快速上升",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于或等于 16.5 元，且未证明正常化归母净利润超过 5.5 亿元",
-      "action": "减仓或不追高",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报季复核大额资本开支、并购、回购、分红或股权激励调整",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报季复核同业雪榕生物、华绿生物是否出现大幅扩产或价格战迹象",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入初始买入观察区，复核 2026H1 扣非净利和经营现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入较有安全边际区，若基本面未恶化可加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过基准估值上沿，除非利润中枢显著上移，否则考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "currency": "CNY",
-      "reason": "进入初始买入观察区，复核 2026H1 扣非净利和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "currency": "CNY",
-      "reason": "进入较有安全边际区，若基本面未恶化可加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "currency": "CNY",
-      "reason": "超过基准估值上沿，除非利润中枢显著上移，否则考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026 年半年报披露后复核收入、扣非净利润、经营现金流和产品毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核金针菇或双孢菇价格是否连续 2 个季度明显下行"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核短期借款、一年内到期负债或在建工程是否继续快速上升"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报季复核大额资本开支、并购、回购、分红或股权激励调整"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报季复核同业雪榕生物、华绿生物是否出现大幅扩产或价格战迹象"
-    }
-  ],
-  "key_tracking_metrics": [
-    "金针菇、双孢菇、真姬菇收入和毛利率",
-    "单季扣非归母净利润",
-    "经营活动现金流净额",
-    "存货和应收账款周转",
-    "资产负债率及一年内到期负债",
-    "资本开支和新产能投产进度",
-    "现金分红和回购注销"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

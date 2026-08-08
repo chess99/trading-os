@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301667",
-  "ticker": "301667",
-  "name": "纳百川",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "纳百川是电池液冷板细分供应商，与宁德时代关系深、收入增长明确，但2026Q1毛利率和利润下滑、经营现金流为负，当前约60元附近已接近牛市情景下沿，缺乏安全边际，适合观察等待毛利率和现金流修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    35,
-    50
-  ],
-  "buy_zone": [
-    30,
-    40
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    80
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "纳百川",
+    "security_status": "active",
+    "symbol": "CN:301667",
+    "ticker": "301667"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "d295ea1219d351172772aa007602327da40ceb86015f3b72c5afeec9fa2d4694"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入30-40元且2026中报毛利率恢复到11%以上、经营现金流边际改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的毛利率、净利率、经营现金流和应收存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于40-50元且客户多元化、利润修复和现金流转正均被验证",
-      "action": "小幅加仓但保持低权重",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否验证利润修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于65元且没有2027年净利润2亿元以上的高置信度证据",
-      "action": "不追涨并减持已有仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-12-15"
+      },
+      "reason": "首发限售股解禁前复核减持预案和流动性压力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "进入买入复核区，需要检查毛利率、经营现金流和客户结构是否未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "进入高估复核区，需要确认是否已有利润和订单证据支撑牛市情景",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 40,
-      "reason": "进入买入复核区，需要检查毛利率、经营现金流和客户结构是否未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 70,
-      "reason": "进入高估复核区，需要确认是否已有利润和订单证据支撑牛市情景"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的毛利率、净利率、经营现金流和应收存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否验证利润修复"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-15",
-      "reason": "首发限售股解禁前复核减持预案和流动性压力"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

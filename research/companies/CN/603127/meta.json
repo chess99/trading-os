@@ -1,110 +1,106 @@
 {
-  "symbol": "CN:603127",
-  "market": "CN",
-  "ticker": "603127",
-  "name": "昭衍新药",
-  "company_name": "昭衍新药",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "昭衍新药具备临床前安全评价与实验动物资源壁垒，但截至2026年7月主营实验室服务利润仍未完成修复，当前股价更适合观察而非买入，需等待价格回到20-27元区间或主营盈利改善被半年报验证。",
-  "quality_rating": "B+",
-  "valuation_rating": "high",
-  "fair_value_range": [
-    28,
-    34
-  ],
-  "buy_zone": [
-    20,
-    27
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    45
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "昭衍新药",
+    "security_status": "active",
+    "symbol": "CN:603127",
+    "ticker": "603127"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "9422b855cf255439445c92ed19e790c5cd637b71cec4b041700ec71133429643"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于20元且主营修复逻辑未被破坏",
-      "action": "积极买入",
-      "max_weight": 0.08,
-      "reason": "价格已较充分反映主营恢复不确定性，赔率显著改善"
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "预计复核2026年半年报，重点看实验室服务及其他业务贡献净利润、毛利率、合同负债与海外收入",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在20-24元且订单、合同负债继续改善",
-      "action": "分批建仓",
-      "max_weight": 0.05,
-      "reason": "开始具备安全边际，但仍需等待毛利率修复确认"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "预计复核2026年三季报，验证订单恢复是否真正传导到主营盈利",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在24-27元且半年报验证主营亏损收窄",
-      "action": "小仓试错",
-      "max_weight": 0.03,
-      "reason": "进入可买区间，但容错率一般"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 27.0
+      },
+      "reason": "进入有安全边际的买入区间，可重新评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价在28-34元",
-      "action": "观察或仅保留跟踪仓",
-      "max_weight": 0.01,
-      "reason": "接近公允价值，回报风险比一般"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入强吸引力买入区间，可考虑提升目标仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价高于36元",
-      "action": "不追高，若已有仓位可逢高减仓",
-      "max_weight": 0.0,
-      "reason": "价格已显著领先当前主营修复程度"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "价格进入不应追高区间，需要严格审视估值透支风险",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "接近乐观情景估值上沿，若基本面未同步兑现可考虑减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 27,
-      "reason": "进入有安全边际的买入区间，可重新评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入强吸引力买入区间，可考虑提升目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "价格进入不应追高区间，需要严格审视估值透支风险"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "接近乐观情景估值上沿，若基本面未同步兑现可考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "预计复核2026年半年报，重点看实验室服务及其他业务贡献净利润、毛利率、合同负债与海外收入"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "预计复核2026年三季报，验证订单恢复是否真正传导到主营盈利"
-    }
-  ],
-  "key_tracking_metrics": [
-    "实验室服务及其他业务贡献净利润",
-    "非临床研究服务收入增速",
-    "综合毛利率",
-    "合同负债",
-    "未履约订单金额",
-    "新签订单金额",
-    "美国及其他海外收入",
-    "生物资产公允价值变动收益占利润比重",
-    "货币资金与交易性金融资产余额",
-    "资本开支与员工人数变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

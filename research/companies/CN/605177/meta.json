@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:605177",
-  "market": "CN",
-  "ticker": "605177",
-  "name": "东亚药业",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "东亚药业具备抗菌药原料药/中间体注册、海外认证和制剂延伸的资产基础，但2025年亏损、2026Q1收入修复仍亏损、2026H1预亏扩大，说明价格压力、停工损失、折旧和可转债利息仍在压制利润。现阶段只适合观察，等待利润表和现金流确认拐点或价格进入足够净资产折价区间。",
-  "fair_value_range": [
-    12.0,
-    17.0
-  ],
-  "buy_zone": [
-    8.5,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    23.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东亚药业",
+    "security_status": "active",
+    "symbol": "CN:605177",
+    "ticker": "605177"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "81054a7ed332db9f571dcf70fe35f75cd8371ba7bfb43ec18463fd879b0dd310"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前证据不足，维持观察，不主动建仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际亏损、存货跌价、停工损失和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于10.5元且2026H2存货下降、经营现金流为正，可试探",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现扣非亏损收窄和毛利修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣非亏损连续两个季度明显收窄并确认2027年盈利恢复",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报资产减值、制剂销售和2027年盈利恢复基础",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入买入观察区，需要复核存货、现金流和毛利修复是否同步出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "若盈利仍未修复而估值超过基准价值上沿，应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入买入观察区，需要复核存货、现金流和毛利修复是否同步出现"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "若盈利仍未修复而估值超过基准价值上沿，应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际亏损、存货跌价、停工损失和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现扣非亏损收窄和毛利修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报资产减值、制剂销售和2027年盈利恢复基础"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

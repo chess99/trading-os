@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:300662",
-  "market": "CN",
-  "ticker": "300662",
-  "name": "科锐国际",
-  "company_name": "北京科锐国际人力资源股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "A股稀缺的人力资源服务与灵活用工平台，规模、客户网络和AI提效具备跟踪价值；但收入高度依赖低毛利灵活用工，扣非利润和经营现金流质量仍需验证，当前价格接近合理价值下沿但安全边际不足。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏低",
-  "fair_value_range": [
-    17.0,
-    22.0
-  ],
-  "buy_zone": [
-    12.0,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    28.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科锐国际",
+    "security_status": "active",
+    "symbol": "CN:300662",
+    "ticker": "300662"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "56b2d8b90396e5eec1f9924f6637cda334ffcafd7b5731824abc867aea5c4bcf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于12.0元且扣非利润、应收账款和经营现金流未出现结构性恶化",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证扣非利润、经营现金流、应收账款和灵活用工毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格位于12.0-14.5元，或2026中报证明扣非利润与经营现金流同步改善",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认AI提效是否转化为人效和净利率改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格位于14.5-17.0元，仅允许试探仓并等待财报验证",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入有安全边际的买入区，重新评估首笔2%-5%仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格位于17.0-22.0元，合理区间内以观察或持有为主",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入强吸引力区，若基本面未恶化可提高至最高8%仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "价格高于24.0元且扣非利润未明显加速，逐步降至观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过不应追高区，除非扣非利润和现金流显著改善，否则降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入有安全边际的买入区，重新评估首笔2%-5%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入强吸引力区，若基本面未恶化可提高至最高8%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "超过不应追高区，除非扣非利润和现金流显著改善，否则降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证扣非利润、经营现金流、应收账款和灵活用工毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认AI提效是否转化为人效和净利率改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润同比增速",
-    "经营现金流净额/扣非归母净利润",
-    "应收账款增速与收入增速差",
-    "灵活用工收入增速和毛利率",
-    "中高端人才访寻与RPO收入增速",
-    "岗位外包及兼职专家派出人次",
-    "禾蛙生态注册合作伙伴、交付顾问、交付岗位数",
-    "AI智能体带来的人均收入、人均毛利和费用率变化",
-    "政府补助和非经常损益占归母净利比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

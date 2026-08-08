@@ -1,108 +1,115 @@
 {
-  "symbol": "CN:002338",
-  "market": "CN",
-  "ticker": "002338",
-  "name": "奥普光电",
-  "company_name": "奥普光电",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "奥普光电具备长春光机所背景、光电测控仪器、光栅传感器、复合材料和长光辰芯协同等稀缺性，但2026-07-10收盘价54.93元已接近牛市情景估值上沿，当前不追高，等待32元以下再评估首笔仓位。",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    33,
-    42
-  ],
-  "buy_zone": [
-    26,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥普光电",
+    "security_status": "active",
+    "symbol": "CN:002338",
+    "ticker": "002338"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "ee2fd04c99c64a7aa451d287e671c8dd36ef77fd3f51055145f3b5fc30cc58ce"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价高于48元且无新增订单或资产重估催化",
-      "action": "不建仓，已持有则分批降仓",
-      "max_weight": 0,
-      "reason": "当前市值接近牛市情景估值上沿，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，验证收入增速、毛利率、现金流和关联交易兑现",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至30-32元且2026年收入、毛利率、现金流未恶化",
-      "action": "建立观察性首笔仓位",
-      "max_weight": 0.015,
-      "reason": "进入合理价值下沿附近，可用小仓位验证订单兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1高增是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元且半年度关联订单兑现、光栅传感器/复合材料继续增长",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "估值开始提供安全边际，且基本面仍处于正向验证"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年关联交易预计，重估合理价值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于26元且未出现控股股东订单转弱、毛利率跌破30%或现金流持续恶化",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.05,
-      "reason": "价格显著低于基准估值，可承受项目制波动"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入首笔观察仓买入区，需同步复核半年报或最新公告",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入加仓区，但必须确认订单、毛利率和现金流未恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "超过减仓区下沿，估值重新接近乐观情景，应避免追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "明显超过合理价值区间，应复核是否存在未计入的重大催化，否则降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入首笔观察仓买入区，需同步复核半年报或最新公告"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入加仓区，但必须确认订单、毛利率和现金流未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "超过减仓区下沿，估值重新接近乐观情景，应避免追高"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "明显超过合理价值区间，应复核是否存在未计入的重大催化，否则降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，验证收入增速、毛利率、现金流和关联交易兑现"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1高增是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年关联交易预计，重估合理价值"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026年关联交易预计3.655亿元的实际执行比例",
-    "光电测控仪器收入增速和毛利率",
-    "光栅传感器收入增速、毛利率和新应用拓展",
-    "复合材料收入增速、毛利率、发射/飞试任务交付次数",
-    "经营活动现金流净额、合同负债、应收账款和存货周转",
-    "长光辰芯收入、净利润、投资收益贡献和上市进展",
-    "控股股东长春光机所持股变化及减持实施情况",
-    "研发投入占收入比例和重点项目产业化节点",
-    "ROE是否从2025年的5.90%持续改善"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

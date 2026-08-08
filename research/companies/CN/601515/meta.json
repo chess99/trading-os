@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:601515",
-  "ticker": "601515",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "衢州东峰",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处于从传统烟标包装向医药包装、膜材料和新能源材料转型的兑现期，但2025年和2026年上半年仍亏损，盈利拐点尚未确认；当前估值未给足安全边际，适合观察等待扣非利润和膜材料产能利用率改善。",
-  "fair_value_range": [
-    2.4,
-    3.4
-  ],
-  "buy_zone": [
-    1.8,
-    2.4
-  ],
-  "sell_or_reduce_zone": [
-    3.8,
-    4.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "衢州东峰",
+    "security_status": "active",
+    "symbol": "CN:601515",
+    "ticker": "601515"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "fd98cbb931ee92ced282a9993b3ce4cd46eead806dedfd7a084e3e204f4d4706"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前信息下，2026年半年度仍预计亏损且价格接近合理价值上沿，维持0仓位观察。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式披露后的亏损区间、现金流、资产减值和各业务毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.4元且最近一季扣非亏损明显收窄，同时经营现金流未恶化，可建立研究性观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认扣非亏损是否继续收窄以及新材料业务是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非归母净利润转正，膜材料或医药包装收入放量并带动毛利率改善，可提升至小仓位配置。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，评估转型资产回报率、减值风险和2027年估值基准。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入研究性买入区上沿，需要复核净资产质量、亏损收窄和膜材料订单。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "接近悲观情景估值，需要重新评估是否具备安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "超过中性估值上沿且若盈利未恢复，转型预期可能透支。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入研究性买入区上沿，需要复核净资产质量、亏损收窄和膜材料订单。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "接近悲观情景估值，需要重新评估是否具备安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.0,
-      "reason": "超过中性估值上沿且若盈利未恢复，转型预期可能透支。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式披露后的亏损区间、现金流、资产减值和各业务毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认扣非亏损是否继续收窄以及新材料业务是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，评估转型资产回报率、减值风险和2027年估值基准。"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

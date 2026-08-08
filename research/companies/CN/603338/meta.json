@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603338",
-  "market": "CN",
-  "ticker": "603338",
-  "name": "浙江鼎力",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "浙江鼎力是全球化高空作业平台龙头，海外收入占比高、盈利能力强、资产负债表稳健；当前约13倍TTM PE未充分反映电动化、臂式产品和海外份额提升的中期价值，但需持续跟踪关税、汇率和国内租赁周期压力。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    56,
-    68
-  ],
-  "buy_zone": [
-    40,
-    52
-  ],
-  "sell_or_reduce_zone": [
-    72,
-    90
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江鼎力",
+    "security_status": "active",
+    "symbol": "CN:603338",
+    "ticker": "603338"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f98ad8449325175ff85f6dbfeb8d2355753828df36172b3b43692b55dab9f849"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在50-52元且2026年中报未显示海外订单或毛利率明显恶化",
-      "action": "建立初始仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "预计披露2026年半年报，重点复核海外收入、毛利率、汇兑损益和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至42-45元且海外收入同比仍为正、经营现金流未持续恶化",
-      "action": "提高仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后更新全年利润和估值假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于72元且未来12个月利润预期未上修至24亿元以上",
-      "action": "减持或停止加仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报披露后重估中期成长、分红和资产负债表质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入较有吸引力买入区，需要复核关税、汇率和订单是否没有结构性恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 72.0
+      },
+      "reason": "接近或超过基准合理估值上沿，需要检查利润上修是否足以支撑估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入较有吸引力买入区，需要复核关税、汇率和订单是否没有结构性恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 72,
-      "reason": "接近或超过基准合理估值上沿，需要检查利润上修是否足以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "预计披露2026年半年报，重点复核海外收入、毛利率、汇兑损益和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后更新全年利润和估值假设"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报披露后重估中期成长、分红和资产负债表质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300856",
-  "ticker": "300856",
-  "name": "科思股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "科思股份是全球重要防晒剂和个人护理品原料供应商，客户认证、产品线和规模制造构成护城河；但2025年利润大幅下滑，2026Q1仍是收入修复而利润未修复，当前10.92元已处于中性估值区间，需等待价格安全边际或连续季度毛利率修复。",
-  "fair_value_range": [
-    9.0,
-    13.0
-  ],
-  "buy_zone": [
-    7.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科思股份",
+    "security_status": "active",
+    "symbol": "CN:300856",
+    "ticker": "300856"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "c5164d24573ae650788e98aaa6928009b8e5455b27945f89aba8d901e355d408"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.5元，且未出现重大客户流失、安全环保事故或马来西亚项目失败",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、毛利率、经营现金流和在建工程转固进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入恢复、综合毛利率高于31%、经营现金流匹配利润，且马来西亚项目投产爬坡顺利",
-      "action": "可提高为核心跟踪仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于15.5元但年化净利润仍低于2.5亿元，或毛利率持续低于29%",
-      "action": "不追高并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和马来西亚项目达产情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入初始买入区间，需要复核基本面是否未继续恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "进入减仓观察区间，需要验证利润修复是否足以支撑估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入初始买入区间，需要复核基本面是否未继续恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "进入减仓观察区间，需要验证利润修复是否足以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、毛利率、经营现金流和在建工程转固进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和马来西亚项目达产情况"
-    }
-  ],
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "latest_report": "reports/2026-07-15-initial.md"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,128 +1,142 @@
 {
-  "symbol": "CN:300021",
-  "market": "CN",
-  "ticker": "300021",
-  "name": "大禹节水",
-  "company_name": "大禹节水集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司受益于国家水网、高标准农田、农业节水和数字水利投入，但当前仍是低净利率、低ROE、回款压力大的项目型公司。4元附近估值已明显高于保守内在价值，需等待价格回落或现金流与ROE实质修复。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.5,
-    3.2
-  ],
-  "buy_zone": [
-    2.0,
-    2.4
-  ],
-  "sell_or_reduce_zone": [
-    4.0,
-    4.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大禹节水",
+    "security_status": "active",
+    "symbol": "CN:300021",
+    "ticker": "300021"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8cae3e355066462cea641e4fecb1c5bab335252c4e58398f7c50db76dbece414"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于2.4元，且没有新增重大坏账、逾期担保或资金占用风险",
-      "action": "建立0.5%-1.0%观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核收入、扣非利润、现金流和应收账款变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.0元，且经营性现金流连续两个报告期改善、应收账款与合同资产占收入比例下降",
-      "action": "提高至1.5%-2.0%仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "判断回款质量是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于4.0元且ROE、扣非净利率和经营现金流没有同步改善",
-      "action": "不加仓，已有仓位逐步减至0",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "评估坏账和资金占用风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "判断订单质量和资本开支压力",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "跟踪资产负债表风险",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "评估资产出售后的现金回笼和业务协同",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "低于保守合理价值下沿并具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "价格显著低于估值区间且赔率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "当前盈利质量难以支撑该估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.5
+      },
+      "reason": "明显高于保守内在价值且缺乏安全边际",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "currency": "CNY",
-      "action": "进入可买区，复核坏账、担保和现金流后可建观察仓",
-      "reason": "低于保守合理价值下沿并具备初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "currency": "CNY",
-      "action": "进入高赔率区，若基本面未恶化可提高仓位",
-      "reason": "价格显著低于估值区间且赔率改善"
-    },
-    {
-      "type": "price_above",
-      "price": 4.0,
-      "currency": "CNY",
-      "action": "进入减仓或回避区，除非ROE和现金流显著修复",
-      "reason": "当前盈利质量难以支撑该估值"
-    },
-    {
-      "type": "price_above",
-      "price": 4.5,
-      "currency": "CNY",
-      "action": "估值风险较高，倾向卖出或保持0仓位",
-      "reason": "明显高于保守内在价值且缺乏安全边际"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布2026年半年报或三季报",
-      "reason": "复核收入、扣非利润、现金流和应收账款变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "经营活动现金流单季或累计转正",
-      "reason": "判断回款质量是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "应收账款、合同资产或1年以上账龄余额明显上升",
-      "reason": "评估坏账和资金占用风险"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "新增重大中标项目、PPP/BOT/特许经营项目或融资安排",
-      "reason": "判断订单质量和资本开支压力"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "新增大额担保、逾期担保、坏账计提或监管问询",
-      "reason": "跟踪资产负债表风险"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "慧图科技股权转让后续收益确认、剩余股权处置或协同变化",
-      "reason": "评估资产出售后的现金回笼和业务协同"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营活动现金流净额",
-    "应收账款加合同资产占营业收入比例",
-    "1年以上应收账款余额和坏账计提",
-    "扣非净利率",
-    "ROE",
-    "财务费用占营业收入比例",
-    "设计、信息化和运营服务收入占比",
-    "新签订单金额、回款金额和订单回款比",
-    "对外担保余额及其占归母净资产比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:605011",
-  "market": "CN",
-  "ticker": "605011",
-  "name": "杭州热电",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "杭州热电是长三角工业园区热电联产和供汽平台，具备区域管网和客户黏性，但2026-07-17股价对应约39倍TTM PE，已经明显高于同业中枢和自身7%-8% ROE可支撑的估值，当前缺乏安全边际，适合观察等待价格回落或新项目利润验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.5,
-    13.5
-  ],
-  "buy_zone": [
-    9.5,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    17.0,
-    20.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "杭州热电",
+    "security_status": "active",
+    "symbol": "CN:605011",
+    "ticker": "605011"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e0b0d1352d73168c2936604814155957cc8a5c077e48f9377abecf11199d16ff"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至11元以下，且2026H1扣非利润不低于0.85亿元、经营现金流修复、热电业务毛利率未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报售汽量、热电毛利率、经营现金流和湖北项目进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至9.5元附近，且湖北小池项目资本开支和收益率未出现负面变化",
-      "action": "提高至小仓位配置",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报利润修复质量及全年估值假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于17元且未出现可量化利润上修",
-      "action": "不新增买入并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红政策、ROE变化及新项目投产贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入初步买入观察区，需要复核半年报现金流和毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "接近具备安全边际的买入区，可复核基本面后加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.0
+      },
+      "reason": "高于合理估值上沿，若无业绩上修应减仓或回避新增仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入初步买入观察区，需要复核半年报现金流和毛利率"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "接近具备安全边际的买入区，可复核基本面后加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 17.0,
-      "reason": "高于合理估值上沿，若无业绩上修应减仓或回避新增仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报售汽量、热电毛利率、经营现金流和湖北项目进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报利润修复质量及全年估值假设"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红政策、ROE变化及新项目投产贡献"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

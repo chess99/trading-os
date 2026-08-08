@@ -1,98 +1,105 @@
 {
-  "symbol": "CN:300562",
-  "market": "CN",
-  "ticker": "300562",
-  "name": "乐心医疗",
-  "company_name": "广东乐心医疗电子股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "乐心医疗已从家用健康硬件向医疗级远程健康监测设备和慢病管理客户交付升级，2025 年及 2026Q1 利润、现金流和资产效率改善明显；但收入增长仍弱、外销和大客户集中度高，2026-07-13 股价 14.23 元处于合理价值中段偏上，安全边际不足，等待 11.5-12.5 元或血糖/远程监测放量证据。",
-  "quality_rating": "中上",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [12.5, 16.0],
-  "buy_zone": [10.5, 12.5],
-  "sell_or_reduce_zone": [18.0, 20.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "乐心医疗",
+    "security_status": "active",
+    "symbol": "CN:300562",
+    "ticker": "300562"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "b995f533573b06c2275e643179200077fe5a137f572f79ab1bd5d8f522cc28d5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 13.0 元且 2026 年收入增速仍低于 8%",
-      "action": "仅保留 0%-2% 观察仓，不追高",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报：收入增速、扣非净利润、毛利率、现金流和血糖产品线进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至 11.5-12.5 元，且经营现金流/净利润继续大于 1、外销毛利率未明显下滑",
-      "action": "分批买入至 3%-5%",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报：确认全年 1 亿元以上净利润目标完成概率与费用下降可持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于 10.5 元，且血糖产品线、海外客户和现金流未出现负面变化",
-      "action": "可提高至 5%-7% 上限",
-      "target_position": "5%-7%",
-      "max_weight": 0.07
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报：检验远程健康监测与智能血糖是否真正贡献收入增长",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价超过 18.0 元但 2026E 净利润无法上修至 1.3 亿元以上",
-      "action": "降低仓位或退出新增仓位",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
       "reason": "进入安全边际买入区间，估值回到合理区间下沿",
-      "action": "进入可买区间，复核半年报和外销毛利率后分批建仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 10.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
       "reason": "跌破保守估值下沿，若基本面未破坏则赔率改善",
-      "action": "若基本面未破坏，复核是否提高至核心观察仓上限"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 18.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
       "reason": "超过当前基本面可解释的合理价值上沿",
-      "action": "估值进入偏贵区，若盈利未上修则减仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报：收入增速、扣非净利润、毛利率、现金流和血糖产品线进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报：确认全年 1 亿元以上净利润目标完成概率与费用下降可持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报：检验远程健康监测与智能血糖是否真正贡献收入增长"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速是否恢复到 8%-12% 以上",
-    "综合毛利率是否稳定在 35%-38%，外销毛利率是否维持约 40%",
-    "扣非净利率是否从 2025 年约 7.8% 提升到 10% 左右",
-    "经营现金流/净利润是否持续大于 1",
-    "前五大客户销售占比是否下降或大客户合作周期是否更清晰",
-    "智能血糖产品线的注册、量产、客户导入和收入贡献",
-    "财务费用和汇兑损益对利润的影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

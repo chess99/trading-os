@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:920125",
-  "market": "CN",
-  "ticker": "920125",
-  "name": "鸿仕达",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "鸿仕达受益于消费电子回暖、AI服务器集群自动化设备和先进封装设备订单放量，2026H1利润预告显著改善；但2026-07-17收盘130元对应约73亿元市值和约100倍TTM PE，已充分计入半导体设备化预期，安全边际不足，需等待半年报验证或价格回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    85,
-    110
-  ],
-  "buy_zone": [
-    55,
-    85
-  ],
-  "sell_or_reduce_zone": [
-    135,
-    170
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鸿仕达",
+    "security_status": "active",
+    "symbol": "CN:920125",
+    "ticker": "920125"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "2a9534e929072da70a007c88179be812cac34525839220ec2b7c26a830169814"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格不高于85元，且2026年半年度报告验证半导体/AI服务器相关订单与毛利率改善，同时应收账款未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、毛利率、应收账款、存货和半导体设备订单进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格不高于70元，且前五大客户订单、经营现金流和存货周转没有同步恶化",
-      "action": "提高到小核心仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，重点确认H2验收节奏、现金流和全年盈利上修可能",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于135元，且没有新的经审计盈利上修、重大半导体设备订单或鸿芯微测商业化验证",
-      "action": "减持或保持空仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报或业绩快报，重新评估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 85.0
+      },
+      "reason": "进入初始买入区间，需要复核半年报与订单质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入较有安全边际区间，可评估是否提升仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 135.0
+      },
+      "reason": "超过减持观察线，若无新增基本面证据则估值风险偏高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 85,
-      "reason": "进入初始买入区间，需要复核半年报与订单质量"
-    },
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入较有安全边际区间，可评估是否提升仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 135,
-      "reason": "超过减持观察线，若无新增基本面证据则估值风险偏高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、毛利率、应收账款、存货和半导体设备订单进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，重点确认H2验收节奏、现金流和全年盈利上修可能"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报或业绩快报，重新评估合理价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

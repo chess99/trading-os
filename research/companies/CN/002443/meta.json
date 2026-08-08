@@ -1,129 +1,123 @@
 {
-  "symbol": "CN:002443",
-  "market": "CN",
-  "ticker": "002443",
-  "name": "金洲管道",
-  "company_name": "浙江金洲管道科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是现金资产较充足、负债较低的管道制造商，受益于城市管网、水利、燃气更新和潜在输氢/液冷订单；但主业低毛利、低ROE、2025年经营现金流显著弱于利润，当前9.41元已高于基准合理价格区间，安全边际不足。",
-  "quality_rating": "B",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    6.8,
-    8.2
-  ],
-  "buy_zone": [
-    5.6,
-    6.6
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    11.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金洲管道",
+    "security_status": "active",
+    "symbol": "CN:002443",
+    "ticker": "002443"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c8ee466fb2213295cacda73f03262c58f2cff0bf0b111f39b3b4fa3869dc54e2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格<=5.6元",
-      "max_weight": 0.06,
-      "position": "4%-6%",
-      "action": "强吸引力区，基本面未恶化时分批买入"
-    },
-    {
-      "condition": "价格5.6-6.6元",
-      "max_weight": 0.04,
-      "position": "2%-4%",
-      "action": "可分批买入"
-    },
-    {
-      "condition": "价格6.6-8.2元",
-      "max_weight": 0.02,
-      "position": "0%-2%",
-      "action": "仅在订单、现金流、毛利率均改善时小仓试错"
-    },
-    {
-      "condition": "价格8.2-9.0元",
-      "max_weight": 0.0,
-      "position": "0%",
-      "action": "等待"
-    },
-    {
-      "condition": "价格>9.0元",
-      "max_weight": 0.0,
-      "position": "0%",
-      "action": "不追高，已有仓位考虑降低风险"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "价格跌至6.6元以下",
-      "price": 6.6,
-      "reason": "进入有安全边际买入价",
-      "action": "复核买入"
-    },
-    {
-      "type": "price_below",
-      "condition": "价格跌至5.6元以下",
-      "price": 5.6,
-      "reason": "进入强吸引力买入价",
-      "action": "复核强吸引力买入"
-    },
-    {
-      "type": "price_above",
-      "condition": "价格高于9.0元",
-      "price": 9.0,
-      "reason": "高于不应追高价",
-      "action": "不追高，已有仓位复核减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "复核2026年半年报",
-      "condition": "2026年半年报披露后复核收入、毛利率、扣非净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核三季报现金流",
-      "condition": "经营现金流净额连续两个报告期显著低于归母净利润"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核毛利率拐点",
-      "condition": "综合毛利率跌破8%或持续高于12%"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "复核新业务订单",
-      "condition": "输氢、液冷或海外业务出现可量化批量订单"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "复核资本配置风险",
-      "condition": "交易性金融资产、担保、关联交易或资金占用出现异常"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "进入有安全边际买入价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "高于不应追高价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "综合毛利率",
-    "扣非归母净利润",
-    "经营现金流净额/归母净利润",
-    "海外收入占比",
-    "钢塑复合管和螺旋焊管收入占比",
-    "输氢和液冷订单金额",
-    "货币资金与交易性金融资产安全性"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

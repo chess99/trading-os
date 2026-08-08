@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688289",
-  "market": "CN",
-  "ticker": "688289",
-  "name": "圣湘生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "圣湘生物具备分子诊断平台、注册证、渠道和现金资产基础，但 2025-2026Q1 盈利仍受集采、医保控费、税率调整和低毛利仪器投入压制；当前价格接近基准合理价值低位，安全边际不足，需等待 2026H1 诊断主业毛利率、经营现金流和海济贡献验证后再加仓。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    15.0,
-    19.0
-  ],
-  "buy_zone": [
-    12.5,
-    14.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "圣湘生物",
+    "security_status": "active",
+    "symbol": "CN:688289",
+    "ticker": "688289"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "320bf5e9c51ccfad3ecc5e5e280694f2483c87e4918c387e94c7763e5edf04a2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 12.5-14.0 元区间，且 2026H1 未出现商誉减值、现金流恶化或海济低于预期",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核 2026 年半年报披露后的收入、扣非利润、试剂毛利率、经营现金流和海济贡献",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 12.5 元，且诊断试剂毛利率企稳、经营现金流转正",
-      "action": "提高至小仓配置",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报是否确认利润拐点及回购/激励进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1 扣非净利润同比继续下滑超过 40% 或海济业绩不及预期",
-      "action": "暂停买入并复核估值",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报、商誉减值、海济业绩承诺后延续性和全年现金流",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入保守买入区上沿，需复核半年报前景和现金流后考虑观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "股价低于按 1.0 倍左右 PB 估算的安全垫，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入乐观情景估值下沿，若利润拐点未确认应减仓或保持空仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入保守买入区上沿，需复核半年报前景和现金流后考虑观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "股价低于按 1.0 倍左右 PB 估算的安全垫，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "进入乐观情景估值下沿，若利润拐点未确认应减仓或保持空仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核 2026 年半年报披露后的收入、扣非利润、试剂毛利率、经营现金流和海济贡献"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报是否确认利润拐点及回购/激励进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报、商誉减值、海济业绩承诺后延续性和全年现金流"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

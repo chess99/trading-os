@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603628",
-  "market": "CN",
-  "ticker": "603628",
-  "name": "清源股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "清源股份具备光伏支架、海外渠道、电站开发建设和电站运营资产，但当前盈利受汇兑和行业价格竞争拖累，经营现金流与应收账款压力较大；在2026-07-17收盘价9.04元附近，估值高于基准合理价值中枢，适合观察而非立即买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.2,
-    8.8
-  ],
-  "buy_zone": [
-    6.2,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "清源股份",
+    "security_status": "active",
+    "symbol": "CN:603628",
+    "ticker": "603628"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f39567148fa2edd2c7a056ac39db499e6da46685f722699544acac6d56af04ac"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入6.2-7.2元区间，且2026中报或三季报显示经营现金流改善、应收账款未继续恶化、光伏支架毛利率稳定在15%左右或以上",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、汇兑损益、经营现金流、应收账款和毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.2元，且没有出现重大坏账、电站减值或订单断崖式下滑",
-      "action": "可提高至小仓位配置",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元但利润、经营现金流和ROE没有同步修复",
-      "action": "不追高并减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及2027年经营展望，更新长期估值中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入基准买入观察区间，需要复核最新现金流与应收账款",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入悲观情景下沿附近，若基本面未恶化可能具备安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过基准合理价值区间，若无利润和现金流修复应考虑降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入基准买入观察区间，需要复核最新现金流与应收账款"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入悲观情景下沿附近，若基本面未恶化可能具备安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过基准合理价值区间，若无利润和现金流修复应考虑降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、汇兑损益、经营现金流、应收账款和毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及2027年经营展望，更新长期估值中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,95 +1,105 @@
 {
-  "symbol": "CN:300720",
-  "name": "海川智能",
-  "market": "CN",
-  "ticker": "300720",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "status": "active",
-  "decision": "不买",
-  "confidence": "高",
-  "currency": "CNY",
-  "price_as_of": "2026-07-13",
-  "last_price": 85.88,
-  "market_cap": 16736000000,
-  "fair_value_range": [
-    5.0,
-    10.3
-  ],
-  "buy_range": [
-    0,
-    6.0
-  ],
-  "buy_zone": [
-    0,
-    6.0
-  ],
-  "watch_range": [
-    6.0,
-    10.0
-  ],
-  "avoid_range": [
-    20.0,
-    999.0
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海川智能",
+    "security_status": "active",
+    "symbol": "CN:300720",
+    "ticker": "300720"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "dde704dae38703fc97220a5a0764400a1128b2810d2c1f65a4f476e53f8010f2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前估值显著脱离主业现金流和少数股权投资可解释范围；仅在股价跌破10元且主业收入、毛利率、经营现金流未恶化时重新观察，跌破6元且外延投资风险清晰后再考虑小仓位研究性买入。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露窗口后复核主业收入、毛利率、经营现金流和南京集溢投资进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露窗口后复核全年盈利修复趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露窗口后复核主业现金流、ROE和外延投资真实贡献。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "价格回到主业与少数股权期权可解释区间上沿，重新进入观察清单。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "价格接近严格安全边际区间，可结合最新财报启动买入前复核。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 100.0
+      },
+      "reason": "若无实质业绩兑现而继续上涨，估值和交易拥挤风险进一步上升，需要复核风险提示。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "价格回到主业与少数股权期权可解释区间上沿，重新进入观察清单。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "价格接近严格安全边际区间，可结合最新财报启动买入前复核。"
-    },
-    {
-      "type": "price_above",
-      "price": 100.0,
-      "reason": "若无实质业绩兑现而继续上涨，估值和交易拥挤风险进一步上升，需要复核风险提示。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露窗口后复核主业收入、毛利率、经营现金流和南京集溢投资进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露窗口后复核全年盈利修复趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报披露窗口后复核主业现金流、ROE和外延投资真实贡献。"
-    }
-  ],
-  "thesis": "海川智能主业为自动衡器和包装检测设备，具备真实产品、客户和经营现金流，但收入规模小、ROE低、成长未证明。2026年半导体少数股权投资带来期权，但当前约167亿元市值已远超主业和少数股权投资可解释范围。",
-  "current_thesis": "海川智能主业为自动衡器和包装检测设备，具备真实产品、客户和经营现金流，但收入规模小、ROE低、成长未证明。2026年半导体少数股权投资带来期权，但当前约167亿元市值已远超主业和少数股权投资可解释范围。",
-  "key_metrics": {
-    "revenue_2025": 228000000,
-    "net_profit_2025": 23113700,
-    "operating_cash_flow_2025": 34249700,
-    "roe_2025": 0.0397,
-    "revenue_2026_q1": 55954100,
-    "net_profit_2026_q1": 7077000,
-    "equity_2026_q1": 588680000
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

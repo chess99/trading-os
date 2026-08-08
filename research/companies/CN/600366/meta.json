@@ -1,81 +1,95 @@
 {
-  "symbol": "CN:600366",
-  "ticker": "600366",
-  "name": "宁波韵升",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "宁波韵升 2025 年扭亏、2026H1 业绩预告显示稀土永磁盈利周期修复，但当前股价已接近公允价值下沿，安全边际不足；等待半年报验证毛利率、现金流和高端订单质量后再决定是否加仓。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    13.0,
-    17.5
-  ],
-  "buy_zone": [
-    10.0,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宁波韵升",
+    "security_status": "active",
+    "symbol": "CN:600366",
+    "ticker": "600366"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "fec1f90ba50770de56ea7a795ed288be7f7609668b846fd7bf2a415f4a97a7d1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入 10.0-11.5 元且 2026 中报未显示毛利率、经营现金流或订单趋势恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查毛利率、经营现金流、存货和订单结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 中报确认归母净利润不低于业绩预告中值、经营现金流/净利润高于 0.7 且毛利率环比改善",
-      "action": "允许提高至核心小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断 H1 业绩弹性是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 20 元但全年盈利预期未上修至 6 亿元以上",
-      "action": "减持或暂停买入",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新估算周期中枢盈利和公允价值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入买入观察区，可重新评估安全边际和中报质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过当前牛市情景下沿，若盈利没有同步上修需考虑减持",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入买入观察区，可重新评估安全边际和中报质量"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "超过当前牛市情景下沿，若盈利没有同步上修需考虑减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查毛利率、经营现金流、存货和订单结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断 H1 业绩弹性是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新估算周期中枢盈利和公允价值"
-    }
-  ],
-  "key_metrics": {
-    "reference_price_cny": 12.84,
-    "reference_price_date": "2026-07-16",
-    "reference_price_confidence": "medium",
-    "fair_value_basis": "2026E 归母净利润 5.2 亿元、合理 PE 24-36x，并用简化 DCF 和情景估值交叉验证"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

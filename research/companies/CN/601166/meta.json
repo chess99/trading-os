@@ -1,65 +1,170 @@
 {
-  "symbol": "CN:601166",
-  "market": "CN",
-  "ticker": "601166",
-  "name": "兴业银行",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "buy",
-  "current_thesis": "兴业银行是资产质量优于行业、特色金融能力突出的股份行核心资产，当前约0.43倍PB和6%以上股息率已反映较悲观预期，适合分批买入但不宜重仓押注高增长。",
-  "fair_value_range": [
-    20,
-    24
-  ],
-  "buy_zone": [
-    15,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "兴业银行",
+    "security_status": "active",
+    "symbol": "CN:601166",
+    "ticker": "601166"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "edf20dff80e2fc50a4347d95704707860a5a62037c82a5084968c480dc4a7272"
+      }
+    ],
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_id": "CN-601166-2026-07-22-initial-research-v2",
+        "report_type": "initial_research",
+        "sha256": "ccb8f4c71b664576f24e1a659f3b54e32fe5310ce4ea71a46f027cb25a266824"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
+    }
+  },
+  "research": {
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:00:00+08:00",
+    "rebaseline_required": false
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于买入区间且基本面未恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "filing_type": "2026_interim_report"
+      },
+      "reason": "半年报披露后重算净息差、存款成本、关注逾期重组、新生不良、拨备、资本和每股账面价值。",
+      "trigger_id": "cib-2026-interim",
+      "type": "filing"
     },
     {
-      "condition": "股价低于16元且不良率、拨备覆盖率、核心一级资本充足率保持稳定",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "filing_type": "next_pillar3_report"
+      },
+      "reason": "下一份第三支柱报告披露后复核风险加权资产、资本要求、杠杆率和流动性指标。",
+      "trigger_id": "cib-next-pillar3",
+      "type": "filing"
     },
     {
-      "condition": "股价低于15元且无资产质量恶化证据",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "metric": "watch_loan_ratio",
+        "operator": "gte",
+        "threshold": 1.9
+      },
+      "reason": "关注率达到1.90%触发信用损失与可持续ROE重估。",
+      "trigger_id": "cib-watch-loan-risk",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "restructured_loan_ratio",
+        "operator": "gte",
+        "threshold": 0.8
+      },
+      "reason": "重组贷款占比达到0.80%触发迁徙与拨备复核。",
+      "trigger_id": "cib-restructured-loan-risk",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "core_tier1_capital_ratio",
+        "operator": "lt",
+        "threshold": 9.2
+      },
+      "reason": "核心一级资本充足率低于9.20%触发资本、扩表和分红约束重估。",
+      "trigger_id": "cib-core-tier1",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "provision_coverage_ratio",
+        "operator": "lt",
+        "threshold": 210.0
+      },
+      "reason": "拨备覆盖率低于210%触发资产损失缓冲重估。",
+      "trigger_id": "cib-provision-buffer",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "net_interest_margin",
+        "operator": "lt",
+        "threshold": 1.5
+      },
+      "reason": "净息差低于1.50%触发可持续ROE下修。",
+      "trigger_id": "cib-nim-floor",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event_name": "quantified_lgfv_or_structured_asset_update"
+      },
+      "reason": "城投或信托资管计划底层敞口出现量化更新时重评证据置信度。",
+      "trigger_id": "cib-credit-transparency",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入初研观察区下沿，仅触发估值与信用证据复核，不自动形成组合动作。",
+      "trigger_id": "cib-price-review-low",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "进入初研乐观估值区，仅触发估值复核，不自动形成组合动作。",
+      "trigger_id": "cib-price-review-high",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的净息差、资产质量、核心一级资本充足率和分红假设"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年盈利趋势"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入有安全边际的买入区间"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-07T23:30:00+08:00"
+  "underwriting": {
+    "confidence": "medium",
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "cycle_position_uncertain",
+      "underwriting_passed"
+    ],
+    "review_id": "2026-07-26-priority-v3-001",
+    "status": "passed"
+  },
+  "updated_at": "2026-07-26T20:10:27.233178+08:00",
+  "valuation": {
+    "bear_value": 14.0,
+    "buy_zone": [
+      15.0,
+      21.2
+    ],
+    "currency": "CNY",
+    "fair_value_range": [
+      24.5,
+      28.5
+    ],
+    "price_as_of": "2026-07-24T16:11:50+08:00",
+    "reduce_zone": [
+      28.5,
+      33.0
+    ]
+  }
 }

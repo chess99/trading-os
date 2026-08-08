@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:301278",
-  "ticker": "301278",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "快可电子",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "快可电子是光伏接线盒与连接器细分供应商，具备认证、客户导入和海外产能基础，但2025年以来利润率与现金流明显承压；当前价格已反映部分修复预期，需等待毛利率、连接器占比和经营现金流确认改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [19, 25],
-  "buy_zone": [15, 19],
-  "sell_or_reduce_zone": [32, 38],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "快可电子",
+    "security_status": "active",
+    "symbol": "CN:301278",
+    "ticker": "301278"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "5b66453c5f6070dc9acb252ac52a1163c9844f26474dc4bb09c4d4a51e89d683"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于19元，且最近一期综合毛利率不低于10%、经营现金流转正或明显改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报毛利率、扣非净利、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于17元，且连接器收入占比回升、扣非净利率连续两个季度改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现利润率和现金流连续改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于32元但毛利率、扣非净利和经营现金流未同步修复",
-      "action": "不追高并降低仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报的海外基地、连接器收入占比和全年现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入合理价值区间下沿，开始具备安全边际，需复核毛利率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "接近资产和收入支撑下的买入区间，可评估小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "超过当前乐观修复前的合理估值，若基本面未改善需降低关注或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19,
-      "reason": "进入合理价值区间下沿，开始具备安全边际，需复核毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "接近资产和收入支撑下的买入区间，可评估小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "超过当前乐观修复前的合理估值，若基本面未改善需降低关注或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报毛利率、扣非净利、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现利润率和现金流连续改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报的海外基地、连接器收入占比和全年现金流质量"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 26.27,
-    "reference_price_date": "2026-07-15",
-    "market_cap_estimate_cny_billion": 2.36,
-    "2025_revenue_cny_billion": 1.084,
-    "2025_net_profit_cny_million": 20.44,
-    "2025_gross_margin": 0.089,
-    "2025_operating_cash_flow_cny_million": -61.62,
-    "2026_q1_revenue_growth": 0.1294,
-    "2026_q1_net_profit_growth": -0.4523
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

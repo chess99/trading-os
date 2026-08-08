@@ -1,117 +1,106 @@
 {
-  "symbol": "CN:002228",
-  "market": "CN",
-  "ticker": "002228",
-  "name": "合兴包装",
-  "company_name": "合兴包装",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_low",
-  "valuation_rating": "neutral",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    2.6,
-    3.4
-  ],
-  "buy_zone": [
-    2.3,
-    2.7
-  ],
-  "sell_or_reduce_zone": [
-    3.8,
-    4.3
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "合兴包装",
+    "security_status": "active",
+    "symbol": "CN:002228",
+    "ticker": "002228"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "8996c94474ff071d94c02fe588fac3c8f595a7d6c105fc7acb199d1434af81e4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约3.06元且Q2/Q3利润率与现金流尚未验证",
-      "action": "不主动追买，仅保留观察或极小跟踪仓",
-      "max_weight": 0.01,
-      "reason": "当前处于基准估值中部，PE对低ROE企业不便宜，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看毛利率、经营现金流、应收账款和海外收入",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入2.50-2.70元且经营现金流保持为正",
-      "action": "建立首笔跟踪仓",
-      "max_weight": 0.01,
-      "reason": "接近买入区上沿，PB安全边际改善，但仍需等待毛利率确认"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认原纸涨价后的价格传导和客户需求",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.30元且瓦楞包装毛利率未跌破10.5%",
-      "action": "提高到研究仓",
-      "max_weight": 0.02,
-      "reason": "价格低于估值下沿，若基本面未恶化，可用资产价值和分红做支撑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.7
+      },
+      "reason": "进入买入观察区，需要复核原纸价格、毛利率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "瓦楞包装毛利率回到12.5%以上且经营现金流/净利润连续两个季度大于2",
-      "action": "考虑提高组合上限",
-      "max_weight": 0.03,
-      "reason": "利润率和现金流同时改善，说明包装服务和成本传导开始兑现"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.3
+      },
+      "reason": "低于估值下沿，若基本面未恶化可考虑提高研究仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.8
+      },
+      "reason": "进入减仓区，若盈利未同步改善则风险收益转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.3
+      },
+      "reason": "超过基准估值上沿，应复核是否只有估值扩张而无利润兑现",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.7,
-      "reason": "进入买入观察区，需要复核原纸价格、毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 2.3,
-      "reason": "低于估值下沿，若基本面未恶化可考虑提高研究仓"
-    },
-    {
-      "type": "price_above",
-      "price": 3.8,
-      "reason": "进入减仓区，若盈利未同步改善则风险收益转弱"
-    },
-    {
-      "type": "price_above",
-      "price": 4.3,
-      "reason": "超过基准估值上沿，应复核是否只有估值扩张而无利润兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看毛利率、经营现金流、应收账款和海外收入"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认原纸涨价后的价格传导和客户需求"
-    }
-  ],
-  "key_tracking_metrics": [
-    "瓦楞包装毛利率",
-    "经营活动现金流净额/归母净利润",
-    "应收账款周转与应收账款增速",
-    "存货金额与库存量变化",
-    "瓦楞纸和箱板纸价格",
-    "前五大客户销售占比",
-    "前五大供应商采购占比",
-    "国外收入占比",
-    "控股股东持股和减持计划",
-    "现金分红/自由现金流"
-  ],
-  "thesis": "合兴包装具备规模、网点、大客户和包装供应链服务能力，但利润率和ROE偏低，原纸价格上涨与下游需求偏弱使当前价格缺少足够安全边际。",
-  "current_thesis": "合兴包装具备规模、网点、大客户和包装供应链服务能力，但利润率和ROE偏低，原纸价格上涨与下游需求偏弱使当前价格缺少足够安全边际，当前应等待2.30-2.70元买入区或利润率和现金流改善。",
-  "research_confidence": "medium",
-  "last_price": 3.06,
-  "last_price_date": "2026-07-12",
-  "market_cap_cny_billion": 3.713,
-  "sources": [
-    "https://static.cninfo.com.cn/finalpage/2026-04-27/1225187146.PDF",
-    "https://static.cninfo.com.cn/finalpage/2026-04-27/1225187153.PDF",
-    "https://www.jisilu.cn/data/stock/002228",
-    "https://www.stats.gov.cn/sj/zxfb/202606/t20260616_1963949.html",
-    "https://www.stcn.com/article/detail/3993690.html",
-    "https://paper.sci99.com/zone/corrugated_%26_cardboard_paper"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

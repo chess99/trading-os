@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:001229",
-  "market": "CN",
-  "ticker": "001229",
-  "name": "魅视科技",
-  "company_name": "魅视科技",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "魅视科技传统分布式视听控制业务高毛利、现金充裕且无有息负债，AI视觉产品已开始贡献收入；但当前股价对应估值显著领先利润兑现，2026年一季度转亏，需要等待价格回落或AI收入、毛利率、现金流共同验证后再买入。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    18,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    48
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "魅视科技",
+    "security_status": "active",
+    "symbol": "CN:001229",
+    "ticker": "001229"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "34a61ee925f6f00d8bbe38eecef0eda087f601ce7c7271bcaf6c2701d8e4b756"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于24元且2026年半年报未显示收入、毛利率和现金流明显恶化",
-      "action": "建立观察性首笔仓位",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区间上沿，资产负债表和传统主业提供一定安全垫"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看AI收入、毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于20元且AI收入继续增长、应收账款占收入比例未超过45%",
-      "action": "分批加仓",
-      "max_weight": 0.02,
-      "reason": "估值开始接近保守合理区间，同时第二曲线仍在兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润修复和订单兑现趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元且经营现金流保持健康、无重大治理或订单风险",
-      "action": "提高到策略上限",
-      "max_weight": 0.03,
-      "reason": "估值给出较强安全边际，但小市值项目制公司仍需控制单票风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入区间上沿，复核半年报后可考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于38元且AI收入、毛利率、现金流缺少同步兑现",
-      "action": "不新增并考虑减仓",
-      "max_weight": 0,
-      "reason": "主题估值明显领先利润兑现，风险收益比不佳"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入较有安全边际区域，若基本面未恶化可加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "进入减仓/回避区间，除非AI业务连续兑现否则估值偏贵",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "接近乐观情景中部，当前利润体量难以支撑新增买入",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入买入区间上沿，复核半年报后可考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入较有安全边际区域，若基本面未恶化可加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "进入减仓/回避区间，除非AI业务连续兑现否则估值偏贵"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "接近乐观情景中部，当前利润体量难以支撑新增买入"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看AI收入、毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润修复和订单兑现趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "AI系列产品收入及同比增速",
-    "AI系列产品毛利率",
-    "专用视听产品收入及毛利率",
-    "应收账款占营业收入比例",
-    "经营活动现金流量净额",
-    "合同负债和预收款项",
-    "研发投入金额及研发人员数量",
-    "境外收入及新加坡子公司贡献",
-    "重大中标和订单公告",
-    "股权激励股份支付费用对利润的影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

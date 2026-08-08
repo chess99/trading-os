@@ -1,117 +1,114 @@
 {
-  "symbol": "CN:002926",
-  "market": "CN",
-  "ticker": "002926",
-  "name": "华西证券",
-  "company_name": "华西证券股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中型区域券商，资本充足、2025年利润修复明显，但长期ROE和护城河不强，利润高度受市场成交、自营投资和监管周期影响。当前价格接近合理价值下半区，安全边际不足，等待7.0-7.6元买入区。",
-  "quality_rating": "中",
-  "valuation_rating": "合理略低估但安全边际不足",
-  "fair_value_range": [
-    8.2,
-    9.6
-  ],
-  "buy_zone": [
-    7.0,
-    7.6
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    11.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华西证券",
+    "security_status": "active",
+    "symbol": "CN:002926",
+    "ticker": "002926"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8da402917af94ec3ae7b5246f465ecaea517966570da33a48e7088f6f5946568"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.6元，且未出现新增重大监管处罚、风控指标恶化或行业成交额显著下滑",
-      "action": "建立观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价低于7.0元，且ROE趋势维持6%以上、两融和经纪业务没有恶化",
-      "action": "加仓至小仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于9.6元但ROE没有上修到7.5%以上",
-      "action": "停止新增，只保留观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价高于10.5元，且没有行业成交额持续放大或投行业务显著恢复的证据",
-      "action": "逐步减仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.6,
-      "currency": "CNY",
-      "reason": "进入估值安全边际较好的可买观察区",
-      "action": "进入可买观察区，复核行业成交额、两融余额和公司最新公告"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "currency": "CNY",
-      "reason": "低于净资产折扣估值的更有吸引力区域",
-      "action": "若无重大负面事件，可考虑提高到2%-3%小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "currency": "CNY",
-      "reason": "高于当前ROE可支持的合理估值区间",
-      "action": "进入减仓复核区，除非ROE和行业景气同步上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "复核2026年半年度报告",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报将更新盈利、净资产和风控指标",
-      "action": "更新盈利、净资产和风控指标"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "复核2026年三季度报告",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证ROE、投资收益波动和券商景气假设",
-      "action": "更新ROE、投资收益波动和券商景气假设"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "复核2026年年度报告",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报后需要重估公允价值、买入区间和仓位上限",
-      "action": "重估公允价值、买入区间和仓位上限"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-13",
-      "condition": "年度跟踪复核",
+      "active": true,
+      "condition": {
+        "date": "2027-07-13"
+      },
       "reason": "距离初始研究满一年，需要检查监管处罚、行业成交额、两融余额和资本充足率变化",
-      "action": "检查监管处罚、行业成交额、两融余额和资本充足率变化"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.6
+      },
+      "reason": "进入估值安全边际较好的可买观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "低于净资产折扣估值的更有吸引力区域",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "高于当前ROE可支持的合理估值区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入和归母净利润同比增速",
-    "加权平均ROE",
-    "经纪业务收入、代销金融产品收入和投顾收入",
-    "两融余额与信用业务利息收入",
-    "投资收益及公允价值变动收益占利润比例",
-    "风险覆盖率、资本杠杆率、流动性覆盖率、净稳定资金率",
-    "投行业务项目数量、承销规模和监管处罚情况",
-    "每股净资产、PB、归一化PE"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,72 +1,86 @@
 {
-  "symbol": "CN:600390",
-  "ticker": "600390",
-  "name": "五矿资本",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "低PB央企产业金融平台，2026H1利润预告显著修复，但信托业务仍需验证扭亏、ROE仍偏低；当前价格接近基准合理价值，等待更大折价或盈利持续性确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    3.9,
-    4.4
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    7.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "五矿资本",
+    "security_status": "active",
+    "symbol": "CN:600390",
+    "ticker": "600390"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "64bafe19eac4ec8871d047a9961658f57383f34984e7c59e23f1a749c04720fd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.4元，且2026年半年报确认归母净利润落在预告区间、五矿信托明显减亏或扭亏、外贸金租资产质量稳定",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "预计半年报披露后复核利润来源、五矿信托扭亏进展和中期分红。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.0元且没有新增信用风险或重大监管风险",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核全年盈利持续性、ROE修复和金融资产公允价值波动。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.5元但ROE仍低于4%或利润主要来自公允价值波动",
-      "action": "不追高并考虑减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入买入区上沿附近，需要复核半年报利润质量和信托修复情况。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "超过基准估值区间，需要复核是否已有ROE持续改善支撑。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入买入区上沿附近，需要复核半年报利润质量和信托修复情况。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "超过基准估值区间，需要复核是否已有ROE持续改善支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "预计半年报披露后复核利润来源、五矿信托扭亏进展和中期分红。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核全年盈利持续性、ROE修复和金融资产公允价值波动。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

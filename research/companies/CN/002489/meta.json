@@ -1,125 +1,123 @@
 {
-  "symbol": "CN:002489",
-  "market": "CN",
-  "ticker": "002489",
-  "name": "浙江永强",
-  "company_name": "浙江永强集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司是户外休闲家具 ODM 龙头之一，客户和供应链能力真实，但行业成熟、贸易政策扰动大，2025 年利润受证券投资和资产处置影响明显；以扣非利润和经营现金流估值，当前 2.75 元高于合理区间且缺乏安全边际。",
-  "quality_rating": "B",
-  "valuation_rating": "偏贵/无安全边际",
-  "fair_value_range": [
-    2.0,
-    2.4
-  ],
-  "buy_zone": [
-    1.5,
-    1.8
-  ],
-  "sell_or_reduce_zone": [
-    2.6,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江永强",
+    "security_status": "active",
+    "symbol": "CN:002489",
+    "ticker": "002489"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "e5e0e1ef3b85af8e31dd7d81161c55aa2ee8a72fbe572042b24bc8ea3271063f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price_range": "<=1.50",
-      "condition": "股价不高于1.50元且基本面未破坏",
-      "max_weight": 0.05,
-      "position": "4%-5%",
-      "action": "强吸引力区，若基本面未破坏可分批买入"
-    },
-    {
-      "price_range": "1.51-1.80",
-      "condition": "股价处于1.51-1.80元且北美订单、经营现金流、应收账款未恶化",
-      "max_weight": 0.03,
-      "position": "2%-3%",
-      "action": "安全边际区，可建立观察仓"
-    },
-    {
-      "price_range": "1.81-2.40",
-      "condition": "股价处于1.81-2.40元合理区间",
-      "max_weight": 0.02,
-      "position": "0%-2%",
-      "action": "合理区间，仅观察或持有，不主动加仓"
-    },
-    {
-      "price_range": ">2.60",
-      "condition": "股价高于2.60元且基本面未显著上修",
-      "max_weight": 0.0,
-      "position": "0%",
-      "action": "不追高；已有仓位考虑降低风险暴露"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "跌入安全边际区且北美订单、经营现金流、应收账款未恶化",
-      "condition": "跌入安全边际区且北美订单、经营现金流、应收账款未恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "跌入强吸引力区且扣非盈利仍可维持",
-      "condition": "跌入强吸引力区且扣非盈利仍可维持"
-    },
-    {
-      "type": "price_above",
-      "price": 2.6,
-      "reason": "高于该价格且基本面未上修时不买",
-      "condition": "高于该价格且基本面未上修时不买"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026 半年报披露后复查扣非净利润、北美收入、欧洲收入、毛利率和经营现金流",
-      "condition": "2026 半年报披露后复查扣非净利润、北美收入、欧洲收入、毛利率和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-12",
+      "active": true,
+      "condition": {
+        "date": "2026-07-12"
+      },
       "reason": "中美关税或小额包裹政策发生重大变化",
-      "condition": "中美关税或小额包裹政策发生重大变化"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-12",
+      "active": true,
+      "condition": {
+        "date": "2026-07-12"
+      },
       "reason": "证券投资或衍生品单季损益绝对值超过1亿元",
-      "condition": "证券投资或衍生品单季损益绝对值超过1亿元"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-12",
+      "active": true,
+      "condition": {
+        "date": "2026-07-12"
+      },
       "reason": "应收账款继续高于22亿元且收入不增长",
-      "condition": "应收账款继续高于22亿元且收入不增长"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-12",
+      "active": true,
+      "condition": {
+        "date": "2026-07-12"
+      },
       "reason": "公司披露海外产能投产进度显著提前或延后",
-      "condition": "公司披露海外产能投产进度显著提前或延后"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "跌入安全边际区且北美订单、经营现金流、应收账款未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "跌入强吸引力区且扣非盈利仍可维持",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.6
+      },
+      "reason": "高于该价格且基本面未上修时不买",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "北美收入增速",
-    "欧洲收入增速",
-    "扣非归母净利润",
-    "经营现金流/扣非净利润",
-    "主业毛利率",
-    "应收账款余额和周转",
-    "证券投资及衍生品损益",
-    "印尼和越南产能建设进度",
-    "前五大客户收入占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:605116",
-  "market": "CN",
-  "ticker": "605116",
-  "name": "奥锐特",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "奥锐特从复杂特色原料药向制剂、TIDES 和小核酸 CDMO 升级，2025 年 TIDES 与女性健康放量证明结构改善，但 2026Q1 利润大幅下滑暴露价格、汇率和产能爬坡压力。当前估值不贵但安全边际不足，等待 18 元以下或后续季度利润修复确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    21.0,
-    26.0
-  ],
-  "buy_zone": [
-    15.5,
-    18.0
-  ],
-  "sell_or_reduce_zone": [
-    27.5,
-    32.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥锐特",
+    "security_status": "active",
+    "symbol": "CN:605116",
+    "ticker": "605116"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "4627c86c2fa38ac26c3cf426217b79fa01a5d661f13bbc53c194637efd5c513e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于18.0元，且最新季报未出现订单、现金流或合规恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看TIDES、女性健康、净利率和产能爬坡成本",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于16.0元，且TIDES/女性健康收入维持增长、经营现金流为正",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1利润下滑是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "Q2或Q3确认收入恢复增长、净利率回升且价格仍低于21.0元",
-      "action": "升级为小仓位买入",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重估长期利润中枢和资本开支回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入初始买入区间，需要复核利润下滑是否只是短期产能爬坡和汇率扰动",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入较厚安全边际区间，如基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.5
+      },
+      "reason": "超过合理价值上沿附近，若无盈利上修证据应减持或避免追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "reason": "进入初始买入区间，需要复核利润下滑是否只是短期产能爬坡和汇率扰动"
-    },
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入较厚安全边际区间，如基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 27.5,
-      "reason": "超过合理价值上沿附近，若无盈利上修证据应减持或避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看TIDES、女性健康、净利率和产能爬坡成本"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1利润下滑是否修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重估长期利润中枢和资本开支回报"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,106 +1,106 @@
 {
-  "symbol": "CN:002997",
-  "market": "CN",
-  "ticker": "002997",
-  "name": "瑞鹄模具",
-  "company_name": "瑞鹄汽车模具股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "公司是汽车白车身制造装备与轻量化零部件一体化供应商，2025年装备业务在手订单47.72亿元、零部件业务快速放量，2026Q1收入仍同比增长34.69%。当前估值约13倍动态PE，已反映一部分客户集中与零部件低毛利风险，但仍有安全边际。主要约束是奇瑞及关联方收入占比过高、零部件业务毛利率仍待验证，因此适合分批买入而非一次性重仓。",
-  "quality_rating": "B+",
-  "valuation_rating": "偏低到合理",
-  "fair_value_range": [31, 38],
-  "buy_zone": [22, 28],
-  "sell_or_reduce_zone": [40, 45],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "瑞鹄模具",
+    "security_status": "active",
+    "symbol": "CN:002997",
+    "ticker": "002997"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ce2cc2efff340837b003c162031411645c934f3638ba3a096d2cd2822589d81f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于28元且2026年订单、回款、毛利率未出现恶化",
-      "action": "建立初始仓位",
-      "max_weight": 0.35,
-      "target_position_pct": 35
-    },
-    {
-      "condition": "股价低于25元且2026E归母净利润仍有4.5亿元以上可见度",
-      "action": "加仓",
-      "max_weight": 0.65,
-      "target_position_pct": 65
-    },
-    {
-      "condition": "股价低于22元且基本面未恶化",
-      "action": "接近满仓",
-      "max_weight": 0.9,
-      "target_position_pct": 90
-    },
-    {
-      "condition": "股价高于40元但盈利未上修",
-      "action": "停止加仓并评估减仓",
-      "max_weight": 0.5,
-      "target_position_pct": 50
-    },
-    {
-      "condition": "股价高于45元且零部件毛利率或客户分散度未明显改善",
-      "action": "主动减仓",
-      "max_weight": 0.35,
-      "target_position_pct": 35
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入初始买入区，较合理价值下沿有一定安全边际",
-      "action": "进入初始买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入强买区，客户集中和毛利率风险已有较充分折价",
-      "action": "进入强买区"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "高于合理价值区间上沿，需依赖盈利上修支撑",
-      "action": "停止追高并复核盈利上修"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "估值进入透支区，除非基本面明显上修否则应减仓",
-      "action": "进入减仓区"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证零部件毛利率、奇瑞收入占比、经营现金流和装备在手订单",
-      "action": "复核零部件毛利率、奇瑞收入占比、经营现金流和装备在手订单"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证全年盈利可见度和估值区间是否需要调整",
-      "action": "复核全年盈利可见度和是否需要调整买入区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入初始买入区，较合理价值下沿有一定安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入强买区，客户集中和毛利率风险已有较充分折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "高于合理价值区间上沿，需依赖盈利上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "估值进入透支区，除非基本面明显上修否则应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "装备业务在手订单金额",
-    "汽车零部件及配件收入增速和毛利率",
-    "奇瑞汽车及关联方收入占比",
-    "出口收入占比和出口毛利率",
-    "经营现金流/归母净利润",
-    "应收账款、合同资产、存货周转变化",
-    "2026Q2/Q3收入增速与归母净利润增速差"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

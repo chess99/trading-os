@@ -1,98 +1,96 @@
 {
-  "symbol": "CN:001382",
-  "market": "CN",
-  "ticker": "001382",
-  "name": "新亚电缆",
-  "company_name": "新亚电缆",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "新亚电缆主营电线电缆业务真实，受益于国网和南网投资上行及华东市场突破，但当前毛利率低、应收账款和经营现金流压力较大，15.12元附近估值已明显高于基本面可支撑区间，适合观察等待现金流修复或价格回落。",
-  "quality_rating": "B-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    10.5,
-    13.0
-  ],
-  "buy_zone": [
-    8.8,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    18.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新亚电缆",
+    "security_status": "active",
+    "symbol": "CN:001382",
+    "ticker": "001382"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "6af1d10231e35382ac86d6d0f36d7f9e0b927dd014549f250ba319e5177766c9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价高于合理价值上沿，且2026Q1利润下滑、经营现金流为负",
-      "action": "仅观察或保留极小跟踪仓",
-      "max_weight": 0.02,
-      "reason": "估值已透支国网扩张预期，现金流尚未验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、毛利率、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于10.5元，且最新定期报告显示经营现金流改善、毛利率不低于9%",
-      "action": "建立首笔试探仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理价值下方，同时财务质量开始修复"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报订单兑现和营运资本变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.8元，且应收账款增速低于收入增速、国网/南网订单持续兑现",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "估值进入低估区且营运资本风险下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入首笔试探买入区，需要复核现金流和毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于16元但盈利预测和现金流未同步上修",
-      "action": "减仓或退出观察仓",
-      "max_weight": 0.0,
-      "reason": "价格进入高估区，风险收益不对称"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入深度买入区，需要复核订单、应收和铜价传导",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "高于合理价值上沿，需要复核是否应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入首笔试探买入区，需要复核现金流和毛利率"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入深度买入区，需要复核订单、应收和铜价传导"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "高于合理价值上沿，需要复核是否应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、毛利率、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报订单兑现和营运资本变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "综合毛利率",
-    "经营活动现金流净额",
-    "应收账款及合同资产占总资产比例",
-    "存货增速与收入增速差",
-    "短期借款和财务费用",
-    "国网及南网中标金额和履约进度",
-    "铜价和铝价走势",
-    "质量抽检、诉讼仲裁和客户暂停采购公告",
-    "募投项目进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

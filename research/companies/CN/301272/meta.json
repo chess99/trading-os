@@ -1,97 +1,105 @@
 {
-  "symbol": "CN:301272",
-  "ticker": "301272",
-  "name": "英华特",
-  "company_name": "苏州英华特涡旋技术股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "current_thesis": "国内商用涡旋压缩机国产替代细分龙头，热泵、商空、冷链和离心压缩机带来中长期增长选项；但2025年利润大幅下滑、2026Q1仍亏损，当前估值未提供足够安全边际，需等待盈利修复或价格回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    28,
-    38
-  ],
-  "buy_zone": [
-    24,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    44,
-    52
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "英华特",
+    "security_status": "active",
+    "symbol": "CN:301272",
+    "ticker": "301272"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "3ab6078e4400dfe585ef3a7a8187d01ccbd657a449a06413dd1d11477c9d669d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "不追高；在2026H1未披露前维持跟踪，不主动建仓。",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：收入、毛利率、利润、经营现金流、海外收入和离心压缩机进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入24-28元且2026H1收入增长、毛利率企稳、经营现金流改善。",
-      "action": "starter_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：验证Q1亏损后是否持续修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于24元，解禁减持风险释放，且主业订单和现金流未恶化。",
-      "action": "small_add",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：判断研发投入、离心子公司和主业盈利是否形成闭环。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "2026H1继续亏损、毛利率继续下滑或离心压缩机商业化低于预期。",
-      "action": "avoid_or_exit",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入初步安全边际区间，复核2026H1盈利和现金流后可考虑小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "低于估算买区下沿，若基本面未恶化且减持压力释放，可重新评估加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 44.0
+      },
+      "reason": "超过基准估值上沿，若利润和离心订单未兑现，应减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入初步安全边际区间，复核2026H1盈利和现金流后可考虑小仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "低于估算买区下沿，若基本面未恶化且减持压力释放，可重新评估加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 44,
-      "reason": "超过基准估值上沿，若利润和离心订单未兑现，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：收入、毛利率、利润、经营现金流、海外收入和离心压缩机进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：验证Q1亏损后是否持续修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：判断研发投入、离心子公司和主业盈利是否形成闭环。"
-    }
-  ],
-  "key_metrics": {
-    "revenue_2025_cny": 568404063.63,
-    "net_profit_2025_cny": 36283055.78,
-    "deducted_net_profit_2025_cny": 24759746.3,
-    "operating_cash_flow_2025_cny": 31602225.78,
-    "roe_2025": 0.0353,
-    "revenue_2026q1_cny": 116934296.31,
-    "net_profit_2026q1_cny": -1236570.07,
-    "operating_cash_flow_2026q1_cny": -19561043.92
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

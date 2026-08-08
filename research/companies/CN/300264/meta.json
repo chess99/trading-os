@@ -1,78 +1,95 @@
 {
-  "symbol": "CN:300264",
-  "ticker": "300264",
-  "market": "CN",
-  "name": "佳创视讯",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司在广电音视频软件、IP视频平台、融合CDN和VR/MR内容上有真实业务积累，2025年毛利率与亏损幅度改善；但收入规模小、持续亏损、净资产极薄且资产负债率接近100%，当前市值相对收入和净资产显著透支，缺乏安全边际。",
-  "rating": {
-    "current_rating": "avoid",
-    "as_of": "2026-07-15",
-    "rationale": "按2026-07-15约7.64元股价和约32.92亿元市值估算，公司对应约28倍2025年收入、约377倍2026Q1每股净资产；在未验证盈利拐点前不具备买入吸引力。"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "佳创视讯",
+    "security_status": "active",
+    "symbol": "CN:300264",
+    "ticker": "300264"
   },
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.2,
-    3.2
-  ],
-  "buy_zone": [
-    0.8,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    9.0
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "f2c6cbed5b75e069fbd727190643d2b9817e00f62a682dfbc3c932fe0d0455b5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于估算合理价值上沿且2026Q1仍亏损，维持空仓观察。",
-      "action": "avoid_new_position",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点验证收入恢复、软件业务占比、经营现金流和资产负债率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌破2.0元且最新半年报显示收入恢复、经营现金流为正、资产负债率开始下降。",
-      "action": "research_only_starter",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断亏损收窄是否持续以及应收账款减值风险。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利润转正，且软件产品收入占比超过30%。",
-      "action": "reassess_watch_to_hold",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估控制权变化、VR/MR商业化和全年盈利能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "进入保守情景价值区间上沿附近，可在财报改善同时重新评估研究仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "若基本面无同步改善而价格继续上行，主题溢价进一步扩大，应强化回避或减仓结论。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "进入保守情景价值区间上沿附近，可在财报改善同时重新评估研究仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "若基本面无同步改善而价格继续上行，主题溢价进一步扩大，应强化回避或减仓结论。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点验证收入恢复、软件业务占比、经营现金流和资产负债率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断亏损收窄是否持续以及应收账款减值风险。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估控制权变化、VR/MR商业化和全年盈利能力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

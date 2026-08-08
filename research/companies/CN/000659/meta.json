@@ -1,88 +1,86 @@
 {
-  "symbol": "CN:000659",
-  "market": "CN",
-  "ticker": "000659",
-  "name": "珠海中富",
-  "company_name": "珠海中富",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "珠海中富具备饮料 PET 包装客户基础和现金流修复线索，但截至 2026-07-10 仍面临高负债、连续亏损、潜在定增摊薄和治理不确定性，困境反转尚未被利润和资产负债表验证，当前应回避并等待定增、现金流、毛利率和产能利用率同步改善。",
-  "quality_rating": "low",
-  "valuation_rating": "expensive_for_risk",
-  "fair_value_range": [
-    1.4,
-    2.2
-  ],
-  "buy_zone": [
-    1.2,
-    1.6
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    3.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "珠海中富",
+    "security_status": "active",
+    "symbol": "CN:000659",
+    "ticker": "000659"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "b8f03c13935ca2d1909a1845e8f461a183589de42cbc4171ddcda9862385f537"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "定增或债务安排落地，经营现金流连续两个季度为正，毛利率与产能利用率同步改善",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "困境反转需要先验证资产负债表和经营质量，首笔仓位必须小"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报，重点看毛利率、经营现金流、债务和定增进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "净资产转正、短债压力下降、核心客户订单稳定，且股价仍低于合理价值区间下沿",
-      "action": "加仓至小仓位",
-      "max_weight": 0.03,
-      "reason": "只有权益价值修复路径清晰后，才允许从观察仓升级为小仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，确认困境反转是否形成连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "定增失败、经营现金流转负、核心客户流失或股价涨至减仓区间但基本面未验证",
-      "action": "不买或退出",
-      "max_weight": 0,
-      "reason": "股权价值处于债务和摊薄风险之后，反转失败时下行不对称"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "进入研究设定买入区间，但仍需先核验定增、现金流和毛利率改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.0
+      },
+      "reason": "价格进入预期透支区，若基本面没有同步修复应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "进入研究设定买入区间，但仍需先核验定增、现金流和毛利率改善"
-    },
-    {
-      "type": "price_above",
-      "price": 3.0,
-      "reason": "价格进入预期透支区，若基本面没有同步修复应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年报，重点看毛利率、经营现金流、债务和定增进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，确认困境反转是否形成连续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "毛利率",
-    "经营活动现金流量净额",
-    "资产负债率",
-    "归属于母公司股东权益",
-    "短期借款和一年内到期非流动负债",
-    "前五大客户销售占比",
-    "PET 瓶片采购价格和产品调价机制",
-    "产能利用率",
-    "定增发行进度和偿债安排"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

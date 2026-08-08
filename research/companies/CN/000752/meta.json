@@ -1,86 +1,96 @@
 {
-  "symbol": "CN:000752",
-  "market": "CN",
-  "ticker": "000752",
-  "name": "*ST西发",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "不买/avoid：核心拉萨啤酒资产有区域品牌和现金流价值，但公司仍处破产重整程序并被实施退市风险警示，当前约7.98元已接近乐观情景估值，缺乏安全边际。",
-  "fair_value_range": [
-    4.5,
-    6.5
-  ],
-  "buy_zone": [
-    3.5,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    9.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST西发",
+    "security_status": "active",
+    "symbol": "CN:000752",
+    "ticker": "000752"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "ebeba332be247227025b2da568594a80ec10f3bf8621b5c5a9bcf4958376809c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "重整计划未获法院裁定批准或公司仍被实施退市风险警示",
-      "action": "不买，已有持仓减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-20"
+      },
+      "reason": "复核嘉士伯持有拉萨啤酒50%股权转让、解除冻结、工商变更、税务和外汇程序是否完成",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "重整计划获法院批准但尚未执行完毕，且股价位于4.50-6.50元",
-      "action": "观察，不追价",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、债权确认、重整计划草案和现金链变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "重整计划执行完毕、拉萨啤酒50%股权完成工商变更、无新增重大债权，且股价位于3.50-4.50元",
-      "action": "可建立第一笔跟踪仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入可复核买入区，但仍需重整进度正向确认",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "退市风险警示撤销路径明确，常态归母利润连续验证，且股价低于3.50元",
-      "action": "提高事件仓但保持上限",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入强吸引力区间，复核重整和现金链后可考虑小仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "高于基准合理区间上沿，缺乏安全边际",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入可复核买入区，但仍需重整进度正向确认"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入强吸引力区间，复核重整和现金链后可考虑小仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "高于基准合理区间上沿，缺乏安全边际"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-20",
-      "reason": "复核嘉士伯持有拉萨啤酒50%股权转让、解除冻结、工商变更、税务和外汇程序是否完成"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、债权确认、重整计划草案和现金链变化"
-    }
-  ],
-  "notes": [
-    "2026-07-19结论为不买/avoid，核心原因是重整未执行完毕且仍被实施退市风险警示。",
-    "当前股价约7.98元、市值约21.05亿元，已接近乐观情景估值，安全边际不足。",
-    "2025年归母净利润受1.83亿元坏账准备转回影响，不代表常态盈利能力。",
-    "资金占用事项已公告清偿并撤销其他风险警示，但破产重整导致的退市风险警示仍未解除。",
-    "下一次复查重点为2026-08-20前后拉萨啤酒50%股权交割和重整计划进展。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

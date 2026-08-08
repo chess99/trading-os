@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301013",
-  "market": "CN",
-  "ticker": "301013",
-  "name": "利和兴",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司具备智能制造装备经验和MLCC第二曲线想象力，但2025年仍亏损、电子元器件业务毛利为负，2026年股价严重异常上涨后估值显著透支；当前安全边际不足，等待毛利率、现金流和利润连续兑现。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    8,
-    15
-  ],
-  "buy_zone": [
-    0,
-    8
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "利和兴",
+    "security_status": "active",
+    "symbol": "CN:301013",
+    "ticker": "301013"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "8f3b56e5a0a79ca17a344ca99d5192192abdd407167416c5de8b7c81d1768374"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约51元/股附近不建仓，电子元器件毛利率仍未被证明转正且估值显著高于可验证基本面。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看电子元器件毛利率、经营现金流、存货和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌入8-15元且半年报显示电子元器件毛利率转正、经营现金流为正，可重新研究但最大仓位不超过2%。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利改善是否连续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价跌入0-8元且未出现重大减值、治理或流动性风险，可在重新核验订单和现金流后考虑试探仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估估值区间和长期投资价值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入公允观察区，需要复核半年报、订单和MLCC毛利率。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入潜在买入区，但仍需确认没有资产减值和经营恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过风险区上沿，若利润未兑现应继续回避或减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入公允观察区，需要复核半年报、订单和MLCC毛利率。"
-    },
-    {
-      "type": "price_below",
-      "price": 8,
-      "reason": "进入潜在买入区，但仍需确认没有资产减值和经营恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 25,
-      "reason": "超过风险区上沿，若利润未兑现应继续回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看电子元器件毛利率、经营现金流、存货和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利改善是否连续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估估值区间和长期投资价值。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,131 +1,105 @@
 {
-  "market": "CN",
-  "ticker": "002670",
-  "symbol": "CN:002670",
-  "name": "国盛证券",
-  "company_name": "国盛证券股份有限公司",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "industry": "非银金融/证券",
-  "status": "active",
-  "research_stage": "initial",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "decision": "观察",
-  "current_rating": "watch",
-  "current_thesis": "江西省属唯一上市券商具备区域资源、国资支持和研究品牌，但当前约2倍PB已透支低ROE阶段的修复预期，需等待价格回落或主业盈利显著改善。",
-  "confidence": "中",
-  "summary": "江西省属唯一上市券商，完成吸收合并后聚焦证券主业；区域资源、国资支持和研究品牌有价值，但当前约2倍PB相对低ROE和HTT利润扰动缺乏安全边际。",
-  "key_points": [
-    "2025年营业总收入17.87亿元，归母净利润2.73亿元，ROE仅2.43%。",
-    "2026Q1归母净利146.87万元，同比下降97.91%，主要受历史存续HTT股票公允价值波动拖累。",
-    "江西省内分支机构密度高，国资股东支持明确，但全国性竞争壁垒弱于头部券商。",
-    "按2026Q1归母权益和11.56元股价估算PB约1.97倍，接近乐观情形估值。"
-  ],
-  "financial_snapshot": {
-    "period": "2026Q1",
-    "price_date": "2026-07-10",
-    "last_price": 11.56,
-    "market_cap_cny_billion": 22.37,
-    "book_value_cny_billion": 11.34,
-    "pb_mrq": 1.97,
-    "net_profit_2025_cny_billion": 0.27,
-    "net_profit_ttm_cny_billion": 0.20
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国盛证券",
+    "security_status": "active",
+    "symbol": "CN:002670",
+    "ticker": "002670"
   },
-  "valuation": {
-    "base_case_fair_value_per_share": "7.5-10.1",
-    "methods": [
-      "PB：1.2-1.5倍PB对应约7.0-8.8元；乐观1.8-2.0倍PB对应约10.5-11.7元。",
-      "正常化PE：4.5-6.0亿元利润、25-30倍PE对应约5.8-9.3元。",
-      "SOTP：核心证券业务136-170亿元，区域和研究期权10-20亿元，历史投资0-5亿元，合计146-195亿元。"
-    ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "b0af94ddf75ad4744b8277d9a86fa3e30d1ebb9d337be29005b779ae993628f4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "fair_value_range": [
-    7.5,
-    10.1
-  ],
-  "buy_zone": [
-    7.0,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    12.4,
-    15.0
-  ],
-  "position_plan": [
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.8元且母公司净资本、风险覆盖率、流动性覆盖率维持监管安全区间，HTT未继续产生重大亏损。",
-      "action": "建立1%-2%观察仓",
-      "max_weight": 0.02,
-      "rationale": "约1.5倍PB，开始具备相对安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计半年报披露窗口后复核主业利润、HTT影响和资本指标。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.0元且经纪、信用业务仍增长，HTT处置路径清晰或已基本出清。",
-      "action": "提高至3%-5%仓位",
-      "max_weight": 0.05,
-      "rationale": "约1.2倍PB，风险收益比明显改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报窗口后复核经纪、信用和自营业务走势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.4元但ROE未提升至6%以上，或HTT风险仍未出清。",
-      "action": "不追涨，若已有观察仓则减仓或退出",
-      "max_weight": 0,
-      "rationale": "估值进入强牛市利润假设区，预期透支。"
-    }
-  ],
-  "price_triggers": [
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报窗口后复核全年ROE、分红、HTT处置和估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 8.8,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
       "reason": "1.5倍PB附近，触发小仓观察复核。",
-      "note": "1.5倍PB附近，触发小仓观察复核。"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 7.0,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
       "reason": "1.2倍PB附近，若基本面未恶化可复核买入。",
-      "note": "1.2倍PB附近，若基本面未恶化可复核买入。"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 12.4,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.4
+      },
       "reason": "接近强牛市正常化利润估值，需警惕预期透支。",
-      "note": "接近强牛市正常化利润估值，需警惕预期透支。"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计半年报披露窗口后复核主业利润、HTT影响和资本指标。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报窗口后复核经纪、信用和自营业务走势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报窗口后复核全年ROE、分红、HTT处置和估值。"
-    }
-  ],
-  "watchlist": [
-    "HTT股票处置进展及对利润的影响",
-    "经纪业务客户数、托管客户资产和投顾收入",
-    "融资融券余额、维持担保比例和利息净收入",
-    "自营投资收益与公允价值变动收益",
-    "母公司净资本、风险覆盖率、流动性覆盖率、净稳定资金率",
-    "江西区域投行和债券承销项目",
-    "前十大股东减持、质押、冻结变化"
-  ],
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "sources": [
-    "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-21/12117447.PDF",
-    "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-29/12263629.PDF",
-    "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-21/12118261.PDF",
-    "https://hq.sinajs.cn/list=sz002670",
-    "https://www.sac.net.cn/xxgk/hysj/jjsj/202603/t20260326_81468.html"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

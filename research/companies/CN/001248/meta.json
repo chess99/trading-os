@@ -1,30 +1,96 @@
 {
-  "symbol": "CN:001248",
-  "market": "CN",
-  "ticker": "001248",
-  "name": "C华润",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "纯新能源运营商资产质量优秀、现金流好，但2024-2025年净利润持续下滑（-3.9%/-23.3%）、电价承压趋势未改，当前PE 33x处于行业上限偏高，缺乏安全边际。上市仅一周，股价仍在寻底。建议观察等待估值回归合理区间（10-14元）再介入。",
-  "fair_value_range": [10, 14],
-  "buy_zone": [8, 10],
-  "sell_or_reduce_zone": [15, 30],
-  "position_plan": [
-    {"condition": "股价低于8元且基本面未恶化", "max_weight": 0.03},
-    {"condition": "股价在8-10元区间", "max_weight": 0.02},
-    {"condition": "股价在10-14元区间", "max_weight": 0.01}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "C华润",
+    "security_status": "active",
+    "symbol": "CN:001248",
+    "ticker": "001248"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "d867d52a88b200edab7da682d9b190a69832078014c3f96fe42c61097b00342a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-09-01"
+      },
+      "reason": "2026年中报披露后复查业绩趋势",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-30"
+      },
+      "reason": "2026年三季报后复查电价走势和装机进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入合理偏低区间，开始关注",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-09-01", "reason": "2026年中报披露后复查业绩趋势"},
-    {"type": "date", "date": "2026-10-30", "reason": "2026年三季报后复查电价走势和装机进度"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 10, "reason": "进入合理偏低区间，开始关注"},
-    {"type": "price_below", "price": 8, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_above", "price": 15, "reason": "进入减仓或不应追高区间"}
-  ],
-  "updated_at": "2026-07-08T20:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

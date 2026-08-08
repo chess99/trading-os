@@ -1,103 +1,105 @@
 {
-  "symbol": "CN:601020",
-  "ticker": "601020",
-  "name": "华钰矿业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华钰矿业具备锑、金、银、铅锌多金属资源弹性，塔铝金业和泥堡金矿提供中期增长期权，但2026Q1利润和现金流偏弱、控制权转让尚需完成、当前核心利润估值不便宜，适合观察等待更好价格或项目兑现。",
-  "fair_value_range": [
-    15.0,
-    21.0
-  ],
-  "buy_zone": [
-    12.0,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    30.0
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "position_plan": [
-    {
-      "condition": "股价回落至12-15元且锑价、金价未显著恶化，初始建仓",
-      "action": "buy_initial",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "2026中报或三季报显示扣非利润恢复、锑精矿库存转化为销售且泥堡试产按计划推进",
-      "action": "add_on_confirmation",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于25元但利润兑现未超预期，或控制权转让出现重大不确定性",
-      "action": "reduce_or_hold_off",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入基准估值下沿，可重新评估建仓安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入悲观情景估值附近，若基本面未恶化可提高买入优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "进入乐观预期定价区，需要泥堡和锑销售兑现支持，否则考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看扣非利润、经营现金流、存货和泥堡建设进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及泥堡选厂联动试机、带料试产进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报或业绩快报，验证锑库存销售和控制权转让后治理变化"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 18.8,
-    "reference_market_cap_cny_billion": 15.4,
-    "core_fair_value_per_share_cny": [
-      15.0,
-      21.0
-    ],
-    "2025_revenue_cny_billion": 2.071,
-    "2025_net_profit_cny_billion": 0.871,
-    "2025_recurring_net_profit_cny_billion": 0.451,
-    "2026_q1_revenue_cny_billion": 0.222,
-    "2026_q1_net_profit_cny_billion": 0.031,
-    "2026_q1_recurring_net_profit_cny_billion": 0.033
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华钰矿业",
+    "security_status": "active",
+    "symbol": "CN:601020",
+    "ticker": "601020"
   },
-  "risk_flags": [
-    "commodity_price_volatility",
-    "project_execution",
-    "overseas_operation",
-    "customer_concentration",
-    "control_change_pending",
-    "valuation_not_cheap"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "9ecc2e733e3db854358acae7565a4d32aa10c3a6546d59e8abbbf5bda3b5be24"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看扣非利润、经营现金流、存货和泥堡建设进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及泥堡选厂联动试机、带料试产进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报或业绩快报，验证锑库存销售和控制权转让后治理变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入基准估值下沿，可重新评估建仓安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入悲观情景估值附近，若基本面未恶化可提高买入优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "进入乐观预期定价区，需要泥堡和锑销售兑现支持，否则考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

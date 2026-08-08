@@ -1,102 +1,106 @@
 {
-  "symbol": "CN:002182",
-  "market": "CN",
-  "ticker": "002182",
-  "name": "宝武镁业",
-  "company_name": "宝武镁业",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "宝武镁业具备资源、全产业链、宝武体系和汽车轻量化客户导入优势，但2025年亏损、2026Q1盈利仍弱，安徽宝镁爬坡和原镁价格周期尚未验证，当前价格安全边际不足，暂列观察。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    7.0,
-    9.0
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    16.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宝武镁业",
+    "security_status": "active",
+    "symbol": "CN:002182",
+    "ticker": "002182"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c0a3a8286b01d98d551dddd29a582271b60208486cf1073cbc9ca94a6d09bfda"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于9.0元，且2026中报显示扣非归母利润转正、安徽宝镁权益法亏损环比收窄",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区且经营拐点开始验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026中报，重点看扣非利润、安徽宝镁权益法损益、压铸产品毛利率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于8.0元，原镁价格稳定在约1.6万元/吨以上，镁合金压铸订单可见性提升",
-      "action": "加仓至小仓位",
-      "max_weight": 0.02,
-      "reason": "资源周期和深加工放量同时改善，安全边际更充分"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报，确认镁价、订单和债务压力是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "安徽宝镁达产改善、镁铝合金压铸毛利率提升至15%以上、汽车客户批量交付三项同时验证",
-      "action": "提高为核心观察仓",
-      "max_weight": 0.03,
-      "reason": "成长逻辑由题材转为利润兑现"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入初始买入区，重新核验中报利润、安徽宝镁亏损和镁价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于13.5元但利润和订单未改善",
-      "action": "减仓或不参与",
-      "max_weight": 0.0,
-      "reason": "当前价格已经提前反映复苏叙事，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入更具安全边际区域，若经营信号改善可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "进入减仓区，若无订单和利润改善则估值偏贵",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "接近牛市情景上沿，需防止题材交易回撤",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入初始买入区，重新核验中报利润、安徽宝镁亏损和镁价"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入更具安全边际区域，若经营信号改善可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "进入减仓区，若无订单和利润改善则估值偏贵"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "接近牛市情景上沿，需防止题材交易回撤"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026中报，重点看扣非利润、安徽宝镁权益法损益、压铸产品毛利率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报，确认镁价、订单和债务压力是否改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "原镁现货均价及是否稳定高于1.6万元/吨",
-    "安徽宝镁权益法投资损益",
-    "镁铝合金压铸产品收入增速和毛利率",
-    "汽车客户定点、量产、订单金额和批产收入",
-    "经营活动现金流净额与归母净利润匹配度",
-    "应收账款余额及回款周期",
-    "短期借款、长期借款和资产负债率",
-    "在建工程转固及折旧压力"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

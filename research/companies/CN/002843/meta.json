@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:002843",
-  "ticker": "002843",
-  "name": "泰嘉股份",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "锯切主业具备细分龙头、标准参与、规模和渠道壁垒，但电源业务仍拖累盈利质量；以2026-07-14约21.07元价格看，市值已提前计入电源修复和泰国基地顺利投产，安全边际不足，等待2026中报验证。",
-  "fair_value_range": [
-    16.0,
-    20.0
-  ],
-  "buy_zone": [
-    13.0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰嘉股份",
+    "security_status": "active",
+    "symbol": "CN:002843",
+    "ticker": "002843"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "e625aac598985096fdf7bf28705535e153a027c4b9bd3f45306cfdb65d43228b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入13.0-15.5元，且2026H1显示电源业务毛利率转正、锯切双金属带锯条毛利率不低于40%、经营活动现金流转正",
-      "action": "建立观察性仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报分部毛利率、现金流、应收账款和泰国基地投入",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度电源业务正毛利，海外锯切收入同比两位数增长，泰国基地投入未导致净负债率明显恶化",
-      "action": "提高至核心观察仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认电源业务修复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于22.0元且2026H1未验证电源毛利率转正或经营现金流仍为负",
-      "action": "不买入或降低仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新完整估值和评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入估值安全边际区，需结合中报验证是否可建立小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入悲观情景附近，若基本面未恶化可重新评估买入价值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过合理价值上沿，若缺乏电源修复证据则预期收益率不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入估值安全边际区，需结合中报验证是否可建立小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入悲观情景附近，若基本面未恶化可重新评估买入价值"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "超过合理价值上沿，若缺乏电源修复证据则预期收益率不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报分部毛利率、现金流、应收账款和泰国基地投入"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认电源业务修复是否持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新完整估值和评级"
-    }
-  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
   "valuation": {
-    "base_date": "2026-07-15",
-    "reference_price": 21.07,
-    "reference_price_date": "2026-07-14",
-    "shares_outstanding": 251737562,
-    "fair_value_method": "relative_pe_dcf_scenario_cross_check",
-    "confidence": "medium"
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

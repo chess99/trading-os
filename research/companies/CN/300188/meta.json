@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300188",
-  "ticker": "300188",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "国投智能",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备电子数据取证和公共安全场景稀缺性、央企控股背景和AI/数据安全主题弹性，但2025年收入下滑20.23%、归母亏损7.82亿元，2026Q1继续降收增亏，当前约6倍PS和3倍以上PB缺乏安全边际，需等待收入、毛利率和现金流修复后再评估买入。",
-  "fair_value_range": [
-    5.5,
-    7.5
-  ],
-  "buy_zone": [
-    5.5,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    12.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国投智能",
+    "security_status": "active",
+    "symbol": "CN:300188",
+    "ticker": "300188"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "b48379389ecde9a4ef4547af1e49aea0d52c9a59619510f5e412faf51cd65fc9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.5元，且2026半年报收入企稳、经营现金流未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入、亏损、经营现金流和分业务毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.5元，且电子数据取证收入恢复增长、公共安全大数据毛利率修复至15%以上",
-      "action": "小幅加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，重点观察前三季度回款和销售费用投入产出",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于11.5元且扣非亏损未明显收窄",
-      "action": "卖出或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，判断收入修复和亏损收窄是否兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入观察买区，重新核验半年报收入、毛利率和现金流是否企稳",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "低于公允价值区间下沿，若基本面未恶化可评估小仓位配置",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "高于减仓区下沿，若基本面仍未转正则估值过度反映乐观情景",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入观察买区，重新核验半年报收入、毛利率和现金流是否企稳"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "低于公允价值区间下沿，若基本面未恶化可评估小仓位配置"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "高于减仓区下沿，若基本面仍未转正则估值过度反映乐观情景"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入、亏损、经营现金流和分业务毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，重点观察前三季度回款和销售费用投入产出"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，判断收入修复和亏损收窄是否兑现"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

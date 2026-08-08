@@ -1,120 +1,123 @@
 {
-  "symbol": "CN:003041",
-  "market": "CN",
-  "ticker": "003041",
-  "name": "真爱美家",
-  "company_name": "浙江真爱美家股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "真爱美家主业是成熟外向型毛毯制造，2025年扣非净利润仅6162万元，2026Q1扣非净利润降至282万元；2026-07-13股价40.50元对应约58亿元市值，显著高于主业合理价值，主要反映控制权变更主题溢价。缺少明确资产注入或利润模型变化前，不具备安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "低",
-  "fair_value_range": [12.0, 18.0],
-  "buy_zone": [0.0, 16.0],
-  "sell_or_reduce_zone": [28.0, 999.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "真爱美家",
+    "security_status": "active",
+    "symbol": "CN:003041",
+    "ticker": "003041"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1966c304a5923d3a18fa5ba1dfb9a266695dabfdffb5cbff4ee9aa6beae6ea88"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于28元且无明确资产注入、主营变更或扣非利润跃升公告",
-      "action": "不建仓；已有仓位以减仓或退出为主",
-      "target_weight": 0.0,
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价在18-28元之间，2026中报尚未验证扣非利润和现金流修复",
-      "action": "观察，不主动加仓",
-      "target_weight": 0.0,
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价回落至13-16元，且扣非净利润、毛利率、经营现金流、短期借款未继续恶化",
-      "action": "小仓试探并跟踪中报/三季报",
-      "target_weight": 0.02,
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于13元，主业订单稳定，经营现金流覆盖扣非利润，且新控制方未出现损害中小股东的资本动作",
-      "action": "提高至观察型核心仓位上限",
-      "target_weight": 0.05,
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "currency": "CNY",
-      "reason": "进入含治理改善期权后的合理价值上沿附近",
-      "action": "重新评估小仓买入"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "currency": "CNY",
-      "reason": "接近主业估值中枢并具备更高安全边际",
-      "action": "若基本面未恶化，复核是否提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "currency": "CNY",
-      "reason": "明显高于主业合理价值，主题溢价占主导",
-      "action": "复核减仓或继续回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年度报告",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026Q1扣非利润和现金流明显走弱，需要中报确认是否恢复",
-      "action": "复核扣非净利润、毛利率、经营现金流和短期借款"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "出现资产注入、重大并购、再融资、关联交易、主营变更或股权激励公告",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "控制权变更后的资本动作会改变估值锚和治理风险",
-      "action": "重做估值和治理风险评估"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "海外订单、关税、汇率或中东/北非需求出现重大变化",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "国外收入占比高，外需和贸易条件是核心变量",
-      "action": "复核收入增长和毛利率假设"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "综合毛利率连续两个季度低于19%或经营现金流持续为负",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "制造业估值依赖稳定毛利和现金转化",
-      "action": "下调质量评级和合理价值区间"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2028-04-30",
-      "condition": "前五大客户占比超过30%或前五大供应商占比继续上升",
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
       "reason": "集中度上升会削弱议价权并放大经营波动",
-      "action": "复核客户/供应商集中风险"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入含治理改善期权后的合理价值上沿附近",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "接近主业估值中枢并具备更高安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "明显高于主业合理价值，主题溢价占主导",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "综合毛利率和毛毯毛利率",
-    "经营活动现金流量净额",
-    "短期借款和净负债",
-    "国外收入增速及中东/北非订单变化",
-    "前五大客户销售占比",
-    "前五大供应商采购占比",
-    "新董事会资本动作和分红政策",
-    "新增智能化印染线投产效果"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

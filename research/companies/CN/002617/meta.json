@@ -1,125 +1,124 @@
 {
-  "symbol": "CN:002617",
-  "market": "CN",
-  "ticker": "002617",
-  "name": "露笑科技",
-  "company_name": "露笑科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "传统漆包线、高空作业设备和光伏发电业务提供产业基础，但 2025 年和 2026 年一季度利润表现不足以支撑当前高估值；碳化硅具备成长选择权，但收入、客户、毛利率和现金回收仍需验证。当前价格高于安全边际区间，等待价格回落或基本面被一手数据验证。",
-  "quality_rating": "B-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.5,
-    7.5
-  ],
-  "buy_zone": [
-    4.5,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    9.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "露笑科技",
+    "security_status": "active",
+    "symbol": "CN:002617",
+    "ticker": "002617"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "fdca50f2dd6942660dbb948e6b8311eac3d5d139a570f04c76607aaecb6f55cf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 8.0 元且没有新增一手证据验证碳化硅放量",
-      "action": "不买不加仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证利润、现金流和毛利率是否修复的关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于 6.5-8.0 元，且半年报利润和经营现金流没有恶化",
-      "action": "仅可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "碳化硅是当前估值中最重要的成长变量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于 5.5-6.5 元，且传统业务稳定、碳化硅未被证伪",
-      "action": "小仓试错",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "资本配置和资产负债表变化会直接影响安全边际",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于 5.5 元，且资产负债表和经营现金流保持健康",
-      "action": "分批买入",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
+      "reason": "价格进入买入区或减仓区时需要重新确认仓位动作",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "股价低于 4.5 元，且无重大减值、诉讼、债务或再融资风险",
-      "action": "提高到强吸引力仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "5.5 元以下对应合理价值区间下沿，风险收益开始改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "4.5 元以下对传统业务和碳化硅期权均有较高安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "8 元以上已高于基准合理区间，需要更强基本面证据",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "9 元以上主要定价乐观情景，若无验证则赔率变差",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "condition": "进入有安全边际买入区，复核半年报和现金流后可分批买入",
-      "reason": "5.5 元以下对应合理价值区间下沿，风险收益开始改善"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "condition": "进入强吸引力区，若基本面未恶化可提高仓位",
-      "reason": "4.5 元以下对传统业务和碳化硅期权均有较高安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "condition": "高于不应追价区，除非碳化硅被可核验收入和订单验证，否则不新增",
-      "reason": "8 元以上已高于基准合理区间，需要更强基本面证据"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "condition": "高估值风险区，若基本面没有同步验证应考虑减仓",
-      "reason": "9 元以上主要定价乐观情景，若无验证则赔率变差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年半年报披露后复核收入、归母净利润、扣非净利润、经营现金流和毛利率是否同步改善",
-      "reason": "半年报是验证利润、现金流和毛利率是否修复的关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "公司披露碳化硅衬底或外延片批量订单、客户认证、收入、毛利率或产能利用率时复核估值",
-      "reason": "碳化硅是当前估值中最重要的成长变量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "公司披露募投项目终止后资金用途、重大资产减值、有息负债明显变化或再融资方案时立即复核",
-      "reason": "资本配置和资产负债表变化会直接影响安全边际"
-    },
-    {
-      "type": "date",
-      "date": "2026-07-31",
-      "condition": "股价跌破 5.5 元或突破 9.0 元时复核仓位计划",
-      "reason": "价格进入买入区或减仓区时需要重新确认仓位动作"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "扣非归母净利润同比增速",
-    "经营活动现金流净额",
-    "漆包线毛利率",
-    "高空作业设备收入和毛利率",
-    "光伏发电收入稳定性",
-    "碳化硅客户认证数量",
-    "碳化硅批量订单和收入",
-    "碳化硅良率和产能利用率",
-    "货币资金与有息负债",
-    "募投项目和资本开支变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

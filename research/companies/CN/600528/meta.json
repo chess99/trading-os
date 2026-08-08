@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:600528",
-  "ticker": "600528",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "中铁工业",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中铁工业拥有盾构/TBM、道岔和桥梁钢结构等央企高端装备资产，当前PB较低且控股股东增持提供一定下行支撑；但2025年利润下滑、ROE偏低，2026Q1新签合同仍下降，需等待订单结构和经营现金流持续修复后再提高评级。",
-  "fair_value_range": [
-    7.6,
-    9.2
-  ],
-  "buy_zone": [
-    5.8,
-    6.4
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    10.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中铁工业",
+    "security_status": "active",
+    "symbol": "CN:600528",
+    "ticker": "600528"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "3f6fb00dbb94832bb505e23378f29be573d5f14846fc21f4e1ef801e15bf9898"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅作为跟踪仓，股价在7.05元附近但订单和现金流尚未确认反转时",
-      "action": "watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查新签订单、毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至5.80-6.40元，且未出现回款恶化或订单断崖",
-      "action": "accumulate",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认订单结构和ROE修复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度新签合同同比转正、专用装备订单占比提升、经营现金流转正",
-      "action": "upgrade_review",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和分红方案，重新评估长期ROE与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.4
+      },
+      "reason": "进入安全边际买入区上沿，需复核订单和回款是否保持稳定",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入安全边际买入区下沿，可评估是否提高至目标仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "进入估值兑现区下沿，如ROE和订单未同步修复应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.8
+      },
+      "reason": "超过基准合理价值区间较多，需复核乐观情景是否成立",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.4,
-      "reason": "进入安全边际买入区上沿，需复核订单和回款是否保持稳定"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入安全边际买入区下沿，可评估是否提高至目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "进入估值兑现区下沿，如ROE和订单未同步修复应考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 10.8,
-      "reason": "超过基准合理价值区间较多，需复核乐观情景是否成立"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查新签订单、毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认订单结构和ROE修复是否持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和分红方案，重新评估长期ROE与估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

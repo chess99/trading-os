@@ -1,98 +1,105 @@
 {
-  "symbol": "CN:600184",
-  "ticker": "600184",
-  "market": "CN",
-  "name": "光电股份",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "兵器集团体系内光电防务与光电材料企业，2025年防务交付和高附加值材料带来修复，但ROE和现金流尚未证明可支撑当前高估值，需等待更低价格或利润兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    10.0,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "position_plan": [
-    {
-      "condition": "价格低于12.5元，且2026年半年报毛利率维持18%以上、经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于10.0元，且防务订单、材料高附加值产品和现金流未出现恶化",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格高于22.0元但归母净利润未显著上台阶，或经营现金流再次明显转负",
-      "action": "减仓或回避",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入基础买入区上沿，需要复核半年报现金流和毛利率"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "接近悲观情景和净资产折价后的安全边际区"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "高于基础价值区间较多，需要检查是否有真实订单和利润兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、经营现金流和防务交付节奏"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认利润加速和定增项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、关联交易和正常化盈利能力"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 18.32,
-    "last_price_time": "2026-07-16 14:06:29",
-    "market_cap_cny_billion": 10.676,
-    "pb": 3.14,
-    "revenue_2025_cny_billion": 2.441,
-    "net_profit_2025_cny_million": 51.0802,
-    "operating_cash_flow_2025_cny_million": -365.7884,
-    "roe_2025": 0.0183,
-    "revenue_2026_q1_cny_billion": 0.315,
-    "net_profit_2026_q1_cny_million": 1.1216
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "光电股份",
+    "security_status": "active",
+    "symbol": "CN:600184",
+    "ticker": "600184"
   },
-  "risks": [
-    "防务订单交付节奏波动",
-    "低ROE无法支撑高PB",
-    "经营现金流质量不稳定",
-    "关联交易和信息透明度折价",
-    "控股股东减持导致风险偏好下降"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "536eb2f224f13b8c5d9c91c28354b3aa821b1aa97a061d88d30fc95b2e83e747"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、经营现金流和防务交付节奏",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认利润加速和定增项目进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、关联交易和正常化盈利能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入基础买入区上沿，需要复核半年报现金流和毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "接近悲观情景和净资产折价后的安全边际区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "高于基础价值区间较多，需要检查是否有真实订单和利润兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

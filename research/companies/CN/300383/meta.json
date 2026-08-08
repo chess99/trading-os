@@ -1,107 +1,105 @@
 {
-  "symbol": "CN:300383",
-  "market": "CN",
-  "ticker": "300383",
-  "name": "光环新网",
-  "company_name": "北京光环新网科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司拥有核心区域 IDC 资源和云计算服务经验，AI 算力需求提供长期选择权，但 2025 年商誉减值后正常化利润仍低，2026Q1 云业务继续下滑、债务和资本开支压力较大。当前约 13 元以上价格已经反映较多修复预期，缺少足够安全边际，等待价格回落或经营指标连续改善。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "光环新网",
+    "security_status": "active",
+    "symbol": "CN:300383",
+    "ticker": "300383"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "680e8c466e2713361cd8a2437a013ecbbeef446a8cb7c694036c0cbb24c62b94"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价 <= 8.5 元，且最近一期经营现金流为正、未出现新增重大减值或债务失控",
-      "action": "建立观察仓",
-      "target_position": "2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点查看 IDC 毛利率、云收入降幅、经营现金流、净债务和资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价 <= 7.5 元，且 IDC 收入同比增长、云计算收入降幅收窄、净债务未继续明显扩大",
-      "action": "加仓",
-      "target_position": "4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断利润修复是否具备连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价 <= 6.5 元，且连续两个季度扣非利润改善、经营现金流可覆盖利息和维护性资本开支",
-      "action": "提高到上限仓位",
-      "target_position": "6%",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估商誉减值后真实 ROE、自由现金流和资本配置质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价 >= 13.0 元，且经营数据没有证明 ROE 和自由现金流进入上行周期",
-      "action": "不新开仓，已有仓位降为观察仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
       "reason": "进入估算合理价值下沿以下，具备初始安全边际",
-      "action": "进入可买区，复核最近一期经营现金流、债务和 IDC 毛利率"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 7.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
       "reason": "较合理价值中枢折价更深，若基本面未恶化可提高仓位",
-      "action": "若基本面无恶化，考虑从 2% 加至 4%"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 13.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
       "reason": "高于当前合理价值区间，市场已计入较多修复和 AI 数据中心预期",
-      "action": "估值进入减仓/回避区，除非经营指标显著超预期"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点查看 IDC 毛利率、云收入降幅、经营现金流、净债务和资本开支"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断利润修复是否具备连续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估商誉减值后真实 ROE、自由现金流和资本配置质量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "IDC 及增值服务收入增速和毛利率",
-    "云计算及相关服务收入降幅和毛利率",
-    "EBITDA 与经营现金流量净额",
-    "短期借款、长期借款、净债务变化",
-    "资本开支、在建工程和新增项目上架率",
-    "扣非归母净利润连续改善情况",
-    "AI/高功率机柜订单、客户续约和电力资源获取情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

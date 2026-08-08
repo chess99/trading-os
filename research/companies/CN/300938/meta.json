@@ -1,92 +1,105 @@
 {
-  "symbol": "CN:300938",
-  "ticker": "300938",
-  "name": "信测标准",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是第三方检测认证中成长性和利润率较好的细分标的，汽车电子、新能源和区域实验室扩张仍能支撑中期增长；但2026-07-15可见股价约41.51元已接近乐观情景估值，基准合理价值为25-33元/股，安全边际不足，暂列观察。",
-  "fair_value_range": [
-    25,
-    33
-  ],
-  "buy_zone": [
-    22,
-    27
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    52
-  ],
-  "position_plan": [
-    {
-      "condition": "股价进入22-27元且最近两个季度收入增速不低于15%、归母净利率保持在21%以上、经营现金流/归母净利润不低于0.9",
-      "action": "建立观察性仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价低于24元且新建实验室爬坡、现金流和利润率均未恶化",
-      "action": "可加至核心观察仓位",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于45元且未来一年业绩增速未提升至25%以上",
-      "action": "不追高或降低暴露",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 27,
-      "reason": "进入买入区间上沿，若基本面未恶化可启动复核"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "接近具备较好安全边际的加仓区间"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "进入减仓或不追高区间，需要确认是否有基本面超预期支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增速、利润率、现金流和实验室爬坡"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年业绩可见度"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、资本开支效率和股东减持/转让情况"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 41.51,
-    "reference_price_date": "2026-07-15",
-    "reference_price_confidence": "medium",
-    "shares_after_2025_distribution_estimate_million": 340.86,
-    "market_cap_estimate_billion": 14.15,
-    "net_profit_2025_billion": 0.196,
-    "net_profit_2026e_billion": [
-      0.225,
-      0.24
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "信测标准",
+    "security_status": "active",
+    "symbol": "CN:300938",
+    "ticker": "300938"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "ee8882aca15f44983da62454e6b7383c954e90be578ccecf5c566f28d0c08c58"
+      }
     ],
-    "rating_reason": "基本面质量较高但当前估值已隐含乐观增长，缺乏足够安全边际"
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增速、利润率、现金流和实验室爬坡",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年业绩可见度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、资本开支效率和股东减持/转让情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 27.0
+      },
+      "reason": "进入买入区间上沿，若基本面未恶化可启动复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "接近具备较好安全边际的加仓区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "进入减仓或不追高区间，需要确认是否有基本面超预期支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

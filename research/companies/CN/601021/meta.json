@@ -1,109 +1,115 @@
 {
-  "symbol": "CN:601021",
-  "market": "CN",
-  "ticker": "601021",
-  "name": "春秋航空",
-  "company_name": "春秋航空",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "春秋航空是中国低成本航空龙头，2026Q1盈利弹性强、客座率维持高位，当前估值低于中性合理价值；但航油、汇率、票价和国际线恢复波动较大，适合小仓位分批买入并用运营数据跟踪。",
-  "quality_rating": "A-",
-  "valuation_rating": "B+",
-  "fair_value_range": [
-    56,
-    68
-  ],
-  "buy_zone": [
-    40,
-    50
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    78
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "春秋航空",
+    "security_status": "active",
+    "symbol": "CN:601021",
+    "ticker": "601021"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "3c12601af743a4a6ebc1bfb66c79d0c40038cd82977ad58d4f4aa8d1d6dbe2aa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于40-50元买入区间且月度客座率维持90%左右",
-      "action": "建立首笔仓位",
-      "max_weight": 0.03,
-      "reason": "估值低于中性合理价值，2026Q1盈利弹性已验证，但航空外生变量多"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年6-7月运营数据和暑运票价表现",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至40-43元且客座率、票价和国际线恢复未恶化",
-      "action": "分批加仓",
-      "max_weight": 0.05,
-      "reason": "价格进入更高安全边际区间，可承受周期波动"
+      "active": true,
+      "condition": {
+        "date": "2026-09-15"
+      },
+      "reason": "复查2026半年报，确认Q1高利润率是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于65元且2026E EPS没有上修至3.6元以上",
-      "action": "降低仓位或停止加仓",
-      "max_weight": 0.03,
-      "reason": "估值开始透支中性盈利情景"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报和全年经营现金流、机队引进、汇兑损益",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "油价、汇率、票价或客座率连续恶化导致2026E EPS低于2.4元",
-      "action": "复核并减仓",
-      "max_weight": 0.02,
-      "reason": "投资假设从效率溢价转为普通航空周期风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 43.0
+      },
+      "reason": "进入更有安全边际的加仓观察区，需同时核验运营数据",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "若基本面未破坏，估值进入悲观情景下沿，需要重新评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "接近中性合理价值上沿，需要检查利润预期是否同步上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 78.0
+      },
+      "reason": "进入减仓区上沿，若无乐观情景兑现应控制仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 43,
-      "reason": "进入更有安全边际的加仓观察区，需同时核验运营数据"
-    },
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "若基本面未破坏，估值进入悲观情景下沿，需要重新评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "接近中性合理价值上沿，需要检查利润预期是否同步上修"
-    },
-    {
-      "type": "price_above",
-      "price": 78,
-      "reason": "进入减仓区上沿，若无乐观情景兑现应控制仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年6-7月运营数据和暑运票价表现"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-15",
-      "reason": "复查2026半年报，确认Q1高利润率是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报和全年经营现金流、机队引进、汇兑损益"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度客座率",
-    "国际线客座率",
-    "ASK和RPK同比增速",
-    "客公里收益或平均票价",
-    "航油价格",
-    "USD/CNY汇率",
-    "机队净增数量",
-    "飞机日利用率",
-    "经营现金流",
-    "租赁负债和资本开支"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

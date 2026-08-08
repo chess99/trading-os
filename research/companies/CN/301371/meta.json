@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301371",
-  "ticker": "301371",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "敷尔佳",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "敷尔佳具备专业皮肤护理品牌心智、极轻负债和充足现金理财资产，但2025年医疗器械线下滑、销售费用率偏高，2026Q1恢复仍受低基数与非经常性损益影响；当前约26元附近处于合理估值区间，缺少深度安全边际，适合观察，等待22元以下或扣非利润连续兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "敷尔佳",
+    "security_status": "active",
+    "symbol": "CN:301371",
+    "ticker": "301371"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "97644e78f2d7788c7bb59c6055ce3a49854eee9683b771d51428223daeedf8cc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于22元，且最近一期扣非净利润同比增长为正、销售费用率未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看化妆品收入、医疗器械降幅、扣非净利率和销售费用率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于20元，且经营现金流/净利润大于0.8、化妆品线保持双位数增长",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1高增长是否具有持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于34元，且扣非利润或销售费用率未同步改善",
-      "action": "减仓或不新增",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-02-01"
+      },
+      "reason": "首发前限售股拟解除限售观察点，跟踪控股股东及相关股东减持安排。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入初始买区，需要复核最新季报扣非利润、销售费用率和经营现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "接近悲观情景价值，可考虑提高仓位但需确认基本面未破坏。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "超过基准价值区间上沿，需要验证高增长和费用率改善是否兑现。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入初始买区，需要复核最新季报扣非利润、销售费用率和经营现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "接近悲观情景价值，可考虑提高仓位但需确认基本面未破坏。"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "超过基准价值区间上沿，需要验证高增长和费用率改善是否兑现。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看化妆品收入、医疗器械降幅、扣非净利率和销售费用率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1高增长是否具有持续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-02-01",
-      "reason": "首发前限售股拟解除限售观察点，跟踪控股股东及相关股东减持安排。"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

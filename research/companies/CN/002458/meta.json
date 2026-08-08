@@ -1,133 +1,123 @@
 {
-  "symbol": "CN:002458",
-  "market": "CN",
-  "ticker": "002458",
-  "name": "益生股份",
-  "company_name": "山东益生种畜禽股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "益生股份是白羽肉鸡种源上游稀缺资产，2026年受父母代鸡苗高景气和种猪放量驱动利润修复；但当前8.84元股价已接近合理价值上沿，缺少足够安全边际，等待7.2元以下或中报/月度销售继续验证。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    7.2,
-    9.2
-  ],
-  "buy_zone": [
-    6.4,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    9.4,
-    10.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "益生股份",
+    "security_status": "active",
+    "symbol": "CN:002458",
+    "ticker": "002458"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "8b87cbc538fd9f330d71d3a5ebb362761fd91b2c09a9bf677596640e01952696"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价<=6.4元",
-      "position": "5%-7%",
-      "max_weight": 0.07,
-      "action": "强吸引力买入"
-    },
-    {
-      "condition": "股价6.4-7.2元",
-      "position": "3%-5%",
-      "max_weight": 0.05,
-      "action": "有安全边际买入"
-    },
-    {
-      "condition": "股价7.2-8.4元",
-      "position": "1%-3%",
-      "max_weight": 0.03,
-      "action": "小仓跟踪"
-    },
-    {
-      "condition": "股价8.4-9.4元",
-      "position": "0%-1%",
-      "max_weight": 0.01,
-      "action": "观察"
-    },
-    {
-      "condition": "股价>9.4元",
-      "position": "0%",
-      "max_weight": 0,
-      "action": "不应追高/已有仓位减仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "股价<=7.2元",
-      "price": 7.2,
-      "action": "买入",
-      "reason": "进入有安全边际买入区，且需确认父母代鸡苗报价仍维持高位、月度销售未转弱"
-    },
-    {
-      "type": "price_below",
-      "condition": "股价<=6.4元",
-      "price": 6.4,
-      "action": "强吸引力买入",
-      "reason": "进入强安全边际区，且未出现引种恢复或疫病损失等基本面反转"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价>=10.5元",
-      "price": 10.5,
-      "action": "减仓",
-      "reason": "价格超过减仓区，除非2026全年利润预期同步显著上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报正式披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证2026H1业绩预告和盈利质量",
-      "action": "复核扣非净利、毛利率和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
-      "condition": "父母代肉种鸡苗报价跌破45元/套并连续两个月下行",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "核心利润弹性来自父母代鸡苗价格",
-      "action": "下调盈利假设并评估降仓"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "境外祖代白羽肉鸡引种恢复导致供给预期逆转",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "祖代供给恢复会削弱上游种源稀缺溢价",
-      "action": "下调估值倍数和合理价格区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "种猪销量明显低于2026年15万头目标节奏",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "种猪业务是第二增长曲线",
-      "action": "下调第二增长曲线权重"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "实控人质押比例继续上升或出现补充质押/平仓风险",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "高质押可能带来治理和股价压力",
-      "action": "下调质量评级并控制仓位"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入有安全边际买入区，且需确认父母代鸡苗报价仍维持高位、月度销售未转弱",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.4
+      },
+      "reason": "进入强安全边际区，且未出现引种恢复或疫病损失等基本面反转",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "价格超过减仓区，除非2026全年利润预期同步显著上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "父母代肉种鸡苗报价",
-    "白羽肉鸡苗销量和销售收入",
-    "祖代白羽肉鸡引种量",
-    "2026H2扣非净利润",
-    "经营现金流/净利润",
-    "种猪销量、收入和毛利率",
-    "实控人质押比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

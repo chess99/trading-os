@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:688503",
-  "market": "CN",
-  "ticker": "688503",
-  "name": "聚和材料",
-  "company_name": "聚和材料",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "聚和材料是光伏导电银浆第一梯队公司，TOPCon/HJT/BC技术迭代带来产品升级机会，但少银化、价格竞争、银价传导和客户集中使盈利与现金流波动较大；当前更适合观察，等待价格回到买入区或中报验证盈利现金流修复。",
-  "quality_rating": "B+",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    82,
-    98
-  ],
-  "buy_zone": [
-    60,
-    75
-  ],
-  "sell_or_reduce_zone": [
-    115,
-    135
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "聚和材料",
+    "security_status": "active",
+    "symbol": "CN:688503",
+    "ticker": "688503"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "0a9b0dd28f8abe1beda79b860d3ac75643b2a39fa9a73d61d09908392b80b488"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于75元，且未出现客户份额显著流失、银价传导失效或经营现金流继续恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "进入买入区上沿以下，安全边际开始出现，但行业周期和技术替代风险仍需控制"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点验证毛利率、经营现金流、应收账款和TOPCon/HJT/BC产品进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于60元，且单季度经营现金流转正、毛利率企稳",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "价格进入悲观情景附近，同时现金流验证基本面修复"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和行业排产，判断盈利修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于100元且中报未证明净利率和现金流显著修复",
-      "action": "不新增仓位",
-      "max_weight": 0,
-      "reason": "估值已提前反映较多盈利修复，缺少足够安全边际"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "进入买入区上沿，适合复核基本面并考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入深度价值区，若现金流和毛利率同步改善可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 115.0
+      },
+      "reason": "进入减仓区下沿，若基本面未上修需降低仓位或停止加仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 75,
-      "reason": "进入买入区上沿，适合复核基本面并考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 60,
-      "reason": "进入深度价值区，若现金流和毛利率同步改善可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 115,
-      "reason": "进入减仓区下沿，若基本面未上修需降低仓位或停止加仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点验证毛利率、经营现金流、应收账款和TOPCon/HJT/BC产品进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和行业排产，判断盈利修复是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "TOPCon/HJT/BC银浆出货量和收入占比",
-    "毛利率及银价传导效率",
-    "经营现金流净额",
-    "应收账款周转天数",
-    "存货周转天数",
-    "前五大客户收入占比和回款质量",
-    "低银化、银包铜、铜电镀替代进展",
-    "帝科股份和苏州固锝/苏州晶银的毛利率与客户突破",
-    "光伏电池片排产和组件开工率",
-    "白银现货价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

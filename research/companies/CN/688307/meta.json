@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688307",
-  "market": "CN",
-  "ticker": "688307",
-  "name": "中润光学",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "中润光学从高端定制光学镜头向“光学镜头+光学元件”双轮驱动升级，2025年和2026Q1收入增长较强，戴斯光电并表和10亿元高精密光学元组件项目提供中长期弹性；但当前估值已隐含较高增长兑现，客户集中、现金流、存货、商誉和定增摊薄仍需验证，因此纳入观察池，等待安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    35,
-    48
-  ],
-  "buy_zone": [
-    28,
-    34
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    70
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中润光学",
+    "security_status": "active",
+    "symbol": "CN:688307",
+    "ticker": "688307"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "db56fe207c52ba3dad9e525e525f2bd4c123bab7894b7e7384c6922bdace7d92"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于安全边际区且2026年7月项目回报尚未验证，保持观察仓或空仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、元件业务增长和存货跌价。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至34元以下，且2026半年报显示收入与扣非净利润继续增长、经营现金流未恶化，可建立试探仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证增长持续性和10亿元项目/定增进度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于30元，同时光学元器件毛利率维持35%以上、客户集中度继续下降、定增摊薄可控，可提高至核心观察仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，更新估值区间与仓位上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入买入区间上沿，需要复核半年报、现金流和元件业务毛利率后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入更有安全边际区间，若基本面未恶化可重新评估提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "超过情景估值中性区间上沿，若无订单、利润率或项目回报的新证据，应减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入买入区间上沿，需要复核半年报、现金流和元件业务毛利率后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入更有安全边际区间，若基本面未恶化可重新评估提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "超过情景估值中性区间上沿，若无订单、利润率或项目回报的新证据，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、元件业务增长和存货跌价。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证增长持续性和10亿元项目/定增进度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，更新估值区间与仓位上限。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

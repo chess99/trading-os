@@ -1,85 +1,96 @@
 {
-  "symbol": "CN:600079",
-  "market": "CN",
-  "ticker": "600079",
-  "name": "ST人福",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST人福具备麻精药等细分工业资产壁垒和现金流修复基础，但历史资金占用、财务虚假记载、其他风险警示和潜在索赔仍要求治理折价。当前价格处于合理区间，不具备充足安全边际，先观察治理修复和半年度现金流。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.5,
-    19.5
-  ],
-  "buy_zone": [
-    11.5,
-    14.0
-  ],
-  "sell_or_reduce_zone": [
-    20.5,
-    23.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST人福",
+    "security_status": "active",
+    "symbol": "CN:600079",
+    "ticker": "600079"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "dcd2be971b6b38fc974c686931c709883c8aefaf6829b35821f4530dd40abdbc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价在14.0元以上且公司仍处于ST状态",
-      "action": "不新开主动仓位，仅保留研究跟踪",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报扣非归母、经营现金流、应收账款和短债覆盖",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至11.5-14.0元且无新增处罚、非标审计、资金占用或重大索赔恶化",
-      "action": "试探性建仓，等待半年度现金流确认后再加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-12-26"
+      },
+      "reason": "行政处罚决定满12个月前后，跟踪撤销其他风险警示条件和公告进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于11.5元且治理修复、现金流和债务滚续均未恶化",
-      "action": "分批提高到小型核心观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入有安全边际买入区，可结合最新公告复核是否开首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于20.5元但尚未撤销其他风险警示或基本面未超预期",
-      "action": "减仓或不参与追高",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入强吸引力区，但必须确认无新增治理和现金流风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.5
+      },
+      "reason": "高于合理区间上沿，若未摘帽或利润未超预期应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入有安全边际买入区，可结合最新公告复核是否开首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入强吸引力区，但必须确认无新增治理和现金流风险"
-    },
-    {
-      "type": "price_above",
-      "price": 20.5,
-      "reason": "高于合理区间上沿，若未摘帽或利润未超预期应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报扣非归母、经营现金流、应收账款和短债覆盖"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-26",
-      "reason": "行政处罚决定满12个月前后，跟踪撤销其他风险警示条件和公告进展"
-    }
-  ],
-  "notes": [
-    "2026-07-20收盘价17.69元，总市值约288.74亿元，处于合理区间内但没有充足安全边际。",
-    "湖北证监局行政处罚决定书确认2020年至2022年3月非经营性资金占用累计127.85亿元，截至2022-04-15已归还本金及利息。",
-    "2025年财务报告和内部控制审计意见为标准无保留意见，但历史虚假记载和潜在索赔仍需治理折价。",
-    "分产品收入毛利和索赔最终影响未完全核验，下一次复查需优先补强。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688062",
-  "market": "CN",
-  "ticker": "688062",
-  "name": "迈威生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "迈威生物已具备生物类似药商业化底盘，核心弹性来自9MW2821 Nectin-4 ADC多适应症注册和潜在海外BD；当前估值已反映较多成功预期，适合跟踪，需等待30元以下安全边际或强临床/BD证据上修胜率。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    34,
-    43
-  ],
-  "buy_zone": [
-    25,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "迈威生物",
+    "security_status": "active",
+    "symbol": "CN:688062",
+    "ticker": "688062"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "4b35b0a84a989debf8cf246c6ddf9934931177766873fa261a08de720b89d068"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于30元且9MW2821无关键临床或监管负面变化时建立观察仓",
-      "action": "buy_watch_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、现金余额、分品种收入和研发费用变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元且现金runway维持两年以上、9MW2821关键数据继续正向时加仓",
-      "action": "add_selectively",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及9MW2821关键临床/注册进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于52元且未出现强阳性III期数据或高质量海外授权时减仓",
-      "action": "reduce",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、港股上市后现金使用、债务结构和核心管线里程碑",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入初始买入区间上沿，重新检查9MW2821数据和现金消耗后可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入深度安全边际区间，若非管线失败导致，可复核是否提高至2%以内",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "进入减仓观察区，需要有强数据、注册或海外BD兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入初始买入区间上沿，重新检查9MW2821数据和现金消耗后可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入深度安全边际区间，若非管线失败导致，可复核是否提高至2%以内"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "进入减仓观察区，需要有强数据、注册或海外BD兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、现金余额、分品种收入和研发费用变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及9MW2821关键临床/注册进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、港股上市后现金使用、债务结构和核心管线里程碑"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

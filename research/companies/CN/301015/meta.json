@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301015",
-  "ticker": "301015",
-  "name": "百洋医药",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "百洋医药的核心价值来自高毛利品牌运营和创新药械商业化平台能力，2026Q1显示利润修复，但当前估值已接近基准公允价值，且现金流、短债、控股股东质押和新项目兑现仍有不确定性，暂列观察。",
-  "fair_value_range": [
-    20,
-    27
-  ],
-  "buy_zone": [
-    16,
-    19
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    36
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "百洋医药",
+    "security_status": "active",
+    "symbol": "CN:301015",
+    "ticker": "301015"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "46825088f9ce3c489f59015b83969b88755ab404ec819eae1096b9dd39b023d5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入19元以下，且最近一期品牌运营毛利率维持45%以上、经营现金流恢复到与利润大体匹配、控股股东质押比例未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "复核2026年半年报，重点看经营现金流、品牌运营收入和安博美/吉伦泰商业化进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至16元附近且核心品牌运营收入仍增长、新项目商业化有明确收入、资产负债率开始下降",
-      "action": "提高至小仓位买入",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证利润修复是否可持续以及短债和质押风险是否缓解",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元且2026H1或2026Q3未证明利润和现金流同步修复",
-      "action": "减仓或不新增",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新计算可持续利润、估值区间和评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入初步安全边际区，需要复核品牌运营毛利率、现金流和质押风险后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入深度安全边际区，若基本面未破坏可重新评估买入评级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过基准公允价值上沿，若没有业绩和现金流超预期，应考虑减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19,
-      "reason": "进入初步安全边际区，需要复核品牌运营毛利率、现金流和质押风险后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入深度安全边际区，若基本面未破坏可重新评估买入评级"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "超过基准公允价值上沿，若没有业绩和现金流超预期，应考虑减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-30",
-      "reason": "复核2026年半年报，重点看经营现金流、品牌运营收入和安博美/吉伦泰商业化进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证利润修复是否可持续以及短债和质押风险是否缓解"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新计算可持续利润、估值区间和评级"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

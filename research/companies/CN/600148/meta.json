@@ -1,91 +1,105 @@
 {
-  "symbol": "CN:600148",
-  "ticker": "600148",
-  "name": "长春一东",
-  "company_name": "长春一东离合器股份有限公司",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "细分商用车离合器和液压翻转机构龙头有周期修复和AMT/海外拓展期权，但当前盈利能力、现金流和新能源转型证据不足，估值显著高于基准内在价值，暂不买入。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "decision": "不买",
-  "confidence": "中",
-  "fair_value_range": [
-    6.5,
-    9.0
-  ],
-  "buy_zone": [
-    5.0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长春一东",
+    "security_status": "active",
+    "symbol": "CN:600148",
+    "ticker": "600148"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "9d44922538c00d6e97ead3381e44dcee032f4897e7245e9d21f61d3596b5d821"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于12元或未见连续两个季度扣非净利率超过4%且经营现金流转正",
-      "action": "不买入，已有仓位降低或退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证扣非净利率、经营现金流、应收账款和新业务收入。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.5元，且最新财报显示扣非利润为正、经营现金流为正、应收账款未继续恶化",
-      "action": "可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1改善是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于5元，且AMT或新能源零部件量产收入得到公告或定期报告验证",
-      "action": "可小幅增持但仍作为小盘周期制造股管理",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新估算公允价值和仓位上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入基准买入观察区，需要复核最新扣非净利率、现金流和两金占用。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入具备安全边际的深度复核区，若基本面未恶化可考虑小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "超过乐观估值上沿，若无明确订单和盈利上修应减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入基准买入观察区，需要复核最新扣非净利率、现金流和两金占用。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入具备安全边际的深度复核区，若基本面未恶化可考虑小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "超过乐观估值上沿，若无明确订单和盈利上修应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证扣非净利率、经营现金流、应收账款和新业务收入。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1改善是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新估算公允价值和仓位上限。"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "扣非净利率是否稳定超过4%",
-    "经营现金流是否连续为正且覆盖净利润",
-    "应收账款和票据合计占收入比例是否下降",
-    "AMT、新能源减振器、电动缸、智能尾板、换电锁止部件是否形成量产收入",
-    "境外收入增速和毛利率是否改善",
-    "一汽股权投资后续减持节奏"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

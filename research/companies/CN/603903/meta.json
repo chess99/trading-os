@@ -1,89 +1,115 @@
 {
-  "symbol": "CN:603903",
-  "market": "CN",
-  "ticker": "603903",
-  "name": "中持股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中持股份处于旧水务工程业务出清与工业/半导体废水转型的交界点，2026Q1 利润修复和控股股东变更带来反转期权；但 2025 年仍亏损、应收账款和负债压力较大，2026-07-17 股价 13.74 元已提前反映较多转型预期，当前安全边际不足，等待回调或订单与现金流兑现。",
-  "fair_value_range": [
-    8.5,
-    12.0
-  ],
-  "buy_zone": [
-    7.0,
-    9.0
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中持股份",
+    "security_status": "active",
+    "symbol": "CN:603903",
+    "ticker": "603903"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "93c043dbc533caf27e3e5191b20575f5cb43e24062b3d21a5630649eb7d3ba2c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅跟踪不建仓，直到 2026H1 或 2026Q3 证明扣非盈利为正且经营现金流/应收账款改善",
-      "action": "watch",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报：收入结构、扣非净利、经营现金流、应收账款和负债变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 9.0 元，且最新定期报告显示工业废水业务毛利率稳定、应收账款下降",
-      "action": "starter_position",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报：Q1 利润修复是否延续，工业废水订单是否兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于 8.0 元，且半导体或工业客户订单开始披露并能看到回款条件",
-      "action": "add",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报：控制权变更后的协同是否进入财务报表",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于 14.5 元但没有订单、利润或现金流进一步兑现",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入基础买入观察区，可结合中报/三季报验证是否建立小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "接近熊市与基准情景交界，若基本面未恶化则安全边际改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "超过基准价值上沿，若无工业订单和利润兑现则估值透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "接近牛市情景，需要强订单和连续盈利支撑，否则应回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入基础买入观察区，可结合中报/三季报验证是否建立小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "接近熊市与基准情景交界，若基本面未恶化则安全边际改善"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "超过基准价值上沿，若无工业订单和利润兑现则估值透支"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "接近牛市情景，需要强订单和连续盈利支撑，否则应回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报：收入结构、扣非净利、经营现金流、应收账款和负债变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报：Q1 利润修复是否延续，工业废水订单是否兑现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报：控制权变更后的协同是否进入财务报表"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

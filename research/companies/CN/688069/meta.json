@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688069",
-  "market": "CN",
-  "ticker": "688069",
-  "name": "德林海",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "德林海是湖库富营养化和蓝藻治理细分龙头，政策和技术案例具备稀缺性，但当前估值已计入较顺利的2026-2027年增长，且应收账款与合同资产偏高、经营现金流尚未验证；维持观察，等待价格进入安全边际或订单与回款同步改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    26,
-    35
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    43,
-    50
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德林海",
+    "security_status": "active",
+    "symbol": "CN:688069",
+    "ticker": "688069"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "3bfa7dd443ff671968ed3968858d229b5280017eb1778c7469e03ee8ca9b6cec"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅跟踪不主动买入；若已有仓位，在半年报前维持观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、利润、经营现金流、应收账款、合同资产和在手订单。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入20-24元且无新增坏账、订单恶化或治理风险时，可分批建立小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认项目验收、回款改善和全年业绩目标可达性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报或三季报确认订单回升、经营现金流连续改善、应收账款加合同资产占收入比例下降后，再考虑提高仓位。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重新计算归母净利润、自由现金流和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入区上沿，估值接近行业中位数和协议转让价格，需要复核订单与回款后考虑建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化，可重新评估提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 43.0
+      },
+      "reason": "进入卖出或减仓区下沿，若订单、现金流没有显著超预期，应降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入买入区上沿，估值接近行业中位数和协议转让价格，需要复核订单与回款后考虑建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入深度安全边际区，若基本面未恶化，可重新评估提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 43,
-      "reason": "进入卖出或减仓区下沿，若订单、现金流没有显著超预期，应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、利润、经营现金流、应收账款、合同资产和在手订单。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认项目验收、回款改善和全年业绩目标可达性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重新计算归母净利润、自由现金流和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,114 +1,115 @@
 {
-  "symbol": "CN:002802",
-  "market": "CN",
-  "ticker": "002802",
-  "name": "洪汇新材",
-  "company_name": "无锡洪汇新材料科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是特种氯乙烯共聚物细分领域的专精特新型企业，资产负债表干净、出口毛利率高、客户认证有一定壁垒；但2025年收入和扣非利润下滑，水性乳液放量不及预期，产能利用率约43%，当前价格相对5.5-7.5元合理价值区间缺少安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.5,
-    7.5
-  ],
-  "buy_zone": [
-    0,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "洪汇新材",
+    "security_status": "active",
+    "symbol": "CN:002802",
+    "ticker": "002802"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ffb851e4365d7435edfcf647b077b19c393d5c5b6321047233cb36bbd06e11a8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于9.5元且没有新的业绩上修证据",
-      "action": "不买入；已有仓位降至0%-1%观察仓。",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格位于7.5元至9.5元之间",
-      "action": "继续观察，不加仓，等待扣非利润和水性乳液恢复。",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格低于5.8元且未出现安全环保、客户流失或治理恶化",
-      "action": "建立2%-3%基础仓。",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格低于5.0元且扣非净利、经营现金流和产能利用率同步改善",
-      "action": "可提升至4%-5%，仍不作为核心重仓。",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "低于保守合理价值区间下沿附近，提供基础安全边际。",
-      "action": "进入可买区，复核最新季度扣非利润和安全环保披露后建基础仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "低于现金流和PB估值的保守区间，安全边际更充足。",
-      "action": "若基本面未恶化，进入高安全边际区，可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "高于合理价值上沿较多，需业绩上修才能支撑。",
-      "action": "估值偏贵，停止买入并考虑减仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "估值更多依赖题材或国资预期，而非已披露扣非盈利。",
-      "action": "若没有明确业绩兑现，按题材溢价处理，卖出或仅保留跟踪仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证2026年收入、扣非净利、现金流和产能利用率是否改善。",
-      "action": "复核收入、扣非净利、现金流和产能利用率。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能验证水性乳液恢复、出口毛利率和全年扣非利润节奏。",
-      "action": "复核水性乳液恢复、出口毛利率和全年扣非利润节奏。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报能完整验证扣非利润、分红回购纪律和国资资本运作质量。",
-      "action": "复核完整年度扣非利润、分红回购纪律和国资资本运作。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "低于保守合理价值区间下沿附近，提供基础安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "低于现金流和PB估值的保守区间，安全边际更充足。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "高于合理价值上沿较多，需业绩上修才能支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "估值更多依赖题材或国资预期，而非已披露扣非盈利。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "水性乳液收入及毛利率",
-    "氯醋树脂收入及毛利率",
-    "出口收入占比及出口毛利率",
-    "扣非归母净利润",
-    "经营现金流净额/扣非归母净利润",
-    "氯醋树脂和水性乳液产能利用率",
-    "前五大客户销售占比",
-    "现金、理财和有息负债",
-    "分红、回购注销和并购价格纪律"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

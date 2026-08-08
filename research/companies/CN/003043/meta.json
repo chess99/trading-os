@@ -1,131 +1,133 @@
 {
-  "symbol": "CN:003043",
-  "market": "CN",
-  "ticker": "003043",
-  "name": "华亚智能",
-  "company_name": "苏州华亚智能科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "业务受益于半导体设备结构件国产化和智能物流装备需求，但2025年收入高增主要来自并表冠鸿，扣非利润下降；2026Q1收入和扣非利润明显下滑，冠鸿2025年业绩承诺未完成。2026-07-13股价约87.10元，对应市值约124.85亿元，显著高于25-35元/股的合理价值区间，当前不具备买方安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "低",
-  "fair_value_range": [
-    25,
-    35
-  ],
-  "buy_zone": [
-    0,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华亚智能",
+    "security_status": "active",
+    "symbol": "CN:003043",
+    "ticker": "003043"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "128e433b1bbc53ddc25ac44a531bacaa6ae5f9c190370f75dcf25ea61fcdda3a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于45元，且未看到连续两个季度扣非利润恢复增长",
-      "action": "不买入；已有仓位减仓或清零",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "股价回落至28-45元，且2026后续季度收入、合同负债转收入和经营现金流改善",
-      "action": "仅小仓观察",
-      "target_position": "0.5%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价回落至22-28元，且冠鸿智能验收恢复、扣非净利率回升",
-      "action": "分批买入",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于22元，且无商誉减值、大客户流失或现金流恶化信号",
-      "action": "提高为重点仓位",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "接近合理价值区间下沿，若经营改善可小仓观察",
-      "action": "进入重点复核，若经营指标改善可建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "低于估算合理价值区间并具备约35%安全边际",
-      "action": "进入买入区，按财务质量确认后分批建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "显著高于合理价值区间，未来利润兑现要求过高",
-      "action": "估值偏贵，避免新增仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 80,
-      "reason": "估值进入主题交易区，脱离当前利润和ROE支撑",
-      "action": "主题交易过热，已有仓位应减仓或退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计披露2026年半年报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026Q1收入和扣非利润下滑，需要用半年报确认是否恢复",
-      "action": "复核收入、扣非利润、现金流和分部毛利率"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计披露2026年三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可以验证冠鸿智能终端客户验收放缓是否改善",
-      "action": "复核冠鸿智能验收恢复、合同负债转收入和利润修复情况"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计披露2026年年报并验证冠鸿智能8800万元追加承诺",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "冠鸿智能2026年承诺兑现度决定并购质量和商誉风险",
-      "action": "复核并购质量、商誉风险和估值上限"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "年末复核股价是否跌破28元或22元进入可买复核区",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "价格进入安全边际区间时需要重新判断是否可建仓",
-      "action": "复核是否满足建仓条件"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "结合2026年年报复核半导体设备结构件毛利率或订单是否持续改善",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "半导体设备结构件订单和毛利率决定长期估值溢价是否成立",
-      "action": "评估是否上调合理价值区间"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "接近合理价值区间下沿，若经营改善可小仓观察",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "低于估算合理价值区间并具备约35%安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "显著高于合理价值区间，未来利润兑现要求过高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 80.0
+      },
+      "reason": "估值进入主题交易区，脱离当前利润和ROE支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "扣非归母净利润及扣非净利率",
-    "冠鸿智能净利润及2026年8800万元承诺完成进度",
-    "经营现金流净额/归母净利润",
-    "合同负债、存货、应收账款周转变化",
-    "前五大客户收入占比和第一大客户占比",
-    "商誉减值测试结果",
-    "精密金属结构件和智能物流装备分部毛利率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

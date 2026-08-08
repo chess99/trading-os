@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603817",
-  "market": "CN",
-  "ticker": "603817",
-  "name": "海峡环保",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "海峡环保是福州国资体系下的区域型污水处理平台，核心水处理资产现金流韧性较强，2025年和2026Q1利润改善明确；但公司区域集中、ROE约7%、分红率仅约20%、固废和技术服务尚未形成高壁垒，现价接近合理价值中枢，适合等待更明确安全边际后分批配置。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.2,
-    6.4
-  ],
-  "buy_zone": [
-    4.8,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    6.6,
-    7.4
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海峡环保",
+    "security_status": "active",
+    "symbol": "CN:603817",
+    "ticker": "603817"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "5ce296106cf144ff064fdf0375f8ff19dafa0f972da15d0f85e0514d89694434"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入4.80-5.20元且2026半年报未显示回款、应收或处理量恶化时，可分两批建立观察仓。",
-      "action": "buy_tranche",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查经营现金流、应收和合同资产、处理量及分红安排。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "半年报确认经营现金流改善、应收和合同资产受控、水处理毛利率维持45%以上，可把总仓位提高至组合上限。",
-      "action": "add",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1高增长是否延续以及管理层交接后的经营稳定性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.60元且2026E EPS没有上修至0.48元以上，或PB超过1.15倍时，降低仓位。",
-      "action": "reduce",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估ROE、分红率、资本开支和合理估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入买入观察区上沿，需要复核半年报现金流和应收质量后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入更有吸引力的安全边际区，若基本面未恶化可优先评估加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.6
+      },
+      "reason": "超过合理价值区间上沿，若盈利和分红未同步上修应考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入买入观察区上沿，需要复核半年报现金流和应收质量后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入更有吸引力的安全边际区，若基本面未恶化可优先评估加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.6,
-      "reason": "超过合理价值区间上沿，若盈利和分红未同步上修应考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查经营现金流、应收和合同资产、处理量及分红安排。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1高增长是否延续以及管理层交接后的经营稳定性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估ROE、分红率、资本开支和合理估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

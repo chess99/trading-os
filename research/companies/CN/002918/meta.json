@@ -1,137 +1,124 @@
 {
-  "symbol": "CN:002918",
-  "market": "CN",
-  "ticker": "002918",
-  "name": "蒙娜丽莎",
-  "company_name": "蒙娜丽莎集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是建筑陶瓷行业中品牌、渠道和现金流相对靠前的周期修复标的，但行业仍受房地产后周期、产能过剩、应收和存货压力影响。2026-07-13 股价约 8.75 元，处于保守合理价值区间中部偏上，缺少足够安全边际，等待 6.8 元以下或经营拐点确认后再提高仓位。",
-  "quality_rating": "中等",
-  "valuation_rating": "中性",
-  "fair_value_range": [7.2, 9.8],
-  "buy_zone": [0, 6.8],
-  "sell_or_reduce_zone": [11.5, 13.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "蒙娜丽莎",
+    "security_status": "active",
+    "symbol": "CN:002918",
+    "ticker": "002918"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "376597ea752bbc5ca560cf99d610ba91fa928662c7c778630cea7582f1e4fc3b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于6.8元且收入、毛利率、应收和存货尚未确认改善",
-      "action": "仅保留观察仓或不持有",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价跌至6.0-6.8元，且经营现金流为正、毛利率稳定在26%以上",
-      "action": "分批小仓买入",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价低于6.0元，且应收账款和存货未继续恶化、回购注销正常推进",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "股价高于11.5元但利润和ROE没有持续修复",
-      "action": "减仓或退出",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "currency": "CNY",
-      "reason": "低于保守买入线，安全边际开始出现",
-      "action": "进入可买区，复核半年报或最近季度的现金流、应收和存货后分批买入"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "currency": "CNY",
-      "reason": "接近悲观资产价值区，若基本面稳定则赔率改善",
-      "action": "若基本面未恶化，考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "currency": "CNY",
-      "reason": "超过合理价值区间上沿，需要盈利修复支撑",
-      "action": "若没有盈利修复证据，降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "currency": "CNY",
-      "reason": "估值进入乐观区，缺少安全边际",
-      "action": "若仅为估值修复，卖出大部分"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报披露后需要复核周期修复是否成立",
-      "condition": "2026年半年报披露",
-      "action": "重算收入、毛利率、应收、存货、经营现金流和TTM估值"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "资产质量风险会直接改变安全边际",
-      "condition": "公司披露大额坏账、存货跌价、工程客户风险或转债下修相关公告",
-      "action": "立即复核资产质量和安全边际"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "回购注销执行情况影响每股价值和管理层资本配置评价",
-      "condition": "公司完成、扩大、取消或变更2026年回购注销方案",
-      "action": "更新资本配置判断"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "行业需求或供给拐点会改变盈利修复假设",
-      "condition": "房地产竣工、旧改或瓷砖行业产能出清出现可量化拐点",
-      "action": "复核盈利修复假设和估值上限"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "低于保守买入线，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "接近悲观资产价值区，若基本面稳定则赔率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "超过合理价值区间上沿，需要盈利修复支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "估值进入乐观区，缺少安全边际",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    {
-      "metric": "季度营业收入同比",
-      "target": "降幅收窄至0%附近或转正",
-      "source": "定期报告"
-    },
-    {
-      "metric": "建筑陶瓷主业毛利率",
-      "target": "维持26%-28%以上",
-      "source": "年度报告/半年度报告"
-    },
-    {
-      "metric": "经销渠道收入占比",
-      "target": "维持80%以上且收入恢复增长",
-      "source": "年度报告"
-    },
-    {
-      "metric": "应收账款和存货合计/收入",
-      "target": "从约52%下降至45%以下",
-      "source": "资产负债表"
-    },
-    {
-      "metric": "经营活动现金流净额",
-      "target": "持续为正且显著高于净利润",
-      "source": "现金流量表"
-    },
-    {
-      "metric": "回购注销执行进度",
-      "target": "2026年3000万-5000万元回购按计划推进并注销",
-      "source": "回购进展公告"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

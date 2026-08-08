@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600606",
-  "ticker": "600606",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "绿地控股",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "绿地控股是高杠杆地产与基建存量资产修复标的，上海国资股东、资产盘活和债务重组提供下行缓冲，但2025年归母大亏、资产负债率高、2026H1扣非仍亏损，经营性拐点尚未确认。当前仅适合观察，需等债务、诉讼、扣非亏损和经营现金流继续改善后再考虑小仓位。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    1.05,
-    1.55
-  ],
-  "buy_zone": [
-    0.75,
-    0.95
-  ],
-  "sell_or_reduce_zone": [
-    1.75,
-    2.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "绿地控股",
+    "security_status": "active",
+    "symbol": "CN:600606",
+    "ticker": "600606"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b0462d171eedafc980f8c3bda6dd1d715fe2a71eff4d560894dace453d3bf0c4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于0.95元且最近一个季度扣非亏损、经营活动现金流、有息负债或新增诉讼中至少两项改善",
-      "action": "仅建立观察性试探仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，确认扣非亏损、债务、应付利息、资产减值和新增诉讼金额",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于1.05-1.55元且扣非仍亏损",
-      "action": "不加仓，继续跟踪债务重组和经营现金流",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和三季度经营简报，验证销售回款、基建清收和经营现金流是否持续改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于1.75元但扣非亏损未明显收窄，或新增诉讼、应付利息、资产减值风险上升",
-      "action": "卖出或降为回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估净资产折价、债务重组进展和长期生存价值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.95
+      },
+      "reason": "进入资产折价修复的初步观察买区，但仍需经营和债务指标确认",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.75
+      },
+      "reason": "若基本面未恶化，价格反映过度悲观，可重新评估小仓位安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.75
+      },
+      "reason": "超过基准合理价值上沿，若扣非亏损仍未修复则风险收益比转差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.95,
-      "reason": "进入资产折价修复的初步观察买区，但仍需经营和债务指标确认"
-    },
-    {
-      "type": "price_below",
-      "price": 0.75,
-      "reason": "若基本面未恶化，价格反映过度悲观，可重新评估小仓位安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 1.75,
-      "reason": "超过基准合理价值上沿，若扣非亏损仍未修复则风险收益比转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，确认扣非亏损、债务、应付利息、资产减值和新增诉讼金额"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和三季度经营简报，验证销售回款、基建清收和经营现金流是否持续改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估净资产折价、债务重组进展和长期生存价值"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

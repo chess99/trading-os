@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:920108",
-  "market": "CN",
-  "ticker": "920108",
-  "name": "宏海科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "宏海科技是绑定美的、海尔、冠捷等头部家电客户的家电结构件与热交换器配套商，泰国基地放量带来收入和利润修复弹性，但客户集中、毛利率下行、现金流承压和资本开支高企使当前估值缺少足够安全边际；6.6元以下且毛利率与现金流改善后才值得建立小仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.2,
-    9.8
-  ],
-  "buy_zone": [
-    0,
-    6.6
-  ],
-  "sell_or_reduce_zone": [
-    10.8,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宏海科技",
+    "security_status": "active",
+    "symbol": "CN:920108",
+    "ticker": "920108"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "cca691828cca5381c9352d2ae42a0b747586db4d72fdf64b0dd7b88fa43fe987"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.6元，且下一份季报确认单季毛利率不低于20%、经营现金流明显改善",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看泰国基地收入、毛利率、经营现金流和有息负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.2元，且泰国基地收入继续增长、净利率修复至5%以上",
-      "action": "可小幅加仓但仍控制单一小市值制造股风险",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润修复是否具备持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.8元但TTM利润和自由现金流未同步改善",
-      "action": "减仓或不追买",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估海外产能、资本开支和长期自由现金流",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "进入买入安全边际区间，需复核毛利率、现金流和泰国基地放量质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.8
+      },
+      "reason": "超过当前情景估值中性上沿，若利润率未显著修复则风险收益不佳",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "reason": "进入买入安全边际区间，需复核毛利率、现金流和泰国基地放量质量"
-    },
-    {
-      "type": "price_above",
-      "price": 10.8,
-      "reason": "超过当前情景估值中性上沿，若利润率未显著修复则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看泰国基地收入、毛利率、经营现金流和有息负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润修复是否具备持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估海外产能、资本开支和长期自由现金流"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

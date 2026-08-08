@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:605006",
-  "market": "CN",
-  "ticker": "605006",
-  "name": "山东玻纤",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "山东玻纤处在玻纤行业周期修复阶段，2026Q1与H1预告显示收入和利润改善，但经营现金流仍待验证；可转债转股后债务压力下降但股本摊薄明显。当前价格已接近乐观情景下沿，安全边际不足，适合等待低价和半年报现金流确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.8,
-    11.2
-  ],
-  "buy_zone": [
-    0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    18
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山东玻纤",
+    "security_status": "active",
+    "symbol": "CN:605006",
+    "ticker": "605006"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "40b2eabe41676dc5de287a3b1e8243b1ad2ec604dc919f5059e37567af3855c1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.50元，且2026半年报正式扣非净利润不低于2500万元、经营现金流转正或明显改善",
-      "action": "initiate_small_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、经营现金流、毛利率与制品占比",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.20元，玻纤价格未再度恶化，且资产负债率继续下降",
-      "action": "add_on_margin_of_safety",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否具备持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于14.50元，且没有利润年化超过2.5亿元和现金流转正的证据",
-      "action": "reduce_or_avoid_new_buying",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和转股后资本结构对每股收益的影响",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入估算买入区间，具备初始小仓位观察的安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入悲观与中性估值交界以下，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "价格接近乐观情景估值，需要复核是否已透支周期修复预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入估算买入区间，具备初始小仓位观察的安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入悲观与中性估值交界以下，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "价格接近乐观情景估值，需要复核是否已透支周期修复预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、经营现金流、毛利率与制品占比"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否具备持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和转股后资本结构对每股收益的影响"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

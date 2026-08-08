@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300752",
-  "ticker": "300752",
-  "name": "隆利科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "隆利科技处于传统背光显示模组向车载显示、LIPO新型封装、Micro-LED和新型精密结构件转型的验证期。2025年收入增长但利润率下滑，2026Q1净利继续承压，当前估值已部分计入转型预期，需等待毛利率、现金流和新业务收入占比进一步验证。",
-  "fair_value_range": [
-    7.2,
-    9.8
-  ],
-  "buy_zone": [
-    5.8,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    16.0
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "隆利科技",
+    "security_status": "active",
+    "symbol": "CN:300752",
+    "ticker": "300752"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "c3e4471158ea434507ce06e692e90599b393d237653ac5fa5da0d180e1beb7bd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 7.2 and 2026H1 gross_margin stabilizes with positive operating cash flow",
-      "action": "start_tracking_position",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "Review 2026 interim report for gross margin, receivables, operating cash flow, LIPO and auto display progress.",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price <= 6.5 and receivables decline while LIPO or auto display revenue contribution is further disclosed",
-      "action": "increase_tracking_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "Review 2026 third-quarter report for profit recovery and working-capital trend.",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "annualized net profit recovers above 100 million CNY with verified auto display and LIPO margin improvement",
-      "action": "upgrade_after_review",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "Review 2026 annual report and validate whether the transformation thesis converted into earnings.",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "Falls into conservative fair value lower zone and merits reassessment for a small tracking position.",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "Falls below base-case buy zone; reassess downside protection against net assets and cash generation.",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "Price enters optimistic scenario valuation before confirmed profit recovery; reassess reduce discipline.",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "Falls into conservative fair value lower zone and merits reassessment for a small tracking position."
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "Falls below base-case buy zone; reassess downside protection against net assets and cash generation."
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "Price enters optimistic scenario valuation before confirmed profit recovery; reassess reduce discipline."
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "Review 2026 interim report for gross margin, receivables, operating cash flow, LIPO and auto display progress."
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "Review 2026 third-quarter report for profit recovery and working-capital trend."
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "Review 2026 annual report and validate whether the transformation thesis converted into earnings."
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

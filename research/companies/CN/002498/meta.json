@@ -1,105 +1,105 @@
 {
-  "symbol": "CN:002498",
-  "market": "CN",
-  "ticker": "002498",
-  "name": "汉缆股份",
-  "company_name": "青岛汉缆股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是电网、高压超高压电缆、海缆和核电缆链条的一线参与者，但当前6.08元价格对应约35倍TTM PE、约2.3倍PB，而2025年ROE仅6.51%、毛利率下滑、应收账款和现金流波动明显，安全边际不足。",
-  "quality_rating": "B",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    3.0,
-    4.2
-  ],
-  "buy_zone": [
-    2.6,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    4.6,
-    5.3
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汉缆股份",
+    "security_status": "active",
+    "symbol": "CN:002498",
+    "ticker": "002498"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "1bda361694dad9f0614927980286afff40f0b1afe774818f26b86e25745dd45c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价约6.08元",
-      "action": "不买，首笔仓位0%",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价<=3.2元且基本面未恶化",
-      "action": "若基本面未恶化，可建立1.0%-1.5%首仓",
-      "max_weight": 0.015
-    },
-    {
-      "condition": "股价<=2.6元且现金流和应收账款可控",
-      "action": "若现金流和应收账款可控，可提高至2.0%-3.0%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价>4.6元",
-      "action": "不追高；已有仓位需审视减仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "低于基准合理价值并开始具备安全边际",
-      "action": "进入安全边际复评区"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "低于强吸引力买入价",
-      "action": "进入强吸引力买入复评区"
-    },
-    {
-      "type": "price_above",
-      "price": 4.6,
-      "reason": "高于不应追高价，风险收益比不足",
-      "action": "高于不应追高价，维持不买"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年半年报预计披露窗口",
-      "action": "复查收入、扣非净利和经营现金流匹配度"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报预计披露窗口",
-      "action": "复查毛利率、应收账款、信用减值和高端订单兑现"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2026年年报预计披露窗口",
-      "action": "复查2026年全年扣非净利润、现金流、分红和估值"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "低于基准合理价值并开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "低于强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.6
+      },
+      "reason": "高于不应追高价，风险收益比不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非净利润",
-    "综合毛利率和电力电缆毛利率",
-    "经营活动现金流净额/归母净利润",
-    "应收账款余额及信用减值损失",
-    "存货和预付款项变化",
-    "国家电网、南方电网及核电客户中标情况",
-    "境外收入占比和回款",
-    "研发费用率及高端电缆产品商业化进展",
-    "分红率和金融资产/衍生品损益"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

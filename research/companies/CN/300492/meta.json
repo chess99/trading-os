@@ -1,106 +1,115 @@
 {
-  "symbol": "CN:300492",
-  "market": "CN",
-  "ticker": "300492",
-  "name": "华图山鼎",
-  "company_name": "华图山鼎设计股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司已转型为华图体系非学历职业教育平台，2025年利润和现金流显著改善，但2026Q1收入增速偏弱、合同负债和退费质量仍需验证。23.09元接近合理价值低端，低于21元才有更清晰安全边际。",
-  "quality_rating": "中高",
-  "valuation_rating": "合理偏低但安全边际不足",
-  "fair_value_range": [
-    25.0,
-    31.0
-  ],
-  "buy_zone": [
-    20.0,
-    22.0
-  ],
-  "sell_or_reduce_zone": [
-    30.0,
-    34.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华图山鼎",
+    "security_status": "active",
+    "symbol": "CN:300492",
+    "ticker": "300492"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ba29d32691fd49c1c52da9f17b5d671a93dd1e0fb63e77d23c449ce7fac5e3fa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于20.5元，且最近一期合同负债、经营现金流和退费指标未明显恶化",
-      "action": "买入约3%仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入增速、合同负债、退费负债和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于18.5元，且无重大政策、退费或控股股东质押风险事件",
-      "action": "加仓至5%-6%上限",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否证明内生增长恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于22-24元且2026Q2/Q3收入增速恢复到两位数",
-      "action": "最多持有1%-2%观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年全年利润质量、分红、股权激励和2027年经营指引",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元，且2026E PE超过约24倍而增长未同步上修",
-      "action": "停止加仓并考虑减仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.5,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.5
+      },
       "reason": "进入基础可买区，隐含约16倍左右2026E PE并具备一定安全边际",
-      "action": "进入可买区，复核最近一期合同负债和现金流后买入"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 18.5,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
       "reason": "接近下行情景估值，若基本面未恶化则风险收益比改善",
-      "action": "进入深度安全边际区，若基本面未变坏则加仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 30.0,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
       "reason": "接近合理价值区间上沿，继续加仓需要盈利预测上修支撑",
-      "action": "估值进入合理区间上沿，停止加仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 34.0,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
       "reason": "超过当前估值中枢且安全边际不足",
-      "action": "若无盈利预测上修，减仓或卖出"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入增速、合同负债、退费负债和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否证明内生增长恢复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年全年利润质量、分红、股权激励和2027年经营指引"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "归母净利润和扣非归母净利润增速",
-    "经营性现金流净额/归母净利润",
-    "合同负债余额和同比变化",
-    "退款相关负债、退费率和客诉监管事件",
-    "销售费用率、教研/研发投入和教师人效",
-    "控股股东质押比例和股权激励摊销影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

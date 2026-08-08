@@ -1,87 +1,86 @@
 {
-  "symbol": "CN:001287",
-  "market": "CN",
-  "ticker": "001287",
-  "name": "中电港",
-  "company_name": "中电港",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中电港受益于AI、数据中心、先进计算和存储器景气上行，2026年利润弹性显著释放；但公司仍是低毛利、高周转、高营运资本占用的电子元器件授权分销商，投资应以价格纪律、现金流和存货应收风险复核为核心，当前评级为观察。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    24.0,
-    32.0
-  ],
-  "buy_zone": [
-    20.0,
-    24.0
-  ],
-  "sell_or_reduce_zone": [
-    36.0,
-    42.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中电港",
+    "security_status": "active",
+    "symbol": "CN:001287",
+    "ticker": "001287"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "d25e1385d406c7e5f1da4a243bce0876e09fc1e412600f9f3362c043a9d52a58"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于24元，且2026年中报确认归母净利润不低于5亿元、存货和应收账款未显著恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "价格进入买入区且业绩预告得到正式报表验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报正式数据、经营现金流、存货、应收账款和半年度预告兑现情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元，三季报显示全年10亿元以上归母净利润可见度较高，经营现金流改善",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.05,
-      "reason": "利润弹性与现金流质量同时验证后才提高仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润和现金流质量是否支持加仓",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于36元但经营现金流未改善，或存储价格出现回落信号",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.01,
-      "reason": "估值进入偏贵区，周期弹性可能反向"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入区，开始复核中报、现金流、存货和应收风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "进入减仓观察区，除非利润和现金流继续超预期，否则赔率下降",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24.0,
-      "reason": "进入买入区，开始复核中报、现金流、存货和应收风险"
-    },
-    {
-      "type": "price_above",
-      "price": 36.0,
-      "reason": "进入减仓观察区，除非利润和现金流继续超预期，否则赔率下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报正式数据、经营现金流、存货、应收账款和半年度预告兑现情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润和现金流质量是否支持加仓"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026年归母净利润与扣非净利润兑现度",
-    "存储器收入占比和毛利率变化",
-    "经营活动现金流净额",
-    "应收账款余额和坏账准备",
-    "存货余额和跌价准备",
-    "资产负债率和短期借款",
-    "财务费用和汇兑损益",
-    "授权产品线新增或流失",
-    "AI、数据中心、先进计算、汽车电子和工业电子客户订单持续性"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

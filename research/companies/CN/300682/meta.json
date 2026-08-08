@@ -1,146 +1,125 @@
 {
-  "symbol": "CN:300682",
-  "market": "CN",
-  "ticker": "300682",
-  "name": "朗新科技",
-  "company_name": "朗新科技集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备电网客户、生活缴费和聚合充电等能源互联网平台资产，但 2026 年利润恢复尚未验证。当前价格处于合理区间中部，缺少安全边际；等待 2026H1/2026Q3 利润、现金流和能源互联网毛利率确认，或等待股价回到 8.20 元以下。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    7.0,
-    8.2
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "朗新科技",
+    "security_status": "active",
+    "symbol": "CN:300682",
+    "ticker": "300682"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1dc911281207aa609fa5b40f47ad3ff79bc6cf948793b98c5712115c3a2f3524"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 12.00 元且没有连续两个季度利润拐点证据",
-      "action": "不追高或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年度报告，重点验证收入恢复、利润率、现金流和能源互联网毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于 9.00-12.00 元且 2026 年利润恢复尚未验证",
-      "action": "观察，可选极小跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，确认全年利润修复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于 8.20 元，核心客户稳定且经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复查 2026 年年度报告和商誉减值测试假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于 7.00 元，且 2026H1 经营现金流和应收回款正常",
-      "action": "分批买入",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入有安全边际的观察仓区间，需复核 2026H1 经营现金流和客户稳定性",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于 6.50 元，且未出现商誉减值、客户流失或连续亏损风险",
-      "action": "强吸引力买入",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入分批买入区间，基准情景下风险收益比改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "连续两个季度收入恢复双位数增长且归母净利率回到 7% 以上",
-      "action": "重新估值后提高仓位上限",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入强吸引力买入区间，但必须排除商誉减值和核心客户流失",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "超过合理区间上沿，若无业绩验证不应追高",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "进入乐观情景估值区间，应复核是否已过度定价",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入有安全边际的观察仓区间，需复核 2026H1 经营现金流和客户稳定性"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入分批买入区间，基准情景下风险收益比改善"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入强吸引力买入区间，但必须排除商誉减值和核心客户流失"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "超过合理区间上沿，若无业绩验证不应追高"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "进入乐观情景估值区间，应复核是否已过度定价"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年度报告，重点验证收入恢复、利润率、现金流和能源互联网毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，确认全年利润修复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复查 2026 年年度报告和商誉减值测试假设"
-    }
-  ],
-  "key_tracking_metrics": [
-    {
-      "metric": "能源数智化收入增速",
-      "target_or_watch": "2026H1 是否恢复到 8% 以上"
-    },
-    {
-      "metric": "能源互联网毛利率",
-      "target_or_watch": "是否稳定在 38%-40% 以上"
-    },
-    {
-      "metric": "归母净利率",
-      "target_or_watch": "能否从 2025 年 2.32% 恢复到 5% 以上"
-    },
-    {
-      "metric": "经营现金流净额/归母净利润",
-      "target_or_watch": "全年经营现金流是否持续高于净利润"
-    },
-    {
-      "metric": "前五大客户销售占比",
-      "target_or_watch": "是否从 60% 附近下降或至少不继续上升"
-    },
-    {
-      "metric": "应收账款和合同资产周转",
-      "target_or_watch": "是否出现异常增长、逾期或减值"
-    },
-    {
-      "metric": "新电途和虚拟电厂业务",
-      "target_or_watch": "连接资源规模、交易电量、服务费收入和单笔经济性是否披露并改善"
-    },
-    {
-      "metric": "AI 能源大模型商业化",
-      "target_or_watch": "是否形成标准化产品、订单金额、续费率或独立毛利"
-    },
-    {
-      "metric": "邦道科技商誉减值测试",
-      "target_or_watch": "收入增长率和毛利率假设是否仍成立"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

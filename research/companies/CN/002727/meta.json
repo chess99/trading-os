@@ -1,106 +1,114 @@
 {
-  "symbol": "CN:002727",
-  "market": "CN",
-  "ticker": "002727",
-  "name": "一心堂",
-  "company_name": "一心堂药业集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "一心堂是西南区域药品零售龙头，门店网络、会员和供应链仍有价值，但行业已从扩张期进入存量竞争和医保合规重估期。当前价格约 10.2-10.5 元不贵但安全边际不足，买入需要更低价格或 2026 年中报验证收入降幅收窄、利润率修复、经营现金流稳定且无新增重大医保合规事件。",
-  "quality_rating": "中等",
-  "valuation_rating": "略低估但需验证",
-  "fair_value_range": [
-    11.5,
-    14.0
-  ],
-  "buy_zone": [
-    0,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "一心堂",
+    "security_status": "active",
+    "symbol": "CN:002727",
+    "ticker": "002727"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "2a3f5538d1fcecf66c3a76bc119d6cdc5803b654a724f625e13a06b14bb51da5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 9.5 元，且没有新增重大医保合规处罚或暂停结算事件",
-      "action": "建立 0.5%-1.0% 观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年度报告：收入降幅、利润率、经营现金流、门店调整和医保合规",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 8.5-9.0 元，且 2026 年中报显示收入降幅收窄、经营现金流为正、毛利率和费用率稳定",
-      "action": "提高到 2%-3% 标准仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季度报告及是否出现国家或地方医保局新增监管通报、处罚或整改结果",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 15.5 元，且收入未恢复正增长或正常化净利润不能支持 8 亿元以上",
-      "action": "减仓或退出",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年度报告、资本配置、分红回购、并购和门店效率",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "出现新的国家或省级医保局重大通报、处罚、暂停医保结算，或经营现金流连续两个报告期弱于净利润",
-      "action": "暂停加仓并重新估值",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "复核 2027 年半年度报告，判断利润修复是否可持续",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "价格低于保守合理价值并提供初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "价格接近悲观情景估值，若经营验证则风险回报改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "价格高于当前合理价值上沿，需要收入和利润中枢上移支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "action": "进入可买区，复核最新季报和医保合规后可建小仓",
-      "reason": "价格低于保守合理价值并提供初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "action": "若中报验证经营修复，可考虑加至标准仓",
-      "reason": "价格接近悲观情景估值，若经营验证则风险回报改善"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "action": "进入减仓复核区，要求更强增长证据",
-      "reason": "价格高于当前合理价值上沿，需要收入和利润中枢上移支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年度报告：收入降幅、利润率、经营现金流、门店调整和医保合规"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季度报告及是否出现国家或地方医保局新增监管通报、处罚或整改结果"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年度报告、资本配置、分红回购、并购和门店效率"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "reason": "复核 2027 年半年度报告，判断利润修复是否可持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "归母净利润和扣非归母净利润",
-    "毛利率、销售费用率和净利率",
-    "经营活动现金流量净额与净利润的匹配度",
-    "门店净增/净关数量和低效门店调整进展",
-    "存货规模、存货周转和应付账款变化",
-    "医保合规事件、追回金额、处罚或暂停结算情况",
-    "分红、回购、并购和资本开支"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,1 +1,96 @@
-{"buy_zone": [4.1, 4.4], "currency": "CNY", "current_rating": "watch", "current_thesis": "国电电力是国家能源集团旗下全国性发电平台，12678.86万千瓦控股装机以火电为底盘，叠加容量电价托底、清洁能源扩张与60%分红率，估值不贵股息率超5%；但2026Q1电价下行压力仍未解除，故建议观察偏买入，4.40元以下再增仓，6.30元以上兑现。", "fair_value_range": [5.2, 5.8], "latest_report": "reports/2026-07-10-initial.md", "market": "CN", "name": "国电电力", "position_plan": [{"condition": "股价处于4.76元附近且煤价电价未恶化", "max_weight": 0.02}, {"condition": "股价进入4.40元以下买入区间且跟踪指标稳定", "max_weight": 0.04}, {"condition": "股价进入4.10元以下深度价值区且2026中报扣非利润仍健康", "max_weight": 0.06}, {"condition": "股价达到6.30元以上且盈利未上修", "max_weight": 0.02}], "price_triggers": [{"price": 4.4, "reason": "进入买入区间，可复核煤价、电价和中报后考虑加仓。", "type": "price_below"}, {"price": 4.1, "reason": "接近悲观情景估值下沿，若基本面未恶化可考虑提高仓位。", "type": "price_below"}, {"price": 6.3, "reason": "达到减仓区间，需要盈利上修才能继续持有高仓位。", "type": "price_above"}], "report_history": ["reports/2026-07-10-initial.md"], "review_triggers": [{"date": "2026-08-31", "reason": "复核2026年中报，重点检查售电均价、煤价、容量电价、资本开支和分红可持续性。", "type": "date"}, {"date": "2026-10-31", "reason": "复核三季报，判断全年扣非利润是否能维持基准情景。", "type": "date"}], "sell_or_reduce_zone": [6.3, 7], "status": "active", "symbol": "CN:600795", "ticker": "600795", "updated_at": "2026-07-10T18:00:00+08:00"}
+{
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国电电力",
+    "security_status": "active",
+    "symbol": "CN:600795",
+    "ticker": "600795"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "63205308dfebca5d0cc572d8c178858682ddfa8fb7f7ec8d119f2834a372b5e3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查售电均价、煤价、容量电价、资本开支和分红可持续性。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报，判断全年扣非利润是否能维持基准情景。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "进入买入区间，可复核煤价、电价和中报后考虑加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "接近悲观情景估值下沿，若基本面未恶化可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.3
+      },
+      "reason": "达到减仓区间，需要盈利上修才能继续持有高仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
+}

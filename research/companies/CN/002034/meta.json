@@ -1,113 +1,106 @@
 {
-  "symbol": "CN:002034",
-  "market": "CN",
-  "ticker": "002034",
-  "name": "旺能环境",
-  "company_name": "旺能环境",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "旺能环境是垃圾焚烧运营资产中现金流改善、估值偏低的观察标的；当前价格可小仓验证，但国补回款、可转债到期和海外项目资本开支决定仓位上限。",
-  "quality_rating": "B+",
-  "valuation_rating": "A-",
-  "fair_value_range": [
-    15.5,
-    18.5
-  ],
-  "buy_zone": [
-    12.5,
-    13.2
-  ],
-  "sell_or_reduce_zone": [
-    20.5,
-    22.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "旺能环境",
+    "security_status": "active",
+    "symbol": "CN:002034",
+    "ticker": "002034"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "67c70277bd2cda68fcd8f4e1f058f9e8a2a65e5e77be10b0b7965095d4ee7125"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价在13.5-14.3元且无新增回款恶化或环保处罚",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "估值低于合理价值但安全边际尚不充分，适合先验证现金流和转债转股进展"
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "公司预约披露2026年半年报，复核现金流、应收、供热和转债转股进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于13.2元且2026年中报经营现金流/归母净利润大于1.5倍",
-      "action": "加仓",
-      "max_weight": 0.03,
-      "reason": "进入高胜率买入区，同时现金流质量确认"
+      "active": true,
+      "condition": {
+        "date": "2026-12-16"
+      },
+      "reason": "旺能转债到期日，复核剩余债券规模、转股和兑付安排",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于12.5元且补贴电费组合和2年以上应收未继续恶化",
-      "action": "加至核心观察仓",
-      "max_weight": 0.05,
-      "reason": "价格显著低于保守估值，回款风险未扩大时具备较好赔率"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.2
+      },
+      "reason": "进入首个高胜率买入区，检查回款和转债后可加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于20.5元且海外项目盈利模式未明确上修",
-      "action": "减仓",
-      "max_weight": 0.03,
-      "reason": "价格进入乐观情景区间，缺少新增证据时赔率下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入深度价值区，若现金流未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "达到合理价值上沿，停止加仓并复核海外项目兑现度",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.5
+      },
+      "reason": "进入减仓区，除非盈利和回款有明确上修",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.2,
-      "reason": "进入首个高胜率买入区，检查回款和转债后可加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入深度价值区，若现金流未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "达到合理价值上沿，停止加仓并复核海外项目兑现度"
-    },
-    {
-      "type": "price_above",
-      "price": 20.5,
-      "reason": "进入减仓区，除非盈利和回款有明确上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "公司预约披露2026年半年报，复核现金流、应收、供热和转债转股进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-16",
-      "reason": "旺能转债到期日，复核剩余债券规模、转股和兑付安排"
-    }
-  ],
-  "key_tracking_metrics": [
-    "垃圾入库量",
-    "生活垃圾入库量",
-    "累计发电量",
-    "累计上网电量",
-    "吨垃圾上网电量",
-    "平均上网电价",
-    "已结算电量",
-    "补贴电费组合余额",
-    "2年以上应收账款余额",
-    "经营活动现金流量净额",
-    "经营现金流/归母净利润",
-    "购建固定资产无形资产和其他长期资产支付的现金",
-    "在建工程",
-    "资产负债率",
-    "旺能转债剩余规模",
-    "供热量",
-    "餐厨油脂提取量",
-    "海外项目资本开支和融资结构",
-    "环保处罚或排放异常"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

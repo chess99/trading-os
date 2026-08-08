@@ -1,90 +1,115 @@
 {
-  "symbol": "CN:300173",
-  "market": "CN",
-  "ticker": "300173",
-  "name": "ST福能",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST福能处于其他风险警示后的治理与盈利修复观察期，主业为锂电池自动化设备，2025年和2026Q1盈利质量偏弱，存货、商誉、应收账款和历史信披违法处罚仍构成主要折价因素；当前价格已较充分反映摘帽和订单修复预期，缺少安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.6,
-    2.4
-  ],
-  "buy_zone": [
-    1.3,
-    1.6
-  ],
-  "sell_or_reduce_zone": [
-    2.6,
-    3.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST福能",
+    "security_status": "active",
+    "symbol": "CN:300173",
+    "ticker": "300173"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "2bb8e9c4d3bb8162c2ccc3d65aa78d3b45d47e08083ad102495d796dc2c01442"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于2.60元且未看到撤销ST、毛利率修复、存货下降的连续证据",
-      "action": "不新建仓位，保持观察",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看收入、毛利率、存货、现金流和ST进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至1.60元以下，且无新增监管处罚或重大诉讼，2026半年报经营现金流为正",
-      "action": "可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证合同负债转收入和盈利修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至1.30元以下，撤销ST取得明确进展，毛利率回升且存货下降",
-      "action": "可提高到小仓位事件修复配置",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报审计意见、内控结论、减值和持续经营风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "进入有安全边际观察区，需同步复核ST进展、存货和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.3
+      },
+      "reason": "进入强吸引力区间，但只在无新增治理和诉讼恶化时考虑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.6
+      },
+      "reason": "高于合理价值上沿，反映较多摘帽和盈利修复预期，不宜追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.2
+      },
+      "reason": "达到乐观情景上沿，应显著降低预期收益率或减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "进入有安全边际观察区，需同步复核ST进展、存货和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 1.3,
-      "reason": "进入强吸引力区间，但只在无新增治理和诉讼恶化时考虑"
-    },
-    {
-      "type": "price_above",
-      "price": 2.6,
-      "reason": "高于合理价值上沿，反映较多摘帽和盈利修复预期，不宜追高"
-    },
-    {
-      "type": "price_above",
-      "price": 3.2,
-      "reason": "达到乐观情景上沿，应显著降低预期收益率或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看收入、毛利率、存货、现金流和ST进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证合同负债转收入和盈利修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报审计意见、内控结论、减值和持续经营风险"
-    }
-  ],
-  "notes": [
-    "当前股价2.97元和总市值约21.82亿元为2026-07-20盘中/实时口径，未核验为收盘价。",
-    "2025年财务报告为标准无保留意见，但关键审计事项包括收入确认、存货、应收账款和商誉减值。",
-    "公司因以前年度信息披露违法违规收到行政处罚决定并被罚650万元，潜在投资者索赔金额未核验。",
-    "2026Q1收入同比下降32.86%，归母净利润亏损2555万元，存货升至13.93亿元，需重点跟踪后续减值压力。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

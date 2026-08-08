@@ -1,99 +1,96 @@
 {
-  "symbol": "CN:000708",
-  "market": "CN",
-  "ticker": "000708",
-  "name": "中信特钢",
-  "company_name": "中信特钢",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中信特钢是具备规模、客户认证、产品结构和央企治理优势的特钢龙头，当前估值处于合理略偏低位置，适合在13.20元以下分批建立观察仓，并以制造业需求、吨毛利、经营现金流和分红率作为加仓或降仓依据。",
-  "quality_rating": "A-",
-  "valuation_rating": "reasonable_to_slightly_undervalued",
-  "fair_value_range": [
-    14.5,
-    17.5
-  ],
-  "buy_zone": [
-    11.5,
-    13.2
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    21.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中信特钢",
+    "security_status": "active",
+    "symbol": "CN:000708",
+    "ticker": "000708"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "cfea9eb446202d038923e9667f4d924ec94d39c4d1f7bc509447d6822a7e67bc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价位于12.80-13.20元且无重大负面公告",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "价格接近基准估值下沿，股息率提供一定保护，但仍需等待半年报验证利润趋势"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入、毛利率、归母净利、经营现金流和分红能力",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入11.50-12.00元且经营现金流、分红和吨毛利未恶化",
-      "action": "分批加仓",
-      "max_weight": 0.04,
-      "reason": "进入明确买入区间，安全边际改善，适合用红利和周期修复赔率承接"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认制造业需求和原料价差是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "制造业需求回暖、吨毛利修复且2026年利润中枢上修",
-      "action": "提高到核心配置仓",
-      "max_weight": 0.06,
-      "reason": "质量资产叠加周期修复，估值有向合理区间上沿重估的空间"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.2
+      },
+      "reason": "进入初始买入区间，适合复核公告后建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于18.50元但盈利预测未同步上修",
-      "action": "逐步减仓",
-      "max_weight": 0.02,
-      "reason": "价格接近或超过合理价值上沿，股息率下降，风险收益比转弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入深度买入区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "进入减持观察区，除非盈利和分红预期明显上修，否则风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.2,
-      "reason": "进入初始买入区间，适合复核公告后建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入深度买入区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "进入减持观察区，除非盈利和分红预期明显上修，否则风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入、毛利率、归母净利、经营现金流和分红能力"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认制造业需求和原料价差是否改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度归母净利润及同比、环比变化",
-    "扣非归母净利润",
-    "毛利率和吨钢毛利",
-    "经营现金流量净额/归母净利润",
-    "应收账款和存货周转",
-    "轴承钢、齿轮钢、无缝钢管等高端产品需求",
-    "汽车产量、工程机械销量、制造业PMI",
-    "铁矿石、焦煤、废钢和合金材料价格",
-    "年度分红率和股息率",
-    "央企市值管理、回购或资本开支公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,105 +1,114 @@
 {
-  "symbol": "CN:000733",
-  "market": "CN",
-  "ticker": "000733",
-  "name": "振华科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "高可靠电子元器件核心供应商，产品线和央企客户资源较强，资产负债表稳健；但2026Q1收入、利润和经营现金流明显走弱，应收账款和存货占用高，当前价格略高于基准合理价值上沿，等待半年报验证订单恢复和回款改善。",
-  "fair_value_range": [
-    41,
-    48
-  ],
-  "buy_zone": [
-    32,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    70
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "振华科技",
+    "security_status": "active",
+    "symbol": "CN:000733",
+    "ticker": "000733"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "148a6e5c164733e910bd302a40cc42abaa77ffd162b80415435ed340518b5e16"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "current",
-      "condition": "价格高于48元或半年报尚未验证恢复",
-      "max_weight": 0,
-      "action": "当前不买，等待半年报验证收入、毛利率和回款。"
-    },
-    {
-      "zone": "buy_zone",
-      "price_range": [
-        32,
-        38
-      ],
-      "condition": "股价低于38元且半年报显示收入、毛利率和回款未继续恶化",
-      "max_weight": 0.03,
-      "action": "若基本面未继续恶化，可开1%-3%观察仓。"
-    },
-    {
-      "zone": "strong_buy_zone",
-      "price_below": 32,
-      "condition": "股价低于32元且未出现坏账或存货大额减值",
-      "max_weight": 0.05,
-      "action": "若未出现坏账或存货大额减值，可提高至3%-5%。"
-    },
-    {
-      "zone": "reduce_zone",
-      "price_above": 55,
-      "condition": "股价高于55元且没有连续业绩恢复证据",
-      "max_weight": 0.01,
-      "action": "若无业绩确认，逐步减仓。"
-    }
-  ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报后复核收入、毛利率、应收账款和经营现金流",
-      "condition": "预计2026年半年报披露后复核收入、毛利率、应收账款和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报后复核订单恢复、扣非净利和现金流",
-      "condition": "预计2026年三季报披露后复核订单恢复、扣非净利和现金流"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报后复核全年盈利、分红、募投和减值",
-      "condition": "预计2026年年报披露后复核全年盈利、分红、募投和减值"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "若期间出现经营或治理重大变化则提前复核",
-      "condition": "若期间出现单季度收入同比降幅超过15%、毛利率低于42%、应收账款超过55亿元、重大减值、募投延期或重大关联交易，提前复核"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 38,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
       "reason": "进入安全边际买入区",
-      "condition": "跌入安全边际买入区，结合半年报验证"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 32,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
       "reason": "进入强吸引力买入区",
-      "condition": "跌入强吸引力区且基本面未恶化"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 55,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
       "reason": "高于不应追高价",
-      "condition": "高于不应追高价，若无业绩确认则减仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-07T23:55:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

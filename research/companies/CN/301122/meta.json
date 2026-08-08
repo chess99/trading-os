@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301122",
-  "ticker": "301122",
-  "name": "采纳股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "出口型低值医用耗材和动物医疗器械公司，资产负债表稳健且2026Q1修复明显，但FDA进口警示和客户信任修复仍是核心不确定性；当前价格已隐含乐观复苏，安全边际不足，等待监管风险缓释和连续季度利润验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    19,
-    24
-  ],
-  "buy_zone": [
-    16,
-    19
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    34
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "采纳股份",
+    "security_status": "active",
+    "symbol": "CN:301122",
+    "ticker": "301122"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "c75fcb50ec6110d125567bc592cfc094dc31a7ec6b977d1a7a09b22deb560ddd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "FDA进口警示出现实质解除或主要客户恢复证据，且连续两个季度单季收入不低于1.4亿元、扣非净利率不低于8%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查收入、扣非净利率、经营现金流、境外订单和FDA进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入16-19元买入区间，同时经营现金流为正且应收账款未异常扩张",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1修复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "FDA警示未解除、2026H1扣非净利率低于6%或价格高于30元",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和海外产能利用率，更新正常化利润假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入基准公允价值下沿和买入区间，需要复核FDA进展与中报质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入悲观情景附近，若基本面未恶化可能具备深度安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "接近乐观情景估值，需要确认FDA解除和利润恢复是否兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19,
-      "reason": "进入基准公允价值下沿和买入区间，需要复核FDA进展与中报质量"
-    },
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入悲观情景附近，若基本面未恶化可能具备深度安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "接近乐观情景估值，需要确认FDA解除和利润恢复是否兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查收入、扣非净利率、经营现金流、境外订单和FDA进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1修复是否持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和海外产能利用率，更新正常化利润假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

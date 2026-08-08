@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:000625",
-  "market": "CN",
-  "ticker": "000625",
-  "name": "长安汽车",
-  "company_name": "长安汽车",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "长安汽车具备自主乘用车规模、新能源品牌矩阵和海外增长基础，但 2026 年利润恢复尚未验证；当前更适合观察，等待 5.2-6.1 元买入区间或中报毛利率企稳信号。",
-  "quality_rating": 7,
-  "valuation_rating": 7,
-  "fair_value_range": [
-    7.0,
-    9.0
-  ],
-  "buy_zone": [
-    5.2,
-    6.1
-  ],
-  "sell_or_reduce_zone": [
-    9.2,
-    10.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长安汽车",
+    "security_status": "active",
+    "symbol": "CN:000625",
+    "ticker": "000625"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "64f0f7e24f3fbbfe1ca78239f677d20a963ffddab9a0d65c9bcb6af6804347da"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 6.1 元，且月度自主新能源销量同比仍保持增长",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "估值进入买入区间上沿，同时新能源转型趋势未被破坏"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年中报，重点验证毛利率、扣非净利率和新能源品牌表现",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 5.6 元，且中报显示毛利率或扣非净利率企稳",
-      "action": "加仓至小仓位",
-      "max_weight": 0.03,
-      "reason": "价格具备更高安全边际，经营质量出现改善信号"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报和三季度车型周期，判断全年盈利恢复概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 9.5 元但利润恢复不及预期",
-      "action": "减仓或停止新增买入",
-      "max_weight": 0.01,
-      "reason": "估值先于基本面兑现，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.1
+      },
+      "reason": "进入初始买入区间，可结合月度销量建立首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入更高安全边际区域，若利润指标企稳可加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "接近减仓观察区，需要验证利润是否同步兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.1,
-      "reason": "进入初始买入区间，可结合月度销量建立首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入更高安全边际区域，若利润指标企稳可加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "接近减仓观察区，需要验证利润是否同步兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年中报，重点验证毛利率、扣非净利率和新能源品牌表现"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报和三季度车型周期，判断全年盈利恢复概率"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度总销量",
-    "自主品牌新能源销量",
-    "海外销量",
-    "深蓝/阿维塔/启源分品牌交付",
-    "整车毛利率",
-    "扣非归母净利率",
-    "单车收入和单车利润",
-    "期间费用率",
-    "投资收益和合资公司利润贡献",
-    "经营现金流净额",
-    "终端折扣和经销商库存"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

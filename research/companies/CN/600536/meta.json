@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600536",
-  "ticker": "600536",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "中国软件",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "中国软件具备国产基础软件和党政核心应用的战略稀缺性，基础软件高毛利业务带来盈利修复期权，但公司仍未证明稳定扣非盈利，且2026年政采合规事件应计入估值折价；当前适合观察，等待价格回落或业绩兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    48
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国软件",
+    "security_status": "active",
+    "symbol": "CN:600536",
+    "ticker": "600536"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "6caf41775b7a9b7f94b90e3d1b6054b0cfe73b1750901dd1079ae8f4a0f0f116"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至20-24元，且无新增政采合规负面，同时2026H1正式半年报确认亏损继续收窄",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、经营现金流、应收账款和政采处罚后的订单影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个半年度扣非盈利修复且经营现金流为正，基础软件收入保持双位数增长",
-      "action": "提高至小仓位核心观察",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q2修复是否延续到Q3",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于40元但扣非盈利和现金流尚未同步兑现",
-      "action": "不新增并逐步降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认是否实现全年扣非亏损收窄或转正",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入估算合理价值下沿且接近买入区，需要复核半年报和订单影响",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入较高安全边际区，可重新评估小仓位配置价值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "超过基准估值上沿，主题溢价较高，需要评估减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入估算合理价值下沿且接近买入区，需要复核半年报和订单影响"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入较高安全边际区，可重新评估小仓位配置价值"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "超过基准估值上沿，主题溢价较高，需要评估减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、经营现金流、应收账款和政采处罚后的订单影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q2修复是否延续到Q3"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认是否实现全年扣非亏损收窄或转正"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

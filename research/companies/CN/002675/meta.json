@@ -1,162 +1,123 @@
 {
-  "market": "CN",
-  "ticker": "002675",
-  "symbol": "CN:002675",
-  "name": "东诚药业",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "current_thesis": "东诚药业的核心价值来自核药商业化网络和创新核药管线，但传统原料药仍拖累收入，蓝纳成融资及回购义务带来不确定性；当前估值已反映较多成长预期，需等待更低价格或更强基本面验证。",
-  "business_summary": "公司由肝素原料药和制剂业务转向核药平台，当前核心资产为核药商业化网络、18F-FDG和云克等已上市产品，以及蓝纳成等创新核药管线。",
-  "thesis": [
-    "核药业务收入和毛利率显著优于传统业务，2025年核药收入11.36亿元，同比增长12.21%，毛利率69.26%。",
-    "2026年一季度核药业务继续增长，收入2.77亿元，同比增长19.79%，但原料药和制剂业务仍在下滑。",
-    "蓝纳成分拆上市和创新核药管线提供期权价值，但临床、融资、回购义务和估值兑现存在不确定性。",
-    "当前约百亿元市值已反映较多核药成长预期，安全边际不足。"
-  ],
-  "financials": {
+  "identity": {
     "currency": "CNY",
-    "revenue_2025": 2741074183.83,
-    "net_profit_2025": 195628901.18,
-    "deducted_net_profit_2025": 179562546.01,
-    "operating_cash_flow_2025": 579850394.46,
-    "roe_2025": 0.0446,
-    "revenue_q1_2026": 626000000,
-    "net_profit_q1_2026": 33435400,
-    "nuclear_medicine_revenue_2025": 1135594099.76,
-    "nuclear_medicine_revenue_q1_2026": 276970000
+    "market": "CN",
+    "name": "东诚药业",
+    "security_status": "active",
+    "symbol": "CN:002675",
+    "ticker": "002675"
   },
-  "valuation": {
-    "reference_price": 12.83,
-    "reference_market_cap": 10580000000,
-    "fair_value_low": 9.1,
-    "fair_value_base": 11.5,
-    "fair_value_high": 13.9,
-    "methods": [
-      "PE/利润倍数法",
-      "SOTP分部估值",
-      "DCF现金流折现"
-    ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "adff3975a4d7bcdb80fecd64944a682f564a4adf62e1a291b985755b1c621974"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "fair_value_range": [
-    9.1,
-    13.9
-  ],
-  "buy_zone": [
-    8.8,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    999.0
-  ],
-  "risks": [
-    "肝素类原料药价格和销量继续下行。",
-    "核药收入增速低于预期或医院准入不及预期。",
-    "蓝纳成核心管线临床、审批或商业化失败。",
-    "子公司融资安排带来潜在回购义务和长期应付款压力。",
-    "中国同辐、远大医药、先通医药、辐联医药等竞争加剧。",
-    "放射性药品生产、运输、环保和合规事故。"
-  ],
-  "watch_items": [
-    "核药业务季度收入同比增速是否持续高于15%。",
-    "18F-FDG收入和销量增长是否延续。",
-    "原料药收入降幅和毛利率是否见底。",
-    "蓝纳成港股上市、融资和核心管线临床进展。",
-    "长期应付款、少数股东权益和潜在回购义务变化。",
-    "经营现金流与扣非净利润匹配度。"
-  ],
-  "review_triggers": [
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证核药增长斜率和传统业务拖累程度。",
-      "condition": "2026年三季报披露后复核核药业务季度收入同比增速是否低于10%或高于20%。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "蓝纳成分拆上市进度会影响创新核药平台估值和母公司资金压力。",
-      "condition": "2026年四季度前复核蓝纳成港股上市申请、聆讯、发行或终止是否出现重大进展。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报前后通常能看到研发、管线和资本结构的完整更新。",
-      "condition": "2026年年报披露前复核核心创新核药管线是否进入NDA、获批、临床失败或出现安全性事件。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证长期应付款和潜在回购义务变化。",
-      "condition": "2026年半年报披露后复核长期应付款或潜在回购义务是否出现重大增加。"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "估值进入触发区间时需要及时复核仓位动作。",
-      "condition": "每月末复核股价是否进入买入区间或减仓区间。"
-    }
-  ],
-  "position_plan": [
-    {
-      "action": "建立观察仓",
-      "condition": "股价低于10.0元，且最近一期核药收入同比增速不低于15%，同时蓝纳成上市或融资安排未新增母公司回购压力。",
-      "size": "1%-2%",
-      "max_weight": 0.02
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "action": "增至标准仓",
-      "condition": "股价低于8.8元，且核药收入连续两个季度同比高于15%，原料药收入降幅明显收窄，蓝纳成融资实质缓解回购义务。",
-      "size": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "action": "暂停加仓",
-      "condition": "股价高于15.5元，且没有新增临床成功、药品获批或核药收入显著超预期证据。",
-      "size": "0%",
-      "max_weight": 0
-    },
-    {
-      "action": "退出观察",
-      "condition": "核药收入同比增速低于10%，或蓝纳成核心管线出现重大失败，或母公司新增重大回购和担保压力。",
-      "size": "清仓或不建仓",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
       "reason": "跌入安全边际观察区，可复核小仓位试错。",
-      "note": "进入观察仓复核区间。"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 8.8,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
       "reason": "跌入更明显低估区，可复核标准仓配置。",
-      "note": "进入标准仓复核区间。"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 15.5,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
       "reason": "估值显著高于当前基本面兑现，需复核减仓或暂停加仓。",
-      "note": "估值透支，需要暂停加仓并复核卖出或降低仓位。"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "sources": [
-    "https://static.cninfo.com.cn/finalpage/2026-03-26/1225032062.PDF",
-    "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-28/f4247d49-5c33-46fd-910c-5c3b2b0dfb17.PDF",
-    "https://file.finance.sina.com.cn/211.154.219.97%3A9494/MRGG/CNSESZ_STOCK/2026/2026-5/2026-05-15/12323612.PDF",
-    "https://m.bjnews.com.cn/detail/1781597247169364.html",
-    "https://data.eastmoney.com/gzfx/detail/002675.html",
-    "https://money.finance.sina.com.cn/corp/go.php/vCB_Bulletin/stockid/002675/page_type/ndbg.phtml"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

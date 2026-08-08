@@ -1,101 +1,95 @@
 {
-  "symbol": "CN:600308",
-  "ticker": "600308",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "华泰股份",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "华泰股份处于低PB、低ROE、纸业周期底部修复阶段。70万吨浆项目、日照特种浆纸一体化和化工板块利润底座提供修复期权，但2026H1预告显示扣非利润仍接近盈亏线，当前更适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    2.8,
-    4.1
-  ],
-  "buy_zone": [
-    0,
-    2.7
-  ],
-  "sell_or_reduce_zone": [
-    4.5,
-    5.2
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于2.70元，且未出现新增大额减值、债务恶化或日照项目调试失败",
-      "action": "建立观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "2026H2扣非单季转正、经营现金流连续改善、纸制品毛利率回到7%以上",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于4.50元但盈利修复未验证，或2026年扣非继续亏损",
-      "action": "减仓或不参与",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.7,
-      "reason": "低于悲观PB下沿后，资产折价提供较厚安全边际，可重新评估观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.5,
-      "reason": "高于中性估值上沿后，若扣非利润和现金流未验证，风险收益比转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认归母净利润是否符合预告、扣非是否接近转正、经营现金流是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证浆纸一体化降本、纸制品毛利率和化工利润稳定性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重新计算正常化盈利、PB折价和长期持仓价值。"
-    }
-  ],
-  "key_metrics": {
-    "last_price_date": "2026-07-15",
-    "last_price_cny": 3.25,
-    "reference_price_range_cny": [
-      3.24,
-      3.25
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华泰股份",
+    "security_status": "active",
+    "symbol": "CN:600308",
+    "ticker": "600308"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "862aa2774046322d6e8d29b13d1282b29ff80f3a86210649f8a379a31e60e61d"
+      }
     ],
-    "shares_outstanding": 1516870176,
-    "market_cap_cny_estimate": 4939828072,
-    "pb_estimate": 0.55,
-    "2025_revenue_cny": 12456416583.59,
-    "2025_net_profit_parent_cny": -65982094.73,
-    "2025_deducted_net_profit_parent_cny": -109289458.49,
-    "2025_operating_cash_flow_cny": 186271506.52,
-    "2026q1_revenue_cny": 3124247251.93,
-    "2026q1_net_profit_parent_cny": 22876482.56,
-    "2026q1_deducted_net_profit_parent_cny": 11279206.86,
-    "2026q1_operating_cash_flow_cny": -82090003.35,
-    "2026h1_net_profit_parent_forecast_cny": [
-      14000000,
-      21000000
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认归母净利润是否符合预告、扣非是否接近转正、经营现金流是否改善。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证浆纸一体化降本、纸制品毛利率和化工利润稳定性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重新计算正常化盈利、PB折价和长期持仓价值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.7
+      },
+      "reason": "低于悲观PB下沿后，资产折价提供较厚安全边际，可重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.5
+      },
+      "reason": "高于中性估值上沿后，若扣非利润和现金流未验证，风险收益比转差。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
     ],
-    "2026h1_deducted_net_profit_parent_forecast_cny": [
-      -10000000,
-      5000000
-    ]
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

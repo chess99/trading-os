@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603839",
-  "market": "CN",
-  "ticker": "603839",
-  "name": "安正时尚",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "安正时尚是低预期、小市值品牌服饰困境反转标的。2025 年亏损暴露部分资产与库存压力，2026 Q1 与半年预告显示盈利修复，但 H1 约 0.38 亿元所得税费用减少不可持续。以 2027 年经营性净利恢复和净资产支撑交叉估值，当前约 6.32 元处于买入区间上沿，适合小仓位买入并用存货、扣非利润和经营现金流持续验证。",
-  "fair_value_range": [
-    7.5,
-    9.5
-  ],
-  "buy_zone": [
-    5.4,
-    6.4
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安正时尚",
+    "security_status": "active",
+    "symbol": "CN:603839",
+    "ticker": "603839"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "59ad85dbed7a20b332dc6de3b987ba12ab479306899a952786b998136b69416c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价位于 5.4-6.4 元且 2026 年扣非利润、经营现金流未恶化时建立或维持基础仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，剥离一次性税项后检查扣非利润、存货和经营现金流质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若价格低于 5.8 元且 2026 H2 存货周转、毛利率、经营现金流继续改善，可加至上限仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 H2 主业修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若价格高于 9.5 元但经营性利润未证明可持续，降低至观察仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重估 2027 年盈利中枢与合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入更有吸引力的安全边际区间，可复核基本面后加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "达到合理价值区间上沿，若经营现金流和库存未同步验证应减持",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入更有吸引力的安全边际区间，可复核基本面后加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "达到合理价值区间上沿，若经营现金流和库存未同步验证应减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，剥离一次性税项后检查扣非利润、存货和经营现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 H2 主业修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重估 2027 年盈利中枢与合理价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

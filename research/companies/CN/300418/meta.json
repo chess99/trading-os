@@ -1,84 +1,96 @@
 {
-  "symbol": "CN:300418",
-  "market": "CN",
-  "ticker": "300418",
-  "name": "昆仑万维",
-  "company_name": "昆仑万维",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "昆仑万维具备海外流量资产和 AI 应用矩阵，2026Q1 收入增长显著，但亏损、投放强度和 AI 产品商业化质量仍需验证；当前股价处于合理区间中部偏上，不适合追高，适合等待半年报或回落后的安全边际。",
-  "fair_value_range": [
-    44.0,
-    55.0
-  ],
-  "buy_zone": [
-    32.0,
-    38.0
-  ],
-  "sell_or_reduce_zone": [
-    65.0,
-    75.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "昆仑万维",
+    "security_status": "active",
+    "symbol": "CN:300418",
+    "ticker": "300418"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "ffb3c11a1db6c6eeb73df3c3f753022b0fa2d8535919f2453bbb7fedc5d21b34"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于合理区间，首笔仓位仅限观察",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计2026半年报披露后复查收入增长质量、费用率、现金流和AI产品商业化证据",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至38元以下安全买入区，可分批建仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报后复查Q1高增长是否延续及亏损收窄路径",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格回落至30元以下且半年报证明AI产品商业化质量改善",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入安全买入区，若基本面未恶化可开始分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于65元不追高，需AI产品收入和经营杠杆显著超预期",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入强吸引买入区，需要复核收入、现金流和产品热度后考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "进入不追高和减仓区，除非AI产品收入和经营杠杆显著超预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38.0,
-      "reason": "进入安全买入区，若基本面未恶化可开始分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 30.0,
-      "reason": "进入强吸引买入区，需要复核收入、现金流和产品热度后考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 65.0,
-      "reason": "进入不追高和减仓区，除非AI产品收入和经营杠杆显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计2026半年报披露后复查收入增长质量、费用率、现金流和AI产品商业化证据"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026三季报后复查Q1高增长是否延续及亏损收窄路径"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1 营业收入及同比增速",
-    "毛利率、销售费用率、研发费用率",
-    "经营活动现金流净额",
-    "AI 产品付费用户、ARPU、留存率或可替代的产品热度指标",
-    "SkyReels、Mureka 等核心产品商业化进展",
-    "Opera 相关业务增长与 AI 功能渗透",
-    "股权激励费用、投资公允价值变动和汇率扰动"
-  ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "updated_at": "2026-07-08T10:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

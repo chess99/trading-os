@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600161",
-  "ticker": "600161",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "天坛生物",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "天坛生物具备稀缺浆站、央企信用和血液制品平台护城河，但2026H1业绩预告显示白蛋白降价、医保支付约束和增值税政策变化已显著压缩利润。当前价格接近合理区间上沿，安全边际不足，等待半年报与价格企稳验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    9.0,
-    12.0
-  ],
-  "buy_zone": [
-    7.8,
-    9.2
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天坛生物",
+    "security_status": "active",
+    "symbol": "CN:600161",
+    "ticker": "600161"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "241c50550f0b2864bc69a3a908487f4ad58084f4e650c5bbd5a213f59b869040"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于9.2元，且2026半年报确认经营现金流未明显恶化、白蛋白价格趋稳",
-      "action": "小仓位观察性建仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报披露后复核收入、毛利率、现金流和税负影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.0元，且采浆量和高附加值产品占比没有结构性恶化",
-      "action": "提高至研究组合核心观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后验证利润是否见底",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于14.0元但2026年利润恢复尚未确认",
-      "action": "不追高并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "2026年年报窗口复核全年利润中枢和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.2
+      },
+      "reason": "进入初步买入区间，需要复核半年报现金流和白蛋白价格",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "接近悲观情景估值下沿，若基本面未继续恶化则安全边际改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "高于当前合理价值区间，若利润拐点未确认应考虑降低暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.2,
-      "reason": "进入初步买入区间，需要复核半年报现金流和白蛋白价格"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "接近悲观情景估值下沿，若基本面未继续恶化则安全边际改善"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "高于当前合理价值区间，若利润拐点未确认应考虑降低暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报披露后复核收入、毛利率、现金流和税负影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后验证利润是否见底"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "2026年年报窗口复核全年利润中枢和估值区间"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

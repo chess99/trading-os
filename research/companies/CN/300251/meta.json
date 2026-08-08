@@ -1,108 +1,115 @@
 {
-  "symbol": "CN:300251",
-  "market": "CN",
-  "ticker": "300251",
-  "name": "光线传媒",
-  "company_name": "光线传媒",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "current_thesis": "光线传媒是具备稀缺动画/IP储备和主投主发能力的内容公司，但2025年利润高度受《哪吒之魔童闹海》爆款驱动，当前估值已部分反映IP平台化预期；在2026片单和衍生业务未进一步验证前，适合作为观察仓而非重仓买入。",
-  "fair_value_range": [
-    10.0,
-    14.0
-  ],
-  "buy_zone": [
-    8.5,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "光线传媒",
+    "security_status": "active",
+    "symbol": "CN:300251",
+    "ticker": "300251"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "d093cebe5e98047c2704a344bab197d3ae551e03989c4f290e37cc12f2c18607"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价约12.26元，处于合理区间中段偏上，且2026Q1尚未验证新片周期",
-      "action": "仅建立观察仓或暂不买入",
-      "max_weight": 0.02,
-      "reason": "2025年利润受《哪吒之魔童闹海》爆款驱动，正常化利润仍需2026片单验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点查看收入确认、存货、长期股权投资、减值和衍生业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至9.5元以下且重点片单、存货和减值风险未恶化",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "进入买入区后对正常化利润和IP期权具备更好安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报和国庆档/暑期档项目表现，更新全年正常化利润判断",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026-2027年至少两个动画或真人项目形成可系列化IP验证，且衍生/IP运营收入独立放量",
-      "action": "提高战略仓位上限",
-      "max_weight": 0.05,
-      "reason": "公司估值基础可由周期影视公司上修为IP平台型资产"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，验证2025爆款后利润中枢和现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价升至16元以上但无新增爆款或衍生业务利润验证",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.01,
-      "reason": "价格进入乐观情景区间，风险收益比转弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入合理价值下沿和买入观察区，复核片单、存货和减值后可考虑分批买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入悲观情景上沿，若基本面未恶化则安全边际明显",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "进入乐观情景估值区，若缺少新增IP兑现应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "估值大概率透支2026-2027片单，需要重新评估持仓上限",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入合理价值下沿和买入观察区，复核片单、存货和减值后可考虑分批买入"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入悲观情景上沿，若基本面未恶化则安全边际明显"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "进入乐观情景估值区，若缺少新增IP兑现应考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "估值大概率透支2026-2027片单，需要重新评估持仓上限"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点查看收入确认、存货、长期股权投资、减值和衍生业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报和国庆档/暑期档项目表现，更新全年正常化利润判断"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，验证2025爆款后利润中枢和现金流质量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "重点影片档期、预售、首周口碑、最终票房和公司参与方式",
-    "动画项目《去你的岛》《罗刹海市》《大鱼海棠2》《姜子牙2》《三体（新）》进度",
-    "IP授权、衍生品收入、毛利率和自主运营比例",
-    "影视剧及衍生业务收入与毛利率",
-    "前五部影视剧收入占比和前五客户集中度",
-    "存货余额、长期股权投资余额和资产减值损失",
-    "经营活动现金流净额与归母净利润匹配程度",
-    "交易性金融资产、货币资金和投资收益波动",
-    "审查、撤档、延期和口碑风险事件"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

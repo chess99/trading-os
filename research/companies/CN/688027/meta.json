@@ -1,31 +1,105 @@
 {
-  "symbol": "CN:688027",
-  "market": "CN",
-  "ticker": "688027",
-  "name": "国盾量子",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "量子信息纯标的稀缺但扣非连年亏损、ROE近零、靠募资理财+补助撑账面，459亿市值vs3.1亿营收PS148x、PB14x，定价远超可证伪假设，无安全边际；仅当敲入buy_zone且基本面拐点验证方转为watch。",
-  "fair_value_range": [90, 140],
-  "buy_zone": [80, 130],
-  "sell_or_reduce_zone": [400, 700],
-  "position_plan": [
-    {"condition": "当前avoid不建仓；已持仓应对位减仓", "max_weight": 0},
-    {"condition": "价格进入80-130区间且扣非转正/毛利抬升/合同负债放大三项中两项成立", "max_weight": 0.01},
-    {"condition": "仅价格进入buy_zone但基本面未明显改善（仍亏损、补贴依赖）", "max_weight": 0.005}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国盾量子",
+    "security_status": "active",
+    "symbol": "CN:688027",
+    "ticker": "688027"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "6eb4df88c8490d1d58f5da90212244c953cdd62e0d1bf185a3463c01985d0583"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报：观察量子计算业务量与毛利率、扣非是否仍恶化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报：合同负债是否兑现为收入、扣非趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报：扣非是否仍亏，决定核心假设证伪/验证；并复查中国电信资产整合/重大关联交易/定增预案/量子计算产业化拐点/限售解禁等事件触发",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 130.0
+      },
+      "reason": "进入观察级buy_zone上沿，需结合基本面拐点信号评估",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 80.0
+      },
+      "reason": "进入buy_zone下沿，现金底+业务期权价值开始出现，需复核后视情况试探观察级仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 400.0
+      },
+      "reason": "进入减仓/不追高区间，估值已包含极乐观远期假设",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": ["reports/2026-07-11-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026年中报：观察量子计算业务量与毛利率、扣非是否仍恶化"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026三季报：合同负债是否兑现为收入、扣非趋势"},
-    {"type": "date", "date": "2027-04-30", "reason": "2026年报：扣非是否仍亏，决定核心假设证伪/验证；并复查中国电信资产整合/重大关联交易/定增预案/量子计算产业化拐点/限售解禁等事件触发"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 130, "reason": "进入观察级buy_zone上沿，需结合基本面拐点信号评估"},
-    {"type": "price_below", "price": 80, "reason": "进入buy_zone下沿，现金底+业务期权价值开始出现，需复核后视情况试探观察级仓位"},
-    {"type": "price_above", "price": 400, "reason": "进入减仓/不追高区间，估值已包含极乐观远期假设"}
-  ],
-  "updated_at": "2026-07-11T04:35:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

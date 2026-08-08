@@ -1,67 +1,95 @@
 {
-  "symbol": "CN:600775",
-  "ticker": "600775",
-  "name": "南京熊猫",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于扣非亏损收窄但尚未完成盈利修复的阶段，资产负债表有净现金和国资信用支撑，但电子制造低毛利、项目制业务现金流波动和当前约2.6倍PB估值使安全边际不足；等待价格回到净资产折价附近或扣非连续转正后再重新评估。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    2.7,
-    4.1
-  ],
-  "buy_zone": [
-    2.4,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    6.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南京熊猫",
+    "security_status": "active",
+    "symbol": "CN:600775",
+    "ticker": "600775"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "a9d352586ea6583fca978fe30aa719d362555e795d67a558ea48f33b2e023f4c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.2元且2026年中报确认扣非亏损继续收窄、经营现金流改善、应收账款和存货合计占归母净资产比例不再上升时，仅可作为困境反转观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报实际亏损、扣非亏损、经营现金流、应收账款和存货变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "扣非归母净利润连续两个季度为正且年化ROE超过3%前，不建立核心仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现扣非盈利和现金流拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报及2027年订单质量，判断是否需要从avoid上调为watch。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入基准买入区上沿，需要复核扣非亏损收窄和现金流改善是否兑现。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "超过基准合理价值上沿，若扣非盈利未连续转正，应回避或降低风险暴露。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入基准买入区上沿，需要复核扣非亏损收窄和现金流改善是否兑现。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "reason": "超过基准合理价值上沿，若扣非盈利未连续转正，应回避或降低风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报实际亏损、扣非亏损、经营现金流、应收账款和存货变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现扣非盈利和现金流拐点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报及2027年订单质量，判断是否需要从avoid上调为watch。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

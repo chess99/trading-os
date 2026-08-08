@@ -1,123 +1,114 @@
 {
-  "symbol": "CN:002985",
-  "market": "CN",
-  "ticker": "002985",
-  "name": "北摩高科",
-  "company_name": "北京北摩高科摩擦材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "北摩高科具备军机起降系统配套壁垒和民航第二增长曲线，但当前约24.82元已处于20-26元合理价值区间上半部；应收账款、再融资稀释、募投折旧和股东减持使安全边际不足，适合观察或小仓验证，等待20元以下更好的买点。",
-  "quality_rating": "中高",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    20.0,
-    26.0
-  ],
-  "buy_zone": [
-    18.0,
-    20.0
-  ],
-  "sell_or_reduce_zone": [
-    31.0,
-    35.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北摩高科",
+    "security_status": "active",
+    "symbol": "CN:002985",
+    "ticker": "002985"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4c9f739529d6cbfa3603f5f148c5d12fea3e6270742521c6f01e18f0cde8d318"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格位于20-26元且半年报尚未验证回款改善",
-      "action": "观察或小仓验证",
-      "target_position": "0%-20% of planned maximum",
-      "max_weight": 0.2
-    },
-    {
-      "condition": "价格低于20元，且收入保持增长、应收账款未继续恶化",
-      "action": "分批买入",
-      "target_position": "30%-40% of planned maximum",
-      "max_weight": 0.4
-    },
-    {
-      "condition": "价格低于18元，且经营现金流恢复为正、应收账款周转改善",
-      "action": "提高配置",
-      "target_position": "50%-60% of planned maximum",
-      "max_weight": 0.6
-    },
-    {
-      "condition": "价格高于31元，且利润、回款、民航订单没有明显超预期",
-      "action": "减仓或停止加仓",
-      "target_position": "reduce risk exposure",
-      "max_weight": 0.2
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "unit": "CNY/share",
-      "reason": "低于合理价值区间下沿附近，安全边际开始出现。",
-      "action": "进入可买区，复核最新订单、回款和再融资进展。"
-    },
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "unit": "CNY/share",
-      "reason": "相对20-26元合理价值区间具备更充分折价。",
-      "action": "进入强买区，若现金流指标确认改善，可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 31.0,
-      "unit": "CNY/share",
-      "reason": "高于合理价值区间上沿约20%，需要利润和现金流超预期支撑。",
-      "action": "进入减仓复核区，检查利润和现金流是否足以支撑估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026年半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证利润修复是否伴随回款改善。",
-      "action": "复核收入、归母净利润、经营现金流和应收账款账龄。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "trigger": "向特定对象发行股票获得注册、确定发行价或实际发行完成",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "再融资会改变股本、现金和募投折旧压力。",
-      "action": "复核稀释比例和募投折旧压力。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-21",
-      "trigger": "5%以上股东减持计划完成或提前终止",
+      "active": true,
+      "condition": {
+        "date": "2026-10-21"
+      },
       "reason": "减持会影响短期供给和市场风险偏好。",
-      "action": "复核股价压力和股东结构。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "公司披露民航产品、国产大飞机适航保障或大额军品订单进展",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "民航订单决定第二增长曲线是否从期权变为利润。",
-      "action": "重估第二增长曲线和估值上限。"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "低于合理价值区间下沿附近，安全边际开始出现。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "相对20-26元合理价值区间具备更充分折价。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 31.0
+      },
+      "reason": "高于合理价值区间上沿约20%，需要利润和现金流超预期支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款账面价值、账龄结构和坏账准备率",
-    "存货余额和周转",
-    "起降系统产品收入和毛利率",
-    "检测服务收入和毛利率",
-    "民航产品订单、PMA/维修资质和适航保障进展",
-    "再融资发行价格、股份稀释比例和募投项目进度",
-    "前五大客户收入占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

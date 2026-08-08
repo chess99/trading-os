@@ -1,99 +1,96 @@
 {
-  "symbol": "CN:002166",
-  "market": "CN",
-  "ticker": "002166",
-  "name": "莱茵生物",
-  "company_name": "莱茵生物",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "莱茵生物具备植物提取和天然甜味剂长期增长逻辑，但当前价格已部分反映复苏，需要等待甜叶菊/罗汉果订单、毛利率和经营现金流在2026中报继续验证后再买入。",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    5.2,
-    6.8
-  ],
-  "buy_zone": [
-    4.8,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    7.6,
-    8.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "莱茵生物",
+    "security_status": "active",
+    "symbol": "CN:002166",
+    "ticker": "002166"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "96fbbac6f668f9f13411c796f56ced86f9752469ce5ca55774dc86ae68a3aded"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约6.34元且2026中报尚未验证甜味剂订单、毛利率和现金流继续改善",
-      "action": "暂不主动买入，保留研究跟踪",
-      "max_weight": 0,
-      "reason": "估值约30倍TTM PE，安全边际不足，需等待基本面或价格确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查甜味剂订单、毛利率、现金流和客户集中度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.50元，且2026中报显示植物提取毛利率和经营现金流质量不恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "进入买入区间上沿，风险收益比改善但仍需控制客户集中和汇率风险"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证全年盈利趋势和汇率影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.00元，且扣非利润、经营现金流和应收账款周转均健康",
-      "action": "加至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "价格提供更厚安全边际，且核心经营指标验证天然甜味剂逻辑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入初始买入区间，复核半年报后可考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于7.60元且未出现盈利预测上修或大客户订单明确放量",
-      "action": "减仓或不追高",
-      "max_weight": 0.01,
-      "reason": "估值进入偏乐观区间，缺少新增证据时预期收益不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "安全边际显著增加，若基本面未破坏可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.6
+      },
+      "reason": "进入减仓区间，若没有盈利上修需降低敞口",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入初始买入区间，复核半年报后可考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "安全边际显著增加，若基本面未破坏可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.6,
-      "reason": "进入减仓区间，若没有盈利上修需降低敞口"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查甜味剂订单、毛利率、现金流和客户集中度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证全年盈利趋势和汇率影响"
-    }
-  ],
-  "key_tracking_metrics": [
-    "植物提取业务收入增速",
-    "植物提取业务毛利率",
-    "甜叶菊和罗汉果相关订单或管理层披露",
-    "境外收入占比和增速",
-    "前五大客户销售占比",
-    "经营活动现金流净额与归母净利润匹配度",
-    "应收账款周转和存货周转",
-    "美元兑人民币汇率及汇兑损益",
-    "甜叶菊专业提取工厂产能利用率",
-    "是否重新推进工业大麻或大额外延并购"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

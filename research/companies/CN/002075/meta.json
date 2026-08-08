@@ -1,96 +1,106 @@
 {
-  "symbol": "CN:002075",
-  "market": "CN",
-  "ticker": "002075",
-  "name": "沙钢股份",
-  "company_name": "沙钢股份",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "沙钢股份是以淮钢特钢为核心的优特钢周期股，2025年现金流和扣非利润修复但2026Q1再度走弱；3.40元附近估值已接近合理区间中部，需等待股价低于3.00元或吨钢价差明确改善后再提高仓位。",
-  "quality_rating": "B-",
-  "valuation_rating": "neutral_to_expensive",
-  "fair_value_range": [
-    3.1,
-    3.8
-  ],
-  "buy_zone": [
-    2.6,
-    3.0
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    4.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "沙钢股份",
+    "security_status": "active",
+    "symbol": "CN:002075",
+    "ticker": "002075"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "0776f82213ff60541522ae86cf85f1a8a11a46d36fd290f4b04e9e4a40b7c780"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.00元，且钢材价差或公司季度扣非利润出现连续改善",
-      "action": "建立或增加观察仓",
-      "max_weight": 0.02,
-      "reason": "低于买入区间上沿时安全边际改善，但公司仍处周期低ROE阶段"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看扣非利润、钢铁毛利率、经营现金流和短债/票据变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在3.00元至3.80元之间，且无明确吨钢毛利改善证据",
-      "action": "持有或仅保留观察仓",
-      "max_weight": 0.01,
-      "reason": "当前估值接近合理区间，尚不适合重仓主动买入"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断年度盈利修复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于4.20元，且上涨主要来自未公告重组预期",
-      "action": "减仓或退出",
-      "max_weight": 0.0,
-      "reason": "缺少公告支撑的资产重组预期不应资本化为主估值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入买入区间上沿，需要复查钢材价差、扣非利润和现金流后决定首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入悲观估值区间，若基本面未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "进入减仓区间下沿，需要检查是否由基本面修复支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "超过乐观区间，若无明确利润上修或公告催化应退出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入买入区间上沿，需要复查钢材价差、扣非利润和现金流后决定首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "进入悲观估值区间，若基本面未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "进入减仓区间下沿，需要检查是否由基本面修复支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "超过乐观区间，若无明确利润上修或公告催化应退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看扣非利润、钢铁毛利率、经营现金流和短债/票据变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断年度盈利修复是否成立"
-    }
-  ],
-  "key_tracking_metrics": [
-    "优特钢棒材价格与铁矿石、焦炭、废钢价差",
-    "季度钢铁销量、产量、库存和吨钢毛利",
-    "扣非归母净利润及同比、环比变化",
-    "经营活动现金流量净额",
-    "货币资金、受限资金、交易性金融资产、短期借款和应付票据",
-    "现金分红率和股息率",
-    "资产重组、关联交易、担保、理财和税务公告",
-    "环保限产、超低排放和碳成本政策变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

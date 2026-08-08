@@ -1,114 +1,105 @@
 {
-  "symbol": "CN:300463",
-  "market": "CN",
-  "ticker": "300463",
-  "name": "迈克生物",
-  "company_name": "迈克生物股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "迈克生物具备完整 IVD 产品线、自主产品占比高和经营现金流较强等优点，但 2025 年收入、归母利润和扣非利润仍明显下滑，利润修复尚未兑现。当前股价约处于合理价值区间中部，更适合等待 2026 年收入止跌、扣非利润恢复或价格跌入更高安全边际区域。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "合理偏低但安全边际不足",
-  "fair_value_range": [
-    8.0,
-    10.5
-  ],
-  "buy_zone": [
-    0.0,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "迈克生物",
+    "security_status": "active",
+    "symbol": "CN:300463",
+    "ticker": "300463"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4015beec534b5ea70e498df66c826626448086dbfd27fffb988284cc7994c32b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在 8.0 元至 10.5 元之间，且尚未看到连续两个季度收入和扣非利润改善",
-      "action": "观察或维持极轻仓",
-      "max_weight": 0.01,
-      "target_position": "0%-1%",
-      "rationale": "价格大致处于合理区间，利润修复仍需验证。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点检查收入是否止跌、扣非利润是否恢复、经营现金流是否保持强劲。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌破 7.2 元，且收入下滑没有扩大、经营现金流仍为正",
-      "action": "开始建立小仓位",
-      "max_weight": 0.02,
-      "target_position": "1%-2%",
-      "rationale": "低 PB 提供资产安全边际，但盈利修复仍不确定。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认自主产品、海外业务和费用率趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌破 6.5 元，且自主产品占比稳定在 80% 以上、未出现重大减值或现金流恶化",
-      "action": "提高到中等观察仓",
-      "max_weight": 0.03,
-      "target_position": "2%-3%",
-      "rationale": "价格对利润修复失败给出更大折价。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估正常化利润和合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入恢复增长、扣非利润率恢复到 5% 以上、经营现金流净额大于净利润",
-      "action": "考虑提高仓位上限",
-      "max_weight": 0.04,
-      "target_position": "3%-4%",
-      "rationale": "基本面修复得到验证，可从资产折价逻辑转向盈利修复逻辑。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入可买区，检查基本面是否未恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入更高安全边际区，适合评估中等仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "价格可能透支利润修复预期。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "currency": "CNY",
-      "action": "复核买入",
-      "reason": "进入可买区，检查基本面是否未恶化。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "currency": "CNY",
-      "action": "复核加仓",
-      "reason": "进入更高安全边际区，适合评估中等仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "currency": "CNY",
-      "action": "复核减仓",
-      "reason": "价格可能透支利润修复预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点检查收入是否止跌、扣非利润是否恢复、经营现金流是否保持强劲。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认自主产品、海外业务和费用率趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估正常化利润和合理价值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比增速",
-    "自主产品收入占比和增速",
-    "扣非归母净利润率",
-    "经营现金流净额/归母净利润",
-    "境外收入增速和占比",
-    "智汇实验室与流水线装机及试剂转化",
-    "研发投入占收入比例及新品注册进展",
-    "应收账款周转和存货周转",
-    "毛利率，特别是自主产品毛利率",
-    "有息负债和利息费用变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

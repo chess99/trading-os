@@ -1,66 +1,86 @@
 {
-  "symbol": "CN:600272",
-  "ticker": "600272",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "开开实业",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "上海静安国资旗下老字号小市值平台，资产负债表干净但主业扣非盈利仍弱；当前股价显著高于保守资产和同业估值，需等待价格回落及扣非利润改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.5,
-    7.5
-  ],
-  "buy_zone": [
-    4.5,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    11.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "开开实业",
+    "security_status": "active",
+    "symbol": "CN:600272",
+    "ticker": "600272"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "b877d97a38c227ec81a90f20e40685a6cd08d7e6ff2872b50e95a6ca89fbeb07"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.8元，且正式定报确认扣非归母净利润连续两个季度为正，同时经营现金流未明显恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报正式数据、非经常性损益和扣非利润质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.8元，且货币资金、交易性金融资产和归母净资产质量未恶化，可提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报中医药业务增长、经营现金流和资产结构变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.0元且没有公告级主业拐点或资产重组证据，不新增仓位并考虑减持观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入买入观察区，需要复核扣非利润和现金流是否同步改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "显著高于保守公允价值上沿，若无公告级基本面变化应降低风险敞口",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入买入观察区，需要复核扣非利润和现金流是否同步改善"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "显著高于保守公允价值上沿，若无公告级基本面变化应降低风险敞口"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报正式数据、非经常性损益和扣非利润质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报中医药业务增长、经营现金流和资产结构变化"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

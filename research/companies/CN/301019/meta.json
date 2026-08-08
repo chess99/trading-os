@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:301019",
-  "ticker": "301019",
-  "name": "宁波色母",
-  "company_name": "宁波色母粒股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "宁波色母是主业纯度高、现金流稳健、分红积极的色母粒细分龙头，但当前股价已接近合理估值下沿，产能利用率和新产能消化仍需验证，适合观察等待更高安全边际。",
-  "rating": {
-    "current_rating": "hold",
-    "updated_at": "2026-07-15",
-    "rationale": "质量较好但估值不便宜，当前价格附近只适合小仓观察；14.5元以下才具备更好的买入安全边际。"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宁波色母",
+    "security_status": "active",
+    "symbol": "CN:301019",
+    "ticker": "301019"
   },
-  "current_rating": "hold",
-  "fair_value_range": [
-    16.0,
-    20.0
-  ],
-  "buy_zone": [
-    0.0,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    999.0
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "13f32bfba971842c8ccf03d21b97df67faedb1cf0687db35a4977c5fb2822498"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于14.5元，且2026半年报扣非净利润同比继续增长、毛利率不低于36%",
-      "action": "分批建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、收入增长、扣非利润、毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于12.0元，且产能利用率改善、经营现金流未恶化",
-      "action": "复核后可提高至价值仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报以及滁州/宁波产能释放进度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于22.0元但无盈利预测上修，或毛利率连续两个季度低于35%",
-      "action": "停止加仓并考虑减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红政策、产能利用率和估值假设。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入安全买入区间，需要复核半年报增长与毛利率。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "可能进入深度价值区间，需要复核基本面是否恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "高于当前估值上沿，若无盈利上修应考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入安全买入区间，需要复核半年报增长与毛利率。"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "可能进入深度价值区间，需要复核基本面是否恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "高于当前估值上沿，若无盈利上修应考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、收入增长、扣非利润、毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报以及滁州/宁波产能释放进度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红政策、产能利用率和估值假设。"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

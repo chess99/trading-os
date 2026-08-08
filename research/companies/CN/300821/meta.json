@@ -1,47 +1,106 @@
 {
-  "symbol": "CN:300821",
-  "market": "CN",
-  "ticker": "300821",
-  "name": "东岳硅材",
-  "company_name": "山东东岳有机硅材料股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "有机硅周期底部确认，2026Q1业绩爆发式反转（营收12.56亿+4.49%，归母净利1.94亿+427%，毛利率从4.84%跃升至21.06%），但当前股价26.44元对应PB 6.2x、年化PE约41倍，远高于同行可比（合盛PB 1.7x、兴发PB 1.8x），安全边际不足。暂不建仓，等待2026半年报验证增长可持续性和股价回调至18元以下（PB<4.2x）后再评估。",
-  "quality_rating": "C+",
-  "valuation_rating": "A-",
-  "fair_value_range": [18.0, 30.0],
-  "buy_zone": [15.0, 18.0],
-  "strong_attraction_zone": [10.0, 15.0],
-  "sell_or_reduce_zone": [30.0, 35.0],
-  "do_not_chase_above": 35.0,
-  "position_plan": [
-    {"zone": "深度低估 <10元", "condition": "DMC价格>18,000元/吨且行业供需改善确认", "action": "积极建仓", "target_weight": 0.05, "max_weight": 0.06},
-    {"zone": "低估 10-15元", "condition": "半年报确认毛利率维持15%以上、经营现金流持续为正", "action": "分批建仓", "target_weight": 0.04, "max_weight": 0.06},
-    {"zone": "偏低 15-18元", "condition": "DMC价格企稳且产能利用率>85%", "action": "少量试探", "target_weight": 0.02, "max_weight": 0.04},
-    {"zone": "合理偏贵 18-30元", "condition": "当前状态", "action": "观望", "target_weight": 0.0, "max_weight": 0.0},
-    {"zone": "偏高 30-35元", "condition": "任何条件", "action": "减仓", "target_weight": 0.0, "max_weight": 0.0},
-    {"zone": "高估 >35元", "condition": "任何条件", "action": "清仓", "target_weight": 0.0, "max_weight": 0.0}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东岳硅材",
+    "security_status": "active",
+    "symbol": "CN:300821",
+    "ticker": "300821"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "bee754a0eca4576e1fff59d8231f442e38609eb21f5b5bbb4a87658c6c0fe59f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报：毛利率是否维持15%以上、净利润实质转正、产能利用率与销量趋势",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报：全年业绩指引与下游深加工产品结构变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入偏低区间，可考虑少量试探性建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入低估区间，可考虑分批建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入深度低估区间，积极建仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "进入高估区间，需考虑清仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026半年报：毛利率是否维持15%以上、净利润实质转正、产能利用率与销量趋势"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026三季报：全年业绩指引与下游深加工产品结构变化"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 18.0, "reason": "进入偏低区间，可考虑少量试探性建仓"},
-    {"type": "price_below", "price": 15.0, "reason": "进入低估区间，可考虑分批建仓"},
-    {"type": "price_below", "price": 10.0, "reason": "进入深度低估区间，积极建仓"},
-    {"type": "price_above", "price": 35.0, "reason": "进入高估区间，需考虑清仓"}
-  ],
-  "key_risks": [
-    "有机硅DMC价格下半年回落导致估值从反转溢价切换为周期折价，下行空间50%+",
-    "合盛硅业等巨头持续扩产，行业供需改善时点和幅度不确定",
-    "缺少上游金属硅自供，原材料价格上涨将直接侵蚀利润",
-    "约40%需求来自建筑领域，国内地产下行周期拖累需求",
-    "产品同质化严重，价格战可能随时再次爆发",
-    "当前PB 6.2x相比历史底部3-4x溢价明显，若周期未如预期反转则估值回归压力大"
-  ],
-  "updated_at": "2026-07-08T23:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

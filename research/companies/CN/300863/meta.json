@@ -1,78 +1,105 @@
 {
-  "symbol": "CN:300863",
-  "ticker": "300863",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "卡倍亿",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "汽车线缆主业具备客户认证、交付和新能源单车价值量提升逻辑，但 2026-07-15 股价已明显计入高速线缆、机器人和 AI 服务器等远期选项；扣非利润和现金流尚未验证经营拐点，当前安全边际不足，维持观察。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    32,
-    42
-  ],
-  "buy_zone": [
-    24,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    50,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "卡倍亿",
+    "security_status": "active",
+    "symbol": "CN:300863",
+    "ticker": "300863"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "e1169e337d3fb02a0e976223738f7bc8e911954d7f6db4b8e60e6bb1fb1c21ad"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 30 元，且 2026 半年报扣非净利润同比转正、经营现金流改善、高压或高频线缆收入占比提升",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "复核 2026 半年报的扣非净利润、毛利率、经营现金流和新业务披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 24 元，且核心客户订单、毛利率和现金流未继续恶化",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报及全年订单趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 50 元且高速线缆、机器人或 AI 服务器相关订单仍无法核验",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，判断主业盈利修复和第二曲线是否兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入初步买入观察区，需要复核半年报扣非利润和经营现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入深度安全边际区，需要复核主业是否未发生永久性恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "显著高于基准估值，需要核验是否已有可支撑乐观情景的新业务订单",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入初步买入观察区，需要复核半年报扣非利润和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入深度安全边际区，需要复核主业是否未发生永久性恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "显著高于基准估值，需要核验是否已有可支撑乐观情景的新业务订单"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-30",
-      "reason": "复核 2026 半年报的扣非净利润、毛利率、经营现金流和新业务披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报及全年订单趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，判断主业盈利修复和第二曲线是否兑现"
-    }
-  ],
-  "confidence": "medium",
-  "decision": "观察"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

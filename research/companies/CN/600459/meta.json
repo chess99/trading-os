@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:600459",
-  "market": "CN",
-  "ticker": "600459",
-  "name": "贵研铂业",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "贵研铂业具备贵金属新材料、资源循环和供给服务一体化壁垒，2025-2026Q1利润稳健增长，但低毛利、营运资金占用和贵金属价格波动压制自由现金流。当前价接近合理价值中枢，等待中报验证现金流修复和高端材料利润率上行。",
-  "fair_value_range": [
-    17.0,
-    22.5
-  ],
-  "buy_zone": [
-    13.5,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    28.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "贵研铂业",
+    "security_status": "active",
+    "symbol": "CN:600459",
+    "ticker": "600459"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "a75515e480023af5e065a476a334f7534600dc155772b0220c30a2bef3c8f2cc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入13.5-15.5元且2026中报经营现金流较2025年明显修复、扣非净利保持正增长",
-      "action": "分两笔建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-22"
+      },
+      "reason": "2026年半年报预约披露后复核收入、扣非净利、现金流、存货和毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于13.0元且毛利率不低于2.5%、资产负债率未继续明显上升",
-      "action": "可提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报披露后验证全年盈利和营运资金修复趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24.0元但2026E净利未上修至8亿元以上或经营现金流未修复",
-      "action": "减仓或不追高",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入安全边际买入区间，需要复核中报现金流和贵金属价格敞口",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "高于合理价值上沿，需要确认利润率或盈利预测是否足以上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入安全边际买入区间，需要复核中报现金流和贵金属价格敞口"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "高于合理价值上沿，需要确认利润率或盈利预测是否足以上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-22",
-      "reason": "2026年半年报预约披露后复核收入、扣非净利、现金流、存货和毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报披露后验证全年盈利和营运资金修复趋势"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

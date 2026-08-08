@@ -1,93 +1,95 @@
 {
-  "symbol": "CN:301560",
-  "ticker": "301560",
-  "name": "众捷汽车",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "汽车热管理精密加工件供应商，客户体系和全球化交付具备价值，但2025年利润下滑、2026Q1亏损且当前估值偏高，需要等待利润和经营现金流修复后再考虑买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    17.0,
-    23.0
-  ],
-  "buy_zone": [
-    0.0,
-    16.0
-  ],
-  "sell_or_reduce_zone": [
-    27.0,
-    30.0
-  ],
-  "position_plan": [
-    {
-      "condition": "价格低于16元，且2026Q2-Q3单季利润恢复至1500万元以上、经营现金流不再显著弱于净利润",
-      "action": "small_watch_position",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格处于17-23元且尚未披露明确利润修复证据",
-      "action": "watch_only",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "价格高于27元且无采埃孚等新项目订单金额或利润恢复证据",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入安全边际买入区，若基本面未恶化可重新评估小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 27.0,
-      "reason": "超过当前基准估值上沿，若缺乏利润兑现应减持或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查Q2利润、毛利率、经营现金流和募投进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否具备持续性。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "检查新建研发中心项目是否按延期计划达到预定可使用状态。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 24.2,
-    "reference_price_date": "2026-07-15",
-    "shares_outstanding_billion": 0.1216,
-    "market_cap_billion_cny": 2.94272,
-    "pe_ttm": 76.61,
-    "pb": 3.06
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "众捷汽车",
+    "security_status": "active",
+    "symbol": "CN:301560",
+    "ticker": "301560"
   },
-  "sources": [
-    "https://static.cninfo.com.cn/finalpage/2026-04-29/1225233834.PDF",
-    "https://pdf.dfcfw.com/pdf/H2_AN202504201659539857_1.pdf",
-    "https://cn.pxi-automotive.com/",
-    "https://static.cninfo.com.cn/finalpage/2026-06-30/1225400719.PDF",
-    "https://quotewh.cfi.cn/quote_301560.html",
-    "https://www.stcn.com/article/detail/4002686.html",
-    "https://www.caam.org.cn/chn/1/cate_29/con_5236999.html"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "4e379f4c1e6ac53b73bfcd94ec6ef1a8e80eda0a9ab08bba9ea5a53b230e21cb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查Q2利润、毛利率、经营现金流和募投进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否具备持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "检查新建研发中心项目是否按延期计划达到预定可使用状态。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入安全边际买入区，若基本面未恶化可重新评估小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "超过当前基准估值上沿，若缺乏利润兑现应减持或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

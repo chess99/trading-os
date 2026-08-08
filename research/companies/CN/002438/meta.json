@@ -1,134 +1,123 @@
 {
-  "symbol": "CN:002438",
-  "market": "CN",
-  "ticker": "002438",
-  "name": "江苏神通",
-  "company_name": "江苏神通阀门股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "核电阀门细分强者，核电新建与后市场支撑中期增长，氢能和半导体阀门提供期权；但当前价格处于合理区间中部，安全边际不足，等待回落或新业务/订单进一步兑现。",
-  "quality_rating": "B+ / 中上",
-  "valuation_rating": "中性略贵",
-  "fair_value_range": [
-    12.5,
-    15.5
-  ],
-  "buy_zone": [
-    10.2,
-    11.8
-  ],
-  "sell_or_reduce_zone": [
-    16.8,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江苏神通",
+    "security_status": "active",
+    "symbol": "CN:002438",
+    "ticker": "002438"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "09429cd323973b7b7bce284eaf5def3b283e999cccbfe457d9221fa393eeb36a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于10.2元且基本面未恶化",
-      "price": "<=10.2",
-      "action": "强吸引力买入",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价在10.2元至11.8元且核电订单未断档",
-      "price": "10.2-11.8",
-      "action": "有安全边际买入",
-      "position": "1%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价在11.8元至15.5元",
-      "price": "11.8-15.5",
-      "action": "观察/持有",
-      "position": "0%-3%；当前首笔仓位0%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于16.8元且业绩未明显上修",
-      "price": ">16.8",
-      "action": "不追高/减仓",
-      "position": "降低至核心观察仓",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "direction": "below",
-      "action": "强吸引力买入",
-      "reason": "接近DCF保守区间下沿，安全边际充分"
-    },
-    {
-      "type": "price_below",
-      "price": 11.8,
-      "direction": "below",
-      "action": "有安全边际买入",
-      "reason": "低于合理价值区间下沿，具备分批建仓条件"
-    },
-    {
-      "type": "price_above",
-      "price": 16.8,
-      "direction": "above",
-      "action": "不追高/减仓",
-      "reason": "高于乐观情景估值下沿，需业绩显著上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026年半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证核电订单确认、收入结构和回款质量",
-      "action": "复查核电收入、订单和回款"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "新增订单低于23亿元或神通核能订单低于9亿元",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "订单是未来1-2年收入增长的前置指标",
-      "action": "复查估值和增长假设"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "经营现金流/净利润低于0.8",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "项目型制造企业需要现金流验证利润质量",
-      "action": "复查财务质量"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "trigger": "半导体或氢能阀门披露批量订单/收入",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "新业务商业化会改变成长性和估值上限",
-      "action": "上修或重估新业务价值"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "股价跌破11.8元或涨破16.8元",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "价格进入买入区或减仓区时需要更新仓位决策",
-      "action": "复查仓位"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "接近DCF保守区间下沿，安全边际充分",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.8
+      },
+      "reason": "低于合理价值区间下沿，具备分批建仓条件",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.8
+      },
+      "reason": "高于乐观情景估值下沿，需业绩显著上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "年度新增订单",
-    "神通核能新增订单",
-    "核电行业收入增速和毛利率",
-    "半导体阀门收入和客户验证",
-    "氢能阀门收入和70MPa产品交付",
-    "经营现金流/净利润",
-    "应收账款和存货周转",
-    "ROE",
-    "分红率",
-    "关联方销售金额和回款"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

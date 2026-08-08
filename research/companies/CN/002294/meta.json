@@ -1,142 +1,106 @@
 {
-  "symbol": "CN:002294",
-  "market": "CN",
-  "ticker": "002294",
-  "name": "信立泰",
-  "company_name": "信立泰",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "current_rating": "watch",
-  "current_thesis": "心血管慢病产品组合提供现金流，创新药和核心管线提供增长弹性；但当前估值已经定价较多管线预期，买入胜率取决于价格回落或新证据抬升基准情景。",
-  "conclusion": "信立泰是心血管慢病领域创新药转型质量较好的药企，但2026-07-08约36.7-38.7元、409-432亿元市值区间已反映较多管线预期；当前适合小仓跟踪，不适合无新证据追高。",
-  "quality_rating": "A-",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    32,
-    42
-  ],
-  "fair_value": {
+  "identity": {
     "currency": "CNY",
-    "low": 32,
-    "high": 42,
-    "method": "相对估值、简化DCF、悲观/基准/乐观情景综合"
+    "market": "CN",
+    "name": "信立泰",
+    "security_status": "active",
+    "symbol": "CN:002294",
+    "ticker": "002294"
   },
-  "buy_zone": [
-    27,
-    30
-  ],
-  "buy_zone_detail": {
-    "currency": "CNY",
-    "safety_margin": {
-      "low": 27,
-      "high": 30
-    },
-    "strong_buy": {
-      "low": 23,
-      "high": 26
-    }
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "f5568f97e4ecc19884e7c2ee78ca450745e9ac2f2fac47bf5c90f771d37c980f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "sell_or_reduce_zone": [
-    45,
-    50
-  ],
-  "sell_or_reduce_zone_detail": {
-    "currency": "CNY",
-    "reduce_above": 50,
-    "do_not_chase_above": 45,
-    "reason": "45元以上需要新增临床、BD或利润上修证据；50元以上若基本面无上修，估值对兑现要求过高。"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "position_plan": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前36.7-38.7元区间，仅观察仓；回落到27-30元且基本面未变时加仓。",
-      "max_weight": 0.06,
-      "current_zone_weight": 0.02,
-      "base_buy_weight": 0.05,
-      "strong_buy_weight": 0.06,
-      "notes": "当前36.7-38.7元区间最多观察仓；27-30元建立核心观察仓；23-26元且基本面未变时提高至上限。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，更新收入、利润、现金流和新品放量假设。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和全年业绩确定性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入安全边际买入区，若基本面未变可分批建立核心观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入强吸引力买入区，若无临床或财务证伪可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "超过不追高价，需新增临床、BD或利润上修证据才能继续买入。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 50.0
+      },
+      "reason": "估值对未来兑现要求过高，若基本面无上修应考虑减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "watch": [
-    "2026-2028年收入增速是否维持15%-20%以上",
-    "扣非归母净利润增速和经营现金流是否同步改善",
-    "JK07、SAL0112等核心管线临床数据、注册进度和潜在授权合作",
-    "信立坦、复立坦、恩那度司他等新品商业化放量和医保续约",
-    "H股发行定价、募集资金用途、回购均价和股份处理方式"
-  ],
-  "tracking_indicators": [
-    {
-      "name": "营业收入增速",
-      "target": "2026-2028年维持15%-20%以上",
-      "reason": "验证创新药和新品商业化是否足以支撑平台估值"
-    },
-    {
-      "name": "扣非归母净利润与经营现金流",
-      "target": "利润增速不显著低于收入增速，经营现金流持续覆盖高研发投入",
-      "reason": "验证增长质量和费用效率"
-    },
-    {
-      "name": "核心管线里程碑",
-      "target": "JK07、SAL0112等临床、注册、BD进展",
-      "reason": "决定估值中管线期权是否兑现"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "currency": "CNY",
-      "reason": "进入安全边际买入区，若基本面未变可分批建立核心观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 26,
-      "currency": "CNY",
-      "reason": "进入强吸引力买入区，若无临床或财务证伪可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "currency": "CNY",
-      "reason": "超过不追高价，需新增临床、BD或利润上修证据才能继续买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 50,
-      "currency": "CNY",
-      "reason": "估值对未来兑现要求过高，若基本面无上修应考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，更新收入、利润、现金流和新品放量假设。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和全年业绩确定性。"
-    }
-  ],
-  "review_plan": "常规复查绑定2026年中报和三季报；若核心管线披露重大临床数据、BD、H股发行定价、回购进展或医保谈判变化，则提前复查并重估合理价区间。",
-  "key_risks": [
-    "核心创新药管线临床失败或数据不及预期",
-    "医保谈判、集采和处方控费压缩价格与利润率",
-    "新品放量慢于预期导致销售费用率维持高位",
-    "H股发行或股权安排带来摊薄和资本配置效率争议",
-    "同类或更优机制药物竞争加剧",
-    "市场按创新药高弹性定价但利润仍处转型期，估值波动放大"
-  ],
-  "sources": [
-    "深圳信立泰药业股份有限公司：《2025年年度报告》，2026-04-21，https://www.cnpharm.com/upload/resources/file/2026/04/21/187779.pdf",
-    "深圳信立泰药业股份有限公司：《2026年第一季度报告》，2026-04-21，https://disc.static.szse.cn/disc/disk03/finalpage/2026-04-21/161482ec-dfc0-47c4-a5fd-3684319090e6.PDF",
-    "新浪财经：信立泰（002294）行情与估值页面，检索日期2026-07-08，https://finance.sina.com.cn/realstock/company/sz002294/nc.shtml",
-    "Yahoo Finance：002294.SZ行情页面，检索日期2026-07-08，https://finance.yahoo.com/quote/002294.SZ/",
-    "Investing.com：信立泰（002294）行情与估值页面，检索日期2026-07-08，https://cn.investing.com/equities/shenzhen-salubris-pharma-a"
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "updated_at": "2026-07-08"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

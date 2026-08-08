@@ -1,127 +1,105 @@
 {
-  "symbol": "CN:300376",
-  "market": "CN",
-  "ticker": "300376",
-  "name": "易事特",
-  "company_name": "易事特集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "易事特具备高端电源、数据中心和储能业务基础，但2025年收入增长未转化为利润质量，2026Q1利润和经营现金流继续承压；4.85元股价高于2.80-3.60元保守合理价值区间，暂不买入，等待毛利率、扣非净利、现金流和诉讼风险收敛。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.8,
-    3.6
-  ],
-  "buy_zone": [
-    2.8,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    4.6,
-    5.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "易事特",
+    "security_status": "active",
+    "symbol": "CN:300376",
+    "ticker": "300376"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "89ac99a8d3076e41e9ffef20a03d6bab35bde6b11e24f94f29b325c7ec8d601b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.20元，且最新季度储能毛利率改善、扣非净利润不再同比大幅下滑、诉讼预计负债未显著扩大",
-      "action": "进入买入观察池，不急于成交",
-      "target_position": "0%",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的收入结构、毛利率、扣非净利润、经营现金流和证券诉讼进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.80元，且连续两个季度经营现金流转正或扣非净利润年化达到1.5亿元以上",
-      "action": "小仓试错",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认高端电源和储能订单质量是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.80元，且2026年全年扣非净利润恢复到2亿元以上、应收账款和存货周转改善、证券诉讼风险基本出清",
-      "action": "提高到中低仓位",
-      "target_position": "1.0%-2.0%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估国资进入后治理改善、盈利恢复和现金流质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于4.60元且未出现利润质量显著改善",
-      "action": "不买入，已有仓位减仓",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入可跟踪买区，需要复核最新季度毛利率、现金流和诉讼进展。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "达到保守安全边际价格，若基本面同步改善可小仓试错。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.6
+      },
+      "reason": "高于合理价值上沿，应避免新增仓位或考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "currency": "CNY",
-      "reason": "进入可跟踪买区，需要复核最新季度毛利率、现金流和诉讼进展。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "currency": "CNY",
-      "reason": "达到保守安全边际价格，若基本面同步改善可小仓试错。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.6,
-      "currency": "CNY",
-      "reason": "高于合理价值上沿，应避免新增仓位或考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的收入结构、毛利率、扣非净利润、经营现金流和证券诉讼进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认高端电源和储能订单质量是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估国资进入后治理改善、盈利恢复和现金流质量。"
-    }
-  ],
-  "key_tracking_metrics": [
-    {
-      "metric": "高端电源装备及数据中心收入增速和毛利率",
-      "current": "2025年收入15.27亿元，同比-11.60%，毛利率37.91%",
-      "target": "收入恢复正增长，毛利率维持35%以上"
-    },
-    {
-      "metric": "储能产品及系统收入和毛利率",
-      "current": "2025年收入13.71亿元，同比+351.24%，毛利率9.77%",
-      "target": "毛利率回升到12%-15%以上，避免低价堆量"
-    },
-    {
-      "metric": "扣非归母净利润",
-      "current": "2025年1.31亿元，2026Q1为0.14亿元且同比-72.04%",
-      "target": "2026年恢复到1.5亿元以上，2027年恢复到2.0-2.5亿元"
-    },
-    {
-      "metric": "经营活动现金流",
-      "current": "2025年9.20亿元但含国补回款影响，2026Q1为-2.42亿元",
-      "target": "连续两个季度转正，且不依赖一次性国补回款"
-    },
-    {
-      "metric": "应收账款和存货占用",
-      "current": "2025年末应收账款24.79亿元、存货21.29亿元；2026Q1末应收账款25.00亿元、存货21.36亿元",
-      "target": "合计占收入比例下降，减值风险不扩大"
-    },
-    {
-      "metric": "证券虚假陈述诉讼进展",
-      "current": "2025年报披露2168起案件、累计索赔8698.03万元、累计计提预计负债1.125亿元",
-      "target": "新增索赔和预计负债收敛，现金赔付压力可控"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

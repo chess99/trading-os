@@ -1,93 +1,86 @@
 {
-  "symbol": "CN:688102",
-  "market": "CN",
-  "ticker": "688102",
-  "name": "斯瑞新材",
-  "company_name": "斯瑞新材",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "expensive",
-  "current_thesis": "斯瑞新材在高强高导铜合金、中高压电接触材料、医疗影像零组件和光模块芯片基座/壳体等方向具备真实技术与客户认证基础，2025 年和 2026Q1 增长正在兑现；但 2026-07-09 股价对应市值已显著透支基准盈利增长，当前以观察为主，等待价格回到 22-28 元买入区间或新业务连续超预期后再提高仓位。",
-  "fair_value_range": [
-    28,
-    36
-  ],
-  "buy_zone": [
-    22,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    50
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "斯瑞新材",
+    "security_status": "active",
+    "symbol": "CN:688102",
+    "ticker": "688102"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "5c1cf4c62ed1ea47b3e0a46e32083485e7d59debe64bde4989a6c2fecca98776"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基准合理价值上沿且未见连续两个季度现金流改善",
-      "action": "不新建正式仓位，仅保留研究观察",
-      "max_weight": 0,
-      "reason": "估值已透支 2026-2028 年基准增长，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报的收入增速、毛利率、经营现金流和新业务放量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至 28 元以下且主营毛利率维持在 24% 以上",
-      "action": "建立首笔仓位",
-      "max_weight": 0.015,
-      "reason": "价格进入买入区间，同时核心盈利能力未恶化"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，确认扣非净利润增速和现金流是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利润同比增长 40% 以上、经营现金流改善且光模块/医疗影像业务继续放量",
-      "action": "逐步加仓",
-      "max_weight": 0.03,
-      "reason": "新业务兑现可支撑更高成长估值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入基准买入区间，复核半年报/三季报后可考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价进入 42-50 元且无新增业绩超预期证据",
-      "action": "减仓或不加仓",
-      "max_weight": 0.005,
-      "reason": "价格接近乐观情景估值，风险收益比偏弱"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "进入减持或不加仓区间，需要有新业务超预期才能支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入基准买入区间，复核半年报/三季报后可考虑首笔仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "进入减持或不加仓区间，需要有新业务超预期才能支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年报的收入增速、毛利率、经营现金流和新业务放量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，确认扣非净利润增速和现金流是否改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "主营业务毛利率",
-    "高强高导铜合金材料及制品收入增速",
-    "光模块芯片基座/壳体收入与毛利率",
-    "医疗影像零组件收入与毛利率",
-    "经营活动现金流量净额",
-    "存货与应收账款周转",
-    "铜价与原材料价格传导",
-    "半导体靶材背板和铜铬锆新客户认证进度",
-    "股权激励行权条件完成度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

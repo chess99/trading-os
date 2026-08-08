@@ -1,62 +1,86 @@
 {
-  "symbol": "CN:600539",
-  "market": "CN",
-  "ticker": "600539",
-  "currency": "CNY",
-  "name": "狮头股份",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "狮头股份存量电商服务和净水业务盈利质量偏弱，当前投资命题主要来自拟收购利珀科技后的机器视觉转型期权；在重组仍有不确定性且二级市场价格已反映乐观预期的情况下，缺乏安全边际，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.0,
-    8.0
-  ],
-  "buy_zone": [
-    0.0,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    14.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "狮头股份",
+    "security_status": "active",
+    "symbol": "CN:600539",
+    "ticker": "600539"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "e3357a8cf1efcc742fabc5abf30177af143c3841d1decf6b765dceaf13a7b819"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价低于5.0元、重组审核/注册进度明确、利珀科技订单与回款质量可验证且存量业务不再扩大亏损时，才允许建立观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、存量业务盈利质量和重组进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价高于10.0元且没有新增利润、现金流或审核落地证据，不新建仓位并评估减仓/回避。",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入初步买入观察区，需要复核重组进度、标的订单和现金流质量。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、利珀科技交易进度及订单/回款披露。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "价格显著高于基准公允价值区间，题材溢价和重组预期过高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、存量业务盈利质量和重组进展。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入初步买入观察区，需要复核重组进度、标的订单和现金流质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报、利珀科技交易进度及订单/回款披露。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "价格显著高于基准公允价值区间，题材溢价和重组预期过高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

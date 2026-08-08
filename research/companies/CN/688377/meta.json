@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688377",
-  "market": "CN",
-  "ticker": "688377",
-  "name": "迪威尔",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "迪威尔是进入国际油服和深海装备供应链的高端油气设备专用件企业，深海油气生产系统专用件带动产品结构和毛利率改善；当前价格低于中性合理价值区间，但客户集中、ROE偏低、固定资产扩张和油气资本开支周期仍需跟踪验证。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    23,
-    28
-  ],
-  "buy_zone": [
-    16,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "迪威尔",
+    "security_status": "active",
+    "symbol": "CN:688377",
+    "ticker": "688377"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "27d5e87b9f748d9f2d6c5a53b598cc6a51c2b1e567f4218a0ca6f570ddc93f31"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格处于16-20元且未出现客户订单或毛利率恶化信号时分批建仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点验证收入、扣非净利、毛利率和营运资金",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1扣非净利恢复正增长、综合毛利率维持22%以上且经营现金流为正时加仓",
-      "max_weight": 0.07
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认深海订单和产能释放节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "应收账款和存货合计增速显著高于收入增速或深海订单兑现低于预期时降仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和年度分红，重估长期ROE和自由现金流",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入悲观情景附近，若基本面未破坏则安全边际显著提高",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "接近中性合理价值区间上沿，需要重新评估增长兑现和估值匹配度",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "超出当前中性估值区间，若利润和ROE未明显上修则应考虑减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入悲观情景附近，若基本面未破坏则安全边际显著提高"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "接近中性合理价值区间上沿，需要重新评估增长兑现和估值匹配度"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "超出当前中性估值区间，若利润和ROE未明显上修则应考虑减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点验证收入、扣非净利、毛利率和营运资金"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认深海订单和产能释放节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和年度分红，重估长期ROE和自由现金流"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

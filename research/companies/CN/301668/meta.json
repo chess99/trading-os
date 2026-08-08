@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:301668",
-  "ticker": "301668",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "昊创瑞通",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "昊创瑞通具备配电网设备需求增长、上市后现金充足和较高历史ROE等优点，但2026年一季度利润和经营现金流明显承压，当前31元附近估值处于合理区间中上部，缺少足够安全边际，暂列观察。",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    26,
-    34
-  ],
-  "buy_zone": [
-    0,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    39,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "昊创瑞通",
+    "security_status": "active",
+    "symbol": "CN:301668",
+    "ticker": "301668"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "a0672b4b534593a2ab5811ef36f5b3c8dfeab42d10f7e69f7b55b80a4f12bae6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于24元且半年报未出现毛利率、经营现金流或大额减值恶化时，可建立观察仓。",
-      "action": "watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的利润恢复、毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于20元且订单、利润和现金流均未恶化，可提高为小仓位配置。",
-      "action": "small_position",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及电网订单确认节奏。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于39元且2026年利润与经营现金流没有同步上修，减持或不追高。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、募投进展和全年现金流质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入有安全边际的观察买入区间，需要复核半年报和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "若基本面未恶化，绝对估值开始具备较强保护。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 39.0
+      },
+      "reason": "进入乐观情景估值下沿，若业绩未上修应降低仓位或避免追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入有安全边际的观察买入区间，需要复核半年报和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "若基本面未恶化，绝对估值开始具备较强保护。"
-    },
-    {
-      "type": "price_above",
-      "price": 39,
-      "reason": "进入乐观情景估值下沿，若业绩未上修应降低仓位或避免追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的利润恢复、毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及电网订单确认节奏。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、募投进展和全年现金流质量。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,100 +1,95 @@
 {
-  "symbol": "CN:603161",
-  "market": "CN",
-  "ticker": "603161",
-  "name": "科华控股",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "科华控股具备全球涡轮增压器壳体客户资源、混动延寿需求和去杠杆后的资产支撑，但2025年扣非盈利下滑、2026H1预亏、价格和汇率压力尚未证明只是短期扰动；当前股价接近乐观情景，安全边际不足，等待价格回落或2026H2扣非盈利恢复。",
-  "fair_value_range": [
-    8.5,
-    12.5
-  ],
-  "buy_zone": [
-    7.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.0
-  ],
-  "position_plan": [
-    {
-      "condition": "股价进入7.0-8.5元且2026半年报未显著差于预告，同时经营现金流未继续恶化",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "2026Q3单季扣非净利润恢复至2500万元以上、主营毛利率回到15%以上，可在8.5-10.0元区间提高观察仓",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于14.0元且扣非盈利尚未恢复，停止加仓并逐步降低风险暴露",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入买入区上沿，需要复核半年报、毛利率和现金流后决定是否建立观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "接近乐观情景估值下沿，若业绩未兑现应减仓或回避追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报正式数据、预亏原因、汇兑损失和毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报扣非盈利、经营现金流和新项目量产进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、定增完成情况和2027年盈利中枢"
-    }
-  ],
-  "key_metrics": {
-    "2025_revenue_cny": 2239573498.9,
-    "2025_net_profit_cny": 97504150.94,
-    "2025_deducted_net_profit_cny": 53601419.3,
-    "2025_operating_cash_flow_cny": 506454818.82,
-    "2026_q1_revenue_cny": 469465709.1,
-    "2026_q1_net_profit_cny": 15695640.23,
-    "2026_h1_net_profit_forecast_cny": [
-      -4500000,
-      -3000000
-    ]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科华控股",
+    "security_status": "active",
+    "symbol": "CN:603161",
+    "ticker": "603161"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "a9eceff32bd0c3484e10cd34030f4e42a1a2b5757e3d77b6e2ccf401cafb860f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "date": "2026-04-24",
-      "title": "科华控股股份有限公司2025年年度报告",
-      "url": "https://stockmc.xueqiu.com/202604/603161_20260424_C3VP.pdf"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报正式数据、预亏原因、汇兑损失和毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "date": "2026-04-30",
-      "title": "科华控股股份有限公司2026年第一季度报告",
-      "url": "https://stockmc.xueqiu.com/202604/603161_20260430_VFRS.pdf"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报扣非盈利、经营现金流和新项目量产进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "date": "2026-07-15",
-      "title": "科华控股股份有限公司2026年半年度业绩预告",
-      "url": "https://dataclouds.cninfo.com.cn/shgonggao/hsomarket/2026/20260714/0c672eebc17140d3a0c9058c83fbc1b8.PDF"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、定增完成情况和2027年盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入买入区上沿，需要复核半年报、毛利率和现金流后决定是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "接近乐观情景估值下沿，若业绩未兑现应减仓或回避追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

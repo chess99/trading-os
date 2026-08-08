@@ -1,104 +1,122 @@
 {
-  "symbol": "CN:000058",
-  "market": "CN",
-  "ticker": "000058",
-  "name": "深 赛 格",
-  "company_name": "深 赛 格",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "深赛格是深圳国资旗下华强北电子市场和物业经营平台，资产区位有稀缺性，但当前利润和分红不足以支撑高估值，需等待价格进入4元以下或租金、出租率、资产盘活出现可验证改善。",
-  "quality_rating": "B-",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    3.6,
-    4.8
-  ],
-  "buy_zone": [
-    3.2,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深 赛 格",
+    "security_status": "active",
+    "symbol": "CN:000058",
+    "ticker": "000058"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "2d1809a59066cfe9e403cdd0915a08490a90cda806011f343e576c0244548041"
+      }
+    ],
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-80a26507c383.md",
+        "report_id": "CN-000058-2026-07-30-rapid-triage-80a26507c383",
+        "report_type": "rapid_triage",
+        "sha256": "85500f17f63c696eaa0b7231e374a8cdc8274123657a92233255766d0a41e13b"
+      },
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-63a496ff2dcc.md",
+        "report_id": "CN-000058-2026-07-30-rapid-triage-63a496ff2dcc",
+        "report_type": "rapid_triage",
+        "sha256": "cc0149f9f9253e92d00f7fe2692fd3f9c75b8aad234d09a2d22a4f34cf2a5825"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-63a496ff2dcc.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-63a496ff2dcc.md"
+    }
+  },
+  "research": {
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T19:05:00+08:00",
+      "report_id": "CN-000058-2026-07-30-rapid-triage-63a496ff2dcc",
+      "report_path": "reports/2026-07-30-rapid-triage-63a496ff2dcc.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002-correction-001/000058/20260730T190500+0800.triage.json",
+      "source_package_sha256": "63a496ff2dcc3875195e831fe800248c4459a4fc11afb468ffdea056b71380cd"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.00元且未出现重大资产减值、退市风险或国资治理风险",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格接近资产折价买入区，安全边际开始出现"
+      "active": true,
+      "condition": {
+        "description": "公司披露2026年半年度报告，可核验电子市场、物业服务、检验检测、新能源和地产开发的分部收入与毛利、扣非利润、资产减值、经营现金流及资本开支。"
+      },
+      "reason": "正式半年报是判断Q1利润韧性是否可持续、以及地产风险是否继续吞噬核心经营成果的最近关键S1证据。",
+      "trigger_id": "cn000058_2026_h1_filing",
+      "type": "filing"
     },
     {
-      "condition": "股价低于3.60元且2026年中报仍保持盈利、经营现金流未显著恶化",
-      "action": "加至核心观察仓",
-      "max_weight": 0.02,
-      "reason": "资产折价和经营韧性同时成立，赔率改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "A股价格降至4.20元或以下时，市净率和正常化收益倍数明显收缩，可结合最新法拍回收和分部现金流重估研究价值；阈值仅触发复核，不构成操作建议。",
+      "trigger_id": "cn000058_price_4_20",
+      "type": "price"
     },
     {
-      "condition": "核心物业出租率、租金或资产盘活公告明显改善且股价低于4.80元",
-      "action": "加仓",
-      "max_weight": 0.03,
-      "reason": "基本面催化开始兑现而估值仍在合理区间"
+      "active": true,
+      "condition": {
+        "description": "公司披露赛格新城市52套房产司法拍卖成交、流拍或其他处置结果，或惠州群星完成清偿/再融资、累计担保代偿超过5,000万元。"
+      },
+      "reason": "司法处置回收率和担保代偿终值直接决定地产存货、应收追偿权及净资产是否继续受损。",
+      "trigger_id": "cn000058_property_and_guarantee_resolution",
+      "type": "event"
     },
     {
-      "condition": "股价高于6.20元且无租金修复、资产盘活或利润跃升证据",
-      "action": "不新增并择机减仓",
-      "max_weight": 0.005,
-      "reason": "主题溢价过高，风险收益比下降"
+      "active": true,
+      "condition": {
+        "description": "连续两个报告期扣非归母利润和经营现金流同步改善，年度化均达到2亿元以上，且地产存货、商誉及司法处置相关新增损失年度化低于5,000万元，改善不依赖出售金融资产。"
+      },
+      "reason": "只有核心盈利、现金转换和地产损失三项同时得到验证，当前条件停止继续研究的依据才会实质失效。",
+      "trigger_id": "cn000058_conditional_stop_reversal",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使价格、公告和盈利条件均未触发，也应在90天内复核商业物业租金、法拍回收、担保代偿和新能源资本开支。",
+      "trigger_id": "cn000058_conditional_stop_ttl_90d",
+      "type": "date"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入可买区，需复核公告和租赁数据后执行首仓"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入高安全边际区，若中报未恶化可加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "进入减持观察区，除非有明确基本面催化"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "主题溢价明显偏高，优先兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、出租率、租金和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和华强北转型是否反映到利润"
-    }
-  ],
-  "key_tracking_metrics": [
-    "核心电子市场出租率",
-    "核心物业租金和续租率",
-    "华强北AI硬件、机器人、跨境展贸对收入的贡献",
-    "物业经营管理与城市服务毛利率",
-    "经营现金流净额",
-    "资产负债率",
-    "投资性房地产和存货变化",
-    "关联交易金额和资产盘活公告",
-    "现金分红率",
-    "深圳商业地产租金指数"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-30T19:05:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

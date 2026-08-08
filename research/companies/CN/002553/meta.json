@@ -1,141 +1,114 @@
 {
-  "symbol": "CN:002553",
-  "market": "CN",
-  "ticker": "002553",
-  "name": "南方精工",
-  "company_name": "江苏南方精工股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "细分精密轴承和单向离合器主业稳健、资产负债表强，但2025年表观利润主要受金融资产公允价值变动抬高；按可持续扣非利润计，当前15.80元估值偏贵，需等10.5元以下才具备安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    11.5,
-    14.5
-  ],
-  "buy_zone": [
-    8.5,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南方精工",
+    "security_status": "active",
+    "symbol": "CN:002553",
+    "ticker": "002553"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "03cc5e57be0c9bc1655d9124577ae0a97a35434f724f724c7cee45c75896a207"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于8.5元",
-      "price": "<=8.5",
-      "max_weight": 0.05,
-      "position": "3%-5%",
-      "note": "强吸引力区，核心业务估值和折价金融资产保护较足"
-    },
-    {
-      "condition": "股价高于8.5元且小于等于10.5元",
-      "price": "8.5-10.5",
-      "max_weight": 0.03,
-      "position": "1%-3%",
-      "note": "有安全边际，可首仓试错"
-    },
-    {
-      "condition": "股价高于10.5元且小于等于14.5元",
-      "price": "10.5-14.5",
-      "max_weight": 0.01,
-      "position": "0%-1%",
-      "note": "合理区间，等待业绩验证"
-    },
-    {
-      "condition": "股价高于14.5元",
-      "price": ">14.5",
-      "max_weight": 0.0,
-      "position": "0%",
-      "note": "估值偏满，不新增买入"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "reason": "低于有安全边际买入价",
-      "condition": "股价低于10.5元",
-      "price": 10.5,
-      "action": "进入可买区，复核半年报后可建1%-3%首仓"
-    },
-    {
-      "type": "price_below",
-      "reason": "低于强吸引力买入价",
-      "condition": "股价低于8.5元",
-      "price": 8.5,
-      "action": "进入强吸引力区，可提高至3%-5%"
-    },
-    {
-      "type": "price_above",
-      "reason": "高于不应追高价",
-      "condition": "股价高于16.0元",
-      "price": 16.0,
-      "action": "不追高，已有仓位考虑降风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026半年报通常可验证扣非利润、毛利率和现金流是否匹配本报告假设。",
-      "condition": "2026半年报披露",
-      "action": "复查扣非净利润、毛利率和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "工业机器人业务是估值上行的主要期权，兑现或失速都需要重估。",
-      "condition": "工业机器人收入年度化超过4000万元或连续两个季度失速",
-      "action": "复查成长假设"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "金融资产波动可能再次主导利润表，需要避免误用表观利润估值。",
-      "condition": "其他非流动金融资产公允价值变动对净利润影响超过扣非利润30%",
-      "action": "复查利润质量和估值口径"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "跌破买入价或升至追高区都需要重新确认仓位纪律。",
-      "condition": "股价跌破10.5元或突破16.0元",
-      "action": "复查估值与仓位"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "低于有安全边际买入价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "低于强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "高于不应追高价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    {
-      "name": "扣非归母净利润",
-      "target": "2026年不低于1.05亿元，2027年进入1.20亿元以上"
-    },
-    {
-      "name": "精密轴承和单向离合器合计收入增速",
-      "target": "维持5%以上"
-    },
-    {
-      "name": "工业机器人收入",
-      "target": "2026年超过4000万元，2027年超过7000万元"
-    },
-    {
-      "name": "新能源汽车收入和毛利率",
-      "target": "收入增速20%以上，毛利率回升至28%以上"
-    },
-    {
-      "name": "经营现金流/扣非净利润",
-      "target": "连续年度保持0.8以上"
-    },
-    {
-      "name": "金融资产公允价值变动影响",
-      "target": "对净利润影响低于扣非利润30%"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

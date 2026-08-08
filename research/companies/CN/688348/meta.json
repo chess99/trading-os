@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688348",
-  "market": "CN",
-  "ticker": "688348",
-  "name": "昱能科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "昱能科技是A股稀缺的MLPE/微型逆变器公司，长期受益于分布式光伏安全、组件级监控和光储一体化趋势；但2025年已由盈转亏，2026Q1仍亏，欧洲户用光伏退坡、价格竞争、费用刚性和储能低毛利压制盈利。当前估值接近账面净资产上方但利润拐点未确认，适合观察，等待价格进入安全区或经营恢复被报表验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24,
-    36
-  ],
-  "buy_zone": [
-    21,
-    25
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    58
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "昱能科技",
+    "security_status": "active",
+    "symbol": "CN:688348",
+    "ticker": "688348"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f0afa8eab38154ff5030f2f811ee36759dda6882335484463cb49865f0bd1ae9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入21-25元且未出现治理、质押、现金流或存货减值进一步恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "公司预计披露2026年中报，需核验收入、亏损收窄、毛利率、现金流和减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或后续季度显示亏损环比收窄、微逆毛利率回到30%以上、经营现金流为正",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断欧洲户用光伏和储能业务是否出现连续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于45元但年化归母利润未恢复至1.5亿元以上",
-      "action": "减仓或暂停买入",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，决定是否从观察上调为买入或下调为不买。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入低谷PB和基准估值下沿附近，若基本面未继续恶化可重新评估左侧买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "在利润拐点未确认前已透支乐观修复预期，应降低仓位或等待新财报验证。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入低谷PB和基准估值下沿附近，若基本面未继续恶化可重新评估左侧买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "在利润拐点未确认前已透支乐观修复预期，应降低仓位或等待新财报验证。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "公司预计披露2026年中报，需核验收入、亏损收窄、毛利率、现金流和减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断欧洲户用光伏和储能业务是否出现连续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，决定是否从观察上调为买入或下调为不买。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

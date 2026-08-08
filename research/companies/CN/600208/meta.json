@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600208",
-  "ticker": "600208",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "衢州发展",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "资产折价明显，国资实际控制和上海核心项目降低尾部风险，但地产行业仍下行、利润依赖投资收益且转型尚未闭环；等待更低价格或经营兑现后再提高仓位。",
-  "fair_value_range": [
-    3.0,
-    3.6
-  ],
-  "buy_zone": [
-    2.1,
-    2.45
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    4.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "衢州发展",
+    "security_status": "active",
+    "symbol": "CN:600208",
+    "ticker": "600208"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "22a3e878528b81dadb3c6c19b6e07e8df40a5227adacfe4c93978e3e56c65573"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于2.45元且无新增重大减值、短债风险或治理负面公告",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查上海项目结算、投资收益和有息负债变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.10元且上海核心项目销售回款正常、有息负债未恶化",
-      "action": "提高至价值仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报，确认经营现金流、合同负债和存货减值趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于3.60元但未出现负债下降、转型资产落地或利润中枢上修",
-      "action": "停止加仓并复核估值",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估资产折价和转型进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.45
+      },
+      "reason": "进入初始买入区间，当前市净率折价提供一定安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.1
+      },
+      "reason": "进入深度折价区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "接近乐观情景估值下沿，需要减仓或等待转型兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.45,
-      "reason": "进入初始买入区间，当前市净率折价提供一定安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 2.1,
-      "reason": "进入深度折价区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "接近乐观情景估值下沿，需要减仓或等待转型兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查上海项目结算、投资收益和有息负债变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报，确认经营现金流、合同负债和存货减值趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估资产折价和转型进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

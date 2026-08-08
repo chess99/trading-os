@@ -1,98 +1,96 @@
 {
-  "symbol": "CN:002105",
-  "market": "CN",
-  "ticker": "002105",
-  "name": "信隆健康",
-  "company_name": "信隆健康",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "信隆健康主营自行车零配件和运动健身康复器材，2025年和2026Q1仍处亏损，毛利率受欧美需求、铝材价格和人民币升值压制；当前股价对应约2.31倍2026Q1 PB，尚未给出足够安全边际，适合仅跟踪，等待价格回落和连续季度利润修复。",
-  "quality_rating": "low_to_mid",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    3.2,
-    4.2
-  ],
-  "buy_zone": [
-    2.6,
-    3.3
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "信隆健康",
+    "security_status": "active",
+    "symbol": "CN:002105",
+    "ticker": "002105"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "38e5d6b279628f18e489586fbdeae7f22dbf7b4e1ff743f6c784d1c6cfcc6eb8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且公司仍未扭亏",
-      "action": "不买入，已有仓位反弹减仓",
-      "max_weight": 0,
-      "reason": "2026-07-10收盘价5.04元对应约2.31倍2026Q1 PB，亏损制造企业风险补偿不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026中报是否扭亏、毛利率是否修复、汇兑损失是否继续扩大",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.30元且连续两个季度扣非净利接近或高于0、综合毛利率回到14%以上、经营现金流为正",
-      "action": "允许建立观察仓",
-      "max_weight": 0.01,
-      "reason": "只有价格和盈利修复同时出现，才具备小仓位试错价值"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报收入、扣非净利、经营现金流和存货变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.60元且资产质量、短债和经营现金流未恶化",
-      "action": "可提高至小仓位跟踪",
-      "max_weight": 0.02,
-      "reason": "低于0.9倍左右2026Q1归母净资产时具备资产折价保护，但仍需控制周期风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "进入初始买入观察区，需要复核中报利润和毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入深度折价区，需要复核资产质量和现金流后评估是否加至2%以内",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "高于减仓区下沿，若基本面未明显扭亏，应降低或避免仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "进入初始买入观察区，需要复核中报利润和毛利率"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "进入深度折价区，需要复核资产质量和现金流后评估是否加至2%以内"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "高于减仓区下沿，若基本面未明显扭亏，应降低或避免仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026中报是否扭亏、毛利率是否修复、汇兑损失是否继续扩大"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报收入、扣非净利、经营现金流和存货变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "quarterly_revenue_growth",
-    "gross_margin",
-    "bicycle_parts_volume",
-    "sports_fitness_rehab_volume",
-    "rehabilitation_equipment_revenue",
-    "oem_odm_revenue_share",
-    "aluminum_price",
-    "usd_cny",
-    "financial_expense",
-    "inventory",
-    "inventory_write_down",
-    "operating_cash_flow",
-    "top_5_customer_share",
-    "short_term_borrowings",
-    "dividend_plan"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

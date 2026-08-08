@@ -1,78 +1,105 @@
 {
-  "symbol": "CN:000822",
-  "ticker": "000822",
-  "name": "山东海化",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "current_price": 3.92,
-  "current_price_as_of": "2026-07-13",
-  "fair_value_range": [
-    3.6,
-    5.2
-  ],
-  "buy_zone": [
-    2.8,
-    3.3
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    6.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山东海化",
+    "security_status": "active",
+    "symbol": "CN:000822",
+    "ticker": "000822"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "25413f37271aaeaefe76982c43c5b1ba0cb38ac5c9bdc2623998b3d7d08a08df"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "纯碱价格仍在成本线附近、公司单季度扣非利润未转正前，仅纳入观察池",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查扣非利润、经营现金流、库存和借款变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入2.8-3.3元且2026Q2/Q3经营现金流改善，可建立小仓位跟踪",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断纯碱旺季是否带来单季度盈利拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "重质纯碱价格连续一个季度高于1500元/吨且公司单季度扣非转正，可提高至周期反转仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报，重估净资产、资本开支和长期投资回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "进入买入观察区，接近0.8倍2026Q1每股净资产",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入深度折价区，若行业未继续恶化可重新评估左侧买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "进入减持观察区，需确认盈利修复是否足以支撑高于1.3倍PB的估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "进入买入观察区，接近0.8倍2026Q1每股净资产"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入深度折价区，若行业未继续恶化可重新评估左侧买入"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "reason": "进入减持观察区，需确认盈利修复是否足以支撑高于1.3倍PB的估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查扣非利润、经营现金流、库存和借款变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断纯碱旺季是否带来单季度盈利拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报，重估净资产、资本开支和长期投资回报"
-    }
-  ],
-  "current_thesis": "山东海化是纯碱下行周期中的低PB弹性标的，但2025年大幅亏损、2026Q1继续亏损且经营现金流恶化，行业仍处于供给过剩和库存高位阶段；在纯碱价格企稳、公司单季度扣非转正前维持观察，只有股价跌入0.7-0.8倍PB或行业出清信号明确时才考虑买入。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

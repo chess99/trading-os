@@ -1,91 +1,105 @@
 {
-  "symbol": "CN:600354",
-  "ticker": "600354",
-  "name": "敦煌种业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "区域制种资源和种子业务修复带来2026年利润弹性，但当前股价已反映半年度预增的相当部分，需等待半年报验证利润质量和更好的安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.2,
-    6.7
-  ],
-  "buy_zone": [
-    4.2,
-    4.9
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "敦煌种业",
+    "security_status": "active",
+    "symbol": "CN:600354",
+    "ticker": "600354"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "beb978950e5ab9ae9f71ab26e554c950266ce37da1ad93674b4d625e65bf0eae"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至4.2-4.9元，且2026半年报确认归母净利润接近预告、扣非利润与经营现金流未明显背离",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，验证业绩预告、毛利率、现金流和存货质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "三季报显示全年1.5亿元以上归母净利润大概率兑现，种子毛利率稳定在25%以上且现金流良好",
-      "action": "加仓但保持小市值种业波动约束",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润中枢和估值区间是否需要调整",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "半年报低于预告、种子业务毛利率回落至22%以下或经营现金流明显转差",
-      "action": "撤销买入计划或降至仅跟踪",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认利润弹性是否具有可持续性",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.9
+      },
+      "reason": "进入买入区间上沿，若基本面验证可建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入更高安全边际区间，可重新评估仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "超过合理价值区间上沿，若缺乏新增利润证据应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.9,
-      "reason": "进入买入区间上沿，若基本面验证可建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入更高安全边际区间，可重新评估仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "超过合理价值区间上沿，若缺乏新增利润证据应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，验证业绩预告、毛利率、现金流和存货质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润中枢和估值区间是否需要调整"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认利润弹性是否具有可持续性"
-    }
-  ],
-  "research_notes": {
-    "decision": "观察",
-    "confidence": "中",
-    "last_price": 5.68,
-    "last_price_date": "2026-07-16",
-    "key_sources": [
-      "公司2025年年度报告",
-      "公司2026年第一季度报告",
-      "公司2026年半年度业绩预增公告",
-      "东方财富2026-07-16行情接口"
-    ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

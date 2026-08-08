@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603860",
-  "market": "CN",
-  "ticker": "603860",
-  "name": "中公高科",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "中公高科是公路科学养护决策细分赛道的稀缺标的，技术和股东背景较强，资产负债表干净且现金充足；但公司收入体量小、项目制波动明显，当前约24元附近估值已反映较多恢复预期，缺少足够安全边际，适合观察等待更低价格或更强订单与利润兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    20,
-    25
-  ],
-  "buy_zone": [
-    17,
-    19
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中公高科",
+    "security_status": "active",
+    "symbol": "CN:603860",
+    "ticker": "603860"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "54de175b8116e4f47c6aa943656731ea1addc63b878a04ace6d295aa298ef4d9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于19元，且2026年半年度报告确认收入恢复、毛利率未继续明显下滑、应收账款和现金流无恶化",
-      "action": "start_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告正式数据、毛利率、应收账款和订单情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于17元，且全年净利润中枢仍可维持4500万元以上、经营现金流未失控",
-      "action": "add_on_margin_of_safety",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润和现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于28元且未来12个月净利润超过6000万元的证据不足",
-      "action": "avoid_chase_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年度报告及分红、回款、信息系统收入占比",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入初始买入区，需要复核半年报和订单质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入较好安全边际区，可评估提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "超过基准情景估值上沿，需要检查是否已有利润加速证据",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19,
-      "reason": "进入初始买入区，需要复核半年报和订单质量"
-    },
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "进入较好安全边际区，可评估提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "超过基准情景估值上沿，需要检查是否已有利润加速证据"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告正式数据、毛利率、应收账款和订单情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润和现金流趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年度报告及分红、回款、信息系统收入占比"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

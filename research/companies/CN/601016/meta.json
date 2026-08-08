@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:601016",
-  "ticker": "601016",
-  "market": "CN",
-  "name": "节能风电",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "央企风电运营平台具备融资和资产稳定性优势，但2025-2026Q1盈利显著下滑，电价市场化和发电量波动压制ROE；当前价格接近中性公允价值上沿，缺乏深度买方安全边际，宜观察等待更低价格或盈利修复证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    2.7,
-    3.4
-  ],
-  "buy_zone": [
-    2.3,
-    2.6
-  ],
-  "sell_or_reduce_zone": [
-    4.1,
-    5.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "节能风电",
+    "security_status": "active",
+    "symbol": "CN:601016",
+    "ticker": "601016"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "4377ff0f892181d7c47118205c539c496c075b4e85276d52e0dfe987f0aef76c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入2.3-2.6元且后续季度发电量同比降幅收窄、市场化电价未继续明显恶化时，可研究性建仓。",
-      "action": "small_research_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中的收入、归母净利润、上网电价、现金流和有息债务变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌破2.3元且归母净利润预期未继续下修、资产负债率和现金流无明显恶化时，重新评估是否提高仓位。",
-      "action": "reassess_add",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及三季度发电量，判断盈利是否出现拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于4.1元但ROE未修复至6.5%以上或2026年归母净利润仍低于7亿元时。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新长期ROE、分红和公允价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入安全买入区间上沿，若基本面未继续恶化可启动研究性建仓复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.3
+      },
+      "reason": "进入更深折价区间，需要复核是否为基本面恶化导致的价值陷阱。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.1
+      },
+      "reason": "超过中性估值上沿较多，若盈利和ROE未同步修复则安全边际不足。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "进入安全买入区间上沿，若基本面未继续恶化可启动研究性建仓复核。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.3,
-      "reason": "进入更深折价区间，需要复核是否为基本面恶化导致的价值陷阱。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.1,
-      "reason": "超过中性估值上沿较多，若盈利和ROE未同步修复则安全边际不足。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的收入、归母净利润、上网电价、现金流和有息债务变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及三季度发电量，判断盈利是否出现拐点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新长期ROE、分红和公允价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,117 +1,114 @@
 {
-  "symbol": "CN:002965",
-  "market": "CN",
-  "ticker": "002965",
-  "name": "祥鑫科技",
-  "company_name": "祥鑫科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "祥鑫科技收入仍在增长，新能源汽车、储能和精密结构件客户资源具备价值，但2025年利润、毛利率、ROE和经营现金流显著恶化，2026Q1转亏，当前49.42元价格已隐含较强利润修复。合理价值约28-38元，30元以下才进入可复核买入区。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    28.0,
-    38.0
-  ],
-  "fair_value_basis": "归一化净利润PE、PB/ROE、PS与利润率反推三种方法交叉验证；单位为CNY/股",
-  "buy_zone": [
-    26.0,
-    30.0
-  ],
-  "buy_zone_condition": "最近一季扣非净利率转正或毛利率明显环比改善，且经营现金流不继续恶化；单位为CNY/股",
-  "sell_or_reduce_zone": [
-    45.0,
-    999.0
-  ],
-  "sell_or_reduce_zone_condition": "若仍未看到净利率和经营现金流修复，45元以上应减仓或不参与；单位为CNY/股",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "祥鑫科技",
+    "security_status": "active",
+    "symbol": "CN:002965",
+    "ticker": "002965"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e9a806ea6d97a669ebbb2c49a582f0ee524857c895c0aaeb9e8e818ca8ac2b42"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于45元且扣非净利率、经营现金流未修复",
-      "action": "不买；已有仓位减仓",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价在30-38元且最近一季扣非净利率转正、毛利率环比改善",
-      "action": "试探仓0.5%-1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价低于30元且收入不失速、经营现金流改善",
-      "action": "配置1.0%-2.0%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于26元且基本面未因客户流失、重大减值或现金流失控而恶化",
-      "action": "上限提高至2.0%-3.0%",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30.0,
-      "currency": "CNY",
-      "reason": "进入可买区上沿，需要确认利润率和现金流修复",
-      "action": "进入可买区，复核最近一季毛利率、扣非净利率和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 26.0,
-      "currency": "CNY",
-      "reason": "进入深度安全边际区，但需排除基本面恶化",
-      "action": "进入深度安全边际区，检查是否由基本面恶化导致下跌"
-    },
-    {
-      "type": "price_above",
-      "price": 45.0,
-      "currency": "CNY",
-      "reason": "高于合理价值区且利润尚未修复时风险收益不佳",
-      "action": "若利润和现金流未修复，减仓或放弃买入"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报后验证利润率和现金流是否修复",
-      "condition": "2026年半年报披露后复盘毛利率、扣非净利率、经营现金流和应收存货变化"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报后验证是否继续亏损或扣非净利率低于0",
-      "condition": "任一季度归母净利润继续亏损或扣非净利率低于0时立即复盘"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "检查重大客户、减值、海外基地和融资事件",
-      "condition": "出现重大客户流失、重大资产减值、海外基地扩产低于预期或大额融资计划时立即复盘"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "价格触发后重估安全边际和仓位",
-      "condition": "股价触及30元、26元或45元价格触发线时复盘"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入可买区上沿，需要确认利润率和现金流修复",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入深度安全边际区，但需排除基本面恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "高于合理价值区且利润尚未修复时风险收益不佳",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "单季毛利率",
-    "扣非净利率",
-    "经营现金流净额/归母净利润",
-    "应收账款+应收票据+应收款项融资/营业收入",
-    "存货周转与存货跌价准备",
-    "前五大客户收入占比",
-    "新能源汽车结构件收入与毛利率",
-    "储能和通信结构件收入占比与毛利率",
-    "新基地达产进度和费用摊薄情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

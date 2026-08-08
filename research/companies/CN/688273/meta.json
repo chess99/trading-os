@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688273",
-  "market": "CN",
-  "ticker": "688273",
-  "name": "麦澜德",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "麦澜德是女性盆底、生殖康复和相关耗材的细分龙头，资产负债表轻、现金充足、毛利率高；但2026Q1收入和利润大幅下滑，需要验证生产场地调整后交付与需求是否恢复。当前价格处于估算合理价值区间内，适合观察，不适合在业绩未恢复前重仓追高。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    28,
-    38
-  ],
-  "buy_zone": [
-    22,
-    27
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    48
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "麦澜德",
+    "security_status": "active",
+    "symbol": "CN:688273",
+    "ticker": "688273"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "0a4636647903eea31cb29495767df52532938d6f862a6bce344c98c85582322e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于27元，且2026H1收入降幅明显收窄、经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证生产场地调整后的收入恢复、毛利率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3收入恢复正增长，扣非归母净利润同比恢复增长，耗材及生殖康复继续增长",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润中枢和费用率趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026全年净利润低于0.8亿元且非一次性原因，或盆底及妇产康复设备持续负增长",
-      "action": "退出或不买",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红，判断成长中枢是否下移",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 27.0
+      },
+      "reason": "进入买入区上沿，若基本面未继续恶化则具备分批建仓赔率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入悲观情景下沿，需要复核是否存在基本面永久损伤",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过乐观情景估值下沿，若利润未恢复到1.2亿元以上应考虑减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 27,
-      "reason": "进入买入区上沿，若基本面未继续恶化则具备分批建仓赔率"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入悲观情景下沿，需要复核是否存在基本面永久损伤"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "超过乐观情景估值下沿，若利润未恢复到1.2亿元以上应考虑减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证生产场地调整后的收入恢复、毛利率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润中枢和费用率趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红，判断成长中枢是否下移"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

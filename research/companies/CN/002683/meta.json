@@ -1,148 +1,96 @@
 {
-  "market": "CN",
-  "ticker": "002683",
-  "symbol": "CN:002683",
-  "name": "广东宏大",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "decision": "观察",
-  "current_rating": "watch",
-  "confidence": "中",
-  "current_thesis": "矿服民爆一体化龙头具备真实资质、区域和大项目壁垒，雪峰科技强化新疆富矿带，防务装备提供期权；但当前估值已接近合理区间，应等待25元以下安全边际或防务订单兑现。",
-  "fair_value_range": [
-    24.0,
-    30.0
-  ],
-  "buy_zone": [
-    22.0,
-    25.0
-  ],
-  "sell_or_reduce_zone": [
-    38.0,
-    45.0
-  ],
-  "summary": "矿服民爆一体化龙头，雪峰科技并表强化新疆富矿带，防务装备提供中长期期权；当前估值接近合理区间，安全边际不足，等待低价或订单兑现。",
-  "business": [
-    "矿山开采服务",
-    "民爆器材销售",
-    "防务装备",
-    "雪峰科技并表带来的能化业务"
-  ],
-  "thesis": [
-    "矿服板块规模行业领先，2025年收入144.37亿元，在手矿服订单逾380亿元。",
-    "民爆行业强监管、强区域和安全许可约束，政策鼓励集中度提升和智能化改造，头部企业受益。",
-    "防务装备收入基数小但增速较高，若订单和交付兑现，估值弹性明显。",
-    "雪峰科技并表强化新疆富矿带卡位，但持股比例较低导致归母利润弹性被少数股东分流。"
-  ],
-  "risks": [
-    "安全生产事故或监管处罚",
-    "应收账款和合同资产回款不及预期",
-    "雪峰科技及后续并购整合不及预期",
-    "防务订单、交付和回款不确定",
-    "矿业资本开支周期下行",
-    "有息负债和财务费用上升"
-  ],
-  "watch_items": [
-    "在手矿服订单是否维持350亿元以上",
-    "矿服和民爆毛利率是否稳定",
-    "防务装备订单、收入、毛利率和预收款变化",
-    "经营活动现金流与归母净利润匹配度",
-    "应收账款加合同资产占收入比例",
-    "雪峰科技归母贡献和协同效果",
-    "拟发行债券、中票、超短融落地和融资成本",
-    "董事会换届、分红、回购或股权激励"
-  ],
-  "valuation": {
-    "reference_price": 28.61,
-    "reference_date": "2026-07-10",
+  "identity": {
     "currency": "CNY",
-    "base_fair_value_per_share": 29.0,
-    "bear_value_per_share": 21.0,
-    "bull_value_per_share": 39.0,
-    "methods": [
-      {
-        "name": "PE",
-        "fair_value_range_per_share": "21-39",
-        "notes": "2026E归母净利润10.0-12.0亿元，16-25倍PE。"
-      },
-      {
-        "name": "SOTP",
-        "fair_value_range_per_share": "26-32",
-        "notes": "矿服、民爆、防务与能化分部估值后，扣除净债务、少数股东和控股折价。"
-      },
-      {
-        "name": "DCF",
-        "fair_value_range_per_share": "24-30",
-        "notes": "归母正常化自由现金流7-9亿元，折现率10%-11%，终值增长2.5%。"
-      }
-    ]
+    "market": "CN",
+    "name": "广东宏大",
+    "security_status": "active",
+    "symbol": "CN:002683",
+    "ticker": "002683"
   },
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "898320bfb38bde7a43babc4dd0a66683f6c3d91e7ad7ea93eaa683a5be5e133a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于25元且未出现重大安全事故、现金流恶化或防务订单证伪",
-      "action": "建立观察仓",
-      "target_weight": "2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价低于22元，或防务订单兑现且应收账款加合同资产未恶化",
-      "action": "加仓",
-      "target_weight": "5%-6%",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "股价高于38元且盈利没有上修，或PE TTM高于30倍且经营现金流弱于净利润",
-      "action": "减仓或退出",
-      "target_weight": "0%-2%",
-      "max_weight": 0.02
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报披露后需要确认雪峰并表、矿服订单、防务收入和现金流质量",
-      "condition": "2026年半年报预计披露后",
-      "action": "复核收入、利润、现金流和应收账款"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报披露后需要判断全年盈利区间和是否达到加仓条件",
-      "condition": "2026年三季报预计披露后",
-      "action": "复核全年盈利、现金流和防务订单兑现"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25.0,
-      "action": "重新评估买入",
-      "reason": "进入安全边际较好的初始买入区"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_below",
-      "price": 22.0,
-      "action": "评估加仓",
-      "reason": "传统业务估值已接近熊市区间，防务期权基本免费"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入安全边际较好的初始买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 38.0,
-      "action": "评估减仓",
-      "reason": "若无盈利上修，估值已透支乐观情景"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "传统业务估值已接近熊市区间，防务期权基本免费",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "若无盈利上修，估值已透支乐观情景",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "source_urls": [
-    "https://announcement.valueonline.cn/20260327/202603271774520137667004056.pdf",
-    "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-24/0d51020f-9efe-4800-bd61-f177496440ca.PDF",
-    "https://www.gdhdkg.com/show.php?id=2645",
-    "https://www.stdaily.com/web/gdxw/2025-03/01/content_303221.html",
-    "https://www.sohu.com/a/1048677861_121319643"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

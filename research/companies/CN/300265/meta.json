@@ -1,104 +1,105 @@
 {
-  "symbol": "CN:300265",
-  "market": "CN",
-  "ticker": "300265",
-  "name": "通光线缆",
-  "company_name": "江苏通光电子线缆股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司受益电网投资、光纤光缆需求修复和装备线缆增长，但 2025 年 ROE 仅 1.42%，2026Q1 收入增而利润降、经营现金流为负；以 2026-07-13 收盘价 14.15 元计，估值明显高于可验证盈利能力，缺乏安全边际。",
-  "quality_rating": "中低",
-  "valuation_rating": "显著高估",
-  "fair_value_range": [
-    5.5,
-    7.5
-  ],
-  "buy_zone": [
-    4.8,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "通光线缆",
+    "security_status": "active",
+    "symbol": "CN:300265",
+    "ticker": "300265"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ddfcd8d7d139cbc5e7a253c07d41832089475bd67ca60bbc0bffc78f3395474e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.0元，且最新季度扣非净利润同比改善、经营现金流没有继续恶化",
-      "action": "建立小仓观察",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、应收账款和装备线缆收入占比",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.5元，且应收账款未继续扩大、装备线缆毛利率维持25%以上",
-      "action": "提高到标准小仓",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断收入增长是否转化为利润和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.8元，且公司全年经营现金流为正、扣非净利润年化超过0.6亿元",
-      "action": "可加至最高观察仓",
-      "target_position": "3%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，决定是否上修或剔除估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于10元但未证明年化归母净利润超过1.2亿元且ROE超过5%",
-      "action": "不新增并考虑退出",
-      "target_position": "0%",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入基准可买区上沿，需要复核最新季度利润与现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "接近每股净资产一倍附近，可能具备安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "超过当前基本面可支持区间，应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "currency": "CNY",
-      "reason": "进入基准可买区上沿，需要复核最新季度利润与现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "currency": "CNY",
-      "reason": "接近每股净资产一倍附近，可能具备安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "currency": "CNY",
-      "reason": "超过当前基本面可支持区间，应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、应收账款和装备线缆收入占比"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断收入增长是否转化为利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，决定是否上修或剔除估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润是否连续两个季度改善",
-    "经营活动现金流净额是否全年为正且不低于净利润",
-    "应收账款余额及应收账款/营业收入比例",
-    "装备线缆收入占比和毛利率是否维持25%以上",
-    "光纤光缆收入和毛利率是否同步改善",
-    "加权ROE是否回升到5%以上",
-    "输电线缆毛利率是否维持或高于8.5%"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

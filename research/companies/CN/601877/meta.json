@@ -1,96 +1,106 @@
 {
-  "symbol": "CN:601877",
-  "market": "CN",
-  "ticker": "601877",
-  "name": "正泰电器",
-  "company_name": "正泰电器",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "正泰电器是低压电器现金牛叠加户用光伏平台的混合资产，当前估值不贵但受光伏周期、正泰安能资本运作和民企治理折价约束，适合等待22.5元以下或半年报验证后分批买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    27.0,
-    32.0
-  ],
-  "buy_zone": [
-    20.0,
-    22.5
-  ],
-  "sell_or_reduce_zone": [
-    34.0,
-    38.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "正泰电器",
+    "security_status": "active",
+    "symbol": "CN:601877",
+    "ticker": "601877"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "3991fe0844e57f1fbf280e9ab6d34376cf889063c611d9759a58f5d0af137b88"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于22.5元且无新增治理、现金流或光伏政策重大负面",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "估值接近10倍左右归母净利润，低压电器现金牛和正泰安能权益价值提供安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点拆分低压电器、正泰安能、电站资产、现金流和负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1确认低压电器毛利率稳定、正泰安能现金流正常、安能资本运作估值不低于当前隐含水平",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "核心不确定性下降，可从观察仓提升为中等仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，观察Q1高收入增长后的利润和现金流延续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "正泰安能分拆路径清晰、经营现金流持续覆盖归母净利润、资产负债表未恶化",
-      "action": "提高至上限仓位",
-      "max_weight": 0.04,
-      "reason": "低压主业与户用光伏平台价值均被验证，但新能源周期和治理折价仍限制仓位上限"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.5
+      },
+      "reason": "进入建议首笔买入区间，安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入深度价值区间，可复核后提高买入优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "超过减仓观察线，若盈利未上修则风险回报转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "进入明显偏高区间，除非安能上市或利润显著超预期，否则应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22.5,
-      "reason": "进入建议首笔买入区间，安全边际改善"
-    },
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "reason": "进入深度价值区间，可复核后提高买入优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 34.0,
-      "reason": "超过减仓观察线，若盈利未上修则风险回报转弱"
-    },
-    {
-      "type": "price_above",
-      "price": 38.0,
-      "reason": "进入明显偏高区间，除非安能上市或利润显著超预期，否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点拆分低压电器、正泰安能、电站资产、现金流和负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，观察Q1高收入增长后的利润和现金流延续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "低压电器收入增速与毛利率",
-    "正泰安能新增装机、交易电站规模、持有电站规模和净利润",
-    "经营活动现金流净额/归母净利润",
-    "电站资产出售价格、回款周期和项目IRR",
-    "资产负债率、有息负债、担保余额和受限资产",
-    "正泰安能分拆上市进度和少数股权交易估值",
-    "户用及工商业分布式光伏电价、并网、消纳政策",
-    "分红率和资本开支强度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

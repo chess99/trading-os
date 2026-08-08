@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603589",
-  "market": "CN",
-  "ticker": "603589",
-  "name": "口子窖",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "口子窖具备安徽区域品牌、兼香型差异化和低杠杆资产负债表，但2025年及2026Q1收入、利润、经营现金流同步恶化，说明渠道库存、动销和省内竞争压力尚未解除。当前股价接近合理价值中枢，缺乏足够安全边际，需等待经营现金流转正和高档酒/批发代理渠道降幅收窄后再考虑加仓。",
-  "fair_value_range": [
-    17.0,
-    23.0
-  ],
-  "buy_zone": [
-    13.5,
-    16.0
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "口子窖",
+    "security_status": "active",
+    "symbol": "CN:603589",
+    "ticker": "603589"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c03e9355ddc6498c1187c63007e72a99cdccdd3777384df672e4eaf842054937"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入13.5-16.0元，且最新季度经营现金流未进一步恶化，高档白酒收入降幅开始收窄",
-      "action": "建立观察性小仓位",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查经营现金流、合同负债、高档白酒和批发代理渠道",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流转正，批发代理渠道收入降幅收窄至个位数，安徽省内收入企稳",
-      "action": "提高至核心观察仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认中秋旺季后收入、现金流和渠道库存是否出现拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H2后经营现金流仍为负，或高档白酒/批发代理渠道继续双位数下滑",
-      "action": "不加仓并考虑移出买入候选",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重新校准长期盈利中枢与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入买入区间上沿，需要复核经营现金流和渠道数据是否继续恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入深度安全边际区间，可重新评估小仓位买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过合理价值区间上沿，需要评估是否已透支经营修复",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入买入区间上沿，需要复核经营现金流和渠道数据是否继续恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入深度安全边际区间，可重新评估小仓位买入"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "超过合理价值区间上沿，需要评估是否已透支经营修复"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查经营现金流、合同负债、高档白酒和批发代理渠道"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认中秋旺季后收入、现金流和渠道库存是否出现拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重新校准长期盈利中枢与估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

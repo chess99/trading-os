@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:601222",
-  "market": "CN",
-  "ticker": "601222",
-  "name": "林洋能源",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "林洋能源具备智能配用电稳定底盘、低PB资产保护和回购增持支撑，但2025年及2026Q1利润趋势仍弱，储能和光伏产品盈利质量不足，当前应等待利润修复或更低价格提供安全边际。",
-  "fair_value_range": [
-    5.2,
-    6.4
-  ],
-  "buy_zone": [
-    4.2,
-    4.6
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    7.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "林洋能源",
+    "security_status": "active",
+    "symbol": "CN:601222",
+    "ticker": "601222"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "df8cb73ece452c065868e911a27f2f545c418358863b9f0825fa2e62883848cd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.2元且2026半年报未显示扣非利润、经营现金流继续恶化时，仅建立观察仓。",
-      "action": "watch_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、智能配用电和储能毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.6元，或智能配用电与储能毛利率改善且经营现金流转正后股价仍低于5.0元。",
-      "action": "buy_or_add",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和电网中标进度，判断利润修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.8元但ROE仍低于4%，或光伏产品、储能继续拖累利润。",
-      "action": "reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-02-09"
+      },
+      "reason": "复核第四期回购和控股股东增持计划完成情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入基准估值下沿并提供足够安全边际，可重新评估买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "超过基准估值上沿，若盈利质量未修复应减仓或避免追高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入基准估值下沿并提供足够安全边际，可重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "超过基准估值上沿，若盈利质量未修复应减仓或避免追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、智能配用电和储能毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和电网中标进度，判断利润修复是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-02-09",
-      "reason": "复核第四期回购和控股股东增持计划完成情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

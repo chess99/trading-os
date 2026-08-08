@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300530",
-  "ticker": "300530",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "领湃科技",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "领湃科技处于新能源储能业务转型验证期，收入规模小、持续亏损、经营现金流为负，当前市值已提前反映乐观反转预期；在订单、毛利率和现金流未连续改善前只观察不买。",
-  "fair_value_range": [
-    5.0,
-    8.0
-  ],
-  "buy_zone": [
-    0.0,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    20.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "领湃科技",
+    "security_status": "active",
+    "symbol": "CN:300530",
+    "ticker": "300530"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "3d2e83ea9b690edd16486fd9e36d1fe3c4224b430ef5935811e69c234878a598"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.5元，且连续两个季度收入超过8000万元、经营现金流明显改善后，才允许建立观察仓。",
-      "action": "watchlist_entry",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、经营现金流和合同负债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "收入放量至单季度1亿元以上、毛利率改善且经营现金流转正后，再重新评估是否提高仓位。",
-      "action": "reassess_for_small_position",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认储能系统和EPC业务是否持续放量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12元但订单、利润和现金流没有兑现，维持不买并降低跟踪优先级。",
-      "action": "avoid_chasing",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断转型是否形成可持续盈利路径。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入初步安全边际区间，可结合季度收入和现金流重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "估值进入乐观情景区间，若基本面未兑现应回避追高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入初步安全边际区间，可结合季度收入和现金流重新评估观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "估值进入乐观情景区间，若基本面未兑现应回避追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、经营现金流和合同负债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认储能系统和EPC业务是否持续放量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断转型是否形成可持续盈利路径。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

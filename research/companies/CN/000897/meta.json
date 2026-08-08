@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:000897",
-  "ticker": "000897",
-  "name": "津滨发展",
-  "company_name": "天津津滨发展股份有限公司",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "current_thesis": "天津区域国资地产项目资产包，账面净资产折价但盈利和现金流仍弱，只有在更深折价或预售/结算改善被验证后才具备较好风险收益比。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.45,
-    1.9
-  ],
-  "buy_zone": [
-    1.2,
-    1.35
-  ],
-  "sell_or_reduce_zone": [
-    2.05,
-    2.3
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "津滨发展",
+    "security_status": "active",
+    "symbol": "CN:000897",
+    "ticker": "000897"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "baeae1441667564f01177215539a23d2e1b585c094873e0565842de9a2b2f2fe"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入1.20-1.35元且未出现重大存货减值、控股权恶化或经营现金流进一步失控",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中的项目结算、合同负债、存货和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "合同负债连续两个季度上升且经营现金流明显改善，同时股价低于1.60元",
-      "action": "小幅加仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断预售回款和结算节奏是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于2.05元但利润恢复和项目去化未被验证",
-      "action": "减持或不追高",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估资产折价、安全边际和股东回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.35
+      },
+      "reason": "进入保守买入区，需要复核存货减值和项目销售是否稳定。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.05
+      },
+      "reason": "超过基础估值上沿，需要检查是否已有利润恢复或资产重估依据。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.35,
-      "reason": "进入保守买入区，需要复核存货减值和项目销售是否稳定。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.05,
-      "reason": "超过基础估值上沿，需要检查是否已有利润恢复或资产重估依据。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的项目结算、合同负债、存货和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断预售回款和结算节奏是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估资产折价、安全边际和股东回报。"
-    }
-  ],
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

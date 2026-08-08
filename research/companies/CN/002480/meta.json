@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:002480",
-  "ticker": "002480",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "新筑股份",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "新筑股份的投资核心已切换为重大资产重组：剥离轨交和桥梁功能部件亏损资产、注入蜀道清洁能源60%股权。重组若落地可显著修复报表和业务定位，但当前价格已反映较多乐观预期，审批、并表质量、消纳、电价和摊薄风险仍需验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.2,
-    4.4
-  ],
-  "buy_zone": [
-    0.0,
-    3.1
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新筑股份",
+    "security_status": "active",
+    "symbol": "CN:002480",
+    "ticker": "002480"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "e771b9f50c33f39128f9d93b53cd6f5b8b6e3847b0ceb77b1d1b5b581d6f5edd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "重组获得深交所审核通过及中国证监会同意注册，且交易后口径价格低于3.10元/股",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、业绩预告兑现情况及重组审核进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "蜀道清洁能源完成并表后连续两个报告期经营现金流为正，归母亏损明显收窄或转正，且价格仍低于4.00元/股",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报、重组问询回复和配套募资进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.20元/股但重组注册、募投收益率、并表利润没有新增超预期证据",
-      "action": "不买入并复核减持或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、交割状态、并表质量和业绩承诺基础",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.1
+      },
+      "reason": "进入基准估值下沿以下，若重组进度未恶化则具备重新评估买入的安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "高于当前合理价值上沿，除非审批和置入资产盈利显著超预期，否则风险收益比转弱",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.1,
-      "reason": "进入基准估值下沿以下，若重组进度未恶化则具备重新评估买入的安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "高于当前合理价值上沿，除非审批和置入资产盈利显著超预期，否则风险收益比转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、业绩预告兑现情况及重组审核进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报、重组问询回复和配套募资进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、交割状态、并表质量和业绩承诺基础"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

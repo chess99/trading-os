@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:002090",
-  "market": "CN",
-  "ticker": "002090",
-  "name": "金智科技",
-  "company_name": "金智科技",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "金智科技受益于电网配网投资、信创和新型电力系统建设，智慧能源业务增长较好，但当前估值已反映较多催化，且扣非盈利、ROE、应收存货和项目回款仍需验证，维持观察不追买。",
-  "quality_rating": "B-",
-  "valuation_rating": "expensive",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    6.4,
-    8.2
-  ],
-  "buy_zone": [
-    5.6,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金智科技",
+    "security_status": "active",
+    "symbol": "CN:002090",
+    "ticker": "002090"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "8558666ccb65cbcfeca1928d498ad2d6ad624a7f52ba63b8e847ade8bb9ff3c0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入5.6-6.8元且2026H1经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格低于基准内在价值中枢，且需要现金流确认项目质量"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的智慧能源收入、毛利率、经营现金流和应收存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3智慧能源收入同比增长超过15%、毛利率不低于29%、经营现金流/归母净利润大于0.8",
-      "action": "加仓至小仓位",
-      "max_weight": 0.03,
-      "reason": "订单转收入、毛利率和回款同时验证后，估值可上修"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报订单转化与全年盈利中枢",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10元且扣非利润上修证据不足",
-      "action": "减仓或不追买",
-      "max_weight": 0.0,
-      "reason": "当前估值已经计入较多电网投资和回购催化"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入买入区间上沿，复核半年报现金流和订单后考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入深度折价区，若基本面未恶化可提高胜率",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "超过减仓区间下沿，若无扣非利润明显上修应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "接近乐观情景估值，需以2026E扣非利润接近1亿元作为支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入买入区间上沿，复核半年报现金流和订单后考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入深度折价区，若基本面未恶化可提高胜率"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "超过减仓区间下沿，若无扣非利润明显上修应降低风险暴露"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "接近乐观情景估值，需以2026E扣非利润接近1亿元作为支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的智慧能源收入、毛利率、经营现金流和应收存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报订单转化与全年盈利中枢"
-    }
-  ],
-  "key_tracking_metrics": [
-    "智慧能源收入同比增速",
-    "智慧能源毛利率",
-    "配用电自动化装置及系统毛利率",
-    "经营现金流净额/归母净利润",
-    "销售商品提供劳务收到的现金/营业收入",
-    "应收账款+合同资产+存货/营业收入",
-    "国网和南网中标公告累计金额",
-    "扣非归母净利润",
-    "研发投入/营业收入",
-    "回购执行进度与股权激励解锁条件"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

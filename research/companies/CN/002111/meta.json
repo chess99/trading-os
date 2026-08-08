@@ -1,106 +1,106 @@
 {
-  "symbol": "CN:002111",
-  "market": "CN",
-  "ticker": "002111",
-  "name": "威海广泰",
-  "company_name": "威海广泰",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "空港装备收入、出口和回款正在修复，但消防救援装备毛利率偏低，应收账款与存货仍重；当前价接近合理区间中枢，等待买入区或半年报验证。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    8.5,
-    10.5
-  ],
-  "buy_zone": [
-    7.6,
-    8.2
-  ],
-  "sell_or_reduce_zone": [
-    11.2,
-    12.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "威海广泰",
+    "security_status": "active",
+    "symbol": "CN:002111",
+    "ticker": "002111"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "f02a12865a2cedea8a49ea1ca00bda3757d7f88f4506d8033eeb52de28875ae1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.20元且2026H1未出现应收账款、存货、经营现金流恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "进入买入区上沿，空港装备修复逻辑仍有效，具备安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看空港装备增速、消防毛利率、应收账款、存货和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1收入增长超过20%、经营现金流为正、空港装备毛利率维持30%以上",
-      "action": "加至核心跟踪仓",
-      "max_weight": 0.03,
-      "reason": "增长和现金流得到下一期定报验证，可接受较小估值溢价"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证全年利润和现金流是否支持估值上修",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于11.20元但利润和现金流未同步上修",
-      "action": "减仓或不追买",
-      "max_weight": 0.0,
-      "reason": "超过合理价值区间，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入买入区上沿，适合复核半年报后建立首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "连续两个季度经营现金流为负或消防救援装备毛利率跌破10%",
-      "action": "退出或降为avoid",
-      "max_weight": 0.0,
-      "reason": "核心修复假设失效，应收、存货和低毛利业务风险上升"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.6
+      },
+      "reason": "进入买入区下沿，若基本面未恶化则安全边际较充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.2
+      },
+      "reason": "高于合理价值区间，若无盈利上修应考虑降低预期收益率",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "达到减仓区上沿，除非订单和现金流显著超预期",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入买入区上沿，适合复核半年报后建立首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 7.6,
-      "reason": "进入买入区下沿，若基本面未恶化则安全边际较充分"
-    },
-    {
-      "type": "price_above",
-      "price": 11.2,
-      "reason": "高于合理价值区间，若无盈利上修应考虑降低预期收益率"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "达到减仓区上沿，除非订单和现金流显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看空港装备增速、消防毛利率、应收账款、存货和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证全年利润和现金流是否支持估值上修"
-    }
-  ],
-  "key_tracking_metrics": [
-    "空港装备收入增速",
-    "空港装备毛利率",
-    "消防救援装备收入增速",
-    "消防救援装备毛利率",
-    "境外销售收入及占比",
-    "国际订单金额",
-    "经营活动现金流量净额",
-    "应收账款账面价值及账龄",
-    "存货余额及跌价准备",
-    "销售费用率",
-    "研发费用率",
-    "可转债转股与总股本变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

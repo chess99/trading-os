@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920651",
-  "market": "CN",
-  "ticker": "920651",
-  "name": "天罡股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "公司盈利、分红和资产负债表质量较好，但毛利率下行、2026Q1增长停滞且当前价格隐含双位数自由现金流增长，等待更充分安全边际。",
-  "fair_value_range": [15.0, 19.0],
-  "buy_zone": [12.5, 14.5],
-  "sell_or_reduce_zone": [22.0, 25.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天罡股份",
+    "security_status": "active",
+    "symbol": "CN:920651",
+    "ticker": "920651"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "30bda6ed1a200535a6b4d096427c29e4b28b1ed1736609b5e908250951da1941"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于12.5-14.5元且核心表计收入仍增长、综合毛利率不低于45%、应收账款未显著恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的毛利率、应收账款、存货、经营现金流和核心产品增速",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "半年报或三季报验证经营现金流改善、新产线回报和核心假设，且股价仍低于合理价值中枢",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入有安全边际的重点复核和分批买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "毛利率跌破42%、经营现金流持续恶化、出现大额客户违约或治理风险时，不因价格下跌加仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入减仓或不应追高区间，需由更高正常化自由现金流支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、应收账款、存货、经营现金流和核心产品增速"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入有安全边际的重点复核和分批买入区间"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "进入减仓或不应追高区间，需由更高正常化自由现金流支撑"
-    }
-  ],
-  "updated_at": "2026-07-15T17:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

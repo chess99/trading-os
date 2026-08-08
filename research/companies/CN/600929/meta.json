@@ -1,76 +1,86 @@
 {
-  "symbol": "CN:600929",
-  "ticker": "600929",
-  "name": "雪天盐业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "雪天盐业具备地方盐资源、食盐品牌渠道和盐化工一体化底盘，但2025年和2026Q1盈利大幅下滑，当前约1倍PB有资产支撑却缺少盈利修复确认；4.10元以下才具备初步安全边际。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    4.3,
-    5.8
-  ],
-  "buy_zone": [
-    0,
-    4.1
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "雪天盐业",
+    "security_status": "active",
+    "symbol": "CN:600929",
+    "ticker": "600929"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "0dfab1d9e8491dc0233c291ef3acf4fdbba6bea5906b526ea7ab642a0157e64d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.10元且最新季度扣非净利润未继续恶化",
-      "action": "small_watch_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认盐化工利润、现金流和项目投产进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.60元且经营现金流为正、盐化工价格不再下行",
-      "action": "increase_to_core_watch_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断盈利修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.20元但ROE仍低于5%",
-      "action": "reduce_or_avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "进入初步买入观察区，需要复核盈利和现金流是否继续恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "高于情景估值中枢，若盈利未修复需降低仓位或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.1,
-      "reason": "进入初步买入观察区，需要复核盈利和现金流是否继续恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "高于情景估值中枢，若盈利未修复需降低仓位或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认盐化工利润、现金流和项目投产进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断盈利修复是否连续"
-    }
-  ],
-  "key_monitoring_items": [
-    "纯碱、烧碱、氯化铵和工业盐价格",
-    "扣非归母净利润环比趋势",
-    "经营现金流净额",
-    "食盐业务毛利率和中高端盐占比",
-    "在建工程转固、折旧和有息负债"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

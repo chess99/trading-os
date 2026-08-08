@@ -1,91 +1,121 @@
 {
-  "symbol": "CN:688012",
-  "market": "CN",
-  "ticker": "688012",
-  "name": "中微公司",
-  "currency": "CNY",
-  "status": "active",
-  "priority": "P1",
-  "analyst": "Codex subagent + GPT-5",
-  "current_rating": "watch",
-  "rating_updated_at": "2026-07-09T23:30:00+08:00",
-  "fair_value_range": [
-    230,
-    310
-  ],
-  "buy_zone": [
-    180,
-    240
-  ],
-  "sell_or_reduce_zone": [
-    360,
-    480
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中微公司",
+    "security_status": "active",
+    "symbol": "CN:688012",
+    "ticker": "688012"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "af2ff187f33ce97b4d05f1bdd2293c65341f547e663f1739b8368c80a133dd73"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-followup.md",
+        "sha256": "07b4f10226e7b69895c8f4beae7db89d84964e7d49fff218166fd8cc67299fb6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于360元",
-      "action": "不新增，已有仓位降为观察仓",
-      "target_weight": 0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报后复核收入、扣非利润、毛利率、合同负债、存货和薄膜设备放量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在220-240元且基本面未恶化",
-      "action": "建立第一笔观察仓",
-      "target_weight": 0.015,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复核订单、薄膜重复订单、众硅并购协同和扣非利润质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于180元且订单、毛利率和扣非利润未恶化",
-      "action": "分批加仓",
-      "target_weight": 0.04,
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 240.0
+      },
+      "reason": "进入安全边际买入区，若基本面未恶化可建观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 180.0
+      },
+      "reason": "进入强吸引力买入区，需复核订单和毛利后考虑加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 360.0
+      },
+      "reason": "高于不应追高区，除非扣非利润和订单显著超预期，否则不新增。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 460.0
+      },
+      "reason": "接近乐观情景上沿，已有仓位应考虑降风险。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 480.0
+      },
+      "reason": "进入极端乐观估值区，除非基本面大幅上修，否则应减仓。",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "thesis": "公司是国产半导体刻蚀设备龙头，薄膜设备和MOCVD提供第二增长曲线，但2026-07-09约471.59元、按上交所股本重算约4517亿元市值已接近乐观情景上沿，当前评级为watch，不新增。",
-  "current_thesis": "公司是国产半导体刻蚀设备龙头，薄膜设备和MOCVD提供第二增长曲线，但2026-07-09约471.59元、按上交所股本重算约4517亿元市值已接近乐观情景上沿，当前评级为watch，不新增。",
-  "latest_report": "reports/2026-07-09-followup.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-09-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报后复核收入、扣非利润、毛利率、合同负债、存货和薄膜设备放量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复核订单、薄膜重复订单、众硅并购协同和扣非利润质量。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 240,
-      "reason": "进入安全边际买入区，若基本面未恶化可建观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 180,
-      "reason": "进入强吸引力买入区，需复核订单和毛利后考虑加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 360,
-      "reason": "高于不应追高区，除非扣非利润和订单显著超预期，否则不新增。"
-    },
-    {
-      "type": "price_above",
-      "price": 460,
-      "reason": "接近乐观情景上沿，已有仓位应考虑降风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 480,
-      "reason": "进入极端乐观估值区，除非基本面大幅上修，否则应减仓。"
-    }
-  ],
-  "updated_at": "2026-07-09T23:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

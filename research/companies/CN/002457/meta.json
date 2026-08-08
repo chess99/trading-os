@@ -1,147 +1,133 @@
 {
-  "symbol": "CN:002457",
-  "market": "CN",
-  "ticker": "002457",
-  "name": "青龙管业",
-  "company_name": "青龙管业集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "细分水利管道和PCCP项目履约能力真实，国家水网投资提供长期需求底，但公司仍是订单型、工程型、回款型制造企业。2025年利润大幅下滑、2026Q1亏损，当前15.76元/52.56亿元市值已反映乐观订单预期，缺乏安全边际。",
-  "quality_rating": "B-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    9.0,
-    12.0
-  ],
-  "buy_zone": [
-    7.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    13.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "青龙管业",
+    "security_status": "active",
+    "symbol": "CN:002457",
+    "ticker": "002457"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "2189c0f2ca6d879fb147b5135b62271d75ed0305d72eb4c3478e645258f7dc42"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于7.0元",
-      "price": "<=7.0",
-      "max_weight": 0.1,
-      "position": "8%-10%",
-      "action": "强安全边际买入"
-    },
-    {
-      "condition": "股价大于7.0元且小于等于8.5元",
-      "price": "7.0-8.5",
-      "max_weight": 0.05,
-      "position": "5%",
-      "action": "首笔仓位"
-    },
-    {
-      "condition": "股价大于8.5元且小于等于10.0元，并且订单和毛利确认改善",
-      "price": "8.5-10.0",
-      "max_weight": 0.03,
-      "position": "2%-3%",
-      "action": "仅在订单和毛利确认后小仓"
-    },
-    {
-      "condition": "股价大于10.0元且小于等于12.0元",
-      "price": "10.0-12.0",
-      "max_weight": 0.01,
-      "position": "0%-1%",
-      "action": "合理区间，以观察为主"
-    },
-    {
-      "condition": "股价高于13.0元",
-      "price": ">13.0",
-      "max_weight": 0.0,
-      "position": "0%",
-      "action": "不追高"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "direction": "below",
-      "reason": "低于有安全边际买入价",
-      "action": "复查并考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "direction": "below",
-      "reason": "低于强吸引力买入价",
-      "action": "复查并考虑强安全边际仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "direction": "above",
-      "reason": "高于基准合理价格区间上沿",
-      "action": "已有仓位考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "direction": "above",
-      "reason": "进入不应追高区",
-      "action": "不追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证订单兑现、毛利率和现金流是否改善",
-      "action": "复查收入、毛利率、经营现金流和应收账款"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
-      "condition": "广西5.57亿元PCCP合同出现供货、回款或变更公告",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "该合同金额占2025年收入比例高，是当前股价的重要催化",
-      "action": "复核订单兑现节奏和毛利率假设"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "混塔项目约4.97亿元拟中标转为正式合同或落空",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "拟中标尚未等同于正式合同，需要验证增量业务真实性",
-      "action": "更新增量收入和利润情景"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "股价跌入8.5元以下买入区",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "进入有安全边际买入区后需要重新核验基本面",
-      "action": "按最新财务和订单数据重新评估首笔仓位"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "应收款项会计估计变更对利润和资产质量影响明确",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "应收账款和坏账假设是财务质量核心风险",
-      "action": "复核财务质量评级"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "低于有安全边际买入价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "低于强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于基准合理价格区间上沿",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "进入不应追高区",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "新签合同金额和正式合同金额",
-    "在手订单及收入确认节奏",
-    "综合毛利率和管道业务毛利率",
-    "归母净利润和扣非归母净利润",
-    "经营现金流净额/净利润",
-    "应收账款加合同资产/营业收入",
-    "期间费用率",
-    "ROE",
-    "分红率和再融资行为"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

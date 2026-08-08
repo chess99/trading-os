@@ -1,76 +1,110 @@
 {
-  "symbol": "CN:300077",
-  "market": "CN",
-  "ticker": "300077",
-  "name": "国民技术",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "2026H1预告归母净利350万-550万元，芯片销量、收入和毛利额改善，但利润含未量化的交易性金融资产公允价值收益；新增8.35亿元银行授信及董事长68.14%的持股质押比例继续约束现金流与治理质量。A股19.24元仍高于9-14元合理价值且位于减仓区，当前不值得买入。",
-  "fair_value_range": [
-    9.0,
-    14.0
-  ],
-  "buy_zone": [
-    7.5,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国民技术",
+    "security_status": "active",
+    "symbol": "CN:300077",
+    "ticker": "300077"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "5713647c7a9784e06e3b4da270a1680f066b28b83df199a67c89a80e2869436e"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "163f34c9d34256db8cb714d13957a2987c2791cd7bd6232380ce054de20d5fbe"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入7.5-10元，且芯片毛利率不再下滑、存货与应收合计下降、斯诺无新增重大减值或偿债风险，分三笔建立观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报的芯片与负极材料收入/毛利、单季盈亏、经营现金流、应收、存货和有息负债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.5元，重新核验下跌并非债务违约、客户流失、治理恶化或永久性竞争力受损，并确认集团经营现金流改善。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认高端芯片商业化、斯诺开工率与毛利、H股融资现金用途及集团是否单季盈利。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于18元，或负极材料毛利率跌破8%、集团经营现金流持续为负且有息负债上升，只减不加。",
-      "max_weight": 0.0025
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报的自由现金流、资本回报、担保风险和分产品规模收入证据。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入买入区上沿，需重新核验芯片毛利、库存应收现金化及斯诺偿债风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入深度复核区，只有内在价值未受损且现金流改善才可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过减仓区上沿，除非正常化归母利润超过5亿元且自由现金流同步验证，否则退出。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报的芯片与负极材料收入/毛利、单季盈亏、经营现金流、应收、存货和有息负债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认高端芯片商业化、斯诺开工率与毛利、H股融资现金用途及集团是否单季盈利。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报的自由现金流、资本回报、担保风险和分产品规模收入证据。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入买入区上沿，需重新核验芯片毛利、库存应收现金化及斯诺偿债风险。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入深度复核区，只有内在价值未受损且现金流改善才可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "超过减仓区上沿，除非正常化归母利润超过5亿元且自由现金流同步验证，否则退出。"
-    }
-  ],
-  "updated_at": "2026-07-18T00:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

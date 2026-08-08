@@ -1,103 +1,106 @@
 {
-  "symbol": "CN:688388",
-  "market": "CN",
-  "ticker": "688388",
-  "name": "嘉元科技",
-  "company_name": "嘉元科技",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "嘉元科技是锂电铜箔第一梯队公司，2026Q1利润弹性显示行业加工费、稼动率和高端产品占比改善，但当前股价已反映较强复苏预期，需等待半年度经营现金流和持续盈利验证后再提高仓位。",
-  "quality_rating": "B",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    31,
-    39
-  ],
-  "buy_zone": [
-    26,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    52
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "嘉元科技",
+    "security_status": "active",
+    "symbol": "CN:688388",
+    "ticker": "688388"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "44d24438470d11b5ca564b4ff329133294e4e5c90d5e21d3ca29b00f16a5800a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于31-39元合理价值区间内，且尚未看到2026年半年度经营现金流验证",
-      "action": "仅保留观察仓或暂不新买",
-      "max_weight": 0.01,
-      "reason": "股价已反映较强周期修复，静态估值高，需等待Q2/Q3利润和现金流确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年度报告，重点验证Q2利润、经营现金流、应收票据和产能利用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至26-30元且产能利用率维持85%以上、加工费未明显回落",
-      "action": "分批建立首笔仓位",
-      "max_weight": 0.02,
-      "reason": "回撤后风险补偿改善，若行业景气仍在，可用小仓位参与复苏"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季度报告，判断Q1高盈利是否具备持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年半年度或三季度确认经营现金流转正、高端铜箔占比提升且单季净利持续超过1亿元",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "利润弹性和现金创造同时验证后，周期反转可信度提高"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入买入观察区上沿，需要复核加工费、稼动率和客户订单后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价升至45-52元但盈利预测未同步上修，或产能利用率/加工费转弱",
-      "action": "减仓或不追高",
-      "max_weight": 0.005,
-      "reason": "乐观情景被提前定价，回撤风险上升"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "跌至悲观与基准情景交界，应检查是否基本面恶化，若无恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "进入乐观情景估值区间，若全年盈利无法上修至7亿元以上，应考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "超过当前乐观估值上沿，风险收益明显转差",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入买入观察区上沿，需要复核加工费、稼动率和客户订单后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "跌至悲观与基准情景交界，应检查是否基本面恶化，若无恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "进入乐观情景估值区间，若全年盈利无法上修至7亿元以上，应考虑降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "超过当前乐观估值上沿，风险收益明显转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年度报告，重点验证Q2利润、经营现金流、应收票据和产能利用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季度报告，判断Q1高盈利是否具备持续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "锂电铜箔产销量和产能利用率",
-    "锂电铜箔平均加工费及高端产品加工费溢价",
-    "6微米及以下、高强高韧、高比表面、载体箔、HVLP/RTF等高端铜箔占比",
-    "宁德时代系列及前五大客户销售占比",
-    "经营活动现金流量净额",
-    "应收账款、应收票据和存货周转",
-    "购建固定资产等资本开支",
-    "信用减值损失、资产减值损失和存货跌价",
-    "复合铜箔、固态电池铜箔、载体铜箔送样认证和量产进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

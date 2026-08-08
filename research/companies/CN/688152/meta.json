@@ -1,83 +1,95 @@
 {
-  "symbol": "CN:688152",
-  "market": "CN",
-  "ticker": "688152",
-  "name": "麒麟信安",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "麒麟信安具备国产操作系统、云计算与信息安全三位一体能力，在电力和特种行业有先发项目经验与资质壁垒，但 2025 年仍扣非亏损、应收减值和费用投入压制盈利，当前约 27 元价格接近基准公允价值上半部，安全边际不足，宜观察等待价格折价或 2026 年中报验证盈利/现金流修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    22,
-    30
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "麒麟信安",
+    "security_status": "active",
+    "symbol": "CN:688152",
+    "ticker": "688152"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "8e7a170f27dc1b328599064d47a00627382a92b9ef6af4d4faed55f26a2f48f4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入18-22元区间，且2026年半年报收入同比增长不低于15%、经营现金流或应收质量出现改善",
-      "action": "建立小仓观察",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入增速、毛利率、扣非亏损、经营现金流和应收质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价仍高于公允价值中枢且中报未验证扣非亏损收窄或现金流改善",
-      "action": "继续观察，不买入",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及电力、特种行业订单交付进度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于34元但盈利兑现不足，或应收减值继续扩大",
-      "action": "减持或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年收入增长、费用率改善和是否接近扭亏。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入基准公允价值下沿并接近买入区间，可结合中报验证重新评估小仓买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "超过乐观情景下沿，若缺少盈利和现金流兑现，安全边际转弱。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入基准公允价值下沿并接近买入区间，可结合中报验证重新评估小仓买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "超过乐观情景下沿，若缺少盈利和现金流兑现，安全边际转弱。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入增速、毛利率、扣非亏损、经营现金流和应收质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及电力、特种行业订单交付进度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年收入增长、费用率改善和是否接近扭亏。"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "2026年收入增速",
-    "扣非归母净利润亏损收窄幅度",
-    "经营活动现金流净额",
-    "应收款项及信用减值",
-    "电力和特种行业收入/订单",
-    "操作系统收入恢复增长",
-    "AI智算一体机和智能运维收入披露"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

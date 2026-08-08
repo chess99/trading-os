@@ -1,97 +1,96 @@
 {
-  "symbol": "CN:002153",
-  "market": "CN",
-  "ticker": "002153",
-  "name": "石基信息",
-  "company_name": "石基信息",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "石基信息具备酒店、餐饮、零售、支付和海外云产品的稀缺垂直平台价值，但2025年仍亏损、2026Q1收入低个位数增长，当前估值已提前反映部分云化成功预期，适合观察或低价小仓位试错。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "expensive_but_watchable",
-  "fair_value_range": [
-    6.6,
-    8.6
-  ],
-  "buy_zone": [
-    5.8,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "石基信息",
+    "security_status": "active",
+    "symbol": "CN:002153",
+    "ticker": "002153"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "9f5b4a0a920cd59967e9a1a067adf2e544a6ff2ef3eefc06c57678bebbd92955"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约7.74元且缺少2026中报验证",
-      "action": "仅观察或建立小观察仓",
-      "max_weight": 0.01,
-      "reason": "公司仍在亏损转型期，当前估值已反映部分云化成功预期"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证海外收入、扣非利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.8元且酒店与零售信息系统收入继续增长、经营现金流未恶化",
-      "action": "分批加仓",
-      "max_weight": 0.02,
-      "reason": "价格进入买入区间且业务结构改善得到初步验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认云化转型和全年盈利趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.0元且扣非亏损明显收窄、海外客户公告持续转化",
-      "action": "提高到进攻观察仓",
-      "max_weight": 0.025,
-      "reason": "下行保护增强，同时云化兑现概率提高"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入初始买入区间，适合结合中报结构验证分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于9.5元但收入增速仍低于8%或经营现金流继续恶化",
-      "action": "减仓或不追买",
-      "max_weight": 0.005,
-      "reason": "估值进入减仓区间，基本面没有同步兑现"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入深度价值观察区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "进入减仓区，若收入和现金流未同步改善则风险收益转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入初始买入区间，适合结合中报结构验证分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入深度价值观察区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "进入减仓区，若收入和现金流未同步改善则风险收益转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证海外收入、扣非利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认云化转型和全年盈利趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "酒店信息管理系统收入增速和毛利率",
-    "中国大陆以外地区收入增速和毛利率",
-    "第三方硬件配套业务收入占比",
-    "经营活动现金流净额",
-    "扣非归母净利润",
-    "支付系统收入和交易规模",
-    "Daylight PMS和Infrasys POS海外客户落地公告",
-    "思迅软件交易审批和整合进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

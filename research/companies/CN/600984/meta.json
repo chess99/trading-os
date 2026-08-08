@@ -1,82 +1,115 @@
 {
-  "symbol": "CN:600984",
-  "ticker": "600984",
-  "name": "建设机械",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "建设机械具备陕煤集团控股信用、塔机租赁规模和行业出清后的周期修复期权，但 2025 年大额亏损、2026H1 预亏约 5 亿元、租赁价格低位和资产减值风险仍未消除；当前更适合观察，等待现金流、出租率、租金价格和减值趋势确认。",
-  "fair_value_range": [
-    1.8,
-    2.8
-  ],
-  "buy_zone": [
-    1.5,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    3.5,
-    4.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "建设机械",
+    "security_status": "active",
+    "symbol": "CN:600984",
+    "ticker": "600984"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "271af39550accae9a968a39b31ac08507995f87496b997216ef917bcbabc97d0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 2.00 元，且 2026 半年报或三季报显示经营现金流转正、亏损收窄、租赁价格或出租率至少一项改善",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报，重点检查净资产、减值、经营现金流、租赁价格和亏损收窄质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 1.50 元且未出现债务违约、重大资金占用或继续大额不可控减值时，仅可作为困境反转仓位复核",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，判断 H2 是否出现现金流与利润表同步改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 3.50 元但 2026H2 仍亏损或经营现金流转弱，维持零仓位或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新评估资产质量、债务压力和周期修复是否兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "进入安全边际复核区，需要结合半年度或三季度经营现金流、资产减值和租赁价格确认是否可建小仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "接近悲观资产折价价值，可启动困境反转深度复核",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.5
+      },
+      "reason": "若基本面未同步改善，股价已显著高于基准价值区间，需降低或避免暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "价格隐含强复苏情景，需要利润和现金流证据支撑，否则风险收益不对称",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "进入安全边际复核区，需要结合半年度或三季度经营现金流、资产减值和租赁价格确认是否可建小仓"
-    },
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "接近悲观资产折价价值，可启动困境反转深度复核"
-    },
-    {
-      "type": "price_above",
-      "price": 3.5,
-      "reason": "若基本面未同步改善，股价已显著高于基准价值区间，需降低或避免暴露"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "价格隐含强复苏情景，需要利润和现金流证据支撑，否则风险收益不对称"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报，重点检查净资产、减值、经营现金流、租赁价格和亏损收窄质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，判断 H2 是否出现现金流与利润表同步改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新评估资产质量、债务压力和周期修复是否兑现"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

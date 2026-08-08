@@ -1,108 +1,106 @@
 {
-  "symbol": "CN:300832",
-  "market": "CN",
-  "ticker": "300832",
-  "name": "新产业",
-  "company_name": "新产业",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "fair_to_slightly_undervalued_with_governance_discount",
-  "current_thesis": "新产业是国内化学发光IVD龙头之一，长期看海外装机带来的试剂复购和国产替代仍有价值；但2025年国内集采和医保控费压制利润，2026Q1增长仍弱，且2026年7月实控人被留置带来治理折价。当前评级为watch，适合小仓观察，等待2026H1业绩和治理事项进展确认。",
-  "fair_value_range": [
-    45,
-    54
-  ],
-  "buy_zone": [
-    35,
-    39
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    65
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新产业",
+    "security_status": "active",
+    "symbol": "CN:300832",
+    "ticker": "300832"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "7712fcec1fcffeef1f19fbe3deb2a1fc134bd09a6829783dc2640510e9de6cd0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约40-43元且未出现公司经营被实控人留置事项牵连的新公告",
-      "action": "仅建立观察仓",
-      "max_weight": 0.01,
-      "reason": "公司质量较高但2026Q1增长仍弱，治理事件未完全消化，先用小仓位保持跟踪。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-25"
+      },
+      "reason": "预计披露2026年半年度报告，需复核海外试剂、国内量价、毛利率和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入35-39元且2026H1显示海外收入同比大于15%、海外试剂同比大于25%、国内降幅收窄",
-      "action": "分两笔加仓",
-      "max_weight": 0.03,
-      "reason": "估值进入有安全边际区间，同时核心增长指标确认。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后验证2026全年恢复趋势是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "实控人留置事项确认不涉及上市公司且2026H1归母净利润恢复双位数增长",
-      "action": "提高至核心观察持仓",
-      "max_weight": 0.04,
-      "reason": "治理折价解除且基本面重新加速，可接受更高仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 39.0
+      },
+      "reason": "进入研究设定的买入区上沿，可检查治理公告和2026H1基本面后分批买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "公告显示留置事项涉及上市公司、核心管理层或资金往来，或连续两个季度归母净利润同比下降超过10%",
-      "action": "减仓至0或仅保留极小观察仓",
-      "max_weight": 0.002,
-      "reason": "投资假设中的治理独立性或经营恢复被破坏。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "进入悲观情景价值附近，若无新增基本面恶化，安全边际显著提高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "进入减仓区下沿，若利润未明显加速，估值修复已较充分。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "接近乐观情景估值，需要重新评估持仓收益风险比并考虑兑现。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 39,
-      "reason": "进入研究设定的买入区上沿，可检查治理公告和2026H1基本面后分批买入。"
-    },
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "进入悲观情景价值附近，若无新增基本面恶化，安全边际显著提高。"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "进入减仓区下沿，若利润未明显加速，估值修复已较充分。"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "接近乐观情景估值，需要重新评估持仓收益风险比并考虑兑现。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-25",
-      "reason": "预计披露2026年半年度报告，需复核海外试剂、国内量价、毛利率和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后验证2026全年恢复趋势是否成立。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "国内主营收入同比增速",
-    "国内试剂收入同比增速和均价变化",
-    "海外主营收入同比增速",
-    "海外试剂收入同比增速",
-    "全自动化学发光仪器国内装机量",
-    "海外全自动化学发光仪器销售量",
-    "中大型发光仪器占比",
-    "T8流水线装机或销售条数",
-    "综合毛利率",
-    "试剂毛利率",
-    "经营现金流净额/归母净利润",
-    "研发费用率和新增注册证",
-    "实控人留置事项公告进展"
-  ],
-  "notes": "2026-07-10初始覆盖。评级为watch，允许小仓观察；核心不确定性是国内集采/医保控费、2026业绩恢复斜率和实控人留置事项。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

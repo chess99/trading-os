@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:601666",
-  "ticker": "601666",
-  "name": "平煤股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "平煤股份具备中南区域稀缺焦煤资源和低PB估值吸引力，但2025低谷利润、2026Q1盈利修复不足及较高负债率使买入证据尚不充分；等待焦煤价格企稳和单季利润恢复后再提高仓位更稳妥。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    8.8,
-    11.8
-  ],
-  "buy_zone": [
-    0,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "平煤股份",
+    "security_status": "active",
+    "symbol": "CN:601666",
+    "ticker": "601666"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "5d42d6c2d7804cdf3d5e0b82e61f10095dfaeb700c3f3c42b172ca6293fdd97f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.2元且未出现重大安全生产事故、资产负债率未继续显著上行",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，确认利润、现金流、负债率和分红能力变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "主焦煤价格连续两个月企稳回升且公司单季归母净利润恢复至3亿元以上",
-      "action": "提高至标准低配仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断焦煤价格修复是否传导至单季利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.5元但盈利修复未确认，或资产负债率继续上行",
-      "action": "不新增并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与年度分红，更新中周期盈利和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入悲观情景估值下沿，低PB资源价值提供更明确安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "接近乐观情景估值起点，若利润未同步修复则风险收益比下降。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入悲观情景估值下沿，低PB资源价值提供更明确安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "接近乐观情景估值起点，若利润未同步修复则风险收益比下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，确认利润、现金流、负债率和分红能力变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断焦煤价格修复是否传导至单季利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与年度分红，更新中周期盈利和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,112 +1,105 @@
 {
-  "symbol": "CN:300070",
-  "market": "CN",
-  "ticker": "300070",
-  "name": "碧水源",
-  "company_name": "北京碧水源科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "碧水源具备膜技术、运营项目和央企控股资产底，但2024-2026Q1归母利润和ROE过低，应收账款、合同资产和减值压力仍大。当前约3.44元已反映部分资产折价，却未提供足够利润修复失败的安全边际，适合观察或在2.6-2.8元以下小仓位试错。",
-  "quality_rating": "中低",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    3.0,
-    4.0
-  ],
-  "buy_zone": [
-    2.6,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    6.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "碧水源",
+    "security_status": "active",
+    "symbol": "CN:300070",
+    "ticker": "300070"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "6372b78fa3e81b6e8426d1064efe7f4df87850421e9abdd1e8faa819dc818022"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于2.80元，最近一期经营现金流没有继续恶化，且信用减值未显著扩大",
-      "action": "建立0.5%-1.0%观察仓",
-      "max_position": "1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价低于2.50元，运营服务收入继续增长，归母利润年化恢复到3亿元以上",
-      "action": "加仓至1.5%-2.0%",
-      "max_position": "2.0%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价高于3.50元但归母利润未恢复、ROE仍低于2%",
-      "action": "不加仓，等待财务质量验证",
-      "max_position": "已有仓位不超过1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价高于4.80元且ROE仍低于3%，或出现大额减值/回款恶化",
-      "action": "减仓或退出",
-      "max_position": "0%",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "currency": "CNY",
-      "reason": "低于买入区上沿，PB约0.37，开始具备资产折价安全边际",
-      "action": "进入可买区，复核最新经营现金流和减值后考虑小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 2.5,
-      "currency": "CNY",
-      "reason": "低于深度安全边际区，若基本面稳定，赔率明显改善",
-      "action": "若基本面未恶化，可提高至核心观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "currency": "CNY",
-      "reason": "高于减仓区下沿，若ROE未修复则估值与质量不匹配",
-      "action": "若ROE未显著修复，考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年半年报通常已披露，需要验证利润修复、现金流和减值是否改善",
-      "action": "复核2026年半年报，重点看收入、利润、现金流、应收账款、合同资产和减值"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报通常已披露，需要确认运营服务增长和ROE是否改善",
-      "action": "复核2026年三季报，判断利润修复和运营服务增长是否兑现"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2026年年报通常已披露，需要重新计算估值区间和仓位计划",
-      "action": "复核2026年年报，重新估算合理价值和买入区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "低于买入区上沿，PB约0.37，开始具备资产折价安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.5
+      },
+      "reason": "低于深度安全边际区，若基本面稳定，赔率明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "高于减仓区下沿，若ROE未修复则估值与质量不匹配",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "归母净利润和扣非归母净利润",
-    "归母ROE",
-    "经营活动现金流净额",
-    "应收账款加合同资产占营业收入比例",
-    "信用减值损失和资产减值损失",
-    "运营服务收入增速和毛利率",
-    "有息债务规模和利息费用",
-    "海水淡化、工业水循环、特种膜订单与收入"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600712",
-  "ticker": "600712",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "南宁百货",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "南宁百货处于传统实体零售止血与调改阶段，2026H1预盈主要来自关店降本、费用压降和非经常性收益，扣非盈利尚未稳定；按近7月中旬公开行情估算PB约3.5倍，显著高于区域百货修复期合理估值，安全边际不足。",
-  "fair_value_range": [
-    1.4,
-    2.2
-  ],
-  "buy_zone": [
-    1.2,
-    1.6
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    4.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南宁百货",
+    "security_status": "active",
+    "symbol": "CN:600712",
+    "ticker": "600712"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f8876913e074987272147ad6e7c05e5c4156b50a082c50eb48bb341af27cd8c2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入1.2-1.6元且2026半年报或三季报显示经营现金流转正、扣非亏损明显收窄",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、经营现金流、扣非利润和业绩预告兑现情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非盈利且费用率继续下降，价格仍低于2.0元",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q2后主营盈利是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于3.0元且扣非盈利未稳定",
-      "action": "不买或减持",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和门店调改、治理事项进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "进入买入观察区，需要复核扣非盈利和现金流是否同步改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.0
+      },
+      "reason": "超过修复期估值上沿，若无基本面跃迁应回避或减持",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "进入买入观察区，需要复核扣非盈利和现金流是否同步改善"
-    },
-    {
-      "type": "price_above",
-      "price": 3.0,
-      "reason": "超过修复期估值上沿，若无基本面跃迁应回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、经营现金流、扣非利润和业绩预告兑现情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q2后主营盈利是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和门店调改、治理事项进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

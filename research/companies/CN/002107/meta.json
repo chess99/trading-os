@@ -1,91 +1,96 @@
 {
-  "symbol": "CN:002107",
-  "market": "CN",
-  "ticker": "002107",
-  "name": "沃华医药",
-  "company_name": "沃华医药",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "沃华医药是现金充裕、无有息负债、高分红的小市值中成药公司，2025年以来利润修复明显，2026年版国家基本药物目录对心可舒和荷丹构成渠道催化；但核心产品成熟、销售费用率仍高、单品销售透明度不足，6.27元附近估值已不便宜，当前以观察为主，等待4.8元以下或正式业绩验证后再考虑首笔仓位。",
-  "quality_rating": "medium",
-  "valuation_rating": "expensive_to_fair",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    4.2,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    99.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "沃华医药",
+    "security_status": "active",
+    "symbol": "CN:002107",
+    "ticker": "002107"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "2afd130b5c12f4386172e433d002b354c0f1e92a19b1ef7615728a7efcafe95a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约6.27元且未看到荷丹基药目录后真实放量证据",
-      "action": "不主动买入，仅允许观察仓",
-      "max_weight": 0.005,
-      "reason": "估值已反映部分利润修复和目录催化，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式披露后的收入、费用率、现金流和荷丹目录影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至4.8元以下且2026H1收入不转负、经营现金流不弱于净利润",
-      "action": "建立首笔研究仓",
-      "max_weight": 0.01,
-      "reason": "进入合理价值下沿，现金流和费用改善若被验证则赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润改善是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价4.2-4.5元且心脑血管系统药物维持增长、销售费用率继续下降",
-      "action": "加仓但保持小市值中成药风险限额",
-      "max_weight": 0.02,
-      "reason": "估值进入折价区，核心逻辑未破坏"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入买入观察区，复核2026H1正式报告后考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入深度价值区，若基本面未恶化可重新评估仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "超过乐观前的减仓区，若缺少荷丹和心可舒放量证据应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入买入观察区，复核2026H1正式报告后考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入深度价值区，若基本面未恶化可重新评估仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "超过乐观前的减仓区，若缺少荷丹和心可舒放量证据应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式披露后的收入、费用率、现金流和荷丹目录影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润改善是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "心脑血管系统药物收入增速",
-    "销售费用率",
-    "综合毛利率",
-    "经营现金流净额/归母净利润",
-    "货币资金余额和有息负债",
-    "荷丹片/胶囊进入2026年版国家基本药物目录后的销售覆盖进展",
-    "每股现金分红和分红率",
-    "医保控费、基药目录执行、地方采购和中成药集采政策变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

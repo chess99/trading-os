@@ -1,77 +1,86 @@
 {
-  "symbol": "CN:601969",
-  "ticker": "601969",
-  "name": "海南矿业",
-  "exchange": "SSE",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海南矿业从铁矿石基本盘扩展为铁矿、油气、锂资源和潜在萤石的多资源平台，2026年锂资源与油气共同驱动利润拐点，但当前股价已部分反映半年度预增，需等待半年报扣非质量和产能兑现验证后再提高仓位。",
-  "fair_value_range": [
-    8.2,
-    10.4
-  ],
-  "buy_zone": [
-    6.2,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海南矿业",
+    "security_status": "active",
+    "symbol": "CN:601969",
+    "ticker": "601969"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "aebbd1a8b5f809d581906d658149dae4f7f2384078cd4f40c5cfa3c34a1fe5e1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.2元且2026半年报扣非归母净利润落在预告区间、经营现金流未明显背离利润、锂价不低于12万元/吨",
-      "action": "建立观察仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报正式数据、经营现金流、锂业务利润质量和油气产量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "半年报确认锂盐达产质量和油气产量进度，股价仍低于8.0元，且净债务未明显恶化",
-      "action": "加至核心小仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报，确认锂盐达产持续性、油气项目进展和全年利润兑现概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026全年可持续归母净利润上修至10.5亿元以上，锂盐与油气均兑现，且估值仍低于合理区间中枢",
-      "action": "重新评估是否提高上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入安全边际买入区间，需要复核半年报扣非质量后考虑建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "进入减仓或不追买区间，需确认利润上修是否足以支撑估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入安全边际买入区间，需要复核半年报扣非质量后考虑建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "进入减仓或不追买区间，需确认利润上修是否足以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报正式数据、经营现金流、锂业务利润质量和油气产量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报，确认锂盐达产持续性、油气项目进展和全年利润兑现概率"
-    }
-  ],
-  "key_monitoring_items": [
-    "2026半年报扣非归母净利润和经营现金流匹配度",
-    "布谷尼锂精矿产量、星之海锂盐产量与单吨成本",
-    "油气净权益产量、八角场气田和阿曼区块进展",
-    "碳酸锂、布伦特原油、铁矿石价格",
-    "丰瑞氟业交易进展、融资成本和并购纪律"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

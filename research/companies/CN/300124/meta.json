@@ -1,131 +1,106 @@
 {
-  "symbol": "CN:300124",
-  "market": "CN",
-  "ticker": "300124",
-  "name": "汇川技术",
-  "company_name": "深圳市汇川技术股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "汇川技术是A股工业自动化+新能源汽车电驱双龙头，平台能力真实但2026Q1归母净利同比-23.39%出现增长断层，结构性毛利率持续压缩(高毛利工控占比降至49%，低毛利电驱占比升至45%)。2026-07-08股价63.20元(跌-4.31%)对应PE约33.9x仍处偏贵区间，加权合理价约50元，建议观察，等待48元以下安全边际分层建仓。",
-  "quality_rating": "B+~A-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    48,
-    62
-  ],
-  "buy_zone": [
-    38,
-    48
-  ],
-  "strong_attraction_zone": [
-    30,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    75,
-    999
-  ],
-  "do_not_chase_above": 62,
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汇川技术",
+    "security_status": "active",
+    "symbol": "CN:300124",
+    "ticker": "300124"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "76fc11283e3cd002741a2f3d6a87f329cd651f05d7e14df8b7c35155e78f2f9c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "75元以上",
-      "condition": "股价高于75元",
-      "action": "不追/减仓评估",
-      "target_weight": 0,
-      "max_weight": 0.08,
-      "reason": "估值透支，赔率差"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看工业自动化增速、电驱毛利率、现金流、应收/存货周转",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "62-75元",
-      "condition": "股价在62至75元",
-      "action": "跟踪不主动加",
-      "target_weight": 0.01,
-      "max_weight": 0.08,
-      "reason": "偏贵，赔率差"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认利润增速拐点是否出现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "48-62元",
-      "condition": "股价在48至62元且基本面未恶化",
-      "action": "小仓试探",
-      "target_weight": 0.03,
-      "max_weight": 0.08,
-      "reason": "进入合理区间，可小仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 62.0
+      },
+      "reason": "进入合理区间上沿，可复核中报后建立1%观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "zone": "38-48元",
-      "condition": "股价在38至48元且2026中报无恶化",
-      "action": "分批买入",
-      "target_weight": 0.05,
-      "max_weight": 0.08,
-      "reason": "安全边际买入区"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入基准情景合理定价区间，可复核中报后建立2-4%仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "zone": "38元以下",
-      "condition": "股价低于38元且基本面未破坏",
-      "action": "强吸引力买入",
-      "target_weight": 0.08,
-      "max_weight": 0.08,
-      "reason": "强吸引力，接近上限"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入安全边际买入区，可提高仓位至6-8%",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "估值透支+增长失速组合，需评估减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看工业自动化增速、电驱毛利率、现金流、应收/存货周转"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认利润增速拐点是否出现"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 62,
-      "reason": "进入合理区间上沿，可复核中报后建立1%观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入基准情景合理定价区间，可复核中报后建立2-4%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入安全边际买入区，可提高仓位至6-8%"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "估值透支+增长失速组合，需评估减仓"
-    }
-  ],
-  "key_risks": [
-    "结构性毛利率持续压缩：高毛利工控占比降至49%，低毛利电驱占比升至45%，4年来综合毛利率从35.8%降至29.0%",
-    "2026Q1归母净利同比-23.39%增长失速，需1-2季度验证是否趋势性，约一半源于投资收益非经营性波动",
-    "新能源汽车电驱价格战加剧，车企自研电驱进一步挤压独立供应商空间",
-    "应收+存货合计超230亿占总资产32%，周转效率敏感，应收账款周转天数若超110天需重估",
-    "商誉20.9亿减值风险，需连续跟踪被并购业务质量",
-    "研发费用率9.44%→9.93%继续上行，营收减速下被动上行进一步压缩净利率",
-    "外资反扑(西门子/三菱本土化)及工控行业集中度天花板，份额达15-20%后增长难度加大",
-    "当前PE 33.9x仍处偏贵区间，业绩即使增长也可能被估值收缩抵消(戴维斯双杀风险)",
-    "海外占比5.87%多年未突破，海外执行力存疑",
-    "实际税率4-6%受益于高新优惠，优惠到期或税率回升对净利率额外稀释1-2pp"
-  ],
-  "review_plan": "至少在2026中报和三季报后复查。重点复查工业自动化业务增速、新能源汽车电驱毛利率(是否守住14%)、经营现金流/净利比率、应收/存货周转天数。若股价跌至48元或上破75元提前复核。若连续2个季度工控负增长或电驱毛利率破13%，下调评级至avoid。",
-  "sources": [
-    "汇川技术2025年年度报告，巨潮资讯/交易所公告披露于2026-04",
-    "汇川技术2026年第一季度报告，巨潮资讯/交易所公告披露于2026-04",
-    "东方财富F10财务分析/经营分析(https://emweb.securities.eastmoney.com/PC_HSF10/)，抓取于2026-07-08",
-    "新浪财经行情快照SZ300124，抓取于2026-07-08",
-    "公司投资者关系活动记录2025-2026多期"
-  ],
-  "updated_at": "2026-07-08T21:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:920055",
-  "market": "CN",
-  "ticker": "920055",
-  "name": "隆源股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "隆源股份是汽车铝合金精密压铸细分供应商，2025 年盈利和现金流质量较好，2026Q1 上市募资后资产负债表明显改善，新能源三电和轻量化募投项目提供增长弹性。当前约 12x TTM PE、约 1.5x PB 的估值对其利润质量和扩产期成长性偏低，但客户集中、北交所流动性、年降压力和扩产利用率仍需折价，适合小仓位分批买入并跟踪半年报验证。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    31,
-    38
-  ],
-  "buy_zone": [
-    22,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    44
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "隆源股份",
+    "security_status": "active",
+    "symbol": "CN:920055",
+    "ticker": "920055"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "93ccd0a6335b2c76f9a78a1a42f2cd4e21f0f10dae3fbfff48a297831cd2dba4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格位于 25-28 元且 2026H1 收入增速不低于 15%、经营现金流为正时分批建仓",
-      "action": "buy",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查收入增速、扣非利润、现金流、应收账款和募投进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 25 元且无客户流失、毛利率大幅下滑或关联担保恶化信号时提高至核心观察仓",
-      "action": "add",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年 1.6-1.8 亿元净利润区间是否仍成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 38 元而 2026 年净利润预期未上修至 1.9 亿元以上时逐步减仓",
-      "action": "trim",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和分红政策，重新评估合理价值区间与仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入更有安全边际的分批买入区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "达到合理价值区间上沿，风险收益比下降，需要复核业绩是否足以支撑更高估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入更有安全边际的分批买入区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "达到合理价值区间上沿，风险收益比下降，需要复核业绩是否足以支撑更高估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查收入增速、扣非利润、现金流、应收账款和募投进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年 1.6-1.8 亿元净利润区间是否仍成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和分红政策，重新评估合理价值区间与仓位上限"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }
