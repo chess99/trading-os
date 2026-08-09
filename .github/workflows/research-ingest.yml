@@ -1,0 +1,68 @@
+name: research-ingest
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/inbox/*.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: research-coordinator
+  cancel-in-progress: false
+
+jobs:
+  apply-results:
+    if: ${{ !contains(github.event.head_commit.message, '[research-ingest]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install trading-os
+        run: python -m pip install -e .
+
+      - name: Apply queued research results
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=(research/inbox/*.json)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo 'No research result files to apply.'
+            exit 0
+          fi
+          IFS=$'\n' files=($(printf '%s\n' "${files[@]}" | sort))
+          unset IFS
+          for f in "${files[@]}"; do
+            echo "Applying $f"
+            python -m trading_os research complete --input "$f"
+            rm "$f"
+          done
+
+      - name: Validate research state
+        run: python -m trading_os research validate
+
+      - name: Commit coordinator outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'research-coordinator[bot]'
+          git config user.email 'research-coordinator[bot]@users.noreply.github.com'
+          git add -A coverage/cn-a research/watchlist.jsonl research/companies research/inbox
+          if git diff --cached --quiet; then
+            echo 'No coordinator changes to commit.'
+            exit 0
+          fi
+          git commit -m 'research: apply baseline result [research-ingest]'
+          git pull --rebase origin main
+          git push origin HEAD:main
