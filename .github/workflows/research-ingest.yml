@@ -44,6 +44,8 @@ jobs:
           IFS=$'\n' files=($(printf '%s\n' "${files[@]}" | sort))
           unset IFS
           for f in "${files[@]}"; do
+            echo "Dispatching next baseline task for $f"
+            python -m trading_os research next --limit 1
             echo "Applying $f"
             python -m trading_os research complete --input "$f"
             rm "$f"
