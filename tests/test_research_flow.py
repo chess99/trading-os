@@ -120,6 +120,26 @@ def test_screening_only_creates_ignore_or_candidate(tmp_path: Path):
     assert [task.symbol for task in flow.list_tasks()] == ["CN:000002"]
 
 
+def test_dispatch_can_select_tasks_from_queue_end(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    symbols = ["CN:000001", "CN:000002", "CN:000003"]
+    flow.register_universe([CompanyRef(symbol, symbol) for symbol in symbols], at=AT)
+    flow.apply_screening(
+        [
+            ScreenDecision(symbol, "research_now", "值得正式研究")
+            for symbol in symbols
+        ],
+        screen_id="reverse-dispatch",
+        mode="event",
+        at=AT,
+    )
+
+    queue_tail = {task.task_id for task in flow.list_tasks()[-2:]}
+    running = flow.dispatch_tasks(limit=2, at=AT, from_end=True)
+
+    assert {task.task_id for task in running} == queue_tail
+
+
 def test_baseline_only_accepts_unseen_companies(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     flow.register_universe([CompanyRef("CN:000001"), CompanyRef("CN:000002")], at=AT)

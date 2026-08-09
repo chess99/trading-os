@@ -1128,7 +1128,11 @@ class ResearchFlow:
         return tuple(task for task in tasks if wanted is None or task.status.value == wanted)
 
     def dispatch_tasks(
-        self, *, limit: int, at: str | datetime | None = None
+        self,
+        *,
+        limit: int,
+        at: str | datetime | None = None,
+        from_end: bool = False,
     ) -> tuple[ResearchTask, ...]:
         """Dispatch at most ``limit`` companies; the caller owns the concurrency policy."""
 
@@ -1139,7 +1143,8 @@ class ResearchFlow:
             tasks = self._tasks()
             active_symbols = {task.symbol for task in tasks if task.status is TaskStatus.RUNNING}
             selected_ids: set[str] = set()
-            for task in tasks:
+            candidates = reversed(tasks) if from_end else iter(tasks)
+            for task in candidates:
                 if len(selected_ids) >= limit:
                     break
                 if task.status is not TaskStatus.QUEUED or task.symbol in active_symbols:

@@ -52,6 +52,7 @@ python -m trading_os screen record --input templates/screen-decisions.json
 
 # 派发并完成单公司研究；报告自动追加到日期时间线
 python -m trading_os research next --limit 4
+python -m trading_os research next --limit 4 --from-end  # 与队首协调器避让
 python -m trading_os research complete --input templates/research-result.json
 
 # 重建自选池；每日收盘后完整取价并扫描

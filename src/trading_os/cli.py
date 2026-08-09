@@ -99,6 +99,11 @@ def build_parser() -> argparse.ArgumentParser:
     research_commands = research.add_subparsers(dest="research_command", required=True)
     next_tasks = research_commands.add_parser("next", help="取下一批公司，数量由调用者决定")
     next_tasks.add_argument("--limit", required=True, type=int)
+    next_tasks.add_argument(
+        "--from-end",
+        action="store_true",
+        help="从队列尾部领取，便于与从队首运行的其他协调器避让",
+    )
     _add_at(next_tasks)
     next_tasks.set_defaults(handler=_research_next)
     requeue = research_commands.add_parser("requeue", help="显式恢复被中断的任务")
@@ -352,7 +357,11 @@ def _screen_record(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
 
 def _research_next(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
-    tasks = _flow(args).dispatch_tasks(limit=args.limit, at=args.at)
+    tasks = _flow(args).dispatch_tasks(
+        limit=args.limit,
+        at=args.at,
+        from_end=args.from_end,
+    )
     return {"count": len(tasks), "tasks": tasks}
 
 

@@ -241,6 +241,19 @@ def test_screen_next_and_explicit_requeue_have_no_fixed_concurrency(tmp_path: Pa
     restored = _call(tmp_path, capsys, "research", "requeue", task_id)
     assert restored["task"]["status"] == "queued"
 
+    from_end = _call(
+        tmp_path,
+        capsys,
+        "research",
+        "next",
+        "--limit",
+        "1",
+        "--from-end",
+        "--at",
+        AT,
+    )
+    assert from_end["count"] == 1
+
 
 def test_research_complete_writes_dated_report_and_full_watchlist(tmp_path: Path, capsys):
     task_id = _screen_and_dispatch(
