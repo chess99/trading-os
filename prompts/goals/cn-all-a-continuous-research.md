@@ -29,7 +29,7 @@
 
 不同公司可以独立并行，一家公司始终由一个 Agent 端到端完成。每个任务必须使用 `prompts/company/standard-deep-research.md`，没有研究等级、分钟预算、复核 Agent、承保或中间交流。
 
-最终结果只有 `covered / ignore`，两者都保留 `current.md`。`covered` 必须有价格或事件触发；`ignore` 不激活价格线。
+最终结果只有 `covered / ignore`，两者都向公司 `reports/` 追加日期化正式报告，并由 `report_path` 自动指向最新一份。`covered` 必须有价格或事件触发；`ignore` 不激活价格线。
 
 ## 增量运行
 

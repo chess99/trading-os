@@ -242,7 +242,7 @@ def test_screen_next_and_explicit_requeue_have_no_fixed_concurrency(tmp_path: Pa
     assert restored["task"]["status"] == "queued"
 
 
-def test_research_complete_writes_current_report_and_full_watchlist(tmp_path: Path, capsys):
+def test_research_complete_writes_dated_report_and_full_watchlist(tmp_path: Path, capsys):
     task_id = _screen_and_dispatch(
         tmp_path,
         capsys,
@@ -255,7 +255,7 @@ def test_research_complete_writes_current_report_and_full_watchlist(tmp_path: Pa
     listed = _call(tmp_path, capsys, "watchlist", "list")
 
     assert completed["status"] == "covered"
-    assert completed["report_path"] == "research/companies/CN/601138/current.md"
+    assert completed["report_path"] == ("research/companies/CN/601138/reports/2026-08-08.md")
     assert (tmp_path / completed["report_path"]).is_file()
     company = listed["companies"][0]
     assert company["key_logic"] == ["需求增长", "现金流转化决定估值"]
@@ -331,9 +331,7 @@ def test_watchlist_fetch_and_run_close_only_request_price_monitored_companies(
                     "name": "平安银行",
                     "route": "research_now",
                     "reason": "等待价格",
-                    "price_levels": [
-                        {"id": "attention", "label": "关注区", "threshold": 10}
-                    ],
+                    "price_levels": [{"id": "attention", "label": "关注区", "threshold": 10}],
                 },
                 {
                     "symbol": "CN:000002",
@@ -462,9 +460,7 @@ def test_events_fetch_requires_explicit_bootstrap_and_only_advances_after_exact_
         "2026-08-09T00:00:00+08:00",
     )
     packet_path = _write(tmp_path / "event-packet.json", packet)
-    incomplete = _write(
-        tmp_path / "incomplete.json", {"successfully_judged_ids": []}
-    )
+    incomplete = _write(tmp_path / "incomplete.json", {"successfully_judged_ids": []})
 
     code = main(
         [

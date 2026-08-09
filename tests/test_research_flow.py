@@ -175,8 +175,9 @@ def test_universe_sync_preserves_history_and_controls_tasks_and_monitoring(tmp_p
     assert (switched.added, switched.reactivated, switched.inactivated) == (1, 1, 1)
     assert [task.symbol for task in switched.enqueued_tasks] == ["CN:000002"]
     assert flow.read_watchlist() == ()
-    assert (tmp_path / "research/companies/CN/000001/current.md").is_file()
+    assert (tmp_path / "research/companies/CN/000001/reports/2026-08-08.md").is_file()
     flow.validate()
+
 
 def test_candidate_task_is_deduplicated_under_concurrency(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
@@ -204,7 +205,7 @@ def test_covered_result_writes_report_and_monitoring_projection(tmp_path: Path):
     assert state["status"] == "covered"
     assert state["information_cutoff"] == AT
     assert state["value_range"] == {"low": 58.0, "high": 82.0, "currency": "CNY"}
-    assert state["report_path"] == "research/companies/CN/601138/current.md"
+    assert state["report_path"] == "research/companies/CN/601138/reports/2026-08-08.md"
     assert (tmp_path / state["report_path"]).is_file()
     assert flow.list_tasks() == ()
     watch = flow.read_watchlist()[0]
@@ -218,11 +219,34 @@ def test_researched_ignore_keeps_report_without_price_monitor(tmp_path: Path):
     state = _complete(flow, _ignored_after_research("CN:000333"))
 
     assert state["status"] == "ignore"
-    assert state["report_path"] == "research/companies/CN/000333/current.md"
+    assert state["report_path"] == "research/companies/CN/000333/reports/2026-08-08.md"
     assert (tmp_path / state["report_path"]).is_file()
     assert state["price_levels"] == []
     assert state["price_monitor"] is None
     assert flow.read_watchlist() == ()
+    flow.validate()
+
+
+def test_same_day_refresh_appends_report_and_current_pointer_uses_latest(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    first = _complete(flow, _covered("CN:601138"))
+    update = flow.apply_screening(
+        [ScreenDecision("CN:601138", "research_now", "新公告改变估值")],
+        screen_id="same-day-refresh",
+        mode="event",
+        at=AT,
+    )
+    flow.dispatch_tasks(limit=1, at=AT)
+    second = flow.apply_result(
+        _covered("CN:601138"),
+        task_id=update.enqueued_tasks[0].task_id,
+        at=AT,
+    )
+
+    assert first["report_path"].endswith("/2026-08-08.md")
+    assert second["report_path"].endswith("/2026-08-08-02.md")
+    assert (tmp_path / first["report_path"]).is_file()
+    assert (tmp_path / second["report_path"]).is_file()
     flow.validate()
 
 
@@ -255,21 +279,11 @@ def test_daily_close_only_scans_covered_and_rearms(tmp_path: Path):
     _complete(flow, _covered("CN:601138"))
 
     assert flow.scan_daily_close({"CN:601138": 60}, trading_date=date(2026, 8, 10), at=AT) == ()
-    first = flow.scan_daily_close(
-        {"CN:601138": 54}, trading_date="2026-08-11", at=AT
-    )
+    first = flow.scan_daily_close({"CN:601138": 54}, trading_date="2026-08-11", at=AT)
     assert len(first) == 1
-    assert flow.scan_daily_close(
-        {"CN:601138": 52}, trading_date="2026-08-12", at=AT
-    ) == ()
-    assert flow.scan_daily_close(
-        {"CN:601138": 58}, trading_date="2026-08-13", at=AT
-    ) == ()
-    assert len(
-        flow.scan_daily_close(
-            {"CN:601138": 55}, trading_date="2026-08-14", at=AT
-        )
-    ) == 1
+    assert flow.scan_daily_close({"CN:601138": 52}, trading_date="2026-08-12", at=AT) == ()
+    assert flow.scan_daily_close({"CN:601138": 58}, trading_date="2026-08-13", at=AT) == ()
+    assert len(flow.scan_daily_close({"CN:601138": 55}, trading_date="2026-08-14", at=AT)) == 1
     assert flow.list_tasks() == ()
 
 
@@ -285,12 +299,8 @@ def test_each_price_level_has_independent_runtime_state(tmp_path: Path):
         ),
     )
     _complete(flow, result)
-    first = flow.scan_daily_close(
-        {"CN:601138": 54}, trading_date="2026-08-11", at=AT
-    )
-    second = flow.scan_daily_close(
-        {"CN:601138": 49}, trading_date="2026-08-12", at=AT
-    )
+    first = flow.scan_daily_close({"CN:601138": 54}, trading_date="2026-08-11", at=AT)
+    second = flow.scan_daily_close({"CN:601138": 49}, trading_date="2026-08-12", at=AT)
     assert [hit.level_id for hit in first] == ["attention"]
     assert [hit.level_id for hit in second] == ["high-attraction"]
 
@@ -317,7 +327,7 @@ def test_material_event_marks_covered_report_stale_and_suppresses_price(tmp_path
     flow.validate()
 
 
-def test_decisive_event_can_ignore_and_remove_obsolete_report_and_task(tmp_path: Path):
+def test_decisive_event_can_ignore_without_deleting_report_history_or_task(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     covered = _complete(flow, _covered("CN:601138"))
     report = tmp_path / covered["report_path"]
@@ -339,7 +349,7 @@ def test_decisive_event_can_ignore_and_remove_obsolete_report_and_task(tmp_path:
     state = flow.read_states()[0]
     assert state["status"] == "ignore"
     assert state["report_path"] is None
-    assert not report.exists()
+    assert report.exists()
     assert flow.list_tasks() == ()
 
 
@@ -399,6 +409,11 @@ def test_v1_migration_splits_watch_and_covered_then_rebaseline(tmp_path: Path):
     assert states["CN:000001"]["status"] == "candidate"
     assert states["CN:000001"]["price_levels"] == []
     assert states["CN:000002"]["status"] == "covered"
+    assert states["CN:000002"]["report_path"] == (
+        "research/companies/CN/000002/reports/2026-08-08.md"
+    )
+    assert not report.exists()
+    assert (tmp_path / states["CN:000002"]["report_path"]).is_file()
     flow.validate()
 
     assert flow.prepare_rebaseline(at=AT) == 1

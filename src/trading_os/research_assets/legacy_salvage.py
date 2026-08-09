@@ -8,22 +8,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from .research_flow import (
-    PriceLevel,
-    ResearchFlow,
-    ResearchFlowError,
-    ResearchResult,
-    ScreenDecision,
-    ValidationError,
-    ValueRange,
-)
+from .research_flow import ResearchFlowError, ValidationError, _atomic_write_text
 
 LEGACY_TAG = "pre-simplification-20260808"
 
 _REPORT_PATH_RE = re.compile(
     r"^research/companies/CN/(?P<ticker>\d{6})/reports/(?P<filename>[^/]+\.md)$"
 )
-_DATE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})-")
+_DATE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})(?:-|\.md$)")
 _URL_RE = re.compile(r'https?://[^\s)>\]}"\']+')
 _SPACE_RE = re.compile(r"\s+")
 _CN_SYMBOL_RE = re.compile(
@@ -33,7 +25,7 @@ _CN_SYMBOL_RE = re.compile(
 
 
 class LegacySalvageError(ResearchFlowError):
-    """Raised when the fixed legacy snapshot cannot be read or safely migrated."""
+    """Raised when the frozen legacy snapshot cannot be archived safely."""
 
 
 @dataclass(frozen=True)
@@ -74,38 +66,33 @@ class LegacyCandidateScan:
 
 
 @dataclass(frozen=True)
-class LegacySalvageResult:
+class LegacyArchiveResult:
     tag: str
     commit: str
-    batch_id: str
-    migrated: tuple[dict[str, Any], ...]
+    reports_scanned: int
+    companies_seen: int
+    companies_archived: int
+    already_archived: int
+    companies_skipped: int
     skipped: tuple[dict[str, Any], ...]
-
-
-def _text(value: Any, label: str) -> str:
-    if not isinstance(value, str) or not value.strip():
-        raise LegacySalvageError(f"{label} must be a non-blank string")
-    return value.strip()
 
 
 def _kind(filename: str) -> str:
     lowered = filename.lower()
-    if "failed" in lowered:
-        return "failed"
-    if "superseded" in lowered or "archived" in lowered:
-        return "superseded"
+    if any(word in lowered for word in ("failed", "superseded", "archived", "draft")):
+        return "excluded"
     if "investment-committee" in lowered or "committee-review" in lowered:
-        return "investment_committee"
+        return "process_review"
     if "chatgpt" in lowered:
         return "chatgpt_deep_research"
-    if "deep-review" in lowered:
-        return "deep_review"
+    if "initial-research" in lowered:
+        return "modern_initial_research"
     if "followup" in lowered:
         return "followup"
     if any(word in lowered for word in ("refresh", "update", "supplement", "monitoring")):
         return "update"
-    if "initial-research" in lowered:
-        return "modern_initial_research"
+    if "deep-review" in lowered:
+        return "deep_review"
     if "rapid-triage" in lowered:
         return "rapid_triage"
     if re.fullmatch(r"\d{4}-\d{2}-\d{2}-initial\.md", lowered):
@@ -114,31 +101,28 @@ def _kind(filename: str) -> str:
 
 
 _KIND_SCORE = {
-    "investment_committee": 100,
     "chatgpt_deep_research": 95,
-    "deep_review": 90,
+    "modern_initial_research": 90,
     "followup": 80,
     "update": 70,
-    "modern_initial_research": 65,
+    "deep_review": 65,
     "other": 40,
     "rapid_triage": 25,
     "bulk_initial": 5,
-    "superseded": -100,
-    "failed": -100,
+    "process_review": -100,
+    "excluded": -100,
 }
 
 
 def _score(kind: str, body: str, byte_size: int) -> tuple[int, tuple[str, ...]]:
     signals = [f"kind:{kind}", f"length:{byte_size}"]
-    score = _KIND_SCORE[kind]
-    score += min(15, byte_size // 4_000)
-
+    score = _KIND_SCORE[kind] + min(15, byte_size // 4_000)
     url_count = len(_URL_RE.findall(body))
     if url_count:
         score += min(5, url_count)
         signals.append(f"urls:{url_count}")
-
     markers = (
+        ("business", ("商业模式", "业务模式", "竞争优势"), 4),
         ("valuation", ("估值", "合理价值", "价值区间", "买入区"), 5),
         ("risk", ("风险", "证伪"), 4),
         ("trigger", ("触发", "催化", "复核条件"), 4),
@@ -152,7 +136,6 @@ def _score(kind: str, body: str, byte_size: int) -> tuple[int, tuple[str, ...]]:
     if "|" in body and "---" in body:
         score += 2
         signals.append("table")
-
     replacement_count = body.count("\ufffd")
     mojibake_count = sum(body.count(token) for token in ("锛", "銆", "鐨勫", "鍏徃"))
     if replacement_count:
@@ -181,13 +164,10 @@ def _title_and_excerpt(body: str) -> tuple[str | None, str]:
             paragraphs.append(normalized)
         if sum(len(item) for item in paragraphs) >= 420:
             break
-    excerpt = " ".join(paragraphs)
-    return title, excerpt[:420]
+    return title, " ".join(paragraphs)[:420]
 
 
 def _body_identity(body: str, expected_symbol: str) -> tuple[str, tuple[str, ...]]:
-    """Check only the title/header area, avoiding peer codes deep in a report."""
-
     header_lines: list[str] = []
     for raw_line in body.splitlines():
         line = raw_line.strip()
@@ -215,27 +195,19 @@ def _candidate_id(commit: str, entry: _TreeEntry) -> str:
 
 
 class LegacyReportSalvager:
-    """Read one frozen Git tag and migrate only explicitly reviewed condensations.
+    """Read one frozen Git tag and copy one best historical report per company.
 
-    Candidate discovery is one local, batched Git read. It never creates company
-    research tasks. Applying decisions deliberately goes through the current
-    :class:`ResearchFlow` contract; no legacy state, queue or report tree is
-    restored into the working tree.
+    The archive is deliberately outside the current-state workflow. It does not
+    read or write company status, tasks, valuation, triggers, or the watchlist.
     """
 
     def __init__(self, root: str | Path) -> None:
         self.root = Path(root).resolve()
 
     def _git(self, *args: str, input_bytes: bytes | None = None) -> bytes:
-        command = [
-            "git",
-            "-c",
-            f"safe.directory={self.root.as_posix()}",
-            *args,
-        ]
         try:
             completed = subprocess.run(
-                command,
+                ["git", "-c", f"safe.directory={self.root.as_posix()}", *args],
                 cwd=self.root,
                 input=input_bytes,
                 stdout=subprocess.PIPE,
@@ -257,15 +229,7 @@ class LegacyReportSalvager:
         return commit
 
     def _tree(self, commit: str) -> tuple[_TreeEntry, ...]:
-        raw = self._git(
-            "ls-tree",
-            "-r",
-            "-z",
-            "-l",
-            commit,
-            "--",
-            "research/companies/CN",
-        )
+        raw = self._git("ls-tree", "-r", "-z", "-l", commit, "--", "research/companies/CN")
         entries: list[_TreeEntry] = []
         for record in raw.split(b"\0"):
             if not record:
@@ -312,188 +276,117 @@ class LegacyReportSalvager:
     def _report_entries(entries: Sequence[_TreeEntry]) -> tuple[_TreeEntry, ...]:
         return tuple(entry for entry in entries if _REPORT_PATH_RE.fullmatch(entry.path))
 
-    def _current_symbols(self) -> set[str]:
-        base = self.root / "research" / "companies" / "CN"
-        if not base.is_dir():
-            return set()
-        return {
-            f"CN:{path.parent.name}"
-            for path in base.glob("*/current.md")
-            if re.fullmatch(r"\d{6}", path.parent.name) and path.is_file()
-        }
-
-    def _meta_identities(
-        self,
-        entries: Sequence[_TreeEntry],
-        blobs: Mapping[str, bytes],
-        symbols: set[str],
-    ) -> dict[str, tuple[str | None, str | None]]:
-        meta_by_symbol: dict[str, _TreeEntry] = {}
+    @staticmethod
+    def _meta_entries(entries: Sequence[_TreeEntry]) -> dict[str, _TreeEntry]:
+        result: dict[str, _TreeEntry] = {}
         for entry in entries:
-            match = re.fullmatch(
-                r"research/companies/CN/(\d{6})/meta\.json", entry.path
-            )
-            if match and f"CN:{match.group(1)}" in symbols:
-                meta_by_symbol[f"CN:{match.group(1)}"] = entry
-        identities: dict[str, tuple[str | None, str | None]] = {}
-        for symbol, entry in meta_by_symbol.items():
-            try:
-                payload = json.loads(blobs[entry.object_id].decode("utf-8"))
-            except (KeyError, UnicodeDecodeError, json.JSONDecodeError):
-                continue
-            identity = payload.get("identity") if isinstance(payload, dict) else None
-            name = identity.get("name") if isinstance(identity, dict) else None
-            declared_symbol = identity.get("symbol") if isinstance(identity, dict) else None
-            if not name and isinstance(payload, dict):
-                name = payload.get("company_name") or payload.get("name")
-            normalized_name = name.strip() if isinstance(name, str) and name.strip() else None
-            normalized_symbol = (
-                declared_symbol.strip().upper()
-                if isinstance(declared_symbol, str) and declared_symbol.strip()
-                else None
-            )
-            identities[symbol] = (normalized_name, normalized_symbol)
-        return identities
+            match = re.fullmatch(r"research/companies/CN/(\d{6})/meta\.json", entry.path)
+            if match:
+                result[f"CN:{match.group(1)}"] = entry
+        return result
 
-    def list_candidates(
+    @staticmethod
+    def _meta_identity(
+        symbol: str, entry: _TreeEntry | None, blobs: Mapping[str, bytes]
+    ) -> tuple[str | None, str | None]:
+        if entry is None:
+            return None, None
+        try:
+            payload = json.loads(blobs[entry.object_id].decode("utf-8"))
+        except (KeyError, UnicodeDecodeError, json.JSONDecodeError):
+            return None, None
+        identity = payload.get("identity") if isinstance(payload, dict) else None
+        name = identity.get("name") if isinstance(identity, dict) else None
+        declared = identity.get("symbol") if isinstance(identity, dict) else None
+        if not name and isinstance(payload, dict):
+            name = payload.get("company_name") or payload.get("name")
+        normalized_name = name.strip() if isinstance(name, str) and name.strip() else None
+        normalized_symbol = declared.strip().upper() if isinstance(declared, str) else None
+        if normalized_symbol == symbol:
+            return normalized_name, normalized_symbol
+        return normalized_name, normalized_symbol
+
+    def _catalog(
         self,
-        *,
-        limit: int = 200,
-        min_score: int = 40,
-    ) -> LegacyCandidateScan:
-        """Rank old Markdown reports without consulting or mutating old workflow state."""
-
-        if isinstance(limit, bool) or not isinstance(limit, int) or limit <= 0:
-            raise ValidationError("limit must be a positive integer")
-        if isinstance(min_score, bool) or not isinstance(min_score, int):
-            raise ValidationError("min_score must be an integer")
-
+    ) -> tuple[str, tuple[_TreeEntry, ...], dict[str, bytes], dict[str, _TreeEntry]]:
         commit = self._commit()
         entries = self._tree(commit)
         reports = self._report_entries(entries)
-        current_symbols = self._current_symbols()
-        eligible_entries: list[_TreeEntry] = []
-        excluded = 0
-        for entry in reports:
-            match = _REPORT_PATH_RE.fullmatch(entry.path)
-            assert match is not None
-            if f"CN:{match.group('ticker')}" in current_symbols:
-                excluded += 1
-            else:
-                eligible_entries.append(entry)
+        meta_entries = self._meta_entries(entries)
+        blobs = self._blobs(
+            [
+                *(entry.object_id for entry in reports),
+                *(entry.object_id for entry in meta_entries.values()),
+            ]
+        )
+        return commit, reports, blobs, meta_entries
 
-        report_blobs = self._blobs([entry.object_id for entry in eligible_entries])
+    def _eligible_candidates(
+        self,
+    ) -> tuple[
+        str,
+        tuple[_TreeEntry, ...],
+        dict[str, bytes],
+        list[LegacyReportCandidate],
+        list[dict[str, Any]],
+    ]:
+        commit, reports, blobs, meta_entries = self._catalog()
         reports_by_symbol: dict[str, list[_TreeEntry]] = {}
-        for entry in eligible_entries:
+        for entry in reports:
             match = _REPORT_PATH_RE.fullmatch(entry.path)
             assert match is not None
             reports_by_symbol.setdefault(f"CN:{match.group('ticker')}", []).append(entry)
 
-        ranked: list[
-            tuple[
-                _TreeEntry,
-                str,
-                str,
-                int,
-                tuple[str, ...],
-                str,
-                tuple[str, ...],
-                tuple[str, ...],
-                str | None,
-                str,
-            ]
-        ] = []
-        identity_mismatches: list[dict[str, Any]] = []
-        for entry in eligible_entries:
+        candidates: list[LegacyReportCandidate] = []
+        skipped: list[dict[str, Any]] = []
+        for entry in reports:
             match = _REPORT_PATH_RE.fullmatch(entry.path)
             assert match is not None
-            body = report_blobs[entry.object_id].decode("utf-8", errors="replace")
-            kind = _kind(match.group("filename"))
-            score, signals = _score(kind, body, entry.size)
             symbol = f"CN:{match.group('ticker')}"
-            identity_status, detected_symbols = _body_identity(body, symbol)
-            if identity_status == "mismatch":
-                identity_mismatches.append(
+            filename = match.group("filename")
+            body = blobs[entry.object_id].decode("utf-8", errors="replace")
+            kind = _kind(filename)
+            if kind in {"excluded", "process_review"}:
+                continue
+            body_status, detected_symbols = _body_identity(body, symbol)
+            name, declared_symbol = self._meta_identity(symbol, meta_entries.get(symbol), blobs)
+            if body_status == "mismatch" or (
+                declared_symbol is not None and declared_symbol != symbol
+            ):
+                skipped.append(
                     {
                         "symbol": symbol,
                         "legacy_path": entry.path,
-                        "detected_symbols": detected_symbols,
                         "reason": "identity_mismatch",
+                        "detected_symbols": detected_symbols
+                        or ((declared_symbol,) if declared_symbol else ()),
                     }
                 )
                 continue
-            if score < min_score:
+            if body_status != "match" and declared_symbol != symbol:
+                skipped.append(
+                    {
+                        "symbol": symbol,
+                        "legacy_path": entry.path,
+                        "reason": "identity_unverified",
+                        "detected_symbols": detected_symbols,
+                    }
+                )
                 continue
-            title, excerpt = _title_and_excerpt(body)
-            report_date_match = _DATE_RE.match(match.group("filename"))
-            report_date = report_date_match.group(1) if report_date_match else None
-            newer_paths: list[str] = []
-            if report_date:
-                for related in reports_by_symbol[symbol]:
-                    related_match = _DATE_RE.match(Path(related.path).name)
-                    if (
-                        related_match
-                        and related_match.group(1) > report_date
-                        and _kind(Path(related.path).name) not in {"failed", "superseded"}
-                    ):
-                        newer_paths.append(related.path)
-            newer_paths.sort()
-            if newer_paths:
-                signals = (*signals, f"newer_reports:{len(newer_paths)}")
-            ranked.append(
-                (
-                    entry,
-                    symbol,
-                    kind,
-                    score,
-                    signals,
-                    identity_status,
-                    detected_symbols,
-                    tuple(newer_paths),
-                    title,
-                    excerpt,
+            score, signals = _score(kind, body, entry.size)
+            date_match = _DATE_RE.match(filename)
+            report_date = date_match.group(1) if date_match else None
+            newer_paths = tuple(
+                sorted(
+                    related.path
+                    for related in reports_by_symbol[symbol]
+                    if (related_match := _DATE_RE.match(Path(related.path).name))
+                    and report_date is not None
+                    and related_match.group(1) > report_date
+                    and _kind(Path(related.path).name) not in {"excluded", "process_review"}
                 )
             )
-        ranked.sort(key=lambda item: (-item[3], item[1], item[0].path))
-        selected = ranked[:limit]
-
-        selected_symbols = {item[1] for item in selected}
-        meta_entries = [
-            entry
-            for entry in entries
-            if re.fullmatch(r"research/companies/CN/\d{6}/meta\.json", entry.path)
-            and f"CN:{entry.path.split('/')[3]}" in selected_symbols
-        ]
-        meta_blobs = self._blobs([entry.object_id for entry in meta_entries])
-        identities = self._meta_identities(meta_entries, meta_blobs, selected_symbols)
-
-        candidates: list[LegacyReportCandidate] = []
-        for (
-            entry,
-            symbol,
-            kind,
-            score,
-            signals,
-            identity_status,
-            detected_symbols,
-            newer_paths,
-            title,
-            excerpt,
-        ) in selected:
-            name, declared_symbol = identities.get(symbol, (None, None))
-            if declared_symbol is not None and declared_symbol != symbol:
-                identity_mismatches.append(
-                    {
-                        "symbol": symbol,
-                        "legacy_path": entry.path,
-                        "detected_symbols": (declared_symbol,),
-                        "reason": "metadata_identity_mismatch",
-                    }
-                )
-                continue
-            if identity_status == "unverified" and declared_symbol == symbol:
-                identity_status = "metadata_match"
-            date_match = _DATE_RE.match(Path(entry.path).name)
+            title, excerpt = _title_and_excerpt(body)
             candidates.append(
                 LegacyReportCandidate(
                     candidate_id=_candidate_id(commit, entry),
@@ -501,329 +394,132 @@ class LegacyReportSalvager:
                     name=name,
                     legacy_path=entry.path,
                     legacy_blob_oid=entry.object_id,
-                    report_date=date_match.group(1) if date_match else None,
+                    report_date=report_date,
                     report_kind=kind,
                     byte_size=entry.size,
                     score=score,
                     signals=signals,
-                    identity_status=identity_status,
+                    identity_status=("match" if body_status == "match" else "metadata_match"),
                     detected_symbols=detected_symbols,
                     newer_report_paths=newer_paths,
                     title=title,
                     excerpt=excerpt,
                 )
             )
+        return commit, reports, blobs, candidates, skipped
+
+    def list_candidates(self, *, limit: int = 200, min_score: int = 0) -> LegacyCandidateScan:
+        """Rank eligible old reports without changing current research facts."""
+
+        if isinstance(limit, bool) or not isinstance(limit, int) or limit <= 0:
+            raise ValidationError("limit must be a positive integer")
+        if isinstance(min_score, bool) or not isinstance(min_score, int):
+            raise ValidationError("min_score must be an integer")
+        commit, reports, _blobs, candidates, skipped = self._eligible_candidates()
+        eligible = [candidate for candidate in candidates if candidate.score >= min_score]
+        eligible.sort(
+            key=lambda item: (
+                -item.score,
+                item.symbol,
+                -(int((item.report_date or "0000-00-00").replace("-", ""))),
+                item.legacy_path,
+            )
+        )
         return LegacyCandidateScan(
             tag=LEGACY_TAG,
             commit=commit,
             reports_scanned=len(reports),
-            reports_excluded_for_current=excluded,
-            identity_mismatches=tuple(
-                sorted(identity_mismatches, key=lambda item: item["legacy_path"])
-            ),
-            eligible_reports=len(ranked),
-            candidates=tuple(candidates),
+            reports_excluded_for_current=0,
+            identity_mismatches=tuple(sorted(skipped, key=lambda item: item["legacy_path"])),
+            eligible_reports=len(eligible),
+            candidates=tuple(eligible[:limit]),
         )
 
-    @staticmethod
-    def _result(payload: Mapping[str, Any]) -> ResearchResult:
-        raw_range = payload.get("value_range")
-        if not isinstance(raw_range, Mapping):
-            raise LegacySalvageError("migrate result requires value_range")
-        raw_levels = payload.get("price_levels") or []
-        if not isinstance(raw_levels, list) or not all(
-            isinstance(item, Mapping) for item in raw_levels
-        ):
-            raise LegacySalvageError("result.price_levels must be an array of objects")
-        return ResearchResult(
-            symbol=payload["symbol"],
-            name=payload.get("name"),
-            outcome=payload["outcome"],
-            summary=payload["summary"],
-            key_logic=payload.get("key_logic") or (),
-            risks=payload.get("risks") or (),
-            value_range=ValueRange(
-                low=raw_range["low"],
-                high=raw_range["high"],
-                currency=raw_range.get("currency", "CNY"),
-            ),
-            price_levels=tuple(
-                PriceLevel(
-                    id=item["id"],
-                    label=item["label"],
-                    threshold=item["threshold"],
-                    rearm_above=item.get("rearm_above"),
+    def archive_best(self) -> LegacyArchiveResult:
+        """Archive exactly one highest-quality legacy report for each verified company."""
+
+        commit, reports, blobs, candidates, skipped_reports = self._eligible_candidates()
+        by_symbol: dict[str, list[LegacyReportCandidate]] = {}
+        for candidate in candidates:
+            by_symbol.setdefault(candidate.symbol, []).append(candidate)
+        selected = {
+            symbol: max(
+                company_candidates,
+                key=lambda item: (
+                    item.score,
+                    item.report_date or "0000-00-00",
+                    item.byte_size,
+                    item.legacy_path,
+                ),
+            )
+            for symbol, company_candidates in by_symbol.items()
+        }
+
+        planned: list[tuple[Path, str]] = []
+        already_archived = 0
+        for symbol, candidate in sorted(selected.items()):
+            ticker = symbol.split(":", 1)[1]
+            filename = f"{candidate.report_date}.md" if candidate.report_date else "undated.md"
+            destination = self.root / "research" / "companies" / "CN" / ticker / "legacy" / filename
+            raw_body = (
+                blobs[candidate.legacy_blob_oid]
+                .decode("utf-8", errors="replace")
+                .replace("\r\n", "\n")
+                .strip()
+            )
+            content = (
+                "> **历史资料**\n"
+                "> 仅供历史参考，不代表当前公司状态、估值或价格结论；"
+                "系统不会用本文件生成研究状态、研究任务或价格监控。\n"
+                f"> 来源：`{LEGACY_TAG}` / `{candidate.legacy_path}` / "
+                f"`{candidate.legacy_blob_oid}`\n\n"
+                f"{raw_body}\n"
+            )
+            existing = list(destination.parent.glob("*.md")) if destination.parent.is_dir() else []
+            if existing:
+                if len(existing) == 1 and existing[0] == destination:
+                    if destination.read_text(encoding="utf-8") == content:
+                        already_archived += 1
+                        continue
+                raise LegacySalvageError(
+                    f"legacy archive already contains a different report for {symbol}"
                 )
-                for item in raw_levels
-            ),
-            buy_below=payload.get("buy_below"),
-            rearm_above=payload.get("rearm_above"),
-            event_triggers=payload.get("event_triggers") or (),
-            source_urls=payload.get("source_urls") or (),
-            information_cutoff=payload["information_cutoff"],
-            report_markdown=payload.get("report_markdown"),
-            valuation_note=payload.get("valuation_note"),
+            planned.append((destination, content))
+
+        for destination, content in planned:
+            _atomic_write_text(destination, content)
+
+        companies_seen = len(
+            {
+                f"CN:{match.group('ticker')}"
+                for entry in reports
+                if (match := _REPORT_PATH_RE.fullmatch(entry.path))
+            }
         )
-
-    def apply_decisions(
-        self,
-        payload: Mapping[str, Any],
-        *,
-        at: str | None = None,
-    ) -> LegacySalvageResult:
-        """Write only explicitly selected, newly condensed modern research results."""
-
-        if not isinstance(payload, Mapping):
-            raise LegacySalvageError("legacy salvage input must be a JSON object")
-        batch_id = _text(payload.get("batch_id"), "batch_id")
-        raw_decisions = payload.get("decisions")
-        if not isinstance(raw_decisions, list) or not raw_decisions:
-            raise LegacySalvageError("decisions must be a non-empty array")
-        if not all(isinstance(item, Mapping) for item in raw_decisions):
-            raise LegacySalvageError("each salvage decision must be an object")
-
-        commit = self._commit()
-        entries = self._tree(commit)
-        reports = self._report_entries(entries)
-        by_path = {entry.path: entry for entry in reports}
-        reports_by_symbol: dict[str, list[_TreeEntry]] = {}
-        meta_by_symbol: dict[str, _TreeEntry] = {}
-        for entry in reports:
-            match = _REPORT_PATH_RE.fullmatch(entry.path)
-            assert match is not None
-            reports_by_symbol.setdefault(f"CN:{match.group('ticker')}", []).append(entry)
-        for entry in entries:
-            meta_match = re.fullmatch(
-                r"research/companies/CN/(\d{6})/meta\.json", entry.path
-            )
-            if meta_match:
-                meta_by_symbol[f"CN:{meta_match.group(1)}"] = entry
-        current_symbols = self._current_symbols()
-        selected: list[tuple[Mapping[str, Any], _TreeEntry, ResearchResult]] = []
-        skipped: list[dict[str, Any]] = []
-        seen_candidates: set[str] = set()
-        seen_symbols: set[str] = set()
-        selected_blob_ids: list[str] = []
-
-        for decision in raw_decisions:
-            candidate_id = _text(decision.get("candidate_id"), "candidate_id")
-            symbol = _text(decision.get("symbol"), "symbol").upper()
-            legacy_path = _text(decision.get("legacy_path"), "legacy_path")
-            legacy_blob_oid = _text(decision.get("legacy_blob_oid"), "legacy_blob_oid")
-            action = _text(decision.get("action"), "action")
-            if candidate_id in seen_candidates:
-                raise LegacySalvageError(f"duplicate candidate decision: {candidate_id}")
-            if symbol in seen_symbols:
-                raise LegacySalvageError(f"only one salvage decision is allowed for {symbol}")
-            seen_candidates.add(candidate_id)
-            seen_symbols.add(symbol)
-
-            entry = by_path.get(legacy_path)
-            match = _REPORT_PATH_RE.fullmatch(legacy_path)
-            if entry is None or match is None:
-                raise LegacySalvageError(f"legacy report is not in {LEGACY_TAG}: {legacy_path}")
-            expected_symbol = f"CN:{match.group('ticker')}"
-            expected_candidate = _candidate_id(commit, entry)
-            if symbol != expected_symbol:
-                raise LegacySalvageError("decision symbol does not match legacy report path")
-            if legacy_blob_oid != entry.object_id or candidate_id != expected_candidate:
-                raise LegacySalvageError(f"legacy candidate identity changed: {legacy_path}")
-            if action == "skip":
-                reason = _text(decision.get("reason"), "skip reason")
-                skipped.append(
-                    {
-                        "candidate_id": candidate_id,
-                        "symbol": symbol,
-                        "legacy_path": legacy_path,
-                        "reason": reason,
-                    }
-                )
-                continue
-            if action != "migrate":
-                raise LegacySalvageError("action must be migrate or skip")
-            if symbol in current_symbols:
-                raise LegacySalvageError(f"current.md already exists for {symbol}")
-            reason = _text(decision.get("reason"), "migrate reason")
-            selected_date_match = _DATE_RE.match(Path(entry.path).name)
-            required_review_paths = {entry.path}
-            if selected_date_match:
-                selected_date = selected_date_match.group(1)
-                required_review_paths.update(
-                    related.path
-                    for related in reports_by_symbol[symbol]
-                    if (related_date := _DATE_RE.match(Path(related.path).name))
-                    and related_date.group(1) > selected_date
-                    and _kind(Path(related.path).name) not in {"failed", "superseded"}
-                )
-            raw_reviewed_paths = decision.get("reviewed_legacy_paths")
-            if not isinstance(raw_reviewed_paths, list) or not all(
-                isinstance(item, str) and item.strip() for item in raw_reviewed_paths
-            ):
-                raise LegacySalvageError(
-                    "migrate decision requires reviewed_legacy_paths"
-                )
-            reviewed_paths = {item.strip() for item in raw_reviewed_paths}
-            missing_reviews = sorted(required_review_paths - reviewed_paths)
-            if missing_reviews:
-                raise LegacySalvageError(
-                    "migrate decision has not reviewed the selected or newer reports: "
-                    + ", ".join(missing_reviews)
-                )
-            unknown_reviews = sorted(reviewed_paths - set(by_path))
-            if unknown_reviews:
-                raise LegacySalvageError(
-                    "reviewed_legacy_paths contains paths outside the frozen report tree: "
-                    + ", ".join(unknown_reviews)
-                )
-            foreign_reviews = sorted(
-                path
-                for path in reviewed_paths
-                if (review_match := _REPORT_PATH_RE.fullmatch(path))
-                and f"CN:{review_match.group('ticker')}" != symbol
-            )
-            if foreign_reviews:
-                raise LegacySalvageError(
-                    "reviewed_legacy_paths contains another company's reports: "
-                    + ", ".join(foreign_reviews)
-                )
-            result_payload = decision.get("result")
-            if not isinstance(result_payload, Mapping):
-                raise LegacySalvageError("migrate decision requires a result object")
-            try:
-                result = self._result(result_payload)
-                normalized = ResearchFlow._normalized_result(result)
-            except (KeyError, TypeError, ValueError) as exc:
-                raise LegacySalvageError(f"invalid migrate result for {symbol}: {exc}") from exc
-            if normalized["symbol"] != symbol:
-                raise LegacySalvageError("result symbol does not match selected candidate")
-            if normalized["outcome"] != "covered":
-                raise LegacySalvageError("legacy salvage only accepts covered results")
-            selected.append((dict(decision, reason=reason), entry, result))
-            selected_blob_ids.append(entry.object_id)
-
-        if not selected:
-            return LegacySalvageResult(
-                tag=LEGACY_TAG,
-                commit=commit,
-                batch_id=batch_id,
-                migrated=(),
-                skipped=tuple(skipped),
-            )
-
-        selected_meta_entries = [
-            meta_by_symbol[result.symbol]
-            for _decision, _entry, result in selected
-            if result.symbol in meta_by_symbol
-        ]
-        old_blobs = self._blobs(
-            [*selected_blob_ids, *(entry.object_id for entry in selected_meta_entries)]
+        skipped_by_symbol: dict[str, dict[str, Any]] = {}
+        for item in skipped_reports:
+            skipped_by_symbol.setdefault(item["symbol"], item)
+        skipped_companies = tuple(
+            skipped_by_symbol[symbol]
+            for symbol in sorted(skipped_by_symbol.keys() - selected.keys())
         )
-        for _decision, entry, result in selected:
-            old_body = old_blobs[entry.object_id].decode("utf-8", errors="replace")
-            identity_status, detected_symbols = _body_identity(old_body, result.symbol)
-            if identity_status == "mismatch":
-                raise LegacySalvageError(
-                    f"identity_mismatch for {entry.path}: " + ", ".join(detected_symbols)
-                )
-            identity_verified = identity_status == "match"
-            meta_entry = meta_by_symbol.get(result.symbol)
-            if meta_entry is not None:
-                identities = self._meta_identities(
-                    [meta_entry], old_blobs, {result.symbol}
-                )
-                _name, declared_symbol = identities.get(result.symbol, (None, None))
-                if declared_symbol is not None and declared_symbol != result.symbol:
-                    raise LegacySalvageError(
-                        f"metadata_identity_mismatch for {entry.path}: {declared_symbol}"
-                    )
-                identity_verified = identity_verified or declared_symbol == result.symbol
-            if not identity_verified:
-                raise LegacySalvageError(
-                    f"identity_unverified for {entry.path}; title/header or metadata "
-                    "must identify the path symbol"
-                )
-            new_body = (result.report_markdown or "").replace("\r\n", "\n").strip()
-            if new_body == old_body.replace("\r\n", "\n").strip():
-                raise LegacySalvageError(
-                    f"raw legacy report cannot be restored as current.md: {entry.path}"
-                )
-
-        flow = ResearchFlow(self.root)
-        flow.validate()
-        if flow.list_tasks():
-            raise LegacySalvageError(
-                "legacy salvage requires an empty research queue; "
-                "finish or requeue current work first"
-            )
-        trigger_key = f"screen:legacy-salvage:{batch_id}"
-        selected_symbols = {result.symbol for _decision, _entry, result in selected}
-        already_processed = sorted(
-            state["symbol"]
-            for state in flow.read_states()
-            if state["symbol"] in selected_symbols
-            and trigger_key in set(state.get("processed_triggers") or [])
-        )
-        if already_processed:
-            raise LegacySalvageError(
-                "salvage batch was already processed for: " + ", ".join(already_processed)
-            )
-
-        timestamp = at or payload.get("at")
-        screening = flow.apply_screening(
-            [
-                ScreenDecision(
-                    symbol=result.symbol,
-                    name=result.name,
-                    route="research_now",
-                    reason=(
-                        f"旧研报打捞 {entry.path}@{entry.object_id}: "
-                        f"{decision['reason']}"
-                    ),
-                )
-                for decision, entry, result in selected
-            ],
-            screen_id=f"legacy-salvage:{batch_id}",
-            mode="event",
-            at=timestamp,
-        )
-        if screening.deduplicated or len(screening.enqueued_tasks) != len(selected):
-            raise LegacySalvageError("one or more salvage candidates were already processed")
-        dispatched = flow.dispatch_tasks(limit=len(selected), at=timestamp)
-        tasks_by_symbol = {task.symbol: task for task in dispatched}
-        if set(tasks_by_symbol) != {result.symbol for _, _, result in selected}:
-            raise LegacySalvageError("could not exclusively dispatch the salvage batch")
-
-        migrated: list[dict[str, Any]] = []
-        for _decision, entry, result in selected:
-            state = flow.apply_result(
-                result,
-                task_id=tasks_by_symbol[result.symbol].task_id,
-                at=timestamp,
-            )
-            migrated.append(
-                {
-                    "candidate_id": _candidate_id(commit, entry),
-                    "symbol": result.symbol,
-                    "legacy_path": entry.path,
-                    "legacy_blob_oid": entry.object_id,
-                    "report_path": state["report_path"],
-                }
-            )
-        flow.validate()
-        return LegacySalvageResult(
+        return LegacyArchiveResult(
             tag=LEGACY_TAG,
             commit=commit,
-            batch_id=batch_id,
-            migrated=tuple(migrated),
-            skipped=tuple(skipped),
+            reports_scanned=len(reports),
+            companies_seen=companies_seen,
+            companies_archived=len(planned),
+            already_archived=already_archived,
+            companies_skipped=companies_seen - len(selected),
+            skipped=skipped_companies,
         )
 
 
 __all__ = [
     "LEGACY_TAG",
+    "LegacyArchiveResult",
     "LegacyCandidateScan",
     "LegacyReportCandidate",
     "LegacyReportSalvager",
     "LegacySalvageError",
-    "LegacySalvageResult",
 ]

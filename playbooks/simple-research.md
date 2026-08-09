@@ -47,10 +47,10 @@
 
 ## 状态硬约束
 
-- `unseen`：没有筛选结论、报告、任务或价格线。
-- `ignore`：没有活动价格监控；初筛 ignore 可以没有报告，正式研究后的 ignore 保留 `current.md`。
-- `candidate`：有选入理由和时间，没有当前有效报告及价格线。
-- `covered`：必须有非空 `current.md`、信息截止时间、关键逻辑、风险、来源，以及价格或事件触发；无法可靠估值时必须解释原因。
+- `unseen`：没有筛选结论、当前报告指针、任务或价格线；隔离历史档案不受影响。
+- `ignore`：没有活动价格监控；正式研究后的 ignore 可以保留最新正式报告指针。
+- `candidate`：有选入理由和时间，没有当前有效报告指针及价格线。
+- `covered`：必须指向最新的非空日期化正式报告，并有信息截止时间、关键逻辑、风险、来源，以及价格或事件触发；无法可靠估值时必须解释原因。
 - `stale`：必须保留旧报告和明确失效原因；价格监控关闭，只允许创建更新研究任务。
 - 价格命中只改变触发器的 armed/hit 状态，不改变公司研究状态。
 - 持仓、仓位和账户信息不进入公司研究状态。
@@ -79,9 +79,24 @@ Agent 必须使用统一提示词，完成商业模式、竞争、财务质量�
 - `covered`：报告当前有效且值得持续监控；
 - `ignore`：完成正式研究后仍不值得持续监控。
 
-两种结果都写 `research/companies/CN/{ticker}/current.md`。报告可以较短，但必须有来源、估值判断和证伪依据。更新历史由 Git 保存。
+两种结果都向 `research/companies/CN/{ticker}/reports/` 追加一份日期化报告。报告可以较短，但必须有来源、估值判断和证伪依据。不得覆盖以前的正式报告。
 
 `covered` 若能可靠估值，给出合理价值区间和关注价；若无法可靠估值但事件具有持续研究价值，可以只做事件监控，并填写无法估值原因。`ignore` 不得激活价格触发。
+
+## 报告存档
+
+新机制正式报告使用：
+
+```text
+research/companies/CN/{ticker}/reports/YYYY-MM-DD.md
+research/companies/CN/{ticker}/reports/YYYY-MM-DD-02.md  # 同一天第二份
+```
+
+`research_state.jsonl.report_path` 必须指向时间线上最新的正式报告，它就是 current；不生成 `current.md` 副本，也不使用 `stale` 文件后缀。公司转为 `stale` 时由状态说明旧报告已经失效。
+
+迁移前旧稿放在 `research/companies/CN/{ticker}/legacy/YYYY-MM-DD.md`。每家公司最多一份，由固定 Git 标签中的候选按证券身份、报告类型、内容完整度和日期选优。`legacy/` 永远不修改公司状态，不参与 current、估值、任务、自选池和价格扫描；正文顶部必须显示历史资料警告。
+
+`reports/` 和 `legacy/` 是本机研究资料并由 Git 忽略，必须使用文件备份或同步工具另行备份。Git 克隆只恢复代码与结构化当前状态，不恢复报告正文。
 
 ## 自选池与每日收盘
 
@@ -119,7 +134,8 @@ stale + research_complete -> covered 或 ignore
 
 - `coverage/cn-a/research_state.jsonl`：证券范围、公司研究状态、当前结论和触发器运行状态；
 - `coverage/cn-a/research_queue.jsonl`：当前 queued/running 任务；
-- `research/companies/CN/{ticker}/current.md`：正式研究当前报告；
+- `research/companies/CN/{ticker}/reports/`：新机制正式报告时间线，状态中的 `report_path` 指向最新一份；
+- `research/companies/CN/{ticker}/legacy/`：每家公司最多一份的隔离历史旧稿；
 - `research/watchlist.jsonl`：从 active covered 状态派生；
 - `coverage/cn-a/event_scan_state.json`：公告扫描成功检查点。
 

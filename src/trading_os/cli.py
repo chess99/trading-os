@@ -66,6 +66,13 @@ def build_parser() -> argparse.ArgumentParser:
     _add_at(rebaseline)
     rebaseline.set_defaults(handler=_state_prepare_rebaseline)
 
+    reports = commands.add_parser("reports", help="维护本机日期化正式研报时间线")
+    report_commands = reports.add_subparsers(dest="reports_command", required=True)
+    migrate_current = report_commands.add_parser(
+        "migrate-current", help="把旧 current.md 一次性迁入 reports/日期.md"
+    )
+    migrate_current.set_defaults(handler=_reports_migrate_current)
+
     universe = commands.add_parser("universe", help="维护全市场证券清单")
     universe_commands = universe.add_subparsers(dest="universe_command", required=True)
     register = universe_commands.add_parser("register", help="登记证券，已有判断不会被覆盖")
@@ -138,9 +145,7 @@ def build_parser() -> argparse.ArgumentParser:
     event_fetch.add_argument("--until", help="半开窗口终点（默认当前上海时间）")
     event_fetch.add_argument("--output", help="将完整待判断 packet 写入仓库内临时 JSON")
     event_fetch.set_defaults(handler=_events_fetch)
-    event_complete = event_commands.add_parser(
-        "complete", help="全部公告判断成功后推进检查点"
-    )
+    event_complete = event_commands.add_parser("complete", help="全部公告判断成功后推进检查点")
     event_complete.add_argument("--packet", required=True, help="events fetch 的原始 JSON")
     _add_input(event_complete)
     event_complete.set_defaults(handler=_events_complete)
@@ -148,17 +153,15 @@ def build_parser() -> argparse.ArgumentParser:
     salvage = commands.add_parser("legacy-salvage", help="从固定恢复标签筛选并打捞旧研报")
     salvage_commands = salvage.add_subparsers(dest="salvage_command", required=True)
     candidates = salvage_commands.add_parser(
-        "candidates", help="批量列出高信号候选；不会创建单公司任务"
+        "candidates", help="只读列出旧报告候选；不会改变当前状态"
     )
     candidates.add_argument("--limit", type=int, default=200)
-    candidates.add_argument("--min-score", type=int, default=40)
+    candidates.add_argument("--min-score", type=int, default=0)
     candidates.set_defaults(handler=_legacy_salvage_candidates)
-    apply_salvage = salvage_commands.add_parser(
-        "apply", help="按显式决策写入重新核验、压缩后的 current.md"
+    archive_salvage = salvage_commands.add_parser(
+        "archive-best", help="每家公司选一份最佳旧报告写入隔离档案"
     )
-    _add_input(apply_salvage)
-    _add_at(apply_salvage)
-    apply_salvage.set_defaults(handler=_legacy_salvage_apply)
+    archive_salvage.set_defaults(handler=_legacy_salvage_archive_best)
     return parser
 
 
@@ -298,6 +301,13 @@ def _state_prepare_rebaseline(args: argparse.Namespace, stdin: TextIO) -> dict[s
     return {"reset": reset, "status": asdict(flow.validate())}
 
 
+def _reports_migrate_current(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    flow = _flow(args)
+    migrated = flow.migrate_current_reports()
+    return {"migrated": migrated, "status": asdict(flow.validate())}
+
+
 def _universe_register(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     payload, _ = _load(args.input, stdin)
     companies = [
@@ -413,9 +423,7 @@ def _watchlist_scan_close(args: argparse.Namespace, stdin: TextIO) -> dict[str, 
 
 def _monitored_companies(flow: ResearchFlow) -> dict[str, str | None]:
     return {
-        row["symbol"]: row.get("name")
-        for row in flow.read_watchlist()
-        if row.get("price_levels")
+        row["symbol"]: row.get("name") for row in flow.read_watchlist() if row.get("price_levels")
     }
 
 
@@ -493,12 +501,16 @@ def _events_fetch(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
                 raise ValueError("--since 必须与当前 last_successful_at 完全一致")
         scan_start = state.last_successful_at
         previous_time = datetime.fromisoformat(scan_start).astimezone(MARKET_TIMEZONE)
-        fetch_start = (previous_time - timedelta(days=1)).replace(
-            hour=0,
-            minute=0,
-            second=0,
-            microsecond=0,
-        ).isoformat()
+        fetch_start = (
+            (previous_time - timedelta(days=1))
+            .replace(
+                hour=0,
+                minute=0,
+                second=0,
+                microsecond=0,
+            )
+            .isoformat()
+        )
     scan_end = (
         _aware_iso(args.until, "until")
         if args.until is not None
@@ -586,10 +598,7 @@ def _events_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
         raise ValueError("packet fetch_start 不得晚于 scan_start")
     if datetime.fromisoformat(scan_end) <= datetime.fromisoformat(scan_start):
         raise ValueError("packet scan_end 必须晚于 scan_start")
-    if (
-        previous.last_successful_at is not None
-        and scan_start != previous.last_successful_at
-    ):
+    if previous.last_successful_at is not None and scan_start != previous.last_successful_at:
         raise ValueError("packet scan_start 已落后于当前公告检查点")
     announcements = tuple(_announcement_from_payload(item) for item in raw_announcements)
     start_time = datetime.fromisoformat(fetch_start)
@@ -601,9 +610,7 @@ def _events_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
             )
         )
         if published_at < start_time:
-            raise ValueError(
-                f"公告 {announcement.announcement_id} 早于 packet scan_start"
-            )
+            raise ValueError(f"公告 {announcement.announcement_id} 早于 packet scan_start")
     next_state = advance_event_scan_state(
         previous,
         scanned_through=scan_end,
@@ -626,11 +633,9 @@ def _legacy_salvage_candidates(args: argparse.Namespace, stdin: TextIO) -> Any:
     )
 
 
-def _legacy_salvage_apply(args: argparse.Namespace, stdin: TextIO) -> Any:
-    payload, _ = _load(args.input, stdin)
-    if not isinstance(payload, dict):
-        raise ValueError("旧研报打捞决策必须是 JSON 对象")
-    return LegacyReportSalvager(Path(args.root)).apply_decisions(payload, at=args.at)
+def _legacy_salvage_archive_best(args: argparse.Namespace, stdin: TextIO) -> Any:
+    del stdin
+    return LegacyReportSalvager(Path(args.root)).archive_best()
 
 
 def main(
