@@ -96,7 +96,7 @@ research/companies/CN/{ticker}/reports/YYYY-MM-DD-02.md  # 同一天第二份
 
 迁移前旧稿放在 `research/companies/CN/{ticker}/legacy/YYYY-MM-DD.md`。每家公司最多一份，由固定 Git 标签中的候选按证券身份、报告类型、内容完整度和日期选优。`legacy/` 永远不修改公司状态，不参与 current、估值、任务、自选池和价格扫描；正文顶部必须显示历史资料警告。
 
-`reports/` 和 `legacy/` 是本机研究资料并由 Git 忽略，必须使用文件备份或同步工具另行备份。Git 克隆只恢复代码与结构化当前状态，不恢复报告正文。
+`reports/` 和 `legacy/` 都进入 Git，完整克隆仓库即可恢复报告正文。是否参与当前研究状态只由目录语义和 `report_path` 决定，与 Git 跟踪状态无关。
 
 ## 自选池与每日收盘
 

@@ -12,7 +12,7 @@
 - 收盘价触发的去重与重新武装状态保存在公司当前状态行。
 - 公告扫描只用 `coverage/cn-a/event_scan_state.json` 保存成功检查点和近期公告 ID。
 
-正式报告和历史旧稿均为本机资料，由 Git 忽略，必须另行做文件备份。不得恢复会漂移的 `current.md` 副本，也不得用 `stale` 文件后缀表达公司状态。
+正式报告和历史旧稿都进入 Git。不得恢复会漂移的 `current.md` 副本，也不得用 `stale` 文件后缀表达公司状态。
 
 旧 manager-screen、quick/targeted/scoped/deep 阶段预算、claim/seal、calibration、独立承保、challenger、仲裁和组合审批均已退役，不得重新引入。
 
