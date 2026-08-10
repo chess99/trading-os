@@ -40,6 +40,18 @@ research/companies/CN/{代码}/legacy/{日期}.md   隔离的旧研报档案
 
 证券范围另用 `active / inactive`；任务另用 `queued / running`。历史上是否写过报告不等于当前研究状态。
 
+## 可视化研究台
+
+`dashboard/` 提供只读的研究决策台：主页按透明的“复核优先级”展示 `covered` 公司，并可在同一页面切换到全市场状态列表；研报库支持搜索、筛选、版本切换和长文目录导航。现价以腾讯行情为主源、东方财富为备援，失败时明确退回最近一次验证收盘价。
+
+```bash
+cd dashboard
+npm install
+npm run dev
+```
+
+页面始终从 `research_state.jsonl` 和正式 `reports/` 生成数据，不维护第二套状态，也不会让 `legacy/` 旧稿参与当前结论。完整设计说明见 [可视化研究台说明](dashboard/README.md)。
+
 ## 常用命令
 
 ```bash
