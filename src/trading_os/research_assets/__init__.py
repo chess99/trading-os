@@ -17,6 +17,8 @@ from .research_flow import (
     ScreenRoute,
     StateCorruptionError,
     TaskStatus,
+    UniverseStatus,
+    UniverseSyncUpdate,
     ValidationError,
     ValueRange,
 )
@@ -38,6 +40,8 @@ __all__ = [
     "ScreeningUpdate",
     "StateCorruptionError",
     "TaskStatus",
+    "UniverseStatus",
+    "UniverseSyncUpdate",
     "ValidationError",
     "ValueRange",
 ]

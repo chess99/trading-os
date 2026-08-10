@@ -20,6 +20,7 @@ WATCHLIST_PATH = Path("research/watchlist.jsonl")
 QUEUE_PATH = Path("coverage/cn-a/research_queue.jsonl")
 
 _SYMBOL_RE = re.compile(r"^CN:\d{6}$")
+_FORMAL_REPORT_RE = re.compile(r"^(?P<date>\d{4}-\d{2}-\d{2})(?:-(?P<sequence>\d{2}))?\.md$")
 _THREAD_LOCKS: dict[str, threading.RLock] = {}
 _THREAD_LOCKS_GUARD = threading.Lock()
 
@@ -36,16 +37,24 @@ class StateCorruptionError(ResearchFlowError):
     """Raised when a persisted JSONL file is malformed or internally inconsistent."""
 
 
+STATE_SCHEMA_VERSION = 2
+
+
+class UniverseStatus(str, Enum):
+    ACTIVE = "active"
+    INACTIVE = "inactive"
+
+
 class CompanyStatus(str, Enum):
     UNSEEN = "unseen"
     IGNORE = "ignore"
-    WATCH = "watch"
-    RESEARCHED = "researched"
+    CANDIDATE = "candidate"
+    COVERED = "covered"
+    STALE = "stale"
 
 
 class ScreenRoute(str, Enum):
     IGNORE = "ignore"
-    WATCH = "watch"
     RESEARCH_NOW = "research_now"
 
 
@@ -55,14 +64,13 @@ class ScreenMode(str, Enum):
 
 
 class ResearchOutcome(str, Enum):
-    DISCARD = "discard"
-    WATCH = "watch"
-    RESEARCHED = "researched"
+    IGNORE = "ignore"
+    COVERED = "covered"
 
 
 class TaskStatus(str, Enum):
     QUEUED = "queued"
-    DISPATCHED = "dispatched"
+    RUNNING = "running"
 
 
 @dataclass(frozen=True)
@@ -92,11 +100,8 @@ class ScreenDecision:
     route: ScreenRoute | str
     reason: str
     name: str | None = None
-    buy_below: float | None = None
-    rearm_above: float | None = None
     event_triggers: Sequence[str] = field(default_factory=tuple)
     source_urls: Sequence[str] = field(default_factory=tuple)
-    price_levels: Sequence[PriceLevel] = field(default_factory=tuple)
 
 
 @dataclass(frozen=True)
@@ -109,11 +114,13 @@ class ResearchResult:
     value_range: ValueRange | None
     event_triggers: Sequence[str]
     source_urls: Sequence[str]
+    information_cutoff: str
     price_levels: Sequence[PriceLevel] = field(default_factory=tuple)
     buy_below: float | None = None
     rearm_above: float | None = None
     name: str | None = None
     report_markdown: str | None = None
+    valuation_note: str | None = None
 
 
 @dataclass(frozen=True)
@@ -126,7 +133,7 @@ class ResearchTask:
     enqueued_at: str
     status: TaskStatus
     name: str | None = None
-    dispatched_at: str | None = None
+    started_at: str | None = None
 
     @property
     def trigger_key(self) -> str:
@@ -137,22 +144,34 @@ class ResearchTask:
 class ScreeningUpdate:
     total: int
     ignored: int
-    watched: int
-    research_now: int
+    candidates: int
     enqueued_tasks: tuple[ResearchTask, ...]
     deduplicated: int
 
 
 @dataclass(frozen=True)
+class UniverseSyncUpdate:
+    total: int
+    added: int
+    reactivated: int
+    inactivated: int
+    renamed: int
+    enqueued_tasks: tuple[ResearchTask, ...]
+
+
+@dataclass(frozen=True)
 class ResearchFlowStatus:
     companies: int
+    active: int
+    inactive: int
     unseen: int
     ignored: int
-    watched: int
-    researched: int
+    candidates: int
+    covered: int
+    stale: int
     watchlist: int
     queued: int
-    dispatched: int
+    running: int
 
 
 @dataclass(frozen=True)
@@ -437,9 +456,10 @@ def _task_id(symbol: str, trigger_key: str) -> str:
 
 def _empty_state(symbol: str, name: str | None, at: str) -> dict[str, Any]:
     return {
-        "schema_version": 1,
+        "schema_version": STATE_SCHEMA_VERSION,
         "symbol": symbol,
         "name": name,
+        "universe_status": UniverseStatus.ACTIVE.value,
         "status": CompanyStatus.UNSEEN.value,
         "updated_at": at,
         "summary": None,
@@ -451,7 +471,11 @@ def _empty_state(symbol: str, name: str | None, at: str) -> dict[str, Any]:
         "source_urls": [],
         "last_screening": None,
         "last_research_at": None,
+        "information_cutoff": None,
         "report_path": None,
+        "valuation_note": None,
+        "candidate_since": None,
+        "invalidation": None,
         "processed_triggers": [],
         "price_monitor": None,
     }
@@ -497,7 +521,7 @@ def _task_from_row(row: Mapping[str, Any]) -> ResearchTask:
             enqueued_at=_timestamp(row["enqueued_at"]),
             status=TaskStatus(_enum_value(row["status"], TaskStatus, "task status")),
             name=_optional_name(row.get("name")),
-            dispatched_at=(_timestamp(row["dispatched_at"]) if row.get("dispatched_at") else None),
+            started_at=(_timestamp(row["started_at"]) if row.get("started_at") else None),
         )
     except KeyError as exc:
         raise StateCorruptionError(f"queue row is missing {exc.args[0]}") from exc
@@ -505,7 +529,7 @@ def _task_from_row(row: Mapping[str, Any]) -> ResearchTask:
 
 def _task_row(task: ResearchTask) -> dict[str, Any]:
     return {
-        "schema_version": 1,
+        "schema_version": STATE_SCHEMA_VERSION,
         "task_id": task.task_id,
         "symbol": task.symbol,
         "name": task.name,
@@ -514,7 +538,7 @@ def _task_row(task: ResearchTask) -> dict[str, Any]:
         "reason": task.reason,
         "enqueued_at": task.enqueued_at,
         "status": task.status.value,
-        "dispatched_at": task.dispatched_at,
+        "started_at": task.started_at,
     }
 
 
@@ -550,6 +574,7 @@ class ResearchFlow:
         for row in rows:
             try:
                 symbol = _symbol(row["symbol"])
+                _enum_value(row["universe_status"], UniverseStatus, "universe status")
                 _enum_value(row["status"], CompanyStatus, "company status")
             except KeyError as exc:
                 raise StateCorruptionError(f"state row is missing {exc.args[0]}") from exc
@@ -581,10 +606,10 @@ class ResearchFlow:
         rows: list[dict[str, Any]] = []
         for symbol in sorted(states):
             state = states[symbol]
-            if state.get("status") not in {
-                CompanyStatus.WATCH.value,
-                CompanyStatus.RESEARCHED.value,
-            }:
+            if (
+                state.get("universe_status") != UniverseStatus.ACTIVE.value
+                or state.get("status") != CompanyStatus.COVERED.value
+            ):
                 continue
             monitor = state.get("price_monitor") or {}
             monitored_levels = monitor.get("levels", {})
@@ -602,7 +627,7 @@ class ResearchFlow:
                 )
             rows.append(
                 {
-                    "schema_version": 1,
+                    "schema_version": STATE_SCHEMA_VERSION,
                     "symbol": symbol,
                     "name": state.get("name"),
                     "status": state["status"],
@@ -614,7 +639,9 @@ class ResearchFlow:
                     "event_triggers": list(state.get("event_triggers") or []),
                     "source_urls": list(state.get("source_urls") or []),
                     "last_research_at": state.get("last_research_at"),
+                    "information_cutoff": state.get("information_cutoff"),
                     "report_path": state.get("report_path"),
+                    "valuation_note": state.get("valuation_note"),
                     "updated_at": state.get("updated_at"),
                 }
             )
@@ -660,6 +687,194 @@ class ResearchFlow:
         tasks.append(task)
         return task
 
+    def migrate_state_v2(self, *, at: str | datetime | None = None) -> int:
+        """One-time migration from the former watch/researched schema.
+
+        A legacy ``watch`` without a formal report becomes ``candidate`` and
+        loses its ungrounded price levels. A legacy ``researched`` row becomes
+        ``covered``. The migration does not create research tasks; candidate
+        selection and task creation remain explicit manager actions.
+        """
+
+        timestamp = _timestamp(at)
+        with _exclusive_lock(self.lock_path):
+            rows = _read_jsonl(self.state_path)
+            if not rows:
+                return 0
+            versions = {row.get("schema_version") for row in rows}
+            if versions == {STATE_SCHEMA_VERSION}:
+                return 0
+            if versions != {1}:
+                raise StateCorruptionError(
+                    f"cannot migrate mixed or unsupported state schemas: {versions}"
+                )
+
+            states: dict[str, dict[str, Any]] = {}
+            migrated_candidates: set[str] = set()
+            for row in rows:
+                symbol = _symbol(row.get("symbol"))
+                legacy_status = _nonblank(row.get("status"), "legacy status")
+                if legacy_status not in {"unseen", "ignore", "watch", "researched"}:
+                    raise StateCorruptionError(
+                        f"unsupported legacy company status for {symbol}: {legacy_status}"
+                    )
+                state = dict(row)
+                state.update(
+                    {
+                        "schema_version": STATE_SCHEMA_VERSION,
+                        "universe_status": UniverseStatus.ACTIVE.value,
+                        "information_cutoff": row.get("last_research_at"),
+                        "valuation_note": None,
+                        "candidate_since": None,
+                        "invalidation": None,
+                    }
+                )
+                if legacy_status == "watch":
+                    state["status"] = CompanyStatus.CANDIDATE.value
+                    state["candidate_since"] = timestamp
+                    state["value_range"] = None
+                    state["price_levels"] = []
+                    state["price_monitor"] = None
+                    state["report_path"] = None
+                    state["last_research_at"] = None
+                    state["information_cutoff"] = None
+                    migrated_candidates.add(symbol)
+                elif legacy_status == "researched":
+                    state["status"] = CompanyStatus.COVERED.value
+                elif legacy_status == "ignore":
+                    state["status"] = CompanyStatus.IGNORE.value
+                    state["price_levels"] = []
+                    state["price_monitor"] = None
+                else:
+                    state["status"] = CompanyStatus.UNSEEN.value
+                states[symbol] = state
+
+            legacy_tasks = _read_jsonl(self.queue_path)
+            tasks: list[ResearchTask] = []
+            for row in legacy_tasks:
+                task_status = _nonblank(row.get("status"), "legacy task status")
+                if task_status not in {"queued", "dispatched"}:
+                    raise StateCorruptionError(f"unsupported legacy task status: {task_status}")
+                task = ResearchTask(
+                    task_id=_nonblank(row.get("task_id"), "task_id"),
+                    symbol=_symbol(row.get("symbol")),
+                    name=_optional_name(row.get("name")),
+                    trigger_kind=_nonblank(row.get("trigger_kind"), "trigger_kind"),
+                    trigger_id=_nonblank(row.get("trigger_id"), "trigger_id"),
+                    reason=_nonblank(row.get("reason"), "reason"),
+                    enqueued_at=_timestamp(row.get("enqueued_at")),
+                    status=(
+                        TaskStatus.RUNNING if task_status == "dispatched" else TaskStatus.QUEUED
+                    ),
+                    started_at=(
+                        _timestamp(row.get("dispatched_at")) if row.get("dispatched_at") else None
+                    ),
+                )
+                tasks.append(task)
+                state = states[task.symbol]
+                if state.get("report_path") is not None:
+                    state["status"] = CompanyStatus.STALE.value
+                    state["invalidation"] = {
+                        "at": timestamp,
+                        "reason": task.reason,
+                        "screen_id": task.trigger_id,
+                    }
+                    state["price_monitor"] = None
+                else:
+                    state["status"] = CompanyStatus.CANDIDATE.value
+                    state["candidate_since"] = state.get("candidate_since") or timestamp
+
+            self._write_tasks(tasks)
+            self._write_states(states)
+        self.migrate_current_reports()
+        return len(rows)
+
+    def migrate_current_reports(self) -> int:
+        """Move legacy ``current.md`` files into the immutable dated timeline."""
+
+        created_targets: list[Path] = []
+        current_paths: list[Path] = []
+        with _exclusive_lock(self.lock_path):
+            states = self._states()
+            migrations: list[tuple[dict[str, Any], Path, Path]] = []
+            for symbol, state in states.items():
+                current = self._company_directory(symbol) / "current.md"
+                current_relative = current.relative_to(self.root).as_posix()
+                if state.get("report_path") != current_relative:
+                    continue
+                research_at = state.get("last_research_at")
+                if not research_at:
+                    raise StateCorruptionError(
+                        f"cannot date legacy current report without last_research_at: {symbol}"
+                    )
+                if not current.is_file():
+                    raise StateCorruptionError(f"legacy current report is missing for {symbol}")
+                report_date = _timestamp(research_at)[:10]
+                target = self._company_directory(symbol) / "reports" / f"{report_date}.md"
+                if target.exists() and target.read_bytes() != current.read_bytes():
+                    raise StateCorruptionError(
+                        f"dated report already exists with different content: {symbol}"
+                    )
+                migrations.append((state, current, target))
+
+            if not migrations:
+                return 0
+            try:
+                for state, current, target in migrations:
+                    if not target.exists():
+                        _atomic_write_text(target, current.read_text(encoding="utf-8"))
+                        created_targets.append(target)
+                    state["report_path"] = target.relative_to(self.root).as_posix()
+                    current_paths.append(current)
+                self._write_states(states)
+            except BaseException:
+                for target in created_targets:
+                    target.unlink(missing_ok=True)
+                raise
+        for current in current_paths:
+            current.unlink(missing_ok=True)
+        return len(current_paths)
+
+    def prepare_rebaseline(self, *, at: str | datetime | None = None) -> int:
+        """Reset active non-covered companies to unseen for a full manager pass."""
+
+        timestamp = _timestamp(at)
+        with _exclusive_lock(self.lock_path):
+            states = self._states()
+            reset_symbols: set[str] = set()
+            for symbol, state in states.items():
+                if state.get("universe_status") != UniverseStatus.ACTIVE.value:
+                    continue
+                if state.get("status") == CompanyStatus.COVERED.value:
+                    continue
+                reset_symbols.add(symbol)
+                state.update(
+                    {
+                        "status": CompanyStatus.UNSEEN.value,
+                        "updated_at": timestamp,
+                        "summary": None,
+                        "key_logic": [],
+                        "risks": [],
+                        "value_range": None,
+                        "price_levels": [],
+                        "event_triggers": [],
+                        "source_urls": [],
+                        "last_screening": None,
+                        "last_research_at": None,
+                        "information_cutoff": None,
+                        "report_path": None,
+                        "valuation_note": None,
+                        "candidate_since": None,
+                        "invalidation": None,
+                        "processed_triggers": [],
+                        "price_monitor": None,
+                    }
+                )
+            tasks = [task for task in self._tasks() if task.symbol not in reset_symbols]
+            self._write_tasks(tasks)
+            self._write_states(states)
+        return len(reset_symbols)
+
     def register_universe(
         self, companies: Iterable[CompanyRef], *, at: str | datetime | None = None
     ) -> int:
@@ -687,6 +902,91 @@ class ResearchFlow:
             self._write_states(states)
         return added
 
+    def sync_universe(
+        self, companies: Iterable[CompanyRef], *, at: str | datetime | None = None
+    ) -> UniverseSyncUpdate:
+        """Synchronize a complete active-security snapshot without losing research history."""
+
+        timestamp = _timestamp(at)
+        snapshot: dict[str, str | None] = {}
+        for company in companies:
+            symbol = _symbol(company.symbol)
+            if symbol in snapshot:
+                raise ValidationError(f"duplicate company in input: {symbol}")
+            snapshot[symbol] = _optional_name(company.name)
+
+        with _exclusive_lock(self.lock_path):
+            states = self._states()
+            tasks = self._tasks()
+            added = 0
+            reactivated = 0
+            inactivated = 0
+            renamed = 0
+            enqueued: list[ResearchTask] = []
+
+            for symbol, state in states.items():
+                if (
+                    symbol not in snapshot
+                    and state.get("universe_status") == UniverseStatus.ACTIVE.value
+                ):
+                    state["universe_status"] = UniverseStatus.INACTIVE.value
+                    state["updated_at"] = timestamp
+                    state["price_monitor"] = None
+                    tasks = [task for task in tasks if task.symbol != symbol]
+                    inactivated += 1
+
+            for symbol, name in snapshot.items():
+                state = states.get(symbol)
+                if state is None:
+                    states[symbol] = _empty_state(symbol, name, timestamp)
+                    added += 1
+                    continue
+                changed = False
+                if name and name != state.get("name"):
+                    state["name"] = name
+                    renamed += 1
+                    changed = True
+                if state.get("universe_status") == UniverseStatus.INACTIVE.value:
+                    state["universe_status"] = UniverseStatus.ACTIVE.value
+                    reactivated += 1
+                    changed = True
+                    if state.get("status") == CompanyStatus.COVERED.value:
+                        state["price_monitor"] = _monitor(None, state.get("price_levels") or [])
+                    elif state.get("status") in {
+                        CompanyStatus.CANDIDATE.value,
+                        CompanyStatus.STALE.value,
+                    }:
+                        reason = (
+                            (state.get("invalidation") or {}).get("reason")
+                            or (state.get("last_screening") or {}).get("reason")
+                            or "security re-entered the active research universe"
+                        )
+                        task = self._enqueue(
+                            tasks,
+                            state,
+                            symbol=symbol,
+                            name=state.get("name"),
+                            trigger_kind="universe",
+                            trigger_id=f"reactivated:{timestamp}",
+                            reason=reason,
+                            at=timestamp,
+                        )
+                        if task is not None:
+                            enqueued.append(task)
+                if changed:
+                    state["updated_at"] = timestamp
+
+            self._write_tasks(tasks)
+            self._write_states(states)
+        return UniverseSyncUpdate(
+            total=len(snapshot),
+            added=added,
+            reactivated=reactivated,
+            inactivated=inactivated,
+            renamed=renamed,
+            enqueued_tasks=tuple(enqueued),
+        )
+
     def apply_screening(
         self,
         decisions: Iterable[ScreenDecision],
@@ -695,7 +995,7 @@ class ResearchFlow:
         mode: ScreenMode | str = ScreenMode.BASELINE,
         at: str | datetime | None = None,
     ) -> ScreeningUpdate:
-        """Apply one manager batch; only ``research_now`` creates worker tasks."""
+        """Apply one manager batch; ``research_now`` selects a research candidate."""
 
         timestamp = _timestamp(at)
         batch_id = _nonblank(screen_id, "screen_id")
@@ -710,21 +1010,13 @@ class ResearchFlow:
             seen.add(symbol)
             route = _enum_value(decision.route, ScreenRoute, "screen route")
             reason = _nonblank(decision.reason, "reason")
-            price_levels = _price_levels(
-                decision.price_levels,
-                buy_below=decision.buy_below,
-                rearm_above=decision.rearm_above,
-            )
             event_triggers = _strings(decision.event_triggers, "event trigger")
-            if route == ScreenRoute.WATCH.value and not price_levels and not event_triggers:
-                raise ValidationError("watch screening requires a price or event trigger")
             normalized.append(
                 {
                     "symbol": symbol,
                     "name": _optional_name(decision.name),
                     "route": route,
                     "reason": reason,
-                    "price_levels": price_levels,
                     "event_triggers": event_triggers,
                     "source_urls": _urls(decision.source_urls),
                 }
@@ -740,8 +1032,7 @@ class ResearchFlow:
                     for item in normalized
                     if item["symbol"] in states
                     and (
-                        states[item["symbol"]].get("status")
-                        != CompanyStatus.UNSEEN.value
+                        states[item["symbol"]].get("status") != CompanyStatus.UNSEEN.value
                         or states[item["symbol"]].get("last_screening") is not None
                     )
                 )
@@ -752,10 +1043,11 @@ class ResearchFlow:
                     )
             enqueued: list[ResearchTask] = []
             deduplicated = 0
-            invalidated_reports: set[Path] = set()
             for item in normalized:
                 symbol = item["symbol"]
                 state = states.setdefault(symbol, _empty_state(symbol, item["name"], timestamp))
+                if state.get("universe_status") != UniverseStatus.ACTIVE.value:
+                    raise ValidationError(f"cannot screen inactive security: {symbol}")
                 if item["name"]:
                     state["name"] = item["name"]
                 state["updated_at"] = timestamp
@@ -764,34 +1056,46 @@ class ResearchFlow:
                     "mode": screen_mode,
                     "route": item["route"],
                     "reason": item["reason"],
-                    "price_levels": item["price_levels"],
                     "event_triggers": item["event_triggers"],
                     "source_urls": item["source_urls"],
                     "at": timestamp,
                 }
                 if item["route"] == ScreenRoute.IGNORE.value:
-                    if state.get("status") == CompanyStatus.RESEARCHED.value:
-                        invalidated_reports.add(self._company_report_path(symbol))
                     state["status"] = CompanyStatus.IGNORE.value
                     state["summary"] = item["reason"]
+                    state["key_logic"] = []
+                    state["risks"] = []
+                    state["value_range"] = None
                     state["price_levels"] = []
                     state["event_triggers"] = item["event_triggers"]
+                    state["source_urls"] = item["source_urls"]
                     state["price_monitor"] = None
+                    state["last_research_at"] = None
+                    state["information_cutoff"] = None
                     state["report_path"] = None
-                    tasks = [task for task in tasks if task.symbol != symbol]
-                elif item["route"] == ScreenRoute.WATCH.value:
-                    if state.get("status") == CompanyStatus.RESEARCHED.value:
-                        invalidated_reports.add(self._company_report_path(symbol))
-                    state["status"] = CompanyStatus.WATCH.value
-                    state["summary"] = item["reason"]
-                    state["price_levels"] = item["price_levels"]
-                    state["event_triggers"] = item["event_triggers"]
-                    state["price_monitor"] = _monitor(
-                        state.get("price_monitor"), item["price_levels"]
-                    )
-                    state["report_path"] = None
+                    state["valuation_note"] = None
+                    state["candidate_since"] = None
+                    state["invalidation"] = None
                     tasks = [task for task in tasks if task.symbol != symbol]
                 elif item["route"] == ScreenRoute.RESEARCH_NOW.value:
+                    if state.get("report_path") is not None:
+                        state["status"] = CompanyStatus.STALE.value
+                        state["invalidation"] = {
+                            "at": timestamp,
+                            "reason": item["reason"],
+                            "screen_id": batch_id,
+                        }
+                    else:
+                        state["status"] = CompanyStatus.CANDIDATE.value
+                        state["candidate_since"] = state.get("candidate_since") or timestamp
+                        state["invalidation"] = None
+                    state["summary"] = item["reason"]
+                    state["price_levels"] = []
+                    state["price_monitor"] = None
+                    if item["event_triggers"]:
+                        state["event_triggers"] = item["event_triggers"]
+                    if item["source_urls"]:
+                        state["source_urls"] = item["source_urls"]
                     task = self._enqueue(
                         tasks,
                         state,
@@ -808,14 +1112,11 @@ class ResearchFlow:
                         enqueued.append(task)
             self._write_tasks(tasks)
             self._write_states(states)
-            for report_path in invalidated_reports:
-                report_path.unlink(missing_ok=True)
 
         return ScreeningUpdate(
             total=len(normalized),
             ignored=counts[ScreenRoute.IGNORE.value],
-            watched=counts[ScreenRoute.WATCH.value],
-            research_now=counts[ScreenRoute.RESEARCH_NOW.value],
+            candidates=counts[ScreenRoute.RESEARCH_NOW.value],
             enqueued_tasks=tuple(enqueued),
             deduplicated=deduplicated,
         )
@@ -827,7 +1128,11 @@ class ResearchFlow:
         return tuple(task for task in tasks if wanted is None or task.status.value == wanted)
 
     def dispatch_tasks(
-        self, *, limit: int, at: str | datetime | None = None
+        self,
+        *,
+        limit: int,
+        at: str | datetime | None = None,
+        from_end: bool = False,
     ) -> tuple[ResearchTask, ...]:
         """Dispatch at most ``limit`` companies; the caller owns the concurrency policy."""
 
@@ -836,9 +1141,10 @@ class ResearchFlow:
         timestamp = _timestamp(at)
         with _exclusive_lock(self.lock_path):
             tasks = self._tasks()
-            active_symbols = {task.symbol for task in tasks if task.status is TaskStatus.DISPATCHED}
+            active_symbols = {task.symbol for task in tasks if task.status is TaskStatus.RUNNING}
             selected_ids: set[str] = set()
-            for task in tasks:
+            candidates = reversed(tasks) if from_end else iter(tasks)
+            for task in candidates:
                 if len(selected_ids) >= limit:
                     break
                 if task.status is not TaskStatus.QUEUED or task.symbol in active_symbols:
@@ -846,7 +1152,7 @@ class ResearchFlow:
                 selected_ids.add(task.task_id)
                 active_symbols.add(task.symbol)
             updated: list[ResearchTask] = []
-            dispatched: list[ResearchTask] = []
+            running: list[ResearchTask] = []
             for task in tasks:
                 if task.task_id in selected_ids:
                     task = ResearchTask(
@@ -857,17 +1163,17 @@ class ResearchFlow:
                         trigger_id=task.trigger_id,
                         reason=task.reason,
                         enqueued_at=task.enqueued_at,
-                        status=TaskStatus.DISPATCHED,
-                        dispatched_at=timestamp,
+                        status=TaskStatus.RUNNING,
+                        started_at=timestamp,
                     )
-                    dispatched.append(task)
+                    running.append(task)
                 updated.append(task)
-            if dispatched:
+            if running:
                 self._write_tasks(updated)
-        return tuple(dispatched)
+        return tuple(running)
 
     def requeue_task(self, task_id: str) -> ResearchTask:
-        """Explicitly return an interrupted dispatched task to the queue."""
+        """Explicitly return an interrupted running task to the queue."""
 
         wanted = _nonblank(task_id, "task_id")
         with _exclusive_lock(self.lock_path):
@@ -886,7 +1192,7 @@ class ResearchFlow:
                 reason=current.reason,
                 enqueued_at=current.enqueued_at,
                 status=TaskStatus.QUEUED,
-                dispatched_at=None,
+                started_at=None,
             )
             self._write_tasks([restored if task.task_id == wanted else task for task in tasks])
             return restored
@@ -906,24 +1212,33 @@ class ResearchFlow:
         )
         event_triggers = _strings(result.event_triggers, "event trigger")
         source_urls = _urls(result.source_urls)
+        information_cutoff = _timestamp(result.information_cutoff)
+        valuation_note = (
+            _nonblank(result.valuation_note, "valuation_note")
+            if result.valuation_note is not None
+            else None
+        )
         report_markdown = (
             _nonblank(result.report_markdown, "report_markdown")
             if result.report_markdown is not None
             else None
         )
-        if outcome != ResearchOutcome.DISCARD.value and not key_logic:
+        if not key_logic:
             raise ValidationError("research result requires at least one key logic item")
-        if outcome != ResearchOutcome.DISCARD.value and not source_urls:
+        if not risks:
+            raise ValidationError("research result requires at least one risk")
+        if not source_urls:
             raise ValidationError("research result requires at least one source URL")
-        if outcome == ResearchOutcome.WATCH.value and not price_levels and not event_triggers:
-            raise ValidationError("watch result requires a price or event trigger")
-        if outcome == ResearchOutcome.RESEARCHED.value:
-            if value_range is None or not price_levels:
-                raise ValidationError("researched result requires value_range and price_levels")
-            if not risks or not event_triggers:
-                raise ValidationError("researched result requires risks and event_triggers")
-            if report_markdown is None:
-                raise ValidationError("researched result requires report_markdown")
+        if report_markdown is None:
+            raise ValidationError("research result requires report_markdown")
+        if value_range is None and valuation_note is None:
+            raise ValidationError("research result requires value_range or valuation_note")
+        if outcome == ResearchOutcome.IGNORE.value and price_levels:
+            raise ValidationError("ignored research result must not activate price levels")
+        if price_levels and value_range is None:
+            raise ValidationError("price_levels require a value_range")
+        if outcome == ResearchOutcome.COVERED.value and not price_levels and not event_triggers:
+            raise ValidationError("covered result requires a price or event trigger")
         return {
             "symbol": symbol,
             "name": _optional_name(result.name),
@@ -935,12 +1250,51 @@ class ResearchFlow:
             "price_levels": price_levels,
             "event_triggers": event_triggers,
             "source_urls": source_urls,
+            "information_cutoff": information_cutoff,
             "report_markdown": report_markdown,
+            "valuation_note": valuation_note,
         }
 
-    def _company_report_path(self, symbol: str) -> Path:
+    def _company_directory(self, symbol: str) -> Path:
         ticker = _symbol(symbol).split(":", 1)[1]
-        return self.root / "research" / "companies" / "CN" / ticker / "current.md"
+        return self.root / "research" / "companies" / "CN" / ticker
+
+    def _formal_reports(self, symbol: str) -> tuple[Path, ...]:
+        reports_directory = self._company_directory(symbol) / "reports"
+        if not reports_directory.is_dir():
+            return ()
+
+        def order(path: Path) -> tuple[str, int]:
+            match = _FORMAL_REPORT_RE.fullmatch(path.name)
+            assert match is not None
+            return match.group("date"), int(match.group("sequence") or "1")
+
+        reports = [
+            path
+            for path in reports_directory.iterdir()
+            if path.is_file() and _FORMAL_REPORT_RE.fullmatch(path.name)
+        ]
+        return tuple(sorted(reports, key=order))
+
+    def _next_report_path(self, symbol: str, timestamp: str) -> Path:
+        report_date = _timestamp(timestamp)[:10]
+        reports = self._formal_reports(symbol)
+        if reports:
+            newest_match = _FORMAL_REPORT_RE.fullmatch(reports[-1].name)
+            assert newest_match is not None
+            if report_date < newest_match.group("date"):
+                raise ValidationError(
+                    f"research completion for {symbol} predates its newest formal report"
+                )
+        reports_directory = self._company_directory(symbol) / "reports"
+        first = reports_directory / f"{report_date}.md"
+        if not first.exists():
+            return first
+        for sequence in range(2, 100):
+            candidate = reports_directory / f"{report_date}-{sequence:02d}.md"
+            if not candidate.exists():
+                return candidate
+        raise ValidationError(f"too many formal reports for {symbol} on {report_date}")
 
     def apply_result(
         self,
@@ -960,8 +1314,8 @@ class ResearchFlow:
             task = next((item for item in tasks if item.task_id == wanted), None)
             if task is None:
                 raise ValidationError(f"task is not current: {wanted}")
-            if task.status is not TaskStatus.DISPATCHED:
-                raise ValidationError("research task must be dispatched before completion")
+            if task.status is not TaskStatus.RUNNING:
+                raise ValidationError("research task must be running before completion")
             if task.symbol != normalized["symbol"]:
                 raise ValidationError("research result symbol does not match task symbol")
             state = states.setdefault(
@@ -970,20 +1324,19 @@ class ResearchFlow:
             )
             previous_monitor = state.get("price_monitor")
             status = {
-                ResearchOutcome.DISCARD.value: CompanyStatus.IGNORE.value,
-                ResearchOutcome.WATCH.value: CompanyStatus.WATCH.value,
-                ResearchOutcome.RESEARCHED.value: CompanyStatus.RESEARCHED.value,
+                ResearchOutcome.IGNORE.value: CompanyStatus.IGNORE.value,
+                ResearchOutcome.COVERED.value: CompanyStatus.COVERED.value,
             }[normalized["outcome"]]
-            report_path = self._company_report_path(normalized["symbol"])
+            report_path = self._next_report_path(normalized["symbol"], timestamp)
             report_relative = report_path.relative_to(self.root).as_posix()
-            if status == CompanyStatus.RESEARCHED.value:
-                report_content = normalized["report_markdown"].rstrip() + "\n"
-                _atomic_write_text(report_path, report_content)
+            report_content = normalized["report_markdown"].rstrip() + "\n"
+            _atomic_write_text(report_path, report_content)
             state.update(
                 {
-                    "schema_version": 1,
+                    "schema_version": STATE_SCHEMA_VERSION,
                     "symbol": normalized["symbol"],
                     "name": normalized["name"] or state.get("name"),
+                    "universe_status": UniverseStatus.ACTIVE.value,
                     "status": status,
                     "updated_at": timestamp,
                     "summary": normalized["summary"],
@@ -994,15 +1347,14 @@ class ResearchFlow:
                     "event_triggers": normalized["event_triggers"],
                     "source_urls": normalized["source_urls"],
                     "last_research_at": timestamp,
-                    "report_path": (
-                        report_relative if status == CompanyStatus.RESEARCHED.value else None
-                    ),
+                    "information_cutoff": normalized["information_cutoff"],
+                    "report_path": report_relative,
+                    "valuation_note": normalized["valuation_note"],
+                    "candidate_since": None,
+                    "invalidation": None,
                 }
             )
-            if normalized["price_levels"] and status in {
-                CompanyStatus.WATCH.value,
-                CompanyStatus.RESEARCHED.value,
-            }:
+            if normalized["price_levels"] and status == CompanyStatus.COVERED.value:
                 state["price_monitor"] = _monitor(previous_monitor, normalized["price_levels"])
             else:
                 state["price_monitor"] = None
@@ -1013,8 +1365,6 @@ class ResearchFlow:
             tasks = [item for item in tasks if item.task_id != task.task_id]
             self._write_states(states)
             self._write_tasks(tasks)
-            if status != CompanyStatus.RESEARCHED.value:
-                report_path.unlink(missing_ok=True)
             return dict(state)
 
     def scan_daily_close(
@@ -1036,15 +1386,14 @@ class ResearchFlow:
             monitored_symbols = {
                 symbol
                 for symbol, state in states.items()
-                if state.get("status")
-                in {CompanyStatus.WATCH.value, CompanyStatus.RESEARCHED.value}
+                if state.get("universe_status") == UniverseStatus.ACTIVE.value
+                and state.get("status") == CompanyStatus.COVERED.value
                 and state.get("price_monitor") is not None
             }
             missing_quotes = sorted(monitored_symbols - normalized_closes.keys())
             if missing_quotes:
                 raise ValidationError(
-                    "daily close input is missing monitored companies: "
-                    + ", ".join(missing_quotes)
+                    "daily close input is missing monitored companies: " + ", ".join(missing_quotes)
                 )
             for symbol, state in states.items():
                 if symbol not in monitored_symbols:
@@ -1059,10 +1408,10 @@ class ResearchFlow:
             changed = False
             for symbol in sorted(states):
                 state = states[symbol]
-                if state.get("status") not in {
-                    CompanyStatus.WATCH.value,
-                    CompanyStatus.RESEARCHED.value,
-                }:
+                if (
+                    state.get("universe_status") != UniverseStatus.ACTIVE.value
+                    or state.get("status") != CompanyStatus.COVERED.value
+                ):
                     continue
                 if symbol not in normalized_closes or state.get("price_monitor") is None:
                     continue
@@ -1120,11 +1469,16 @@ class ResearchFlow:
             states = self._states()
             tasks = self._tasks()
             counts = {status.value: 0 for status in CompanyStatus}
+            universe_counts = {status.value: 0 for status in UniverseStatus}
             try:
                 for symbol, state in states.items():
-                    if state.get("schema_version") != 1:
+                    if state.get("schema_version") != STATE_SCHEMA_VERSION:
                         raise StateCorruptionError(f"state for {symbol} has unsupported schema")
+                    universe_status = _enum_value(
+                        state.get("universe_status"), UniverseStatus, "universe status"
+                    )
                     status = _enum_value(state.get("status"), CompanyStatus, "company status")
+                    universe_counts[universe_status] += 1
                     counts[status] += 1
                     if not state.get("updated_at"):
                         raise StateCorruptionError(f"state for {symbol} has no updated_at")
@@ -1153,6 +1507,13 @@ class ResearchFlow:
                         raise StateCorruptionError(f"price_levels for {symbol} are not canonical")
                     monitor = state.get("price_monitor")
                     if monitor is not None:
+                        if (
+                            universe_status != UniverseStatus.ACTIVE.value
+                            or status != CompanyStatus.COVERED.value
+                        ):
+                            raise StateCorruptionError(
+                                f"only active covered company may have price_monitor: {symbol}"
+                            )
                         if not isinstance(monitor, dict) or not isinstance(
                             monitor.get("levels"), dict
                         ):
@@ -1173,27 +1534,98 @@ class ResearchFlow:
                                 raise StateCorruptionError(
                                     f"price_monitor rearm mismatch for {symbol}:{level_id}"
                                 )
+                    elif (
+                        universe_status == UniverseStatus.ACTIVE.value
+                        and status == CompanyStatus.COVERED.value
+                        and levels
+                    ):
+                        raise StateCorruptionError(
+                            f"covered company with price levels has no monitor: {symbol}"
+                        )
                     processed = state.get("processed_triggers") or []
                     if not isinstance(processed, list) or len(processed) != len(set(processed)):
                         raise StateCorruptionError(
                             f"processed_triggers for {symbol} must be a unique list"
                         )
-                    expected_report = self._company_report_path(symbol)
-                    expected_relative = expected_report.relative_to(self.root).as_posix()
-                    if status == CompanyStatus.RESEARCHED.value:
-                        if state.get("report_path") != expected_relative:
+                    report_path = state.get("report_path")
+                    if report_path is not None:
+                        expected_prefix = (self._company_directory(symbol) / "reports").relative_to(
+                            self.root
+                        ).as_posix() + "/"
+                        if not isinstance(report_path, str) or not report_path.startswith(
+                            expected_prefix
+                        ):
                             raise StateCorruptionError(f"report_path mismatch for {symbol}")
+                        report_name = report_path.removeprefix(expected_prefix)
+                        if not _FORMAL_REPORT_RE.fullmatch(report_name):
+                            raise StateCorruptionError(
+                                f"report_path is not a dated formal report for {symbol}"
+                            )
+                        expected_report = self.root / report_path
                         if not expected_report.is_file():
                             raise StateCorruptionError(f"current report is missing for {symbol}")
                         if not expected_report.read_text(encoding="utf-8").strip():
                             raise StateCorruptionError(f"current report is blank for {symbol}")
-                    elif state.get("report_path") is not None:
+                        reports = self._formal_reports(symbol)
+                        if not reports or expected_report != reports[-1]:
+                            raise StateCorruptionError(
+                                f"report_path is not the latest formal report for {symbol}"
+                            )
+
+                    if status in {CompanyStatus.COVERED.value, CompanyStatus.STALE.value}:
+                        if report_path is None:
+                            raise StateCorruptionError(f"{status} company has no report: {symbol}")
+                        if not state.get("last_research_at") or not state.get("information_cutoff"):
+                            raise StateCorruptionError(
+                                f"{status} company lacks research timestamps: {symbol}"
+                            )
+                        _timestamp(state["last_research_at"])
+                        _timestamp(state["information_cutoff"])
+                        if not state.get("key_logic") or not state.get("risks"):
+                            raise StateCorruptionError(
+                                f"{status} company lacks research logic or risks: {symbol}"
+                            )
+                        if not state.get("source_urls"):
+                            raise StateCorruptionError(
+                                f"{status} company lacks source URLs: {symbol}"
+                            )
+                    if status == CompanyStatus.COVERED.value:
+                        if not levels and not state.get("event_triggers"):
+                            raise StateCorruptionError(
+                                f"covered company has no executable trigger: {symbol}"
+                            )
+                        if state.get("value_range") is None and not state.get("valuation_note"):
+                            raise StateCorruptionError(f"covered company lacks valuation: {symbol}")
+                        if state.get("invalidation") is not None:
+                            raise StateCorruptionError(
+                                f"covered company unexpectedly has invalidation: {symbol}"
+                            )
+                    elif status == CompanyStatus.STALE.value:
+                        invalidation = state.get("invalidation")
+                        if not isinstance(invalidation, dict):
+                            raise StateCorruptionError(
+                                f"stale company lacks invalidation details: {symbol}"
+                            )
+                        _timestamp(invalidation.get("at"))
+                        _nonblank(invalidation.get("reason"), "invalidation reason")
+                        if monitor is not None:
+                            raise StateCorruptionError(
+                                f"stale company must not have price monitor: {symbol}"
+                            )
+                    elif status == CompanyStatus.CANDIDATE.value:
+                        if report_path is not None or levels or monitor is not None:
+                            raise StateCorruptionError(
+                                f"candidate cannot have report or price levels: {symbol}"
+                            )
+                        _timestamp(state.get("candidate_since"))
+                    elif status == CompanyStatus.UNSEEN.value:
+                        if state.get("last_screening") is not None or report_path is not None:
+                            raise StateCorruptionError(
+                                f"unseen company already has screening or report: {symbol}"
+                            )
+                    if universe_status == UniverseStatus.INACTIVE.value and monitor is not None:
                         raise StateCorruptionError(
-                            f"non-researched company {symbol} must not have report_path"
-                        )
-                    elif expected_report.exists():
-                        raise StateCorruptionError(
-                            f"non-researched company {symbol} still has current.md"
+                            f"inactive company must not have a price monitor: {symbol}"
                         )
             except (KeyError, TypeError, ValidationError) as exc:
                 if isinstance(exc, StateCorruptionError):
@@ -1204,19 +1636,31 @@ class ResearchFlow:
             for task in tasks:
                 if task.symbol not in states:
                     raise StateCorruptionError(f"queue task has no company state: {task.symbol}")
+                company = states[task.symbol]
+                if company.get("universe_status") != UniverseStatus.ACTIVE.value:
+                    raise StateCorruptionError(
+                        f"inactive company has a research task: {task.symbol}"
+                    )
+                if company.get("status") not in {
+                    CompanyStatus.CANDIDATE.value,
+                    CompanyStatus.STALE.value,
+                }:
+                    raise StateCorruptionError(
+                        f"task company is neither candidate nor stale: {task.symbol}"
+                    )
                 if task.symbol in queued_symbols:
                     raise StateCorruptionError(
                         f"company has more than one current task: {task.symbol}"
                     )
                 queued_symbols.add(task.symbol)
-                if task.status is TaskStatus.DISPATCHED:
-                    if task.dispatched_at is None:
+                if task.status is TaskStatus.RUNNING:
+                    if task.started_at is None:
                         raise StateCorruptionError(
-                            f"dispatched task has no dispatched_at: {task.task_id}"
+                            f"running task has no started_at: {task.task_id}"
                         )
-                elif task.dispatched_at is not None:
+                elif task.started_at is not None:
                     raise StateCorruptionError(
-                        f"queued task unexpectedly has dispatched_at: {task.task_id}"
+                        f"queued task unexpectedly has started_at: {task.task_id}"
                     )
 
             expected_watchlist = self._watch_rows(states)
@@ -1228,13 +1672,16 @@ class ResearchFlow:
 
             return ResearchFlowStatus(
                 companies=len(states),
+                active=universe_counts[UniverseStatus.ACTIVE.value],
+                inactive=universe_counts[UniverseStatus.INACTIVE.value],
                 unseen=counts[CompanyStatus.UNSEEN.value],
                 ignored=counts[CompanyStatus.IGNORE.value],
-                watched=counts[CompanyStatus.WATCH.value],
-                researched=counts[CompanyStatus.RESEARCHED.value],
+                candidates=counts[CompanyStatus.CANDIDATE.value],
+                covered=counts[CompanyStatus.COVERED.value],
+                stale=counts[CompanyStatus.STALE.value],
                 watchlist=len(expected_watchlist),
                 queued=sum(task.status is TaskStatus.QUEUED for task in tasks),
-                dispatched=sum(task.status is TaskStatus.DISPATCHED for task in tasks),
+                running=sum(task.status is TaskStatus.RUNNING for task in tasks),
             )
 
     def status(self) -> ResearchFlowStatus:
@@ -1280,6 +1727,7 @@ __all__ = [
     "ScreeningUpdate",
     "StateCorruptionError",
     "TaskStatus",
+    "UniverseStatus",
     "ValidationError",
     "ValueRange",
     "WATCHLIST_PATH",

@@ -55,16 +55,40 @@ def build_parser() -> argparse.ArgumentParser:
     validate = commands.add_parser("validate", help="只读校验状态、队列、观察池和当前报告")
     validate.set_defaults(handler=_validate)
 
+    state = commands.add_parser("state", help="维护公司状态模型和全市场基线")
+    state_commands = state.add_subparsers(dest="state_command", required=True)
+    migrate_v2 = state_commands.add_parser("migrate-v2", help="迁移到候选/覆盖/失效状态模型")
+    _add_at(migrate_v2)
+    migrate_v2.set_defaults(handler=_state_migrate_v2)
+    rebaseline = state_commands.add_parser(
+        "prepare-rebaseline", help="保留有效覆盖，重置其余公司供全市场重筛"
+    )
+    _add_at(rebaseline)
+    rebaseline.set_defaults(handler=_state_prepare_rebaseline)
+
+    reports = commands.add_parser("reports", help="维护本机日期化正式研报时间线")
+    report_commands = reports.add_subparsers(dest="reports_command", required=True)
+    migrate_current = report_commands.add_parser(
+        "migrate-current", help="把旧 current.md 一次性迁入 reports/日期.md"
+    )
+    migrate_current.set_defaults(handler=_reports_migrate_current)
+
     universe = commands.add_parser("universe", help="维护全市场证券清单")
     universe_commands = universe.add_subparsers(dest="universe_command", required=True)
     register = universe_commands.add_parser("register", help="登记证券，已有判断不会被覆盖")
     _add_input(register)
     _add_at(register)
     register.set_defaults(handler=_universe_register)
+    sync = universe_commands.add_parser(
+        "sync", help="用完整证券快照同步 active/inactive，保留已有研究历史"
+    )
+    _add_input(sync)
+    _add_at(sync)
+    sync.set_defaults(handler=_universe_sync)
 
     screen = commands.add_parser("screen", help="记录主 Agent 的批量初筛")
     screen_commands = screen.add_subparsers(dest="screen_command", required=True)
-    record = screen_commands.add_parser("record", help="记录 ignore/watch/research_now")
+    record = screen_commands.add_parser("record", help="记录 ignore/research_now")
     _add_input(record)
     record.add_argument("--screen-id", help="覆盖输入文件中的 screen_id")
     record.add_argument("--mode", choices=("baseline", "event"), help="覆盖输入中的筛选模式")
@@ -75,6 +99,11 @@ def build_parser() -> argparse.ArgumentParser:
     research_commands = research.add_subparsers(dest="research_command", required=True)
     next_tasks = research_commands.add_parser("next", help="取下一批公司，数量由调用者决定")
     next_tasks.add_argument("--limit", required=True, type=int)
+    next_tasks.add_argument(
+        "--from-end",
+        action="store_true",
+        help="从队列尾部领取，便于与从队首运行的其他协调器避让",
+    )
     _add_at(next_tasks)
     next_tasks.set_defaults(handler=_research_next)
     requeue = research_commands.add_parser("requeue", help="显式恢复被中断的任务")
@@ -121,9 +150,7 @@ def build_parser() -> argparse.ArgumentParser:
     event_fetch.add_argument("--until", help="半开窗口终点（默认当前上海时间）")
     event_fetch.add_argument("--output", help="将完整待判断 packet 写入仓库内临时 JSON")
     event_fetch.set_defaults(handler=_events_fetch)
-    event_complete = event_commands.add_parser(
-        "complete", help="全部公告判断成功后推进检查点"
-    )
+    event_complete = event_commands.add_parser("complete", help="全部公告判断成功后推进检查点")
     event_complete.add_argument("--packet", required=True, help="events fetch 的原始 JSON")
     _add_input(event_complete)
     event_complete.set_defaults(handler=_events_complete)
@@ -131,17 +158,15 @@ def build_parser() -> argparse.ArgumentParser:
     salvage = commands.add_parser("legacy-salvage", help="从固定恢复标签筛选并打捞旧研报")
     salvage_commands = salvage.add_subparsers(dest="salvage_command", required=True)
     candidates = salvage_commands.add_parser(
-        "candidates", help="批量列出高信号候选；不会创建单公司任务"
+        "candidates", help="只读列出旧报告候选；不会改变当前状态"
     )
     candidates.add_argument("--limit", type=int, default=200)
-    candidates.add_argument("--min-score", type=int, default=40)
+    candidates.add_argument("--min-score", type=int, default=0)
     candidates.set_defaults(handler=_legacy_salvage_candidates)
-    apply_salvage = salvage_commands.add_parser(
-        "apply", help="按显式决策写入重新核验、压缩后的 current.md"
+    archive_salvage = salvage_commands.add_parser(
+        "archive-best", help="每家公司选一份最佳旧报告写入隔离档案"
     )
-    _add_input(apply_salvage)
-    _add_at(apply_salvage)
-    apply_salvage.set_defaults(handler=_legacy_salvage_apply)
+    archive_salvage.set_defaults(handler=_legacy_salvage_archive_best)
     return parser
 
 
@@ -200,9 +225,6 @@ def _screen_decision(payload: Mapping[str, Any]) -> ScreenDecision:
         name=payload.get("name"),
         route=payload["route"],
         reason=payload["reason"],
-        price_levels=_levels(payload),
-        buy_below=payload.get("buy_below"),
-        rearm_above=payload.get("rearm_above"),
         event_triggers=payload.get("event_triggers") or (),
         source_urls=payload.get("source_urls") or (),
     )
@@ -232,7 +254,9 @@ def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
         rearm_above=payload.get("rearm_above"),
         event_triggers=payload.get("event_triggers") or (),
         source_urls=payload.get("source_urls") or (),
+        information_cutoff=payload["information_cutoff"],
         report_markdown=payload.get("report_markdown"),
+        valuation_note=payload.get("valuation_note"),
     )
 
 
@@ -268,6 +292,27 @@ def _validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     return {"ok": True, "status": asdict(_flow(args).validate())}
 
 
+def _state_migrate_v2(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    flow = _flow(args)
+    migrated = flow.migrate_state_v2(at=args.at)
+    return {"migrated": migrated, "status": asdict(flow.validate())}
+
+
+def _state_prepare_rebaseline(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    flow = _flow(args)
+    reset = flow.prepare_rebaseline(at=args.at)
+    return {"reset": reset, "status": asdict(flow.validate())}
+
+
+def _reports_migrate_current(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    flow = _flow(args)
+    migrated = flow.migrate_current_reports()
+    return {"migrated": migrated, "status": asdict(flow.validate())}
+
+
 def _universe_register(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     payload, _ = _load(args.input, stdin)
     companies = [
@@ -277,6 +322,15 @@ def _universe_register(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
     flow = _flow(args)
     added = flow.register_universe(companies, at=args.at)
     return {"added": added, "companies": flow.status().companies}
+
+
+def _universe_sync(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    payload, _ = _load(args.input, stdin)
+    companies = [
+        CompanyRef(symbol=item["symbol"], name=item.get("name"))
+        for item in _records(payload, "companies")
+    ]
+    return _jsonable(_flow(args).sync_universe(companies, at=args.at))
 
 
 def _screen_record(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
@@ -295,8 +349,7 @@ def _screen_record(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     return {
         "total": update.total,
         "ignore": update.ignored,
-        "watch": update.watched,
-        "research_now": update.research_now,
+        "research_now": update.candidates,
         "enqueued": [_jsonable(task) for task in update.enqueued_tasks],
         "deduplicated": update.deduplicated,
     }
@@ -304,7 +357,11 @@ def _screen_record(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
 
 def _research_next(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
-    tasks = _flow(args).dispatch_tasks(limit=args.limit, at=args.at)
+    tasks = _flow(args).dispatch_tasks(
+        limit=args.limit,
+        at=args.at,
+        from_end=args.from_end,
+    )
     return {"count": len(tasks), "tasks": tasks}
 
 
@@ -375,9 +432,7 @@ def _watchlist_scan_close(args: argparse.Namespace, stdin: TextIO) -> dict[str, 
 
 def _monitored_companies(flow: ResearchFlow) -> dict[str, str | None]:
     return {
-        row["symbol"]: row.get("name")
-        for row in flow.read_watchlist()
-        if row.get("price_levels")
+        row["symbol"]: row.get("name") for row in flow.read_watchlist() if row.get("price_levels")
     }
 
 
@@ -455,12 +510,16 @@ def _events_fetch(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
                 raise ValueError("--since 必须与当前 last_successful_at 完全一致")
         scan_start = state.last_successful_at
         previous_time = datetime.fromisoformat(scan_start).astimezone(MARKET_TIMEZONE)
-        fetch_start = (previous_time - timedelta(days=1)).replace(
-            hour=0,
-            minute=0,
-            second=0,
-            microsecond=0,
-        ).isoformat()
+        fetch_start = (
+            (previous_time - timedelta(days=1))
+            .replace(
+                hour=0,
+                minute=0,
+                second=0,
+                microsecond=0,
+            )
+            .isoformat()
+        )
     scan_end = (
         _aware_iso(args.until, "until")
         if args.until is not None
@@ -548,10 +607,7 @@ def _events_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
         raise ValueError("packet fetch_start 不得晚于 scan_start")
     if datetime.fromisoformat(scan_end) <= datetime.fromisoformat(scan_start):
         raise ValueError("packet scan_end 必须晚于 scan_start")
-    if (
-        previous.last_successful_at is not None
-        and scan_start != previous.last_successful_at
-    ):
+    if previous.last_successful_at is not None and scan_start != previous.last_successful_at:
         raise ValueError("packet scan_start 已落后于当前公告检查点")
     announcements = tuple(_announcement_from_payload(item) for item in raw_announcements)
     start_time = datetime.fromisoformat(fetch_start)
@@ -563,9 +619,7 @@ def _events_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
             )
         )
         if published_at < start_time:
-            raise ValueError(
-                f"公告 {announcement.announcement_id} 早于 packet scan_start"
-            )
+            raise ValueError(f"公告 {announcement.announcement_id} 早于 packet scan_start")
     next_state = advance_event_scan_state(
         previous,
         scanned_through=scan_end,
@@ -588,11 +642,9 @@ def _legacy_salvage_candidates(args: argparse.Namespace, stdin: TextIO) -> Any:
     )
 
 
-def _legacy_salvage_apply(args: argparse.Namespace, stdin: TextIO) -> Any:
-    payload, _ = _load(args.input, stdin)
-    if not isinstance(payload, dict):
-        raise ValueError("旧研报打捞决策必须是 JSON 对象")
-    return LegacyReportSalvager(Path(args.root)).apply_decisions(payload, at=args.at)
+def _legacy_salvage_archive_best(args: argparse.Namespace, stdin: TextIO) -> Any:
+    del stdin
+    return LegacyReportSalvager(Path(args.root)).archive_best()
 
 
 def main(
