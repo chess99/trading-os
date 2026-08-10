@@ -24,10 +24,6 @@ export function AppHeader({ active }: AppHeaderProps) {
           研报库
         </a>
       </nav>
-      <div className="header-meta">
-        <span className="market-dot" aria-hidden="true" />
-        <span>只读研究视图</span>
-      </div>
     </header>
   );
 }

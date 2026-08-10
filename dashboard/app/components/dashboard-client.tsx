@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @next/next/no-html-link-for-pages */
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -10,10 +9,10 @@ import {
   loadCatalog,
   loadQuotes,
   opportunityPriority,
-  primaryPriceLevel,
   STATUS_META,
   type Catalog,
   type Company,
+  type PriceLevel,
   type Quote,
   type ResearchStatus,
 } from "../lib/research";
@@ -23,9 +22,8 @@ type MarketSort = "updated" | "name" | "status";
 
 const STATUS_ORDER: ResearchStatus[] = ["covered", "candidate", "stale", "ignore", "unseen"];
 
-function percent(value: number | null, signed = false) {
-  if (value === null || !Number.isFinite(value)) return "—";
-  return `${signed && value > 0 ? "+" : ""}${(value * 100).toFixed(1)}%`;
+function statusCount(catalog: Catalog, status: ResearchStatus) {
+  return catalog.stats.status[status] ?? 0;
 }
 
 function quoteChangeClass(quote?: Quote) {
@@ -33,32 +31,39 @@ function quoteChangeClass(quote?: Quote) {
   return quote.change > 0 ? "price-up" : "price-down";
 }
 
-function sourceLabel(quote?: Quote, fallbackDate?: string | null) {
+function quoteSourceLabel(quote?: Quote, fallbackDate?: string | null) {
   if (quote?.source === "tencent") return "腾讯行情";
-  if (quote?.source === "eastmoney") return "东方财富备援";
+  if (quote?.source === "eastmoney") return "东方财富行情";
   return fallbackDate ? `${fallbackDate} 收盘` : "行情待同步";
 }
 
-function statusCount(catalog: Catalog, status: ResearchStatus) {
-  return catalog.stats.status[status] ?? 0;
+function isHighAttractionLevel(level: PriceLevel) {
+  return /高吸引力|安全边际/u.test(level.label);
 }
 
-function valuationMarker(company: Company, price: number | null) {
-  if (!company.valueRange || price === null) return 50;
-  const { low, high } = company.valueRange;
-  const start = Math.max(0.01, low * 0.72);
-  const end = high * 1.28;
-  return Math.min(100, Math.max(0, ((price - start) / (end - start)) * 100));
+function groupPriceLevels(company: Company) {
+  const sorted = [...company.priceLevels].sort((a, b) => b.threshold - a.threshold);
+  return {
+    attention: sorted.filter((level) => !isHighAttractionLevel(level)),
+    highAttraction: sorted.filter(isHighAttractionLevel),
+  };
 }
 
-function PriorityPill({ company, quote }: { company: Company; quote?: Quote }) {
-  const priority = opportunityPriority(company, quote);
-  const tone = priority.score >= 78 ? "hot" : priority.score >= 58 ? "warm" : "cool";
+function PriceLevelCell({ levels }: { levels: PriceLevel[] }) {
+  if (!levels.length) return <td className="level-cell empty-price">—</td>;
+
+  const thresholds = levels.map((level) => level.threshold).sort((a, b) => a - b);
+  const value =
+    thresholds.length === 1
+      ? formatPrice(thresholds[0])
+      : `${formatPrice(thresholds[0])}–${formatPrice(thresholds.at(-1))}`;
+  const labels = [...new Set(levels.map((level) => level.label))].join(" / ");
+
   return (
-    <span className={`priority-pill ${tone}`} title={`复核优先级 ${priority.score}/100`}>
-      <span>{priority.score || "—"}</span>
-      {priority.label}
-    </span>
+    <td className="level-cell" title={levels.map((level) => `${level.label} ¥${formatPrice(level.threshold)}`).join("；")}>
+      <strong>¥{value}</strong>
+      <span>{labels}</span>
+    </td>
   );
 }
 
@@ -67,124 +72,6 @@ function StatusBadge({ status }: { status: ResearchStatus }) {
     <span className={`status-badge status-${status}`} title={STATUS_META[status].description}>
       {STATUS_META[status].label}
     </span>
-  );
-}
-
-function TopOpportunity({ company, quote }: { company: Company; quote?: Quote }) {
-  const priority = opportunityPriority(company, quote);
-  const price = effectivePrice(company, quote);
-  const level = primaryPriceLevel(company);
-  const marker = valuationMarker(company, price);
-  return (
-    <article className="top-opportunity-card">
-      <div className="top-card-head">
-        <div>
-          <div className="rank-kicker">NO. 01 · 今日优先复核</div>
-          <div className="company-title-line">
-            <h2>{cleanCompanyName(company.name)}</h2>
-            <span>{company.ticker}</span>
-          </div>
-          <p className="company-industry">{company.industry}</p>
-        </div>
-        <PriorityPill company={company} quote={quote} />
-      </div>
-
-      <div className="quote-and-thesis">
-        <div className="hero-quote">
-          <span>现价</span>
-          <strong>¥{formatPrice(price)}</strong>
-          <span className={quoteChangeClass(quote)}>
-            {quote?.changePercent === null || quote?.changePercent === undefined
-              ? ""
-              : `${quote.changePercent > 0 ? "+" : ""}${quote.changePercent.toFixed(2)}%`}
-          </span>
-          <small>{sourceLabel(quote, company.lastCloseDate)}</small>
-        </div>
-        <p className="top-summary">{company.summary}</p>
-      </div>
-
-      <div className="valuation-band-block">
-        <div className="valuation-labels">
-          <span>
-            合理价值 <strong>{company.valueRange ? `¥${company.valueRange.low}—${company.valueRange.high}` : "待定"}</strong>
-          </span>
-          <span>
-            {level?.label ?? "事件触发"} <strong>{level ? `¥${formatPrice(level.threshold)}` : `${company.eventTriggerCount} 项`}</strong>
-          </span>
-        </div>
-        <div className="valuation-track" aria-label="现价相对合理价值区间的位置">
-          <span className="fair-zone" />
-          <span className="price-marker" style={{ left: `${marker}%` }}>
-            <i />
-          </span>
-        </div>
-        <div className="valuation-axis">
-          <span>更有安全边际</span>
-          <span>合理价值区间</span>
-          <span>估值偏高</span>
-        </div>
-      </div>
-
-      <div className="card-footer">
-        <div className="distance-note">
-          {priority.distance === null
-            ? "该公司以事件触发为主"
-            : priority.distance <= 0
-              ? `现价已进入“${level?.label}”复核区`
-              : `距“${level?.label}”还有 ${percent(priority.distance)}`}
-        </div>
-        {company.reportPath ? (
-          <a className="primary-button" href={`/reports/${company.ticker}`}>
-            阅读最新研报 <span aria-hidden="true">↗</span>
-          </a>
-        ) : null}
-      </div>
-    </article>
-  );
-}
-
-function OpportunityQueue({ companies, quotes }: { companies: Company[]; quotes: Map<string, Quote> }) {
-  return (
-    <aside className="opportunity-queue" aria-label="下一步复核队列">
-      <div className="queue-header">
-        <div>
-          <span className="section-eyebrow">NEXT UP</span>
-          <h3>接下来值得看</h3>
-        </div>
-        <span>{companies.length} 家</span>
-      </div>
-      <div className="queue-list">
-        {companies.slice(0, 5).map((company, index) => {
-          const quote = quotes.get(company.ticker);
-          const priority = opportunityPriority(company, quote);
-          const level = primaryPriceLevel(company);
-          return (
-            <a className="queue-item" href={`/reports/${company.ticker}`} key={company.symbol}>
-              <span className="queue-rank">{String(index + 2).padStart(2, "0")}</span>
-              <span className="queue-company">
-                <strong>{cleanCompanyName(company.name)}</strong>
-                <small>
-                  {company.ticker} · {company.industry}
-                </small>
-              </span>
-              <span className="queue-numbers">
-                <strong>¥{formatPrice(priority.price)}</strong>
-                <small>
-                  {level && priority.distance !== null
-                    ? priority.distance <= 0
-                      ? "已触发"
-                      : `距线 ${percent(priority.distance)}`
-                    : "事件监控"}
-                </small>
-              </span>
-              <span className={`score-dot score-${priority.score >= 78 ? "hot" : priority.score >= 58 ? "warm" : "cool"}`}>
-                {priority.score || "—"}
-              </span>
-            </a>
-          );
-        })}
-      </div>
-    </aside>
   );
 }
 
@@ -316,99 +203,39 @@ export function DashboardClient() {
   if (!catalog) {
     return (
       <main className="dashboard-shell dashboard-loading" aria-busy="true">
-        <section className="hero-copy">
-          <span className="section-eyebrow">RESEARCH NAVIGATOR</span>
-          <h1>从全市场状态里，先找到今天值得看的公司。</h1>
-          <p>正在整理机会、研究状态和最新研报…</p>
-        </section>
-        <div className="loading-card-grid" aria-hidden="true">
+        <div className="loading-state-strip" aria-hidden="true">
+          <span />
           <span />
           <span />
           <span />
         </div>
+        <div className="loading-table" aria-hidden="true" />
       </main>
     );
   }
 
-  const top = opportunities[0];
   return (
     <main className="dashboard-shell">
-      <section className="dashboard-hero" aria-labelledby="dashboard-title">
-        <div className="hero-copy">
-          <span className="section-eyebrow">RESEARCH NAVIGATOR · {formatDate(catalog.generatedAt, true)}</span>
-          <h1 id="dashboard-title">先看最接近研究边界的公司。</h1>
-          <p>
-            这里排序的是<strong>研报复核优先级</strong>，不是买入评级。价格、价值区间和研究新鲜度只负责告诉你先读谁。
-          </p>
-        </div>
-        <div className="hero-status">
-          <span className={`sync-light sync-${quoteState}`} />
-          <div>
-            <strong>{quoteState === "live" ? "现价已连接" : quoteState === "loading" ? "行情连接中" : "使用最近收盘价"}</strong>
-            <span>腾讯行情主源 · 东方财富自动备援</span>
-          </div>
-        </div>
-      </section>
-
       <section className="state-strip" aria-label="研究状态概览">
         <button onClick={() => switchView("opportunities")}>
           <span className="state-number">{statusCount(catalog, "covered")}</span>
-          <span className="state-copy">
-            <strong>持续覆盖</strong>
-            <small>机会池中的有效研报</small>
-          </span>
+          <span className="state-copy"><strong>持续覆盖</strong></span>
         </button>
         <button className={triggerCount ? "attention" : ""} onClick={() => switchView("opportunities")}>
           <span className="state-number">{triggerCount}</span>
-          <span className="state-copy">
-            <strong>进入复核区</strong>
-            <small>现价已到关注线</small>
-          </span>
+          <span className="state-copy"><strong>进入复核区</strong></span>
         </button>
         <button onClick={() => showStatus("candidate")}>
           <span className="state-number">{statusCount(catalog, "candidate")}</span>
-          <span className="state-copy">
-            <strong>候选研究</strong>
-            <small>{catalog.stats.queue.running} 运行中 · {catalog.stats.queue.queued} 排队</small>
-          </span>
+          <span className="state-copy"><strong>候选研究</strong></span>
         </button>
         <button className={statusCount(catalog, "stale") ? "attention" : ""} onClick={() => showStatus("stale")}>
           <span className="state-number">{statusCount(catalog, "stale")}</span>
-          <span className="state-copy">
-            <strong>等待更新</strong>
-            <small>报告失效，监控暂停</small>
-          </span>
+          <span className="state-copy"><strong>等待更新</strong></span>
         </button>
       </section>
 
-      {top ? (
-        <section className="opportunity-stage" aria-label="最高优先级机会">
-          <TopOpportunity company={top} quote={quotes.get(top.ticker)} />
-          <OpportunityQueue companies={opportunities.slice(1)} quotes={quotes} />
-        </section>
-      ) : null}
-
-      <details className="ranking-note">
-        <summary>排序为什么把这些公司放在前面？</summary>
-        <div>
-          <p>
-            复核优先级 = 55% 关注价距离 + 35% 合理价值区间位置 + 10% 报告新鲜度。价格进入关注区时优先级最高；没有可靠估值的事件型公司不会被硬算成低估。
-          </p>
-          <p>算法只安排阅读顺序，不输出仓位、买入动作或预期收益率。</p>
-        </div>
-      </details>
-
-      <section className="company-explorer" id="company-explorer" aria-labelledby="explorer-title">
-        <div className="explorer-heading">
-          <div>
-            <span className="section-eyebrow">UNIVERSE EXPLORER</span>
-            <h2 id="explorer-title">从机会池切到全市场，只需要一次点击。</h2>
-          </div>
-          <a className="text-link" href="/reports">
-            在研报库中搜索 <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-
+      <section className="company-explorer" id="company-explorer" aria-label="公司研究列表">
         <div className="explorer-toolbar">
           <div className="view-switch" role="tablist" aria-label="公司列表视图">
             <button
@@ -483,65 +310,105 @@ export function DashboardClient() {
         ) : null}
 
         <div className="table-caption">
-          <span>显示 {Math.min(visibleRows, filtered.length).toLocaleString("zh-CN")} / {filtered.length.toLocaleString("zh-CN")} 家</span>
-          <span>{view === "opportunities" ? "按复核优先级排序" : "状态来自唯一事实源"}</span>
+          <span>
+            显示 {Math.min(visibleRows, filtered.length).toLocaleString("zh-CN")} / {filtered.length.toLocaleString("zh-CN")} 家
+          </span>
+          {view === "opportunities" ? (
+            <span className={`quote-status quote-status-${quoteState}`}>
+              <i aria-hidden="true" />
+              {quoteState === "live" ? "现价已更新" : quoteState === "loading" ? "现价更新中" : "显示最近收盘价"}
+            </span>
+          ) : (
+            <span>更新于 {formatDate(catalog.generatedAt, true)}</span>
+          )}
         </div>
+
         <div className="company-table-wrap">
-          <table className="company-table">
+          <table className={`company-table company-table-${view}`}>
             <thead>
-              <tr>
-                {view === "opportunities" ? <th className="rank-column">优先级</th> : null}
-                <th>公司</th>
-                <th>研究状态</th>
-                <th>行业</th>
-                <th className="price-column">{view === "opportunities" ? "现价 / 关注价" : "最近更新"}</th>
-                <th className="summary-column">当前结论</th>
-                <th aria-label="操作" />
-              </tr>
+              {view === "opportunities" ? (
+                <tr>
+                  <th className="rank-column">顺序</th>
+                  <th className="company-column">公司</th>
+                  <th className="industry-column">行业</th>
+                  <th className="current-price-column">现价</th>
+                  <th className="value-column">合理价值</th>
+                  <th className="level-column">关注价</th>
+                  <th className="level-column attraction-column">高吸引力价</th>
+                  <th className="summary-column">当前结论</th>
+                  <th className="action-column" aria-label="操作" />
+                </tr>
+              ) : (
+                <tr>
+                  <th className="company-column">公司</th>
+                  <th className="status-column">研究状态</th>
+                  <th className="industry-column">行业</th>
+                  <th className="updated-column">最近更新</th>
+                  <th className="summary-column">当前结论</th>
+                  <th className="action-column" aria-label="操作" />
+                </tr>
+              )}
             </thead>
             <tbody>
               {filtered.slice(0, visibleRows).map((company, index) => {
                 const quote = quotes.get(company.ticker);
-                const priority = opportunityPriority(company, quote);
-                const level = primaryPriceLevel(company);
-                return (
+                const groupedLevels = groupPriceLevels(company);
+                const price = effectivePrice(company, quote);
+                return view === "opportunities" ? (
                   <tr key={company.symbol}>
-                    {view === "opportunities" ? (
-                      <td className="rank-cell">
-                        <span>{String(index + 1).padStart(2, "0")}</span>
-                        <i style={{ width: `${priority.score}%` }} />
-                      </td>
-                    ) : null}
+                    <td className="rank-cell">{String(index + 1).padStart(2, "0")}</td>
                     <td className="company-cell">
                       <strong>{cleanCompanyName(company.name)}</strong>
-                      <span>
-                        {company.ticker} · {company.exchange}
-                      </span>
-                    </td>
-                    <td>
-                      <StatusBadge status={company.status} />
+                      <span>{company.ticker} · {company.exchange}</span>
                     </td>
                     <td className="industry-cell">{company.industry}</td>
-                    <td className="price-cell">
-                      {view === "opportunities" ? (
-                        <>
-                          <strong>¥{formatPrice(priority.price)}</strong>
-                          <span>{level ? `${level.label} ¥${formatPrice(level.threshold)}` : `${company.eventTriggerCount} 项事件`}</span>
-                        </>
+                    <td className="current-price-cell" title={quoteSourceLabel(quote, company.lastCloseDate)}>
+                      <strong>¥{formatPrice(price)}</strong>
+                      {quote?.changePercent === null || quote?.changePercent === undefined ? (
+                        <span>{company.lastCloseDate ? `${company.lastCloseDate} 收盘` : "待同步"}</span>
                       ) : (
-                        <>
-                          <strong>{formatDate(company.updatedAt)}</strong>
-                          <span>{company.reportDate ? `研报 ${company.reportDate}` : "无正式研报"}</span>
-                        </>
+                        <span className={quoteChangeClass(quote)}>
+                          {quote.changePercent > 0 ? "+" : ""}{quote.changePercent.toFixed(2)}%
+                        </span>
                       )}
                     </td>
-                    <td className="summary-cell">
-                      <p>{company.summary}</p>
+                    <td className="value-cell">
+                      {company.valueRange ? (
+                        <strong>¥{formatPrice(company.valueRange.low)}–{formatPrice(company.valueRange.high)}</strong>
+                      ) : (
+                        <span className="empty-price">—</span>
+                      )}
                     </td>
+                    <PriceLevelCell levels={groupedLevels.attention} />
+                    <PriceLevelCell levels={groupedLevels.highAttraction} />
+                    <td className="summary-cell"><p>{company.summary}</p></td>
                     <td className="row-action">
                       {company.reports.length ? (
                         <a href={`/reports/${company.ticker}`} aria-label={`阅读${cleanCompanyName(company.name)}研报`}>
-                          ↗
+                          阅读
+                        </a>
+                      ) : (
+                        <span>—</span>
+                      )}
+                    </td>
+                  </tr>
+                ) : (
+                  <tr key={company.symbol}>
+                    <td className="company-cell">
+                      <strong>{cleanCompanyName(company.name)}</strong>
+                      <span>{company.ticker} · {company.exchange}</span>
+                    </td>
+                    <td><StatusBadge status={company.status} /></td>
+                    <td className="industry-cell">{company.industry}</td>
+                    <td className="updated-cell">
+                      <strong>{formatDate(company.updatedAt)}</strong>
+                      <span>{company.reportDate ? `研报 ${company.reportDate}` : "无正式研报"}</span>
+                    </td>
+                    <td className="summary-cell"><p>{company.summary}</p></td>
+                    <td className="row-action">
+                      {company.reports.length ? (
+                        <a href={`/reports/${company.ticker}`} aria-label={`阅读${cleanCompanyName(company.name)}研报`}>
+                          阅读
                         </a>
                       ) : (
                         <span>—</span>
@@ -565,11 +432,6 @@ export function DashboardClient() {
           </button>
         ) : null}
       </section>
-
-      <footer className="dashboard-footer">
-        <span>Trading OS · 研究状态与正式报告只读投影</span>
-        <span>行情仅用于复核排序，不构成投资建议</span>
-      </footer>
     </main>
   );
 }

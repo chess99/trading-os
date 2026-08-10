@@ -21,8 +21,22 @@ test("server-renders the Trading OS decision workspace", async () => {
   assert.match(html, /<title>研究决策台 · Trading OS<\/title>/i);
   assert.match(html, /Trading OS/);
   assert.match(html, /研究决策台/);
-  assert.match(html, /从全市场状态里，先找到今天值得看的公司/);
+  assert.doesNotMatch(html, /只读研究视图|先看最接近研究边界的公司|从全市场状态里，先找到今天值得看的公司/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
+});
+
+test("the decision workspace stays table-first and separates research prices", async () => {
+  const [dashboard, header] = await Promise.all([
+    readFile(new URL("../app/components/dashboard-client.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/app-header.tsx", import.meta.url), "utf8"),
+  ]);
+  assert.match(dashboard, />现价</);
+  assert.match(dashboard, />合理价值</);
+  assert.match(dashboard, />关注价</);
+  assert.match(dashboard, />高吸引力价</);
+  assert.match(dashboard, /-webkit-line-clamp: 6|summary-cell/);
+  assert.doesNotMatch(dashboard, /TopOpportunity|OpportunityQueue|排序为什么把这些公司放在前面/);
+  assert.doesNotMatch(header, /只读研究视图/);
 });
 
 test("server-renders the report library and detail route", async () => {
