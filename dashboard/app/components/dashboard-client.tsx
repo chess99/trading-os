@@ -1,7 +1,7 @@
 "use client";
+/* eslint-disable @next/next/no-html-link-for-pages */
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
 import {
   cleanCompanyName,
   effectivePrice,
@@ -134,9 +134,9 @@ function TopOpportunity({ company, quote }: { company: Company; quote?: Quote })
               : `距“${level?.label}”还有 ${percent(priority.distance)}`}
         </div>
         {company.reportPath ? (
-          <Link className="primary-button" href={`/reports/${company.ticker}`}>
+          <a className="primary-button" href={`/reports/${company.ticker}`}>
             阅读最新研报 <span aria-hidden="true">↗</span>
-          </Link>
+          </a>
         ) : null}
       </div>
     </article>
@@ -159,7 +159,7 @@ function OpportunityQueue({ companies, quotes }: { companies: Company[]; quotes:
           const priority = opportunityPriority(company, quote);
           const level = primaryPriceLevel(company);
           return (
-            <Link className="queue-item" href={`/reports/${company.ticker}`} key={company.symbol}>
+            <a className="queue-item" href={`/reports/${company.ticker}`} key={company.symbol}>
               <span className="queue-rank">{String(index + 2).padStart(2, "0")}</span>
               <span className="queue-company">
                 <strong>{cleanCompanyName(company.name)}</strong>
@@ -180,7 +180,7 @@ function OpportunityQueue({ companies, quotes }: { companies: Company[]; quotes:
               <span className={`score-dot score-${priority.score >= 78 ? "hot" : priority.score >= 58 ? "warm" : "cool"}`}>
                 {priority.score || "—"}
               </span>
-            </Link>
+            </a>
           );
         })}
       </div>
@@ -404,9 +404,9 @@ export function DashboardClient() {
             <span className="section-eyebrow">UNIVERSE EXPLORER</span>
             <h2 id="explorer-title">从机会池切到全市场，只需要一次点击。</h2>
           </div>
-          <Link className="text-link" href="/reports">
+          <a className="text-link" href="/reports">
             在研报库中搜索 <span aria-hidden="true">↗</span>
-          </Link>
+          </a>
         </div>
 
         <div className="explorer-toolbar">
@@ -540,9 +540,9 @@ export function DashboardClient() {
                     </td>
                     <td className="row-action">
                       {company.reports.length ? (
-                        <Link href={`/reports/${company.ticker}`} aria-label={`阅读${cleanCompanyName(company.name)}研报`}>
+                        <a href={`/reports/${company.ticker}`} aria-label={`阅读${cleanCompanyName(company.name)}研报`}>
                           ↗
-                        </Link>
+                        </a>
                       ) : (
                         <span>—</span>
                       )}

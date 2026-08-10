@@ -1,8 +1,8 @@
 "use client";
+/* eslint-disable @next/next/no-html-link-for-pages */
 
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -263,7 +263,7 @@ export function ReportWorkspace({ initialTicker }: ReportWorkspaceProps) {
           <>
             <header className="report-document-header">
               <div className="report-breadcrumbs">
-                <Link href="/">研究决策台</Link>
+                <a href="/">研究决策台</a>
                 <span>/</span>
                 <span>研报库</span>
                 <span>/</span>
