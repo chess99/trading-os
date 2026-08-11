@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   cleanCompanyName,
   effectivePrice,
@@ -21,6 +21,42 @@ type ExplorerView = "opportunities" | "market";
 type MarketSort = "updated" | "name" | "status";
 
 const STATUS_ORDER: ResearchStatus[] = ["covered", "candidate", "stale", "ignore", "unseen"];
+const QUOTE_REFRESH_INTERVAL_MS = 5 * 60 * 1000;
+
+function isChinaMarketOpen(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Shanghai",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(date);
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((item) => item.type === type)?.value ?? "";
+  const weekday = part("weekday");
+  if (weekday === "Sat" || weekday === "Sun") return false;
+
+  const minutes = Number(part("hour")) * 60 + Number(part("minute"));
+  return (minutes >= 9 * 60 + 30 && minutes <= 11 * 60 + 30) || (minutes >= 13 * 60 && minutes <= 15 * 60);
+}
+
+function latestQuoteTimestamp(quotes: Quote[]) {
+  return quotes.reduce<string | null>((latest, quote) => {
+    if (!quote.quoteAt || Number.isNaN(Date.parse(quote.quoteAt))) return latest;
+    if (!latest || Date.parse(quote.quoteAt) > Date.parse(latest)) return quote.quoteAt;
+    return latest;
+  }, null);
+}
+
+function formatQuoteTime(value: string) {
+  return new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(new Date(value));
+}
 
 function statusCount(catalog: Catalog, status: ResearchStatus) {
   return catalog.stats.status[status] ?? 0;
@@ -80,6 +116,8 @@ export function DashboardClient() {
   const [quotes, setQuotes] = useState<Map<string, Quote>>(new Map());
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [quoteState, setQuoteState] = useState<"loading" | "live" | "fallback">("loading");
+  const [quoteRefreshing, setQuoteRefreshing] = useState(false);
+  const [quoteUpdatedAt, setQuoteUpdatedAt] = useState<string | null>(null);
   const [view, setView] = useState<ExplorerView>("opportunities");
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<ResearchStatus | "all">("all");
@@ -87,28 +125,67 @@ export function DashboardClient() {
   const [marketSort, setMarketSort] = useState<MarketSort>("updated");
   const [visibleRows, setVisibleRows] = useState(80);
   const searchRef = useRef<HTMLInputElement>(null);
+  const quoteRefreshRunningRef = useRef(false);
+  const lastQuoteRequestAtRef = useRef(0);
 
   useEffect(() => {
     const controller = new AbortController();
     loadCatalog(controller.signal)
-      .then(async (nextCatalog) => {
-        setCatalog(nextCatalog);
-        const coveredTickers = nextCatalog.companies
-          .filter((company) => company.status === "covered")
-          .map((company) => company.ticker);
-        try {
-          const nextQuotes = await loadQuotes(coveredTickers, controller.signal);
-          setQuotes(new Map(nextQuotes.map((quote) => [quote.ticker, quote])));
-          setQuoteState(nextQuotes.length ? "live" : "fallback");
-        } catch {
-          setQuoteState("fallback");
-        }
-      })
+      .then(setCatalog)
       .catch((error: Error) => {
         if (error.name !== "AbortError") setCatalogError(error.message);
       });
     return () => controller.abort();
   }, []);
+
+  const refreshQuotes = useCallback(async (signal?: AbortSignal) => {
+    if (!catalog || quoteRefreshRunningRef.current) return;
+    quoteRefreshRunningRef.current = true;
+    lastQuoteRequestAtRef.current = Date.now();
+    setQuoteRefreshing(true);
+
+    const coveredTickers = catalog.companies
+      .filter((company) => company.status === "covered")
+      .map((company) => company.ticker);
+    try {
+      const nextQuotes = await loadQuotes(coveredTickers, signal);
+      if (signal?.aborted) return;
+      if (nextQuotes.length) {
+        setQuotes(new Map(nextQuotes.map((quote) => [quote.ticker, quote])));
+        setQuoteUpdatedAt(latestQuoteTimestamp(nextQuotes) ?? new Date().toISOString());
+        setQuoteState("live");
+      } else {
+        setQuoteState((current) => current === "live" ? current : "fallback");
+      }
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") return;
+      setQuoteState((current) => current === "live" ? current : "fallback");
+    } finally {
+      quoteRefreshRunningRef.current = false;
+      if (!signal?.aborted) setQuoteRefreshing(false);
+    }
+  }, [catalog]);
+
+  useEffect(() => {
+    if (!catalog) return;
+    const controller = new AbortController();
+    const initialRefresh = window.setTimeout(() => void refreshQuotes(controller.signal), 0);
+
+    function refreshIfDue() {
+      if (document.visibilityState !== "visible" || !isChinaMarketOpen()) return;
+      if (Date.now() - lastQuoteRequestAtRef.current < QUOTE_REFRESH_INTERVAL_MS) return;
+      void refreshQuotes(controller.signal);
+    }
+
+    const interval = window.setInterval(refreshIfDue, 60_000);
+    document.addEventListener("visibilitychange", refreshIfDue);
+    return () => {
+      controller.abort();
+      window.clearTimeout(initialRefresh);
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", refreshIfDue);
+    };
+  }, [catalog, refreshQuotes]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -314,10 +391,27 @@ export function DashboardClient() {
             显示 {Math.min(visibleRows, filtered.length).toLocaleString("zh-CN")} / {filtered.length.toLocaleString("zh-CN")} 家
           </span>
           {view === "opportunities" ? (
-            <span className={`quote-status quote-status-${quoteState}`}>
-              <i aria-hidden="true" />
-              {quoteState === "live" ? "现价已更新" : quoteState === "loading" ? "现价更新中" : "显示最近收盘价"}
-            </span>
+            <div className="quote-controls" aria-live="polite">
+              <span className={`quote-status quote-status-${quoteRefreshing ? "loading" : quoteState}`}>
+                <i aria-hidden="true" />
+                {quoteRefreshing
+                  ? "现价更新中"
+                  : quoteState === "live"
+                    ? "现价已更新"
+                    : quoteState === "loading"
+                      ? "现价更新中"
+                      : "显示最近收盘价"}
+              </span>
+              {quoteUpdatedAt ? <time dateTime={quoteUpdatedAt}>行情时间 {formatQuoteTime(quoteUpdatedAt)}</time> : null}
+              <button
+                className="quote-refresh"
+                disabled={quoteRefreshing}
+                onClick={() => void refreshQuotes()}
+                type="button"
+              >
+                {quoteRefreshing ? "刷新中" : "刷新"}
+              </button>
+            </div>
           ) : (
             <span>更新于 {formatDate(catalog.generatedAt, true)}</span>
           )}

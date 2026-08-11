@@ -39,6 +39,16 @@ test("the decision workspace stays table-first and separates research prices", a
   assert.doesNotMatch(header, /只读研究视图/);
 });
 
+test("quotes refresh during A-share trading hours and can be refreshed manually", async () => {
+  const dashboard = await readFile(new URL("../app/components/dashboard-client.tsx", import.meta.url), "utf8");
+  assert.match(dashboard, /QUOTE_REFRESH_INTERVAL_MS = 5 \* 60 \* 1000/);
+  assert.match(dashboard, /timeZone: "Asia\/Shanghai"/);
+  assert.match(dashboard, /isChinaMarketOpen/);
+  assert.match(dashboard, /setInterval\(refreshIfDue, 60_000\)/);
+  assert.match(dashboard, /行情时间/);
+  assert.match(dashboard, /onClick=\{\(\) => void refreshQuotes\(\)\}/);
+});
+
 test("server-renders the report library and detail route", async () => {
   const [library, detail] = await Promise.all([render("/reports"), render("/reports/000001")]);
   assert.equal(library.status, 200);
