@@ -73,15 +73,17 @@ function quoteSourceLabel(quote?: Quote, fallbackDate?: string | null) {
   return fallbackDate ? `${fallbackDate} 收盘` : "行情待同步";
 }
 
-function isHighAttractionLevel(level: PriceLevel) {
-  return /高吸引力|安全边际/u.test(level.label);
+function isDeepReviewLevel(level: PriceLevel) {
+  return level.id === "deep_review"
+    || /^(attractive|high_attraction|deep_attention|high_margin|high_margin_of_safety|deep_value)/u.test(level.id)
+    || /深度复核|深度关注|高吸引力|安全边际|深度价值/u.test(level.label);
 }
 
 function groupPriceLevels(company: Company) {
   const sorted = [...company.priceLevels].sort((a, b) => b.threshold - a.threshold);
   return {
-    attention: sorted.filter((level) => !isHighAttractionLevel(level)),
-    highAttraction: sorted.filter(isHighAttractionLevel),
+    attention: sorted.filter((level) => !isDeepReviewLevel(level)),
+    deepReview: sorted.filter(isDeepReviewLevel),
   };
 }
 
@@ -427,8 +429,8 @@ export function DashboardClient() {
                   <th className="industry-column">行业</th>
                   <th className="current-price-column">现价</th>
                   <th className="value-column">合理价值</th>
-                  <th className="level-column">关注价</th>
-                  <th className="level-column attraction-column">高吸引力价</th>
+                  <th className="level-column">关注复核价</th>
+                  <th className="level-column attraction-column">深度复核价</th>
                   <th className="summary-column">当前结论</th>
                   <th className="action-column" aria-label="操作" />
                 </tr>
@@ -474,7 +476,7 @@ export function DashboardClient() {
                       )}
                     </td>
                     <PriceLevelCell levels={groupedLevels.attention} />
-                    <PriceLevelCell levels={groupedLevels.highAttraction} />
+                    <PriceLevelCell levels={groupedLevels.deepReview} />
                     <td className="summary-cell"><p>{company.summary}</p></td>
                     <td className="row-action">
                       {company.reports.length ? (

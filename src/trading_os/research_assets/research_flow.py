@@ -449,6 +449,44 @@ def _price_levels(
     return output
 
 
+def _new_research_price_levels(
+    values: Sequence[PriceLevel],
+    *,
+    buy_below: float | None,
+    rearm_above: float | None,
+) -> list[dict[str, Any]]:
+    """Canonicalize new research results without invalidating historical level IDs."""
+
+    levels = _price_levels(values, buy_below=buy_below, rearm_above=rearm_above)
+    if not levels:
+        return []
+
+    # Keep the legacy single-threshold input compatible, but persist it with the
+    # current research-only vocabulary instead of creating another historical ID.
+    if len(levels) == 1 and levels[0]["id"] == "buy":
+        levels[0]["id"] = "attention"
+
+    allowed = {"attention": "关注复核价", "deep_review": "深度复核价"}
+    unknown = sorted(level["id"] for level in levels if level["id"] not in allowed)
+    if unknown:
+        raise ValidationError(
+            "new research price level IDs must be attention or deep_review: "
+            + ", ".join(unknown)
+        )
+
+    by_id = {level["id"]: level for level in levels}
+    if "deep_review" in by_id and "attention" not in by_id:
+        raise ValidationError("deep_review requires an attention price level")
+    if "deep_review" in by_id and (
+        by_id["deep_review"]["threshold"] >= by_id["attention"]["threshold"]
+    ):
+        raise ValidationError("deep_review threshold must be below attention threshold")
+
+    for level_id, level in by_id.items():
+        level["label"] = allowed[level_id]
+    return [by_id[level_id] for level_id in ("attention", "deep_review") if level_id in by_id]
+
+
 def _task_id(symbol: str, trigger_key: str) -> str:
     digest = hashlib.sha256(f"{symbol}\0{trigger_key}".encode()).hexdigest()
     return digest[:24]
@@ -1205,7 +1243,7 @@ class ResearchFlow:
         key_logic = _strings(result.key_logic, "key logic")
         risks = _strings(result.risks, "risk")
         value_range = _value_range(result.value_range)
-        price_levels = _price_levels(
+        price_levels = _new_research_price_levels(
             result.price_levels,
             buy_below=result.buy_below,
             rearm_above=result.rearm_above,

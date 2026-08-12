@@ -314,15 +314,36 @@ def test_each_price_level_has_independent_runtime_state(tmp_path: Path):
         buy_below=None,
         rearm_above=None,
         price_levels=(
-            PriceLevel("attention", "关注价", 55, 57),
-            PriceLevel("high-attraction", "高吸引力价", 50, 52),
+            PriceLevel("attention", "输入标签会被统一", 55, 57),
+            PriceLevel("deep_review", "输入标签会被统一", 50, 52),
         ),
     )
     _complete(flow, result)
     first = flow.scan_daily_close({"CN:601138": 54}, trading_date="2026-08-11", at=AT)
     second = flow.scan_daily_close({"CN:601138": 49}, trading_date="2026-08-12", at=AT)
     assert [hit.level_id for hit in first] == ["attention"]
-    assert [hit.level_id for hit in second] == ["high-attraction"]
+    assert [hit.level_id for hit in second] == ["deep_review"]
+
+
+def test_new_research_uses_standard_price_level_ids_and_labels(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    state = _complete(
+        flow,
+        replace(
+            _covered("CN:601138"),
+            buy_below=None,
+            rearm_above=None,
+            price_levels=(
+                PriceLevel("deep_review", "旧式深度标签", 50, 52),
+                PriceLevel("attention", "旧式关注标签", 55, 57),
+            ),
+        ),
+    )
+
+    assert [(level["id"], level["label"]) for level in state["price_levels"]] == [
+        ("attention", "关注复核价"),
+        ("deep_review", "深度复核价"),
+    ]
 
 
 def test_material_event_marks_covered_report_stale_and_suppresses_price(tmp_path: Path):
@@ -501,6 +522,27 @@ def test_validation_rejects_two_current_tasks_for_one_company(tmp_path: Path):
         (
             replace(_ignored_after_research("CN:000001"), buy_below=10),
             "must not activate price",
+        ),
+        (
+            replace(
+                _covered("CN:000001"),
+                buy_below=None,
+                rearm_above=None,
+                price_levels=(PriceLevel("attractive", "旧标识", 50, 52),),
+            ),
+            "must be attention or deep_review",
+        ),
+        (
+            replace(
+                _covered("CN:000001"),
+                buy_below=None,
+                rearm_above=None,
+                price_levels=(
+                    PriceLevel("attention", "关注复核价", 50, 52),
+                    PriceLevel("deep_review", "深度复核价", 50, 52),
+                ),
+            ),
+            "must be below attention",
         ),
     ],
 )

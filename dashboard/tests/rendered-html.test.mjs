@@ -32,8 +32,10 @@ test("the decision workspace stays table-first and separates research prices", a
   ]);
   assert.match(dashboard, />现价</);
   assert.match(dashboard, />合理价值</);
-  assert.match(dashboard, />关注价</);
-  assert.match(dashboard, />高吸引力价</);
+  assert.match(dashboard, />关注复核价</);
+  assert.match(dashboard, />深度复核价</);
+  assert.match(dashboard, /level\.id === "deep_review"/);
+  assert.match(dashboard, /high_attraction/);
   assert.match(dashboard, /-webkit-line-clamp: 6|summary-cell/);
   assert.doesNotMatch(dashboard, /TopOpportunity|OpportunityQueue|排序为什么把这些公司放在前面/);
   assert.doesNotMatch(header, /只读研究视图/);

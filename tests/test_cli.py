@@ -36,8 +36,8 @@ def _full_result(symbol: str, task_id: str | None = None) -> dict:
         "risks": ["客户集中", "资本开支回报不及预期"],
         "value_range": {"low": 58, "high": 82, "currency": "CNY"},
         "price_levels": [
-            {"id": "attention", "label": "关注区", "threshold": 55, "rearm_above": 57},
-            {"id": "attractive", "label": "高吸引力区", "threshold": 50, "rearm_above": 52},
+            {"id": "attention", "label": "关注复核价", "threshold": 55, "rearm_above": 57},
+            {"id": "deep_review", "label": "深度复核价", "threshold": 50, "rearm_above": 52},
         ],
         "event_triggers": ["下一期财报发布"],
         "source_urls": ["https://example.com/report"],
@@ -274,7 +274,7 @@ def test_research_complete_writes_dated_report_and_full_watchlist(tmp_path: Path
     assert company["key_logic"] == ["需求增长", "现金流转化决定估值"]
     assert [level["id"] for level in company["price_levels"]] == [
         "attention",
-        "attractive",
+        "deep_review",
     ]
 
 
@@ -304,7 +304,7 @@ def test_watchlist_close_scan_emits_independent_price_levels(tmp_path: Path, cap
     )
 
     assert scanned["hit_count"] == 2
-    assert [hit["level_id"] for hit in scanned["hits"]] == ["attention", "attractive"]
+    assert [hit["level_id"] for hit in scanned["hits"]] == ["attention", "deep_review"]
     assert all("enqueued" not in hit and "task_id" not in hit for hit in scanned["hits"])
     pending = _call(tmp_path, capsys, "research", "next", "--limit", "1", "--at", AT)
     assert pending == {"count": 0, "tasks": []}
