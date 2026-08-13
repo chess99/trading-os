@@ -9,7 +9,7 @@ import tempfile
 import threading
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Mapping, Sequence
@@ -20,7 +20,23 @@ WATCHLIST_PATH = Path("research/watchlist.jsonl")
 QUEUE_PATH = Path("coverage/cn-a/research_queue.jsonl")
 
 _SYMBOL_RE = re.compile(r"^CN:\d{6}$")
-_FORMAL_REPORT_RE = re.compile(r"^(?P<date>\d{4}-\d{2}-\d{2})(?:-(?P<sequence>\d{2}))?\.md$")
+_DATED_MARKDOWN_RE = re.compile(
+    r"^(?P<date>\d{4}-\d{2}-\d{2})(?:-(?P<sequence>\d{2}))?\.md$"
+)
+_FORMAL_REPORT_RE = _DATED_MARKDOWN_RE
+_SECURITY_PRICE_TRIGGER_RE = re.compile(
+    r"收盘价|股价|价格线|价格触发|重新武装|重装触发器|关注价|买入价|安全边际价格"
+)
+_REPORT_DEFERRAL_RE = re.compile(
+    r"本次裁决不重复发明|完整业务分析可沿时间线回看|"
+    r"(?:详见|参见|请回看).{0,20}(?:前序|上一版|历史|原)报告|"
+    r"本报告不再重复.{0,20}(?:前序|上一版|历史|原)报告|"
+    r"(?:前序|上一版|历史|原)报告.{0,30}(?:继续有效|共同部分)"
+)
+_REPORT_SECURITY_PRICE_LINE_RE = re.compile(
+    r"关注价(?:格)?|买入价|重新武装|安全边际价格|"
+    r"price_levels|price_monitor|deep_review|rearm_above"
+)
 _THREAD_LOCKS: dict[str, threading.RLock] = {}
 _THREAD_LOCKS_GUARD = threading.Lock()
 
@@ -37,7 +53,7 @@ class StateCorruptionError(ResearchFlowError):
     """Raised when a persisted JSONL file is malformed or internally inconsistent."""
 
 
-STATE_SCHEMA_VERSION = 2
+STATE_SCHEMA_VERSION = 3
 
 
 class UniverseStatus(str, Enum):
@@ -68,6 +84,12 @@ class ResearchOutcome(str, Enum):
     COVERED = "covered"
 
 
+class UpdateImpact(str, Enum):
+    REAFFIRMED = "reaffirmed"
+    MONITOR = "monitor"
+    INVALIDATED = "invalidated"
+
+
 class TaskStatus(str, Enum):
     QUEUED = "queued"
     RUNNING = "running"
@@ -84,14 +106,6 @@ class ValueRange:
     low: float
     high: float
     currency: str = "CNY"
-
-
-@dataclass(frozen=True)
-class PriceLevel:
-    id: str
-    label: str
-    threshold: float
-    rearm_above: float | None = None
 
 
 @dataclass(frozen=True)
@@ -115,12 +129,33 @@ class ResearchResult:
     event_triggers: Sequence[str]
     source_urls: Sequence[str]
     information_cutoff: str
-    price_levels: Sequence[PriceLevel] = field(default_factory=tuple)
-    buy_below: float | None = None
-    rearm_above: float | None = None
     name: str | None = None
     report_markdown: str | None = None
     valuation_note: str | None = None
+
+
+@dataclass(frozen=True)
+class ResearchUpdate:
+    symbol: str
+    title: str
+    impact: UpdateImpact | str
+    reviewed_at: str
+    information_cutoff: str
+    summary: str
+    analysis: str
+    conclusion: str
+    source_urls: Sequence[str]
+    event_ids: Sequence[str] = field(default_factory=tuple)
+    invalidation_reason: str | None = None
+
+
+@dataclass(frozen=True)
+class ResearchUpdateRecord:
+    symbol: str
+    impact: UpdateImpact
+    update_path: str
+    status: CompanyStatus
+    enqueued_task: ResearchTask | None
 
 
 @dataclass(frozen=True)
@@ -172,22 +207,6 @@ class ResearchFlowStatus:
     watchlist: int
     queued: int
     running: int
-
-
-@dataclass(frozen=True)
-class PriceHit:
-    symbol: str
-    trading_date: str
-    close: float
-    level_id: str
-    label: str
-    threshold: float
-
-    @property
-    def buy_below(self) -> float:
-        """Compatibility name for callers that previously had one threshold."""
-
-        return self.threshold
 
 
 def _thread_lock(path: Path) -> threading.RLock:
@@ -333,10 +352,6 @@ def _number(value: float | int, label: str) -> float:
     return result
 
 
-def _optional_number(value: float | int | None, label: str) -> float | None:
-    return None if value is None else _number(value, label)
-
-
 def _strings(values: Sequence[str], label: str) -> list[str]:
     if isinstance(values, (str, bytes)):
         raise ValidationError(f"{label} must be a sequence of strings")
@@ -359,6 +374,41 @@ def _urls(values: Sequence[str]) -> list[str]:
     return output
 
 
+def _event_triggers(values: Sequence[str]) -> list[str]:
+    output = _strings(values, "event trigger")
+    security_price_triggers = [
+        value for value in output if _SECURITY_PRICE_TRIGGER_RE.search(value)
+    ]
+    if security_price_triggers:
+        raise ValidationError(
+            "event triggers must be business, financial, governance, or industry facts; "
+            "security-price triggers are not research triggers"
+        )
+    return output
+
+
+def _without_security_price_triggers(values: object) -> list[str]:
+    if not isinstance(values, list):
+        return []
+    return [
+        value
+        for value in values
+        if isinstance(value, str) and not _SECURITY_PRICE_TRIGGER_RE.search(value)
+    ]
+
+
+def _migrated_screening(value: object) -> object:
+    if not isinstance(value, dict):
+        return value
+    screening = dict(value)
+    for field_name in ("price_levels", "price_monitor", "buy_below", "rearm_above"):
+        screening.pop(field_name, None)
+    screening["event_triggers"] = _without_security_price_triggers(
+        screening.get("event_triggers")
+    )
+    return screening
+
+
 def _timestamp(value: str | datetime | None) -> str:
     if value is None:
         parsed = datetime.now(timezone.utc)
@@ -375,17 +425,6 @@ def _timestamp(value: str | datetime | None) -> str:
     return parsed.isoformat()
 
 
-def _trading_date(value: str | date) -> str:
-    if isinstance(value, datetime):
-        raise ValidationError("trading_date must be a date, not a datetime")
-    if isinstance(value, date):
-        return value.isoformat()
-    try:
-        return date.fromisoformat(_nonblank(value, "trading_date")).isoformat()
-    except ValueError as exc:
-        raise ValidationError(f"invalid trading_date: {value}") from exc
-
-
 def _value_range(value: ValueRange | None) -> dict[str, Any] | None:
     if value is None:
         return None
@@ -396,95 +435,6 @@ def _value_range(value: ValueRange | None) -> dict[str, Any] | None:
     if low > high:
         raise ValidationError("value_range.low must not exceed value_range.high")
     return {"low": low, "high": high, "currency": _nonblank(value.currency, "currency")}
-
-
-def _price_levels(
-    values: Sequence[PriceLevel],
-    *,
-    buy_below: float | None,
-    rearm_above: float | None,
-) -> list[dict[str, Any]]:
-    if isinstance(values, (str, bytes)):
-        raise ValidationError("price_levels must be a sequence of PriceLevel objects")
-    if values and (buy_below is not None or rearm_above is not None):
-        raise ValidationError("use price_levels or buy_below, not both")
-    if not values:
-        threshold = _optional_number(buy_below, "buy_below")
-        rearm = _optional_number(rearm_above, "rearm_above")
-        if rearm is not None and threshold is None:
-            raise ValidationError("rearm_above requires buy_below")
-        if threshold is None:
-            return []
-        if rearm is not None and rearm < threshold:
-            raise ValidationError("rearm_above must be greater than or equal to buy_below")
-        return [
-            {
-                "id": "buy",
-                "label": "买入触发",
-                "threshold": threshold,
-                "rearm_above": rearm if rearm is not None else threshold,
-            }
-        ]
-    output: list[dict[str, Any]] = []
-    seen: set[str] = set()
-    for value in values:
-        if not isinstance(value, PriceLevel):
-            raise ValidationError("price_levels must contain PriceLevel objects")
-        level_id = _nonblank(value.id, "price level id")
-        if level_id in seen:
-            raise ValidationError(f"duplicate price level id: {level_id}")
-        seen.add(level_id)
-        threshold = _number(value.threshold, "price level threshold")
-        rearm = _optional_number(value.rearm_above, "price level rearm_above")
-        if rearm is not None and rearm < threshold:
-            raise ValidationError("price level rearm_above must not be below threshold")
-        output.append(
-            {
-                "id": level_id,
-                "label": _nonblank(value.label, "price level label"),
-                "threshold": threshold,
-                "rearm_above": rearm if rearm is not None else threshold,
-            }
-        )
-    return output
-
-
-def _new_research_price_levels(
-    values: Sequence[PriceLevel],
-    *,
-    buy_below: float | None,
-    rearm_above: float | None,
-) -> list[dict[str, Any]]:
-    """Canonicalize new research results without invalidating historical level IDs."""
-
-    levels = _price_levels(values, buy_below=buy_below, rearm_above=rearm_above)
-    if not levels:
-        return []
-
-    # Keep the legacy single-threshold input compatible, but persist it with the
-    # current research-only vocabulary instead of creating another historical ID.
-    if len(levels) == 1 and levels[0]["id"] == "buy":
-        levels[0]["id"] = "attention"
-
-    allowed = {"attention": "关注复核价", "deep_review": "深度复核价"}
-    unknown = sorted(level["id"] for level in levels if level["id"] not in allowed)
-    if unknown:
-        raise ValidationError(
-            "new research price level IDs must be attention or deep_review: "
-            + ", ".join(unknown)
-        )
-
-    by_id = {level["id"]: level for level in levels}
-    if "deep_review" in by_id and "attention" not in by_id:
-        raise ValidationError("deep_review requires an attention price level")
-    if "deep_review" in by_id and (
-        by_id["deep_review"]["threshold"] >= by_id["attention"]["threshold"]
-    ):
-        raise ValidationError("deep_review threshold must be below attention threshold")
-
-    for level_id, level in by_id.items():
-        level["label"] = allowed[level_id]
-    return [by_id[level_id] for level_id in ("attention", "deep_review") if level_id in by_id]
 
 
 def _task_id(symbol: str, trigger_key: str) -> str:
@@ -504,7 +454,6 @@ def _empty_state(symbol: str, name: str | None, at: str) -> dict[str, Any]:
         "key_logic": [],
         "risks": [],
         "value_range": None,
-        "price_levels": [],
         "event_triggers": [],
         "source_urls": [],
         "last_screening": None,
@@ -515,37 +464,7 @@ def _empty_state(symbol: str, name: str | None, at: str) -> dict[str, Any]:
         "candidate_since": None,
         "invalidation": None,
         "processed_triggers": [],
-        "price_monitor": None,
     }
-
-
-def _monitor(
-    existing: Mapping[str, Any] | None, levels: Sequence[Mapping[str, Any]]
-) -> dict[str, Any] | None:
-    if not levels:
-        return None
-    previous = existing.get("levels", {}) if existing else {}
-    monitored: dict[str, dict[str, Any]] = {}
-    for level in levels:
-        level_id = level["id"]
-        old = previous.get(level_id)
-        if (
-            isinstance(old, dict)
-            and old.get("threshold") == level["threshold"]
-            and old.get("rearm_above") == level["rearm_above"]
-        ):
-            item = dict(old)
-            item["label"] = level["label"]
-        else:
-            item = {
-                **level,
-                "armed": True,
-                "last_close": None,
-                "last_scan_date": None,
-                "last_hit_date": None,
-            }
-        monitored[level_id] = item
-    return {"levels": monitored}
 
 
 def _task_from_row(row: Mapping[str, Any]) -> ResearchTask:
@@ -581,7 +500,7 @@ def _task_row(task: ResearchTask) -> dict[str, Any]:
 
 
 class ResearchFlow:
-    """Small, single-writer coordinator for screening, research and price alerts.
+    """Small, single-writer coordinator for screening and company research.
 
     Worker agents receive :class:`ResearchTask` objects and return one
     :class:`ResearchResult`. They do not need to mutate any shared file. The
@@ -649,20 +568,6 @@ class ResearchFlow:
                 or state.get("status") != CompanyStatus.COVERED.value
             ):
                 continue
-            monitor = state.get("price_monitor") or {}
-            monitored_levels = monitor.get("levels", {})
-            price_levels = []
-            for level in state.get("price_levels") or []:
-                runtime = monitored_levels.get(level["id"], {})
-                price_levels.append(
-                    {
-                        **level,
-                        "armed": runtime.get("armed", True),
-                        "last_close": runtime.get("last_close"),
-                        "last_scan_date": runtime.get("last_scan_date"),
-                        "last_hit_date": runtime.get("last_hit_date"),
-                    }
-                )
             rows.append(
                 {
                     "schema_version": STATE_SCHEMA_VERSION,
@@ -673,7 +578,6 @@ class ResearchFlow:
                     "key_logic": list(state.get("key_logic") or []),
                     "risks": list(state.get("risks") or []),
                     "value_range": state.get("value_range"),
-                    "price_levels": price_levels,
                     "event_triggers": list(state.get("event_triggers") or []),
                     "source_urls": list(state.get("source_urls") or []),
                     "last_research_at": state.get("last_research_at"),
@@ -725,13 +629,13 @@ class ResearchFlow:
         tasks.append(task)
         return task
 
-    def migrate_state_v2(self, *, at: str | datetime | None = None) -> int:
-        """One-time migration from the former watch/researched schema.
+    def migrate_state_v3(self, *, at: str | datetime | None = None) -> int:
+        """Migrate legacy state into the event-driven schema.
 
         A legacy ``watch`` without a formal report becomes ``candidate`` and
-        loses its ungrounded price levels. A legacy ``researched`` row becomes
-        ``covered``. The migration does not create research tasks; candidate
-        selection and task creation remain explicit manager actions.
+        a legacy ``researched`` row becomes ``covered``. Version 2 rows lose
+        all security-price alert state and security-price event text. The
+        migration does not create research tasks.
         """
 
         timestamp = _timestamp(at)
@@ -741,7 +645,38 @@ class ResearchFlow:
                 return 0
             versions = {row.get("schema_version") for row in rows}
             if versions == {STATE_SCHEMA_VERSION}:
-                return 0
+                states: dict[str, dict[str, Any]] = {}
+                changed = 0
+                for row in rows:
+                    symbol = _symbol(row.get("symbol"))
+                    state = dict(row)
+                    migrated_screening = _migrated_screening(state.get("last_screening"))
+                    if migrated_screening != state.get("last_screening"):
+                        state["last_screening"] = migrated_screening
+                        changed += 1
+                    states[symbol] = state
+                if changed:
+                    self._write_states(states)
+                return changed
+            if versions == {2}:
+                states: dict[str, dict[str, Any]] = {}
+                for row in rows:
+                    symbol = _symbol(row.get("symbol"))
+                    state = dict(row)
+                    state["schema_version"] = STATE_SCHEMA_VERSION
+                    state.pop("price_levels", None)
+                    state.pop("price_monitor", None)
+                    state["event_triggers"] = _without_security_price_triggers(
+                        state.get("event_triggers")
+                    )
+                    state["last_screening"] = _migrated_screening(
+                        state.get("last_screening")
+                    )
+                    states[symbol] = state
+                tasks = self._tasks()
+                self._write_tasks(tasks)
+                self._write_states(states)
+                return len(rows)
             if versions != {1}:
                 raise StateCorruptionError(
                     f"cannot migrate mixed or unsupported state schemas: {versions}"
@@ -767,12 +702,18 @@ class ResearchFlow:
                         "invalidation": None,
                     }
                 )
+                state.pop("price_levels", None)
+                state.pop("price_monitor", None)
+                state["event_triggers"] = _without_security_price_triggers(
+                    state.get("event_triggers")
+                )
+                state["last_screening"] = _migrated_screening(
+                    state.get("last_screening")
+                )
                 if legacy_status == "watch":
                     state["status"] = CompanyStatus.CANDIDATE.value
                     state["candidate_since"] = timestamp
                     state["value_range"] = None
-                    state["price_levels"] = []
-                    state["price_monitor"] = None
                     state["report_path"] = None
                     state["last_research_at"] = None
                     state["information_cutoff"] = None
@@ -781,8 +722,6 @@ class ResearchFlow:
                     state["status"] = CompanyStatus.COVERED.value
                 elif legacy_status == "ignore":
                     state["status"] = CompanyStatus.IGNORE.value
-                    state["price_levels"] = []
-                    state["price_monitor"] = None
                 else:
                     state["status"] = CompanyStatus.UNSEEN.value
                 states[symbol] = state
@@ -817,7 +756,6 @@ class ResearchFlow:
                         "reason": task.reason,
                         "screen_id": task.trigger_id,
                     }
-                    state["price_monitor"] = None
                 else:
                     state["status"] = CompanyStatus.CANDIDATE.value
                     state["candidate_since"] = state.get("candidate_since") or timestamp
@@ -894,7 +832,6 @@ class ResearchFlow:
                         "key_logic": [],
                         "risks": [],
                         "value_range": None,
-                        "price_levels": [],
                         "event_triggers": [],
                         "source_urls": [],
                         "last_screening": None,
@@ -905,7 +842,6 @@ class ResearchFlow:
                         "candidate_since": None,
                         "invalidation": None,
                         "processed_triggers": [],
-                        "price_monitor": None,
                     }
                 )
             tasks = [task for task in self._tasks() if task.symbol not in reset_symbols]
@@ -969,7 +905,6 @@ class ResearchFlow:
                 ):
                     state["universe_status"] = UniverseStatus.INACTIVE.value
                     state["updated_at"] = timestamp
-                    state["price_monitor"] = None
                     tasks = [task for task in tasks if task.symbol != symbol]
                     inactivated += 1
 
@@ -988,9 +923,7 @@ class ResearchFlow:
                     state["universe_status"] = UniverseStatus.ACTIVE.value
                     reactivated += 1
                     changed = True
-                    if state.get("status") == CompanyStatus.COVERED.value:
-                        state["price_monitor"] = _monitor(None, state.get("price_levels") or [])
-                    elif state.get("status") in {
+                    if state.get("status") in {
                         CompanyStatus.CANDIDATE.value,
                         CompanyStatus.STALE.value,
                     }:
@@ -1048,7 +981,7 @@ class ResearchFlow:
             seen.add(symbol)
             route = _enum_value(decision.route, ScreenRoute, "screen route")
             reason = _nonblank(decision.reason, "reason")
-            event_triggers = _strings(decision.event_triggers, "event trigger")
+            event_triggers = _event_triggers(decision.event_triggers)
             normalized.append(
                 {
                     "symbol": symbol,
@@ -1079,6 +1012,18 @@ class ResearchFlow:
                         "baseline screening only accepts unseen companies: "
                         + ", ".join(already_screened)
                     )
+            direct_outcome_changes = sorted(
+                item["symbol"]
+                for item in normalized
+                if item["route"] == ScreenRoute.IGNORE.value
+                and isinstance(states.get(item["symbol"], {}).get("report_path"), str)
+            )
+            if direct_outcome_changes:
+                raise ValidationError(
+                    "screening cannot replace a formal research outcome with ignore; "
+                    "complete a full research task instead: "
+                    + ", ".join(direct_outcome_changes)
+                )
             enqueued: list[ResearchTask] = []
             deduplicated = 0
             for item in normalized:
@@ -1104,10 +1049,8 @@ class ResearchFlow:
                     state["key_logic"] = []
                     state["risks"] = []
                     state["value_range"] = None
-                    state["price_levels"] = []
                     state["event_triggers"] = item["event_triggers"]
                     state["source_urls"] = item["source_urls"]
-                    state["price_monitor"] = None
                     state["last_research_at"] = None
                     state["information_cutoff"] = None
                     state["report_path"] = None
@@ -1128,8 +1071,6 @@ class ResearchFlow:
                         state["candidate_since"] = state.get("candidate_since") or timestamp
                         state["invalidation"] = None
                     state["summary"] = item["reason"]
-                    state["price_levels"] = []
-                    state["price_monitor"] = None
                     if item["event_triggers"]:
                         state["event_triggers"] = item["event_triggers"]
                     if item["source_urls"]:
@@ -1243,12 +1184,7 @@ class ResearchFlow:
         key_logic = _strings(result.key_logic, "key logic")
         risks = _strings(result.risks, "risk")
         value_range = _value_range(result.value_range)
-        price_levels = _new_research_price_levels(
-            result.price_levels,
-            buy_below=result.buy_below,
-            rearm_above=result.rearm_above,
-        )
-        event_triggers = _strings(result.event_triggers, "event trigger")
+        event_triggers = _event_triggers(result.event_triggers)
         source_urls = _urls(result.source_urls)
         information_cutoff = _timestamp(result.information_cutoff)
         valuation_note = (
@@ -1269,14 +1205,17 @@ class ResearchFlow:
             raise ValidationError("research result requires at least one source URL")
         if report_markdown is None:
             raise ValidationError("research result requires report_markdown")
+        if _REPORT_DEFERRAL_RE.search(report_markdown):
+            raise ValidationError(
+                "formal report must be self-contained and must not defer core analysis "
+                "to prior reports"
+            )
+        if _REPORT_SECURITY_PRICE_LINE_RE.search(report_markdown):
+            raise ValidationError(
+                "formal report must not define a security-price trigger or review line"
+            )
         if value_range is None and valuation_note is None:
             raise ValidationError("research result requires value_range or valuation_note")
-        if outcome == ResearchOutcome.IGNORE.value and price_levels:
-            raise ValidationError("ignored research result must not activate price levels")
-        if price_levels and value_range is None:
-            raise ValidationError("price_levels require a value_range")
-        if outcome == ResearchOutcome.COVERED.value and not price_levels and not event_triggers:
-            raise ValidationError("covered result requires a price or event trigger")
         return {
             "symbol": symbol,
             "name": _optional_name(result.name),
@@ -1285,7 +1224,6 @@ class ResearchFlow:
             "key_logic": key_logic,
             "risks": risks,
             "value_range": value_range,
-            "price_levels": price_levels,
             "event_triggers": event_triggers,
             "source_urls": source_urls,
             "information_cutoff": information_cutoff,
@@ -1334,6 +1272,223 @@ class ResearchFlow:
                 return candidate
         raise ValidationError(f"too many formal reports for {symbol} on {report_date}")
 
+    def _updates(self, symbol: str) -> tuple[Path, ...]:
+        updates_directory = self._company_directory(symbol) / "updates"
+        if not updates_directory.is_dir():
+            return ()
+
+        def order(path: Path) -> tuple[str, int]:
+            match = _DATED_MARKDOWN_RE.fullmatch(path.name)
+            assert match is not None
+            return match.group("date"), int(match.group("sequence") or "1")
+
+        updates = [
+            path
+            for path in updates_directory.iterdir()
+            if path.is_file() and _DATED_MARKDOWN_RE.fullmatch(path.name)
+        ]
+        return tuple(sorted(updates, key=order))
+
+    def _next_update_path(self, symbol: str, timestamp: str) -> Path:
+        update_date = _timestamp(timestamp)[:10]
+        updates = self._updates(symbol)
+        if updates:
+            newest_match = _DATED_MARKDOWN_RE.fullmatch(updates[-1].name)
+            assert newest_match is not None
+            if update_date < newest_match.group("date"):
+                raise ValidationError(
+                    f"research update for {symbol} predates its newest update record"
+                )
+        updates_directory = self._company_directory(symbol) / "updates"
+        first = updates_directory / f"{update_date}.md"
+        if not first.exists():
+            return first
+        for sequence in range(2, 100):
+            candidate = updates_directory / f"{update_date}-{sequence:02d}.md"
+            if not candidate.exists():
+                return candidate
+        raise ValidationError(f"too many research updates for {symbol} on {update_date}")
+
+    @staticmethod
+    def _normalized_update(update: ResearchUpdate) -> dict[str, Any]:
+        impact = UpdateImpact(
+            _enum_value(update.impact, UpdateImpact, "research update impact")
+        )
+        reviewed_at = _timestamp(update.reviewed_at)
+        information_cutoff = _timestamp(update.information_cutoff)
+        if datetime.fromisoformat(information_cutoff) > datetime.fromisoformat(reviewed_at):
+            raise ValidationError("research update information_cutoff must not follow reviewed_at")
+        source_urls = _urls(update.source_urls)
+        if not source_urls:
+            raise ValidationError("research update requires at least one source URL")
+        event_ids = _strings(update.event_ids, "event ID")
+        if len(event_ids) != len(set(event_ids)):
+            raise ValidationError("research update event IDs must be unique")
+        if any("`" in event_id or "\n" in event_id or "\r" in event_id for event_id in event_ids):
+            raise ValidationError("research update event IDs must be single-line plain text")
+        invalidation_reason = (
+            _nonblank(update.invalidation_reason, "invalidation reason")
+            if update.invalidation_reason is not None
+            else None
+        )
+        if impact is UpdateImpact.INVALIDATED and invalidation_reason is None:
+            raise ValidationError("invalidated update requires invalidation_reason")
+        if impact is not UpdateImpact.INVALIDATED and invalidation_reason is not None:
+            raise ValidationError("only invalidated update may have invalidation_reason")
+        return {
+            "symbol": _symbol(update.symbol),
+            "title": _nonblank(update.title, "research update title"),
+            "impact": impact,
+            "reviewed_at": reviewed_at,
+            "information_cutoff": information_cutoff,
+            "summary": _nonblank(update.summary, "research update summary"),
+            "analysis": _nonblank(update.analysis, "research update analysis"),
+            "conclusion": _nonblank(update.conclusion, "research update conclusion"),
+            "source_urls": source_urls,
+            "event_ids": event_ids,
+            "invalidation_reason": invalidation_reason,
+        }
+
+    @staticmethod
+    def _update_markdown(
+        normalized: Mapping[str, Any], *, base_report: str
+    ) -> str:
+        impact_labels = {
+            UpdateImpact.REAFFIRMED: "确认原报告",
+            UpdateImpact.MONITOR: "继续观察",
+            UpdateImpact.INVALIDATED: "原报告失效",
+        }
+        event_lines = (
+            "\n".join(f"- `{event_id}`" for event_id in normalized["event_ids"])
+            or "- 无外部事件 ID"
+        )
+        source_lines = "\n".join(f"- {url}" for url in normalized["source_urls"])
+        invalidation = ""
+        if normalized["impact"] is UpdateImpact.INVALIDATED:
+            invalidation = (
+                "\n## 失效原因\n\n"
+                f"{normalized['invalidation_reason']}\n"
+            )
+        return (
+            f"# {normalized['title']}\n\n"
+            f"- 公司：`{normalized['symbol']}`\n"
+            f"- 类型：`event_review`\n"
+            f"- 影响：`{normalized['impact'].value}`（{impact_labels[normalized['impact']]}）\n"
+            f"- 审阅时间：{normalized['reviewed_at']}\n"
+            f"- 信息截止：{normalized['information_cutoff']}\n"
+            f"- 基础报告：`{base_report}`\n\n"
+            "## 事件 ID\n\n"
+            f"{event_lines}\n\n"
+            "## 事件摘要\n\n"
+            f"{normalized['summary']}\n\n"
+            "## 与当前报告的关系\n\n"
+            f"{normalized['analysis']}\n\n"
+            "## 结论\n\n"
+            f"{normalized['conclusion']}\n"
+            f"{invalidation}\n"
+            "## 来源\n\n"
+            f"{source_lines}\n"
+        )
+
+    def record_update(self, update: ResearchUpdate) -> ResearchUpdateRecord:
+        """Append a reviewed event without silently patching the formal report.
+
+        ``reaffirmed`` and ``monitor`` leave current research state untouched.
+        ``invalidated`` marks the formal report stale and enqueues exactly one
+        full-research task. Any valuation or conclusion change belongs in a new
+        self-contained formal report, not in this record type.
+        """
+
+        normalized = self._normalized_update(update)
+        with _exclusive_lock(self.lock_path):
+            states = self._states()
+            tasks = self._tasks()
+            state = states.get(normalized["symbol"])
+            if state is None:
+                raise ValidationError("research update company is not registered")
+            if state.get("universe_status") != UniverseStatus.ACTIVE.value:
+                raise ValidationError("research update requires an active security")
+            if state.get("status") not in {
+                CompanyStatus.COVERED.value,
+                CompanyStatus.STALE.value,
+            }:
+                raise ValidationError("research update requires a covered or stale company")
+            base_report = state.get("report_path")
+            if not isinstance(base_report, str):
+                raise ValidationError("research update requires a current formal report")
+            report_cutoff = _timestamp(state.get("information_cutoff"))
+            if datetime.fromisoformat(normalized["information_cutoff"]) < datetime.fromisoformat(
+                report_cutoff
+            ):
+                raise ValidationError(
+                    "research update information_cutoff predates the current formal report"
+                )
+            impact = normalized["impact"]
+            if (
+                state.get("status") == CompanyStatus.STALE.value
+                and impact is not UpdateImpact.INVALIDATED
+            ):
+                raise ValidationError("stale company only accepts another invalidation record")
+
+            existing_updates = self._updates(normalized["symbol"])
+            duplicate_event_ids = sorted(
+                event_id
+                for event_id in normalized["event_ids"]
+                if any(
+                    f"- `{event_id}`" in update_file.read_text(encoding="utf-8")
+                    for update_file in existing_updates
+                )
+            )
+            if duplicate_event_ids:
+                raise ValidationError(
+                    "research update event IDs were already recorded: "
+                    + ", ".join(duplicate_event_ids)
+                )
+
+            update_path = self._next_update_path(
+                normalized["symbol"], normalized["reviewed_at"]
+            )
+            update_relative = update_path.relative_to(self.root).as_posix()
+            _atomic_write_text(
+                update_path,
+                self._update_markdown(normalized, base_report=base_report),
+            )
+
+            enqueued: ResearchTask | None = None
+            if impact is UpdateImpact.INVALIDATED:
+                state["status"] = CompanyStatus.STALE.value
+                state["updated_at"] = normalized["reviewed_at"]
+                state["invalidation"] = {
+                    "at": normalized["reviewed_at"],
+                    "reason": normalized["invalidation_reason"],
+                    "update_path": update_relative,
+                }
+                trigger_id = (
+                    ",".join(normalized["event_ids"])
+                    if normalized["event_ids"]
+                    else hashlib.sha256(update_relative.encode()).hexdigest()[:24]
+                )
+                enqueued = self._enqueue(
+                    tasks,
+                    state,
+                    symbol=normalized["symbol"],
+                    name=state.get("name"),
+                    trigger_kind="update",
+                    trigger_id=trigger_id,
+                    reason=normalized["invalidation_reason"],
+                    at=normalized["reviewed_at"],
+                )
+                self._write_tasks(tasks)
+                self._write_states(states)
+
+            return ResearchUpdateRecord(
+                symbol=normalized["symbol"],
+                impact=impact,
+                update_path=update_relative,
+                status=CompanyStatus(state["status"]),
+                enqueued_task=enqueued,
+            )
+
     def apply_result(
         self,
         result: ResearchResult,
@@ -1360,7 +1515,6 @@ class ResearchFlow:
                 normalized["symbol"],
                 _empty_state(normalized["symbol"], normalized["name"], timestamp),
             )
-            previous_monitor = state.get("price_monitor")
             status = {
                 ResearchOutcome.IGNORE.value: CompanyStatus.IGNORE.value,
                 ResearchOutcome.COVERED.value: CompanyStatus.COVERED.value,
@@ -1381,7 +1535,6 @@ class ResearchFlow:
                     "key_logic": normalized["key_logic"],
                     "risks": normalized["risks"],
                     "value_range": normalized["value_range"],
-                    "price_levels": normalized["price_levels"],
                     "event_triggers": normalized["event_triggers"],
                     "source_urls": normalized["source_urls"],
                     "last_research_at": timestamp,
@@ -1392,10 +1545,6 @@ class ResearchFlow:
                     "invalidation": None,
                 }
             )
-            if normalized["price_levels"] and status == CompanyStatus.COVERED.value:
-                state["price_monitor"] = _monitor(previous_monitor, normalized["price_levels"])
-            else:
-                state["price_monitor"] = None
             processed = list(state.get("processed_triggers") or [])
             if task.trigger_key not in processed:
                 processed.append(task.trigger_key)
@@ -1404,100 +1553,6 @@ class ResearchFlow:
             self._write_states(states)
             self._write_tasks(tasks)
             return dict(state)
-
-    def scan_daily_close(
-        self,
-        closes: Mapping[str, float],
-        *,
-        trading_date: str | date,
-        at: str | datetime | None = None,
-    ) -> tuple[PriceHit, ...]:
-        """Return close-price edge hits; a later close above rearm re-arms the trigger."""
-
-        scan_date = _trading_date(trading_date)
-        timestamp = _timestamp(at)
-        normalized_closes = {
-            _symbol(symbol): _number(close, "close") for symbol, close in closes.items()
-        }
-        with _exclusive_lock(self.lock_path):
-            states = self._states()
-            monitored_symbols = {
-                symbol
-                for symbol, state in states.items()
-                if state.get("universe_status") == UniverseStatus.ACTIVE.value
-                and state.get("status") == CompanyStatus.COVERED.value
-                and state.get("price_monitor") is not None
-            }
-            missing_quotes = sorted(monitored_symbols - normalized_closes.keys())
-            if missing_quotes:
-                raise ValidationError(
-                    "daily close input is missing monitored companies: " + ", ".join(missing_quotes)
-                )
-            for symbol, state in states.items():
-                if symbol not in monitored_symbols:
-                    continue
-                for runtime in state["price_monitor"].get("levels", {}).values():
-                    previous_date = runtime.get("last_scan_date")
-                    if previous_date is not None and previous_date > scan_date:
-                        raise ValidationError(
-                            f"cannot scan {symbol} at {scan_date}; latest scan is {previous_date}"
-                        )
-            hits: list[PriceHit] = []
-            changed = False
-            for symbol in sorted(states):
-                state = states[symbol]
-                if (
-                    state.get("universe_status") != UniverseStatus.ACTIVE.value
-                    or state.get("status") != CompanyStatus.COVERED.value
-                ):
-                    continue
-                if symbol not in normalized_closes or state.get("price_monitor") is None:
-                    continue
-                monitor = {
-                    "levels": {
-                        level_id: dict(runtime)
-                        for level_id, runtime in state["price_monitor"].get("levels", {}).items()
-                    }
-                }
-                close = normalized_closes[symbol]
-                symbol_changed = False
-                for level_id, runtime in monitor["levels"].items():
-                    if runtime.get("last_scan_date") == scan_date:
-                        continue
-                    label = _nonblank(runtime["label"], "price level label")
-                    threshold = _number(runtime["threshold"], "price level threshold")
-                    rearm_above = _number(
-                        runtime.get("rearm_above", threshold), "price level rearm_above"
-                    )
-                    armed = bool(runtime.get("armed", True))
-                    hit = armed and close <= threshold
-                    if hit:
-                        runtime["armed"] = False
-                        runtime["last_hit_date"] = scan_date
-                    elif not armed and close > rearm_above:
-                        runtime["armed"] = True
-                    runtime["last_close"] = close
-                    runtime["last_scan_date"] = scan_date
-                    symbol_changed = True
-                    if hit:
-                        hits.append(
-                            PriceHit(
-                                symbol=symbol,
-                                trading_date=scan_date,
-                                close=close,
-                                level_id=level_id,
-                                label=label,
-                                threshold=threshold,
-                            )
-                        )
-                if not symbol_changed:
-                    continue
-                state["price_monitor"] = monitor
-                state["updated_at"] = timestamp
-                changed = True
-            if changed:
-                self._write_states(states)
-            return tuple(hits)
 
     def validate(self) -> ResearchFlowStatus:
         """Validate all compact facts and projections without writing any file."""
@@ -1523,63 +1578,26 @@ class ResearchFlow:
                     _timestamp(state["updated_at"])
                     _strings(state.get("key_logic") or [], "key logic")
                     _strings(state.get("risks") or [], "risk")
-                    _strings(state.get("event_triggers") or [], "event trigger")
+                    _event_triggers(state.get("event_triggers") or [])
                     _urls(state.get("source_urls") or [])
-                    raw_levels = state.get("price_levels")
-                    if not isinstance(raw_levels, list):
-                        raise StateCorruptionError(f"price_levels for {symbol} must be a list")
-                    levels = _price_levels(
-                        tuple(
-                            PriceLevel(
-                                id=level["id"],
-                                label=level["label"],
-                                threshold=level["threshold"],
-                                rearm_above=level.get("rearm_above"),
-                            )
-                            for level in raw_levels
-                        ),
-                        buy_below=None,
-                        rearm_above=None,
-                    )
-                    if levels != raw_levels:
-                        raise StateCorruptionError(f"price_levels for {symbol} are not canonical")
-                    monitor = state.get("price_monitor")
-                    if monitor is not None:
-                        if (
-                            universe_status != UniverseStatus.ACTIVE.value
-                            or status != CompanyStatus.COVERED.value
-                        ):
-                            raise StateCorruptionError(
-                                f"only active covered company may have price_monitor: {symbol}"
-                            )
-                        if not isinstance(monitor, dict) or not isinstance(
-                            monitor.get("levels"), dict
-                        ):
-                            raise StateCorruptionError(
-                                f"price_monitor for {symbol} must contain levels"
-                            )
-                        expected = {level["id"]: level for level in levels}
-                        if set(monitor["levels"]) != set(expected):
-                            raise StateCorruptionError(
-                                f"price_monitor levels do not match {symbol} price_levels"
-                            )
-                        for level_id, runtime in monitor["levels"].items():
-                            if runtime.get("threshold") != expected[level_id]["threshold"]:
-                                raise StateCorruptionError(
-                                    f"price_monitor threshold mismatch for {symbol}:{level_id}"
-                                )
-                            if runtime.get("rearm_above") != expected[level_id]["rearm_above"]:
-                                raise StateCorruptionError(
-                                    f"price_monitor rearm mismatch for {symbol}:{level_id}"
-                                )
-                    elif (
-                        universe_status == UniverseStatus.ACTIVE.value
-                        and status == CompanyStatus.COVERED.value
-                        and levels
-                    ):
+                    if "price_levels" in state or "price_monitor" in state:
                         raise StateCorruptionError(
-                            f"covered company with price levels has no monitor: {symbol}"
+                            f"retired security-price fields remain in state for {symbol}"
                         )
+                    last_screening = state.get("last_screening")
+                    if isinstance(last_screening, dict):
+                        retired = {
+                            "price_levels",
+                            "price_monitor",
+                            "buy_below",
+                            "rearm_above",
+                        }.intersection(last_screening)
+                        if retired:
+                            raise StateCorruptionError(
+                                f"retired security-price fields remain in last_screening "
+                                f"for {symbol}: {', '.join(sorted(retired))}"
+                            )
+                        _event_triggers(last_screening.get("event_triggers") or [])
                     processed = state.get("processed_triggers") or []
                     if not isinstance(processed, list) or len(processed) != len(set(processed)):
                         raise StateCorruptionError(
@@ -1604,11 +1622,33 @@ class ResearchFlow:
                             raise StateCorruptionError(f"current report is missing for {symbol}")
                         if not expected_report.read_text(encoding="utf-8").strip():
                             raise StateCorruptionError(f"current report is blank for {symbol}")
+                        if _REPORT_DEFERRAL_RE.search(
+                            expected_report.read_text(encoding="utf-8")
+                        ):
+                            raise StateCorruptionError(
+                                f"current report defers core analysis to prior reports: {symbol}"
+                            )
                         reports = self._formal_reports(symbol)
                         if not reports or expected_report != reports[-1]:
                             raise StateCorruptionError(
                                 f"report_path is not the latest formal report for {symbol}"
                             )
+
+                    updates_directory = self._company_directory(symbol) / "updates"
+                    if updates_directory.is_dir():
+                        for update_file in updates_directory.iterdir():
+                            if (
+                                not update_file.is_file()
+                                or not _DATED_MARKDOWN_RE.fullmatch(update_file.name)
+                            ):
+                                raise StateCorruptionError(
+                                    f"research update path is not dated Markdown for {symbol}: "
+                                    f"{update_file.name}"
+                                )
+                            if not update_file.read_text(encoding="utf-8").strip():
+                                raise StateCorruptionError(
+                                    f"research update is blank for {symbol}: {update_file.name}"
+                                )
 
                     if status in {CompanyStatus.COVERED.value, CompanyStatus.STALE.value}:
                         if report_path is None:
@@ -1628,10 +1668,6 @@ class ResearchFlow:
                                 f"{status} company lacks source URLs: {symbol}"
                             )
                     if status == CompanyStatus.COVERED.value:
-                        if not levels and not state.get("event_triggers"):
-                            raise StateCorruptionError(
-                                f"covered company has no executable trigger: {symbol}"
-                            )
                         if state.get("value_range") is None and not state.get("valuation_note"):
                             raise StateCorruptionError(f"covered company lacks valuation: {symbol}")
                         if state.get("invalidation") is not None:
@@ -1646,14 +1682,33 @@ class ResearchFlow:
                             )
                         _timestamp(invalidation.get("at"))
                         _nonblank(invalidation.get("reason"), "invalidation reason")
-                        if monitor is not None:
-                            raise StateCorruptionError(
-                                f"stale company must not have price monitor: {symbol}"
-                            )
+                        update_path = invalidation.get("update_path")
+                        if update_path is not None:
+                            expected_prefix = (
+                                self._company_directory(symbol) / "updates"
+                            ).relative_to(self.root).as_posix() + "/"
+                            if not isinstance(update_path, str) or not update_path.startswith(
+                                expected_prefix
+                            ):
+                                raise StateCorruptionError(
+                                    f"invalidation update_path mismatch for {symbol}"
+                                )
+                            update_name = update_path.removeprefix(expected_prefix)
+                            if not _DATED_MARKDOWN_RE.fullmatch(update_name):
+                                raise StateCorruptionError(
+                                    f"invalidation update_path is not dated for {symbol}"
+                                )
+                            update_file = self.root / update_path
+                            if not update_file.is_file() or not update_file.read_text(
+                                encoding="utf-8"
+                            ).strip():
+                                raise StateCorruptionError(
+                                    f"invalidation update is missing or blank for {symbol}"
+                                )
                     elif status == CompanyStatus.CANDIDATE.value:
-                        if report_path is not None or levels or monitor is not None:
+                        if report_path is not None:
                             raise StateCorruptionError(
-                                f"candidate cannot have report or price levels: {symbol}"
+                                f"candidate cannot have a current report: {symbol}"
                             )
                         _timestamp(state.get("candidate_since"))
                     elif status == CompanyStatus.UNSEEN.value:
@@ -1661,10 +1716,6 @@ class ResearchFlow:
                             raise StateCorruptionError(
                                 f"unseen company already has screening or report: {symbol}"
                             )
-                    if universe_status == UniverseStatus.INACTIVE.value and monitor is not None:
-                        raise StateCorruptionError(
-                            f"inactive company must not have a price monitor: {symbol}"
-                        )
             except (KeyError, TypeError, ValidationError) as exc:
                 if isinstance(exc, StateCorruptionError):
                     raise
@@ -1749,8 +1800,6 @@ class ResearchFlow:
 __all__ = [
     "CompanyRef",
     "CompanyStatus",
-    "PriceHit",
-    "PriceLevel",
     "QUEUE_PATH",
     "ResearchFlow",
     "ResearchFlowError",
@@ -1758,6 +1807,8 @@ __all__ = [
     "ResearchOutcome",
     "ResearchResult",
     "ResearchTask",
+    "ResearchUpdate",
+    "ResearchUpdateRecord",
     "STATE_PATH",
     "ScreenDecision",
     "ScreenMode",
@@ -1766,6 +1817,7 @@ __all__ = [
     "StateCorruptionError",
     "TaskStatus",
     "UniverseStatus",
+    "UpdateImpact",
     "ValidationError",
     "ValueRange",
     "WATCHLIST_PATH",

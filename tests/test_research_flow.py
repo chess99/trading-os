@@ -4,7 +4,6 @@ import hashlib
 import json
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
-from datetime import date
 from itertools import count
 from pathlib import Path
 
@@ -12,9 +11,9 @@ import pytest
 
 from trading_os.research_assets.research_flow import (
     CompanyRef,
-    PriceLevel,
     ResearchFlow,
     ResearchResult,
+    ResearchUpdate,
     ScreenDecision,
     StateCorruptionError,
     TaskStatus,
@@ -23,6 +22,7 @@ from trading_os.research_assets.research_flow import (
 )
 
 AT = "2026-08-08T17:00:00+08:00"
+LATER = "2026-08-09T17:00:00+08:00"
 _TRIGGER_IDS = count()
 
 
@@ -42,508 +42,378 @@ def _covered(symbol: str) -> ResearchResult:
         key_logic=("核心产品需求增长", "现金流转化决定估值上限"),
         risks=("客户集中", "资本开支回报不及预期"),
         value_range=ValueRange(low=58, high=82),
-        buy_below=55,
-        rearm_above=57,
         event_triggers=("下一期财报发布", "大客户订单显著变化"),
-        source_urls=(
-            "https://example.com/annual-report",
-            "https://example.com/company-announcement",
-        ),
+        source_urls=("https://example.com/annual-report",),
         report_markdown=(
-            "# 示例公司研究\n\n"
-            "核心逻辑是需求增长，估值上限取决于利润向自由现金流的转化。\n\n"
+            "# 示例公司完整研究\n\n"
+            "## 商业与竞争\n\n核心产品需求增长，竞争位置取决于客户验证。\n\n"
+            "## 财务与估值\n\n现金流转化决定估值上限。\n\n"
             "## 风险\n\n客户集中，且资本开支回报仍待验证。"
         ),
     )
 
 
-def _ignored_after_research(symbol: str) -> ResearchResult:
+def _ignored(symbol: str) -> ResearchResult:
     return ResearchResult(
         symbol=symbol,
         name="示例公司",
         outcome="ignore",
         information_cutoff=AT,
-        summary="完成研究后，业务质量与估值仍不值得持续监控。",
+        summary="正式研究后仍不值得持续覆盖。",
         key_logic=("增长依赖持续融资",),
         risks=("普通股持续稀释",),
         value_range=None,
         valuation_note="无法建立不依赖外部融资的普通股价值。",
         event_triggers=("下一份年报显示自由现金流持续转正",),
         source_urls=("https://example.com/annual-report",),
-        report_markdown="# 示例公司研究\n\n研究后不纳入持续覆盖。",
+        report_markdown="# 示例公司完整研究\n\n业务、财务、治理、估值和风险均已独立说明。",
     )
 
 
 def _complete(flow: ResearchFlow, result: ResearchResult, *, at: str = AT) -> dict:
     update = flow.apply_screening(
-        [
-            ScreenDecision(
-                result.symbol,
-                "research_now",
-                "主 Agent 已决定完成统一标准研究",
-                name=result.name,
-            )
-        ],
+        [ScreenDecision(result.symbol, "research_now", "完成统一标准研究", name=result.name)],
         screen_id=f"test-{next(_TRIGGER_IDS)}",
         mode="event",
         at=at,
     )
-    assert len(update.enqueued_tasks) == 1
     task = update.enqueued_tasks[0]
-    running = flow.dispatch_tasks(limit=1, at=at)
-    assert [item.task_id for item in running] == [task.task_id]
+    assert flow.dispatch_tasks(limit=1, at=at)[0].task_id == task.task_id
     return flow.apply_result(result, task_id=task.task_id, at=at)
 
 
-def test_screening_only_creates_ignore_or_candidate(tmp_path: Path):
-    flow = ResearchFlow(tmp_path)
-    flow.register_universe(
-        [CompanyRef("CN:000001", "甲公司"), CompanyRef("CN:000002", "乙公司")],
-        at=AT,
+def _update(symbol: str, impact: str = "reaffirmed") -> ResearchUpdate:
+    return ResearchUpdate(
+        symbol=symbol,
+        title="重大合同公告核对",
+        impact=impact,
+        reviewed_at=LATER,
+        information_cutoff=LATER,
+        summary="公司披露一项合同，规模仍在原报告情景内。",
+        analysis="事件没有改变正常化利润、价值区间、核心逻辑或风险排序。",
+        conclusion="当前正式报告继续有效。",
+        source_urls=("https://example.com/announcement",),
+        event_ids=("event-001",),
+        invalidation_reason=("新事实越过原报告边界" if impact == "invalidated" else None),
     )
 
+
+def test_screening_creates_only_ignore_or_candidate_and_deduplicates(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    flow.register_universe(
+        [CompanyRef("CN:000001", "甲公司"), CompanyRef("CN:000002", "乙公司")], at=AT
+    )
     update = flow.apply_screening(
         [
             ScreenDecision("CN:000001", "ignore", "当前不值得正式研究"),
             ScreenDecision("CN:000002", "research_now", "现金流问题值得正式研究"),
         ],
-        screen_id="baseline-2026-08-08",
+        screen_id="baseline",
         at=AT,
     )
-
-    assert (update.total, update.ignored, update.candidates) == (2, 1, 1)
-    assert {row["symbol"]: row["status"] for row in flow.read_states()} == {
-        "CN:000001": "ignore",
-        "CN:000002": "candidate",
-    }
-    assert flow.read_watchlist() == ()
+    assert (update.ignored, update.candidates) == (1, 1)
     assert [task.symbol for task in flow.list_tasks()] == ["CN:000002"]
 
-
-def test_dispatch_can_select_tasks_from_queue_end(tmp_path: Path):
-    flow = ResearchFlow(tmp_path)
-    symbols = ["CN:000001", "CN:000002", "CN:000003"]
-    flow.register_universe([CompanyRef(symbol, symbol) for symbol in symbols], at=AT)
-    flow.apply_screening(
-        [
-            ScreenDecision(symbol, "research_now", "值得正式研究")
-            for symbol in symbols
-        ],
-        screen_id="reverse-dispatch",
-        mode="event",
-        at=AT,
-    )
-
-    queue_tail = {task.task_id for task in flow.list_tasks()[-2:]}
-    running = flow.dispatch_tasks(limit=2, at=AT, from_end=True)
-
-    assert {task.task_id for task in running} == queue_tail
-
-
-def test_baseline_only_accepts_unseen_companies(tmp_path: Path):
-    flow = ResearchFlow(tmp_path)
-    flow.register_universe([CompanyRef("CN:000001"), CompanyRef("CN:000002")], at=AT)
-    flow.apply_screening(
-        [ScreenDecision("CN:000001", "ignore", "当前不值得研究")],
-        screen_id="baseline-1",
-        at=AT,
-    )
-    before = flow.read_states()
-
-    with pytest.raises(ValidationError, match="only accepts unseen companies: CN:000001"):
-        flow.apply_screening(
-            [
-                ScreenDecision("CN:000002", "research_now", "首次判断"),
-                ScreenDecision("CN:000001", "research_now", "重复覆盖"),
-            ],
-            screen_id="baseline-2",
-            at=AT,
-        )
-
-    assert flow.read_states() == before
-    assert flow.list_tasks() == ()
-
-
-def test_universe_sync_preserves_history_and_controls_tasks_and_monitoring(tmp_path: Path):
-    flow = ResearchFlow(tmp_path)
-    _complete(flow, _covered("CN:000001"))
-    candidate = flow.apply_screening(
-        [ScreenDecision("CN:000002", "research_now", "值得正式研究")],
-        screen_id="candidate-before-universe-sync",
-        mode="event",
-        at=AT,
-    ).enqueued_tasks[0]
-
-    reduced = flow.sync_universe(
-        [CompanyRef("CN:000001", "更新后的公司名")],
-        at="2026-08-09T17:00:00+08:00",
-    )
-
-    assert (reduced.total, reduced.inactivated, reduced.renamed) == (1, 1, 1)
-    assert candidate.task_id not in {task.task_id for task in flow.list_tasks()}
-    states = {row["symbol"]: row for row in flow.read_states()}
-    assert states["CN:000001"]["status"] == "covered"
-    assert states["CN:000001"]["name"] == "更新后的公司名"
-    assert states["CN:000002"]["universe_status"] == "inactive"
-    assert [row["symbol"] for row in flow.read_watchlist()] == ["CN:000001"]
-
-    switched = flow.sync_universe(
-        [CompanyRef("CN:000002"), CompanyRef("CN:000003", "新增公司")],
-        at="2026-08-10T17:00:00+08:00",
-    )
-
-    assert (switched.added, switched.reactivated, switched.inactivated) == (1, 1, 1)
-    assert [task.symbol for task in switched.enqueued_tasks] == ["CN:000002"]
-    assert flow.read_watchlist() == ()
-    assert (tmp_path / "research/companies/CN/000001/reports/2026-08-08.md").is_file()
-    flow.validate()
-
-
-def test_candidate_task_is_deduplicated_under_concurrency(tmp_path: Path):
-    flow = ResearchFlow(tmp_path)
-
-    def screen():
+    def repeat():
         return flow.apply_screening(
             [ScreenDecision("CN:600000", "research_now", "半年报可能显示变化")],
-            screen_id="2026-h1-results",
+            screen_id="event-one",
             mode="event",
             at=AT,
         )
 
     with ThreadPoolExecutor(max_workers=8) as executor:
-        returned = list(executor.map(lambda _: screen(), range(16)))
-
-    assert sum(len(update.enqueued_tasks) for update in returned) == 1
-    assert sum(update.deduplicated for update in returned) == 15
-    assert flow.read_states()[0]["status"] == "candidate"
+        returned = list(executor.map(lambda _: repeat(), range(12)))
+    assert sum(len(item.enqueued_tasks) for item in returned) == 1
 
 
-def test_covered_result_writes_report_and_monitoring_projection(tmp_path: Path):
+def test_dispatch_from_end_and_requeue_are_explicit(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    symbols = ["CN:000001", "CN:000002", "CN:000003"]
+    flow.apply_screening(
+        [ScreenDecision(symbol, "research_now", "值得研究") for symbol in symbols],
+        screen_id="three",
+        mode="event",
+        at=AT,
+    )
+    tail = {task.task_id for task in flow.list_tasks()[-2:]}
+    running = flow.dispatch_tasks(limit=2, at=AT, from_end=True)
+    assert {task.task_id for task in running} == tail
+    restored = flow.requeue_task(running[0].task_id)
+    assert restored.status is TaskStatus.QUEUED and restored.started_at is None
+
+
+def test_formal_result_is_self_contained_and_watchlist_has_no_price_state(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     state = _complete(flow, _covered("CN:601138"))
-
     assert state["status"] == "covered"
-    assert state["information_cutoff"] == AT
     assert state["value_range"] == {"low": 58.0, "high": 82.0, "currency": "CNY"}
-    assert state["report_path"] == "research/companies/CN/601138/reports/2026-08-08.md"
+    assert "price_levels" not in state and "price_monitor" not in state
     assert (tmp_path / state["report_path"]).is_file()
-    assert flow.list_tasks() == ()
     watch = flow.read_watchlist()[0]
-    assert watch["symbol"] == "CN:601138"
-    assert watch["status"] == "covered"
-    assert watch["information_cutoff"] == AT
+    assert watch["report_path"] == state["report_path"]
+    assert "price_levels" not in watch and "price_monitor" not in watch
+    flow.validate()
 
 
-def test_researched_ignore_keeps_report_without_price_monitor(tmp_path: Path):
+def test_formal_report_cannot_defer_analysis_to_history(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
-    state = _complete(flow, _ignored_after_research("CN:000333"))
+    bad = replace(
+        _covered("CN:601138"),
+        report_markdown=(
+            "# 裁决版\n\n本次裁决不重复发明第三套商业事实。"
+            "完整业务分析可沿时间线回看两份前序报告。"
+        ),
+    )
+    with pytest.raises(ValidationError, match="self-contained"):
+        flow.apply_result(bad, task_id="missing", at=AT)
+    assert not flow.state_path.exists()
 
-    assert state["status"] == "ignore"
-    assert state["report_path"] == "research/companies/CN/000333/reports/2026-08-08.md"
-    assert (tmp_path / state["report_path"]).is_file()
-    assert state["price_levels"] == []
-    assert state["price_monitor"] is None
+
+def test_new_formal_report_cannot_restore_a_price_review_line(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    bad = replace(
+        _covered("CN:601138"),
+        report_markdown="# 完整研究\n\n核心合理价值区间 58—82 元，关注价格 55 元。",
+    )
+    with pytest.raises(ValidationError, match="security-price trigger"):
+        flow.apply_result(bad, task_id="missing", at=AT)
+    assert not flow.state_path.exists()
+
+
+@pytest.mark.parametrize(
+    "trigger",
+    ["收盘价跌至 50 元", "股价回到合理区间下沿", "关注价触发后重新武装"],
+)
+def test_security_price_is_not_a_research_trigger(tmp_path: Path, trigger: str):
+    flow = ResearchFlow(tmp_path)
+    with pytest.raises(ValidationError, match="security-price"):
+        flow.apply_screening(
+            [ScreenDecision("CN:000001", "research_now", "研究", event_triggers=(trigger,))],
+            screen_id="price-trigger",
+            mode="event",
+            at=AT,
+        )
+    assert not flow.state_path.exists()
+
+
+def test_business_and_industry_prices_remain_valid_triggers(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    update = flow.apply_screening(
+        [
+            ScreenDecision(
+                "CN:000001",
+                "research_now",
+                "经营变量变化",
+                event_triggers=("铜价持续高于每吨 10 万元", "产品售价显著下调"),
+            )
+        ],
+        screen_id="operating-price",
+        mode="event",
+        at=AT,
+    )
+    assert len(update.enqueued_tasks) == 1
+
+
+def test_reaffirmed_update_writes_log_without_changing_formal_state(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    before = _complete(flow, _covered("CN:601138"))
+    record = flow.record_update(_update("CN:601138"))
+    after = flow.read_states()[0]
+    assert record.impact.value == "reaffirmed"
+    assert record.status.value == "covered" and record.enqueued_task is None
+    assert after["report_path"] == before["report_path"]
+    assert after["information_cutoff"] == before["information_cutoff"]
+    assert after["value_range"] == before["value_range"]
+    text = (tmp_path / record.update_path).read_text(encoding="utf-8")
+    assert "确认原报告" in text and before["report_path"] in text
+    flow.validate()
+
+
+def test_monitor_update_also_leaves_current_conclusion_untouched(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    before = _complete(flow, _covered("CN:601138"))
+    record = flow.record_update(_update("CN:601138", "monitor"))
+    after = flow.read_states()[0]
+    assert record.impact.value == "monitor"
+    assert after == before
+    assert flow.list_tasks() == ()
+
+
+def test_update_event_ids_are_idempotent(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    _complete(flow, _covered("CN:601138"))
+    flow.record_update(_update("CN:601138"))
+    with pytest.raises(ValidationError, match="already recorded"):
+        flow.record_update(_update("CN:601138", "monitor"))
+    assert len(list((tmp_path / "research/companies/CN/601138/updates").iterdir())) == 1
+
+
+def test_invalidated_update_marks_stale_and_enqueues_one_full_research(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    before = _complete(flow, _covered("CN:601138"))
+    record = flow.record_update(_update("CN:601138", "invalidated"))
+    state = flow.read_states()[0]
+    assert record.status.value == "stale"
+    assert state["report_path"] == before["report_path"]
+    assert state["invalidation"]["update_path"] == record.update_path
+    assert record.enqueued_task is not None
+    assert record.enqueued_task.trigger_kind == "update"
+    assert len(flow.list_tasks()) == 1
     assert flow.read_watchlist() == ()
     flow.validate()
 
 
-def test_same_day_refresh_appends_report_and_current_pointer_uses_latest(tmp_path: Path):
+def test_stale_cannot_be_reaffirmed_and_update_cannot_predate_report(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    _complete(flow, _covered("CN:601138"))
+    flow.record_update(_update("CN:601138", "invalidated"))
+    with pytest.raises(ValidationError, match="stale company"):
+        flow.record_update(replace(_update("CN:601138"), event_ids=("event-002",)))
+
+    other = ResearchFlow(tmp_path / "other")
+    _complete(other, _covered("CN:601138"))
+    with pytest.raises(ValidationError, match="predates"):
+        other.record_update(
+            replace(
+                _update("CN:601138"),
+                reviewed_at="2026-08-08T18:00:00+08:00",
+                information_cutoff="2026-08-07T17:00:00+08:00",
+            )
+        )
+
+
+def test_same_day_full_refresh_appends_complete_report(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     first = _complete(flow, _covered("CN:601138"))
-    update = flow.apply_screening(
-        [ScreenDecision("CN:601138", "research_now", "新公告改变估值")],
+    refresh = flow.apply_screening(
+        [ScreenDecision("CN:601138", "research_now", "财报改变估值")],
         screen_id="same-day-refresh",
         mode="event",
         at=AT,
     )
     flow.dispatch_tasks(limit=1, at=AT)
     second = flow.apply_result(
-        _covered("CN:601138"),
-        task_id=update.enqueued_tasks[0].task_id,
+        replace(_covered("CN:601138"), value_range=ValueRange(62, 88)),
+        task_id=refresh.enqueued_tasks[0].task_id,
         at=AT,
     )
-
-    assert first["report_path"].endswith("/2026-08-08.md")
-    assert second["report_path"].endswith("/2026-08-08-02.md")
-    assert (tmp_path / first["report_path"]).is_file()
-    assert (tmp_path / second["report_path"]).is_file()
+    assert first["report_path"].endswith("2026-08-08.md")
+    assert second["report_path"].endswith("2026-08-08-02.md")
+    assert second["value_range"]["low"] == 62
     flow.validate()
 
 
-def test_dispatch_and_requeue_use_separate_task_state(tmp_path: Path):
+def test_screening_cannot_change_a_formal_outcome_to_ignore(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
-    created = flow.apply_screening(
-        [
-            ScreenDecision("CN:000001", "research_now", "需要研究"),
-            ScreenDecision("CN:000002", "research_now", "需要研究"),
-            ScreenDecision("CN:000003", "research_now", "需要研究"),
-        ],
-        screen_id="event-a",
-        mode="event",
-        at=AT,
-    )
-    assert len(created.enqueued_tasks) == 3
-
-    first = flow.dispatch_tasks(limit=2, at=AT)
-    second = flow.dispatch_tasks(limit=2, at=AT)
-    assert len(first) == 2
-    assert len(second) == 1
-    assert all(task.status is TaskStatus.RUNNING for task in first + second)
-    restored = flow.requeue_task(first[0].task_id)
-    assert restored.status is TaskStatus.QUEUED
-    assert restored.started_at is None
+    before = _complete(flow, _covered("CN:601138"))
+    with pytest.raises(ValidationError, match="full research task"):
+        flow.apply_screening(
+            [ScreenDecision("CN:601138", "ignore", "事件看起来负面")],
+            screen_id="direct-ignore",
+            mode="event",
+            at=LATER,
+        )
+    assert flow.read_states()[0] == before
 
 
-def test_daily_close_only_scans_covered_and_rearms(tmp_path: Path):
+def test_ignore_keeps_formal_report_outside_watchlist(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
-    _complete(flow, _covered("CN:601138"))
-
-    assert flow.scan_daily_close({"CN:601138": 60}, trading_date=date(2026, 8, 10), at=AT) == ()
-    first = flow.scan_daily_close({"CN:601138": 54}, trading_date="2026-08-11", at=AT)
-    assert len(first) == 1
-    assert flow.scan_daily_close({"CN:601138": 52}, trading_date="2026-08-12", at=AT) == ()
-    assert flow.scan_daily_close({"CN:601138": 58}, trading_date="2026-08-13", at=AT) == ()
-    assert len(flow.scan_daily_close({"CN:601138": 55}, trading_date="2026-08-14", at=AT)) == 1
-    assert flow.list_tasks() == ()
-
-
-def test_each_price_level_has_independent_runtime_state(tmp_path: Path):
-    flow = ResearchFlow(tmp_path)
-    result = replace(
-        _covered("CN:601138"),
-        buy_below=None,
-        rearm_above=None,
-        price_levels=(
-            PriceLevel("attention", "输入标签会被统一", 55, 57),
-            PriceLevel("deep_review", "输入标签会被统一", 50, 52),
-        ),
-    )
-    _complete(flow, result)
-    first = flow.scan_daily_close({"CN:601138": 54}, trading_date="2026-08-11", at=AT)
-    second = flow.scan_daily_close({"CN:601138": 49}, trading_date="2026-08-12", at=AT)
-    assert [hit.level_id for hit in first] == ["attention"]
-    assert [hit.level_id for hit in second] == ["deep_review"]
-
-
-def test_new_research_uses_standard_price_level_ids_and_labels(tmp_path: Path):
-    flow = ResearchFlow(tmp_path)
-    state = _complete(
-        flow,
-        replace(
-            _covered("CN:601138"),
-            buy_below=None,
-            rearm_above=None,
-            price_levels=(
-                PriceLevel("deep_review", "旧式深度标签", 50, 52),
-                PriceLevel("attention", "旧式关注标签", 55, 57),
-            ),
-        ),
-    )
-
-    assert [(level["id"], level["label"]) for level in state["price_levels"]] == [
-        ("attention", "关注复核价"),
-        ("deep_review", "深度复核价"),
-    ]
-
-
-def test_material_event_marks_covered_report_stale_and_suppresses_price(tmp_path: Path):
-    flow = ResearchFlow(tmp_path)
-    covered = _complete(flow, _covered("CN:601138"))
-    report = tmp_path / covered["report_path"]
-
-    update = flow.apply_screening(
-        [ScreenDecision("CN:601138", "research_now", "新财报改变现金流和估值")],
-        screen_id="2026-h1-refresh",
-        mode="event",
-        at="2026-08-09T17:00:00+08:00",
-    )
-    state = flow.read_states()[0]
-    assert state["status"] == "stale"
-    assert state["invalidation"]["reason"] == "新财报改变现金流和估值"
-    assert state["price_monitor"] is None
-    assert state["report_path"] == covered["report_path"]
-    assert report.is_file()
-    assert flow.read_watchlist() == ()
-    assert len(update.enqueued_tasks) == 1
-    flow.validate()
-
-
-def test_decisive_event_can_ignore_without_deleting_report_history_or_task(tmp_path: Path):
-    flow = ResearchFlow(tmp_path)
-    covered = _complete(flow, _covered("CN:601138"))
-    report = tmp_path / covered["report_path"]
-    update = flow.apply_screening(
-        [ScreenDecision("CN:601138", "research_now", "需要更新")],
-        screen_id="refresh",
-        mode="event",
-        at=AT,
-    )
-    running = flow.dispatch_tasks(limit=1, at=AT)[0]
-    assert running.task_id == update.enqueued_tasks[0].task_id
-
-    flow.apply_screening(
-        [ScreenDecision("CN:601138", "ignore", "关键业务已经终止")],
-        screen_id="decisive-failure",
-        mode="event",
-        at=AT,
-    )
-    state = flow.read_states()[0]
+    state = _complete(flow, _ignored("CN:000333"))
     assert state["status"] == "ignore"
-    assert state["report_path"] is None
-    assert report.exists()
-    assert flow.list_tasks() == ()
+    assert (tmp_path / state["report_path"]).is_file()
+    assert flow.read_watchlist() == ()
+    flow.validate()
 
 
-def test_v1_migration_splits_watch_and_covered_then_rebaseline(tmp_path: Path):
+def test_v2_to_v3_migration_removes_price_state_and_only_security_price_triggers(
+    tmp_path: Path,
+):
     state_path = tmp_path / "coverage/cn-a/research_state.jsonl"
     state_path.parent.mkdir(parents=True)
-    report = tmp_path / "research/companies/CN/000002/current.md"
-    report.parent.mkdir(parents=True)
-    report.write_text("# 已有正式研究\n", encoding="utf-8")
-    legacy_rows = [
-        {
-            "schema_version": 1,
-            "symbol": "CN:000001",
-            "name": "候选公司",
-            "status": "watch",
-            "updated_at": AT,
-            "summary": "旧观察",
-            "key_logic": [],
-            "risks": [],
-            "value_range": None,
-            "price_levels": [{"id": "buy", "label": "旧价格", "threshold": 10, "rearm_above": 11}],
-            "event_triggers": ["下一期财报"],
-            "source_urls": [],
-            "last_screening": {"screen_id": "old", "mode": "baseline"},
-            "last_research_at": None,
-            "report_path": None,
-            "processed_triggers": [],
-            "price_monitor": {"levels": {}},
-        },
-        {
-            "schema_version": 1,
-            "symbol": "CN:000002",
-            "name": "覆盖公司",
-            "status": "researched",
-            "updated_at": AT,
-            "summary": "已有研究",
-            "key_logic": ["逻辑"],
-            "risks": ["风险"],
-            "value_range": {"low": 10.0, "high": 20.0, "currency": "CNY"},
-            "price_levels": [],
-            "event_triggers": ["下一期财报"],
-            "source_urls": ["https://example.com/report"],
-            "last_screening": {"screen_id": "old", "mode": "baseline"},
-            "last_research_at": AT,
-            "report_path": "research/companies/CN/000002/current.md",
-            "processed_triggers": [],
-            "price_monitor": None,
-        },
-    ]
-    state_path.write_text(
-        "\n".join(json.dumps(row, ensure_ascii=False) for row in legacy_rows) + "\n",
+    report_path = tmp_path / "research/companies/CN/000001/reports/2026-08-08.md"
+    report_path.parent.mkdir(parents=True)
+    report_path.write_text(
+        "# 完整研究\n\n独立说明业务、财务、治理、估值和风险。\n",
         encoding="utf-8",
     )
+    row = {
+        "schema_version": 2,
+        "symbol": "CN:000001",
+        "name": "示例公司",
+        "universe_status": "active",
+        "status": "covered",
+        "updated_at": AT,
+        "summary": "已有研究",
+        "key_logic": ["逻辑"],
+        "risks": ["风险"],
+        "value_range": {"low": 10.0, "high": 20.0, "currency": "CNY"},
+        "valuation_note": None,
+        "price_levels": [{"id": "attention", "threshold": 10}],
+        "price_monitor": {"levels": {}},
+        "event_triggers": ["收盘价跌至 10 元", "铜价持续上涨", "下一期财报"],
+        "source_urls": ["https://example.com/report"],
+        "last_screening": {
+            "event_triggers": ["股价回到低位", "产品售价下调"],
+            "price_levels": [{"id": "attention", "threshold": 10}],
+        },
+        "last_research_at": AT,
+        "information_cutoff": AT,
+        "report_path": "research/companies/CN/000001/reports/2026-08-08.md",
+        "candidate_since": None,
+        "invalidation": None,
+        "processed_triggers": [],
+    }
+    state_path.write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")
     flow = ResearchFlow(tmp_path)
-    assert flow.migrate_state_v2(at=AT) == 2
-    states = {row["symbol"]: row for row in flow.read_states()}
-    assert states["CN:000001"]["status"] == "candidate"
-    assert states["CN:000001"]["price_levels"] == []
-    assert states["CN:000002"]["status"] == "covered"
-    assert states["CN:000002"]["report_path"] == (
-        "research/companies/CN/000002/reports/2026-08-08.md"
-    )
-    assert not report.exists()
-    assert (tmp_path / states["CN:000002"]["report_path"]).is_file()
+    assert flow.migrate_state_v3(at=LATER) == 1
+    state = flow.read_states()[0]
+    assert state["schema_version"] == 3
+    assert "price_levels" not in state and "price_monitor" not in state
+    assert state["event_triggers"] == ["铜价持续上涨", "下一期财报"]
+    assert state["last_screening"]["event_triggers"] == ["产品售价下调"]
+    assert "price_levels" not in state["last_screening"]
     flow.validate()
 
-    assert flow.prepare_rebaseline(at=AT) == 1
-    states = {row["symbol"]: row for row in flow.read_states()}
-    assert states["CN:000001"]["status"] == "unseen"
-    assert states["CN:000002"]["status"] == "covered"
 
-
-def test_validation_checks_queue_and_watchlist_projection(tmp_path: Path):
+def test_validation_detects_corrupt_projection_and_duplicate_tasks(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     _complete(flow, _covered("CN:601138"))
-    flow.apply_screening(
-        [ScreenDecision("CN:000001", "research_now", "年报复核")],
-        screen_id="annual-report",
-        mode="event",
-        at=AT,
-    )
-    status = flow.validate()
-    assert (status.companies, status.covered, status.candidates) == (2, 1, 1)
-    assert (status.watchlist, status.queued, status.running) == (1, 1, 0)
-
     flow.watchlist_path.write_text("", encoding="utf-8")
     with pytest.raises(StateCorruptionError, match="watchlist is not"):
         flow.validate()
 
-
-def test_validation_rejects_two_current_tasks_for_one_company(tmp_path: Path):
-    flow = ResearchFlow(tmp_path)
-    flow.apply_screening(
-        [ScreenDecision("CN:000001", "research_now", "第一次研究判断")],
-        screen_id="first-screen",
+    other = ResearchFlow(tmp_path / "other")
+    other.apply_screening(
+        [ScreenDecision("CN:000001", "research_now", "第一次研究")],
+        screen_id="first",
         mode="event",
         at=AT,
     )
-    rows = _rows(flow.queue_path)
-    trigger_key = "screen:second-screen"
+    rows = _rows(other.queue_path)
+    trigger_key = "screen:second"
     duplicate = {
         **rows[0],
         "task_id": hashlib.sha256(f"CN:000001\0{trigger_key}".encode()).hexdigest()[:24],
-        "trigger_id": "second-screen",
+        "trigger_id": "second",
     }
-    flow.queue_path.write_text(
+    other.queue_path.write_text(
         "\n".join(json.dumps(row, ensure_ascii=False) for row in [*rows, duplicate]) + "\n",
         encoding="utf-8",
     )
     with pytest.raises(StateCorruptionError, match="more than one current task"):
-        flow.validate()
+        other.validate()
 
 
 @pytest.mark.parametrize(
     "result, match",
     [
-        (
-            replace(_covered("CN:000001"), risks=()),
-            "at least one risk",
-        ),
+        (replace(_covered("CN:000001"), risks=()), "at least one risk"),
         (
             replace(_covered("CN:000001"), value_range=None, valuation_note=None),
             "value_range or valuation_note",
         ),
-        (
-            replace(_covered("CN:000001"), source_urls=("not-a-url",)),
-            "absolute http",
-        ),
-        (
-            replace(_ignored_after_research("CN:000001"), buy_below=10),
-            "must not activate price",
-        ),
-        (
-            replace(
-                _covered("CN:000001"),
-                buy_below=None,
-                rearm_above=None,
-                price_levels=(PriceLevel("attractive", "旧标识", 50, 52),),
-            ),
-            "must be attention or deep_review",
-        ),
-        (
-            replace(
-                _covered("CN:000001"),
-                buy_below=None,
-                rearm_above=None,
-                price_levels=(
-                    PriceLevel("attention", "关注复核价", 50, 52),
-                    PriceLevel("deep_review", "深度复核价", 50, 52),
-                ),
-            ),
-            "must be below attention",
-        ),
+        (replace(_covered("CN:000001"), source_urls=("not-a-url",)), "absolute http"),
     ],
 )
 def test_invalid_results_fail_before_state_write(
@@ -551,37 +421,19 @@ def test_invalid_results_fail_before_state_write(
 ):
     flow = ResearchFlow(tmp_path)
     with pytest.raises(ValidationError, match=match):
-        flow.apply_result(result, task_id="missing-task", at=AT)
+        flow.apply_result(result, task_id="missing", at=AT)
     assert not flow.state_path.exists()
 
 
-def test_corrupt_or_duplicate_state_fails_closed(tmp_path: Path):
+def test_duplicate_state_fails_closed(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     flow.state_path.parent.mkdir(parents=True)
     row = {
-        "schema_version": 2,
+        "schema_version": 3,
         "symbol": "CN:000001",
         "universe_status": "active",
         "status": "ignore",
     }
-    flow.state_path.write_text(
-        json.dumps(row) + "\n" + json.dumps(row) + "\n",
-        encoding="utf-8",
-    )
+    flow.state_path.write_text(json.dumps(row) + "\n" + json.dumps(row) + "\n", encoding="utf-8")
     with pytest.raises(StateCorruptionError, match="duplicate state"):
         flow.read_states()
-
-
-def test_invalid_screen_batch_is_all_or_nothing(tmp_path: Path):
-    flow = ResearchFlow(tmp_path)
-    with pytest.raises(ValidationError, match="duplicate screening"):
-        flow.apply_screening(
-            [
-                ScreenDecision("CN:000001", "ignore", "不看"),
-                ScreenDecision("cn:000001", "research_now", "要看"),
-            ],
-            screen_id="bad-batch",
-            at=AT,
-        )
-    assert not flow.state_path.exists()
-    assert not flow.queue_path.exists()

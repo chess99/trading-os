@@ -25,17 +25,17 @@ test("server-renders the Trading OS decision workspace", async () => {
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
 
-test("the decision workspace stays table-first and separates research prices", async () => {
+test("the decision workspace stays table-first and only derives value-range position", async () => {
   const [dashboard, header] = await Promise.all([
     readFile(new URL("../app/components/dashboard-client.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/app-header.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(dashboard, />现价</);
   assert.match(dashboard, />合理价值</);
-  assert.match(dashboard, />关注复核价</);
-  assert.match(dashboard, />深度复核价</);
-  assert.match(dashboard, /level\.id === "deep_review"/);
-  assert.match(dashboard, /high_attraction/);
+  assert.match(dashboard, />相对下沿</);
+  assert.match(dashboard, />相对中枢</);
+  assert.match(dashboard, /pricePosition/);
+  assert.doesNotMatch(dashboard, /关注复核价|深度复核价|进入复核区|opportunityPriority/);
   assert.match(dashboard, /-webkit-line-clamp: 6|summary-cell/);
   assert.doesNotMatch(dashboard, /TopOpportunity|OpportunityQueue|排序为什么把这些公司放在前面/);
   assert.doesNotMatch(header, /只读研究视图/);
@@ -70,6 +70,7 @@ test("generated research catalog remains a faithful compact projection", async (
   assert.equal(catalog.companies.length, sourceRows.length);
   assert.ok(catalog.companies.some((company) => company.status === "covered" && company.reports.length));
   assert.ok(catalog.companies.every((company) => !JSON.stringify(company).includes("legacy/")));
+  assert.ok(catalog.companies.every((company) => !("priceLevels" in company) && !("lastClose" in company)));
 
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   const layout = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");

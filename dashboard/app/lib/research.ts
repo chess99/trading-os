@@ -1,16 +1,5 @@
 export type ResearchStatus = "unseen" | "ignore" | "candidate" | "covered" | "stale";
 
-export interface PriceLevel {
-  id: string;
-  label: string;
-  threshold: number;
-  rearmAbove: number;
-  armed: boolean;
-  lastClose: number | null;
-  lastScanDate: string | null;
-  lastHitDate: string | null;
-}
-
 export interface ReportVersion {
   date: string;
   path: string;
@@ -27,12 +16,9 @@ export interface Company {
   updatedAt: string;
   summary: string;
   informationCutoff: string | null;
-  invalidation: string | null;
+  invalidation: { at?: string; reason?: string; update_path?: string } | null;
   candidateSince: string | null;
   valueRange: { currency: string; low: number; high: number } | null;
-  priceLevels: PriceLevel[];
-  lastClose: number | null;
-  lastCloseDate: string | null;
   reportPath: string | null;
   reportDate: string | null;
   reports: ReportVersion[];
@@ -70,7 +56,7 @@ export const STATUS_META: Record<
   covered: {
     label: "持续覆盖",
     shortLabel: "已覆盖",
-    description: "正式研报当前有效，正在进行价格或事件监控。",
+    description: "正式研报当前有效，等待公司、财务、治理或行业新事实。",
   },
   candidate: {
     label: "候选研究",
@@ -80,7 +66,7 @@ export const STATUS_META: Record<
   stale: {
     label: "等待更新",
     shortLabel: "待更新",
-    description: "重大事实已使当前研报失效，价格监控暂停。",
+    description: "重大事实已使当前研报失效，等待完整更新研究。",
   },
   ignore: {
     label: "暂不关注",
@@ -117,57 +103,16 @@ export async function loadQuotes(tickers: string[], signal?: AbortSignal): Promi
   return payloads.flatMap((payload) => payload.quotes);
 }
 
-export function primaryPriceLevel(company: Company): PriceLevel | null {
-  if (!company.priceLevels.length) return null;
-  return [...company.priceLevels].sort((a, b) => b.threshold - a.threshold)[0];
-}
-
-export function effectivePrice(company: Company, quote?: Quote): number | null {
-  return quote?.price ?? company.lastClose;
-}
-
-function clamp(value: number, low = 0, high = 100) {
-  return Math.min(high, Math.max(low, value));
-}
-
-export function opportunityPriority(company: Company, quote?: Quote) {
-  const price = effectivePrice(company, quote);
-  const level = primaryPriceLevel(company);
-  if (price === null) {
-    return { score: 0, label: "等待行情", distance: null, price: null, level };
-  }
-
-  let triggerScore = 25;
-  let distance: number | null = null;
-  if (level) {
-    distance = (price - level.threshold) / level.threshold;
-    triggerScore = distance <= 0 ? 100 : clamp(100 - distance * 180, 12, 100);
-  }
-
-  let valueScore = 35;
+export function pricePosition(company: Company, quote?: Quote) {
+  const price = quote?.price ?? null;
   const range = company.valueRange;
-  if (range) {
-    if (price <= range.low) valueScore = 100;
-    else if (price <= range.high) {
-      valueScore = 100 - ((price - range.low) / Math.max(range.high - range.low, 0.01)) * 35;
-    } else {
-      valueScore = clamp(65 - ((price - range.high) / range.high) * 120);
-    }
+  if (price === null || !range) {
+    return { price, lowRatio: null, midpointRatio: null, label: "—" };
   }
-
-  const cutoff = company.informationCutoff ? new Date(company.informationCutoff).getTime() : 0;
-  const ageDays = cutoff ? Math.max(0, (Date.now() - cutoff) / 86_400_000) : 365;
-  const freshnessScore = clamp(100 - ageDays * 0.45, 20, 100);
-  const score = Math.round(triggerScore * 0.55 + valueScore * 0.35 + freshnessScore * 0.1);
-  const label =
-    level && distance !== null && distance <= 0
-      ? "已到复核区"
-      : score >= 78
-        ? "接近关注"
-        : score >= 58
-          ? "估值可读"
-          : "继续观察";
-  return { score, label, distance, price, level };
+  const lowRatio = price / range.low;
+  const midpointRatio = price / ((range.low + range.high) / 2);
+  const label = price < range.low ? "低于区间下沿" : price <= range.high ? "区间内" : "高于区间上沿";
+  return { price, lowRatio, midpointRatio, label };
 }
 
 export function formatPrice(value: number | null | undefined) {

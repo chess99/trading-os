@@ -7,7 +7,7 @@ import pytest
 
 import trading_os.cli as cli_module
 from trading_os.cli import main
-from trading_os.research_assets.market_data import Announcement, DailyClose
+from trading_os.research_assets.market_data import Announcement
 
 AT = "2026-08-08T17:00:00+08:00"
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,10 +35,6 @@ def _full_result(symbol: str, task_id: str | None = None) -> dict:
         "key_logic": ["需求增长", "现金流转化决定估值"],
         "risks": ["客户集中", "资本开支回报不及预期"],
         "value_range": {"low": 58, "high": 82, "currency": "CNY"},
-        "price_levels": [
-            {"id": "attention", "label": "关注复核价", "threshold": 55, "rearm_above": 57},
-            {"id": "deep_review", "label": "深度复核价", "threshold": 50, "rearm_above": 52},
-        ],
         "event_triggers": ["下一期财报发布"],
         "source_urls": ["https://example.com/report"],
         "information_cutoff": AT,
@@ -95,6 +91,7 @@ def test_help_contains_only_the_compact_workflow(capsys: pytest.CaptureFixture[s
         "universe",
         "screen",
         "research",
+        "updates",
         "watchlist",
         "events",
     ):
@@ -112,8 +109,8 @@ def test_research_assets_package_exports_only_the_compact_flow():
     import trading_os.research_assets as assets
 
     assert assets.ResearchFlow
-    assert assets.PriceLevel
     assert assets.ResearchResult
+    assert assets.ResearchUpdate
     for removed in (
         "AssetValidationError",
         "CompanyTimelineError",
@@ -205,8 +202,7 @@ def test_screen_record_only_enqueues_research_now(tmp_path: Path, capsys):
                 {
                     "symbol": "CN:000002",
                     "route": "ignore",
-                    "reason": "等待价格",
-                    "price_levels": [{"id": "buy", "label": "关注区", "threshold": 10}],
+                    "reason": "当前没有值得研究的新事实",
                 },
                 {"symbol": "CN:000003", "route": "research_now", "reason": "出现拐点"},
             ],
@@ -272,42 +268,32 @@ def test_research_complete_writes_dated_report_and_full_watchlist(tmp_path: Path
     assert (tmp_path / completed["report_path"]).is_file()
     company = listed["companies"][0]
     assert company["key_logic"] == ["需求增长", "现金流转化决定估值"]
-    assert [level["id"] for level in company["price_levels"]] == [
-        "attention",
-        "deep_review",
-    ]
+    assert company["value_range"] == {"currency": "CNY", "high": 82.0, "low": 58.0}
+    assert "price_levels" not in company
 
 
-def test_watchlist_close_scan_emits_independent_price_levels(tmp_path: Path, capsys):
-    task_id = _screen_and_dispatch(
-        tmp_path,
-        capsys,
-        "CN:601138",
-        trigger_id="price-scan-fixture",
+def test_retired_security_price_fields_are_rejected(tmp_path: Path, capsys):
+    task_id = _screen_and_dispatch(tmp_path, capsys, "CN:601138", trigger_id="old-input")
+    payload = _full_result("CN:601138", task_id)
+    payload["result"]["price_levels"] = [{"id": "attention", "threshold": 55}]
+    source = _write(tmp_path / "old-result.json", payload)
+
+    code = main(
+        ["--root", str(tmp_path), "research", "complete", "--input", str(source)]
     )
-    result = _write(tmp_path / "result.json", _full_result("CN:601138", task_id))
-    _call(tmp_path, capsys, "research", "complete", "--input", str(result), "--at", AT)
-    quotes = _write(
-        tmp_path / "quotes.json",
-        {"trading_date": "2026-08-11", "quotes": [{"symbol": "CN:601138", "close": 49}]},
-    )
+    captured = capsys.readouterr()
+    assert code == 1
+    assert "已退役字段" in json.loads(captured.err)["error"]
 
-    scanned = _call(
-        tmp_path,
-        capsys,
-        "watchlist",
-        "scan-close",
-        "--input",
-        str(quotes),
-        "--at",
-        AT,
-    )
 
-    assert scanned["hit_count"] == 2
-    assert [hit["level_id"] for hit in scanned["hits"]] == ["attention", "deep_review"]
-    assert all("enqueued" not in hit and "task_id" not in hit for hit in scanned["hits"])
-    pending = _call(tmp_path, capsys, "research", "next", "--limit", "1", "--at", AT)
-    assert pending == {"count": 0, "tasks": []}
+def test_watchlist_has_no_close_price_commands(capsys):
+    with pytest.raises(SystemExit) as exc:
+        main(["watchlist", "--help"])
+    assert exc.value.code == 0
+    output = capsys.readouterr().out
+    assert "build" in output and "list" in output
+    for removed in ("scan-close", "fetch-close", "run-close"):
+        assert removed not in output
 
 
 def test_watchlist_build_and_validate_detect_a_consistent_projection(tmp_path: Path, capsys):
@@ -327,91 +313,36 @@ def test_watchlist_build_and_validate_detect_a_consistent_projection(tmp_path: P
     assert validated["status"]["covered"] == 1
 
 
-def test_watchlist_fetch_and_run_close_only_request_price_monitored_companies(
+def test_updates_record_reaffirms_or_invalidates_without_patching_valuation(
     tmp_path: Path,
     capsys,
-    monkeypatch,
 ):
-    source = _write(
-        tmp_path / "watch.json",
+    task_id = _screen_and_dispatch(tmp_path, capsys, "CN:601138", trigger_id="initial")
+    result = _write(tmp_path / "result.json", _full_result("CN:601138", task_id))
+    completed = _call(tmp_path, capsys, "research", "complete", "--input", str(result))
+
+    update = _write(
+        tmp_path / "update.json",
         {
-            "screen_id": "watch-close-fetch",
-            "mode": "baseline",
-            "at": AT,
-            "decisions": [
-                {
-                    "symbol": "CN:000001",
-                    "name": "平安银行",
-                    "route": "research_now",
-                    "reason": "等待价格",
-                    "price_levels": [{"id": "attention", "label": "关注区", "threshold": 10}],
-                },
-                {
-                    "symbol": "CN:000002",
-                    "name": "万科A",
-                    "route": "research_now",
-                    "reason": "只等待事件",
-                    "event_triggers": ["下一份财报"],
-                },
-            ],
+            "symbol": "CN:601138",
+            "title": "合同公告核对",
+            "impact": "reaffirmed",
+            "reviewed_at": "2026-08-09T17:00:00+08:00",
+            "information_cutoff": "2026-08-09T16:00:00+08:00",
+            "summary": "合同规模仍在原报告情景内。",
+            "analysis": "不改变正常化利润、核心逻辑、风险排序或价值区间。",
+            "conclusion": "当前正式报告继续有效。",
+            "event_ids": ["event-001"],
+            "source_urls": ["https://example.com/announcement"],
         },
     )
-    screened = _call(tmp_path, capsys, "screen", "record", "--input", str(source))
-    assert len(screened["enqueued"]) == 2
-    started = _call(tmp_path, capsys, "research", "next", "--limit", "2", "--at", AT)
-    for task in started["tasks"]:
-        payload = _full_result(task["symbol"], task["task_id"])
-        payload["result"].pop("name")
-        if task["symbol"] == "CN:000002":
-            payload["result"]["price_levels"] = []
-        result_path = _write(tmp_path / f"{task['task_id']}.json", payload)
-        _call(tmp_path, capsys, "research", "complete", "--input", str(result_path))
-    requested: list[dict[str, str | None]] = []
-
-    def fake_fetch(companies, *, trading_date, fetched_at):
-        requested.append(dict(companies))
-        assert trading_date == "2026-08-07"
-        assert fetched_at == AT
-        return (
-            DailyClose(
-                symbol="CN:000001",
-                name="平安银行",
-                close=9.5,
-                trading_date="2026-08-07",
-                closed_at="2026-08-07T15:00:00+08:00",
-                source_url="https://qt.gtimg.cn/q=sz000001",
-            ),
-        )
-
-    monkeypatch.setattr(cli_module, "fetch_tencent_daily_closes", fake_fetch)
-    fetched = _call(
-        tmp_path,
-        capsys,
-        "watchlist",
-        "fetch-close",
-        "--date",
-        "2026-08-07",
-        "--at",
-        AT,
-    )
-    scanned = _call(
-        tmp_path,
-        capsys,
-        "watchlist",
-        "run-close",
-        "--date",
-        "2026-08-07",
-        "--at",
-        AT,
-    )
-
-    assert requested == [
-        {"CN:000001": None},
-        {"CN:000001": None},
-    ]
-    assert fetched["quote_count"] == 1
-    assert scanned["quote_count"] == 1
-    assert scanned["hit_count"] == 2
+    recorded = _call(tmp_path, capsys, "updates", "record", "--input", str(update))
+    listed = _call(tmp_path, capsys, "watchlist", "list")
+    assert recorded["impact"] == "reaffirmed"
+    assert recorded["enqueued_task"] is None
+    assert listed["companies"][0]["report_path"] == completed["report_path"]
+    assert listed["companies"][0]["value_range"] == completed["value_range"]
+    assert (tmp_path / recorded["update_path"]).is_file()
 
 
 def test_events_fetch_requires_explicit_bootstrap_and_only_advances_after_exact_judgment(
@@ -642,7 +573,7 @@ def test_input_templates_are_valid_and_contain_only_the_compact_model():
         "universe.json",
         "screen-decisions.json",
         "research-result.json",
-        "close-quotes.json",
+        "research-update.json",
         "event-judgments.json",
     )
     combined = ""
@@ -652,3 +583,5 @@ def test_input_templates_are_valid_and_contain_only_the_compact_model():
         combined += text.lower()
     for removed in ("underwriting", "challenger", "allocation", "calibration", "claim"):
         assert removed not in combined
+    for retired in ("price_levels", "price_monitor", "buy_below", "rearm_above"):
+        assert retired not in combined

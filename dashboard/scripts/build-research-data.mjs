@@ -33,23 +33,6 @@ function reportDate(filename) {
   return filename.replace(/\.md$/u, "");
 }
 
-function compactPriceLevels(row) {
-  const runtime = row.price_monitor?.levels ?? {};
-  return (row.price_levels ?? []).map((level) => {
-    const monitored = runtime[level.id] ?? {};
-    return {
-      id: level.id,
-      label: level.label,
-      threshold: level.threshold,
-      rearmAbove: level.rearm_above ?? level.threshold,
-      armed: monitored.armed ?? true,
-      lastClose: monitored.last_close ?? null,
-      lastScanDate: monitored.last_scan_date ?? null,
-      lastHitDate: monitored.last_hit_date ?? null,
-    };
-  });
-}
-
 async function collectReports(ticker) {
   const sourceDirectory = join(reportsRoot, ticker, "reports");
   let files = [];
@@ -93,9 +76,7 @@ async function main() {
   for (const row of states) {
     const ticker = String(row.symbol ?? "").replace(/^CN:/u, "");
     const reports = /^\d{6}$/u.test(ticker) && row.report_path ? await collectReports(ticker) : [];
-    const priceLevels = compactPriceLevels(row);
     const latestReport = reports[0] ?? null;
-    const monitoredClose = priceLevels.find((level) => level.lastClose !== null) ?? null;
     companies.push({
       symbol: row.symbol,
       ticker,
@@ -116,9 +97,6 @@ async function main() {
             high: row.value_range.high,
           }
         : null,
-      priceLevels,
-      lastClose: monitoredClose?.lastClose ?? null,
-      lastCloseDate: monitoredClose?.lastScanDate ?? null,
       reportPath: row.report_path,
       reportDate: latestReport?.date ?? null,
       reports,

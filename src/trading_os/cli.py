@@ -18,17 +18,16 @@ from .research_assets.market_data import (
     advance_event_scan_state,
     discover_cninfo_announcements_for_companies,
     event_scan_state_payload,
-    fetch_tencent_daily_closes,
     read_event_scan_state,
     unseen_event_announcements,
     write_event_scan_state,
 )
 from .research_assets.research_flow import (
     CompanyRef,
-    PriceLevel,
     ResearchFlow,
     ResearchFlowError,
     ResearchResult,
+    ResearchUpdate,
     ScreenDecision,
     ValueRange,
 )
@@ -45,7 +44,7 @@ def _add_at(parser: argparse.ArgumentParser) -> None:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="trading_os",
-        description="精简的全市场初筛、单公司研究和每日收盘监控",
+        description="由公司、财务、治理和行业新事实驱动的 A 股研究工作流",
     )
     parser.add_argument("--root", default=".", help="仓库根目录（默认当前目录）")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -57,9 +56,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     state = commands.add_parser("state", help="维护公司状态模型和全市场基线")
     state_commands = state.add_subparsers(dest="state_command", required=True)
-    migrate_v2 = state_commands.add_parser("migrate-v2", help="迁移到候选/覆盖/失效状态模型")
-    _add_at(migrate_v2)
-    migrate_v2.set_defaults(handler=_state_migrate_v2)
+    migrate_v3 = state_commands.add_parser(
+        "migrate-v3", help="迁移到无证券价格触发的事件驱动状态模型"
+    )
+    _add_at(migrate_v3)
+    migrate_v3.set_defaults(handler=_state_migrate_v3)
     rebaseline = state_commands.add_parser(
         "prepare-rebaseline", help="保留有效覆盖，重置其余公司供全市场重筛"
     )
@@ -115,30 +116,21 @@ def build_parser() -> argparse.ArgumentParser:
     _add_at(complete)
     complete.set_defaults(handler=_research_complete)
 
-    watchlist = commands.add_parser("watchlist", help="查看观察池并执行每日收盘扫描")
+    updates = commands.add_parser("updates", help="追加不改变正式结论的公司研究日志")
+    update_commands = updates.add_subparsers(dest="updates_command", required=True)
+    update_record = update_commands.add_parser(
+        "record", help="记录 reaffirmed/monitor，或宣告报告 invalidated"
+    )
+    _add_input(update_record)
+    _add_at(update_record)
+    update_record.set_defaults(handler=_updates_record)
+
+    watchlist = commands.add_parser("watchlist", help="查看或重建当前有效研究的确定性投影")
     watchlist_commands = watchlist.add_subparsers(dest="watchlist_command", required=True)
     build = watchlist_commands.add_parser("build", help="从研究状态重建观察池")
     build.set_defaults(handler=_watchlist_build)
     list_command = watchlist_commands.add_parser("list", help="列出观察池")
     list_command.set_defaults(handler=_watchlist_list)
-    scan = watchlist_commands.add_parser("scan-close", help="扫描一个交易日的收盘价")
-    _add_input(scan)
-    scan.add_argument("--date", help="覆盖输入文件中的 trading_date")
-    _add_at(scan)
-    scan.set_defaults(handler=_watchlist_scan_close)
-    fetch_close = watchlist_commands.add_parser(
-        "fetch-close", help="严格获取全部受监控公司的当日不复权收盘价"
-    )
-    fetch_close.add_argument("--date", required=True, help="交易日 YYYY-MM-DD")
-    _add_at(fetch_close)
-    fetch_close.set_defaults(handler=_watchlist_fetch_close)
-    run_close = watchlist_commands.add_parser(
-        "run-close", help="完整取价后原子执行一次每日收盘触发扫描"
-    )
-    run_close.add_argument("--date", required=True, help="交易日 YYYY-MM-DD")
-    _add_at(run_close)
-    run_close.set_defaults(handler=_watchlist_run_close)
-
     events = commands.add_parser("events", help="获取全市场公告并维护成功检查点")
     event_commands = events.add_subparsers(dest="events_command", required=True)
     event_status = event_commands.add_parser("status", help="查看当前公告扫描检查点")
@@ -204,22 +196,21 @@ def _records(payload: Any, key: str) -> list[Mapping[str, Any]]:
     return records
 
 
-def _levels(payload: Mapping[str, Any]) -> tuple[PriceLevel, ...]:
-    raw = payload.get("price_levels") or []
-    if not isinstance(raw, list):
-        raise ValueError("price_levels 必须是数组")
-    return tuple(
-        PriceLevel(
-            id=item["id"],
-            label=item["label"],
-            threshold=item["threshold"],
-            rearm_above=item.get("rearm_above"),
+_RETIRED_PRICE_FIELDS = frozenset(
+    {"price_levels", "price_monitor", "buy_below", "rearm_above"}
+)
+
+
+def _reject_retired_price_fields(payload: Mapping[str, Any]) -> None:
+    present = sorted(_RETIRED_PRICE_FIELDS.intersection(payload))
+    if present:
+        raise ValueError(
+            "证券价格不再是研究触发器；请删除已退役字段：" + ", ".join(present)
         )
-        for item in raw
-    )
 
 
 def _screen_decision(payload: Mapping[str, Any]) -> ScreenDecision:
+    _reject_retired_price_fields(payload)
     return ScreenDecision(
         symbol=payload["symbol"],
         name=payload.get("name"),
@@ -231,6 +222,7 @@ def _screen_decision(payload: Mapping[str, Any]) -> ScreenDecision:
 
 
 def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
+    _reject_retired_price_fields(payload)
     raw_range = payload.get("value_range")
     value_range = None
     if raw_range is not None:
@@ -249,14 +241,30 @@ def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
         key_logic=payload.get("key_logic") or (),
         risks=payload.get("risks") or (),
         value_range=value_range,
-        price_levels=_levels(payload),
-        buy_below=payload.get("buy_below"),
-        rearm_above=payload.get("rearm_above"),
         event_triggers=payload.get("event_triggers") or (),
         source_urls=payload.get("source_urls") or (),
         information_cutoff=payload["information_cutoff"],
         report_markdown=payload.get("report_markdown"),
         valuation_note=payload.get("valuation_note"),
+    )
+
+
+def _research_update(
+    payload: Mapping[str, Any], *, reviewed_at: str | None = None
+) -> ResearchUpdate:
+    _reject_retired_price_fields(payload)
+    return ResearchUpdate(
+        symbol=payload["symbol"],
+        title=payload["title"],
+        impact=payload["impact"],
+        reviewed_at=reviewed_at or payload["reviewed_at"],
+        information_cutoff=payload["information_cutoff"],
+        summary=payload["summary"],
+        analysis=payload["analysis"],
+        conclusion=payload["conclusion"],
+        source_urls=payload.get("source_urls") or (),
+        event_ids=payload.get("event_ids") or (),
+        invalidation_reason=payload.get("invalidation_reason"),
     )
 
 
@@ -292,10 +300,10 @@ def _validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     return {"ok": True, "status": asdict(_flow(args).validate())}
 
 
-def _state_migrate_v2(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+def _state_migrate_v3(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
     flow = _flow(args)
-    migrated = flow.migrate_state_v2(at=args.at)
+    migrated = flow.migrate_state_v3(at=args.at)
     return {"migrated": migrated, "status": asdict(flow.validate())}
 
 
@@ -388,9 +396,23 @@ def _research_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
     return {
         "symbol": state["symbol"],
         "status": state["status"],
-        "price_levels": state["price_levels"],
+        "value_range": state["value_range"],
         "report_path": state["report_path"],
     }
+
+
+def _updates_record(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    payload, _ = _load(args.input, stdin)
+    if not isinstance(payload, dict):
+        raise ValueError("研究日志必须是 JSON 对象")
+    update_payload = payload.get("update", payload)
+    if not isinstance(update_payload, dict):
+        raise ValueError("update 必须是对象")
+    reviewed_at = args.at or payload.get("at")
+    record = _flow(args).record_update(
+        _research_update(update_payload, reviewed_at=reviewed_at)
+    )
+    return _jsonable(record)
 
 
 def _watchlist_build(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
@@ -404,74 +426,6 @@ def _watchlist_list(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
     rows = _flow(args).read_watchlist()
     return {"count": len(rows), "companies": rows}
-
-
-def _watchlist_scan_close(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    payload, _ = _load(args.input, stdin)
-    if not isinstance(payload, dict):
-        raise ValueError("收盘价输入必须是 JSON 对象")
-    if isinstance(payload.get("closes"), dict):
-        closes = payload["closes"]
-    else:
-        quotes = payload.get("quotes")
-        if not isinstance(quotes, list):
-            raise ValueError("输入需包含 closes 对象或 quotes 数组")
-        closes = {item["symbol"]: item["close"] for item in quotes}
-        if len(closes) != len(quotes):
-            raise ValueError("quotes 中存在重复 symbol")
-    trading_date = args.date or payload.get("trading_date")
-    if not trading_date:
-        raise ValueError("trading_date 必须由输入文件或 --date 提供")
-    hits = _flow(args).scan_daily_close(
-        closes,
-        trading_date=trading_date,
-        at=args.at or payload.get("at"),
-    )
-    return {"trading_date": trading_date, "hit_count": len(hits), "hits": hits}
-
-
-def _monitored_companies(flow: ResearchFlow) -> dict[str, str | None]:
-    # 证券代码（含交易所映射）是行情身份的稳定键。状态中的 name 可能是
-    # 法定全称、旧简称或带 XD/C 等临时前缀，不应让名称展示变化阻断
-    # 全市场收盘扫描；行情层仍严格验证代码、交易所、完整覆盖和收盘时间。
-    return {
-        row["symbol"]: None for row in flow.read_watchlist() if row.get("price_levels")
-    }
-
-
-def _watchlist_fetch_close(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    del stdin
-    flow = _flow(args)
-    companies = _monitored_companies(flow)
-    quotes = fetch_tencent_daily_closes(
-        companies,
-        trading_date=args.date,
-        fetched_at=args.at,
-    )
-    return {
-        "trading_date": args.date,
-        "quote_count": len(quotes),
-        "quotes": quotes,
-    }
-
-
-def _watchlist_run_close(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    del stdin
-    flow = _flow(args)
-    companies = _monitored_companies(flow)
-    quotes = fetch_tencent_daily_closes(
-        companies,
-        trading_date=args.date,
-        fetched_at=args.at,
-    )
-    closes = {quote.symbol: quote.close for quote in quotes}
-    hits = flow.scan_daily_close(closes, trading_date=args.date, at=args.at)
-    return {
-        "trading_date": args.date,
-        "quote_count": len(quotes),
-        "hit_count": len(hits),
-        "hits": hits,
-    }
 
 
 def _aware_iso(value: object, label: str) -> str:

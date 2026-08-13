@@ -1,54 +1,54 @@
 # Trading OS
 
-Trading OS 是一套面向 A 股的轻量研究工作流。它不做自动交易，也不要求把每家公司都写成长篇研报；主 Agent 先快速覆盖全市场，只把真正值得投入的公司交给单公司 Agent，再把有效研究转成自选池和每日收盘价格触发。
+Trading OS 是一套面向 A 股、由新事实驱动的轻量研究工作流。仓库的主要产品是可审计的公司研究状态、完整正式报告和研究日志；网站只是这些资产的只读展示。系统不做自动交易，也不因股票价格变化启动研究。
 
-## 核心流程
+## 核心机制
 
-1. 主 Agent 批量浏览压缩事实，只判断 `ignore` 或 `research_now`。
-2. `research_now` 把公司标记为 `candidate` 并放入研究队列；未正式研究的公司不能设置价格。
-3. 不同公司可并行；一家公司始终由一个 Agent 用统一提示词端到端完成。
-4. 正式结果只有 `covered` 或 `ignore`。只有 active `covered` 进入自选池和价格监控。
-5. 每日收盘后扫描触发价格。池内外公司发生财报或重大事件时，只对受影响公司做局部更新。
+1. 主 Agent 对全市场压缩事实只判断 `ignore / research_now`。
+2. `research_now` 把公司标记为 `candidate` 并创建唯一研究任务；一家公司由一个 Agent 用统一提示词端到端完成。
+3. 正式结果只有 `covered / ignore`，两者都追加一份脱离历史版本也能独立阅读的完整报告。
+4. 财报、公告、治理、资本结构及行业经营变量触发研究；定期财报以及任何估值或结论变化，都生成新的完整正式报告。
+5. 不改变正式结论的事件可以写研究日志；日志只能 `reaffirmed / monitor / invalidated`，不能充当报告补丁。
+6. 证券价格不进入研究触发、公司状态或队列。展示层可以把实时价格与 `value_range` 机械比较，但这不是买入信号或投资决策。
 
 没有研究强度分档、固定分钟数、复核 Agent、独立承保、经理审批、多 Agent 共识、收益率硬门槛或仓位审批。
 
 ## 当前事实源
 
 ```text
-coverage/cn-a/research_state.jsonl              全市场当前状态，一家公司一行
-coverage/cn-a/research_queue.jsonl              当前 queued/running 任务
-coverage/cn-a/screening_baseline.json           全市场初筛基线
-coverage/cn-a/event_scan_state.json             公告扫描成功检查点
-research/watchlist.jsonl                        active covered 的确定性投影
-research/companies/CN/{代码}/reports/{日期}.md  新机制正式研报时间线
-research/companies/CN/{代码}/legacy/{日期}.md   隔离的旧研报档案
+coverage/cn-a/research_state.jsonl                       全市场当前状态，一家公司一行
+coverage/cn-a/research_queue.jsonl                       当前 queued/running 任务
+coverage/cn-a/screening_baseline.json                    全市场初筛基线
+coverage/cn-a/event_scan_state.json                      公告扫描成功检查点
+research/watchlist.jsonl                                 active covered 的确定性投影
+research/companies/CN/{代码}/reports/YYYY-MM-DD[-NN].md 完整正式报告时间线
+research/companies/CN/{代码}/updates/YYYY-MM-DD[-NN].md 研究日志
+research/companies/CN/{代码}/legacy/YYYY-MM-DD.md        隔离旧稿
 ```
 
-`research_state.jsonl.report_path` 指向该公司最新的正式日期报告，这个指针就是 current；不再维护会覆盖或漂移的 `current.md` 副本。同一天再次完成正式研究时依次写成 `YYYY-MM-DD-02.md`、`-03.md`。
+`research_state.jsonl.report_path` 指向该公司最新正式报告，这个指针就是 current；同一天再次完成正式研究时依次写为 `-02`、`-03`。正式报告必须自足，禁止用“参见前序报告”替代商业、财务或估值正文。
 
-`legacy/` 每家公司最多一份，只供偶尔翻阅。它不参与状态、队列、估值、触发价格、自选池或 current 判断。`stale` 是公司当前研究状态，不是历史文件后缀。
+`updates/` 记录事件处理过程：
 
-正式报告和历史档案都进入 Git，因此完整克隆仓库即可恢复报告正文。两类文件的区别只在研究语义：`reports/` 参与 current 判断，`legacy/` 永远只是历史参考。
+- `reaffirmed`：新事实确认当前报告；
+- `monitor`：信息尚未越过原报告边界，继续观察；
+- `invalidated`：当前报告失效，状态转 `stale` 并创建完整研究任务。
+
+update 不得调整 `value_range`、正常化利润、核心逻辑、风险排序或 `covered / ignore`。财报后即使商业逻辑未变，只要估值需要调整，也必须写一份新的完整正式报告。
 
 ## 状态
 
 - `unseen`：尚未完成首次初筛；
-- `ignore`：当前不值得投入正式研究或持续监控；
-- `candidate`：已被主 Agent 选中，等待或正在正式研究；
-- `covered`：已有当前有效正式报告，按价格或事件监控；
-- `stale`：重大新事实使当前报告失效，暂停价格监控并等待更新。
+- `ignore`：当前不值得正式研究，或正式研究后不值得持续覆盖；
+- `candidate`：已选中，等待或正在正式研究；
+- `covered`：已有当前有效正式报告，值得持续维护；
+- `stale`：重大新事实使当前报告失效，等待完整更新。
 
-证券范围另用 `active / inactive`；任务另用 `queued / running`。历史上是否写过报告不等于当前研究状态。
-
-## 价格复核门槛
-
-价格线只用于安排研究复核，不是买入价或仓位建议。新报告默认使用一条 `attention`（关注复核价）；只有更低价格会带来实质不同的研究问题时，才增加 `deep_review`（深度复核价）。不能可靠定价的公司可以只用事件触发。
-
-历史数据中的 `attractive`、`high_attraction`、`deep_attention` 等旧标识继续有效，不需要批量重写；公司因财报、重大事件或估值失效而更新时，再按新名称自然统一。
+证券范围另用 `active / inactive`；任务另用 `queued / running`。只有 active `covered` 进入自选池。
 
 ## 可视化研究台
 
-`dashboard/` 提供只读的研究决策台：主页按透明的“复核优先级”展示 `covered` 公司，并可在同一页面切换到全市场状态列表；研报库支持搜索、筛选、版本切换和长文目录导航。现价以腾讯行情为主源、东方财富为备援，失败时明确退回最近一次验证收盘价。
+`dashboard/` 是只读附属展示。它从仓库状态和正式报告生成页面，不维护第二套研究事实。实时行情仅用于显示现价与合理价值区间的机械关系，例如 `当前价格 / value_range.low`；行情缺失时显示 `—`，不回退到仓库中的价格状态，也不生成“关注价”“安全边际充分”或买入提示。
 
 ```bash
 cd dashboard
@@ -56,43 +56,33 @@ npm install
 npm run dev
 ```
 
-页面始终从 `research_state.jsonl` 和正式 `reports/` 生成数据，不维护第二套状态，也不会让 `legacy/` 旧稿参与当前结论。完整设计说明见 [可视化研究台说明](dashboard/README.md)。
-
 ## 常用命令
 
 ```bash
-# 查看状态、任务和自选池
+# 查看与校验
 python -m trading_os status
 python -m trading_os validate
 
-# 记录主 Agent 的 ignore / research_now 初筛结论
-python -m trading_os screen record --input templates/screen-decisions.json
+# 一次性从 schema v1/v2 迁移到无证券价格触发的 v3
+python -m trading_os state migrate-v3 --at 2026-08-14T17:00:00+08:00
 
-# 派发并完成单公司研究；报告自动追加到日期时间线
+# 记录初筛、派发并完成完整研究
+python -m trading_os screen record --input templates/screen-decisions.json
 python -m trading_os research next --limit 4
-python -m trading_os research next --limit 4 --from-end  # 与队首协调器避让
 python -m trading_os research complete --input templates/research-result.json
 
-# 重建自选池；每日收盘后完整取价并扫描
+# 记录不改变正式结论的事件处理；invalidated 会自动进入完整研究
+python -m trading_os updates record --input templates/research-update.json
+
+# 重建或查看 active covered 投影
 python -m trading_os watchlist build
-python -m trading_os watchlist run-close --date 2026-08-07 \
-  --at 2026-08-07T16:30:00+08:00
+python -m trading_os watchlist list
 
 # 获取并完成全市场公告判断
 python -m trading_os events fetch --since 2026-08-09T00:00:00+08:00 \
   --until 2026-08-09T07:30:00+08:00 --output tmp/event-packet.json
 python -m trading_os events complete --packet tmp/event-packet.json \
   --input templates/event-judgments.json
-
-# 一次性旧格式迁移；以及从冻结标签恢复每家公司最佳历史旧稿
-python -m trading_os reports migrate-current
-python -m trading_os legacy-salvage candidates --limit 100
-python -m trading_os legacy-salvage archive-best
 ```
 
-收盘扫描以带交易所的六位证券代码作为稳定身份，严格校验返回代码、完整
-覆盖、交易日和正式收盘时间；公司法定全称、证券简称、临时除权标记或更名
-只属于展示信息，不会阻断整批扫描。公告抓取对限流、临时 5xx/599 和网络
-中断进行有限重试；重试仍失败时保持原检查点，不产生部分状态更新。
-
-完整状态约束和操作说明见 [精简研究流程](playbooks/simple-research.md)。迁移前的旧机制可从 Git 标签 `pre-simplification-20260808` 恢复，但旧资产不再参与当前运行。
+公告抓取失败时保持原检查点，不产生部分状态更新。完整约束见 [精简研究流程](playbooks/simple-research.md)。

@@ -3,16 +3,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   cleanCompanyName,
-  effectivePrice,
   formatDate,
   formatPrice,
   loadCatalog,
   loadQuotes,
-  opportunityPriority,
+  pricePosition,
   STATUS_META,
   type Catalog,
-  type Company,
-  type PriceLevel,
   type Quote,
   type ResearchStatus,
 } from "../lib/research";
@@ -67,42 +64,10 @@ function quoteChangeClass(quote?: Quote) {
   return quote.change > 0 ? "price-up" : "price-down";
 }
 
-function quoteSourceLabel(quote?: Quote, fallbackDate?: string | null) {
+function quoteSourceLabel(quote?: Quote) {
   if (quote?.source === "tencent") return "腾讯行情";
   if (quote?.source === "eastmoney") return "东方财富行情";
-  return fallbackDate ? `${fallbackDate} 收盘` : "行情待同步";
-}
-
-function isDeepReviewLevel(level: PriceLevel) {
-  return level.id === "deep_review"
-    || /^(attractive|high_attraction|deep_attention|high_margin|high_margin_of_safety|deep_value)/u.test(level.id)
-    || /深度复核|深度关注|高吸引力|安全边际|深度价值/u.test(level.label);
-}
-
-function groupPriceLevels(company: Company) {
-  const sorted = [...company.priceLevels].sort((a, b) => b.threshold - a.threshold);
-  return {
-    attention: sorted.filter((level) => !isDeepReviewLevel(level)),
-    deepReview: sorted.filter(isDeepReviewLevel),
-  };
-}
-
-function PriceLevelCell({ levels }: { levels: PriceLevel[] }) {
-  if (!levels.length) return <td className="level-cell empty-price">—</td>;
-
-  const thresholds = levels.map((level) => level.threshold).sort((a, b) => a - b);
-  const value =
-    thresholds.length === 1
-      ? formatPrice(thresholds[0])
-      : `${formatPrice(thresholds[0])}–${formatPrice(thresholds.at(-1))}`;
-  const labels = [...new Set(levels.map((level) => level.label))].join(" / ");
-
-  return (
-    <td className="level-cell" title={levels.map((level) => `${level.label} ¥${formatPrice(level.threshold)}`).join("；")}>
-      <strong>¥{value}</strong>
-      <span>{labels}</span>
-    </td>
-  );
+  return "行情待同步";
 }
 
 function StatusBadge({ status }: { status: ResearchStatus }) {
@@ -205,10 +170,11 @@ export function DashboardClient() {
     return catalog.companies
       .filter((company) => company.status === "covered")
       .sort((a, b) => {
-        const priorityDifference =
-          opportunityPriority(b, quotes.get(b.ticker)).score -
-          opportunityPriority(a, quotes.get(a.ticker)).score;
-        if (priorityDifference) return priorityDifference;
+        const aRatio = pricePosition(a, quotes.get(a.ticker)).lowRatio;
+        const bRatio = pricePosition(b, quotes.get(b.ticker)).lowRatio;
+        if (aRatio !== null && bRatio !== null && aRatio !== bRatio) return aRatio - bRatio;
+        if (aRatio !== null) return -1;
+        if (bRatio !== null) return 1;
         return b.updatedAt.localeCompare(a.updatedAt) || a.ticker.localeCompare(b.ticker);
       });
   }, [catalog, quotes]);
@@ -220,11 +186,11 @@ export function DashboardClient() {
     return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh-CN"));
   }, [catalog]);
 
-  const triggerCount = useMemo(
+  const belowRangeCount = useMemo(
     () =>
       opportunities.filter((company) => {
-        const priority = opportunityPriority(company, quotes.get(company.ticker));
-        return priority.distance !== null && priority.distance <= 0;
+        const position = pricePosition(company, quotes.get(company.ticker));
+        return position.lowRatio !== null && position.lowRatio < 1;
       }).length,
     [opportunities, quotes],
   );
@@ -300,9 +266,9 @@ export function DashboardClient() {
           <span className="state-number">{statusCount(catalog, "covered")}</span>
           <span className="state-copy"><strong>持续覆盖</strong></span>
         </button>
-        <button className={triggerCount ? "attention" : ""} onClick={() => switchView("opportunities")}>
-          <span className="state-number">{triggerCount}</span>
-          <span className="state-copy"><strong>进入复核区</strong></span>
+        <button className={belowRangeCount ? "attention" : ""} onClick={() => switchView("opportunities")}>
+          <span className="state-number">{belowRangeCount}</span>
+          <span className="state-copy"><strong>低于区间下沿</strong></span>
         </button>
         <button onClick={() => showStatus("candidate")}>
           <span className="state-number">{statusCount(catalog, "candidate")}</span>
@@ -323,7 +289,7 @@ export function DashboardClient() {
               onClick={() => switchView("opportunities")}
               role="tab"
             >
-              机会池 <span>{statusCount(catalog, "covered")}</span>
+              价值区间 <span>{statusCount(catalog, "covered")}</span>
             </button>
             <button
               aria-selected={view === "market"}
@@ -402,7 +368,7 @@ export function DashboardClient() {
                     ? "现价已更新"
                     : quoteState === "loading"
                       ? "现价更新中"
-                      : "显示最近收盘价"}
+                      : "行情暂缺"}
               </span>
               {quoteUpdatedAt ? <time dateTime={quoteUpdatedAt}>行情时间 {formatQuoteTime(quoteUpdatedAt)}</time> : null}
               <button
@@ -429,8 +395,8 @@ export function DashboardClient() {
                   <th className="industry-column">行业</th>
                   <th className="current-price-column">现价</th>
                   <th className="value-column">合理价值</th>
-                  <th className="level-column">关注复核价</th>
-                  <th className="level-column attraction-column">深度复核价</th>
+                  <th className="level-column">相对下沿</th>
+                  <th className="level-column attraction-column">相对中枢</th>
                   <th className="summary-column">当前结论</th>
                   <th className="action-column" aria-label="操作" />
                 </tr>
@@ -448,8 +414,8 @@ export function DashboardClient() {
             <tbody>
               {filtered.slice(0, visibleRows).map((company, index) => {
                 const quote = quotes.get(company.ticker);
-                const groupedLevels = groupPriceLevels(company);
-                const price = effectivePrice(company, quote);
+                const position = pricePosition(company, quote);
+                const price = position.price;
                 return view === "opportunities" ? (
                   <tr key={company.symbol}>
                     <td className="rank-cell">{String(index + 1).padStart(2, "0")}</td>
@@ -458,10 +424,10 @@ export function DashboardClient() {
                       <span>{company.ticker} · {company.exchange}</span>
                     </td>
                     <td className="industry-cell">{company.industry}</td>
-                    <td className="current-price-cell" title={quoteSourceLabel(quote, company.lastCloseDate)}>
+                    <td className="current-price-cell" title={quoteSourceLabel(quote)}>
                       <strong>¥{formatPrice(price)}</strong>
                       {quote?.changePercent === null || quote?.changePercent === undefined ? (
-                        <span>{company.lastCloseDate ? `${company.lastCloseDate} 收盘` : "待同步"}</span>
+                        <span>待同步</span>
                       ) : (
                         <span className={quoteChangeClass(quote)}>
                           {quote.changePercent > 0 ? "+" : ""}{quote.changePercent.toFixed(2)}%
@@ -475,8 +441,14 @@ export function DashboardClient() {
                         <span className="empty-price">—</span>
                       )}
                     </td>
-                    <PriceLevelCell levels={groupedLevels.attention} />
-                    <PriceLevelCell levels={groupedLevels.deepReview} />
+                    <td className="level-cell">
+                      <strong>{position.lowRatio === null ? "—" : `${position.lowRatio.toFixed(2)}×`}</strong>
+                      <span>{position.label}</span>
+                    </td>
+                    <td className="level-cell">
+                      <strong>{position.midpointRatio === null ? "—" : `${position.midpointRatio.toFixed(2)}×`}</strong>
+                      <span>现价 / 区间中枢</span>
+                    </td>
                     <td className="summary-cell"><p>{company.summary}</p></td>
                     <td className="row-action">
                       {company.reports.length ? (
