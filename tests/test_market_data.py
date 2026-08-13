@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import urllib.error
 from datetime import datetime
+from io import BytesIO
 
 import pytest
 
+import trading_os.research_assets.market_data as market_data_module
 from trading_os.research_assets.market_data import (
     CNINFO_STOCK_DIRECTORY_ENDPOINT,
     MARKET_TIMEZONE,
@@ -153,6 +156,53 @@ def test_tencent_accepts_exchange_corporate_action_name_prefix(temporary_name: s
 
     assert closes[0].symbol == "CN:600104"
     assert closes[0].name == temporary_name
+
+
+def test_tencent_accepts_exchange_short_name_inside_legal_issuer_name():
+    closes = fetch_tencent_daily_closes(
+        {"CN:920065": "深圳千岸科技股份有限公司"},
+        trading_date="2026-08-07",
+        fetched_at="2026-08-07T15:10:00+08:00",
+        fetcher=lambda _: _tencent_row("bj920065", name="千岸科技"),
+    )
+
+    assert closes[0].symbol == "CN:920065"
+    assert closes[0].name == "千岸科技"
+
+
+def test_cninfo_fetch_retries_transient_http_failure(monkeypatch):
+    attempts = 0
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def read(self):
+            return b"{}"
+
+    def fake_urlopen(_request, timeout):
+        nonlocal attempts
+        assert timeout == 30
+        attempts += 1
+        if attempts < 3:
+            raise urllib.error.HTTPError(
+                "https://www.cninfo.com.cn/",
+                599,
+                "temporary",
+                {},
+                BytesIO(),
+            )
+        return Response()
+
+    monkeypatch.setattr(market_data_module.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(market_data_module.time_module, "sleep", lambda _seconds: None)
+    request = market_data_module.urllib.request.Request("https://www.cninfo.com.cn/")
+
+    assert market_data_module._fetch_with_retry(request, "CNInfo test") == b"{}"
+    assert attempts == 3
 
 
 @pytest.mark.parametrize(

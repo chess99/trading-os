@@ -406,8 +406,8 @@ def test_watchlist_fetch_and_run_close_only_request_price_monitored_companies(
     )
 
     assert requested == [
-        {"CN:000001": "平安银行"},
-        {"CN:000001": "平安银行"},
+        {"CN:000001": None},
+        {"CN:000001": None},
     ]
     assert fetched["quote_count"] == 1
     assert scanned["quote_count"] == 1

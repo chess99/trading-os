@@ -431,8 +431,11 @@ def _watchlist_scan_close(args: argparse.Namespace, stdin: TextIO) -> dict[str, 
 
 
 def _monitored_companies(flow: ResearchFlow) -> dict[str, str | None]:
+    # 证券代码（含交易所映射）是行情身份的稳定键。状态中的 name 可能是
+    # 法定全称、旧简称或带 XD/C 等临时前缀，不应让名称展示变化阻断
+    # 全市场收盘扫描；行情层仍严格验证代码、交易所、完整覆盖和收盘时间。
     return {
-        row["symbol"]: row.get("name") for row in flow.read_watchlist() if row.get("price_levels")
+        row["symbol"]: None for row in flow.read_watchlist() if row.get("price_levels")
     }
 
 

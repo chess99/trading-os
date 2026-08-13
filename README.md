@@ -90,4 +90,9 @@ python -m trading_os legacy-salvage candidates --limit 100
 python -m trading_os legacy-salvage archive-best
 ```
 
+收盘扫描以带交易所的六位证券代码作为稳定身份，严格校验返回代码、完整
+覆盖、交易日和正式收盘时间；公司法定全称、证券简称、临时除权标记或更名
+只属于展示信息，不会阻断整批扫描。公告抓取对限流、临时 5xx/599 和网络
+中断进行有限重试；重试仍失败时保持原检查点，不产生部分状态更新。
+
 完整状态约束和操作说明见 [精简研究流程](playbooks/simple-research.md)。迁移前的旧机制可从 Git 标签 `pre-simplification-20260808` 恢复，但旧资产不再参与当前运行。

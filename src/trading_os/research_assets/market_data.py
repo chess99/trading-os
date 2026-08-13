@@ -6,6 +6,7 @@ import math
 import os
 import re
 import tempfile
+import time as time_module
 import unicodedata
 import urllib.error
 import urllib.request
@@ -24,6 +25,7 @@ DEFAULT_EVENT_SCAN_STATE_PATH = Path("coverage/cn-a/event_scan_state.json")
 DEFAULT_RECENT_ANNOUNCEMENT_LIMIT = 10_000
 DEFAULT_CNINFO_COMPANY_CHUNK_SIZE = 50
 CNINFO_MAX_QUERY_PAGES = 100
+UPSTREAM_FETCH_ATTEMPTS = 3
 
 MARKET_TIMEZONE = timezone(timedelta(hours=8), "Asia/Shanghai")
 _CLOSE_TIME = time(15, 0)
@@ -868,6 +870,11 @@ def _quote_name_matches(expected: str, returned: str) -> bool:
     returned_key = _name_key(returned)
     if returned_key == expected_key:
         return True
+    # 行情源通常返回证券简称，而全市场状态可能保存发行人的法定全称。
+    # 证券代码与交易所仍会独立严格校验，因此只接受有辨识度且确实包含
+    # 在法定全称中的简称，不会把另一只证券的报价写入当前公司。
+    if len(returned_key) >= 4 and returned_key in expected_key:
+        return True
     for marker in ("XD", "XR", "DR"):
         if returned_key.startswith(marker):
             quoted_core = returned_key[len(marker) :]
@@ -993,18 +1000,19 @@ def _fetch_cninfo_page(url: str, form: Mapping[str, str]) -> bytes:
         url,
         data=urlencode(form).encode("utf-8"),
         headers={
+            "Accept": "application/json, text/javascript, */*; q=0.01",
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-            "Referer": "https://www.cninfo.com.cn/",
-            "User-Agent": "Trading-OS announcement collector/1.0",
+            "Origin": "https://www.cninfo.com.cn",
+            "Referer": "https://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search",
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 Chrome/139.0 Safari/537.36"
+            ),
             "X-Requested-With": "XMLHttpRequest",
         },
         method="POST",
     )
-    try:
-        with urllib.request.urlopen(request, timeout=30) as response:
-            return response.read()
-    except (OSError, TimeoutError, urllib.error.URLError) as exc:
-        raise MarketDataError(f"failed to fetch CNInfo announcements: {exc}") from exc
+    return _fetch_with_retry(request, "CNInfo announcements")
 
 
 def _fetch_cninfo_stock_directory(url: str) -> bytes:
@@ -1013,14 +1021,41 @@ def _fetch_cninfo_stock_directory(url: str) -> bytes:
         headers={
             "Accept": "application/json",
             "Referer": "https://www.cninfo.com.cn/",
-            "User-Agent": "Trading-OS announcement collector/1.0",
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 Chrome/139.0 Safari/537.36"
+            ),
         },
     )
-    try:
-        with urllib.request.urlopen(request, timeout=30) as response:
-            return response.read()
-    except (OSError, TimeoutError, urllib.error.URLError) as exc:
-        raise MarketDataError(f"failed to fetch CNInfo stock directory: {exc}") from exc
+    return _fetch_with_retry(request, "CNInfo stock directory")
+
+
+def _fetch_with_retry(
+    request: urllib.request.Request,
+    label: str,
+    *,
+    attempts: int = UPSTREAM_FETCH_ATTEMPTS,
+) -> bytes:
+    """Retry transient upstream failures without allowing partial scan writes."""
+
+    last_error: BaseException | None = None
+    for attempt in range(1, attempts + 1):
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                return response.read()
+        except urllib.error.HTTPError as exc:
+            last_error = exc
+            if exc.code not in {429, 500, 502, 503, 504, 599} or attempt == attempts:
+                break
+        except (OSError, TimeoutError, urllib.error.URLError) as exc:
+            last_error = exc
+            if attempt == attempts:
+                break
+        time_module.sleep(0.25 * attempt)
+    assert last_error is not None
+    raise MarketDataError(
+        f"failed to fetch {label} after {attempts} attempts: {last_error}"
+    ) from last_error
 
 
 def _json_object(value: object, label: str) -> Mapping[str, Any]:
