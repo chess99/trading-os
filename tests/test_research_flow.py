@@ -161,8 +161,7 @@ def test_formal_report_cannot_defer_analysis_to_history(tmp_path: Path):
     bad = replace(
         _covered("CN:601138"),
         report_markdown=(
-            "# 裁决版\n\n本次裁决不重复发明第三套商业事实。"
-            "完整业务分析可沿时间线回看两份前序报告。"
+            "# 裁决版\n\n本次裁决不重复发明第三套商业事实。完整业务分析可沿时间线回看两份前序报告。"
         ),
     )
     with pytest.raises(ValidationError, match="self-contained"):
@@ -312,22 +311,37 @@ def test_stale_cannot_be_reaffirmed_and_update_cannot_predate_report(tmp_path: P
 def test_same_day_full_refresh_appends_complete_report(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     first = _complete(flow, _covered("CN:601138"))
-    refresh = flow.apply_screening(
-        [ScreenDecision("CN:601138", "research_now", "财报改变估值")],
-        screen_id="same-day-refresh",
-        mode="event",
-        at=AT,
+    refresh = flow.record_update(
+        replace(
+            _update("CN:601138", "invalidated"),
+            reviewed_at=AT,
+            information_cutoff=AT,
+        )
     )
     flow.dispatch_tasks(limit=1, at=AT)
     second = flow.apply_result(
         replace(_covered("CN:601138"), value_range=ValueRange(62, 88)),
-        task_id=refresh.enqueued_tasks[0].task_id,
+        task_id=refresh.enqueued_task.task_id,
         at=AT,
     )
     assert first["report_path"].endswith("2026-08-08.md")
     assert second["report_path"].endswith("2026-08-08-02.md")
     assert second["value_range"]["low"] == 62
     flow.validate()
+
+
+def test_screening_cannot_invalidate_a_current_formal_report(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    before = _complete(flow, _covered("CN:601138"))
+    with pytest.raises(ValidationError, match="invalidated research update"):
+        flow.apply_screening(
+            [ScreenDecision("CN:601138", "research_now", "积压财报看起来更新")],
+            screen_id="stale-backlog-event",
+            mode="event",
+            at=LATER,
+        )
+    assert flow.read_states()[0] == before
+    assert flow.list_tasks() == ()
 
 
 def test_screening_cannot_change_a_formal_outcome_to_ignore(tmp_path: Path):

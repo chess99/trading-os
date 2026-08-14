@@ -36,6 +36,8 @@ research/companies/CN/{代码}/legacy/YYYY-MM-DD.md        隔离旧稿
 
 update 不得调整 `value_range`、正常化利润、核心逻辑、风险排序或 `covered / ignore`。财报后即使商业逻辑未变，只要估值需要调整，也必须写一份新的完整正式报告。
 
+已有正式报告的公司不能再通过初筛命令直接转为 `stale`。扫描到的新事实必须先与当前报告的 `information_cutoff` 比较：已被报告吸收的旧公告不触发任何状态变化；报告截止日之后、但仍在原报告边界内的事实写 `reaffirmed / monitor`；确实使报告失效时，必须用 `updates record` 写入带明确事实截止点的 `invalidated` 日志，再由系统转为 `stale` 并创建更新研究任务。
+
 ## 状态
 
 - `unseen`：尚未完成首次初筛；
@@ -85,4 +87,4 @@ python -m trading_os events complete --packet tmp/event-packet.json \
   --input templates/event-judgments.json
 ```
 
-公告抓取失败时保持原检查点，不产生部分状态更新。完整约束见 [精简研究流程](playbooks/simple-research.md)。
+公告扫描负责发现、判断、记录 update 和创建任务，不消费研究队列。`research next` 与后续完整研究由独立的队列消费者执行，避免一次扫描同时承担抓取、裁决和深度研究而超时。正常扫描应从成功检查点直接推进到当前时间；短时间窗仅用于故障恢复，不应成为长期积压机制。公告抓取失败时保持原检查点，不产生部分状态更新。完整约束见 [精简研究流程](playbooks/simple-research.md)。

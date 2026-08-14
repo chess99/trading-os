@@ -163,9 +163,7 @@ def fetch_tencent_daily_closes(
                 raise MarketDataError(f"Tencent ticker does not match requested code: {code}")
             returned_name = _name(fields[1], f"Tencent name for {code}")
             expected_name = expected[code][1]
-            if expected_name is not None and not _quote_name_matches(
-                expected_name, returned_name
-            ):
+            if expected_name is not None and not _quote_name_matches(expected_name, returned_name):
                 raise MarketDataError(
                     f"Tencent name does not match requested security: {code} "
                     f"expected={expected_name!r}, returned={returned_name!r}"
@@ -285,13 +283,9 @@ def discover_cninfo_announcements(
         total_announcement = _nonnegative_int(
             payload.get("totalAnnouncement"), "CNInfo totalAnnouncement"
         )
-        total_records = _nonnegative_int(
-            payload.get("totalRecordNum"), "CNInfo totalRecordNum"
-        )
+        total_records = _nonnegative_int(payload.get("totalRecordNum"), "CNInfo totalRecordNum")
         if total_announcement != total_records:
-            raise MarketDataError(
-                "CNInfo totalAnnouncement and totalRecordNum do not match"
-            )
+            raise MarketDataError("CNInfo totalAnnouncement and totalRecordNum do not match")
         rows_value = payload.get("announcements")
         if rows_value is None and total_records == 0:
             rows: list[Any] = []
@@ -338,9 +332,7 @@ def discover_cninfo_announcements(
             )
         should_have_more = page_number < expected_pages
         if has_more != should_have_more:
-            raise MarketDataError(
-                f"CNInfo hasMore is inconsistent on page {page_number}"
-            )
+            raise MarketDataError(f"CNInfo hasMore is inconsistent on page {page_number}")
 
         raw_count += len(rows)
         for row in rows:
@@ -356,8 +348,7 @@ def discover_cninfo_announcements(
                 and announcement.symbol not in expected_stock_symbols
             ):
                 raise MarketDataError(
-                    "CNInfo filtered query returned an unexpected security: "
-                    f"{announcement.symbol}"
+                    f"CNInfo filtered query returned an unexpected security: {announcement.symbol}"
                 )
             published = datetime.fromisoformat(announcement.published_at)
             if not window_start <= published < window_end:
@@ -452,8 +443,7 @@ def discover_cninfo_announcements_for_companies(
     for day_start, day_end in _market_day_windows(window_start, window_end):
         for chunk in chunks:
             filtered_stocks = {
-                requested_tickers[symbol]: directory[requested_tickers[symbol]]
-                for symbol in chunk
+                requested_tickers[symbol]: directory[requested_tickers[symbol]] for symbol in chunk
             }
             announcements = discover_cninfo_announcements(
                 day_start,
@@ -504,17 +494,17 @@ def parse_event_scan_state(value: object) -> EventScanState:
     if raw_successful_at is None:
         successful_at = None
     else:
-        successful_at = _datetime(
-            raw_successful_at, "event scan last_successful_at"
-        ).astimezone(MARKET_TIMEZONE).isoformat()
+        successful_at = (
+            _datetime(raw_successful_at, "event scan last_successful_at")
+            .astimezone(MARKET_TIMEZONE)
+            .isoformat()
+        )
 
     raw_ids = value.get("recent_announcement_ids")
     if not isinstance(raw_ids, list):
         raise MarketDataError("event scan recent_announcement_ids must be a JSON list")
     if len(raw_ids) > DEFAULT_RECENT_ANNOUNCEMENT_LIMIT:
-        raise MarketDataError(
-            "event scan recent_announcement_ids exceeds the compact state limit"
-        )
+        raise MarketDataError("event scan recent_announcement_ids exceeds the compact state limit")
     recent_ids = tuple(
         _announcement_id(item, "event scan recent announcement ID") for item in raw_ids
     )
@@ -624,9 +614,7 @@ def advance_event_scan_state(
 
     endpoint = _datetime(scanned_through, "scanned_through").astimezone(MARKET_TIMEZONE)
     if previous.last_successful_at is not None:
-        previous_endpoint = _datetime(
-            previous.last_successful_at, "event scan last_successful_at"
-        )
+        previous_endpoint = _datetime(previous.last_successful_at, "event scan last_successful_at")
         if endpoint < previous_endpoint:
             raise MarketDataError("event scan checkpoint must not move backwards")
 
@@ -655,9 +643,7 @@ def advance_event_scan_state(
 
     discovered_ids = tuple(item.announcement_id for item in discovered)
     refreshed_ids = set(discovered_ids)
-    combined = [
-        item for item in previous.recent_announcement_ids if item not in refreshed_ids
-    ]
+    combined = [item for item in previous.recent_announcement_ids if item not in refreshed_ids]
     combined.extend(discovered_ids)
     return EventScanState(
         last_successful_at=endpoint.isoformat(),
@@ -704,9 +690,7 @@ def _cninfo_stock_directory(value: object) -> dict[str, str]:
             raise MarketDataError("CNInfo stock directory code must contain six digits")
         org_id = row.get("orgId")
         if not isinstance(org_id, str) or _CNINFO_ORG_ID_RE.fullmatch(org_id) is None:
-            raise MarketDataError(
-                f"CNInfo stock directory orgId is invalid for code {code}"
-            )
+            raise MarketDataError(f"CNInfo stock directory orgId is invalid for code {code}")
         if code in directory:
             raise MarketDataError(f"CNInfo stock directory contains duplicate code: {code}")
         directory[code] = org_id
@@ -730,10 +714,7 @@ def _cninfo_stock_query(
         symbol = _a_share_symbol(raw_code)
         if symbol is None:
             raise MarketDataError("stock_filter keys must be six-digit A-share codes")
-        if (
-            not isinstance(raw_org_id, str)
-            or _CNINFO_ORG_ID_RE.fullmatch(raw_org_id) is None
-        ):
+        if not isinstance(raw_org_id, str) or _CNINFO_ORG_ID_RE.fullmatch(raw_org_id) is None:
             raise MarketDataError(f"stock_filter orgId is invalid for code {raw_code}")
         entries.append((raw_code, raw_org_id, symbol))
     entries.sort()
@@ -750,9 +731,7 @@ def _market_day_windows(
     windows: list[tuple[datetime, datetime]] = []
     while cursor < endpoint:
         next_date = cursor.date() + timedelta(days=1)
-        next_midnight = datetime.combine(next_date, time.min).replace(
-            tzinfo=MARKET_TIMEZONE
-        )
+        next_midnight = datetime.combine(next_date, time.min).replace(tzinfo=MARKET_TIMEZONE)
         boundary = min(endpoint, next_midnight)
         windows.append((cursor, boundary))
         cursor = boundary
@@ -784,9 +763,7 @@ def _event_announcements(values: Iterable[Announcement]) -> tuple[Announcement, 
     try:
         announcements = tuple(values)
     except TypeError as exc:
-        raise MarketDataError(
-            "announcements must be an iterable of Announcement values"
-        ) from exc
+        raise MarketDataError("announcements must be an iterable of Announcement values") from exc
     observed_ids: set[str] = set()
     for item in announcements:
         if not isinstance(item, Announcement):
@@ -826,9 +803,7 @@ def _judged_announcement_ids(values: Iterable[str]) -> tuple[str, ...]:
             _announcement_id(item, "successfully judged announcement ID") for item in values
         )
     except TypeError as exc:
-        raise MarketDataError(
-            "successfully_judged_ids must be an iterable of IDs"
-        ) from exc
+        raise MarketDataError("successfully_judged_ids must be an iterable of IDs") from exc
     if len(set(ids)) != len(ids):
         raise MarketDataError("successfully_judged_ids contains duplicates")
     return ids
@@ -962,9 +937,7 @@ def _tencent_close_timestamp(
     if not isinstance(value, str) or not re.fullmatch(r"[0-9]{14}", value):
         raise MarketDataError(f"Tencent close timestamp is invalid: {code}")
     try:
-        closed_at = datetime.strptime(value, "%Y%m%d%H%M%S").replace(
-            tzinfo=MARKET_TIMEZONE
-        )
+        closed_at = datetime.strptime(value, "%Y%m%d%H%M%S").replace(tzinfo=MARKET_TIMEZONE)
     except ValueError as exc:
         raise MarketDataError(f"Tencent close timestamp is invalid: {code}") from exc
     if closed_at.date() != trading_date:
@@ -1099,8 +1072,10 @@ def _clean_title(value: object) -> str:
     if not isinstance(value, str):
         raise MarketDataError("CNInfo announcement title must be a string")
     without_highlight = re.sub(r"</?em>", "", value, flags=re.I)
-    if "<" in without_highlight or ">" in without_highlight:
-        raise MarketDataError("CNInfo announcement title contains unexpected markup")
+    if re.search(r"<\s*/?\s*[A-Za-z][^<>]*>", without_highlight):
+        raise MarketDataError(
+            "CNInfo announcement title contains unexpected markup: " + repr(value[:200])
+        )
     return _name(html.unescape(without_highlight), "CNInfo announcement title")
 
 
