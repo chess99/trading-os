@@ -463,6 +463,7 @@ def _empty_state(symbol: str, name: str | None, at: str) -> dict[str, Any]:
         "valuation_note": None,
         "candidate_since": None,
         "invalidation": None,
+        "last_update": None,
         "processed_triggers": [],
     }
 
@@ -1423,6 +1424,10 @@ class ResearchFlow:
                 raise ValidationError(
                     "research update information_cutoff predates the current formal report"
                 )
+            if datetime.fromisoformat(normalized["reviewed_at"]) < datetime.fromisoformat(
+                _timestamp(state.get("updated_at"))
+            ):
+                raise ValidationError("research update predates the current company state")
             impact = normalized["impact"]
             if (
                 state.get("status") == CompanyStatus.STALE.value
@@ -1454,10 +1459,21 @@ class ResearchFlow:
                 self._update_markdown(normalized, base_report=base_report),
             )
 
+            state["updated_at"] = normalized["reviewed_at"]
+            state["last_update"] = {
+                "path": update_relative,
+                "impact": impact.value,
+                "reviewed_at": normalized["reviewed_at"],
+                "information_cutoff": normalized["information_cutoff"],
+                "event_ids": normalized["event_ids"],
+                "summary": normalized["summary"],
+                "source_urls": normalized["source_urls"],
+                "base_report": base_report,
+            }
+
             enqueued: ResearchTask | None = None
             if impact is UpdateImpact.INVALIDATED:
                 state["status"] = CompanyStatus.STALE.value
-                state["updated_at"] = normalized["reviewed_at"]
                 state["invalidation"] = {
                     "at": normalized["reviewed_at"],
                     "reason": normalized["invalidation_reason"],
@@ -1479,7 +1495,7 @@ class ResearchFlow:
                     at=normalized["reviewed_at"],
                 )
                 self._write_tasks(tasks)
-                self._write_states(states)
+            self._write_states(states)
 
             return ResearchUpdateRecord(
                 symbol=normalized["symbol"],
@@ -1649,6 +1665,104 @@ class ResearchFlow:
                                 raise StateCorruptionError(
                                     f"research update is blank for {symbol}: {update_file.name}"
                                 )
+
+                    last_update = state.get("last_update")
+                    if last_update is not None:
+                        if not isinstance(last_update, dict):
+                            raise StateCorruptionError(
+                                f"last_update for {symbol} must be an object"
+                            )
+                        expected_last_update_fields = {
+                            "path",
+                            "impact",
+                            "reviewed_at",
+                            "information_cutoff",
+                            "event_ids",
+                            "summary",
+                            "source_urls",
+                            "base_report",
+                        }
+                        if set(last_update) != expected_last_update_fields:
+                            raise StateCorruptionError(
+                                f"last_update fields mismatch for {symbol}"
+                            )
+                        UpdateImpact(
+                            _enum_value(
+                                last_update.get("impact"),
+                                UpdateImpact,
+                                "research update impact",
+                            )
+                        )
+                        reviewed_at = _timestamp(last_update.get("reviewed_at"))
+                        information_cutoff = _timestamp(
+                            last_update.get("information_cutoff")
+                        )
+                        if datetime.fromisoformat(information_cutoff) > datetime.fromisoformat(
+                            reviewed_at
+                        ):
+                            raise StateCorruptionError(
+                                f"last_update information_cutoff follows review for {symbol}"
+                            )
+                        if datetime.fromisoformat(reviewed_at) > datetime.fromisoformat(
+                            _timestamp(state["updated_at"])
+                        ):
+                            raise StateCorruptionError(
+                                f"last_update follows state updated_at for {symbol}"
+                            )
+                        event_ids = _strings(
+                            last_update.get("event_ids") or [], "event ID"
+                        )
+                        if len(event_ids) != len(set(event_ids)):
+                            raise StateCorruptionError(
+                                f"last_update event IDs must be unique for {symbol}"
+                            )
+                        _nonblank(last_update.get("summary"), "research update summary")
+                        if not _urls(last_update.get("source_urls") or []):
+                            raise StateCorruptionError(
+                                f"last_update requires source URLs for {symbol}"
+                            )
+                        update_path = last_update.get("path")
+                        expected_update_prefix = updates_directory.relative_to(
+                            self.root
+                        ).as_posix() + "/"
+                        if not isinstance(update_path, str) or not update_path.startswith(
+                            expected_update_prefix
+                        ):
+                            raise StateCorruptionError(
+                                f"last_update path mismatch for {symbol}"
+                            )
+                        update_name = update_path.removeprefix(expected_update_prefix)
+                        if not _DATED_MARKDOWN_RE.fullmatch(update_name):
+                            raise StateCorruptionError(
+                                f"last_update path is not dated for {symbol}"
+                            )
+                        updates = self._updates(symbol)
+                        if not updates or self.root / update_path != updates[-1]:
+                            raise StateCorruptionError(
+                                f"last_update is not the latest update for {symbol}"
+                            )
+                        base_report = last_update.get("base_report")
+                        expected_report_prefix = (
+                            self._company_directory(symbol) / "reports"
+                        ).relative_to(self.root).as_posix() + "/"
+                        if not isinstance(base_report, str) or not base_report.startswith(
+                            expected_report_prefix
+                        ):
+                            raise StateCorruptionError(
+                                f"last_update base_report mismatch for {symbol}"
+                            )
+                        base_report_name = base_report.removeprefix(expected_report_prefix)
+                        if not _FORMAL_REPORT_RE.fullmatch(base_report_name):
+                            raise StateCorruptionError(
+                                f"last_update base_report is not dated for {symbol}"
+                            )
+                        base_report_file = self.root / base_report
+                        if not base_report_file.is_file() or not base_report_file.read_text(
+                            encoding="utf-8"
+                        ).strip():
+                            raise StateCorruptionError(
+                                f"last_update base report is missing or blank for {symbol}"
+                            )
 
                     if status in {CompanyStatus.COVERED.value, CompanyStatus.STALE.value}:
                         if report_path is None:

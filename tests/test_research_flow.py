@@ -215,7 +215,7 @@ def test_business_and_industry_prices_remain_valid_triggers(tmp_path: Path):
     assert len(update.enqueued_tasks) == 1
 
 
-def test_reaffirmed_update_writes_log_without_changing_formal_state(tmp_path: Path):
+def test_reaffirmed_update_writes_log_and_advances_auditable_receipt(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     before = _complete(flow, _covered("CN:601138"))
     record = flow.record_update(_update("CN:601138"))
@@ -225,6 +225,17 @@ def test_reaffirmed_update_writes_log_without_changing_formal_state(tmp_path: Pa
     assert after["report_path"] == before["report_path"]
     assert after["information_cutoff"] == before["information_cutoff"]
     assert after["value_range"] == before["value_range"]
+    assert after["updated_at"] == LATER
+    assert after["last_update"] == {
+        "path": record.update_path,
+        "impact": "reaffirmed",
+        "reviewed_at": LATER,
+        "information_cutoff": LATER,
+        "event_ids": ["event-001"],
+        "summary": "公司披露一项合同，规模仍在原报告情景内。",
+        "source_urls": ["https://example.com/announcement"],
+        "base_report": before["report_path"],
+    }
     text = (tmp_path / record.update_path).read_text(encoding="utf-8")
     assert "确认原报告" in text and before["report_path"] in text
     flow.validate()
@@ -236,7 +247,10 @@ def test_monitor_update_also_leaves_current_conclusion_untouched(tmp_path: Path)
     record = flow.record_update(_update("CN:601138", "monitor"))
     after = flow.read_states()[0]
     assert record.impact.value == "monitor"
-    assert after == before
+    for field in ("report_path", "information_cutoff", "value_range", "summary"):
+        assert after[field] == before[field]
+    assert after["last_update"]["impact"] == "monitor"
+    assert after["last_update"]["path"] == record.update_path
     assert flow.list_tasks() == ()
 
 
@@ -279,6 +293,18 @@ def test_stale_cannot_be_reaffirmed_and_update_cannot_predate_report(tmp_path: P
                 _update("CN:601138"),
                 reviewed_at="2026-08-08T18:00:00+08:00",
                 information_cutoff="2026-08-07T17:00:00+08:00",
+            )
+        )
+
+    newer = ResearchFlow(tmp_path / "newer")
+    _complete(newer, _covered("CN:601138"), at=LATER)
+    with pytest.raises(ValidationError, match="current company state"):
+        newer.record_update(
+            replace(
+                _update("CN:601138"),
+                reviewed_at="2026-08-08T18:00:00+08:00",
+                information_cutoff=AT,
+                event_ids=("event-003",),
             )
         )
 
