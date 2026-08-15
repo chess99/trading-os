@@ -50,7 +50,12 @@ def _covered(symbol: str) -> ResearchResult:
             "## 一句话结论\n\n需求增长成立，但现金流仍需验证。\n\n"
             "## 商业与竞争\n\n核心产品需求增长，竞争位置取决于客户验证。\n\n"
             "## 财务质量与股东现金收益\n\n现金流转化决定估值上限。\n\n"
-            "## 估值与核心合理价值区间\n\n核心合理价值区间：58—82 元。\n\n"
+            "| 前次假设 | 本期实际 | 判断变化 | 估值影响 |\n"
+            "|---|---|---|---|\n"
+            "| 需求增长 | 需求增长 | 不变 | 区间不变 |\n\n"
+            "## 估值与核心合理价值区间\n\n"
+            "方法一为正常化PE，方法二为现金流折现；以正常化PE为核心。\n\n"
+            "核心合理价值区间：58—82 元。\n\n"
             "## 核心风险与证伪\n\n客户集中，且资本开支回报仍待验证。\n\n"
             "## 来源清单\n\n- https://example.com/annual-report"
         ),
@@ -245,6 +250,40 @@ def test_report_core_value_range_must_match_structured_value_range(tmp_path: Pat
     with pytest.raises(ValidationError, match="must match value_range"):
         flow.apply_result(bad, task_id="missing", at=AT)
     assert not flow.state_path.exists()
+
+
+def test_report_value_range_requires_two_methods_and_a_primary_method(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    base = _covered("CN:601138")
+    bad = replace(
+        base,
+        report_markdown=base.report_markdown.replace(
+            "方法一为正常化PE，方法二为现金流折现；以正常化PE为核心。",
+            "使用多种方法估值。",
+        ),
+    )
+    with pytest.raises(ValidationError, match="primary valuation method"):
+        flow.apply_result(bad, task_id="missing", at=AT)
+    assert not flow.state_path.exists()
+
+
+def test_updated_report_requires_prior_actual_change_valuation_comparison(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    _complete(flow, _covered("CN:601138"))
+    refresh = flow.record_update(_update("CN:601138", "invalidated"))
+    flow.dispatch_tasks(limit=1, at=LATER)
+    base = _covered("CN:601138")
+    bad = replace(
+        base,
+        information_cutoff=LATER,
+        report_markdown=(
+            base.report_markdown.replace("2026-08-08", "2026-08-09")
+            .replace("前次假设", "历史预期")
+        ),
+    )
+    with pytest.raises(ValidationError, match="updated formal report must compare"):
+        flow.apply_result(bad, task_id=refresh.enqueued_task.task_id, at=LATER)
+    assert flow.list_tasks()[0].status is TaskStatus.RUNNING
 
 
 @pytest.mark.parametrize(

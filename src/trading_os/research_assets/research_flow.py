@@ -54,6 +54,13 @@ _REPORT_CORE_VALUE_RANGE_RE = re.compile(
     r"(?:—|–|-|至|~|～)\s*"
     r"(?P<high>\d+(?:,\d{3})*(?:\.\d+)?)"
 )
+_REPORT_PRIMARY_VALUATION_METHOD_RE = re.compile(
+    r"主方法|核心方法|(?:PE|P/B|PB|DCF|现金流|分部估值|资产价值).{0,20}为核心|"
+    r"以.{0,30}为核心"
+)
+_REPORT_METHOD_ONE_RE = re.compile(r"方法一")
+_REPORT_METHOD_TWO_RE = re.compile(r"方法二")
+_REFRESH_COMPARISON_FIELDS = ("前次假设", "本期实际", "判断变化", "估值影响")
 _REQUIRED_REPORT_HEADINGS = {
     "一句话结论": re.compile(r"一句话结论"),
     "财务质量": re.compile(r"财务质量"),
@@ -1283,6 +1290,15 @@ class ResearchFlow:
             )
 
         if value_range is not None:
+            if not (
+                _REPORT_METHOD_ONE_RE.search(report_markdown)
+                and _REPORT_METHOD_TWO_RE.search(report_markdown)
+                and _REPORT_PRIMARY_VALUATION_METHOD_RE.search(report_markdown)
+            ):
+                raise ValidationError(
+                    "formal report with value_range must identify method one, method two, "
+                    "and the primary valuation method"
+                )
             range_match = _REPORT_CORE_VALUE_RANGE_RE.search(report_markdown)
             if range_match is None:
                 raise ValidationError(
@@ -1606,6 +1622,14 @@ class ResearchFlow:
                 raise ValidationError("research task must be running before completion")
             if task.symbol != normalized["symbol"]:
                 raise ValidationError("research result symbol does not match task symbol")
+            if task.trigger_kind == "update" and not all(
+                field in normalized["report_markdown"]
+                for field in _REFRESH_COMPARISON_FIELDS
+            ):
+                raise ValidationError(
+                    "updated formal report must compare prior assumptions, current actuals, "
+                    "judgment changes, and valuation impact"
+                )
             state = states.setdefault(
                 normalized["symbol"],
                 _empty_state(normalized["symbol"], normalized["name"], timestamp),

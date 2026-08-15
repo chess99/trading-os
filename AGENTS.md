@@ -7,12 +7,12 @@
 - 全市场状态：`coverage/cn-a/research_state.jsonl`。
 - 当前研究队列：`coverage/cn-a/research_queue.jsonl`。
 - 自选池：`research/watchlist.jsonl`，只能从全市场状态确定性重建。
-- 正式报告：`research/companies/CN/{ticker}/reports/YYYY-MM-DD[-NN].md`。`report_path` 指向最新正式报告，这个指针就是 current。
+- 正式报告：`research/companies/CN/{ticker}/reports/YYYY-MM-DD[-NN].md`。只有通过协调器验收并由 `research complete` 原子写入的结果才是正式报告；`report_path` 指向最新合格正式报告，这个指针就是 current。
 - 研究日志：`research/companies/CN/{ticker}/updates/YYYY-MM-DD[-NN].md`，只能确认、观察或宣告当前报告失效。
 - 隔离旧稿：`research/companies/CN/{ticker}/legacy/YYYY-MM-DD.md`，每家公司最多一份，永远不参与当前状态、估值或队列。
 - 公告扫描只用 `coverage/cn-a/event_scan_state.json` 保存成功检查点和近期公告 ID。
 
-正式报告、研究日志和历史旧稿都进入 Git。不得恢复会漂移的 `current.md` 副本，也不得用 `stale` 文件后缀表达公司状态。
+正式报告、研究日志和历史旧稿都进入 Git。worker 返回的结构化 JSON 和 `report_markdown` 在验收前只是候选稿，不进入正式时间线；验收失败直接丢弃，不创建报告文件，也不占用 `-02/-03` 序号。已经通过验收的历史正式报告保持不可变；误入库且能够确认从未完成验收的坏稿按数据修复删除，并恢复到前一份合格报告和原研究任务。不得恢复会漂移的 `current.md` 副本，也不得用 `stale` 文件后缀表达公司状态。
 
 仓库不保存证券价格触发线、armed/hit/rearm 状态或每日收盘扫描结果。网站如展示实时价格相对 `value_range` 的位置，只能现场机械派生，不得写回研究状态或解释为买入信号。
 
@@ -43,7 +43,7 @@
 
 - worker 不直接修改共享 JSONL；协调器校验并原子写入。
 - `research/watchlist.jsonl` 禁止手改。同一公司最多一个活动任务。
-- 新正式研究只追加报告，不覆盖或删除历史报告；`report_path` 必须指向最新正式报告。
+- 新正式研究通过验收后只追加报告，不覆盖或删除已经合格的历史报告；`report_path` 必须指向最新合格正式报告。未通过验收的候选稿直接丢弃，不进入本规则所称的历史报告。
 - `legacy/` 只允许通过旧研报归档工具写入，不得改变任何当前事实。
 - 修改共享状态后重建自选池并执行 `python -m trading_os validate`。
 
