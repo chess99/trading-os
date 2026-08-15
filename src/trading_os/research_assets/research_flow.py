@@ -72,6 +72,30 @@ _THREAD_LOCKS: dict[str, threading.RLock] = {}
 _THREAD_LOCKS_GUARD = threading.Lock()
 
 
+def _has_refresh_comparison_table(report_markdown: str) -> bool:
+    lines = report_markdown.splitlines()
+    for index, line in enumerate(lines):
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if tuple(cells) != _REFRESH_COMPARISON_FIELDS:
+            continue
+        if index + 2 >= len(lines):
+            return False
+        separator = [
+            cell.strip()
+            for cell in lines[index + 1].strip().strip("|").split("|")
+        ]
+        if len(separator) != len(_REFRESH_COMPARISON_FIELDS) or not all(
+            re.fullmatch(r":?-{3,}:?", cell) for cell in separator
+        ):
+            return False
+        values = [
+            cell.strip()
+            for cell in lines[index + 2].strip().strip("|").split("|")
+        ]
+        return len(values) == len(_REFRESH_COMPARISON_FIELDS) and all(values)
+    return False
+
+
 class ResearchFlowError(RuntimeError):
     """Base error for the compact research workflow."""
 
@@ -1622,13 +1646,12 @@ class ResearchFlow:
                 raise ValidationError("research task must be running before completion")
             if task.symbol != normalized["symbol"]:
                 raise ValidationError("research result symbol does not match task symbol")
-            if task.trigger_kind == "update" and not all(
-                field in normalized["report_markdown"]
-                for field in _REFRESH_COMPARISON_FIELDS
+            if task.trigger_kind == "update" and not _has_refresh_comparison_table(
+                normalized["report_markdown"]
             ):
                 raise ValidationError(
-                    "updated formal report must compare prior assumptions, current actuals, "
-                    "judgment changes, and valuation impact"
+                    "updated formal report must contain a populated comparison table for "
+                    "prior assumptions, current actuals, judgment changes, and valuation impact"
                 )
             state = states.setdefault(
                 normalized["symbol"],

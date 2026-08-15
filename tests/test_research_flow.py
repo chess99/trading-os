@@ -281,7 +281,27 @@ def test_updated_report_requires_prior_actual_change_valuation_comparison(tmp_pa
             .replace("前次假设", "历史预期")
         ),
     )
-    with pytest.raises(ValidationError, match="updated formal report must compare"):
+    with pytest.raises(ValidationError, match="populated comparison table"):
+        flow.apply_result(bad, task_id=refresh.enqueued_task.task_id, at=LATER)
+    assert flow.list_tasks()[0].status is TaskStatus.RUNNING
+
+
+def test_updated_report_rejects_comparison_labels_without_data_row(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    _complete(flow, _covered("CN:601138"))
+    refresh = flow.record_update(_update("CN:601138", "invalidated"))
+    flow.dispatch_tasks(limit=1, at=LATER)
+    base = _covered("CN:601138")
+    bad = replace(
+        base,
+        information_cutoff=LATER,
+        report_markdown=(
+            base.report_markdown.replace("2026-08-08", "2026-08-09").replace(
+                "| 需求增长 | 需求增长 | 不变 | 区间不变 |", ""
+            )
+        ),
+    )
+    with pytest.raises(ValidationError, match="populated comparison table"):
         flow.apply_result(bad, task_id=refresh.enqueued_task.task_id, at=LATER)
     assert flow.list_tasks()[0].status is TaskStatus.RUNNING
 
