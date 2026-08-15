@@ -46,9 +46,13 @@ def _covered(symbol: str) -> ResearchResult:
         source_urls=("https://example.com/annual-report",),
         report_markdown=(
             "# 示例公司完整研究\n\n"
+            "信息截止：2026-08-08\n\n"
+            "## 一句话结论\n\n需求增长成立，但现金流仍需验证。\n\n"
             "## 商业与竞争\n\n核心产品需求增长，竞争位置取决于客户验证。\n\n"
-            "## 财务与估值\n\n现金流转化决定估值上限。\n\n"
-            "## 风险\n\n客户集中，且资本开支回报仍待验证。"
+            "## 财务质量与股东现金收益\n\n现金流转化决定估值上限。\n\n"
+            "## 估值与核心合理价值区间\n\n核心合理价值区间：58—82 元。\n\n"
+            "## 核心风险与证伪\n\n客户集中，且资本开支回报仍待验证。\n\n"
+            "## 来源清单\n\n- https://example.com/annual-report"
         ),
     )
 
@@ -66,7 +70,15 @@ def _ignored(symbol: str) -> ResearchResult:
         valuation_note="无法建立不依赖外部融资的普通股价值。",
         event_triggers=("下一份年报显示自由现金流持续转正",),
         source_urls=("https://example.com/annual-report",),
-        report_markdown="# 示例公司完整研究\n\n业务、财务、治理、估值和风险均已独立说明。",
+        report_markdown=(
+            "# 示例公司完整研究\n\n"
+            "信息截止：2026-08-08\n\n"
+            "## 一句话结论\n\n正式研究后仍不值得持续覆盖。\n\n"
+            "## 财务质量\n\n增长依赖持续融资。\n\n"
+            "## 估值\n\n无法建立不依赖外部融资的普通股价值。\n\n"
+            "## 核心风险\n\n普通股持续稀释。\n\n"
+            "## 来源清单\n\n- https://example.com/annual-report"
+        ),
     )
 
 
@@ -176,6 +188,61 @@ def test_new_formal_report_cannot_restore_a_price_review_line(tmp_path: Path):
         report_markdown="# 完整研究\n\n核心合理价值区间 58—82 元，关注价格 55 元。",
     )
     with pytest.raises(ValidationError, match="security-price trigger"):
+        flow.apply_result(bad, task_id="missing", at=AT)
+    assert not flow.state_path.exists()
+
+
+@pytest.mark.parametrize(
+    "fragment",
+    [
+        "鉴于当前价值区间使用跨周期正常化经营而非单期利润直接年化，区间不变。",
+        "半年报主要会计数据表的可复核摘录如下：营业收入 100 亿元。",
+    ],
+)
+def test_formal_report_rejects_stitched_or_raw_financial_excerpt(
+    tmp_path: Path, fragment: str
+):
+    flow = ResearchFlow(tmp_path)
+    base = _covered("CN:601138")
+    bad = replace(base, report_markdown=f"{base.report_markdown}\n\n{fragment}")
+    with pytest.raises(ValidationError, match="must not stitch"):
+        flow.apply_result(bad, task_id="missing", at=AT)
+    assert not flow.state_path.exists()
+
+
+@pytest.mark.parametrize("retired_line", ["价值区间下沿", "重新复核价", "研究买入观察区"])
+def test_formal_report_rejects_retired_price_line_aliases(
+    tmp_path: Path, retired_line: str
+):
+    flow = ResearchFlow(tmp_path)
+    base = _covered("CN:601138")
+    bad = replace(base, report_markdown=f"{base.report_markdown}\n\n{retired_line}：55 元。")
+    with pytest.raises(ValidationError, match="security-price trigger"):
+        flow.apply_result(bad, task_id="missing", at=AT)
+
+
+def test_formal_report_rejects_duplicate_conclusion_or_cutoff(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    base = _covered("CN:601138")
+    duplicate_conclusion = replace(
+        base,
+        report_markdown=f"{base.report_markdown}\n\n## 一句话结论\n\n重复结论。",
+    )
+    with pytest.raises(ValidationError, match="exactly one one-sentence"):
+        flow.apply_result(duplicate_conclusion, task_id="missing", at=AT)
+
+    conflicting_cutoff = replace(
+        base,
+        report_markdown=f"{base.report_markdown}\n\n信息截止：2026-03-31",
+    )
+    with pytest.raises(ValidationError, match="exactly one information cutoff"):
+        flow.apply_result(conflicting_cutoff, task_id="missing", at=AT)
+
+
+def test_report_core_value_range_must_match_structured_value_range(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    bad = replace(_covered("CN:601138"), value_range=ValueRange(40, 50))
+    with pytest.raises(ValidationError, match="must match value_range"):
         flow.apply_result(bad, task_id="missing", at=AT)
     assert not flow.state_path.exists()
 
@@ -319,8 +386,13 @@ def test_same_day_full_refresh_appends_complete_report(tmp_path: Path):
         )
     )
     flow.dispatch_tasks(limit=1, at=AT)
+    refreshed_result = _covered("CN:601138")
     second = flow.apply_result(
-        replace(_covered("CN:601138"), value_range=ValueRange(62, 88)),
+        replace(
+            refreshed_result,
+            value_range=ValueRange(62, 88),
+            report_markdown=refreshed_result.report_markdown.replace("58—82", "62—88"),
+        ),
         task_id=refresh.enqueued_task.task_id,
         at=AT,
     )

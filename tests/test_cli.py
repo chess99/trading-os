@@ -38,7 +38,15 @@ def _full_result(symbol: str, task_id: str | None = None) -> dict:
         "event_triggers": ["下一期财报发布"],
         "source_urls": ["https://example.com/report"],
         "information_cutoff": AT,
-        "report_markdown": "# 示例公司\n\n需求成立，但现金流转化仍需验证。",
+        "report_markdown": (
+            "# 示例公司\n\n"
+            "信息截止：2026-08-08\n\n"
+            "## 一句话结论\n\n需求成立，但现金流转化仍需验证。\n\n"
+            "## 财务质量与股东现金收益\n\n现金流转化仍需验证。\n\n"
+            "## 估值与核心合理价值区间\n\n核心合理价值区间：58—82 元。\n\n"
+            "## 核心风险\n\n客户集中且资本开支回报可能不及预期。\n\n"
+            "## 来源清单\n\n- https://example.com/report"
+        ),
     }
     return {"task_id": task_id, "at": AT, "result": payload} if task_id else payload
 

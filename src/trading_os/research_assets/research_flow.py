@@ -23,7 +23,8 @@ _SYMBOL_RE = re.compile(r"^CN:\d{6}$")
 _DATED_MARKDOWN_RE = re.compile(r"^(?P<date>\d{4}-\d{2}-\d{2})(?:-(?P<sequence>\d{2}))?\.md$")
 _FORMAL_REPORT_RE = _DATED_MARKDOWN_RE
 _SECURITY_PRICE_TRIGGER_RE = re.compile(
-    r"收盘价|股价|价格线|价格触发|重新武装|重装触发器|关注价|买入价|安全边际价格"
+    r"收盘价|股价|价格线|价格触发|重新武装|重装触发器|关注价|买入价|安全边际价格|"
+    r"价值区间下沿|重新复核价|研究买入观察区"
 )
 _REPORT_DEFERRAL_RE = re.compile(
     r"本次裁决不重复发明|完整业务分析可沿时间线回看|"
@@ -32,9 +33,34 @@ _REPORT_DEFERRAL_RE = re.compile(
     r"(?:前序|上一版|历史|原)报告.{0,30}(?:继续有效|共同部分)"
 )
 _REPORT_SECURITY_PRICE_LINE_RE = re.compile(
-    r"关注价(?:格)?|买入价|重新武装|安全边际价格|"
+    r"关注价(?:格)?|买入价|重新武装|安全边际价格|价值区间下沿|"
+    r"重新复核价|研究买入观察区|观察区|触发区|"
     r"price_levels|price_monitor|deep_review|rearm_above"
 )
+_REPORT_STITCHING_RE = re.compile(
+    r"鉴于当前价值区间使用跨周期正常化经营而非单期利润直接年化|"
+    r"(?:主要会计数据表|合并利润表主要数据).{0,30}可复核摘录如下"
+)
+_REPORT_INFORMATION_CUTOFF_RE = re.compile(
+    r"信息截止(?:时间|时点|日)?\s*[：:=为]?\s*"
+    r"(?P<year>20\d{2})[-年/](?P<month>\d{1,2})[-月/](?P<day>\d{1,2})日?"
+)
+_REPORT_ONE_SENTENCE_HEADING_RE = re.compile(
+    r"^#{1,6}\s+(?:\d+(?:\.\d+)*[.、]?\s*)?一句话结论\s*$", re.MULTILINE
+)
+_REPORT_CORE_VALUE_RANGE_RE = re.compile(
+    r"核心合理价值区间(?:为|是|\s|[：:])*"
+    r"(?P<low>\d+(?:,\d{3})*(?:\.\d+)?)\s*"
+    r"(?:—|–|-|至|~|～)\s*"
+    r"(?P<high>\d+(?:,\d{3})*(?:\.\d+)?)"
+)
+_REQUIRED_REPORT_HEADINGS = {
+    "一句话结论": re.compile(r"一句话结论"),
+    "财务质量": re.compile(r"财务质量"),
+    "估值": re.compile(r"估值|核心合理价值区间"),
+    "风险": re.compile(r"风险"),
+    "来源": re.compile(r"来源"),
+}
 _THREAD_LOCKS: dict[str, threading.RLock] = {}
 _THREAD_LOCKS_GUARD = threading.Lock()
 
@@ -1218,6 +1244,65 @@ class ResearchFlow:
             raise ValidationError(
                 "formal report must not define a security-price trigger or review line"
             )
+        if _REPORT_STITCHING_RE.search(report_markdown):
+            raise ValidationError(
+                "formal report must not stitch a financial-report excerpt onto prior analysis"
+            )
+
+        report_headings = tuple(
+            line for line in report_markdown.splitlines() if re.match(r"^#{1,6}\s+", line)
+        )
+        missing_headings = [
+            label
+            for label, pattern in _REQUIRED_REPORT_HEADINGS.items()
+            if not any(pattern.search(heading) for heading in report_headings)
+        ]
+        if missing_headings:
+            raise ValidationError(
+                "formal report is missing required headings: " + ", ".join(missing_headings)
+            )
+        if len(_REPORT_ONE_SENTENCE_HEADING_RE.findall(report_markdown)) != 1:
+            raise ValidationError(
+                "formal report requires exactly one one-sentence conclusion heading"
+            )
+
+        cutoff_matches = tuple(_REPORT_INFORMATION_CUTOFF_RE.finditer(report_markdown))
+        if len(cutoff_matches) != 1:
+            raise ValidationError(
+                "formal report requires exactly one information cutoff declaration"
+            )
+        cutoff_match = cutoff_matches[0]
+        declared_cutoff = (
+            f"{cutoff_match.group('year')}-"
+            f"{int(cutoff_match.group('month')):02d}-"
+            f"{int(cutoff_match.group('day')):02d}"
+        )
+        if declared_cutoff != information_cutoff[:10]:
+            raise ValidationError(
+                "formal report information cutoff must match the structured result"
+            )
+
+        if value_range is not None:
+            range_match = _REPORT_CORE_VALUE_RANGE_RE.search(report_markdown)
+            if range_match is None:
+                raise ValidationError(
+                    "formal report must state the structured value_range as its "
+                    "core reasonable value range"
+                )
+            report_low = float(range_match.group("low").replace(",", ""))
+            report_high = float(range_match.group("high").replace(",", ""))
+            if not (
+                math.isclose(report_low, value_range["low"], rel_tol=1e-9, abs_tol=0.01)
+                and math.isclose(
+                    report_high,
+                    value_range["high"],
+                    rel_tol=1e-9,
+                    abs_tol=0.01,
+                )
+            ):
+                raise ValidationError(
+                    "formal report core reasonable value range must match value_range"
+                )
         if value_range is None and valuation_note is None:
             raise ValidationError("research result requires value_range or valuation_note")
         return {

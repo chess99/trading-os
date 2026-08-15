@@ -63,7 +63,15 @@ def _current_result() -> ResearchResult:
         event_triggers=("下一份财报",),
         source_urls=("https://example.com/current",),
         information_cutoff=AT,
-        report_markdown="# 甲公司当前研究\n\n这是当前有效研究。",
+        report_markdown=(
+            "# 甲公司当前研究\n\n"
+            "信息截止：2026-08-09\n\n"
+            "## 一句话结论\n\n这是当前有效研究。\n\n"
+            "## 财务质量\n\n现金收益可以复核。\n\n"
+            "## 估值与核心合理价值区间\n\n核心合理价值区间：10—20 元。\n\n"
+            "## 核心风险\n\n当前风险需要持续观察。\n\n"
+            "## 来源清单\n\n- https://example.com/current"
+        ),
     )
 
 
