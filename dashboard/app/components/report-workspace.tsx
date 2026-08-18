@@ -63,7 +63,7 @@ function ReportStatus({ status }: { status: ResearchStatus }) {
 }
 
 function reportSourceLabel(quote?: Quote) {
-  if (!quote) return "最近收盘";
+  if (!quote) return "行情暂缺";
   return quote.source === "tencent" ? "腾讯行情" : "东方财富备援";
 }
 
@@ -281,7 +281,7 @@ export function ReportWorkspace({ initialTicker }: ReportWorkspaceProps) {
                 </div>
                 <div className="reader-quote">
                   <span>现价</span>
-                  <strong>¥{formatPrice(quote?.price ?? selected.lastClose)}</strong>
+                  <strong>¥{formatPrice(quote?.price)}</strong>
                   {quote?.changePercent !== null && quote?.changePercent !== undefined ? (
                     <small className={quote.changePercent > 0 ? "price-up" : quote.changePercent < 0 ? "price-down" : "price-flat"}>
                       {quote.changePercent > 0 ? "+" : ""}{quote.changePercent.toFixed(2)}%

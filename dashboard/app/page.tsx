@@ -4,7 +4,7 @@ import { DashboardClient } from "./components/dashboard-client";
 
 export const metadata: Metadata = {
   title: "研究决策台",
-  description: "从全市场研究状态中发现优先复核机会，并浏览全部公司与正式研报。",
+  description: "浏览全市场研究状态、完整正式研报及实时价格相对价值区间的机械位置。",
 };
 
 export default function Home() {

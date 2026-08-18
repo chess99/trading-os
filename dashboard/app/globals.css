@@ -2231,6 +2231,40 @@ a {
   gap: 7px;
 }
 
+.quote-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quote-controls time {
+  color: var(--muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 9px;
+}
+
+.quote-refresh {
+  min-height: 26px;
+  padding: 0 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 7px;
+  color: var(--ink-soft);
+  background: var(--paper);
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.quote-refresh:hover:not(:disabled),
+.quote-refresh:focus-visible:not(:disabled) {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.quote-refresh:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
 .quote-status i {
   width: 6px;
   height: 6px;
@@ -2519,5 +2553,13 @@ a {
     align-items: flex-start;
     flex-direction: column;
     gap: 5px;
+  }
+
+  .quote-controls {
+    width: 100%;
+  }
+
+  .quote-refresh {
+    margin-left: auto;
   }
 }

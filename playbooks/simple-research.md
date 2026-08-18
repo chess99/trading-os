@@ -2,167 +2,161 @@
 
 ## 目标
 
-系统先完成一次全市场基线，此后只处理新增公司、重大变化和每日收盘价格触发。初筛负责选择研究对象，不负责估值；单公司研究负责形成可持续维护的当前报告和触发条件。
+系统先完成一次全市场基线，此后只处理新增公司和足以影响研究的新事实。初筛负责选择研究对象；单公司研究负责形成完整、自足的当前报告。证券价格不是研究事实，不触发复核或任务。
 
 核心原则：
 
 1. 主 Agent 批量判断公司是否值得进行一次正式研究。
-2. 未正式研究的公司不得设置价格触发。
-3. 所有候选使用同一份 `prompts/company/standard-deep-research.md`，一家公司由一个 Agent 端到端完成。
-4. 不设置研究强度等级、分钟预算、复核 Agent、承保、经理审批或跨 Agent 往返。
+2. 所有候选使用同一份 `prompts/company/standard-deep-research.md`，一家公司由一个 Agent 端到端完成。
+3. 正式报告是某个信息截止时点的完整研究快照，必须脱离历史报告独立可读。
+4. 估值、正常化经营、核心逻辑、风险排序或正式结论变化，必须生成新的完整报告。
+5. 研究由公司、财务、治理、资本结构和行业经营变量驱动，不由股票价格驱动。
 
-## 三类事实分开维护
+## 三类状态
 
-### 证券范围
-
-`universe_status`：
-
-- `active`：当前属于研究范围；
-- `inactive`：退市、终止上市、身份失效或移出范围。
-
-证券身份不是投资判断。`inactive` 不得创建任务或价格监控，但历史研究保留。
-
-首次或增量补录可使用 `universe register`。日后拿到完整上市证券快照时使用 `universe sync`：快照内证券设为 active，快照外证券设为 inactive；退出范围会取消活动任务和价格监控但不删除报告，重新进入范围时恢复 covered 监控，并重新排队此前未完成的 candidate/stale。
-
-### 公司研究状态
-
-`status`：
+证券范围使用 `active / inactive`；公司研究状态使用：
 
 - `unseen`：尚未完成首次初筛；
-- `ignore`：当前不值得投入正式研究或正式研究后不值得持续监控；
-- `candidate`：已被主 Agent 选中，等待或正在正式研究；
-- `covered`：已有当前有效正式报告，值得进行价格或事件监控；
-- `stale`：重大新事实使旧报告或估值失效，暂停价格监控并等待更新。
+- `ignore`：当前不值得正式研究，或正式研究后不值得持续覆盖；
+- `candidate`：已被选中，等待或正在正式研究；
+- `covered`：已有当前有效正式报告，值得持续维护；
+- `stale`：重大新事实已使当前报告失效，等待完整更新。
 
-“研究过”是报告历史，“当前是否可用”才是状态。只有 active `covered` 公司进入 `research/watchlist.jsonl`。
-
-### 研究任务状态
-
-活动队列只使用：
-
-- `queued`：等待领取；
-- `running`：一个 Agent 正在研究。
-
-任务完成后从活动队列移除。失败或中断的 `running` 任务显式退回 `queued`。同一公司最多一个活动任务，任务只允许绑定 `candidate` 或 `stale`。
-
-## 状态硬约束
-
-- `unseen`：没有筛选结论、当前报告指针、任务或价格线；隔离历史档案不受影响。
-- `ignore`：没有活动价格监控；正式研究后的 ignore 可以保留最新正式报告指针。
-- `candidate`：有选入理由和时间，没有当前有效报告指针及价格线。
-- `covered`：必须指向最新的非空日期化正式报告，并有信息截止时间、关键逻辑、风险、来源，以及价格或事件触发；无法可靠估值时必须解释原因。
-- `stale`：必须保留旧报告和明确失效原因；价格监控关闭，只允许创建更新研究任务。
-- 价格命中只改变触发器的 armed/hit 状态，不改变公司研究状态。
-- 持仓、仓位和账户信息不进入公司研究状态。
+活动任务只使用 `queued / running`。同一公司最多一个活动任务，任务只绑定 `candidate / stale`。只有 active `covered` 进入 `research/watchlist.jsonl`。
 
 ## 一次性全市场基线
 
-首次建立基线时，冻结证券范围和信息截止时间。主 Agent分批浏览压缩事实，对每家公司只做两个判断：
+主 Agent 分批浏览 active unseen 公司的压缩事实，每家公司只做：
 
-- `ignore`：当前不值得占用一次完整单公司研究资源；
-- `research_now`：商业质量、错价可能性、变化程度或关键问题的信息价值值得完成正式研究。
+- `ignore`：当前不值得占用完整研究资源；
+- `research_now`：商业质量、错价可能性、变化程度或关键问题的信息价值值得正式研究。
 
-`research_now` 是动作：写入 `candidate` 并创建唯一任务。初筛不输出价值区间、目标价、买点或价格触发，也不为每家公司生成 Markdown。
+`research_now` 写入 `candidate` 并创建唯一任务。初筛不估值、不设置目标价或买点，也不生成公司 Markdown。不得按数量目标填队列，不得用单一财务指标机械决定。
 
-不得按数量目标填队列，也不得因市值、行业、亏损或单一指标机械决定。程序可以准备证券身份、业务、利润、现金流、债务、估值和风险摘要，但主 Agent 对整批作最终判断。
+## 单公司完整研究
 
-基线批次只接受 active `unseen` 公司；混入任何已判断公司时整批失败，不产生部分写入。基线完成后不再定期重跑全市场，只处理新增与变化。
-
-## 单公司统一研究
-
-只有 `candidate` 和 `stale` 可以派发。不同公司可以独立并行，同一公司始终只有一个 Agent。
-
-Agent 必须使用统一提示词，完成商业模式、竞争、财务质量、治理、资本配置、市场预期、估值和风险检查。报告篇幅可以随复杂度变化，但不能自行选择研究等级或跳过核心问题。
-
-结果只有：
-
-- `covered`：报告当前有效且值得持续监控；
-- `ignore`：完成正式研究后仍不值得持续监控。
-
-两种结果都向 `research/companies/CN/{ticker}/reports/` 追加一份日期化报告。报告可以较短，但必须有来源、估值判断和证伪依据。不得覆盖以前的正式报告。
-
-`covered` 若能可靠估值，给出合理价值区间和关注价；若无法可靠估值但事件具有持续研究价值，可以只做事件监控，并填写无法估值原因。`ignore` 不得激活价格触发。
-
-## 报告存档
-
-新机制正式报告使用：
+结果只有 `covered / ignore`。worker 先只返回结构化候选结果；协调器完成格式、财报对照、估值算术、方法主次和来源核验后，才通过 `research complete` 向以下目录原子追加正式报告：
 
 ```text
 research/companies/CN/{ticker}/reports/YYYY-MM-DD.md
-research/companies/CN/{ticker}/reports/YYYY-MM-DD-02.md  # 同一天第二份
+research/companies/CN/{ticker}/reports/YYYY-MM-DD-02.md
 ```
 
-`research_state.jsonl.report_path` 必须指向时间线上最新的正式报告，它就是 current；不生成 `current.md` 副本，也不使用 `stale` 文件后缀。公司转为 `stale` 时由状态说明旧报告已经失效。
+报告必须完整说明商业模式、竞争、行业、财务质量、普通股股东口径、治理、资本配置、市场隐含预期、估值、风险、结论和来源。不得写“详见前序报告”“历史分析继续有效”“沿时间线回看”来跳过正文。
 
-迁移前旧稿放在 `research/companies/CN/{ticker}/legacy/YYYY-MM-DD.md`。每家公司最多一份，由固定 Git 标签中的候选按证券身份、报告类型、内容完整度和日期选优。`legacy/` 永远不修改公司状态，不参与 current、估值、任务、自选池和价格扫描；正文顶部必须显示历史资料警告。
+候选结果未通过验收时直接丢弃并重新排队：不写报告文件，不推进 `report_path`，不占用同日 `-02/-03` 序号。只有通过验收的报告才进入不可变正式时间线。若历史中发现能够确认从未完成验收的误入稿，按数据修复删除该稿及其补写的质量审计日志，恢复前一份合格报告和原始研究任务；这不构成删除合格历史报告。
 
-`reports/` 和 `legacy/` 都进入 Git，完整克隆仓库即可恢复报告正文。是否参与当前研究状态只由目录语义和 `report_path` 决定，与 Git 跟踪状态无关。
+`value_range` 是截至信息截止日、由已验证事实和正常化经营支持的普通股核心合理价值区间。它不是买入价，不包含具体投资决策人的安全边际、账户约束或仓位决定。无法可靠估值时填 `valuation_note` 说明原因。
 
-## 自选池与每日收盘
+定期财报默认需要新的完整报告。公告或其他事实即使不改变商业逻辑，只要改变正常化利润、估值参数、`value_range`、风险排序或 `covered / ignore`，也必须生成完整新报告，不能只写 update。
 
-`research/watchlist.jsonl` 是 active `covered` 的确定性投影，不是人工维护的第二套账本。
+财报更新不得采用“新财报摘录＋旧报告正文”的拼接方式。必须重新核验整份报告，并完成以下验收：
 
-每日收盘：
+- 区分累计、报告期单季、上年同期单季和上一季度，无法可靠拆分时明确说明；
+- 对关键变量说明“前次假设—本期实际—判断变化—估值影响”；
+- 全文只保留一套信息截止、一套一句话结论和一套最终判断；
+- 关键数字、普通股口径、股本、报告时点价格和估值假设重新核验；
+- 两种估值方法中枢相差超过 25% 时说明差异并指定核心方法；
+- 核心合理价值、悲观情景和投资决策安全边际分开表达，`value_range` 与正文核心合理价值区间一致。
 
-1. 完整获取所有带价格线的 covered 公司收盘价；
-2. 首次跌入触发区时提示，离开触发区后重新武装；
-3. 主 Agent 简短检查原逻辑和最新信息；
-4. 只有基本面或估值框架已经失效时，才把公司转为 `stale` 并更新研究。
+PDF 抽取文本和财报表格可以作为工作底稿，不能未经整理直接进入正式报告。新提交缺少“一句话结论、财务质量、估值、风险、来源”标题，含退役价格线，含已知拼接模板，截止日冲突或正文区间与结构化 `value_range` 不一致时，协调器拒绝写入。
 
-缺少任意受监控公司报价时整批失败。价格命中不自动交易，也不自动创建完整研究任务。
+## 公司研究日志
 
-## 财报与重大事件
+不越过当前正式报告边界的事件，可以追加：
 
-公告扫描覆盖全部 active 公司，包括 `ignore`。程序找出新增财报、业绩预告、重大合同、处罚、控制权和资本结构变化，主 Agent 只记录确有状态影响的公司。
+```text
+research/companies/CN/{ticker}/updates/YYYY-MM-DD[-NN].md
+```
+
+update 只允许三种影响：
+
+- `reaffirmed`：新事实确认当前报告；
+- `monitor`：信息仍在原报告边界内，继续观察；
+- `invalidated`：宣告当前报告失效，转 `stale` 并创建完整研究任务。
+
+update 必须引用基础正式报告、事件 ID、事件摘要、分析、结论和来源。它不得修改：
+
+- `value_range` 或正常化利润；
+- 核心逻辑或风险排序；
+- `covered / ignore`；
+- 正式报告指针或信息截止时间。
+
+每次 update 都必须在公司状态行推进 `updated_at`，并写入 `last_update`：日志路径、影响类型、审阅时间、该事件的信息截止点、事件 ID、摘要、来源和基础报告。这个字段是跨系统审计凭据，不会把 update 冒充为新的正式报告，也不会改写正式报告的 `information_cutoff`。
+
+`invalidated` 只说明为什么旧报告已经不能使用；替代结论必须由后续完整正式报告给出。
+
+已有正式报告的公司不得再通过全市场初筛的 `research_now` 路径直接失效。处理公告时必须先比较事件事实时间与当前报告的 `information_cutoff`：
+
+- 事实时间不晚于报告截止点：视为已被当前报告吸收，不改变状态，也不重复排队；
+- 事实时间晚于报告截止点、但没有越过报告边界：写 `reaffirmed` 或 `monitor` update；
+- 事实时间晚于报告截止点、且足以改变正式报告：写带明确 `information_cutoff` 的 `invalidated` update，由协调器转 `stale` 并创建完整研究任务。
+
+`stale` 的失效时间不得早于当前正式报告截止点，且必须引用实际存在的 `invalidated` update 文件。这样即使公告扫描回补旧窗口，也不能用历史公告推翻更新后的正式报告。
+
+## 触发机制
+
+公告扫描覆盖全部 active 公司，包括 `ignore`。典型触发包括：
+
+- 年报、半年报、一季报和三季报；
+- 业绩预告、重大合同、并购、融资、股本和控制权变化；
+- 处罚、治理、关联交易和资本配置变化；
+- 铜价、产品售价、运价、利率、汇率、产能利用率等经营或行业变量。
+
+证券自身的收盘价、涨跌幅、估值区间穿越不触发研究。仓库不保存 `price_levels`、`price_monitor`、armed/hit/rearm 或每日收盘扫描结果。
+
+公告扫描与完整研究是两条独立链路：扫描从最近一次成功检查点直接推进到当前时间，完成公告发现、裁决、研究日志和排队；独立的研究队列消费者再通过 `research next` 逐家公司完成完整研究。扫描不得顺带消费队列，也不应固定只清理一个很短的历史切片；只有在数据源故障恢复时才临时缩小窗口。
 
 典型流转：
 
 ```text
-ignore + material_event   -> candidate 或 ignore
-candidate + new_context   -> candidate（更新任务理由）
-covered + non_material    -> covered
-covered + invalidation    -> stale
-covered + decisive_failure -> ignore
-stale + research_complete -> covered 或 ignore
+ignore + material_event       -> candidate 或 ignore
+covered + fact_in_range       -> reaffirmed / monitor update
+covered + report_invalidated  -> invalidated update -> stale + full research
+covered + valuation_change    -> stale + full research
+stale + research_complete     -> covered 或 ignore
 ```
 
-全市场公告扫描负责让池外公司重新进入；公司特定事件触发帮助维护 covered 结论。无实质变化不写状态，不创建任务。
+## 行情和网站边界
 
-## 状态维护方式
+网站是附带的只读展示，不是仓库的主要产品。它可以现场获取行情，并机械展示：
+
+```text
+当前价格 / value_range.low
+当前价格 / value_range 中枢
+```
+
+这些值不得写回研究状态，不得称为买入信号、关注价或“安全边际充分”。行情缺失时显示 `—`，不得从退役的价格运行状态回退。
+
+## 状态维护
 
 唯一事实源：
 
-- `coverage/cn-a/research_state.jsonl`：证券范围、公司研究状态、当前结论和触发器运行状态；
-- `coverage/cn-a/research_queue.jsonl`：当前 queued/running 任务；
-- `research/companies/CN/{ticker}/reports/`：新机制正式报告时间线，状态中的 `report_path` 指向最新一份；
-- `research/companies/CN/{ticker}/legacy/`：每家公司最多一份的隔离历史旧稿；
-- `research/watchlist.jsonl`：从 active covered 状态派生；
-- `coverage/cn-a/event_scan_state.json`：公告扫描成功检查点。
+- `coverage/cn-a/research_state.jsonl`：证券范围与公司研究状态；
+- `coverage/cn-a/research_queue.jsonl`：当前任务；
+- `research/companies/CN/{ticker}/reports/`：完整正式报告；
+- `research/companies/CN/{ticker}/updates/`：研究日志；
+- `research/companies/CN/{ticker}/legacy/`：隔离旧稿；
+- `research/watchlist.jsonl`：active covered 的确定性投影；
+- `coverage/cn-a/event_scan_state.json`：公告扫描检查点。
 
-所有共享 JSONL 只由协调器在锁内原子写入。单公司 Agent只返回最终结构化结果，不直接修改共享文件。每次状态变更后重建自选池并执行 `python -m trading_os validate`。
+共享 JSONL 只由协调器原子写入。worker 只返回最终结构化结果。状态变更后重建自选池并执行 `python -m trading_os validate`。
 
-一次性旧状态迁移：
-
-```bash
-python -m trading_os state migrate-v2 --at <带时区时间>
-```
-
-迁移规则：旧 `researched` 变为 `covered`；旧 `watch` 若没有正式报告变为 `candidate` 并清除价格线。需要重新执行全市场基线时，先准备好筛选输入，再运行：
+一次性迁移：
 
 ```bash
-python -m trading_os state prepare-rebaseline --at <带时区时间>
+python -m trading_os state migrate-v3 --at <带时区时间>
 ```
 
-该命令保留 active `covered`，把其余 active 公司重置为 `unseen`，然后用新的 `ignore / research_now` 批次完整覆盖。
+v3 删除证券价格层、价格运行状态和证券价格型事件条件，保留财报、公司事件及经营变量触发。
 
 ## 验收
 
-- active 范围内没有遗留 `unseen`；
-- 只有 `candidate/stale` 有活动任务；
-- candidate 没有价格线；
-- covered 都有有效报告及价格或事件触发；
-- stale 已暂停价格监控并记录失效原因；
+- active 范围没有遗留 `unseen`；
+- 只有 `candidate / stale` 有活动任务；
+- current 报告是最新、非空、自足的日期化完整报告；
+- 状态和自选池不存在证券价格触发字段；
+- update 没有修改正式估值或结论，invalidated 正确创建完整研究任务；
 - 自选池与 active covered 完全一致；
-- 每日价格扫描只覆盖 covered；
 - 公告扫描覆盖全部 active 公司；
 - `python -m trading_os validate` 通过。

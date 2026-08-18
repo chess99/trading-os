@@ -25,18 +25,30 @@ test("server-renders the Trading OS decision workspace", async () => {
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
 
-test("the decision workspace stays table-first and separates research prices", async () => {
+test("the decision workspace stays table-first and only derives value-range position", async () => {
   const [dashboard, header] = await Promise.all([
     readFile(new URL("../app/components/dashboard-client.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/app-header.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(dashboard, />现价</);
   assert.match(dashboard, />合理价值</);
-  assert.match(dashboard, />关注价</);
-  assert.match(dashboard, />高吸引力价</);
+  assert.match(dashboard, />相对下沿</);
+  assert.match(dashboard, />相对中枢</);
+  assert.match(dashboard, /pricePosition/);
+  assert.doesNotMatch(dashboard, /关注复核价|深度复核价|进入复核区|opportunityPriority/);
   assert.match(dashboard, /-webkit-line-clamp: 6|summary-cell/);
   assert.doesNotMatch(dashboard, /TopOpportunity|OpportunityQueue|排序为什么把这些公司放在前面/);
   assert.doesNotMatch(header, /只读研究视图/);
+});
+
+test("quotes refresh during A-share trading hours and can be refreshed manually", async () => {
+  const dashboard = await readFile(new URL("../app/components/dashboard-client.tsx", import.meta.url), "utf8");
+  assert.match(dashboard, /QUOTE_REFRESH_INTERVAL_MS = 5 \* 60 \* 1000/);
+  assert.match(dashboard, /timeZone: "Asia\/Shanghai"/);
+  assert.match(dashboard, /isChinaMarketOpen/);
+  assert.match(dashboard, /setInterval\(refreshIfDue, 60_000\)/);
+  assert.match(dashboard, /行情时间/);
+  assert.match(dashboard, /onClick=\{\(\) => void refreshQuotes\(\)\}/);
 });
 
 test("server-renders the report library and detail route", async () => {
@@ -58,6 +70,7 @@ test("generated research catalog remains a faithful compact projection", async (
   assert.equal(catalog.companies.length, sourceRows.length);
   assert.ok(catalog.companies.some((company) => company.status === "covered" && company.reports.length));
   assert.ok(catalog.companies.every((company) => !JSON.stringify(company).includes("legacy/")));
+  assert.ok(catalog.companies.every((company) => !("priceLevels" in company) && !("lastClose" in company)));
 
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   const layout = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");

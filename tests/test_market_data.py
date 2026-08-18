@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import urllib.error
 from datetime import datetime
+from io import BytesIO
 
 import pytest
 
+import trading_os.research_assets.market_data as market_data_module
 from trading_os.research_assets.market_data import (
     CNINFO_STOCK_DIRECTORY_ENDPOINT,
     MARKET_TIMEZONE,
@@ -84,10 +87,16 @@ def _page(
 def _stock_directory(*entries: tuple[str, str]) -> dict[str, object]:
     return {
         "stockList": [
-            {"code": code, "orgId": org_id, "category": "A股"}
-            for code, org_id in entries
+            {"code": code, "orgId": org_id, "category": "A股"} for code, org_id in entries
         ]
     }
+
+
+def test_cninfo_title_allows_chinese_document_brackets_but_rejects_html():
+    assert market_data_module._clean_title("修订<公司章程>的公告") == "修订<公司章程>的公告"
+    assert market_data_module._clean_title("<em>2026年</em>半年度报告") == "2026年半年度报告"
+    with pytest.raises(MarketDataError, match="unexpected markup"):
+        market_data_module._clean_title("<span>重大事项</span>")
 
 
 def test_tencent_daily_close_is_exact_batched_unadjusted_and_identity_checked():
@@ -155,14 +164,59 @@ def test_tencent_accepts_exchange_corporate_action_name_prefix(temporary_name: s
     assert closes[0].name == temporary_name
 
 
+def test_tencent_accepts_exchange_short_name_inside_legal_issuer_name():
+    closes = fetch_tencent_daily_closes(
+        {"CN:920065": "深圳千岸科技股份有限公司"},
+        trading_date="2026-08-07",
+        fetched_at="2026-08-07T15:10:00+08:00",
+        fetcher=lambda _: _tencent_row("bj920065", name="千岸科技"),
+    )
+
+    assert closes[0].symbol == "CN:920065"
+    assert closes[0].name == "千岸科技"
+
+
+def test_cninfo_fetch_retries_transient_http_failure(monkeypatch):
+    attempts = 0
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def read(self):
+            return b"{}"
+
+    def fake_urlopen(_request, timeout):
+        nonlocal attempts
+        assert timeout == 30
+        attempts += 1
+        if attempts < 3:
+            raise urllib.error.HTTPError(
+                "https://www.cninfo.com.cn/",
+                599,
+                "temporary",
+                {},
+                BytesIO(),
+            )
+        return Response()
+
+    monkeypatch.setattr(market_data_module.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(market_data_module.time_module, "sleep", lambda _seconds: None)
+    request = market_data_module.urllib.request.Request("https://www.cninfo.com.cn/")
+
+    assert market_data_module._fetch_with_retry(request, "CNInfo test") == b"{}"
+    assert attempts == 3
+
+
 @pytest.mark.parametrize(
     ("response", "message"),
     [
         (_tencent_row("sz000001"), "count does not match"),
         (
-            "\n".join(
-                [_tencent_row("sz000001"), _tencent_row("sz000001")]
-            ),
+            "\n".join([_tencent_row("sz000001"), _tencent_row("sz000001")]),
             "duplicate quote",
         ),
         (
@@ -202,9 +256,7 @@ def test_tencent_accepts_exchange_corporate_action_name_prefix(temporary_name: s
             "before the official close",
         ),
         (
-            "\n".join(
-                [_tencent_row("sz000001"), _tencent_row("sh601138", close="0")]
-            ),
+            "\n".join([_tencent_row("sz000001"), _tencent_row("sh601138", close="0")]),
             "positive number",
         ),
     ],
@@ -317,9 +369,9 @@ def test_cninfo_accepts_json_bytes_and_zero_results():
             {
                 "totalAnnouncement": 2,
                 "totalRecordNum": 2,
-                "announcements": [_announcement(
-                    "1225000001", "000001", "2026-08-07T08:00:00+08:00"
-                )],
+                "announcements": [
+                    _announcement("1225000001", "000001", "2026-08-07T08:00:00+08:00")
+                ],
                 "hasMore": False,
                 "totalpages": 1,
             },
@@ -339,12 +391,14 @@ def test_cninfo_accepts_json_bytes_and_zero_results():
             {
                 "totalAnnouncement": 1,
                 "totalRecordNum": 1,
-                "announcements": [_announcement(
-                    "1225000001",
-                    "000001",
-                    "2026-08-07T08:00:00+08:00",
-                    url="https://example.com/finalpage/2026-08-07/1225000001.PDF",
-                )],
+                "announcements": [
+                    _announcement(
+                        "1225000001",
+                        "000001",
+                        "2026-08-07T08:00:00+08:00",
+                        url="https://example.com/finalpage/2026-08-07/1225000001.PDF",
+                    )
+                ],
                 "hasMore": False,
                 "totalpages": 0,
             },
@@ -363,9 +417,7 @@ def test_cninfo_fails_closed_on_incomplete_or_unofficial_response(payload, messa
 
 
 def test_cninfo_rejects_conflicting_duplicates():
-    first = _announcement(
-        "1225000001", "000001", "2026-08-07T08:00:00+08:00", title="甲公告"
-    )
+    first = _announcement("1225000001", "000001", "2026-08-07T08:00:00+08:00", title="甲公告")
     conflict = {**first, "announcementTitle": "乙公告"}
     payload = {
         "totalAnnouncement": 2,
@@ -464,9 +516,7 @@ def test_cninfo_company_scan_fails_before_query_when_directory_misses_security()
             ["CN:000001", "CN:601138"],
             "2026-08-07T00:00:00+08:00",
             "2026-08-08T00:00:00+08:00",
-            directory_fetcher=lambda _url: _stock_directory(
-                ("000001", "org000001")
-            ),
+            directory_fetcher=lambda _url: _stock_directory(("000001", "org000001")),
             fetcher=lambda _url, form: calls.append(dict(form)),
         )
 
@@ -475,9 +525,7 @@ def test_cninfo_company_scan_fails_before_query_when_directory_misses_security()
 
 def test_cninfo_company_scan_fails_closed_above_provider_page_limit():
     calls: list[dict[str, str]] = []
-    row = _announcement(
-        "1225000001", "000001", "2026-08-07T08:00:00+08:00"
-    )
+    row = _announcement("1225000001", "000001", "2026-08-07T08:00:00+08:00")
 
     def fetch(_: str, form: dict[str, str]) -> object:
         calls.append(dict(form))
@@ -494,9 +542,7 @@ def test_cninfo_company_scan_fails_closed_above_provider_page_limit():
             ["CN:000001"],
             "2026-08-07T00:00:00+08:00",
             "2026-08-08T00:00:00+08:00",
-            directory_fetcher=lambda _url: _stock_directory(
-                ("000001", "org000001")
-            ),
+            directory_fetcher=lambda _url: _stock_directory(("000001", "org000001")),
             fetcher=fetch,
             page_size=1,
         )
@@ -505,30 +551,22 @@ def test_cninfo_company_scan_fails_closed_above_provider_page_limit():
 
 
 def test_cninfo_company_scan_rejects_security_outside_requested_chunk():
-    unexpected = _announcement(
-        "1225000001", "601138", "2026-08-07T08:00:00+08:00"
-    )
+    unexpected = _announcement("1225000001", "601138", "2026-08-07T08:00:00+08:00")
 
     with pytest.raises(MarketDataError, match="unexpected security"):
         discover_cninfo_announcements_for_companies(
             ["CN:000001"],
             "2026-08-07T00:00:00+08:00",
             "2026-08-08T00:00:00+08:00",
-            directory_fetcher=lambda _url: _stock_directory(
-                ("000001", "org000001")
-            ),
-            fetcher=lambda _url, _form: _page(
-                [unexpected], total=1, has_more=False, page_size=30
-            ),
+            directory_fetcher=lambda _url: _stock_directory(("000001", "org000001")),
+            fetcher=lambda _url, _form: _page([unexpected], total=1, has_more=False, page_size=30),
         )
 
 
 def test_cninfo_company_scan_rejects_conflicting_ids_across_chunks():
     def fetch(_: str, form: dict[str, str]) -> object:
         code = form["stock"].split(",", 1)[0]
-        row = _announcement(
-            "1225000001", code, "2026-08-07T08:00:00+08:00"
-        )
+        row = _announcement("1225000001", code, "2026-08-07T08:00:00+08:00")
         return _page([row], total=1, has_more=False, page_size=30)
 
     with pytest.raises(MarketDataError, match="conflicting global duplicate"):
@@ -557,10 +595,7 @@ def _event(
         symbol=symbol,
         title=f"Announcement {announcement_id}",
         published_at=published_at,
-        url=(
-            "https://static.cninfo.com.cn/finalpage/"
-            f"{day.isoformat()}/{announcement_id}.PDF"
-        ),
+        url=(f"https://static.cninfo.com.cn/finalpage/{day.isoformat()}/{announcement_id}.PDF"),
     )
 
 
@@ -588,9 +623,7 @@ def test_event_scan_overlap_filters_seen_ids_and_advances_after_exact_successes(
     )
     overlap = _event("1225000001", "2026-08-07T23:00:00+08:00")
     first_new = _event("1225000002", "2026-08-08T08:00:00+08:00")
-    second_new = _event(
-        "1225000003", "2026-08-08T09:00:00+08:00", symbol="CN:601138"
-    )
+    second_new = _event("1225000003", "2026-08-08T09:00:00+08:00", symbol="CN:601138")
     discovered = (overlap, first_new, second_new)
 
     assert unseen_event_announcements(previous, discovered) == (first_new, second_new)

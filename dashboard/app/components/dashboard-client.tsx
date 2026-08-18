@@ -1,18 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   cleanCompanyName,
-  effectivePrice,
   formatDate,
   formatPrice,
   loadCatalog,
   loadQuotes,
-  opportunityPriority,
+  pricePosition,
   STATUS_META,
   type Catalog,
-  type Company,
-  type PriceLevel,
   type Quote,
   type ResearchStatus,
 } from "../lib/research";
@@ -21,6 +18,42 @@ type ExplorerView = "opportunities" | "market";
 type MarketSort = "updated" | "name" | "status";
 
 const STATUS_ORDER: ResearchStatus[] = ["covered", "candidate", "stale", "ignore", "unseen"];
+const QUOTE_REFRESH_INTERVAL_MS = 5 * 60 * 1000;
+
+function isChinaMarketOpen(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Shanghai",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(date);
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((item) => item.type === type)?.value ?? "";
+  const weekday = part("weekday");
+  if (weekday === "Sat" || weekday === "Sun") return false;
+
+  const minutes = Number(part("hour")) * 60 + Number(part("minute"));
+  return (minutes >= 9 * 60 + 30 && minutes <= 11 * 60 + 30) || (minutes >= 13 * 60 && minutes <= 15 * 60);
+}
+
+function latestQuoteTimestamp(quotes: Quote[]) {
+  return quotes.reduce<string | null>((latest, quote) => {
+    if (!quote.quoteAt || Number.isNaN(Date.parse(quote.quoteAt))) return latest;
+    if (!latest || Date.parse(quote.quoteAt) > Date.parse(latest)) return quote.quoteAt;
+    return latest;
+  }, null);
+}
+
+function formatQuoteTime(value: string) {
+  return new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(new Date(value));
+}
 
 function statusCount(catalog: Catalog, status: ResearchStatus) {
   return catalog.stats.status[status] ?? 0;
@@ -31,40 +64,10 @@ function quoteChangeClass(quote?: Quote) {
   return quote.change > 0 ? "price-up" : "price-down";
 }
 
-function quoteSourceLabel(quote?: Quote, fallbackDate?: string | null) {
+function quoteSourceLabel(quote?: Quote) {
   if (quote?.source === "tencent") return "腾讯行情";
   if (quote?.source === "eastmoney") return "东方财富行情";
-  return fallbackDate ? `${fallbackDate} 收盘` : "行情待同步";
-}
-
-function isHighAttractionLevel(level: PriceLevel) {
-  return /高吸引力|安全边际/u.test(level.label);
-}
-
-function groupPriceLevels(company: Company) {
-  const sorted = [...company.priceLevels].sort((a, b) => b.threshold - a.threshold);
-  return {
-    attention: sorted.filter((level) => !isHighAttractionLevel(level)),
-    highAttraction: sorted.filter(isHighAttractionLevel),
-  };
-}
-
-function PriceLevelCell({ levels }: { levels: PriceLevel[] }) {
-  if (!levels.length) return <td className="level-cell empty-price">—</td>;
-
-  const thresholds = levels.map((level) => level.threshold).sort((a, b) => a - b);
-  const value =
-    thresholds.length === 1
-      ? formatPrice(thresholds[0])
-      : `${formatPrice(thresholds[0])}–${formatPrice(thresholds.at(-1))}`;
-  const labels = [...new Set(levels.map((level) => level.label))].join(" / ");
-
-  return (
-    <td className="level-cell" title={levels.map((level) => `${level.label} ¥${formatPrice(level.threshold)}`).join("；")}>
-      <strong>¥{value}</strong>
-      <span>{labels}</span>
-    </td>
-  );
+  return "行情待同步";
 }
 
 function StatusBadge({ status }: { status: ResearchStatus }) {
@@ -80,6 +83,8 @@ export function DashboardClient() {
   const [quotes, setQuotes] = useState<Map<string, Quote>>(new Map());
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [quoteState, setQuoteState] = useState<"loading" | "live" | "fallback">("loading");
+  const [quoteRefreshing, setQuoteRefreshing] = useState(false);
+  const [quoteUpdatedAt, setQuoteUpdatedAt] = useState<string | null>(null);
   const [view, setView] = useState<ExplorerView>("opportunities");
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<ResearchStatus | "all">("all");
@@ -87,28 +92,67 @@ export function DashboardClient() {
   const [marketSort, setMarketSort] = useState<MarketSort>("updated");
   const [visibleRows, setVisibleRows] = useState(80);
   const searchRef = useRef<HTMLInputElement>(null);
+  const quoteRefreshRunningRef = useRef(false);
+  const lastQuoteRequestAtRef = useRef(0);
 
   useEffect(() => {
     const controller = new AbortController();
     loadCatalog(controller.signal)
-      .then(async (nextCatalog) => {
-        setCatalog(nextCatalog);
-        const coveredTickers = nextCatalog.companies
-          .filter((company) => company.status === "covered")
-          .map((company) => company.ticker);
-        try {
-          const nextQuotes = await loadQuotes(coveredTickers, controller.signal);
-          setQuotes(new Map(nextQuotes.map((quote) => [quote.ticker, quote])));
-          setQuoteState(nextQuotes.length ? "live" : "fallback");
-        } catch {
-          setQuoteState("fallback");
-        }
-      })
+      .then(setCatalog)
       .catch((error: Error) => {
         if (error.name !== "AbortError") setCatalogError(error.message);
       });
     return () => controller.abort();
   }, []);
+
+  const refreshQuotes = useCallback(async (signal?: AbortSignal) => {
+    if (!catalog || quoteRefreshRunningRef.current) return;
+    quoteRefreshRunningRef.current = true;
+    lastQuoteRequestAtRef.current = Date.now();
+    setQuoteRefreshing(true);
+
+    const coveredTickers = catalog.companies
+      .filter((company) => company.status === "covered")
+      .map((company) => company.ticker);
+    try {
+      const nextQuotes = await loadQuotes(coveredTickers, signal);
+      if (signal?.aborted) return;
+      if (nextQuotes.length) {
+        setQuotes(new Map(nextQuotes.map((quote) => [quote.ticker, quote])));
+        setQuoteUpdatedAt(latestQuoteTimestamp(nextQuotes) ?? new Date().toISOString());
+        setQuoteState("live");
+      } else {
+        setQuoteState((current) => current === "live" ? current : "fallback");
+      }
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") return;
+      setQuoteState((current) => current === "live" ? current : "fallback");
+    } finally {
+      quoteRefreshRunningRef.current = false;
+      if (!signal?.aborted) setQuoteRefreshing(false);
+    }
+  }, [catalog]);
+
+  useEffect(() => {
+    if (!catalog) return;
+    const controller = new AbortController();
+    const initialRefresh = window.setTimeout(() => void refreshQuotes(controller.signal), 0);
+
+    function refreshIfDue() {
+      if (document.visibilityState !== "visible" || !isChinaMarketOpen()) return;
+      if (Date.now() - lastQuoteRequestAtRef.current < QUOTE_REFRESH_INTERVAL_MS) return;
+      void refreshQuotes(controller.signal);
+    }
+
+    const interval = window.setInterval(refreshIfDue, 60_000);
+    document.addEventListener("visibilitychange", refreshIfDue);
+    return () => {
+      controller.abort();
+      window.clearTimeout(initialRefresh);
+      window.clearInterval(interval);
+      document.removeEventListener("visibilitychange", refreshIfDue);
+    };
+  }, [catalog, refreshQuotes]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -126,10 +170,11 @@ export function DashboardClient() {
     return catalog.companies
       .filter((company) => company.status === "covered")
       .sort((a, b) => {
-        const priorityDifference =
-          opportunityPriority(b, quotes.get(b.ticker)).score -
-          opportunityPriority(a, quotes.get(a.ticker)).score;
-        if (priorityDifference) return priorityDifference;
+        const aRatio = pricePosition(a, quotes.get(a.ticker)).lowRatio;
+        const bRatio = pricePosition(b, quotes.get(b.ticker)).lowRatio;
+        if (aRatio !== null && bRatio !== null && aRatio !== bRatio) return aRatio - bRatio;
+        if (aRatio !== null) return -1;
+        if (bRatio !== null) return 1;
         return b.updatedAt.localeCompare(a.updatedAt) || a.ticker.localeCompare(b.ticker);
       });
   }, [catalog, quotes]);
@@ -141,11 +186,11 @@ export function DashboardClient() {
     return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh-CN"));
   }, [catalog]);
 
-  const triggerCount = useMemo(
+  const belowRangeCount = useMemo(
     () =>
       opportunities.filter((company) => {
-        const priority = opportunityPriority(company, quotes.get(company.ticker));
-        return priority.distance !== null && priority.distance <= 0;
+        const position = pricePosition(company, quotes.get(company.ticker));
+        return position.lowRatio !== null && position.lowRatio < 1;
       }).length,
     [opportunities, quotes],
   );
@@ -221,9 +266,9 @@ export function DashboardClient() {
           <span className="state-number">{statusCount(catalog, "covered")}</span>
           <span className="state-copy"><strong>持续覆盖</strong></span>
         </button>
-        <button className={triggerCount ? "attention" : ""} onClick={() => switchView("opportunities")}>
-          <span className="state-number">{triggerCount}</span>
-          <span className="state-copy"><strong>进入复核区</strong></span>
+        <button className={belowRangeCount ? "attention" : ""} onClick={() => switchView("opportunities")}>
+          <span className="state-number">{belowRangeCount}</span>
+          <span className="state-copy"><strong>低于区间下沿</strong></span>
         </button>
         <button onClick={() => showStatus("candidate")}>
           <span className="state-number">{statusCount(catalog, "candidate")}</span>
@@ -244,7 +289,7 @@ export function DashboardClient() {
               onClick={() => switchView("opportunities")}
               role="tab"
             >
-              机会池 <span>{statusCount(catalog, "covered")}</span>
+              价值区间 <span>{statusCount(catalog, "covered")}</span>
             </button>
             <button
               aria-selected={view === "market"}
@@ -314,10 +359,27 @@ export function DashboardClient() {
             显示 {Math.min(visibleRows, filtered.length).toLocaleString("zh-CN")} / {filtered.length.toLocaleString("zh-CN")} 家
           </span>
           {view === "opportunities" ? (
-            <span className={`quote-status quote-status-${quoteState}`}>
-              <i aria-hidden="true" />
-              {quoteState === "live" ? "现价已更新" : quoteState === "loading" ? "现价更新中" : "显示最近收盘价"}
-            </span>
+            <div className="quote-controls" aria-live="polite">
+              <span className={`quote-status quote-status-${quoteRefreshing ? "loading" : quoteState}`}>
+                <i aria-hidden="true" />
+                {quoteRefreshing
+                  ? "现价更新中"
+                  : quoteState === "live"
+                    ? "现价已更新"
+                    : quoteState === "loading"
+                      ? "现价更新中"
+                      : "行情暂缺"}
+              </span>
+              {quoteUpdatedAt ? <time dateTime={quoteUpdatedAt}>行情时间 {formatQuoteTime(quoteUpdatedAt)}</time> : null}
+              <button
+                className="quote-refresh"
+                disabled={quoteRefreshing}
+                onClick={() => void refreshQuotes()}
+                type="button"
+              >
+                {quoteRefreshing ? "刷新中" : "刷新"}
+              </button>
+            </div>
           ) : (
             <span>更新于 {formatDate(catalog.generatedAt, true)}</span>
           )}
@@ -333,8 +395,8 @@ export function DashboardClient() {
                   <th className="industry-column">行业</th>
                   <th className="current-price-column">现价</th>
                   <th className="value-column">合理价值</th>
-                  <th className="level-column">关注价</th>
-                  <th className="level-column attraction-column">高吸引力价</th>
+                  <th className="level-column">相对下沿</th>
+                  <th className="level-column attraction-column">相对中枢</th>
                   <th className="summary-column">当前结论</th>
                   <th className="action-column" aria-label="操作" />
                 </tr>
@@ -352,8 +414,8 @@ export function DashboardClient() {
             <tbody>
               {filtered.slice(0, visibleRows).map((company, index) => {
                 const quote = quotes.get(company.ticker);
-                const groupedLevels = groupPriceLevels(company);
-                const price = effectivePrice(company, quote);
+                const position = pricePosition(company, quote);
+                const price = position.price;
                 return view === "opportunities" ? (
                   <tr key={company.symbol}>
                     <td className="rank-cell">{String(index + 1).padStart(2, "0")}</td>
@@ -362,10 +424,10 @@ export function DashboardClient() {
                       <span>{company.ticker} · {company.exchange}</span>
                     </td>
                     <td className="industry-cell">{company.industry}</td>
-                    <td className="current-price-cell" title={quoteSourceLabel(quote, company.lastCloseDate)}>
+                    <td className="current-price-cell" title={quoteSourceLabel(quote)}>
                       <strong>¥{formatPrice(price)}</strong>
                       {quote?.changePercent === null || quote?.changePercent === undefined ? (
-                        <span>{company.lastCloseDate ? `${company.lastCloseDate} 收盘` : "待同步"}</span>
+                        <span>待同步</span>
                       ) : (
                         <span className={quoteChangeClass(quote)}>
                           {quote.changePercent > 0 ? "+" : ""}{quote.changePercent.toFixed(2)}%
@@ -379,8 +441,14 @@ export function DashboardClient() {
                         <span className="empty-price">—</span>
                       )}
                     </td>
-                    <PriceLevelCell levels={groupedLevels.attention} />
-                    <PriceLevelCell levels={groupedLevels.highAttraction} />
+                    <td className="level-cell">
+                      <strong>{position.lowRatio === null ? "—" : `${position.lowRatio.toFixed(2)}×`}</strong>
+                      <span>{position.label}</span>
+                    </td>
+                    <td className="level-cell">
+                      <strong>{position.midpointRatio === null ? "—" : `${position.midpointRatio.toFixed(2)}×`}</strong>
+                      <span>现价 / 区间中枢</span>
+                    </td>
                     <td className="summary-cell"><p>{company.summary}</p></td>
                     <td className="row-action">
                       {company.reports.length ? (
