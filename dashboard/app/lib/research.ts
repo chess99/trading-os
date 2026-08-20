@@ -1,8 +1,33 @@
+import { calculateIrrRange } from "./irr.mjs";
+
 export type ResearchStatus = "unseen" | "ignore" | "candidate" | "covered" | "stale";
 
 export interface ReportVersion {
   date: string;
   path: string;
+}
+
+export interface TerminalEquityValueRange {
+  low: number;
+  high: number;
+}
+
+export interface ReturnModel {
+  schema_version: 1;
+  method: "annual_common_equity_irr_v1";
+  currency: "CNY";
+  model_as_of: string;
+  base_case_distributions_per_share: number[];
+  base_case_terminal_equity_value_range_per_share: {
+    year_5: TerminalEquityValueRange;
+    year_3?: TerminalEquityValueRange;
+  };
+}
+
+export interface IrrRange {
+  low: number | null;
+  midpoint: number | null;
+  high: number | null;
 }
 
 export interface Company {
@@ -19,6 +44,8 @@ export interface Company {
   invalidation: { at?: string; reason?: string; update_path?: string } | null;
   candidateSince: string | null;
   valueRange: { currency: string; low: number; high: number } | null;
+  returnModel: ReturnModel | null;
+  returnModelNote: string | null;
   reportPath: string | null;
   reportDate: string | null;
   reports: ReportVersion[];
@@ -83,7 +110,15 @@ export const STATUS_META: Record<
 export async function loadCatalog(signal?: AbortSignal): Promise<Catalog> {
   const response = await fetch("/data/research-catalog.json", { signal });
   if (!response.ok) throw new Error("研究目录暂时无法读取");
-  return (await response.json()) as Catalog;
+  const catalog = (await response.json()) as Catalog;
+  return {
+    ...catalog,
+    companies: catalog.companies.map((company) => ({
+      ...company,
+      returnModel: company.returnModel ?? null,
+      returnModelNote: company.returnModelNote ?? null,
+    })),
+  };
 }
 
 export async function loadQuotes(tickers: string[], signal?: AbortSignal): Promise<Quote[]> {
@@ -115,12 +150,26 @@ export function pricePosition(company: Company, quote?: Quote) {
   return { price, lowRatio, midpointRatio, label };
 }
 
+export function returnIrr(company: Company, quote: Quote | undefined, horizonYears: 3 | 5): IrrRange | null {
+  if (!company.returnModel || company.returnModel.model_as_of !== company.informationCutoff) return null;
+  return calculateIrrRange(quote?.price, company.returnModel, horizonYears);
+}
+
 export function formatPrice(value: number | null | undefined) {
   return value === null || value === undefined
     ? "—"
     : new Intl.NumberFormat("zh-CN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(
         value,
       );
+}
+
+export function formatIrr(value: number | null | undefined) {
+  if (value === null || value === undefined || !Number.isFinite(value)) return "—";
+  const percentage = Math.abs(value) < 0.0005 ? 0 : value * 100;
+  return `${new Intl.NumberFormat("zh-CN", {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  }).format(percentage)}%`;
 }
 
 export function formatDate(value: string | null | undefined, withTime = false) {

@@ -25,17 +25,26 @@ test("server-renders the Trading OS decision workspace", async () => {
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
 
-test("the decision workspace stays table-first and only derives value-range position", async () => {
-  const [dashboard, header] = await Promise.all([
+test("the decision workspace stays table-first and derives IRR without replacing value-range position", async () => {
+  const [dashboard, header, opportunitySort] = await Promise.all([
     readFile(new URL("../app/components/dashboard-client.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/app-header.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/lib/opportunity-sort.mjs", import.meta.url), "utf8"),
   ]);
   assert.match(dashboard, />现价</);
+  assert.match(dashboard, />5年基准情景年化回报</);
   assert.match(dashboard, />合理价值</);
   assert.match(dashboard, />相对下沿</);
   assert.match(dashboard, />相对中枢</);
   assert.match(dashboard, /pricePosition/);
+  assert.match(dashboard, /returnIrr/);
+  assert.match(opportunitySort, /return bIrr - aIrr/);
+  assert.match(opportunitySort, /return aLowRatio - bLowRatio/);
+  assert.match(dashboard, /5年基准情景回报按现价机械派生，不是收益承诺或交易信号/);
+  assert.match(dashboard, /title=\{returnModelTitle\(company\)\}/);
+  assert.match(dashboard, /company\.returnModelNote[\s\S]*?暂无法可靠建模[\s\S]*?待后续完整研究补充/);
   assert.doesNotMatch(dashboard, /关注复核价|深度复核价|进入复核区|opportunityPriority/);
+  assert.doesNotMatch(dashboard, /买入信号|收益率阈值|概率加权/);
   assert.match(dashboard, /-webkit-line-clamp: 6|summary-cell/);
   assert.doesNotMatch(dashboard, /TopOpportunity|OpportunityQueue|排序为什么把这些公司放在前面/);
   assert.doesNotMatch(header, /只读研究视图/);
@@ -49,6 +58,13 @@ test("quotes refresh during A-share trading hours and can be refreshed manually"
   assert.match(dashboard, /setInterval\(refreshIfDue, 60_000\)/);
   assert.match(dashboard, /行情时间/);
   assert.match(dashboard, /onClick=\{\(\) => void refreshQuotes\(\)\}/);
+  assert.match(dashboard, /company\.universeStatus === "active" && company\.status === "covered"/);
+  assert.equal((dashboard.match(/\.filter\(isActiveCovered\)/gu) ?? []).length, 2);
+  assert.match(
+    dashboard,
+    /function clearQuoteSnapshot\(\) \{[\s\S]*?setQuotes\(new Map\(\)\);[\s\S]*?setQuoteUpdatedAt\(null\);[\s\S]*?setQuoteState\("fallback"\);[\s\S]*?\}/,
+  );
+  assert.equal((dashboard.match(/clearQuoteSnapshot\(\);/gu) ?? []).length, 2);
 });
 
 test("server-renders the report library and detail route", async () => {
@@ -66,11 +82,28 @@ test("generated research catalog remains a faithful compact projection", async (
   ]);
   const catalog = JSON.parse(catalogText);
   const sourceRows = sourceText.split(/\r?\n/u).filter((line) => line.trim());
+  const sourceBySymbol = new Map(sourceRows.map((line) => {
+    const row = JSON.parse(line);
+    return [row.symbol, row];
+  }));
   assert.equal(catalog.stats.total, sourceRows.length);
   assert.equal(catalog.companies.length, sourceRows.length);
   assert.ok(catalog.companies.some((company) => company.status === "covered" && company.reports.length));
   assert.ok(catalog.companies.every((company) => !JSON.stringify(company).includes("legacy/")));
   assert.ok(catalog.companies.every((company) => !("priceLevels" in company) && !("lastClose" in company)));
+  assert.ok(catalog.companies.every((company) => {
+    const source = sourceBySymbol.get(company.symbol);
+    return (
+      JSON.stringify(company.returnModel) === JSON.stringify(source?.return_model ?? null)
+      && company.returnModelNote === (source?.return_model_note ?? null)
+      && !("year5Irr" in company)
+      && !("currentIrr" in company)
+    );
+  }));
+
+  const researchLibrary = await readFile(new URL("../app/lib/research.ts", import.meta.url), "utf8");
+  assert.match(researchLibrary, /returnModel: company\.returnModel \?\? null/);
+  assert.match(researchLibrary, /company\.returnModel\.model_as_of !== company\.informationCutoff/);
 
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   const layout = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");

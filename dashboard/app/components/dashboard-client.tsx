@@ -4,15 +4,19 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   cleanCompanyName,
   formatDate,
+  formatIrr,
   formatPrice,
   loadCatalog,
   loadQuotes,
   pricePosition,
+  returnIrr,
   STATUS_META,
   type Catalog,
+  type Company,
   type Quote,
   type ResearchStatus,
 } from "../lib/research";
+import { compareOpportunityRanks } from "../lib/opportunity-sort.mjs";
 
 type ExplorerView = "opportunities" | "market";
 type MarketSort = "updated" | "name" | "status";
@@ -70,6 +74,18 @@ function quoteSourceLabel(quote?: Quote) {
   return "行情待同步";
 }
 
+function isActiveCovered(company: Company) {
+  return company.universeStatus === "active" && company.status === "covered";
+}
+
+function returnModelTitle(company: Company) {
+  const details = [
+    company.returnModel ? `模型时点：${company.returnModel.model_as_of}` : null,
+    company.returnModelNote,
+  ].filter((detail): detail is string => Boolean(detail));
+  return details.length ? details.join("\n") : undefined;
+}
+
 function StatusBadge({ status }: { status: ResearchStatus }) {
   return (
     <span className={`status-badge status-${status}`} title={STATUS_META[status].description}>
@@ -112,8 +128,13 @@ export function DashboardClient() {
     setQuoteRefreshing(true);
 
     const coveredTickers = catalog.companies
-      .filter((company) => company.status === "covered")
+      .filter(isActiveCovered)
       .map((company) => company.ticker);
+    function clearQuoteSnapshot() {
+      setQuotes(new Map());
+      setQuoteUpdatedAt(null);
+      setQuoteState("fallback");
+    }
     try {
       const nextQuotes = await loadQuotes(coveredTickers, signal);
       if (signal?.aborted) return;
@@ -122,11 +143,11 @@ export function DashboardClient() {
         setQuoteUpdatedAt(latestQuoteTimestamp(nextQuotes) ?? new Date().toISOString());
         setQuoteState("live");
       } else {
-        setQuoteState((current) => current === "live" ? current : "fallback");
+        clearQuoteSnapshot();
       }
     } catch (error) {
       if (error instanceof Error && error.name === "AbortError") return;
-      setQuoteState((current) => current === "live" ? current : "fallback");
+      clearQuoteSnapshot();
     } finally {
       quoteRefreshRunningRef.current = false;
       if (!signal?.aborted) setQuoteRefreshing(false);
@@ -168,15 +189,19 @@ export function DashboardClient() {
   const opportunities = useMemo(() => {
     if (!catalog) return [];
     return catalog.companies
-      .filter((company) => company.status === "covered")
-      .sort((a, b) => {
-        const aRatio = pricePosition(a, quotes.get(a.ticker)).lowRatio;
-        const bRatio = pricePosition(b, quotes.get(b.ticker)).lowRatio;
-        if (aRatio !== null && bRatio !== null && aRatio !== bRatio) return aRatio - bRatio;
-        if (aRatio !== null) return -1;
-        if (bRatio !== null) return 1;
-        return b.updatedAt.localeCompare(a.updatedAt) || a.ticker.localeCompare(b.ticker);
-      });
+      .filter(isActiveCovered)
+      .map((company) => {
+        const quote = quotes.get(company.ticker);
+        return {
+          company,
+          midpointIrr: returnIrr(company, quote, 5)?.midpoint ?? null,
+          lowRatio: pricePosition(company, quote).lowRatio,
+          updatedAt: company.updatedAt,
+          ticker: company.ticker,
+        };
+      })
+      .sort(compareOpportunityRanks)
+      .map(({ company }) => company);
   }, [catalog, quotes]);
 
   const industries = useMemo(() => {
@@ -263,7 +288,7 @@ export function DashboardClient() {
     <main className="dashboard-shell">
       <section className="state-strip" aria-label="研究状态概览">
         <button onClick={() => switchView("opportunities")}>
-          <span className="state-number">{statusCount(catalog, "covered")}</span>
+          <span className="state-number">{opportunities.length}</span>
           <span className="state-copy"><strong>持续覆盖</strong></span>
         </button>
         <button className={belowRangeCount ? "attention" : ""} onClick={() => switchView("opportunities")}>
@@ -289,7 +314,7 @@ export function DashboardClient() {
               onClick={() => switchView("opportunities")}
               role="tab"
             >
-              价值区间 <span>{statusCount(catalog, "covered")}</span>
+              赔率地图 <span>{opportunities.length}</span>
             </button>
             <button
               aria-selected={view === "market"}
@@ -357,6 +382,7 @@ export function DashboardClient() {
         <div className="table-caption">
           <span>
             显示 {Math.min(visibleRows, filtered.length).toLocaleString("zh-CN")} / {filtered.length.toLocaleString("zh-CN")} 家
+            {view === "opportunities" ? " · 5年基准情景回报按现价机械派生，不是收益承诺或交易信号。" : null}
           </span>
           {view === "opportunities" ? (
             <div className="quote-controls" aria-live="polite">
@@ -394,6 +420,7 @@ export function DashboardClient() {
                   <th className="company-column">公司</th>
                   <th className="industry-column">行业</th>
                   <th className="current-price-column">现价</th>
+                  <th className="irr-column">5年基准情景年化回报</th>
                   <th className="value-column">合理价值</th>
                   <th className="level-column">相对下沿</th>
                   <th className="level-column attraction-column">相对中枢</th>
@@ -416,6 +443,12 @@ export function DashboardClient() {
                 const quote = quotes.get(company.ticker);
                 const position = pricePosition(company, quote);
                 const price = position.price;
+                const year5Irr = returnIrr(company, quote, 5);
+                const year3Irr = returnIrr(company, quote, 3);
+                const hasYear5Irr = year5Irr?.midpoint !== null && year5Irr?.midpoint !== undefined;
+                const hasYear3Model = Boolean(
+                  company.returnModel?.base_case_terminal_equity_value_range_per_share.year_3,
+                );
                 return view === "opportunities" ? (
                   <tr key={company.symbol}>
                     <td className="rank-cell">{String(index + 1).padStart(2, "0")}</td>
@@ -431,6 +464,27 @@ export function DashboardClient() {
                       ) : (
                         <span className={quoteChangeClass(quote)}>
                           {quote.changePercent > 0 ? "+" : ""}{quote.changePercent.toFixed(2)}%
+                        </span>
+                      )}
+                    </td>
+                    <td className="irr-cell" title={returnModelTitle(company)}>
+                      <strong>{formatIrr(year5Irr?.midpoint)}</strong>
+                      {hasYear5Irr ? (
+                        <>
+                          <span>低 {formatIrr(year5Irr.low)} · 高 {formatIrr(year5Irr.high)}</span>
+                          {hasYear3Model && year3Irr?.midpoint !== null && year3Irr?.midpoint !== undefined ? (
+                            <small>
+                              3年中枢 {formatIrr(year3Irr.midpoint)} · 低 {formatIrr(year3Irr.low)} · 高 {formatIrr(year3Irr.high)}
+                            </small>
+                          ) : null}
+                        </>
+                      ) : (
+                        <span>
+                          {company.returnModel
+                            ? (quote ? "模型暂不可用" : "行情暂缺")
+                            : company.returnModelNote
+                              ? "暂无法可靠建模"
+                              : "待后续完整研究补充"}
                         </span>
                       )}
                     </td>
