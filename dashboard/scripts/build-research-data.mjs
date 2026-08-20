@@ -97,6 +97,8 @@ async function main() {
             high: row.value_range.high,
           }
         : null,
+      returnModel: row.return_model ?? null,
+      returnModelNote: row.return_model_note ?? null,
       reportPath: row.report_path,
       reportDate: latestReport?.date ?? null,
       reports,

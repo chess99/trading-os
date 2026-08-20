@@ -2289,7 +2289,7 @@ a {
 }
 
 .dashboard-shell .company-table-opportunities {
-  min-width: 1320px;
+  min-width: 1530px;
 }
 
 .dashboard-shell .company-table-market {
@@ -2325,6 +2325,11 @@ a {
 .company-table-opportunities th.current-price-column,
 .company-table-opportunities td.current-price-cell {
   width: 112px;
+}
+
+.company-table-opportunities th.irr-column,
+.company-table-opportunities td.irr-cell {
+  width: 210px;
 }
 
 .company-table-opportunities th.value-column,
@@ -2384,6 +2389,9 @@ a {
 
 .current-price-cell strong,
 .current-price-cell span,
+.irr-cell strong,
+.irr-cell span,
+.irr-cell small,
 .value-cell strong,
 .level-cell strong,
 .level-cell span,
@@ -2393,6 +2401,7 @@ a {
 }
 
 .current-price-cell strong,
+.irr-cell strong,
 .value-cell strong,
 .level-cell strong,
 .updated-cell strong {
@@ -2404,6 +2413,8 @@ a {
 }
 
 .current-price-cell span,
+.irr-cell span,
+.irr-cell small,
 .level-cell span,
 .updated-cell span {
   margin-top: 5px;
@@ -2413,8 +2424,20 @@ a {
 }
 
 .current-price-cell span,
+.irr-cell strong,
+.irr-cell small,
 .updated-cell span {
   font-family: var(--font-geist-mono), monospace;
+}
+
+.irr-cell strong {
+  font-size: 14px;
+}
+
+.irr-cell small {
+  margin-top: 7px;
+  padding-top: 6px;
+  border-top: 1px solid var(--line);
 }
 
 .empty-price {

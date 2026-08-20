@@ -14,6 +14,7 @@ from trading_os.research_assets.research_flow import (
     ResearchFlow,
     ResearchResult,
     ResearchUpdate,
+    ReturnModel,
     ScreenDecision,
     StateCorruptionError,
     TaskStatus,
@@ -32,6 +33,20 @@ def _rows(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
 
 
+def _return_model(*, model_as_of: str = AT) -> ReturnModel:
+    return ReturnModel(
+        schema_version=1,
+        method="annual_common_equity_irr_v1",
+        currency="CNY",
+        model_as_of=model_as_of,
+        base_case_distributions_per_share=(1.0, 1.1, 1.2, 1.3, 1.4),
+        base_case_terminal_equity_value_range_per_share={
+            "year_3": {"low": 65.0, "high": 78.0},
+            "year_5": {"low": 72.0, "high": 92.0},
+        },
+    )
+
+
 def _covered(symbol: str) -> ResearchResult:
     return ResearchResult(
         symbol=symbol,
@@ -42,6 +57,8 @@ def _covered(symbol: str) -> ResearchResult:
         key_logic=("核心产品需求增长", "现金流转化决定估值上限"),
         risks=("客户集中", "资本开支回报不及预期"),
         value_range=ValueRange(low=58, high=82),
+        return_model=_return_model(),
+        return_model_note=("终值采用正常化每股收益与退出PE区间，已按完全稀释股本折算普通股权益。"),
         event_triggers=("下一期财报发布", "大客户订单显著变化"),
         source_urls=("https://example.com/annual-report",),
         report_markdown=(
@@ -56,6 +73,9 @@ def _covered(symbol: str) -> ResearchResult:
             "## 估值与核心合理价值区间\n\n"
             "方法一为正常化PE，方法二为现金流折现；以正常化PE为核心。\n\n"
             "核心合理价值区间：58—82 元。\n\n"
+            "### 基准持有人回报模型输入\n\n"
+            "未来五年每股现金分配为1.0、1.1、1.2、1.3、1.4元；"
+            "三年终值65—78元，五年终值72—92元。\n\n"
             "## 核心风险与证伪\n\n客户集中，且资本开支回报仍待验证。\n\n"
             "## 来源清单\n\n- https://example.com/annual-report"
         ),
@@ -73,6 +93,8 @@ def _ignored(symbol: str) -> ResearchResult:
         risks=("普通股持续稀释",),
         value_range=None,
         valuation_note="无法建立不依赖外部融资的普通股价值。",
+        return_model=None,
+        return_model_note="持续外部融资和普通股稀释使五年持有人现金流无法可靠建模。",
         event_triggers=("下一份年报显示自由现金流持续转正",),
         source_urls=("https://example.com/annual-report",),
         report_markdown=(
@@ -81,6 +103,8 @@ def _ignored(symbol: str) -> ResearchResult:
             "## 一句话结论\n\n正式研究后仍不值得持续覆盖。\n\n"
             "## 财务质量\n\n增长依赖持续融资。\n\n"
             "## 估值\n\n无法建立不依赖外部融资的普通股价值。\n\n"
+            "### 基准持有人回报模型输入\n\n"
+            "持续外部融资和普通股稀释使五年持有人现金流无法可靠建模。\n\n"
             "## 核心风险\n\n普通股持续稀释。\n\n"
             "## 来源清单\n\n- https://example.com/annual-report"
         ),
@@ -165,10 +189,26 @@ def test_formal_result_is_self_contained_and_watchlist_has_no_price_state(tmp_pa
     state = _complete(flow, _covered("CN:601138"))
     assert state["status"] == "covered"
     assert state["value_range"] == {"low": 58.0, "high": 82.0, "currency": "CNY"}
+    assert state["return_model"] == {
+        "schema_version": 1,
+        "method": "annual_common_equity_irr_v1",
+        "currency": "CNY",
+        "model_as_of": AT,
+        "base_case_distributions_per_share": [1.0, 1.1, 1.2, 1.3, 1.4],
+        "base_case_terminal_equity_value_range_per_share": {
+            "year_3": {"low": 65.0, "high": 78.0},
+            "year_5": {"low": 72.0, "high": 92.0},
+        },
+    }
+    assert state["return_model_note"].startswith("终值采用")
+    assert "expected_irr" not in state
     assert "price_levels" not in state and "price_monitor" not in state
     assert (tmp_path / state["report_path"]).is_file()
     watch = flow.read_watchlist()[0]
     assert watch["report_path"] == state["report_path"]
+    assert watch["return_model"] == state["return_model"]
+    assert watch["return_model_note"] == state["return_model_note"]
+    assert "expected_irr" not in watch
     assert "price_levels" not in watch and "price_monitor" not in watch
     flow.validate()
 
@@ -204,9 +244,7 @@ def test_new_formal_report_cannot_restore_a_price_review_line(tmp_path: Path):
         "半年报主要会计数据表的可复核摘录如下：营业收入 100 亿元。",
     ],
 )
-def test_formal_report_rejects_stitched_or_raw_financial_excerpt(
-    tmp_path: Path, fragment: str
-):
+def test_formal_report_rejects_stitched_or_raw_financial_excerpt(tmp_path: Path, fragment: str):
     flow = ResearchFlow(tmp_path)
     base = _covered("CN:601138")
     bad = replace(base, report_markdown=f"{base.report_markdown}\n\n{fragment}")
@@ -216,9 +254,7 @@ def test_formal_report_rejects_stitched_or_raw_financial_excerpt(
 
 
 @pytest.mark.parametrize("retired_line", ["价值区间下沿", "重新复核价", "研究买入观察区"])
-def test_formal_report_rejects_retired_price_line_aliases(
-    tmp_path: Path, retired_line: str
-):
+def test_formal_report_rejects_retired_price_line_aliases(tmp_path: Path, retired_line: str):
     flow = ResearchFlow(tmp_path)
     base = _covered("CN:601138")
     bad = replace(base, report_markdown=f"{base.report_markdown}\n\n{retired_line}：55 元。")
@@ -267,6 +303,157 @@ def test_report_value_range_requires_two_methods_and_a_primary_method(tmp_path: 
     assert not flow.state_path.exists()
 
 
+def test_formal_report_requires_return_model_input_heading(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    base = _covered("CN:601138")
+    bad = replace(
+        base,
+        report_markdown=base.report_markdown.replace("基准持有人回报模型输入", "未来回报说明"),
+    )
+    with pytest.raises(ValidationError, match="基准持有人回报模型输入"):
+        flow.apply_result(bad, task_id="missing", at=AT)
+    assert not flow.state_path.exists()
+
+
+@pytest.mark.parametrize(
+    "model, match",
+    [
+        (replace(_return_model(), schema_version=2), "schema_version must be 1"),
+        (replace(_return_model(), method="other"), "method must be"),
+        (replace(_return_model(), currency="USD"), "currency must be CNY"),
+        (replace(_return_model(), model_as_of=LATER), "must match information_cutoff"),
+        (
+            replace(
+                _return_model(),
+                base_case_distributions_per_share=(1.0, 1.1, 1.2, 1.3),
+            ),
+            "exactly 5 values",
+        ),
+        (
+            replace(
+                _return_model(),
+                base_case_distributions_per_share=(1.0, 1.1, -1.0, 1.3, 1.4),
+            ),
+            "finite non-negative",
+        ),
+        (
+            replace(
+                _return_model(),
+                base_case_distributions_per_share=(10**400, 1.1, 1.2, 1.3, 1.4),
+            ),
+            "finite non-negative",
+        ),
+        (
+            replace(
+                _return_model(),
+                base_case_terminal_equity_value_range_per_share={"year_3": {"low": 65, "high": 78}},
+            ),
+            "require year_5",
+        ),
+        (
+            replace(
+                _return_model(),
+                base_case_terminal_equity_value_range_per_share={
+                    "year_4": {"low": 70, "high": 80},
+                    "year_5": {"low": 72, "high": 92},
+                },
+            ),
+            "may only include year_3",
+        ),
+        (
+            replace(
+                _return_model(),
+                base_case_terminal_equity_value_range_per_share={"year_5": {"low": 93, "high": 92}},
+            ),
+            "low must not exceed",
+        ),
+    ],
+)
+def test_return_model_contract_is_strict(tmp_path: Path, model: ReturnModel, match: str):
+    flow = ResearchFlow(tmp_path)
+    with pytest.raises(ValidationError, match=match):
+        flow.apply_result(
+            replace(_covered("CN:601138"), return_model=model),
+            task_id="missing",
+            at=AT,
+        )
+    assert not flow.state_path.exists()
+
+
+def test_return_model_year_3_is_optional(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    model = _return_model()
+    without_year_3 = replace(
+        model,
+        base_case_terminal_equity_value_range_per_share={
+            "year_5": model.base_case_terminal_equity_value_range_per_share["year_5"]
+        },
+    )
+    state = _complete(
+        flow,
+        replace(_covered("CN:601138"), return_model=without_year_3),
+    )
+    assert set(state["return_model"]["base_case_terminal_equity_value_range_per_share"]) == {
+        "year_5"
+    }
+
+
+@pytest.mark.parametrize("note", [None, " ", 123])
+def test_return_model_note_must_be_a_nonblank_string(tmp_path: Path, note: object):
+    flow = ResearchFlow(tmp_path)
+    with pytest.raises(ValidationError, match="return_model_note"):
+        flow.apply_result(
+            replace(_covered("CN:601138"), return_model_note=note),  # type: ignore[arg-type]
+            task_id="missing",
+            at=AT,
+        )
+    assert not flow.state_path.exists()
+
+
+def test_validation_rejects_non_string_persisted_return_model_note(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    _complete(flow, _covered("CN:601138"))
+    row = _rows(flow.state_path)[0]
+    row["return_model_note"] = 123
+    flow.state_path.write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    with pytest.raises(StateCorruptionError, match="return_model_note"):
+        flow.validate()
+
+
+def test_validation_rejects_overflowing_persisted_return_model_number(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    _complete(flow, _covered("CN:601138"))
+    row = _rows(flow.state_path)[0]
+    row["return_model"]["base_case_distributions_per_share"][0] = 10**400
+    flow.state_path.write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    with pytest.raises(StateCorruptionError, match="finite non-negative"):
+        flow.validate()
+
+
+@pytest.mark.parametrize(
+    "field",
+    [
+        "expected_annual_return",
+        "expected_irr",
+        "current_irr",
+        "irr",
+        "year_3_irr",
+        "year_5_irr",
+    ],
+)
+def test_validation_rejects_persisted_dynamic_return_fields(tmp_path: Path, field: str):
+    flow = ResearchFlow(tmp_path)
+    _complete(flow, _covered("CN:601138"))
+    row = _rows(flow.state_path)[0]
+    row[field] = 0.12
+    flow.state_path.write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    with pytest.raises(StateCorruptionError, match="dynamic return fields"):
+        flow.validate()
+
+
 def test_updated_report_requires_prior_actual_change_valuation_comparison(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     _complete(flow, _covered("CN:601138"))
@@ -276,9 +463,9 @@ def test_updated_report_requires_prior_actual_change_valuation_comparison(tmp_pa
     bad = replace(
         base,
         information_cutoff=LATER,
+        return_model=_return_model(model_as_of=LATER),
         report_markdown=(
-            base.report_markdown.replace("2026-08-08", "2026-08-09")
-            .replace("前次假设", "历史预期")
+            base.report_markdown.replace("2026-08-08", "2026-08-09").replace("前次假设", "历史预期")
         ),
     )
     with pytest.raises(ValidationError, match="populated comparison table"):
@@ -295,6 +482,7 @@ def test_updated_report_rejects_comparison_labels_without_data_row(tmp_path: Pat
     bad = replace(
         base,
         information_cutoff=LATER,
+        return_model=_return_model(model_as_of=LATER),
         report_markdown=(
             base.report_markdown.replace("2026-08-08", "2026-08-09").replace(
                 "| 需求增长 | 需求增长 | 不变 | 区间不变 |", ""

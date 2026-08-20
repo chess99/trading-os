@@ -60,11 +60,33 @@ _REPORT_PRIMARY_VALUATION_METHOD_RE = re.compile(
 )
 _REPORT_METHOD_ONE_RE = re.compile(r"方法一")
 _REPORT_METHOD_TWO_RE = re.compile(r"方法二")
+_RETURN_MODEL_SCHEMA_VERSION = 1
+_RETURN_MODEL_METHOD = "annual_common_equity_irr_v1"
+_RETURN_MODEL_FIELDS = {
+    "schema_version",
+    "method",
+    "currency",
+    "model_as_of",
+    "base_case_distributions_per_share",
+    "base_case_terminal_equity_value_range_per_share",
+}
+_RETURN_MODEL_TERMINAL_HORIZONS = {"year_3", "year_5"}
+_RETIRED_DYNAMIC_RETURN_FIELDS = frozenset(
+    {
+        "expected_annual_return",
+        "expected_irr",
+        "current_irr",
+        "irr",
+        "year_3_irr",
+        "year_5_irr",
+    }
+)
 _REFRESH_COMPARISON_FIELDS = ("前次假设", "本期实际", "判断变化", "估值影响")
 _REQUIRED_REPORT_HEADINGS = {
     "一句话结论": re.compile(r"一句话结论"),
     "财务质量": re.compile(r"财务质量"),
     "估值": re.compile(r"估值|核心合理价值区间"),
+    "基准持有人回报模型输入": re.compile(r"基准持有人回报模型输入"),
     "风险": re.compile(r"风险"),
     "来源": re.compile(r"来源"),
 }
@@ -80,18 +102,12 @@ def _has_refresh_comparison_table(report_markdown: str) -> bool:
             continue
         if index + 2 >= len(lines):
             return False
-        separator = [
-            cell.strip()
-            for cell in lines[index + 1].strip().strip("|").split("|")
-        ]
+        separator = [cell.strip() for cell in lines[index + 1].strip().strip("|").split("|")]
         if len(separator) != len(_REFRESH_COMPARISON_FIELDS) or not all(
             re.fullmatch(r":?-{3,}:?", cell) for cell in separator
         ):
             return False
-        values = [
-            cell.strip()
-            for cell in lines[index + 2].strip().strip("|").split("|")
-        ]
+        values = [cell.strip() for cell in lines[index + 2].strip().strip("|").split("|")]
         return len(values) == len(_REFRESH_COMPARISON_FIELDS) and all(values)
     return False
 
@@ -164,6 +180,16 @@ class ValueRange:
 
 
 @dataclass(frozen=True)
+class ReturnModel:
+    schema_version: int
+    method: str
+    currency: str
+    model_as_of: str
+    base_case_distributions_per_share: Sequence[float]
+    base_case_terminal_equity_value_range_per_share: Mapping[str, Mapping[str, float]]
+
+
+@dataclass(frozen=True)
 class ScreenDecision:
     symbol: str
     route: ScreenRoute | str
@@ -187,6 +213,8 @@ class ResearchResult:
     name: str | None = None
     report_markdown: str | None = None
     valuation_note: str | None = None
+    return_model: ReturnModel | None = None
+    return_model_note: str | None = None
 
 
 @dataclass(frozen=True)
@@ -401,7 +429,10 @@ def _optional_name(value: str | None) -> str | None:
 def _number(value: float | int, label: str) -> float:
     if isinstance(value, bool):
         raise ValidationError(f"{label} must be a finite non-negative number")
-    result = float(value)
+    try:
+        result = float(value)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValidationError(f"{label} must be a finite non-negative number") from exc
     if not math.isfinite(result) or result < 0:
         raise ValidationError(f"{label} must be a finite non-negative number")
     return result
@@ -490,6 +521,148 @@ def _value_range(value: ValueRange | None) -> dict[str, Any] | None:
     return {"low": low, "high": high, "currency": _nonblank(value.currency, "currency")}
 
 
+def _return_model_number(value: object, label: str) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ValidationError(f"{label} must be a finite non-negative number")
+    return _number(value, label)
+
+
+def _return_model_text(value: object, label: str) -> str:
+    if not isinstance(value, str):
+        raise ValidationError(f"{label} must be a non-empty string")
+    return _nonblank(value, label)
+
+
+def _return_model_range(value: object, label: str) -> dict[str, float]:
+    if not isinstance(value, Mapping) or set(value) != {"low", "high"}:
+        raise ValidationError(f"{label} must contain exactly low and high")
+    low = _return_model_number(value["low"], f"{label}.low")
+    high = _return_model_number(value["high"], f"{label}.high")
+    if low > high:
+        raise ValidationError(f"{label}.low must not exceed {label}.high")
+    return {"low": low, "high": high}
+
+
+def _normalized_return_model_payload(
+    value: Mapping[str, Any],
+    *,
+    information_cutoff: str,
+    value_range: Mapping[str, Any] | None,
+) -> dict[str, Any]:
+    if set(value) != _RETURN_MODEL_FIELDS:
+        raise ValidationError("return_model fields do not match the version 1 contract")
+    schema_version = value["schema_version"]
+    if (
+        isinstance(schema_version, bool)
+        or not isinstance(schema_version, int)
+        or schema_version != _RETURN_MODEL_SCHEMA_VERSION
+    ):
+        raise ValidationError("return_model.schema_version must be 1")
+    method = _return_model_text(value["method"], "return_model.method")
+    if method != _RETURN_MODEL_METHOD:
+        raise ValidationError(f"return_model.method must be {_RETURN_MODEL_METHOD}")
+    currency = _return_model_text(value["currency"], "return_model.currency")
+    if currency != "CNY":
+        raise ValidationError("return_model.currency must be CNY")
+    if value_range is not None and currency != value_range.get("currency"):
+        raise ValidationError("return_model.currency must match value_range.currency")
+    model_as_of = _timestamp(_return_model_text(value["model_as_of"], "return_model.model_as_of"))
+    if model_as_of != information_cutoff:
+        raise ValidationError("return_model.model_as_of must match information_cutoff")
+
+    raw_distributions = value["base_case_distributions_per_share"]
+    if (
+        isinstance(raw_distributions, (str, bytes))
+        or not isinstance(raw_distributions, Sequence)
+        or len(raw_distributions) != 5
+    ):
+        raise ValidationError(
+            "return_model.base_case_distributions_per_share must contain exactly 5 values"
+        )
+    distributions = [
+        _return_model_number(
+            item,
+            f"return_model.base_case_distributions_per_share[{index}]",
+        )
+        for index, item in enumerate(raw_distributions)
+    ]
+
+    raw_terminal = value["base_case_terminal_equity_value_range_per_share"]
+    if not isinstance(raw_terminal, Mapping):
+        raise ValidationError(
+            "return_model.base_case_terminal_equity_value_range_per_share must be an object"
+        )
+    horizons = set(raw_terminal)
+    if "year_5" not in horizons or not horizons.issubset(_RETURN_MODEL_TERMINAL_HORIZONS):
+        raise ValidationError(
+            "return_model terminal ranges require year_5 and may only include year_3"
+        )
+    terminal: dict[str, dict[str, float]] = {}
+    if "year_3" in raw_terminal:
+        terminal["year_3"] = _return_model_range(
+            raw_terminal["year_3"],
+            "return_model.base_case_terminal_equity_value_range_per_share.year_3",
+        )
+        if sum(distributions[:3]) + terminal["year_3"]["high"] <= 0:
+            raise ValidationError("return_model year_3 total future payoff must be positive")
+    terminal["year_5"] = _return_model_range(
+        raw_terminal["year_5"],
+        "return_model.base_case_terminal_equity_value_range_per_share.year_5",
+    )
+    if sum(distributions) + terminal["year_5"]["high"] <= 0:
+        raise ValidationError("return_model year_5 total future payoff must be positive")
+
+    return {
+        "schema_version": _RETURN_MODEL_SCHEMA_VERSION,
+        "method": method,
+        "currency": currency,
+        "model_as_of": model_as_of,
+        "base_case_distributions_per_share": distributions,
+        "base_case_terminal_equity_value_range_per_share": terminal,
+    }
+
+
+def _return_model(
+    value: ReturnModel | None,
+    *,
+    information_cutoff: str,
+    value_range: Mapping[str, Any] | None,
+) -> dict[str, Any] | None:
+    if value is None:
+        return None
+    if not isinstance(value, ReturnModel):
+        raise ValidationError("return_model must be a ReturnModel or None")
+    return _normalized_return_model_payload(
+        {
+            "schema_version": value.schema_version,
+            "method": value.method,
+            "currency": value.currency,
+            "model_as_of": value.model_as_of,
+            "base_case_distributions_per_share": value.base_case_distributions_per_share,
+            "base_case_terminal_equity_value_range_per_share": (
+                value.base_case_terminal_equity_value_range_per_share
+            ),
+        },
+        information_cutoff=information_cutoff,
+        value_range=value_range,
+    )
+
+
+def _stored_return_model(
+    value: object,
+    *,
+    information_cutoff: str,
+    value_range: Mapping[str, Any] | None,
+) -> dict[str, Any]:
+    if not isinstance(value, Mapping):
+        raise ValidationError("persisted return_model must be an object")
+    return _normalized_return_model_payload(
+        value,
+        information_cutoff=information_cutoff,
+        value_range=value_range,
+    )
+
+
 def _task_id(symbol: str, trigger_key: str) -> str:
     digest = hashlib.sha256(f"{symbol}\0{trigger_key}".encode()).hexdigest()
     return digest[:24]
@@ -514,6 +687,8 @@ def _empty_state(symbol: str, name: str | None, at: str) -> dict[str, Any]:
         "information_cutoff": None,
         "report_path": None,
         "valuation_note": None,
+        "return_model": None,
+        "return_model_note": None,
         "candidate_since": None,
         "invalidation": None,
         "last_update": None,
@@ -622,25 +797,27 @@ class ResearchFlow:
                 or state.get("status") != CompanyStatus.COVERED.value
             ):
                 continue
-            rows.append(
-                {
-                    "schema_version": STATE_SCHEMA_VERSION,
-                    "symbol": symbol,
-                    "name": state.get("name"),
-                    "status": state["status"],
-                    "summary": state.get("summary"),
-                    "key_logic": list(state.get("key_logic") or []),
-                    "risks": list(state.get("risks") or []),
-                    "value_range": state.get("value_range"),
-                    "event_triggers": list(state.get("event_triggers") or []),
-                    "source_urls": list(state.get("source_urls") or []),
-                    "last_research_at": state.get("last_research_at"),
-                    "information_cutoff": state.get("information_cutoff"),
-                    "report_path": state.get("report_path"),
-                    "valuation_note": state.get("valuation_note"),
-                    "updated_at": state.get("updated_at"),
-                }
-            )
+            row = {
+                "schema_version": STATE_SCHEMA_VERSION,
+                "symbol": symbol,
+                "name": state.get("name"),
+                "status": state["status"],
+                "summary": state.get("summary"),
+                "key_logic": list(state.get("key_logic") or []),
+                "risks": list(state.get("risks") or []),
+                "value_range": state.get("value_range"),
+                "event_triggers": list(state.get("event_triggers") or []),
+                "source_urls": list(state.get("source_urls") or []),
+                "last_research_at": state.get("last_research_at"),
+                "information_cutoff": state.get("information_cutoff"),
+                "report_path": state.get("report_path"),
+                "valuation_note": state.get("valuation_note"),
+                "updated_at": state.get("updated_at"),
+            }
+            if "return_model" in state or "return_model_note" in state:
+                row["return_model"] = state.get("return_model")
+                row["return_model_note"] = state.get("return_model_note")
+            rows.append(row)
         return rows
 
     def _write_states(self, states: Mapping[str, Mapping[str, Any]]) -> None:
@@ -889,6 +1066,8 @@ class ResearchFlow:
                         "information_cutoff": None,
                         "report_path": None,
                         "valuation_note": None,
+                        "return_model": None,
+                        "return_model_note": None,
                         "candidate_since": None,
                         "invalidation": None,
                         "processed_triggers": [],
@@ -1116,6 +1295,8 @@ class ResearchFlow:
                     state["information_cutoff"] = None
                     state["report_path"] = None
                     state["valuation_note"] = None
+                    state["return_model"] = None
+                    state["return_model_note"] = None
                     state["candidate_since"] = None
                     state["invalidation"] = None
                     tasks = [task for task in tasks if task.symbol != symbol]
@@ -1253,6 +1434,16 @@ class ResearchFlow:
             if result.valuation_note is not None
             else None
         )
+        return_model = _return_model(
+            result.return_model,
+            information_cutoff=information_cutoff,
+            value_range=value_range,
+        )
+        return_model_note = (
+            _return_model_text(result.return_model_note, "return_model_note")
+            if result.return_model_note is not None
+            else None
+        )
         report_markdown = (
             _nonblank(result.report_markdown, "report_markdown")
             if result.report_markdown is not None
@@ -1345,6 +1536,8 @@ class ResearchFlow:
                 )
         if value_range is None and valuation_note is None:
             raise ValidationError("research result requires value_range or valuation_note")
+        if return_model_note is None:
+            raise ValidationError("research result requires return_model_note")
         return {
             "symbol": symbol,
             "name": _optional_name(result.name),
@@ -1358,6 +1551,8 @@ class ResearchFlow:
             "information_cutoff": information_cutoff,
             "report_markdown": report_markdown,
             "valuation_note": valuation_note,
+            "return_model": return_model,
+            "return_model_note": return_model_note,
         }
 
     def _company_directory(self, symbol: str) -> Path:
@@ -1683,6 +1878,8 @@ class ResearchFlow:
                     "information_cutoff": normalized["information_cutoff"],
                     "report_path": report_relative,
                     "valuation_note": normalized["valuation_note"],
+                    "return_model": normalized["return_model"],
+                    "return_model_note": normalized["return_model_note"],
                     "candidate_since": None,
                     "invalidation": None,
                 }
@@ -1722,6 +1919,42 @@ class ResearchFlow:
                     _strings(state.get("risks") or [], "risk")
                     _event_triggers(state.get("event_triggers") or [])
                     _urls(state.get("source_urls") or [])
+                    has_return_contract = "return_model" in state or "return_model_note" in state
+                    return_model_note = state.get("return_model_note")
+                    if return_model_note is not None:
+                        _return_model_text(return_model_note, "return_model_note")
+                    if state.get("return_model") is not None:
+                        information_cutoff_value = state.get("information_cutoff")
+                        if not isinstance(information_cutoff_value, str):
+                            raise StateCorruptionError(
+                                f"return_model lacks information_cutoff for {symbol}"
+                            )
+                        raw_value_range = state.get("value_range")
+                        if raw_value_range is not None and not isinstance(raw_value_range, Mapping):
+                            raise StateCorruptionError(
+                                f"value_range must be an object for {symbol}"
+                            )
+                        _stored_return_model(
+                            state["return_model"],
+                            information_cutoff=_timestamp(information_cutoff_value),
+                            value_range=raw_value_range,
+                        )
+                    if (
+                        has_return_contract
+                        and state.get("report_path") is not None
+                        and return_model_note is None
+                    ):
+                        raise StateCorruptionError(
+                            f"current formal report lacks return_model_note for {symbol}"
+                        )
+                    retired_return_fields = sorted(
+                        _RETIRED_DYNAMIC_RETURN_FIELDS.intersection(state)
+                    )
+                    if retired_return_fields:
+                        raise StateCorruptionError(
+                            f"dynamic return fields remain in state for {symbol}: "
+                            + ", ".join(retired_return_fields)
+                        )
                     if "price_levels" in state or "price_monitor" in state:
                         raise StateCorruptionError(
                             f"retired security-price fields remain in state for {symbol}"
@@ -2042,6 +2275,7 @@ __all__ = [
     "ResearchFlowStatus",
     "ResearchOutcome",
     "ResearchResult",
+    "ReturnModel",
     "ResearchTask",
     "ResearchUpdate",
     "ResearchUpdateRecord",

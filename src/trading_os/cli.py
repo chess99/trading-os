@@ -28,6 +28,7 @@ from .research_assets.research_flow import (
     ResearchFlowError,
     ResearchResult,
     ResearchUpdate,
+    ReturnModel,
     ScreenDecision,
     ValueRange,
 )
@@ -196,16 +197,30 @@ def _records(payload: Any, key: str) -> list[Mapping[str, Any]]:
     return records
 
 
-_RETIRED_PRICE_FIELDS = frozenset(
-    {"price_levels", "price_monitor", "buy_below", "rearm_above"}
+_RETIRED_PRICE_FIELDS = frozenset({"price_levels", "price_monitor", "buy_below", "rearm_above"})
+_RETIRED_DYNAMIC_RETURN_FIELDS = frozenset(
+    {
+        "expected_annual_return",
+        "expected_irr",
+        "current_irr",
+        "irr",
+        "year_3_irr",
+        "year_5_irr",
+    }
 )
 
 
 def _reject_retired_price_fields(payload: Mapping[str, Any]) -> None:
     present = sorted(_RETIRED_PRICE_FIELDS.intersection(payload))
     if present:
+        raise ValueError("证券价格不再是研究触发器；请删除已退役字段：" + ", ".join(present))
+
+
+def _reject_retired_dynamic_return_fields(payload: Mapping[str, Any]) -> None:
+    present = sorted(_RETIRED_DYNAMIC_RETURN_FIELDS.intersection(payload))
+    if present:
         raise ValueError(
-            "证券价格不再是研究触发器；请删除已退役字段：" + ", ".join(present)
+            "动态回报只能由展示层使用实时价格现场计算；请删除字段：" + ", ".join(present)
         )
 
 
@@ -223,6 +238,7 @@ def _screen_decision(payload: Mapping[str, Any]) -> ScreenDecision:
 
 def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
     _reject_retired_price_fields(payload)
+    _reject_retired_dynamic_return_fields(payload)
     raw_range = payload.get("value_range")
     value_range = None
     if raw_range is not None:
@@ -232,6 +248,33 @@ def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
             low=raw_range["low"],
             high=raw_range["high"],
             currency=raw_range.get("currency", "CNY"),
+        )
+    raw_return_model = payload.get("return_model")
+    return_model = None
+    if raw_return_model is not None:
+        if not isinstance(raw_return_model, dict):
+            raise ValueError("return_model 必须是对象或 null")
+        expected_fields = {
+            "schema_version",
+            "method",
+            "currency",
+            "model_as_of",
+            "base_case_distributions_per_share",
+            "base_case_terminal_equity_value_range_per_share",
+        }
+        if set(raw_return_model) != expected_fields:
+            raise ValueError("return_model 字段不符合 version 1 合同")
+        return_model = ReturnModel(
+            schema_version=raw_return_model["schema_version"],
+            method=raw_return_model["method"],
+            currency=raw_return_model["currency"],
+            model_as_of=raw_return_model["model_as_of"],
+            base_case_distributions_per_share=(
+                raw_return_model["base_case_distributions_per_share"]
+            ),
+            base_case_terminal_equity_value_range_per_share=(
+                raw_return_model["base_case_terminal_equity_value_range_per_share"]
+            ),
         )
     return ResearchResult(
         symbol=payload["symbol"],
@@ -246,6 +289,8 @@ def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
         information_cutoff=payload["information_cutoff"],
         report_markdown=payload.get("report_markdown"),
         valuation_note=payload.get("valuation_note"),
+        return_model=return_model,
+        return_model_note=payload.get("return_model_note"),
     )
 
 
@@ -382,6 +427,7 @@ def _research_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
     payload, _ = _load(args.input, stdin)
     if not isinstance(payload, dict):
         raise ValueError("研究结果必须是 JSON 对象")
+    _reject_retired_dynamic_return_fields(payload)
     result_payload = payload.get("result", payload)
     if not isinstance(result_payload, dict):
         raise ValueError("result 必须是对象")
@@ -397,6 +443,8 @@ def _research_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
         "symbol": state["symbol"],
         "status": state["status"],
         "value_range": state["value_range"],
+        "return_model": state["return_model"],
+        "return_model_note": state["return_model_note"],
         "report_path": state["report_path"],
     }
 
@@ -409,9 +457,7 @@ def _updates_record(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     if not isinstance(update_payload, dict):
         raise ValueError("update 必须是对象")
     reviewed_at = args.at or payload.get("at")
-    record = _flow(args).record_update(
-        _research_update(update_payload, reviewed_at=reviewed_at)
-    )
+    record = _flow(args).record_update(_research_update(update_payload, reviewed_at=reviewed_at))
     return _jsonable(record)
 
 

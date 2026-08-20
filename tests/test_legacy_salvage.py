@@ -60,6 +60,8 @@ def _current_result() -> ResearchResult:
         key_logic=("当前逻辑",),
         risks=("当前风险",),
         value_range=ValueRange(10, 20),
+        return_model=None,
+        return_model_note="历史修复测试不建立五年持有人回报模型。",
         event_triggers=("下一份财报",),
         source_urls=("https://example.com/current",),
         information_cutoff=AT,
@@ -71,6 +73,8 @@ def _current_result() -> ResearchResult:
             "## 估值与核心合理价值区间\n\n"
             "方法一为正常化PE，方法二为现金流折现；以正常化PE为核心。\n\n"
             "核心合理价值区间：10—20 元。\n\n"
+            "### 基准持有人回报模型输入\n\n"
+            "历史修复测试不建立五年持有人回报模型。\n\n"
             "## 核心风险\n\n当前风险需要持续观察。\n\n"
             "## 来源清单\n\n- https://example.com/current"
         ),

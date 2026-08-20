@@ -35,6 +35,18 @@ def _full_result(symbol: str, task_id: str | None = None) -> dict:
         "key_logic": ["需求增长", "现金流转化决定估值"],
         "risks": ["客户集中", "资本开支回报不及预期"],
         "value_range": {"low": 58, "high": 82, "currency": "CNY"},
+        "return_model": {
+            "schema_version": 1,
+            "method": "annual_common_equity_irr_v1",
+            "currency": "CNY",
+            "model_as_of": AT,
+            "base_case_distributions_per_share": [1, 1.1, 1.2, 1.3, 1.4],
+            "base_case_terminal_equity_value_range_per_share": {
+                "year_3": {"low": 65, "high": 78},
+                "year_5": {"low": 72, "high": 92},
+            },
+        },
+        "return_model_note": ("终值采用正常化每股收益与退出PE区间，并按完全稀释股本折算。"),
         "event_triggers": ["下一期财报发布"],
         "source_urls": ["https://example.com/report"],
         "information_cutoff": AT,
@@ -48,6 +60,9 @@ def _full_result(symbol: str, task_id: str | None = None) -> dict:
             "## 估值与核心合理价值区间\n\n"
             "方法一为正常化PE，方法二为现金流折现；以正常化PE为核心。\n\n"
             "核心合理价值区间：58—82 元。\n\n"
+            "### 基准持有人回报模型输入\n\n"
+            "未来五年每股现金分配为1.0、1.1、1.2、1.3、1.4元；"
+            "三年终值65—78元，五年终值72—92元。\n\n"
             "## 核心风险\n\n客户集中且资本开支回报可能不及预期。\n\n"
             "## 来源清单\n\n- https://example.com/report"
         ),
@@ -122,6 +137,7 @@ def test_research_assets_package_exports_only_the_compact_flow():
 
     assert assets.ResearchFlow
     assert assets.ResearchResult
+    assert assets.ReturnModel
     assert assets.ResearchUpdate
     for removed in (
         "AssetValidationError",
@@ -281,7 +297,113 @@ def test_research_complete_writes_dated_report_and_full_watchlist(tmp_path: Path
     company = listed["companies"][0]
     assert company["key_logic"] == ["需求增长", "现金流转化决定估值"]
     assert company["value_range"] == {"currency": "CNY", "high": 82.0, "low": 58.0}
+    assert completed["return_model"] == company["return_model"]
+    assert completed["return_model_note"] == company["return_model_note"]
+    assert company["return_model"]["base_case_distributions_per_share"] == [
+        1.0,
+        1.1,
+        1.2,
+        1.3,
+        1.4,
+    ]
+    assert "expected_irr" not in company
     assert "price_levels" not in company
+
+
+def test_research_complete_requires_return_model_note(tmp_path: Path, capsys):
+    task_id = _screen_and_dispatch(
+        tmp_path,
+        capsys,
+        "CN:601138",
+        trigger_id="missing-return-note",
+    )
+    payload = _full_result("CN:601138", task_id)
+    del payload["result"]["return_model_note"]
+    source = _write(tmp_path / "missing-return-note.json", payload)
+
+    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
+    captured = capsys.readouterr()
+    assert code == 1
+    assert "return_model_note" in json.loads(captured.err)["error"]
+
+
+def test_research_complete_rejects_unexpected_return_model_fields(tmp_path: Path, capsys):
+    task_id = _screen_and_dispatch(
+        tmp_path,
+        capsys,
+        "CN:601138",
+        trigger_id="unexpected-return-field",
+    )
+    payload = _full_result("CN:601138", task_id)
+    payload["result"]["return_model"]["expected_irr"] = 0.12
+    source = _write(tmp_path / "unexpected-return-field.json", payload)
+
+    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
+    captured = capsys.readouterr()
+    assert code == 1
+    assert "version 1" in json.loads(captured.err)["error"]
+
+
+def test_research_complete_rejects_overflowing_return_model_number(tmp_path: Path, capsys):
+    task_id = _screen_and_dispatch(
+        tmp_path,
+        capsys,
+        "CN:601138",
+        trigger_id="overflowing-return-number",
+    )
+    payload = _full_result("CN:601138", task_id)
+    payload["result"]["return_model"]["base_case_distributions_per_share"][0] = 10**400
+    source = _write(tmp_path / "overflowing-return-number.json", payload)
+
+    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
+    captured = capsys.readouterr()
+    assert code == 1
+    assert "finite non-negative" in json.loads(captured.err)["error"]
+
+
+@pytest.mark.parametrize(
+    "field",
+    [
+        "expected_annual_return",
+        "expected_irr",
+        "current_irr",
+        "irr",
+        "year_3_irr",
+        "year_5_irr",
+    ],
+)
+def test_research_complete_rejects_dynamic_return_fields(tmp_path: Path, capsys, field: str):
+    task_id = _screen_and_dispatch(
+        tmp_path,
+        capsys,
+        "CN:601138",
+        trigger_id=f"dynamic-return-field:{field}",
+    )
+    payload = _full_result("CN:601138", task_id)
+    payload["result"][field] = 0.12
+    source = _write(tmp_path / f"dynamic-return-field-{field}.json", payload)
+
+    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
+    captured = capsys.readouterr()
+    assert code == 1
+    assert field in json.loads(captured.err)["error"]
+
+
+def test_research_complete_rejects_dynamic_return_field_on_envelope(tmp_path: Path, capsys):
+    task_id = _screen_and_dispatch(
+        tmp_path,
+        capsys,
+        "CN:601138",
+        trigger_id="dynamic-return-envelope",
+    )
+    payload = _full_result("CN:601138", task_id)
+    payload["expected_irr"] = 0.12
+    source = _write(tmp_path / "dynamic-return-envelope.json", payload)
+
+    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
+    captured = capsys.readouterr()
+    assert code == 1
+    assert "expected_irr" in json.loads(captured.err)["error"]
 
 
 def test_retired_security_price_fields_are_rejected(tmp_path: Path, capsys):
@@ -290,9 +412,7 @@ def test_retired_security_price_fields_are_rejected(tmp_path: Path, capsys):
     payload["result"]["price_levels"] = [{"id": "attention", "threshold": 55}]
     source = _write(tmp_path / "old-result.json", payload)
 
-    code = main(
-        ["--root", str(tmp_path), "research", "complete", "--input", str(source)]
-    )
+    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
     captured = capsys.readouterr()
     assert code == 1
     assert "已退役字段" in json.loads(captured.err)["error"]

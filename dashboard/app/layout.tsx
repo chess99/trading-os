@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
-  const description = "A股全市场研究状态、机会复核顺序与正式研报阅读工作台。";
+  const description = "A股全市场五年基准情景年化回报、合理价值位置与正式研报阅读工作台。";
   return {
     metadataBase: new URL(origin),
     title: {
@@ -33,9 +33,9 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [
         {
           url: `${origin}/og.png`,
-          width: 1200,
-          height: 630,
-          alt: "Trading OS 全市场研究决策台",
+          width: 1729,
+          height: 910,
+          alt: "Trading OS 赔率地图",
         },
       ],
     },
