@@ -45,10 +45,55 @@ jobs:
           IFS=$'\n' files=($(printf '%s\n' "${files[@]}" | sort))
           unset IFS
           for f in "${files[@]}"; do
-            echo "Dispatching next baseline task for $f"
-            python -m trading_os research next --limit 1
-            echo "Applying $f"
-            python -m trading_os research complete --input "$f"
+            has_update="$(python - "$f" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding='utf-8') as handle:
+              payload = json.load(handle)
+          print('1' if isinstance(payload, dict) and isinstance(payload.get('update'), dict) else '0')
+          PY
+            )"
+
+            if [ "$has_update" = '1' ]; then
+              echo "Recording refresh invalidation for $f"
+              update_output="$(python -m trading_os updates record --input "$f")"
+              task_id="$(python - "$update_output" <<'PY'
+          import json
+          import sys
+
+          payload = json.loads(sys.argv[1])
+          task = payload.get('enqueued_task')
+          if not isinstance(task, dict) or not task.get('task_id'):
+              raise SystemExit('refresh update did not enqueue a research task')
+          print(task['task_id'])
+          PY
+              )"
+              echo "Dispatching refresh task $task_id"
+              dispatch_output="$(python -m trading_os research next --limit 1 --from-end)"
+              dispatched_id="$(python - "$dispatch_output" <<'PY'
+          import json
+          import sys
+
+          payload = json.loads(sys.argv[1])
+          tasks = payload.get('tasks') or []
+          if len(tasks) != 1:
+              raise SystemExit('refresh dispatch did not return exactly one task')
+          print(tasks[0]['task_id'])
+          PY
+              )"
+              if [ "$dispatched_id" != "$task_id" ]; then
+                echo "Expected refresh task $task_id, dispatched $dispatched_id" >&2
+                exit 1
+              fi
+              echo "Applying refresh result from $f"
+              python -m trading_os research complete --input "$f" --task-id "$task_id"
+            else
+              echo "Dispatching next baseline task for $f"
+              python -m trading_os research next --limit 1
+              echo "Applying $f"
+              python -m trading_os research complete --input "$f"
+            fi
             rm "$f"
           done
 
