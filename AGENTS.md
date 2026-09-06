@@ -11,12 +11,21 @@
 - 研究日志：`research/companies/CN/{ticker}/updates/YYYY-MM-DD[-NN].md`，只能确认、观察或宣告当前报告失效。
 - 隔离旧稿：`research/companies/CN/{ticker}/legacy/YYYY-MM-DD.md`，每家公司最多一份，永远不参与当前状态、估值或队列。
 - 公告扫描只用 `coverage/cn-a/event_scan_state.json` 保存成功检查点和近期公告 ID。
+- 独立价值质量池：`screening/cn-a/value-quality/pool.json`；筛选规范见 `prompts/screening/cn-a-value-quality.md`，可读投影 `current.md` 只能由池文件确定性生成。
 
 正式报告、研究日志和历史旧稿都进入 Git。worker 返回的结构化 JSON 和 `report_markdown` 在验收前只是候选稿，不进入正式时间线；验收失败直接丢弃，不创建报告文件，也不占用 `-02/-03` 序号。已经通过验收的历史正式报告保持不可变；误入库且能够确认从未完成验收的坏稿按数据修复删除，并恢复到前一份合格报告和原研究任务。不得恢复会漂移的 `current.md` 副本，也不得用 `stale` 文件后缀表达公司状态。
 
 仓库不保存证券价格触发线、armed/hit/rearm 状态或每日收盘扫描结果。正式研究可以冻结不含现价的 `return_model` 持有人回报模型输入；IRR 只允许由展示层使用实时价格现场机械求解，不得写回研究状态或解释为买入信号、收益率门槛或投资授权。
 
 旧 manager-screen、quick/targeted/scoped/deep 阶段预算、价格触发、claim/seal、calibration、独立承保、challenger、仲裁和组合审批均已退役，不得重新引入。
+
+## 独立价值质量筛选层
+
+价值质量池与单公司研究完全隔离。筛选只维护 `screening/cn-a/value-quality/pool.json`，不得修改研究状态、队列、自选池、公司报告或研究日志；池内成员不会自动成为 `candidate / covered`。单公司研究也不得根据该池改变状态或结论。
+
+筛选可以独立获取公开信息，也可以把正式报告当作普通参考，但公司研究状态不是入池条件。池中不得保存现价、估值、回报率、仓位、交易动作、任务 ID、报告路径或 `return_model`。结果只维护当前全量版本，历史通过 Git 查看；`current.md` 禁止手改。
+
+处理价值质量池时必须完整阅读 `prompts/screening/cn-a-value-quality.md`，使用独立的 `quality-pool status / validate / list / replace` 命令。这里的价值质量筛选不要与下文决定 `ignore / research_now` 的研究队列初筛混淆。
 
 ## 角色与结果
 
@@ -55,5 +64,7 @@
 
 1. `playbooks/simple-research.md`
 2. `prompts/goals/cn-all-a-continuous-research.md`
+
+若任务涉及价值质量池，再读 `prompts/screening/cn-a-value-quality.md`。
 
 常用命令见 `README.md`。

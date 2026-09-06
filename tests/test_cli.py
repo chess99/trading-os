@@ -115,6 +115,7 @@ def test_help_contains_only_the_compact_workflow(capsys: pytest.CaptureFixture[s
     for command in (
         "status",
         "validate",
+        "quality-pool",
         "universe",
         "screen",
         "research",

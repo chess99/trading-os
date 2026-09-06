@@ -2,6 +2,8 @@
 
 Trading OS 是一套面向 A 股、由新事实驱动的轻量研究工作流。仓库的主要产品是可审计的公司研究状态、完整正式报告和研究日志；网站只是这些资产的只读展示。系统不做自动交易，也不因股票价格变化启动研究。
 
+仓库另有一层完全隔离的价值质量筛选：它从全市场维护一个当前商业质量池，不创建研究任务，也不改变公司研究状态。筛选规范与结果都随 Git 保存，但不保留重复的日期化筛选快照。
+
 ## 核心机制
 
 1. 主 Agent 对全市场压缩事实只判断 `ignore / research_now`。
@@ -25,6 +27,8 @@ research/watchlist.jsonl                                 active covered 的确�
 research/companies/CN/{代码}/reports/YYYY-MM-DD[-NN].md 完整正式报告时间线
 research/companies/CN/{代码}/updates/YYYY-MM-DD[-NN].md 研究日志
 research/companies/CN/{代码}/legacy/YYYY-MM-DD.md        隔离旧稿
+screening/cn-a/value-quality/pool.json                    独立价值质量池唯一结果源
+screening/cn-a/value-quality/current.md                   由当前池生成的可读投影
 ```
 
 `research_state.jsonl.report_path` 指向该公司最新合格正式报告，这个指针就是 current；同一天再次完成并通过验收的正式研究才依次写为 `-02`、`-03`。正式报告必须自足，禁止用“参见前序报告”替代商业、财务或估值正文。未通过验收的候选稿直接丢弃并重新排队，不创建报告文件、不推进指针，也不占序号；能够确认从未完成验收的历史误入稿可按数据修复删除，合格历史报告仍不可变。
@@ -73,12 +77,29 @@ npm install
 npm run dev
 ```
 
+## 独立价值质量池
+
+价值质量池只回答“哪些公司值得长期研究”，不表达买入、仓位或当前估值。它不读写研究队列，单公司研究也不从该池派生状态。完整方法见 [价值质量筛选规范](prompts/screening/cn-a-value-quality.md)。
+
+```bash
+python -m trading_os quality-pool status
+python -m trading_os quality-pool validate
+python -m trading_os quality-pool list --tier core_moat
+python -m trading_os quality-pool replace --input <完整池.json>
+```
+
+`pool.json` 是唯一结果源，`current.md` 只能由 `replace` 确定性重建。成员增删和分层变化直接替换当前池；需要历史时查看 Git。
+
 ## 常用命令
 
 ```bash
 # 查看与校验
 python -m trading_os status
 python -m trading_os validate
+
+# 独立价值质量池（不会改变单公司研究）
+python -m trading_os quality-pool status
+python -m trading_os quality-pool validate
 
 # 一次性从 schema v1/v2 迁移到无证券价格触发的 v3
 python -m trading_os state migrate-v3 --at 2026-08-14T17:00:00+08:00

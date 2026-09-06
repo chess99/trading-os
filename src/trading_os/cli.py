@@ -32,6 +32,7 @@ from .research_assets.research_flow import (
     ScreenDecision,
     ValueRange,
 )
+from .screening_pool import TIERS, QualityPoolStore
 
 
 def _add_input(parser: argparse.ArgumentParser) -> None:
@@ -54,6 +55,27 @@ def build_parser() -> argparse.ArgumentParser:
     status.set_defaults(handler=_status)
     validate = commands.add_parser("validate", help="只读校验状态、队列、观察池和当前报告")
     validate.set_defaults(handler=_validate)
+
+    quality_pool = commands.add_parser(
+        "quality-pool", help="独立维护价值质量筛选池；不改变单公司研究状态"
+    )
+    quality_pool_commands = quality_pool.add_subparsers(
+        dest="quality_pool_command", required=True
+    )
+    quality_pool_status = quality_pool_commands.add_parser("status", help="查看当前池计数")
+    quality_pool_status.set_defaults(handler=_quality_pool_status)
+    quality_pool_validate = quality_pool_commands.add_parser(
+        "validate", help="只读校验当前池和可读投影"
+    )
+    quality_pool_validate.set_defaults(handler=_quality_pool_validate)
+    quality_pool_replace = quality_pool_commands.add_parser(
+        "replace", help="用完整快照原子替换当前池"
+    )
+    _add_input(quality_pool_replace)
+    quality_pool_replace.set_defaults(handler=_quality_pool_replace)
+    quality_pool_list = quality_pool_commands.add_parser("list", help="列出当前池")
+    quality_pool_list.add_argument("--tier", choices=TIERS)
+    quality_pool_list.set_defaults(handler=_quality_pool_list)
 
     state = commands.add_parser("state", help="维护公司状态模型和全市场基线")
     state_commands = state.add_subparsers(dest="state_command", required=True)
@@ -343,6 +365,40 @@ def _status(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
 def _validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
     return {"ok": True, "status": asdict(_flow(args).validate())}
+
+
+def _quality_pool(args: argparse.Namespace) -> QualityPoolStore:
+    return QualityPoolStore(Path(args.root))
+
+
+def _quality_pool_status(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    return _quality_pool(args).validate().status()
+
+
+def _quality_pool_validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    return {"ok": True, "status": _quality_pool(args).validate().status()}
+
+
+def _quality_pool_replace(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    payload, _ = _load(args.input, stdin)
+    store = _quality_pool(args)
+    pool = store.replace(payload)
+    return {
+        "pool_path": store.pool_path.relative_to(store.root).as_posix(),
+        "current_path": store.current_path.relative_to(store.root).as_posix(),
+        **pool.status(),
+    }
+
+
+def _quality_pool_list(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    pool = _quality_pool(args).validate()
+    companies = [
+        company for company in pool.companies if args.tier is None or company.tier == args.tier
+    ]
+    return {"count": len(companies), "companies": companies}
 
 
 def _state_migrate_v3(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
