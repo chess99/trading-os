@@ -88,7 +88,7 @@ python -m trading_os quality-pool list --tier core_moat
 python -m trading_os quality-pool replace --input <完整池.json>
 ```
 
-`pool.json` 是唯一结果源，`current.md` 只能由 `replace` 确定性重建。成员增删和分层变化直接替换当前池；需要历史时查看 Git。
+`pool.json` 是唯一结果源，`current.md` 只能由 `replace / rebuild` 确定性重建。成员增删和分层变化直接替换当前池；需要历史时查看 Git。v2 强制保存竞争优势、普通股现金、反证、分层理由及公开来源，并嵌入独立证券身份与实际复核范围。投影损坏时 `status/list` 仍读权威 JSON，运行 `python -m trading_os quality-pool rebuild` 恢复；`validate` 只做机械检查，不认证商业结论。
 
 ## 常用命令
 

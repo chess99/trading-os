@@ -73,6 +73,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_input(quality_pool_replace)
     quality_pool_replace.set_defaults(handler=_quality_pool_replace)
+    quality_pool_rebuild = quality_pool_commands.add_parser(
+        "rebuild", help="只从已保存名单重建可读投影"
+    )
+    quality_pool_rebuild.set_defaults(handler=_quality_pool_rebuild)
     quality_pool_list = quality_pool_commands.add_parser("list", help="列出当前池")
     quality_pool_list.add_argument("--tier", choices=TIERS)
     quality_pool_list.set_defaults(handler=_quality_pool_list)
@@ -373,32 +377,46 @@ def _quality_pool(args: argparse.Namespace) -> QualityPoolStore:
 
 def _quality_pool_status(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
-    return _quality_pool(args).validate().status()
+    store = _quality_pool(args)
+    pool = store.read()
+    return {**pool.status(), "projection_current": store.projection_current(pool)}
 
 
 def _quality_pool_validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
-    return {"ok": True, "status": _quality_pool(args).validate().status()}
+    return {"ok": True, "status": {
+        **_quality_pool(args).validate().status(), "projection_current": True,
+    }}
 
 
 def _quality_pool_replace(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     payload, _ = _load(args.input, stdin)
     store = _quality_pool(args)
-    pool = store.replace(payload)
+    result = store.replace(payload)
     return {
         "pool_path": store.pool_path.relative_to(store.root).as_posix(),
         "current_path": store.current_path.relative_to(store.root).as_posix(),
-        **pool.status(),
+        **result.pool.status(),
+        "committed": True,
+        "projection_current": result.projection_current,
+        "warning": result.warning,
     }
 
 
 def _quality_pool_list(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
-    pool = _quality_pool(args).validate()
+    store = _quality_pool(args)
+    pool = store.read()
     companies = [
         company for company in pool.companies if args.tier is None or company.tier == args.tier
     ]
-    return {"count": len(companies), "companies": companies}
+    return {"count": len(companies), "companies": companies,
+            "projection_current": store.projection_current(pool)}
+
+
+def _quality_pool_rebuild(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    return {"ok": True, **_quality_pool(args).rebuild().status(), "projection_current": True}
 
 
 def _state_migrate_v3(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:

@@ -25,7 +25,7 @@
 
 筛选可以独立获取公开信息，也可以把正式报告当作普通参考，但公司研究状态不是入池条件。池中不得保存现价、估值、回报率、仓位、交易动作、任务 ID、报告路径或 `return_model`。结果只维护当前全量版本，历史通过 Git 查看；`current.md` 禁止手改。
 
-处理价值质量池时必须完整阅读 `prompts/screening/cn-a-value-quality.md`，使用独立的 `quality-pool status / validate / list / replace` 命令。这里的价值质量筛选不要与下文决定 `ignore / research_now` 的研究队列初筛混淆。
+处理价值质量池时必须完整阅读 `prompts/screening/cn-a-value-quality.md`，使用独立的 `quality-pool status / validate / list / replace / rebuild` 命令。v2 每家公司必须有竞争优势、普通股现金、反证、分层理由及公开来源；证券身份清单与实际复核范围嵌入池文件。JSON 是唯一提交点，投影失败用 rebuild 恢复，不能把机械校验当作商业认证。这里的价值质量筛选不要与下文决定 `ignore / research_now` 的研究队列初筛混淆。
 
 ## 角色与结果
 
