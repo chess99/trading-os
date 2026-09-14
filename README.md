@@ -16,6 +16,8 @@ Trading OS 是一套面向 A 股、由新事实驱动的轻量研究工作流。
 
 没有研究强度分档、固定分钟数、复核 Agent、独立承保、经理审批、多 Agent 共识、收益率硬门槛或仓位审批。
 
+研究围绕少数决定性商业问题取证，现有协调器同时检查关键原证、相反解释及经营假设怎样进入估值；具体见[商业判断验收](playbooks/simple-research.md#商业判断验收)。[产业专题](research/industries/README.md)按需积累跨公司知识，供研究者核验和反驳，不维护第二套公司状态。[星宇样本审查](docs/reviews/2026-09-15-xingyu-research-quality-review.md)展示了这套方法的依据和边界。
+
 ## 当前事实源
 
 ```text
