@@ -12,6 +12,8 @@
     "prebuild": "npm run data",
     "build": "vinext build",
     "start": "vinext start",
+    "deploy:dry-run": "npm run build && wrangler deploy --dry-run --config dist/server/wrangler.json",
+    "deploy": "npm run build && wrangler deploy --config dist/server/wrangler.json",
     "test": "npm run build && node --test tests/*.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern public/data"
   },

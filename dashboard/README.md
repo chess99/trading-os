@@ -43,6 +43,18 @@ npm run dev
 
 启动和正式构建前会从仓库唯一事实源生成只读目录。`npm test` 会验证构建、页面和数据投影。
 
+## Cloudflare Workers 部署
+
+线上预览使用 Cloudflare Workers，不依赖 Sites。首次部署前先登录 Cloudflare，随后执行：
+
+```bash
+npx wrangler login
+npm run deploy:dry-run
+npm run deploy
+```
+
+构建产物中的 Worker 配置是唯一部署入口；行情 API 与页面由同一个 Worker 提供，研究数据仍在每次构建时从仓库事实源生成。
+
 ## 后续产品路线
 
 可以继续增加公告变化收件箱、研究日志浏览、正式报告版本差异和个人筛选视图。它们都应继续读取现有仓库资产，不得反向引入第二套状态、组合动作或价格触发体系。
