@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { reportReferenceLink } from "../lib/report-reference.mjs";
 
 interface Document {
   id: string;
@@ -52,8 +53,8 @@ export function ResearchDocuments({ kind }: { kind: Document["kind"] }) {
   function documentLink(href: string | undefined) {
     if (!href || /^(https?:|mailto:|#)/u.test(href)) return href;
     const resolved = new URL(href, `https://research.local/${current?.sourcePath ?? ""}`);
-    const ticker = /research\/companies\/CN\/(\d{6})\/reports\//u.exec(resolved.pathname)?.[1];
-    if (ticker) return `/reports/${ticker}`;
+    const reportLink = reportReferenceLink(resolved.pathname);
+    if (reportLink) return reportLink;
     const target = documents.find((doc) => `/${doc.sourcePath}` === resolved.pathname);
     return target ? `/${target.kind === "industry" ? "industries" : "selection"}?topic=${encodeURIComponent(target.id)}` : undefined;
   }
