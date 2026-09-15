@@ -7,6 +7,7 @@ import os
 import re
 import tempfile
 import threading
+import time
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -339,6 +340,18 @@ def _exclusive_lock(path: Path) -> Iterator[None]:
                 handle.close()
 
 
+def _replace_file(source: Path, target: Path) -> None:
+    """Keep atomic replacement while tolerating brief Windows reader locks."""
+    for attempt in range(7):
+        try:
+            os.replace(source, target)
+            return
+        except PermissionError as error:
+            if getattr(error, "winerror", None) not in {5, 32, 33} or attempt == 6:
+                raise
+            time.sleep(0.025 * (2 ** attempt))
+
+
 def _atomic_write_jsonl(path: Path, records: Iterable[Mapping[str, Any]]) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     lines = [
@@ -355,7 +368,7 @@ def _atomic_write_jsonl(path: Path, records: Iterable[Mapping[str, Any]]) -> Pat
             handle.write(content)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temporary_path, path)
+        _replace_file(temporary_path, path)
     except BaseException:
         temporary_path.unlink(missing_ok=True)
         raise
@@ -373,7 +386,7 @@ def _atomic_write_text(path: Path, content: str) -> Path:
             handle.write(content)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temporary_path, path)
+        _replace_file(temporary_path, path)
     except BaseException:
         temporary_path.unlink(missing_ok=True)
         raise

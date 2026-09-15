@@ -23,6 +23,7 @@ from trading_os.research_assets.research_flow import (
     _atomic_write_text,
     _exclusive_lock,
     _nonblank,
+    _replace_file,
     _timestamp,
     _urls,
 )
@@ -70,6 +71,8 @@ def _restore_bytes(path: Path, content: bytes | None) -> None:
     if content is None:
         path.unlink(missing_ok=True)
         return
+    if path.exists() and path.read_bytes() == content:
+        return
     descriptor, name = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
     temporary = Path(name)
     try:
@@ -77,7 +80,7 @@ def _restore_bytes(path: Path, content: bytes | None) -> None:
             handle.write(content)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temporary, path)
+        _replace_file(temporary, path)
     finally:
         temporary.unlink(missing_ok=True)
 
