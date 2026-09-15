@@ -9,7 +9,7 @@ from __future__ import annotations
 import os
 import tempfile
 from collections.abc import Mapping
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -24,6 +24,7 @@ from trading_os.research_assets.research_flow import (
     _exclusive_lock,
     _nonblank,
     _timestamp,
+    _urls,
 )
 
 
@@ -89,6 +90,7 @@ def revise_current(
     expected_report: str,
     reviewed_at: str,
     rationale: str,
+    display_issue: Mapping[str, str] | None = None,
 ) -> dict[str, Any]:
     """Correct one authorized current report and its compact state together.
 
@@ -104,6 +106,15 @@ def revise_current(
         raise ValidationError("reviewed_at and rationale must be explicit text")
     timestamp = _timestamp(_nonblank(reviewed_at, "reviewed_at"))
     reason = _nonblank(rationale, "rationale")
+    issue = None
+    if display_issue is not None:
+        issue = {
+            "event_date": date.fromisoformat(display_issue["event_date"]).isoformat(),
+            "reason": _nonblank(display_issue.get("reason"), "display issue reason"),
+            "source_url": _urls([display_issue.get("source_url")])[0],
+        }
+        if not normalized["information_cutoff"][:10] < issue["event_date"] <= timestamp[:10]:
+            raise ValidationError("display issue must be an observed post-cutoff event")
     if not isinstance(expected_report, str) or not expected_report.strip():
         raise ValidationError("revision requires the exact nonblank original report")
     relative = allowed_reports.get(symbol)
@@ -163,7 +174,15 @@ def revise_current(
             state["status"] = normalized["outcome"]
         state["updated_at"] = timestamp
         state["last_research_at"] = timestamp
+        previous_issue = (state.get("last_revision") or {}).get("display_issue")
         state["last_revision"] = {"reviewed_at": timestamp, "rationale": reason}
+        if issue is not None:
+            state["last_revision"]["display_issue"] = {
+                **issue, "base_report": relative,
+                "model_as_of": normalized["information_cutoff"],
+            }
+        elif previous_issue and previous_issue.get("base_report") == relative:
+            state["last_revision"]["display_issue"] = previous_issue
         try:
             _atomic_write_text(target, normalized["report_markdown"].rstrip() + "\n")
             flow._write_states(states)

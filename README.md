@@ -18,6 +18,21 @@ Trading OS 是一套面向 A 股、由新事实驱动的轻量研究工作流。
 
 研究围绕少数决定性商业问题取证，现有协调器同时检查关键原证、相反解释及经营假设怎样进入估值；具体见[商业判断验收](playbooks/simple-research.md#商业判断验收)。[产业专题](research/industries/README.md)按需积累跨公司知识，供研究者核验和反驳，不维护第二套公司状态。[星宇样本审查](docs/reviews/2026-09-15-xingyu-research-quality-review.md)展示了这套方法的依据和边界。
 
+## 各层如何协作
+
+| 层 | 回答的问题 | 入口与结果 |
+|---|---|---|
+| 研究队列初筛 | 哪些公司值得完整研究？ | [初筛方法](prompts/screening/research-triage.md)，`screen record` |
+| 独立价值质量筛选 | 哪些已有优势与普通股现金证据？ | [质量池](prompts/screening/cn-a-value-quality.md)，独立维护 `pool.json` |
+| 产业知识 | 利润由谁创造、谁取得，如何跨公司验证？ | [全行业框架](research/industries/README.md)，`industry list / validate` |
+| 单公司研究 | 公司经济学、合理价值和条件现金回报如何？ | [完整深研](prompts/company/standard-deep-research.md)，正式报告及事件维护 |
+| 协调验收 | 证据、推理与结构化结果是否一致？ | [验收规则](playbooks/simple-research.md#商业判断验收)，同一协调器串行落库 |
+| 长期精选 | 哪些更值得长期拥有和等待？ | [原则](selection/principles.md)、[当前精选](selection/current.md)，文本取舍，不自动配置资金 |
+
+网站提供研究台、研报库、产业研究和长期精选四个入口，均从仓库生成只读展示。研究覆盖池包含全部有效 covered，不等同长期精选。行情和机械IRR属于临时展示，不能代替商业判断。
+
+[2026-09全层迭代](docs/reviews/2026-09-system-upgrade/README.md)包含用户授权的中报当前稿原路径修订例外。仅清单内报告可使用 `reports revise-current --scope <清单> --expected <审核前原文> --input <完整候选>`；正常研究继续追加正式报告，历史归档不参与本轮。
+
 ## 当前事实源
 
 ```text

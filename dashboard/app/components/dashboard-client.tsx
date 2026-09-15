@@ -82,6 +82,7 @@ function returnModelTitle(company: Company) {
   const details = [
     company.returnModel ? `模型时点：${company.returnModel.model_as_of}` : null,
     company.returnModelNote,
+    company.returnModelDisplayIssue?.reason,
   ].filter((detail): detail is string => Boolean(detail));
   return details.length ? details.join("\n") : undefined;
 }
@@ -480,7 +481,7 @@ export function DashboardClient() {
                         </>
                       ) : (
                         <span>
-                          {company.returnModel
+                          {company.returnModelDisplayIssue ? "现金路径待更新" : company.returnModel
                             ? (quote ? "模型暂不可用" : "行情暂缺")
                             : company.returnModelNote
                               ? "暂无法可靠建模"

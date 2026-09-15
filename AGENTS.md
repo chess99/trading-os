@@ -52,6 +52,8 @@
 
 ## 写入纪律
 
+本轮用户明确授权的例外：依 `docs/reviews/2026-09-system-upgrade/report-scope.json` 审核已吸收2026中报的当前报告，可原路径修订并同步结构化研究字段；具体执行 `prompts/company/current-report-review.md`。此授权不延伸到清单外报告、legacy、历史版本或之后的常规研究，Git 保留原文。审核旧截止报告不能清除更晚事实造成的 stale 和任务。
+
 - worker 不直接修改共享 JSONL；协调器校验并原子写入。
 - `research/watchlist.jsonl` 禁止手改。同一公司最多一个活动任务。
 - 新正式研究通过验收后只追加报告，不覆盖或删除已经合格的历史报告；`report_path` 必须指向最新合格正式报告。未通过验收的候选稿直接丢弃，不进入本规则所称的历史报告。
@@ -59,6 +61,8 @@
 - 修改共享状态后重建自选池并执行 `python -m trading_os validate`。
 
 ## 开始工作
+
+系统分层：研究队列初筛见 `prompts/screening/research-triage.md`；产业框架见 `research/industries/README.md`；单公司研究与验收沿用下列工作流；长期精选见 `selection/principles.md` 和 `prompts/selection/long-term-selection.md`。精选、产业知识与独立质量池均不产生公司研究状态或价格交易指令。
 
 先读：
 

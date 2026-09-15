@@ -106,6 +106,40 @@ def _screen_and_dispatch(
     return dispatched["tasks"][0]["task_id"]
 
 
+def test_scoped_current_revision_cli_updates_report_without_a_new_task(tmp_path, capsys):
+    symbol = "CN:000001"
+    task_id = _screen_and_dispatch(tmp_path, capsys, symbol, trigger_id="initial")
+    initial = _write(tmp_path / "initial.json", _full_result(symbol, task_id))
+    _call(tmp_path, capsys, "research", "complete", "--input", str(initial))
+    state_file = tmp_path / "coverage/cn-a/research_state.jsonl"
+    state = json.loads(state_file.read_text(encoding="utf-8").splitlines()[0])
+    report = tmp_path / state["report_path"]
+    expected = tmp_path / "original.md"
+    expected.write_text(report.read_text(encoding="utf-8"), encoding="utf-8")
+    scope = _write(tmp_path / "scope.json", {"reports": [
+        {"symbol": symbol, "report_path": state["report_path"], "eligible": True}
+    ]})
+    payload = _full_result(symbol)
+    payload["report_markdown"] = payload["report_markdown"].replace(
+        "现金流转化仍需验证。", "客户信用账期限制了利润的现金转换。"
+    )
+    candidate = _write(tmp_path / "revision.json", {
+        "at": "2026-09-15T12:00:00+08:00", "rationale": "核验客户账期与现金转换。",
+        "result": payload,
+    })
+    revised = _call(tmp_path, capsys, "reports", "revise-current", "--scope", str(scope),
+                    "--expected", str(expected), "--input", str(candidate))
+    assert revised["report_path"] == state["report_path"]
+    assert "信用账期" in report.read_text(encoding="utf-8")
+    assert (tmp_path / "coverage/cn-a/research_queue.jsonl").read_text(encoding="utf-8") == ""
+    assert len(list(report.parent.glob("*.md"))) == 1
+    _call(tmp_path, capsys, "validate")
+    # Reusing the reviewed original cannot overwrite a subsequent revision.
+    assert main(["--root", str(tmp_path), "reports", "revise-current", "--scope", str(scope),
+                 "--expected", str(expected), "--input", str(candidate)]) == 1
+    assert "changed since" in capsys.readouterr().err
+
+
 def test_help_contains_only_the_compact_workflow(capsys: pytest.CaptureFixture[str]):
     with pytest.raises(SystemExit) as exc:
         main(["--help"])

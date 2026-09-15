@@ -102,6 +102,23 @@ def _snapshot(flow, report):
     }
 
 
+def test_known_post_cutoff_distribution_is_a_display_issue_not_new_research(case):
+    flow, state, report, _ = case
+    issue = {"event_date": "2026-09-01", "reason": "原模型中的分红已支付。",
+             "source_url": "https://example.com/dividend-implementation"}
+    revised = _run(case, display_issue=issue)
+    assert revised["information_cutoff"] == state["information_cutoff"]
+    assert revised["last_revision"]["display_issue"]["base_report"] == state["report_path"]
+    assert revised["last_revision"]["display_issue"]["event_date"] == issue["event_date"]
+    # Another method-only correction must not silently erase a known incompatibility.
+    second = _run(case)
+    assert second["last_revision"]["display_issue"] == revised["last_revision"]["display_issue"]
+    before = _snapshot(flow, report)
+    with pytest.raises(ValidationError, match="observed post-cutoff"):
+        _run(case, display_issue={**issue, "event_date": "2027-01-01"})
+    assert _snapshot(flow, report) == before
+
+
 def test_revision_updates_current_state_and_projection_only(case):
     flow, state, report, candidate = case
     other = _complete(flow, _result("CN:000002"))

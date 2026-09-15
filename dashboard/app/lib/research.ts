@@ -46,6 +46,7 @@ export interface Company {
   valueRange: { currency: string; low: number; high: number } | null;
   returnModel: ReturnModel | null;
   returnModelNote: string | null;
+  returnModelDisplayIssue?: { event_date: string; reason: string; source_url: string } | null;
   reportPath: string | null;
   reportDate: string | null;
   reports: ReportVersion[];
@@ -151,6 +152,7 @@ export function pricePosition(company: Company, quote?: Quote) {
 }
 
 export function returnIrr(company: Company, quote: Quote | undefined, horizonYears: 3 | 5): IrrRange | null {
+  if (company.returnModelDisplayIssue) return null;
   if (!company.returnModel || company.returnModel.model_as_of !== company.informationCutoff) return null;
   return calculateIrrRange(quote?.price, company.returnModel, horizonYears);
 }

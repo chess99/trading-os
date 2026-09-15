@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 
 interface AppHeaderProps {
-  active: "dashboard" | "reports";
+  active: "dashboard" | "reports" | "industries" | "selection";
 }
 
 export function AppHeader({ active }: AppHeaderProps) {
@@ -22,6 +22,12 @@ export function AppHeader({ active }: AppHeaderProps) {
         </a>
         <a className={active === "reports" ? "is-active" : ""} href="/reports">
           研报库
+        </a>
+        <a className={active === "industries" ? "is-active" : ""} href="/industries">
+          产业研究
+        </a>
+        <a className={active === "selection" ? "is-active" : ""} href="/selection">
+          长期精选
         </a>
       </nav>
     </header>
