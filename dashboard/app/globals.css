@@ -2586,3 +2586,20 @@ a {
     margin-left: auto;
   }
 }
+/* Industry knowledge and long-term selection use the same reading surface. */
+.research-documents { display: grid; grid-template-columns: 250px minmax(0, 860px); gap: 48px; max-width: 1240px; margin: 36px auto; padding: 0 24px; }
+.research-documents-nav { position: sticky; top: 88px; align-self: start; max-height: calc(100vh - 110px); overflow-y: auto; }
+.research-documents-nav h1 { font-size: 21px; margin-bottom: 20px; }
+.research-documents-nav label { display: block; font-size: 12px; margin-bottom: 8px; }
+.research-documents-nav input { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper, #fff); }
+.research-documents-nav nav { display: grid; gap: 4px; margin-top: 16px; }
+.research-documents-nav button { text-align: left; border: 0; border-radius: 8px; padding: 10px 12px; background: transparent; cursor: pointer; color: var(--ink); }
+.research-documents-nav button.is-active { background: var(--emerald-soft); font-weight: 700; }
+.research-document-body { min-width: 0; width: 100%; padding: 28px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+@media (max-width: 800px) {
+  .research-documents { grid-template-columns: 1fr; gap: 22px; padding: 0 16px; }
+  .research-documents-nav { position: static; max-height: 260px; }
+  .research-document-body { padding: 20px; overflow-x: auto; }
+  .primary-nav { max-width: 100%; overflow-x: auto; }
+  .primary-nav a { white-space: nowrap; padding-left: 12px; padding-right: 12px; }
+}

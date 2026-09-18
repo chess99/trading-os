@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { referencedReport } from "../lib/report-reference.mjs";
 import {
   cleanCompanyName,
   formatDate,
@@ -89,10 +90,22 @@ export function ReportWorkspace({ initialTicker }: ReportWorkspaceProps) {
           .filter((company) => company.reports.length)
           .sort((a, b) => (b.reportDate ?? "").localeCompare(a.reportDate ?? ""));
         const requested = withReports.find((company) => company.ticker === initialTicker);
+        if (initialTicker && !requested) {
+          setLoadingReport(false);
+          setError("所引用公司的研报暂时不可用，请在研报库选择公司。");
+          return;
+        }
         const next = requested ?? withReports[0];
         if (next) {
           setSelectedTicker(next.ticker);
-          setSelectedReportPath(next.reports[0].path);
+          const version = initialTicker ? new URLSearchParams(window.location.search).get("version") : null;
+          const report = referencedReport(next.reports, version);
+          if (!report) {
+            setLoadingReport(false);
+            setError("所引用的研报版本暂时不可用。可查看当前版本或在左侧选择公司。");
+            return;
+          }
+          setSelectedReportPath(report.path);
         }
       })
       .catch((loadError: Error) => {
@@ -111,6 +124,7 @@ export function ReportWorkspace({ initialTicker }: ReportWorkspaceProps) {
       })
       .then((body) => {
         setMarkdown(body);
+        setError(null);
         setLoadingReport(false);
         window.scrollTo({ top: 0, behavior: "smooth" });
       })
@@ -258,6 +272,7 @@ export function ReportWorkspace({ initialTicker }: ReportWorkspaceProps) {
           <div className="reader-empty">
             <strong>研报暂时无法显示</strong>
             <span>{error}</span>
+            {selected && <a href={`/reports/${selected.ticker}`}>查看当前版本</a>}
           </div>
         ) : selected ? (
           <>
@@ -275,8 +290,8 @@ export function ReportWorkspace({ initialTicker }: ReportWorkspaceProps) {
                   <h2>{cleanCompanyName(selected.name)}</h2>
                   <div className="report-meta-line">
                     <ReportStatus status={selected.status} />
-                    <span>信息截止 {formatDate(selected.informationCutoff)}</span>
-                    <span>当前版本 {selectedReportPath.split("/").pop()?.replace(".md", "")}</span>
+                    <span>当前研究截止 {formatDate(selected.informationCutoff)}</span>
+                    <span>阅读版本 {selectedReportPath.split("/").pop()?.replace(".md", "")}</span>
                   </div>
                 </div>
                 <div className="reader-quote">
@@ -290,16 +305,20 @@ export function ReportWorkspace({ initialTicker }: ReportWorkspaceProps) {
                   <em>{reportSourceLabel(quote)}</em>
                 </div>
               </div>
-              {selected.reports.length > 1 ? (
+              {selected.reports.length > 0 ? (
                 <label className="version-select">
                   <span>报告版本</span>
                   <select
                     value={selectedReportPath}
                     onChange={(event) => {
                       setLoadingReport(true);
+                      setError(null);
                       setSelectedReportPath(event.target.value);
+                      const report = selected.reports.find((item) => item.path === event.target.value);
+                      if (report) window.history.replaceState({}, "", `/reports/${selected.ticker}?version=${report.date}`);
                     }}
                   >
+                    {!selectedReportPath && <option value="" disabled>请选择报告版本</option>}
                     {selected.reports.map((report, index) => (
                       <option key={report.path} value={report.path}>
                         {report.date}{index === 0 ? " · 当前" : ""}
@@ -309,6 +328,10 @@ export function ReportWorkspace({ initialTicker }: ReportWorkspaceProps) {
                 </label>
               ) : null}
             </header>
+
+            {selectedReportPath && selectedReportPath !== selected.reports[0]?.path && (
+              <p className="legacy-note">正在阅读历史版本。上方状态、行情与右侧摘要来自当前研究，历史正文保留当时的判断。</p>
+            )}
 
             {loadingReport ? (
               <div className="report-loading" aria-busy="true">
@@ -363,7 +386,7 @@ export function ReportWorkspace({ initialTicker }: ReportWorkspaceProps) {
           </nav>
           {selected ? (
             <div className="toc-summary">
-              <span>一句话结论</span>
+              <span>当前研究摘要</span>
               <p>{selected.summary}</p>
             </div>
           ) : null}

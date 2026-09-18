@@ -75,6 +75,22 @@ test("server-renders the report library and detail route", async () => {
   assert.match(await detail.text(), /研报详情/);
 });
 
+test("industry and selection reading routes render and link to real exported documents", async () => {
+  const [industry, selection] = await Promise.all([render("/industries"), render("/selection")]);
+  assert.equal(industry.status, 200);
+  assert.equal(selection.status, 200);
+  assert.match(await industry.text(), /产业研究/);
+  assert.match(await selection.text(), /长期精选/);
+  const { documents } = JSON.parse(await readFile(new URL("../public/data/documents.json", import.meta.url), "utf8"));
+  assert.ok(documents.some((doc) => doc.id === "selection-current"));
+  assert.ok(documents.some((doc) => doc.id === "industry-guide"));
+  for (const doc of documents) {
+    const original = await readFile(new URL(`../../${doc.sourcePath}`, import.meta.url), "utf8");
+    const projection = await readFile(new URL(`../public${doc.path}`, import.meta.url), "utf8");
+    assert.equal(projection, original);
+  }
+});
+
 test("generated research catalog remains a faithful compact projection", async () => {
   const [catalogText, sourceText] = await Promise.all([
     readFile(new URL("../public/data/research-catalog.json", import.meta.url), "utf8"),

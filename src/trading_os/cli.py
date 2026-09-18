@@ -9,6 +9,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Mapping, Sequence, TextIO
 
+from .industry_catalog import industry_catalog
 from .research_assets.legacy_salvage import LegacyReportSalvager
 from .research_assets.market_data import (
     DEFAULT_EVENT_SCAN_STATE_PATH,
@@ -56,6 +57,15 @@ def build_parser() -> argparse.ArgumentParser:
     validate = commands.add_parser("validate", help="只读校验状态、队列、观察池和当前报告")
     validate.set_defaults(handler=_validate)
 
+    industry = commands.add_parser("industry", help="查阅产业框架和检查细分行业覆盖")
+    industry_commands = industry.add_subparsers(dest="industry_command", required=True)
+    industry_commands.add_parser("list", help="列出产业专题及未分类公司").set_defaults(
+        handler=_industry_list
+    )
+    industry_commands.add_parser("validate", help="校验现有细分行业的框架路由").set_defaults(
+        handler=_industry_validate
+    )
+
     quality_pool = commands.add_parser(
         "quality-pool", help="独立维护价值质量筛选池；不改变单公司研究状态"
     )
@@ -100,6 +110,14 @@ def build_parser() -> argparse.ArgumentParser:
         "migrate-current", help="把旧 current.md 一次性迁入 reports/日期.md"
     )
     migrate_current.set_defaults(handler=_reports_migrate_current)
+    revise_current = report_commands.add_parser(
+        "revise-current", help="仅按本次用户授权清单修订当前中报报告"
+    )
+    _add_input(revise_current)
+    _add_at(revise_current)
+    revise_current.add_argument("--scope", required=True, help="冻结的本次资格清单 JSON")
+    revise_current.add_argument("--expected", required=True, help="审核前原文文件，防止并发覆盖")
+    revise_current.set_defaults(handler=_reports_revise_current)
 
     universe = commands.add_parser("universe", help="维护全市场证券清单")
     universe_commands = universe.add_subparsers(dest="universe_command", required=True)
@@ -369,6 +387,42 @@ def _status(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
 def _validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
     return {"ok": True, "status": asdict(_flow(args).validate())}
+
+
+def _industry_list(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    return industry_catalog(Path(args.root))
+
+
+def _industry_validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    return {"ok": True, **industry_catalog(Path(args.root), require_complete=True)}
+
+
+def _reports_revise_current(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    from .report_revision import revise_current
+
+    payload, _ = _load(args.input, stdin)
+    scope, _ = _load(args.scope, stdin)
+    if not isinstance(payload, dict) or not isinstance(scope, dict):
+        raise ValueError("修订结果与资格清单必须为对象")
+    records = _records(scope, "reports")
+    eligible = [row for row in records if row.get("eligible") is True]
+    allowed = {row["symbol"]: row["report_path"] for row in eligible}
+    if len(allowed) != len(eligible):
+        raise ValueError("资格清单存在重复公司")
+    result = payload.get("result", payload)
+    if not isinstance(result, dict):
+        raise ValueError("result 必须为对象")
+    revised = revise_current(
+        Path(args.root), _research_result(result), allowed_reports=allowed,
+        expected_report=Path(args.expected).read_text(encoding="utf-8"),
+        reviewed_at=args.at or payload.get("at") or datetime.now().astimezone().isoformat(),
+        rationale=payload.get("rationale", ""),
+        display_issue=payload.get("post_cutoff_display_issue"),
+    )
+    return {"symbol": revised["symbol"], "report_path": revised["report_path"],
+            "status": revised["status"], "last_revision": revised.get("last_revision")}
 
 
 def _quality_pool(args: argparse.Namespace) -> QualityPoolStore:

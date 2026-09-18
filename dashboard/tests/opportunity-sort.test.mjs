@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { compareOpportunityRanks } from "../app/lib/opportunity-sort.mjs";
+import { compareOpportunityRanks, compareResearchMapRows } from "../app/lib/opportunity-sort.mjs";
 
 function row(ticker, midpointIrr, lowRatio, updatedAt) {
   return { ticker, midpointIrr, lowRatio, updatedAt };
@@ -22,4 +22,15 @@ test("opportunity sorting prioritizes IRR, then falls back to cheaper low-ratio 
     rows.map(({ ticker }) => ticker),
     ["000004", "000002", "000006", "000003", "000001", "000005"],
   );
+});
+
+test("research map defaults stay stable when prices or estimated returns change", () => {
+  const rows = [row("000003", 0.99, 0.1, "2026-09-15"), row("000001", null, null, "2026-08-01"),
+    row("000002", 0.04, 1.2, "2026-09-16")];
+  assert.deepEqual([...rows].sort(compareResearchMapRows).map((item) => item.ticker), ["000001", "000002", "000003"]);
+  assert.deepEqual([...rows].sort((a,b) => compareResearchMapRows(a,b,"irr")).map((item) => item.ticker), ["000003", "000002", "000001"]);
+  assert.deepEqual([...rows].sort((a,b) => compareResearchMapRows(a,b,"updated")).map((item) => item.ticker), ["000002", "000003", "000001"]);
+  rows[0].midpointIrr = -0.6;
+  rows[2].lowRatio = 0.01;
+  assert.deepEqual([...rows].sort(compareResearchMapRows).map((item) => item.ticker), ["000001", "000002", "000003"]);
 });

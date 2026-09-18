@@ -16,10 +16,11 @@ import {
   type Quote,
   type ResearchStatus,
 } from "../lib/research";
-import { compareOpportunityRanks } from "../lib/opportunity-sort.mjs";
+import { compareResearchMapRows } from "../lib/opportunity-sort.mjs";
 
 type ExplorerView = "opportunities" | "market";
 type MarketSort = "updated" | "name" | "status";
+type MapSort = "ticker" | "updated" | "irr" | "value";
 
 const STATUS_ORDER: ResearchStatus[] = ["covered", "candidate", "stale", "ignore", "unseen"];
 const QUOTE_REFRESH_INTERVAL_MS = 5 * 60 * 1000;
@@ -82,6 +83,7 @@ function returnModelTitle(company: Company) {
   const details = [
     company.returnModel ? `模型时点：${company.returnModel.model_as_of}` : null,
     company.returnModelNote,
+    company.returnModelDisplayIssue?.reason,
   ].filter((detail): detail is string => Boolean(detail));
   return details.length ? details.join("\n") : undefined;
 }
@@ -106,6 +108,7 @@ export function DashboardClient() {
   const [status, setStatus] = useState<ResearchStatus | "all">("all");
   const [industry, setIndustry] = useState("all");
   const [marketSort, setMarketSort] = useState<MarketSort>("updated");
+  const [mapSort, setMapSort] = useState<MapSort>("ticker");
   const [visibleRows, setVisibleRows] = useState(80);
   const searchRef = useRef<HTMLInputElement>(null);
   const quoteRefreshRunningRef = useRef(false);
@@ -200,9 +203,9 @@ export function DashboardClient() {
           ticker: company.ticker,
         };
       })
-      .sort(compareOpportunityRanks)
+      .sort((a, b) => compareResearchMapRows(a, b, mapSort))
       .map(({ company }) => company);
-  }, [catalog, quotes]);
+  }, [catalog, quotes, mapSort]);
 
   const industries = useMemo(() => {
     if (!catalog) return [];
@@ -358,7 +361,20 @@ export function DashboardClient() {
                 <option value="name">公司名称</option>
               </select>
             </label>
-          ) : null}
+          ) : (
+            <label className="select-field sort-field">
+              <span>排序</span>
+              <select value={mapSort} onChange={(event) => {
+                setMapSort(event.target.value as MapSort);
+                setVisibleRows(80);
+              }}>
+                <option value="ticker">代码顺序</option>
+                <option value="updated">最近研究</option>
+                <option value="irr">模型年化回报</option>
+                <option value="value">相对价值下沿</option>
+              </select>
+            </label>
+          )}
         </div>
 
         {view === "market" ? (
@@ -480,7 +496,7 @@ export function DashboardClient() {
                         </>
                       ) : (
                         <span>
-                          {company.returnModel
+                          {company.returnModelDisplayIssue ? "现金路径待更新" : company.returnModel
                             ? (quote ? "模型暂不可用" : "行情暂缺")
                             : company.returnModelNote
                               ? "暂无法可靠建模"

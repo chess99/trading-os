@@ -60,6 +60,35 @@ async function collectReports(ticker) {
   }));
 }
 
+async function collectResearchDocuments() {
+  const documents = [];
+  const directory = join(repositoryRoot, "research", "industries", "sectors");
+  let sectors = [];
+  try { sectors = (await readdir(directory)).filter((file) => file.endsWith(".md")).sort(); }
+  catch (error) { if (error?.code !== "ENOENT") throw error; }
+  const sources = [
+    ...sectors.map((file) => ({ id: file.slice(0, -3), kind: "industry", path: `research/industries/sectors/${file}` })),
+    { id: "automotive-lighting", kind: "industry", path: "research/industries/automotive-lighting.md" },
+    { id: "industry-guide", kind: "industry", path: "research/industries/README.md" },
+    { id: "selection-current", kind: "selection", path: "selection/current.md" },
+    { id: "selection-principles", kind: "selection", path: "selection/principles.md" },
+    { id: "selection-process", kind: "selection", path: "prompts/selection/long-term-selection.md" },
+  ];
+  const destination = join(outputRoot, "documents");
+  await mkdir(destination, { recursive: true });
+  for (const source of sources) {
+    let markdown;
+    try { markdown = await readFile(join(repositoryRoot, source.path), "utf8"); }
+    catch (error) { if (error?.code === "ENOENT") continue; throw error; }
+    const title = /^#\s+(.+)$/mu.exec(markdown)?.[1] ?? source.id;
+    const industries = /^适用二级行业：\s*(.+)$/mu.exec(markdown)?.[1].split("、").map((name) => name.trim().replace(/。$/u, "")) ?? [];
+    const path = `/data/documents/${source.id}.md`;
+    await writeFile(join(destination, `${source.id}.md`), markdown, "utf8");
+    documents.push({ ...source, sourcePath: source.path, path, title, industries });
+  }
+  await writeFile(join(outputRoot, "documents.json"), JSON.stringify({ documents }, null, 2), "utf8");
+}
+
 async function main() {
   assertInside(dashboardRoot, outputRoot);
   const [stateText, queueText] = await Promise.all([
@@ -71,6 +100,7 @@ async function main() {
 
   await rm(outputRoot, { recursive: true, force: true });
   await mkdir(outputRoot, { recursive: true });
+  await collectResearchDocuments();
 
   const companies = [];
   for (const row of states) {
@@ -98,6 +128,10 @@ async function main() {
           }
         : null,
       returnModel: row.return_model ?? null,
+      returnModelDisplayIssue:
+        row.last_revision?.display_issue?.base_report === row.report_path
+        && row.last_revision?.display_issue?.model_as_of === row.information_cutoff
+          ? row.last_revision.display_issue : null,
       returnModelNote: row.return_model_note ?? null,
       reportPath: row.report_path,
       reportDate: latestReport?.date ?? null,
