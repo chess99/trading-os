@@ -25,6 +25,7 @@ export function progressCounts(companies, scope = "quality_pool") {
     inactive: count(["inactive"]),
   };
 }
+/** @param {string | null} [version] */
 export function readingContext(company, version = null, mode = "current") {
   if (!company) return { report: null, live: false, historical: false };
   if (version || mode === "history") {
