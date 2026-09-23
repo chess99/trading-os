@@ -93,7 +93,7 @@ export function makeExports(catalog, scope) {
 }
 function csvCell(value) {
   let text = value == null ? "" : String(value);
-  if (/^[=+@\-]/u.test(text)) text = `'${text}`;
+  if (/^[=+@-]/u.test(text)) text = `'${text}`;
   return `"${text.replaceAll('"', '""')}"`;
 }
 async function exportCurrent(output, catalog, scope, basename) {
