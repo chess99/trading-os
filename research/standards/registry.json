@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "active_standard": "owner-value-1.0",
+  "default_scope": "quality_pool",
+  "scope_source": "screening/cn-a/value-quality/pool.json",
+  "standards": [
+    {
+      "id": "owner-value-1.0",
+      "label": "长期股东价值研究 1.0",
+      "status": "released",
+      "published_at": "2026-09-23T00:00:00+08:00",
+      "spec_revision": "320545a7e5878afab2eb781fbb9ee4a91deff304",
+      "spec_path": "prompts/company/standard-deep-research.md",
+      "verification_path": "prompts/company/research-verification.md",
+      "value_definition": "current-common-equity-base-v1",
+      "value_label": "基准经营路径下普通股经济利益的当前价值",
+      "compatible_with": ["owner-value-1.0"],
+      "compatibility_note": "首个显式展示标准；冻结9月18日长期判断规范。旧报告不按日期或covered状态自动认证，仅逐份实质验收后登记。",
+      "change_kind": "major",
+      "change_note": "将长期商业判断、再投资与现金归属作为估值必要依据；默认研究台不混排未确认的历史标准结果。"
+    }
+  ]
+}

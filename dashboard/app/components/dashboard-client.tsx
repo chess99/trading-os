@@ -1,575 +1,141 @@
 "use client";
-
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  cleanCompanyName,
-  formatDate,
-  formatIrr,
-  formatPrice,
-  loadCatalog,
-  loadQuotes,
-  pricePosition,
-  returnIrr,
-  STATUS_META,
-  type Catalog,
-  type Company,
-  type Quote,
-  type ResearchStatus,
-} from "../lib/research";
+import { cleanCompanyName, formatDate, formatIrr, formatPrice, loadCatalog, loadQuotes,
+  pricePosition, returnIrr, STATUS_META, type Catalog, type Company, type Quote } from "../lib/research";
+import { currentResults, scopedCompanies, progressCounts, DISPLAY_LABELS } from "../lib/display-policy.mjs";
 import { compareResearchMapRows } from "../lib/opportunity-sort.mjs";
+import "../standards.css";
 
-type ExplorerView = "opportunities" | "market";
-type MarketSort = "updated" | "name" | "status";
-type MapSort = "ticker" | "updated" | "irr" | "value";
-
-const STATUS_ORDER: ResearchStatus[] = ["covered", "candidate", "stale", "ignore", "unseen"];
+type View = "current" | "progress" | "market";
+type Scope = "quality_pool" | "all_standard";
+type Sort = "ticker" | "updated" | "irr" | "value";
 const QUOTE_REFRESH_INTERVAL_MS = 5 * 60 * 1000;
-
 function isChinaMarketOpen(date = new Date()) {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Shanghai",
-    weekday: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-  }).formatToParts(date);
-  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((item) => item.type === type)?.value ?? "";
-  const weekday = part("weekday");
-  if (weekday === "Sat" || weekday === "Sun") return false;
-
+  const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Shanghai", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(date);
+  const part = (name: Intl.DateTimeFormatPartTypes) => parts.find((item) => item.type === name)?.value ?? "";
   const minutes = Number(part("hour")) * 60 + Number(part("minute"));
-  return (minutes >= 9 * 60 + 30 && minutes <= 11 * 60 + 30) || (minutes >= 13 * 60 && minutes <= 15 * 60);
+  return !["Sat", "Sun"].includes(part("weekday")) && ((minutes >= 570 && minutes <= 690) || (minutes >= 780 && minutes <= 900));
 }
-
-function latestQuoteTimestamp(quotes: Quote[]) {
-  return quotes.reduce<string | null>((latest, quote) => {
-    if (!quote.quoteAt || Number.isNaN(Date.parse(quote.quoteAt))) return latest;
-    if (!latest || Date.parse(quote.quoteAt) > Date.parse(latest)) return quote.quoteAt;
-    return latest;
-  }, null);
-}
-
-function formatQuoteTime(value: string) {
-  return new Intl.DateTimeFormat("zh-CN", {
-    timeZone: "Asia/Shanghai",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).format(new Date(value));
-}
-
-function statusCount(catalog: Catalog, status: ResearchStatus) {
-  return catalog.stats.status[status] ?? 0;
-}
-
-function quoteChangeClass(quote?: Quote) {
-  if (!quote?.change) return "price-flat";
-  return quote.change > 0 ? "price-up" : "price-down";
-}
-
-function quoteSourceLabel(quote?: Quote) {
-  if (quote?.source === "tencent") return "腾讯行情";
-  if (quote?.source === "eastmoney") return "东方财富行情";
-  return "行情待同步";
-}
-
-function isActiveCovered(company: Company) {
-  return company.universeStatus === "active" && company.status === "covered";
-}
-
 function returnModelTitle(company: Company) {
-  const details = [
-    company.returnModel ? `模型时点：${company.returnModel.model_as_of}` : null,
-    company.returnModelNote,
-    company.returnModelDisplayIssue?.reason,
-  ].filter((detail): detail is string => Boolean(detail));
-  return details.length ? details.join("\n") : undefined;
+  return [company.returnModel?.model_as_of, company.returnModelNote, company.returnModelDisplayIssue?.reason].filter(Boolean).join("\n");
 }
-
-function StatusBadge({ status }: { status: ResearchStatus }) {
-  return (
-    <span className={`status-badge status-${status}`} title={STATUS_META[status].description}>
-      {STATUS_META[status].label}
-    </span>
-  );
-}
-
 export function DashboardClient() {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
-  const [quotes, setQuotes] = useState<Map<string, Quote>>(new Map());
-  const [catalogError, setCatalogError] = useState<string | null>(null);
-  const [quoteState, setQuoteState] = useState<"loading" | "live" | "fallback">("loading");
-  const [quoteRefreshing, setQuoteRefreshing] = useState(false);
-  const [quoteUpdatedAt, setQuoteUpdatedAt] = useState<string | null>(null);
-  const [view, setView] = useState<ExplorerView>("opportunities");
+  const [error, setError] = useState<string | null>(null);
+  const [view, setView] = useState<View>("current");
+  const [scope, setScope] = useState<Scope>("quality_pool");
   const [query, setQuery] = useState("");
-  const [status, setStatus] = useState<ResearchStatus | "all">("all");
   const [industry, setIndustry] = useState("all");
-  const [marketSort, setMarketSort] = useState<MarketSort>("updated");
-  const [mapSort, setMapSort] = useState<MapSort>("ticker");
-  const [visibleRows, setVisibleRows] = useState(80);
-  const searchRef = useRef<HTMLInputElement>(null);
-  const quoteRefreshRunningRef = useRef(false);
-  const lastQuoteRequestAtRef = useRef(0);
-
+  const [progress, setProgress] = useState("all");
+  const [sort, setSort] = useState<Sort>("ticker");
+  const [limit, setLimit] = useState(80);
+  const [quotes, setQuotes] = useState<Map<string, Quote>>(new Map());
+  const [quoteRefreshing, setQuoteRefreshing] = useState(false);
+  const [quoteAt, setQuoteAt] = useState<string | null>(null);
+  const search = useRef<HTMLInputElement>(null);
+  const quoteGeneration = useRef(0);
+  const lastRequest = useRef(0);
   useEffect(() => {
     const controller = new AbortController();
-    loadCatalog(controller.signal)
-      .then(setCatalog)
-      .catch((error: Error) => {
-        if (error.name !== "AbortError") setCatalogError(error.message);
-      });
+    loadCatalog(controller.signal).then(setCatalog).catch((e: Error) => { if (e.name !== "AbortError") setError(e.message); });
     return () => controller.abort();
   }, []);
-
+  const accepted: Company[] = useMemo(() => currentResults(catalog?.companies ?? [], scope), [catalog, scope]);
+  const scoped: Company[] = useMemo(() => scopedCompanies(catalog?.companies ?? [], scope), [catalog, scope]);
+  const counts = useMemo(() => progressCounts(catalog?.companies ?? [], scope), [catalog, scope]);
   const refreshQuotes = useCallback(async (signal?: AbortSignal) => {
-    if (!catalog || quoteRefreshRunningRef.current) return;
-    quoteRefreshRunningRef.current = true;
-    lastQuoteRequestAtRef.current = Date.now();
-    setQuoteRefreshing(true);
-
-    const coveredTickers = catalog.companies
-      .filter(isActiveCovered)
-      .map((company) => company.ticker);
-    function clearQuoteSnapshot() {
-      setQuotes(new Map());
-      setQuoteUpdatedAt(null);
-      setQuoteState("fallback");
-    }
+    if (!catalog || view !== "current") return;
+    const generation = ++quoteGeneration.current; lastRequest.current = Date.now(); setQuoteRefreshing(true);
+    const clearQuoteSnapshot = () => { setQuotes(new Map()); setQuoteAt(null); };
     try {
-      const nextQuotes = await loadQuotes(coveredTickers, signal);
-      if (signal?.aborted) return;
-      if (nextQuotes.length) {
-        setQuotes(new Map(nextQuotes.map((quote) => [quote.ticker, quote])));
-        setQuoteUpdatedAt(latestQuoteTimestamp(nextQuotes) ?? new Date().toISOString());
-        setQuoteState("live");
-      } else {
-        clearQuoteSnapshot();
-      }
-    } catch (error) {
-      if (error instanceof Error && error.name === "AbortError") return;
-      clearQuoteSnapshot();
-    } finally {
-      quoteRefreshRunningRef.current = false;
-      if (!signal?.aborted) setQuoteRefreshing(false);
-    }
-  }, [catalog]);
-
+      // Exactly the same eligible set as the current table; never fetch the old covered universe.
+      const rows = await loadQuotes(accepted.map((company) => company.ticker), signal);
+      if (signal?.aborted || generation !== quoteGeneration.current) return;
+      if (rows.length) {
+        setQuotes(new Map(rows.map((quote) => [quote.ticker, quote])));
+        setQuoteAt(rows.map((quote) => quote.quoteAt).filter((date): date is string => Boolean(date)).sort().at(-1) ?? null);
+      } else clearQuoteSnapshot();
+    } catch (e) { if (generation === quoteGeneration.current && !(e instanceof Error && e.name === "AbortError")) clearQuoteSnapshot(); }
+    finally { if (generation === quoteGeneration.current) setQuoteRefreshing(false); }
+  }, [catalog, view, accepted]);
   useEffect(() => {
-    if (!catalog) return;
+    if (!catalog || view !== "current") return;
     const controller = new AbortController();
-    const initialRefresh = window.setTimeout(() => void refreshQuotes(controller.signal), 0);
-
-    function refreshIfDue() {
-      if (document.visibilityState !== "visible" || !isChinaMarketOpen()) return;
-      if (Date.now() - lastQuoteRequestAtRef.current < QUOTE_REFRESH_INTERVAL_MS) return;
-      void refreshQuotes(controller.signal);
-    }
-
+    const initial = window.setTimeout(() => void refreshQuotes(controller.signal), 0);
+    const refreshIfDue = () => {
+      if (document.visibilityState === "visible" && isChinaMarketOpen()
+        && Date.now() - lastRequest.current >= QUOTE_REFRESH_INTERVAL_MS) void refreshQuotes(controller.signal);
+    };
     const interval = window.setInterval(refreshIfDue, 60_000);
     document.addEventListener("visibilitychange", refreshIfDue);
-    return () => {
-      controller.abort();
-      window.clearTimeout(initialRefresh);
-      window.clearInterval(interval);
-      document.removeEventListener("visibilitychange", refreshIfDue);
-    };
-  }, [catalog, refreshQuotes]);
-
+    return () => { controller.abort(); window.clearTimeout(initial); window.clearInterval(interval); document.removeEventListener("visibilitychange", refreshIfDue); };
+  }, [catalog, view, refreshQuotes]);
   useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "/" && document.activeElement?.tagName !== "INPUT") {
-        event.preventDefault();
-        searchRef.current?.focus();
-      }
-    }
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    const keydown = (event: KeyboardEvent) => { if (event.key === "/" && document.activeElement?.tagName !== "INPUT") { event.preventDefault(); search.current?.focus(); } };
+    window.addEventListener("keydown", keydown); return () => window.removeEventListener("keydown", keydown);
   }, []);
-
-  const opportunities = useMemo(() => {
-    if (!catalog) return [];
-    return catalog.companies
-      .filter(isActiveCovered)
-      .map((company) => {
-        const quote = quotes.get(company.ticker);
-        return {
-          company,
-          midpointIrr: returnIrr(company, quote, 5)?.midpoint ?? null,
-          lowRatio: pricePosition(company, quote).lowRatio,
-          updatedAt: company.updatedAt,
-          ticker: company.ticker,
-        };
-      })
-      .sort((a, b) => compareResearchMapRows(a, b, mapSort))
-      .map(({ company }) => company);
-  }, [catalog, quotes, mapSort]);
-
-  const industries = useMemo(() => {
-    if (!catalog) return [];
-    const counts = new Map<string, number>();
-    catalog.companies.forEach((company) => counts.set(company.industry, (counts.get(company.industry) ?? 0) + 1));
-    return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh-CN"));
-  }, [catalog]);
-
-  const belowRangeCount = useMemo(
-    () =>
-      opportunities.filter((company) => {
-        const position = pricePosition(company, quotes.get(company.ticker));
-        return position.lowRatio !== null && position.lowRatio < 1;
-      }).length,
-    [opportunities, quotes],
-  );
-
-  const filtered = useMemo(() => {
-    if (!catalog) return [];
-    const normalizedQuery = query.trim().toLocaleLowerCase("zh-CN");
-    let rows = view === "opportunities" ? opportunities : [...catalog.companies];
-    if (status !== "all") rows = rows.filter((company) => company.status === status);
-    if (industry !== "all") rows = rows.filter((company) => company.industry === industry);
-    if (normalizedQuery) {
-      rows = rows.filter((company) =>
-        [company.name, company.ticker, company.symbol, company.industry, company.summary]
-          .join(" ")
-          .toLocaleLowerCase("zh-CN")
-          .includes(normalizedQuery),
-      );
-    }
-    if (view === "market") {
-      rows.sort((a, b) => {
-        if (marketSort === "name") return a.name.localeCompare(b.name, "zh-CN");
-        if (marketSort === "status") {
-          return STATUS_ORDER.indexOf(a.status) - STATUS_ORDER.indexOf(b.status) || a.ticker.localeCompare(b.ticker);
-        }
-        return b.updatedAt.localeCompare(a.updatedAt) || a.ticker.localeCompare(b.ticker);
-      });
-    }
-    return rows;
-  }, [catalog, industry, marketSort, opportunities, query, status, view]);
-
-  function switchView(nextView: ExplorerView) {
-    setView(nextView);
-    setStatus("all");
-    setVisibleRows(80);
-  }
-
-  function showStatus(nextStatus: ResearchStatus) {
-    setView("market");
-    setStatus(nextStatus);
-    setVisibleRows(80);
-    document.getElementById("company-explorer")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  if (catalogError) {
-    return (
-      <main className="load-state error-state">
-        <span>研究目录读取失败</span>
-        <h1>页面暂时没有拿到仓库数据</h1>
-        <p>{catalogError}</p>
-        <button onClick={() => window.location.reload()}>重新载入</button>
-      </main>
-    );
-  }
-
-  if (!catalog) {
-    return (
-      <main className="dashboard-shell dashboard-loading" aria-busy="true">
-        <div className="loading-state-strip" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-        <div className="loading-table" aria-hidden="true" />
-      </main>
-    );
-  }
-
-  return (
-    <main className="dashboard-shell">
-      <section className="state-strip" aria-label="研究状态概览">
-        <button onClick={() => switchView("opportunities")}>
-          <span className="state-number">{opportunities.length}</span>
-          <span className="state-copy"><strong>持续覆盖</strong></span>
-        </button>
-        <button className={belowRangeCount ? "attention" : ""} onClick={() => switchView("opportunities")}>
-          <span className="state-number">{belowRangeCount}</span>
-          <span className="state-copy"><strong>低于区间下沿</strong></span>
-        </button>
-        <button onClick={() => showStatus("candidate")}>
-          <span className="state-number">{statusCount(catalog, "candidate")}</span>
-          <span className="state-copy"><strong>候选研究</strong></span>
-        </button>
-        <button className={statusCount(catalog, "stale") ? "attention" : ""} onClick={() => showStatus("stale")}>
-          <span className="state-number">{statusCount(catalog, "stale")}</span>
-          <span className="state-copy"><strong>等待更新</strong></span>
-        </button>
-      </section>
-
-      <section className="company-explorer" id="company-explorer" aria-label="公司研究列表">
-        <div className="explorer-toolbar">
-          <div className="view-switch" role="tablist" aria-label="公司列表视图">
-            <button
-              aria-selected={view === "opportunities"}
-              className={view === "opportunities" ? "is-active" : ""}
-              onClick={() => switchView("opportunities")}
-              role="tab"
-            >
-              赔率地图 <span>{opportunities.length}</span>
-            </button>
-            <button
-              aria-selected={view === "market"}
-              className={view === "market" ? "is-active" : ""}
-              onClick={() => switchView("market")}
-              role="tab"
-            >
-              全市场 <span>{catalog.stats.active}</span>
-            </button>
-          </div>
-          <label className="search-field">
-            <span aria-hidden="true">⌕</span>
-            <input
-              onChange={(event) => {
-                setQuery(event.target.value);
-                setVisibleRows(80);
-              }}
-              placeholder="搜索公司、代码、行业或结论  /"
-              ref={searchRef}
-              type="search"
-              value={query}
-            />
-          </label>
-          <label className="select-field">
-            <span>行业</span>
-            <select value={industry} onChange={(event) => setIndustry(event.target.value)}>
-              <option value="all">全部行业</option>
-              {industries.map(([name, count]) => (
-                <option key={name} value={name}>
-                  {name} · {count}
-                </option>
-              ))}
-            </select>
-          </label>
-          {view === "market" ? (
-            <label className="select-field sort-field">
-              <span>排序</span>
-              <select value={marketSort} onChange={(event) => setMarketSort(event.target.value as MarketSort)}>
-                <option value="updated">最近更新</option>
-                <option value="status">研究状态</option>
-                <option value="name">公司名称</option>
-              </select>
-            </label>
-          ) : (
-            <label className="select-field sort-field">
-              <span>排序</span>
-              <select value={mapSort} onChange={(event) => {
-                setMapSort(event.target.value as MapSort);
-                setVisibleRows(80);
-              }}>
-                <option value="ticker">代码顺序</option>
-                <option value="updated">最近研究</option>
-                <option value="irr">模型年化回报</option>
-                <option value="value">相对价值下沿</option>
-              </select>
-            </label>
-          )}
-        </div>
-
-        {view === "market" ? (
-          <div className="status-filters" aria-label="研究状态筛选">
-            <button className={status === "all" ? "is-active" : ""} onClick={() => setStatus("all")}>
-              全部 <span>{catalog.stats.active}</span>
-            </button>
-            {STATUS_ORDER.map((value) => (
-              <button
-                className={status === value ? `is-active status-filter-${value}` : ""}
-                key={value}
-                onClick={() => setStatus(value)}
-                title={STATUS_META[value].description}
-              >
-                {STATUS_META[value].shortLabel} <span>{statusCount(catalog, value)}</span>
-              </button>
-            ))}
-          </div>
-        ) : null}
-
-        <div className="table-caption">
-          <span>
-            显示 {Math.min(visibleRows, filtered.length).toLocaleString("zh-CN")} / {filtered.length.toLocaleString("zh-CN")} 家
-            {view === "opportunities" ? " · 5年基准情景回报按现价机械派生，不是收益承诺或交易信号。" : null}
-          </span>
-          {view === "opportunities" ? (
-            <div className="quote-controls" aria-live="polite">
-              <span className={`quote-status quote-status-${quoteRefreshing ? "loading" : quoteState}`}>
-                <i aria-hidden="true" />
-                {quoteRefreshing
-                  ? "现价更新中"
-                  : quoteState === "live"
-                    ? "现价已更新"
-                    : quoteState === "loading"
-                      ? "现价更新中"
-                      : "行情暂缺"}
-              </span>
-              {quoteUpdatedAt ? <time dateTime={quoteUpdatedAt}>行情时间 {formatQuoteTime(quoteUpdatedAt)}</time> : null}
-              <button
-                className="quote-refresh"
-                disabled={quoteRefreshing}
-                onClick={() => void refreshQuotes()}
-                type="button"
-              >
-                {quoteRefreshing ? "刷新中" : "刷新"}
-              </button>
-            </div>
-          ) : (
-            <span>更新于 {formatDate(catalog.generatedAt, true)}</span>
-          )}
-        </div>
-
-        <div className="company-table-wrap">
-          <table className={`company-table company-table-${view}`}>
-            <thead>
-              {view === "opportunities" ? (
-                <tr>
-                  <th className="rank-column">顺序</th>
-                  <th className="company-column">公司</th>
-                  <th className="industry-column">行业</th>
-                  <th className="current-price-column">现价</th>
-                  <th className="irr-column">5年基准情景年化回报</th>
-                  <th className="value-column">合理价值</th>
-                  <th className="level-column">相对下沿</th>
-                  <th className="level-column attraction-column">相对中枢</th>
-                  <th className="summary-column">当前结论</th>
-                  <th className="action-column" aria-label="操作" />
-                </tr>
-              ) : (
-                <tr>
-                  <th className="company-column">公司</th>
-                  <th className="status-column">研究状态</th>
-                  <th className="industry-column">行业</th>
-                  <th className="updated-column">最近更新</th>
-                  <th className="summary-column">当前结论</th>
-                  <th className="action-column" aria-label="操作" />
-                </tr>
-              )}
-            </thead>
-            <tbody>
-              {filtered.slice(0, visibleRows).map((company, index) => {
-                const quote = quotes.get(company.ticker);
-                const position = pricePosition(company, quote);
-                const price = position.price;
-                const year5Irr = returnIrr(company, quote, 5);
-                const year3Irr = returnIrr(company, quote, 3);
-                const hasYear5Irr = year5Irr?.midpoint !== null && year5Irr?.midpoint !== undefined;
-                const hasYear3Model = Boolean(
-                  company.returnModel?.base_case_terminal_equity_value_range_per_share.year_3,
-                );
-                return view === "opportunities" ? (
-                  <tr key={company.symbol}>
-                    <td className="rank-cell">{String(index + 1).padStart(2, "0")}</td>
-                    <td className="company-cell">
-                      <strong>{cleanCompanyName(company.name)}</strong>
-                      <span>{company.ticker} · {company.exchange}</span>
-                    </td>
-                    <td className="industry-cell">{company.industry}</td>
-                    <td className="current-price-cell" title={quoteSourceLabel(quote)}>
-                      <strong>¥{formatPrice(price)}</strong>
-                      {quote?.changePercent === null || quote?.changePercent === undefined ? (
-                        <span>待同步</span>
-                      ) : (
-                        <span className={quoteChangeClass(quote)}>
-                          {quote.changePercent > 0 ? "+" : ""}{quote.changePercent.toFixed(2)}%
-                        </span>
-                      )}
-                    </td>
-                    <td className="irr-cell" title={returnModelTitle(company)}>
-                      <strong>{formatIrr(year5Irr?.midpoint)}</strong>
-                      {hasYear5Irr ? (
-                        <>
-                          <span>低 {formatIrr(year5Irr.low)} · 高 {formatIrr(year5Irr.high)}</span>
-                          {hasYear3Model && year3Irr?.midpoint !== null && year3Irr?.midpoint !== undefined ? (
-                            <small>
-                              3年中枢 {formatIrr(year3Irr.midpoint)} · 低 {formatIrr(year3Irr.low)} · 高 {formatIrr(year3Irr.high)}
-                            </small>
-                          ) : null}
-                        </>
-                      ) : (
-                        <span>
-                          {company.returnModelDisplayIssue ? "现金路径待更新" : company.returnModel
-                            ? (quote ? "模型暂不可用" : "行情暂缺")
-                            : company.returnModelNote
-                              ? "暂无法可靠建模"
-                              : "待后续完整研究补充"}
-                        </span>
-                      )}
-                    </td>
-                    <td className="value-cell">
-                      {company.valueRange ? (
-                        <strong>¥{formatPrice(company.valueRange.low)}–{formatPrice(company.valueRange.high)}</strong>
-                      ) : (
-                        <span className="empty-price">—</span>
-                      )}
-                    </td>
-                    <td className="level-cell">
-                      <strong>{position.lowRatio === null ? "—" : `${position.lowRatio.toFixed(2)}×`}</strong>
-                      <span>{position.label}</span>
-                    </td>
-                    <td className="level-cell">
-                      <strong>{position.midpointRatio === null ? "—" : `${position.midpointRatio.toFixed(2)}×`}</strong>
-                      <span>现价 / 区间中枢</span>
-                    </td>
-                    <td className="summary-cell"><p>{company.summary}</p></td>
-                    <td className="row-action">
-                      {company.reports.length ? (
-                        <a href={`/reports/${company.ticker}`} aria-label={`阅读${cleanCompanyName(company.name)}研报`}>
-                          阅读
-                        </a>
-                      ) : (
-                        <span>—</span>
-                      )}
-                    </td>
-                  </tr>
-                ) : (
-                  <tr key={company.symbol}>
-                    <td className="company-cell">
-                      <strong>{cleanCompanyName(company.name)}</strong>
-                      <span>{company.ticker} · {company.exchange}</span>
-                    </td>
-                    <td><StatusBadge status={company.status} /></td>
-                    <td className="industry-cell">{company.industry}</td>
-                    <td className="updated-cell">
-                      <strong>{formatDate(company.updatedAt)}</strong>
-                      <span>{company.reportDate ? `研报 ${company.reportDate}` : "无正式研报"}</span>
-                    </td>
-                    <td className="summary-cell"><p>{company.summary}</p></td>
-                    <td className="row-action">
-                      {company.reports.length ? (
-                        <a href={`/reports/${company.ticker}`} aria-label={`阅读${cleanCompanyName(company.name)}研报`}>
-                          阅读
-                        </a>
-                      ) : (
-                        <span>—</span>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          {!filtered.length ? (
-            <div className="empty-table">
-              <strong>没有符合当前条件的公司</strong>
-              <span>试试清空关键词或切换状态、行业筛选。</span>
-            </div>
-          ) : null}
-        </div>
-        {visibleRows < filtered.length ? (
-          <button className="load-more" onClick={() => setVisibleRows((current) => current + 100)}>
-            再显示 {Math.min(100, filtered.length - visibleRows)} 家
-          </button>
-        ) : null}
-      </section>
-    </main>
-  );
+  const candidates: Company[] = view === "current" ? accepted : view === "progress" ? scoped : catalog?.companies ?? [];
+  const industries = [...new Set(candidates.map((company) => company.industry))].sort((a, b) => a.localeCompare(b, "zh-CN"));
+  const filtered = candidates.filter((company) => (industry === "all" || company.industry === industry)
+    && (progress === "all" || view !== "progress" || company.display.state === progress)
+    && [company.name, company.ticker, company.industry, view === "current" ? company.summary : ""]
+      .join(" ").toLowerCase().includes(query.trim().toLowerCase()));
+  const ordered = filtered.map((company) => ({ company, ticker: company.ticker, updatedAt: company.updatedAt,
+    midpointIrr: view === "current" ? returnIrr(company, quotes.get(company.ticker), 5)?.midpoint ?? null : null,
+    lowRatio: view === "current" ? pricePosition(company, quotes.get(company.ticker)).lowRatio : null }))
+    .sort((a, b) => compareResearchMapRows(a, b, view === "current" ? sort : "ticker")).map(({ company }) => company);
+  const compared = view === "current" ? filtered.filter((company) => pricePosition(company, quotes.get(company.ticker)).lowRatio !== null) : [];
+  const below = compared.filter((company) => (pricePosition(company, quotes.get(company.ticker)).lowRatio ?? Infinity) < 1).length;
+  function changeView(next: View) { setView(next); setIndustry("all"); setProgress("all"); setLimit(80); }
+  if (error) return <main className="standards-workspace"><h1>研究决策台</h1><p role="alert">{error}</p></main>;
+  if (!catalog) return <main className="standards-workspace"><h1>研究决策台</h1><p>正在读取现行标准及验收结果…</p></main>;
+  const exportName = scope === "quality_pool" ? "current-research" : "all-current-research";
+  return <main className="standards-workspace">
+    <header className="standards-heading"><div><span className="section-eyebrow">CURRENT RESEARCH</span><h1>当前研究</h1>
+      <p>少而清楚：仅展示现行兼容标准下已验收、仍有效的结果。旧估值留在历史研报，不填补新版空缺。</p></div>
+      <a className="standards-link" href="/reports?view=history">查看历史研报 ↗</a></header>
+    <details className="standards-banner"><summary>现行标准：{catalog.standard.label} · {catalog.standard.value_label}</summary>
+      <p>发布于 {formatDate(catalog.standard.published_at)}；规范提交 {catalog.standard.spec_revision.slice(0, 7)}。资料截止与验收日期分别标明。</p>
+      <p>{catalog.standard.compatibility_note}</p><p>兼容版本：{catalog.standard.compatible_with.join("、")}。{catalog.standard.change_note}</p>
+      <p>统一的是价值含义和验收标准，不是要求不同行业使用同一公式或相同资本成本。</p></details>
+    <section className="standards-stats" aria-label="选定范围研究进度">
+      <button onClick={() => changeView("progress")}><strong>{counts.total}</strong><span>{scope === "quality_pool" ? "核心池公司" : "研究档案"}</span></button>
+      <button onClick={() => changeView("current")}><strong>{counts.completed}</strong><span>新版有效结果</span></button>
+      <button onClick={() => { changeView("progress"); setProgress("unpriced"); }}><strong>{counts.unpriced}</strong><span>已研究 · 暂无法估值</span></button>
+      <button onClick={() => changeView("progress")}><strong>{counts.pending}</strong><span>待首次研究 / 待升级</span></button>
+      <button onClick={() => changeView("progress")}><strong>{counts.updating + counts.review}</strong><span>新版待更新 / 待复核</span></button>
+    </section>
+    <section aria-label="公司研究列表">
+      <div className="standards-toolbar"><div className="standards-tabs" role="tablist" aria-label="研究视图">
+        {([["current", "当前研究"], ["progress", "研究进度"], ["market", "全部档案"]] as const).map(([id, label]) =>
+          <button key={id} role="tab" aria-selected={view === id} onClick={() => changeView(id)}>{label}</button>)}</div>
+        {view !== "market" && <label>范围 <select aria-label="研究范围" value={scope} onChange={(event) => { setScope(event.target.value as Scope); setIndustry("all"); setLimit(80); }}>
+          <option value="quality_pool">核心研究池 · {catalog.scope.count}家</option><option value="all_standard">全部研究档案（当前页仍仅现行标准）</option></select></label>}
+        <input ref={search} aria-label="搜索公司" placeholder="搜索公司、代码、行业 /" value={query} onChange={(event) => { setQuery(event.target.value); setLimit(80); }} />
+        <select aria-label="行业筛选" value={industry} onChange={(event) => setIndustry(event.target.value)}><option value="all">全部行业</option>{industries.map((name) => <option key={name}>{name}</option>)}</select>
+        {view === "current" && <select aria-label="当前研究排序" value={sort} onChange={(event) => setSort(event.target.value as Sort)}><option value="ticker">代码顺序</option><option value="updated">最近研究</option><option value="irr">模型年化回报</option><option value="value">相对价值下沿</option></select>}
+        {view === "progress" && <select aria-label="新版进度筛选" value={progress} onChange={(event) => setProgress(event.target.value)}><option value="all">全部进度</option>{Object.entries(DISPLAY_LABELS).map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select>}
+      </div>
+      <div className="standards-caption"><span>显示 {Math.min(limit, ordered.length)} / {ordered.length} 家{view === "current" ? ` · 已取得可比较行情 ${compared.length} 家，其中低于区间下沿 ${below} 家` : " · 不展示旧估值"}</span>
+        {view === "current" ? <div><span>行情时间 {formatDate(quoteAt, true)}</span> <button disabled={quoteRefreshing} onClick={() => void refreshQuotes()}>{quoteRefreshing ? "刷新中" : "刷新"}</button>
+          <a href={`/data/${exportName}.json`} download>导出本范围 JSON</a><a href={`/data/${exportName}.csv`} download>CSV</a></div> : <span>质量池版本 {catalog.scope.asOf}</span>}</div>
+      {view === "current" && <p className="standards-hint">5年基准情景回报按现价机械派生，不是收益承诺或交易信号。只对本页现行结果计算；不同公司的资料日期与关键假设仍需分别阅读。</p>}
+      <div className="standards-table-scroll"><table className="standards-table"><thead><tr><th>公司</th><th>行业</th>
+        {view === "current" ? <><th>现价</th><th>合理价值</th><th>5年基准情景年化回报</th><th>相对下沿</th><th>相对中枢</th><th>当前结论</th><th>资料截止</th></>
+          : <><th>新版进度</th><th>研究状态</th><th>说明</th><th>报告版本</th></>}<th>阅读</th></tr></thead><tbody>
+        {ordered.slice(0, limit).map((company) => {
+          const quote = quotes.get(company.ticker); const position = pricePosition(company, quote); const irr = returnIrr(company, quote, 5);
+          return <tr key={company.symbol} data-symbol={company.symbol}><td><strong>{cleanCompanyName(company.name)}</strong><small>{company.ticker}{company.inQualityPool ? ` · ${company.qualityTier === "core_moat" ? "A" : "B"}` : ""}</small></td><td>{company.industry}</td>
+            {view === "current" ? <><td>¥{formatPrice(position.price)}</td><td>{company.valueRange ? <strong>¥{formatPrice(company.valueRange.low)}–{formatPrice(company.valueRange.high)}</strong> : <span>暂无法估值</span>}</td>
+              <td title={returnModelTitle(company)}><strong>{formatIrr(irr?.midpoint)}</strong><small>{irr?.midpoint != null ? `低 ${formatIrr(irr.low)} · 高 ${formatIrr(irr.high)}` : company.returnModelDisplayIssue ? "现金路径待更新" : company.returnModel ? "行情暂缺或模型暂不可用" : company.returnModelNote ? "暂无法可靠建模" : "待后续完整研究补充"}</small></td>
+              <td>{position.lowRatio == null ? "—" : `${position.lowRatio.toFixed(2)}×`}<small>{position.label}</small></td><td>{position.midpointRatio == null ? "—" : `${position.midpointRatio.toFixed(2)}×`}</td>
+              <td className="summary-cell"><p>{company.summary}</p>{company.status === "ignore" && <small>研究后暂不持续覆盖</small>}</td><td>{formatDate(company.informationCutoff)}<small>验收 {formatDate(company.acceptedAt)}</small></td></>
+              : <><td>{DISPLAY_LABELS[company.display.state]}</td><td>{STATUS_META[company.status].label}</td><td className="summary-cell">{company.hasResearchState ? company.display.reason : "已在质量池，待与研究状态衔接；未自动创建研究任务。"}</td><td>{company.reportDate ?? "尚无报告"}</td></>}
+            <td>{company.reports.length ? <a href={`/reports/${company.ticker}${company.display.eligible ? "" : "?view=history"}`}>{company.display.eligible ? "阅读新版" : "查看历史"}</a> : "—"}</td></tr>;
+        })}</tbody></table></div>
+      {!ordered.length && <div className="standards-empty"><strong>{view === "current" ? "暂无符合条件的现行研究" : "没有符合条件的公司"}</strong><p>不会使用旧估值补位。可以切换研究进度或主动查看历史研报。</p></div>}
+      {ordered.length > limit && <button className="load-more" onClick={() => setLimit((value) => value + 100)}>继续显示</button>}
+    </section>
+  </main>;
 }

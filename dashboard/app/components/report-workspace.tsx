@@ -1,397 +1,130 @@
 "use client";
 /* eslint-disable @next/next/no-html-link-for-pages */
-
-import type { ReactNode } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { referencedReport } from "../lib/report-reference.mjs";
-import {
-  cleanCompanyName,
-  formatDate,
-  formatPrice,
-  loadCatalog,
-  loadQuotes,
-  STATUS_META,
-  type Catalog,
-  type Company,
-  type Quote,
-  type ResearchStatus,
-} from "../lib/research";
-
-interface ReportWorkspaceProps {
-  initialTicker?: string;
-}
-
-interface TocItem {
-  depth: number;
-  label: string;
-  id: string;
-}
-
-function slugify(value: string) {
-  return value
-    .trim()
-    .toLocaleLowerCase("zh-CN")
-    .replace(/[\s/]+/gu, "-")
-    .replace(/[^\p{Letter}\p{Number}-]/gu, "")
-    .replace(/-+/gu, "-");
-}
+import { loadCatalog, loadQuotes, formatDate, formatPrice, STATUS_META,
+  type Catalog, type Company, type Quote, type ReportVersion } from "../lib/research";
+import { currentResults, isCurrentResult, readingContext } from "../lib/display-policy.mjs";
+import "../standards.css";
 
 function nodeText(node: ReactNode): string {
   if (typeof node === "string" || typeof node === "number") return String(node);
   if (Array.isArray(node)) return node.map(nodeText).join("");
-  if (node && typeof node === "object" && "props" in node) {
-    return nodeText((node as { props: { children?: ReactNode } }).props.children);
-  }
+  if (node && typeof node === "object" && "props" in node) return nodeText((node as { props: { children?: ReactNode } }).props.children);
   return "";
 }
-
-function parseToc(markdown: string): TocItem[] {
-  return markdown
-    .split(/\r?\n/u)
-    .flatMap((line) => {
-      const match = /^(#{2,3})\s+(.+)$/u.exec(line.trim());
-      if (!match) return [];
-      const label = match[2].replace(/[*_`]/gu, "").trim();
-      return [{ depth: match[1].length, label, id: slugify(label) }];
-    })
-    .slice(0, 32);
-}
-
-function ReportStatus({ status }: { status: ResearchStatus }) {
-  return <span className={`status-badge status-${status}`}>{STATUS_META[status].label}</span>;
-}
-
-function reportSourceLabel(quote?: Quote) {
-  if (!quote) return "行情暂缺";
-  return quote.source === "tencent" ? "腾讯行情" : "东方财富备援";
-}
-
-export function ReportWorkspace({ initialTicker }: ReportWorkspaceProps) {
+function slug(value: string) { return value.trim().replace(/[*_`]/gu, "").replace(/[^\p{Letter}\p{Number}]+/gu, "-"); }
+type Mode = "current" | "history";
+type Scope = "quality_pool" | "all_standard";
+export function ReportWorkspace({ initialTicker }: { initialTicker?: string }) {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
-  const [selectedTicker, setSelectedTicker] = useState(initialTicker ?? "");
-  const [selectedReportPath, setSelectedReportPath] = useState("");
-  const [markdown, setMarkdown] = useState("");
-  const [query, setQuery] = useState("");
-  const [status, setStatus] = useState<ResearchStatus | "all">("all");
-  const [industry, setIndustry] = useState("all");
-  const [quote, setQuote] = useState<Quote | undefined>();
-  const [loadingReport, setLoadingReport] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const searchRef = useRef<HTMLInputElement>(null);
-
+  const [mode, setMode] = useState<Mode>("current");
+  const [scope, setScope] = useState<Scope>("quality_pool");
+  const [selectedTicker, setSelectedTicker] = useState(initialTicker ?? "");
+  const [version, setVersion] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+  const [standardFilter, setStandardFilter] = useState("all");
+  const [content, setContent] = useState<{ path: string; body: string } | null>(null);
+  const [bodyError, setBodyError] = useState<{ path: string; message: string } | null>(null);
+  const [quoteSnapshot, setQuoteSnapshot] = useState<{ ticker: string; quote: Quote } | null>(null);
   useEffect(() => {
     const controller = new AbortController();
-    loadCatalog(controller.signal)
-      .then((nextCatalog) => {
-        setCatalog(nextCatalog);
-        const withReports = nextCatalog.companies
-          .filter((company) => company.reports.length)
-          .sort((a, b) => (b.reportDate ?? "").localeCompare(a.reportDate ?? ""));
-        const requested = withReports.find((company) => company.ticker === initialTicker);
-        if (initialTicker && !requested) {
-          setLoadingReport(false);
-          setError("所引用公司的研报暂时不可用，请在研报库选择公司。");
-          return;
-        }
-        const next = requested ?? withReports[0];
-        if (next) {
-          setSelectedTicker(next.ticker);
-          const version = initialTicker ? new URLSearchParams(window.location.search).get("version") : null;
-          const report = referencedReport(next.reports, version);
-          if (!report) {
-            setLoadingReport(false);
-            setError("所引用的研报版本暂时不可用。可查看当前版本或在左侧选择公司。");
-            return;
-          }
-          setSelectedReportPath(report.path);
-        }
-      })
-      .catch((loadError: Error) => {
-        if (loadError.name !== "AbortError") setError(loadError.message);
-      });
+    loadCatalog(controller.signal).then((data) => {
+      const params = new URLSearchParams(window.location.search);
+      const requestedVersion = params.get("version");
+      const historical = Boolean(requestedVersion || params.get("view") === "history");
+      setCatalog(data); setVersion(requestedVersion); setMode(historical ? "history" : "current");
+      if (historical || initialTicker) setScope("all_standard");
+      if (!initialTicker) {
+        const rows: Company[] = historical ? data.companies.filter((company) => company.reports.length) : currentResults(data.companies);
+        setSelectedTicker(rows.sort((a, b) => historical ? (b.reportDate ?? "").localeCompare(a.reportDate ?? "") : a.ticker.localeCompare(b.ticker))[0]?.ticker ?? "");
+      }
+    }).catch((e: Error) => { if (e.name !== "AbortError") setError(e.message); });
     return () => controller.abort();
   }, [initialTicker]);
-
+  const selected = useMemo(() => catalog?.companies.find((company) => company.ticker === selectedTicker) ?? null, [catalog, selectedTicker]);
+  const context = readingContext(selected, version, mode) as { report: ReportVersion | null; live: boolean; historical: boolean };
+  const path = context.report?.path ?? "";
   useEffect(() => {
-    if (!selectedReportPath) return;
+    if (!path) return;
     const controller = new AbortController();
-    fetch(selectedReportPath, { signal: controller.signal })
-      .then((response) => {
-        if (!response.ok) throw new Error("研报正文暂时无法读取");
-        return response.text();
-      })
-      .then((body) => {
-        setMarkdown(body);
-        setError(null);
-        setLoadingReport(false);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      })
-      .catch((loadError: Error) => {
-        if (loadError.name !== "AbortError") {
-          setError(loadError.message);
-          setLoadingReport(false);
-        }
-      });
+    fetch(path, { signal: controller.signal }).then((response) => {
+      if (!response.ok) throw new Error("所选研报暂时不可用；没有回退到其他版本。");
+      return response.text();
+    }).then((body) => { setContent({ path, body }); setBodyError(null); })
+      .catch((e: Error) => { if (e.name !== "AbortError") setBodyError({ path, message: e.message }); });
     return () => controller.abort();
-  }, [selectedReportPath]);
-
+  }, [path]);
   useEffect(() => {
-    if (!selectedTicker) return;
+    if (!selected || !context.live) return;
     const controller = new AbortController();
-    loadQuotes([selectedTicker], controller.signal)
-      .then((quotes) => setQuote(quotes[0]))
-      .catch(() => setQuote(undefined));
+    const ticker = selected.ticker;
+    loadQuotes([ticker], controller.signal).then((quotes) => setQuoteSnapshot(quotes[0] ? { ticker, quote: quotes[0] } : null))
+      .catch((e: Error) => { if (e.name !== "AbortError") setQuoteSnapshot(null); });
     return () => controller.abort();
-  }, [selectedTicker]);
-
-  useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "/" && document.activeElement?.tagName !== "INPUT") {
-        event.preventDefault();
-        searchRef.current?.focus();
-      }
-    }
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
-
-  const reportCompanies = useMemo(() => {
-    if (!catalog) return [];
-    const normalized = query.trim().toLocaleLowerCase("zh-CN");
-    return catalog.companies
-      .filter((company) => company.reports.length)
-      .filter((company) => status === "all" || company.status === status)
-      .filter((company) => industry === "all" || company.industry === industry)
-      .filter(
-        (company) =>
-          !normalized ||
-          [company.name, company.ticker, company.industry, company.summary]
-            .join(" ")
-            .toLocaleLowerCase("zh-CN")
-            .includes(normalized),
-      )
-      .sort((a, b) => (b.reportDate ?? "").localeCompare(a.reportDate ?? "") || a.ticker.localeCompare(b.ticker));
-  }, [catalog, industry, query, status]);
-
-  const industries = useMemo(() => {
-    if (!catalog) return [];
-    return [...new Set(catalog.companies.filter((company) => company.reports.length).map((company) => company.industry))].sort(
-      (a, b) => a.localeCompare(b, "zh-CN"),
-    );
-  }, [catalog]);
-
-  const selected = useMemo(
-    () => catalog?.companies.find((company) => company.ticker === selectedTicker) ?? null,
-    [catalog, selectedTicker],
-  );
-  const toc = useMemo(() => parseToc(markdown), [markdown]);
-
-  function chooseCompany(company: Company) {
-    setLoadingReport(true);
-    setQuote(undefined);
-    setSelectedTicker(company.ticker);
-    setSelectedReportPath(company.reports[0].path);
-    window.history.replaceState({}, "", `/reports/${company.ticker}`);
+  }, [selected, context.live]);
+  const markdown = content?.path === path ? content.body : "";
+  const quote = context.live && quoteSnapshot?.ticker === selectedTicker ? quoteSnapshot.quote : undefined;
+  const toc = markdown.split(/\r?\n/u).flatMap((line) => {
+    const match = /^(#{2,3})\s+(.+)$/u.exec(line);
+    return match ? [{ depth: match[1].length, label: match[2].replace(/[*_`]/gu, ""), id: slug(match[2]) }] : [];
+  });
+  const rows = (catalog?.companies ?? []).filter((company) => mode === "current"
+    ? isCurrentResult(company, scope) : company.reports.length && (scope === "all_standard" || company.inQualityPool))
+    .filter((company) => mode !== "history" || standardFilter === "all" || company.reports.some((report) => (report.standardId ?? "unconfirmed") === standardFilter))
+    .filter((company) => [company.name, company.ticker, company.industry].join(" ").toLowerCase().includes(query.trim().toLowerCase()))
+    .sort((a, b) => a.ticker.localeCompare(b.ticker));
+  function choose(company: Company, nextMode = mode) {
+    const matchingVersion = nextMode === "history" && standardFilter !== "all"
+      ? company.reports.find((report) => (report.standardId ?? "unconfirmed") === standardFilter)?.date ?? null : null;
+    setSelectedTicker(company.ticker); setVersion(matchingVersion); setMode(nextMode); setQuoteSnapshot(null);
+    const suffix = matchingVersion ? `?version=${matchingVersion}` : nextMode === "history" ? "?view=history" : "";
+    window.history.replaceState({}, "", `/reports/${company.ticker}${suffix}`);
   }
-
-  return (
-    <main className="report-shell">
-      <aside className="report-library-panel">
-        <div className="library-intro">
-          <span className="section-eyebrow">REPORT LIBRARY</span>
-          <h1>研报库</h1>
-          <p>{catalog ? `${catalog.stats.reports} 家公司有正式研报` : "正在整理正式研报"}</p>
-        </div>
-        <label className="search-field report-search">
-          <span aria-hidden="true">⌕</span>
-          <input
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="搜索公司、代码、行业  /"
-            ref={searchRef}
-            type="search"
-            value={query}
-          />
-        </label>
-        <div className="report-filters">
-          <select aria-label="按研究状态筛选" value={status} onChange={(event) => setStatus(event.target.value as ResearchStatus | "all")}>
-            <option value="all">全部状态</option>
-            <option value="covered">持续覆盖</option>
-            <option value="ignore">暂不关注</option>
-            <option value="stale">等待更新</option>
-          </select>
-          <select aria-label="按行业筛选" value={industry} onChange={(event) => setIndustry(event.target.value)}>
-            <option value="all">全部行业</option>
-            {industries.map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="report-result-count">
-          <span>{reportCompanies.length} 份当前公司档案</span>
-          {(query || status !== "all" || industry !== "all") && (
-            <button
-              onClick={() => {
-                setQuery("");
-                setStatus("all");
-                setIndustry("all");
-              }}
-            >
-              清除筛选
-            </button>
-          )}
-        </div>
-        <div className="report-company-list">
-          {reportCompanies.map((company) => (
-            <button
-              className={company.ticker === selectedTicker ? "is-active" : ""}
-              key={company.symbol}
-              onClick={() => chooseCompany(company)}
-            >
-              <span className="report-list-title">
-                <strong>{cleanCompanyName(company.name)}</strong>
-                <small>{company.ticker}</small>
-              </span>
-              <span className="report-list-meta">
-                <span>{company.industry}</span>
-                <time>{company.reportDate}</time>
-              </span>
-              <span className={`report-status-dot report-status-${company.status}`} aria-label={STATUS_META[company.status].label} />
-            </button>
-          ))}
-          {!reportCompanies.length ? <div className="report-list-empty">没有符合条件的正式研报。</div> : null}
-        </div>
-        <div className="legacy-note">隔离旧稿不参与当前结论，也不会混入这里的搜索结果。</div>
-      </aside>
-
-      <section className="report-reader">
-        {error ? (
-          <div className="reader-empty">
-            <strong>研报暂时无法显示</strong>
-            <span>{error}</span>
-            {selected && <a href={`/reports/${selected.ticker}`}>查看当前版本</a>}
-          </div>
-        ) : selected ? (
-          <>
-            <header className="report-document-header">
-              <div className="report-breadcrumbs">
-                <a href="/">研究决策台</a>
-                <span>/</span>
-                <span>研报库</span>
-                <span>/</span>
-                <strong>{selected.ticker}</strong>
-              </div>
-              <div className="report-title-row">
-                <div>
-                  <span className="report-ticker">{selected.ticker} · {selected.exchange} · {selected.industry}</span>
-                  <h2>{cleanCompanyName(selected.name)}</h2>
-                  <div className="report-meta-line">
-                    <ReportStatus status={selected.status} />
-                    <span>当前研究截止 {formatDate(selected.informationCutoff)}</span>
-                    <span>阅读版本 {selectedReportPath.split("/").pop()?.replace(".md", "")}</span>
-                  </div>
-                </div>
-                <div className="reader-quote">
-                  <span>现价</span>
-                  <strong>¥{formatPrice(quote?.price)}</strong>
-                  {quote?.changePercent !== null && quote?.changePercent !== undefined ? (
-                    <small className={quote.changePercent > 0 ? "price-up" : quote.changePercent < 0 ? "price-down" : "price-flat"}>
-                      {quote.changePercent > 0 ? "+" : ""}{quote.changePercent.toFixed(2)}%
-                    </small>
-                  ) : null}
-                  <em>{reportSourceLabel(quote)}</em>
-                </div>
-              </div>
-              {selected.reports.length > 0 ? (
-                <label className="version-select">
-                  <span>报告版本</span>
-                  <select
-                    value={selectedReportPath}
-                    onChange={(event) => {
-                      setLoadingReport(true);
-                      setError(null);
-                      setSelectedReportPath(event.target.value);
-                      const report = selected.reports.find((item) => item.path === event.target.value);
-                      if (report) window.history.replaceState({}, "", `/reports/${selected.ticker}?version=${report.date}`);
-                    }}
-                  >
-                    {!selectedReportPath && <option value="" disabled>请选择报告版本</option>}
-                    {selected.reports.map((report, index) => (
-                      <option key={report.path} value={report.path}>
-                        {report.date}{index === 0 ? " · 当前" : ""}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              ) : null}
-            </header>
-
-            {selectedReportPath && selectedReportPath !== selected.reports[0]?.path && (
-              <p className="legacy-note">正在阅读历史版本。上方状态、行情与右侧摘要来自当前研究，历史正文保留当时的判断。</p>
-            )}
-
-            {loadingReport ? (
-              <div className="report-loading" aria-busy="true">
-                <span />
-                <span />
-                <span />
-                <p>正在展开研报正文…</p>
-              </div>
-            ) : (
-              <article className="markdown-document">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  components={{
-                    h1: ({ children }) => <h1 id={slugify(nodeText(children))}>{children}</h1>,
-                    h2: ({ children }) => <h2 id={slugify(nodeText(children))}>{children}</h2>,
-                    h3: ({ children }) => <h3 id={slugify(nodeText(children))}>{children}</h3>,
-                    a: ({ href, children }) => (
-                      <a href={href} rel="noreferrer" target={href?.startsWith("http") ? "_blank" : undefined}>
-                        {children}
-                      </a>
-                    ),
-                    table: ({ children }) => (
-                      <div className="markdown-table-wrap">
-                        <table>{children}</table>
-                      </div>
-                    ),
-                  }}
-                >
-                  {markdown}
-                </ReactMarkdown>
-              </article>
-            )}
-          </>
-        ) : (
-          <div className="reader-empty">
-            <strong>从左侧选择一份研报</strong>
-            <span>可以按公司、代码、行业或研究状态筛选。</span>
-          </div>
-        )}
-      </section>
-
-      <aside className="report-toc-panel">
-        <div className="toc-sticky">
-          <span className="section-eyebrow">ON THIS PAGE</span>
-          <h3>本页目录</h3>
-          <nav aria-label="研报目录">
-            {toc.map((item, index) => (
-              <a className={item.depth === 3 ? "toc-depth-three" : ""} href={`#${item.id}`} key={`${item.id}-${index}`}>
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          {selected ? (
-            <div className="toc-summary">
-              <span>当前研究摘要</span>
-              <p>{selected.summary}</p>
-            </div>
-          ) : null}
-        </div>
-      </aside>
-    </main>
-  );
+  function switchMode(nextMode: Mode) {
+    setMode(nextMode); setVersion(null); setStandardFilter("all"); setQuoteSnapshot(null);
+    if (nextMode === "history") setScope("all_standard");
+    window.history.replaceState({}, "", selectedTicker ? `/reports/${selectedTicker}${nextMode === "history" ? "?view=history" : ""}` : `/reports${nextMode === "history" ? "?view=history" : ""}`);
+  }
+  if (error) return <main className="standards-workspace"><h1>研报库</h1><p role="alert">{error}</p></main>;
+  return <main className="standards-workspace standards-reader">
+    <aside className="standards-library"><h1>研报库</h1><p>当前结果与历史档案分开阅读。</p>
+      <div className="standards-tabs" role="tablist" aria-label="研报库范围">
+        <button role="tab" aria-selected={mode === "current"} onClick={() => switchMode("current")}>当前标准</button>
+        <button role="tab" aria-selected={mode === "history"} onClick={() => switchMode("history")}>历史研报</button></div>
+      <label>公司范围<select aria-label="研报公司范围" value={scope} onChange={(event) => setScope(event.target.value as Scope)}><option value="quality_pool">核心研究池</option><option value="all_standard">全部公司</option></select></label>
+      <input aria-label="搜索研报" placeholder="公司、代码、行业" value={query} onChange={(event) => setQuery(event.target.value)} />
+      {mode === "history" && <label>历史标准<select aria-label="历史标准筛选" value={standardFilter} onChange={(event) => setStandardFilter(event.target.value)}><option value="all">所有历史标准（不进行估值混排）</option><option value="unconfirmed">历史标准未确认</option>{catalog?.standards.map((standard) => <option key={standard.id} value={standard.id}>{standard.label}</option>)}</select></label>}
+      <p>{rows.length} 家{mode === "current" ? "现行标准结果" : "历史档案"}</p>
+      <div className="standards-library-list">{rows.map((company) => <button key={company.symbol} aria-pressed={selectedTicker === company.ticker} onClick={() => choose(company)}><strong>{company.name}</strong><small>{company.ticker} · {company.industry}</small><span>{mode === "current" ? company.standardLabel : `${company.reports.length} 个版本`}</span></button>)}</div>
+    </aside>
+    <section className="standards-reading" aria-label="所选报告">
+      {selected ? <><header><span className="section-eyebrow">{context.historical ? "HISTORICAL SNAPSHOT" : "CURRENT STANDARD"}</span><h2>{selected.name}</h2>
+        {context.report ? <><p className="standards-meta">阅读版本 {context.report.date} · 资料截止 {formatDate(context.report.informationCutoff)} · {context.report.standardLabel}</p>
+          <p className="standards-meta">验收时间 {formatDate(context.report.acceptedAt, true)}{context.report.valueDefinition ? ` · ${context.report.valueDefinition}` : " · 本版价值含义以历史正文为准"}</p></> : <p>尚无可展示的现行标准报告</p>}
+        {context.live && <div className="standards-reader-price" data-testid="live-research-panel"><span>{STATUS_META[selected.status].label}</span><strong>现价 ¥{formatPrice(quote?.price)}</strong><span>行情 {formatDate(quote?.quoteAt, true)}</span><p>{selected.summary}</p></div>}
+        {selected.reports.length > 0 && <label>报告版本<select aria-label="报告版本" value={context.report?.date ?? ""} onChange={(event) => { setVersion(event.target.value); setMode("history"); setQuoteSnapshot(null); window.history.replaceState({}, "", `/reports/${selected.ticker}?version=${event.target.value}`); }}>
+          {!context.report && <option value="" disabled>选择历史版本</option>}{selected.reports.map((report) => <option key={report.sourcePath} value={report.date}>{report.date} · {report.standardLabel}{report.sourcePath === selected.reportPath ? " · 当前文件指针" : ""}</option>)}</select></label>}
+      </header>
+      {context.historical && <div className="standards-history-note" data-testid="historical-notice"><strong>历史快照</strong><p>正文保留本版的判断与估值，不加载现价、不附上其他版本摘要，也不参与当前估值排序。</p>
+        {context.report?.acceptanceStatus === "content_changed" && <p>该正文与原验收记录不一致，原验收不适用于当前内容。</p>}
+        {context.report?.acceptanceStatus === "revoked" && <p>该版本验收已撤销。</p>}
+        {selected.display.eligible && <a href={`/reports/${selected.ticker}`}>转到现行有效研究 →</a>}</div>}
+      {!context.report ? <div className="standards-empty"><strong>{context.historical ? "所引用的报告版本不存在" : selected.display.reason}</strong><p>不会自动用更早或其他口径的估值补位。</p>
+        {selected.reports.length > 0 && <button onClick={() => choose(selected, "history")}>主动查看历史研报</button>}</div>
+        : bodyError?.path === path ? <p role="alert">{bodyError.message}</p>
+          : !markdown ? <p aria-busy="true">正在读取所选版本…</p>
+            : <article className="markdown-document"><ReactMarkdown remarkPlugins={[remarkGfm]} components={{
+              h1: ({ children }) => <h1 id={slug(nodeText(children))}>{children}</h1>,
+              h2: ({ children }) => <h2 id={slug(nodeText(children))}>{children}</h2>,
+              h3: ({ children }) => <h3 id={slug(nodeText(children))}>{children}</h3>,
+              a: ({ href, children }) => <a href={href} rel="noreferrer" target={href?.startsWith("http") ? "_blank" : undefined}>{children}</a>,
+              table: ({ children }) => <div className="standards-table-scroll"><table>{children}</table></div>,
+            }}>{markdown}</ReactMarkdown></article>}
+      </> : <div className="standards-empty"><h2>{catalog ? "从左侧选择报告" : "正在读取研报库…"}</h2><p>现行结果为空时可以主动进入历史研报；不会自动补入旧估值。</p></div>}
+    </section>
+    <aside className="standards-toc"><h3>本版目录</h3><nav aria-label="本版目录">{toc.map((item, index) => <a key={`${item.id}-${index}`} href={`#${item.id}`} style={{ paddingLeft: item.depth === 3 ? 12 : 0 }}>{item.label}</a>)}</nav></aside>
+  </main>;
 }

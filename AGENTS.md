@@ -82,3 +82,13 @@
 单公司研究及其验收另须完整阅读主提示词与核验附录；价值质量池任务另读 `prompts/screening/cn-a-value-quality.md`。
 
 常用命令见 `README.md`。
+
+## 现行标准与历史展示
+
+执行新研究的协调验收或修改网页前，再读 [现行研究展示标准](research/standards/README.md)。`research/standards/registry.json` 发布现行标准及显式兼容版本；报告级验收登记绑定具体正文与结构化结果，不另存估值、不增加审批角色。
+
+沿用同一协调器完成实质验收及 `research complete` 后，使用 `node dashboard/scripts/report-standards.mjs inspect/accept` 对刚验收的当前版本登记，随该轮正式输出提交。登记必须保留事实截止、实际采用的规范版本及具体验收说明，不按报告日期、covered、当前文件指针或模型数字自动认证。缺少登记的报告不会进入默认当前研究，但仍可主动查阅历史。
+
+网页默认核心质量池且只显示现行兼容标准的有效结果；暂无法估值及研究后ignore不自动排除。新版缺失、失效、内容改变或撤销验收时不回退旧值。历史阅读不加载现价或其他版本摘要。范围、研究状态、标准兼容和资料时点分别处理；不要为了隐藏旧估值移动报告、修改公司状态或清空队列。
+
+网页与导出改动运行 `node dashboard/scripts/report-standards.mjs validate`，并执行dashboard测试、类型检查及浏览器隔离测试。原研究状态校验仍须通过。2026-09-23本轮只实现版本登记与展示隔离，不重做企业估值、不启动批量研究，也不自动部署到生产站点。
