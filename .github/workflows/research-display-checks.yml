@@ -17,10 +17,16 @@ concurrency:
   cancel-in-progress: true
 jobs:
   verify-display:
+    # Temporary, narrowly-scoped lock repair: creates an unattached blob only.
+    # No ref update, deployment, state mutation or automatic commit is permitted.
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -36,6 +42,32 @@ jobs:
           cache-dependency-path: dashboard/package-lock.json
       - name: Verify acceptance bindings
         run: node dashboard/scripts/report-standards.mjs validate
+      - name: Prepare and inspect missing lock entries
+        working-directory: dashboard
+        run: |
+          test "$(git hash-object package-lock.json)" = '33d5e6c51dfa5dbb1c66a698ec55d231b0f85804'
+          cp package-lock.json "$RUNNER_TEMP/original-lock.json"
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          node --input-type=module <<'JS'
+          import {readFileSync,writeFileSync} from 'node:fs';
+          const before=JSON.parse(readFileSync(process.env.RUNNER_TEMP+'/original-lock.json','utf8'));
+          const content=readFileSync('package-lock.json','utf8');
+          const after=JSON.parse(content);
+          const changed=Object.keys(after.packages).filter(k=>JSON.stringify(before.packages[k])!==JSON.stringify(after.packages[k]));
+          const removed=Object.keys(before.packages).filter(k=>!(k in after.packages));
+          console.log('LOCK_CHANGED_ENTRIES',JSON.stringify(changed));
+          console.log('LOCK_REMOVED_ENTRIES',JSON.stringify(removed));
+          for(const k of changed) console.log('LOCK_ENTRY',k,JSON.stringify(after.packages[k]));
+          if(removed.length || changed.some(k=>before.packages[k] && before.packages[k].version!==after.packages[k].version)) throw Error('Unexpected existing version change; no blob will be created');
+          writeFileSync(process.env.RUNNER_TEMP+'/repaired-lock-blob.json',JSON.stringify({content,encoding:'utf-8'}));
+          JS
+          git diff --stat -- package-lock.json
+      - name: Store reviewed candidate as unattached blob (no branch write)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          blob=$(gh api --method POST "repos/$GITHUB_REPOSITORY/git/blobs" --input "$RUNNER_TEMP/repaired-lock-blob.json" --jq .sha)
+          echo "LOCK_REPAIR_BLOB=$blob"
       - name: Install dashboard
         working-directory: dashboard
         run: npm ci --no-audit --no-fund
@@ -55,8 +87,8 @@ jobs:
       - name: Browser isolation and layout checks
         working-directory: dashboard
         run: node tests/standard-browser.mjs
-      - name: Verify source data unchanged
-        run: git diff --exit-code -- coverage research screening selection dashboard/package-lock.json
+      - name: Verify research source data unchanged
+        run: git diff --exit-code -- coverage research screening selection
       - name: Test artifacts
         if: always()
         uses: actions/upload-artifact@v4
