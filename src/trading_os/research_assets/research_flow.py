@@ -1603,6 +1603,46 @@ class ResearchFlow:
             self._write_tasks([restored if task.task_id == wanted else task for task in tasks])
             return restored
 
+    def start_task(
+        self,
+        task_id: str,
+        *,
+        at: str | datetime | None = None,
+    ) -> ResearchTask:
+        """Atomically claim one exact queued task without consuming its neighbors."""
+
+        wanted = _nonblank(task_id, "task_id")
+        timestamp = _timestamp(at)
+        with _exclusive_lock(self.lock_path):
+            tasks = self._tasks()
+            current = next((task for task in tasks if task.task_id == wanted), None)
+            if current is None:
+                raise ValidationError(f"task is not current: {wanted}")
+            if current.status is TaskStatus.RUNNING:
+                return current
+            if any(
+                task.symbol == current.symbol
+                and task.status is TaskStatus.RUNNING
+                and task.task_id != current.task_id
+                for task in tasks
+            ):
+                raise ValidationError(f"company already has a running task: {current.symbol}")
+            started = ResearchTask(
+                task_id=current.task_id,
+                symbol=current.symbol,
+                name=current.name,
+                trigger_kind=current.trigger_kind,
+                trigger_id=current.trigger_id,
+                reason=current.reason,
+                enqueued_at=current.enqueued_at,
+                status=TaskStatus.RUNNING,
+                started_at=timestamp,
+                standard_id=current.standard_id,
+                batch_id=current.batch_id,
+            )
+            self._write_tasks([started if task.task_id == wanted else task for task in tasks])
+            return started
+
     @staticmethod
     def _normalized_result(result: ResearchResult) -> dict[str, Any]:
         symbol = _symbol(result.symbol)

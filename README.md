@@ -132,6 +132,8 @@ python -m trading_os state migrate-v3 --at 2026-08-14T17:00:00+08:00
 # 记录初筛、派发并完成完整研究
 python -m trading_os screen record --input templates/screen-decisions.json
 python -m trading_os research next --limit 4
+# 已知任务 ID 时精确领取，不消费队列中其他公司
+python -m trading_os research start <task_id>
 # 按模板完成实际研究并经协调器验收，不直接提交示例模板
 python -m trading_os research complete --input <已验收完整候选.json>
 

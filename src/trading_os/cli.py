@@ -165,6 +165,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_at(next_tasks)
     next_tasks.set_defaults(handler=_research_next)
+    start = research_commands.add_parser("start", help="按任务 ID 精确领取一个排队任务")
+    start.add_argument("task_id")
+    _add_at(start)
+    start.set_defaults(handler=_research_start)
     requeue = research_commands.add_parser("requeue", help="显式恢复被中断的任务")
     requeue.add_argument("task_id")
     requeue.set_defaults(handler=_research_requeue)
@@ -614,6 +618,11 @@ def _research_enqueue_standard(args: argparse.Namespace, stdin: TextIO) -> dict[
 def _research_requeue(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
     return {"task": _flow(args).requeue_task(args.task_id)}
+
+
+def _research_start(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    return {"task": _flow(args).start_task(args.task_id, at=args.at)}
 
 
 def _research_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:

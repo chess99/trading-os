@@ -335,6 +335,31 @@ def test_dispatch_from_end_and_requeue_are_explicit(tmp_path: Path):
     assert restored.status is TaskStatus.QUEUED and restored.started_at is None
 
 
+def test_start_task_claims_only_the_exact_queued_task(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    update = flow.apply_screening(
+        [
+            ScreenDecision("CN:000001", "research_now", "先研究一号"),
+            ScreenDecision("CN:000002", "research_now", "再研究二号"),
+        ],
+        screen_id="exact-start",
+        mode="event",
+        at=AT,
+    )
+    wanted = update.enqueued_tasks[1]
+
+    started = flow.start_task(wanted.task_id, at=LATER)
+
+    assert started.task_id == wanted.task_id
+    assert started.status is TaskStatus.RUNNING
+    tasks = {task.task_id: task for task in flow.list_tasks()}
+    assert tasks[wanted.task_id].status is TaskStatus.RUNNING
+    other = update.enqueued_tasks[0]
+    assert tasks[other.task_id].status is TaskStatus.QUEUED
+    assert flow.start_task(wanted.task_id, at=LATER).task_id == wanted.task_id
+    flow.validate()
+
+
 def test_formal_result_is_self_contained_and_watchlist_has_no_price_state(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     state = _complete(flow, _covered("CN:601138"))
