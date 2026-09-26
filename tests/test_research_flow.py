@@ -16,6 +16,7 @@ from trading_os.research_assets.research_flow import (
     ResearchUpdate,
     ReturnModel,
     ScreenDecision,
+    StandardResearchRequest,
     StateCorruptionError,
     TaskStatus,
     ValidationError,
@@ -137,6 +138,156 @@ def _update(symbol: str, impact: str = "reaffirmed") -> ResearchUpdate:
         event_ids=("event-001",),
         invalidation_reason=("新事实越过原报告边界" if impact == "invalidated" else None),
     )
+
+
+def test_standard_upgrade_research_preserves_current_state_until_completion(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    symbol = "CN:601138"
+    original = _complete(flow, _covered(symbol))
+    original_state_text = flow.state_path.read_text(encoding="utf-8")
+    original_watchlist_text = flow.watchlist_path.read_text(encoding="utf-8")
+
+    batch = flow.enqueue_standard_research(
+        [
+            StandardResearchRequest(
+                symbol=symbol,
+                reason="按长期股东价值研究 1.0 重做估值与报告文案",
+            )
+        ],
+        standard_id="owner-value-1.0",
+        batch_id="core-pool-2026-09",
+        at=LATER,
+    )
+
+    assert batch.total == 1 and batch.deduplicated == 0
+    task = batch.enqueued_tasks[0]
+    assert task.trigger_kind == "standard_upgrade"
+    assert task.trigger_id == "core-pool-2026-09"
+    assert task.standard_id == "owner-value-1.0"
+    assert task.batch_id == "core-pool-2026-09"
+    assert flow.state_path.read_text(encoding="utf-8") == original_state_text
+    assert flow.watchlist_path.read_text(encoding="utf-8") == original_watchlist_text
+    assert flow.read_states()[0]["status"] == "covered"
+    assert flow.read_states()[0]["report_path"] == original["report_path"]
+    flow.validate()
+
+    dispatched = flow.dispatch_tasks(
+        limit=1,
+        trigger_kind="standard_upgrade",
+        at=LATER,
+    )
+    assert dispatched[0].task_id == task.task_id
+    revised = flow.apply_result(_covered(symbol), task_id=task.task_id, at=LATER)
+    assert revised["status"] == "covered"
+    assert revised["report_path"] != original["report_path"]
+    assert len(list((tmp_path / "research/companies/CN/601138/reports").glob("*.md"))) == 2
+    assert "standard_upgrade:owner-value-1.0:core-pool-2026-09" in revised["processed_triggers"]
+    flow.validate()
+
+
+def test_standard_upgrade_accepts_ignore_and_dispatch_filter_keeps_normal_queue(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    flow.apply_screening(
+        [ScreenDecision("CN:000001", "ignore", "暂不值得正式研究")],
+        screen_id="baseline",
+        at=AT,
+    )
+    flow.apply_screening(
+        [ScreenDecision("CN:000002", "research_now", "进入常态研究")],
+        screen_id="normal",
+        mode="event",
+        at=AT,
+    )
+    standard = flow.enqueue_standard_research(
+        [StandardResearchRequest("CN:000001", "统一按新标准完成正式研究")],
+        standard_id="owner-value-1.0",
+        batch_id="review-191",
+        at=AT,
+    ).enqueued_tasks[0]
+
+    dispatched = flow.dispatch_tasks(
+        limit=10,
+        trigger_kind="standard_upgrade",
+        at=AT,
+    )
+    assert [task.task_id for task in dispatched] == [standard.task_id]
+    normal = next(task for task in flow.list_tasks() if task.symbol == "CN:000002")
+    assert normal.status is TaskStatus.QUEUED
+    assert flow.read_states()[0]["status"] == "ignore"
+
+    completed = flow.apply_result(_ignored("CN:000001"), task_id=standard.task_id, at=AT)
+    assert completed["status"] == "ignore"
+    assert completed["report_path"].endswith("/reports/2026-08-08.md")
+    flow.validate()
+
+
+def test_standard_upgrade_rejects_candidate_and_deduplicates_same_batch(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    flow.apply_screening(
+        [ScreenDecision("CN:000001", "research_now", "进入常态研究")],
+        screen_id="normal",
+        mode="event",
+        at=AT,
+    )
+    with pytest.raises(ValidationError, match="active covered/ignore"):
+        flow.enqueue_standard_research(
+            [StandardResearchRequest("CN:000001", "不应绕过常态任务")],
+            standard_id="owner-value-1.0",
+            batch_id="review-191",
+            at=AT,
+        )
+
+    other = ResearchFlow(tmp_path / "other")
+    other.apply_screening(
+        [ScreenDecision("CN:000003", "ignore", "暂不覆盖")],
+        screen_id="baseline",
+        at=AT,
+    )
+    request = [StandardResearchRequest("CN:000003", "按现行标准重做")]
+    first = other.enqueue_standard_research(
+        request,
+        standard_id="owner-value-1.0",
+        batch_id="review-191",
+        at=AT,
+    )
+    second = other.enqueue_standard_research(
+        request,
+        standard_id="owner-value-1.0",
+        batch_id="review-191",
+        at=AT,
+    )
+    assert len(first.enqueued_tasks) == 1
+    assert second.enqueued_tasks == () and second.deduplicated == 1
+    with pytest.raises(ValidationError, match="another active task"):
+        other.enqueue_standard_research(
+            request,
+            standard_id="owner-value-1.0",
+            batch_id="review-192",
+            at=AT,
+        )
+
+
+def test_ordinary_task_still_cannot_bind_covered_company(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    _complete(flow, _covered("CN:000001"))
+    flow.enqueue_standard_research(
+        [StandardResearchRequest("CN:000001", "按新标准重做")],
+        standard_id="owner-value-1.0",
+        batch_id="review-191",
+        at=LATER,
+    )
+    row = _rows(flow.queue_path)[0]
+    row["trigger_kind"] = "screen"
+    row["trigger_id"] = "illegally-covered"
+    row["task_id"] = hashlib.sha256(
+        b"CN:000001\0screen:illegally-covered"
+    ).hexdigest()[:24]
+    row.pop("standard_id")
+    row.pop("batch_id")
+    flow.queue_path.write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    with pytest.raises(StateCorruptionError, match="ordinary task company"):
+        flow.validate()
 
 
 def test_screening_creates_only_ignore_or_candidate_and_deduplicates(tmp_path: Path):

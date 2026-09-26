@@ -31,6 +31,7 @@ from .research_assets.research_flow import (
     ResearchUpdate,
     ReturnModel,
     ScreenDecision,
+    StandardResearchRequest,
     ValueRange,
 )
 from .screening_pool import TIERS, QualityPoolStore
@@ -143,8 +144,20 @@ def build_parser() -> argparse.ArgumentParser:
 
     research = commands.add_parser("research", help="管理单公司端到端研究任务")
     research_commands = research.add_subparsers(dest="research_command", required=True)
+    enqueue_standard = research_commands.add_parser(
+        "enqueue-standard", help="批量创建不改变当前报告状态的研究标准重做任务"
+    )
+    _add_input(enqueue_standard)
+    enqueue_standard.add_argument("--standard-id", help="覆盖输入文件中的 standard_id")
+    enqueue_standard.add_argument("--batch-id", help="覆盖输入文件中的 batch_id")
+    _add_at(enqueue_standard)
+    enqueue_standard.set_defaults(handler=_research_enqueue_standard)
     next_tasks = research_commands.add_parser("next", help="取下一批公司，数量由调用者决定")
     next_tasks.add_argument("--limit", required=True, type=int)
+    next_tasks.add_argument(
+        "--trigger-kind",
+        help="只领取指定触发类型；标准重做使用 standard_upgrade",
+    )
     next_tasks.add_argument(
         "--from-end",
         action="store_true",
@@ -542,8 +555,60 @@ def _research_next(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
         limit=args.limit,
         at=args.at,
         from_end=args.from_end,
+        trigger_kind=args.trigger_kind,
     )
     return {"count": len(tasks), "tasks": tasks}
+
+
+def _research_enqueue_standard(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    payload, _ = _load(args.input, stdin)
+    metadata = payload if isinstance(payload, dict) else {}
+    standard_id = args.standard_id or metadata.get("standard_id")
+    batch_id = args.batch_id or metadata.get("batch_id")
+    if not standard_id:
+        raise ValueError("standard_id 必须由输入文件或 --standard-id 提供")
+    if not batch_id:
+        raise ValueError("batch_id 必须由输入文件或 --batch-id 提供")
+    registry_path = Path(args.root) / "research/standards/registry.json"
+    try:
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        raise ValueError(f"研究标准登记不存在: {registry_path}") from None
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"研究标准登记不是合法 JSON: {registry_path}: {exc}") from None
+    if not isinstance(registry, dict) or not isinstance(registry.get("standards"), list):
+        raise ValueError(f"研究标准登记缺少 standards 数组: {registry_path}")
+    released_standard_ids = {
+        item.get("id")
+        for item in registry["standards"]
+        if isinstance(item, dict) and item.get("status") == "released"
+    }
+    if standard_id not in released_standard_ids:
+        raise ValueError(f"standard_id 不存在或尚未 released: {standard_id}")
+    common_reason = metadata.get("reason")
+    requests = []
+    for item in _records(payload, "companies"):
+        reason = item.get("reason") or common_reason
+        if not reason:
+            raise ValueError(f"{item.get('symbol', '<unknown>')} 缺少标准重做原因")
+        requests.append(
+            StandardResearchRequest(
+                symbol=item["symbol"],
+                name=item.get("name"),
+                reason=reason,
+            )
+        )
+    update = _flow(args).enqueue_standard_research(
+        requests,
+        standard_id=standard_id,
+        batch_id=batch_id,
+        at=args.at or metadata.get("at"),
+    )
+    return {
+        "total": update.total,
+        "enqueued": update.enqueued_tasks,
+        "deduplicated": update.deduplicated,
+    }
 
 
 def _research_requeue(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:

@@ -167,6 +167,9 @@ class TaskStatus(str, Enum):
     RUNNING = "running"
 
 
+STANDARD_UPGRADE_TRIGGER = "standard_upgrade"
+
+
 @dataclass(frozen=True)
 class CompanyRef:
     symbol: str
@@ -253,10 +256,28 @@ class ResearchTask:
     status: TaskStatus
     name: str | None = None
     started_at: str | None = None
+    standard_id: str | None = None
+    batch_id: str | None = None
 
     @property
     def trigger_key(self) -> str:
+        if self.trigger_kind == STANDARD_UPGRADE_TRIGGER:
+            return f"{self.trigger_kind}:{self.standard_id}:{self.batch_id}"
         return f"{self.trigger_kind}:{self.trigger_id}"
+
+
+@dataclass(frozen=True)
+class StandardResearchRequest:
+    symbol: str
+    reason: str
+    name: str | None = None
+
+
+@dataclass(frozen=True)
+class StandardResearchBatchUpdate:
+    total: int
+    enqueued_tasks: tuple[ResearchTask, ...]
+    deduplicated: int
 
 
 @dataclass(frozen=True)
@@ -711,7 +732,7 @@ def _empty_state(symbol: str, name: str | None, at: str) -> dict[str, Any]:
 
 def _task_from_row(row: Mapping[str, Any]) -> ResearchTask:
     try:
-        return ResearchTask(
+        task = ResearchTask(
             task_id=_nonblank(row["task_id"], "task_id"),
             symbol=_symbol(row["symbol"]),
             trigger_kind=_nonblank(row["trigger_kind"], "trigger_kind"),
@@ -721,13 +742,29 @@ def _task_from_row(row: Mapping[str, Any]) -> ResearchTask:
             status=TaskStatus(_enum_value(row["status"], TaskStatus, "task status")),
             name=_optional_name(row.get("name")),
             started_at=(_timestamp(row["started_at"]) if row.get("started_at") else None),
+            standard_id=(
+                _nonblank(row["standard_id"], "standard_id")
+                if row.get("standard_id") is not None
+                else None
+            ),
+            batch_id=(
+                _nonblank(row["batch_id"], "batch_id") if row.get("batch_id") is not None else None
+            ),
         )
     except KeyError as exc:
         raise StateCorruptionError(f"queue row is missing {exc.args[0]}") from exc
+    if task.trigger_kind == STANDARD_UPGRADE_TRIGGER:
+        if task.standard_id is None or task.batch_id is None:
+            raise StateCorruptionError("standard-upgrade task lacks standard_id or batch_id")
+        if task.trigger_id != task.batch_id:
+            raise StateCorruptionError("standard-upgrade task trigger_id must equal batch_id")
+    elif task.standard_id is not None or task.batch_id is not None:
+        raise StateCorruptionError("ordinary research task has standard-upgrade metadata")
+    return task
 
 
 def _task_row(task: ResearchTask) -> dict[str, Any]:
-    return {
+    row = {
         "schema_version": STATE_SCHEMA_VERSION,
         "task_id": task.task_id,
         "symbol": task.symbol,
@@ -739,6 +776,11 @@ def _task_row(task: ResearchTask) -> dict[str, Any]:
         "status": task.status.value,
         "started_at": task.started_at,
     }
+    if task.standard_id is not None:
+        row["standard_id"] = task.standard_id
+    if task.batch_id is not None:
+        row["batch_id"] = task.batch_id
+    return row
 
 
 class ResearchFlow:
@@ -848,10 +890,27 @@ class ResearchFlow:
         trigger_id: str,
         reason: str,
         at: str,
+        standard_id: str | None = None,
+        batch_id: str | None = None,
     ) -> ResearchTask | None:
         kind = _nonblank(trigger_kind, "trigger_kind")
         identifier = _nonblank(trigger_id, "trigger_id")
-        trigger_key = f"{kind}:{identifier}"
+        normalized_standard_id = (
+            _nonblank(standard_id, "standard_id") if standard_id is not None else None
+        )
+        normalized_batch_id = _nonblank(batch_id, "batch_id") if batch_id is not None else None
+        if kind == STANDARD_UPGRADE_TRIGGER:
+            if normalized_standard_id is None or normalized_batch_id is None:
+                raise ValidationError("standard-upgrade task requires standard_id and batch_id")
+            if identifier != normalized_batch_id:
+                raise ValidationError("standard-upgrade trigger_id must equal batch_id")
+            trigger_key = f"{kind}:{normalized_standard_id}:{normalized_batch_id}"
+        else:
+            if normalized_standard_id is not None or normalized_batch_id is not None:
+                raise ValidationError(
+                    "ordinary research task cannot carry standard-upgrade metadata"
+                )
+            trigger_key = f"{kind}:{identifier}"
         identifier_hash = _task_id(symbol, trigger_key)
         processed = set(state.get("processed_triggers") or [])
         if (
@@ -869,6 +928,8 @@ class ResearchFlow:
             reason=_nonblank(reason, "reason"),
             enqueued_at=at,
             status=TaskStatus.QUEUED,
+            standard_id=normalized_standard_id,
+            batch_id=normalized_batch_id,
         )
         tasks.append(task)
         return task
@@ -1355,6 +1416,105 @@ class ResearchFlow:
             deduplicated=deduplicated,
         )
 
+    def enqueue_standard_research(
+        self,
+        requests: Iterable[StandardResearchRequest],
+        *,
+        standard_id: str,
+        batch_id: str,
+        at: str | datetime | None = None,
+    ) -> StandardResearchBatchUpdate:
+        """Queue a standards-driven rewrite without invalidating the current report.
+
+        This administrative trigger is deliberately separate from business-event
+        invalidation. It is only valid for active ``covered`` or ``ignore``
+        companies and leaves their current state and report pointer untouched until
+        the usual :meth:`apply_result` transaction accepts a completed task.
+        """
+
+        timestamp = _timestamp(at)
+        normalized_standard_id = _nonblank(standard_id, "standard_id")
+        normalized_batch_id = _nonblank(batch_id, "batch_id")
+        normalized: list[dict[str, Any]] = []
+        seen: set[str] = set()
+        for request in requests:
+            symbol = _symbol(request.symbol)
+            if symbol in seen:
+                raise ValidationError(f"duplicate standard-research request for {symbol}")
+            seen.add(symbol)
+            normalized.append(
+                {
+                    "symbol": symbol,
+                    "name": _optional_name(request.name),
+                    "reason": _nonblank(request.reason, "reason"),
+                }
+            )
+
+        with _exclusive_lock(self.lock_path):
+            states = self._states()
+            tasks = self._tasks()
+            invalid: list[str] = []
+            conflicts: list[str] = []
+            for item in normalized:
+                state = states.get(item["symbol"])
+                if (
+                    state is None
+                    or state.get("universe_status") != UniverseStatus.ACTIVE.value
+                    or state.get("status")
+                    not in {CompanyStatus.COVERED.value, CompanyStatus.IGNORE.value}
+                ):
+                    invalid.append(item["symbol"])
+                    continue
+                current_task = next(
+                    (task for task in tasks if task.symbol == item["symbol"]),
+                    None,
+                )
+                if current_task is not None and not (
+                    current_task.trigger_kind == STANDARD_UPGRADE_TRIGGER
+                    and current_task.standard_id == normalized_standard_id
+                    and current_task.batch_id == normalized_batch_id
+                ):
+                    conflicts.append(item["symbol"])
+            if invalid:
+                raise ValidationError(
+                    "standard research only accepts active covered/ignore companies: "
+                    + ", ".join(invalid)
+                )
+            if conflicts:
+                raise ValidationError(
+                    "standard research company already has another active task: "
+                    + ", ".join(conflicts)
+                )
+
+            enqueued: list[ResearchTask] = []
+            deduplicated = 0
+            for item in normalized:
+                state = states[item["symbol"]]
+                task = self._enqueue(
+                    tasks,
+                    state,
+                    symbol=item["symbol"],
+                    name=item["name"] or state.get("name"),
+                    trigger_kind=STANDARD_UPGRADE_TRIGGER,
+                    trigger_id=normalized_batch_id,
+                    reason=item["reason"],
+                    at=timestamp,
+                    standard_id=normalized_standard_id,
+                    batch_id=normalized_batch_id,
+                )
+                if task is None:
+                    deduplicated += 1
+                else:
+                    enqueued.append(task)
+            if enqueued:
+                self._write_tasks(tasks)
+
+        return StandardResearchBatchUpdate(
+            total=len(normalized),
+            enqueued_tasks=tuple(enqueued),
+            deduplicated=deduplicated,
+        )
+
     def list_tasks(self, *, status: TaskStatus | str | None = None) -> tuple[ResearchTask, ...]:
         wanted = None if status is None else _enum_value(status, TaskStatus, "task status")
         with _exclusive_lock(self.lock_path):
@@ -1367,12 +1527,16 @@ class ResearchFlow:
         limit: int,
         at: str | datetime | None = None,
         from_end: bool = False,
+        trigger_kind: str | None = None,
     ) -> tuple[ResearchTask, ...]:
         """Dispatch at most ``limit`` companies; the caller owns the concurrency policy."""
 
         if isinstance(limit, bool) or not isinstance(limit, int) or limit <= 0:
             raise ValidationError("limit must be a positive integer")
         timestamp = _timestamp(at)
+        wanted_trigger = (
+            _nonblank(trigger_kind, "trigger_kind") if trigger_kind is not None else None
+        )
         with _exclusive_lock(self.lock_path):
             tasks = self._tasks()
             active_symbols = {task.symbol for task in tasks if task.status is TaskStatus.RUNNING}
@@ -1381,7 +1545,11 @@ class ResearchFlow:
             for task in candidates:
                 if len(selected_ids) >= limit:
                     break
-                if task.status is not TaskStatus.QUEUED or task.symbol in active_symbols:
+                if (
+                    task.status is not TaskStatus.QUEUED
+                    or task.symbol in active_symbols
+                    or (wanted_trigger is not None and task.trigger_kind != wanted_trigger)
+                ):
                     continue
                 selected_ids.add(task.task_id)
                 active_symbols.add(task.symbol)
@@ -1399,6 +1567,8 @@ class ResearchFlow:
                         enqueued_at=task.enqueued_at,
                         status=TaskStatus.RUNNING,
                         started_at=timestamp,
+                        standard_id=task.standard_id,
+                        batch_id=task.batch_id,
                     )
                     running.append(task)
                 updated.append(task)
@@ -1427,6 +1597,8 @@ class ResearchFlow:
                 enqueued_at=current.enqueued_at,
                 status=TaskStatus.QUEUED,
                 started_at=None,
+                standard_id=current.standard_id,
+                batch_id=current.batch_id,
             )
             self._write_tasks([restored if task.task_id == wanted else task for task in tasks])
             return restored
@@ -1854,7 +2026,12 @@ class ResearchFlow:
                 raise ValidationError("research task must be running before completion")
             if task.symbol != normalized["symbol"]:
                 raise ValidationError("research result symbol does not match task symbol")
-            if task.trigger_kind == "update" and not _has_refresh_comparison_table(
+            current_state = states.get(normalized["symbol"])
+            needs_comparison = task.trigger_kind == "update" or (
+                task.trigger_kind == STANDARD_UPGRADE_TRIGGER
+                and isinstance((current_state or {}).get("report_path"), str)
+            )
+            if needs_comparison and not _has_refresh_comparison_table(
                 normalized["report_markdown"]
             ):
                 raise ValidationError(
@@ -2212,12 +2389,21 @@ class ResearchFlow:
                     raise StateCorruptionError(
                         f"inactive company has a research task: {task.symbol}"
                     )
-                if company.get("status") not in {
+                if task.trigger_kind == STANDARD_UPGRADE_TRIGGER:
+                    if company.get("status") not in {
+                        CompanyStatus.COVERED.value,
+                        CompanyStatus.IGNORE.value,
+                    }:
+                        raise StateCorruptionError(
+                            "standard-upgrade task company is neither covered nor ignore: "
+                            f"{task.symbol}"
+                        )
+                elif company.get("status") not in {
                     CompanyStatus.CANDIDATE.value,
                     CompanyStatus.STALE.value,
                 }:
                     raise StateCorruptionError(
-                        f"task company is neither candidate nor stale: {task.symbol}"
+                        f"ordinary task company is neither candidate nor stale: {task.symbol}"
                     )
                 if task.symbol in queued_symbols:
                     raise StateCorruptionError(
@@ -2297,6 +2483,9 @@ __all__ = [
     "ScreenMode",
     "ScreenRoute",
     "ScreeningUpdate",
+    "STANDARD_UPGRADE_TRIGGER",
+    "StandardResearchBatchUpdate",
+    "StandardResearchRequest",
     "StateCorruptionError",
     "TaskStatus",
     "UniverseStatus",

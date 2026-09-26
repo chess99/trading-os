@@ -135,6 +135,10 @@ python -m trading_os research next --limit 4
 # 按模板完成实际研究并经协调器验收，不直接提交示例模板
 python -m trading_os research complete --input <已验收完整候选.json>
 
+# 研究标准升级：批量入队时不改 covered/ignore 或当前报告，单独领取避免混入常态积压
+python -m trading_os research enqueue-standard --input <标准重做批次.json>
+python -m trading_os research next --limit 4 --trigger-kind standard_upgrade
+
 # 记录不改变正式结论的事件处理；invalidated 会自动进入完整研究
 python -m trading_os updates record --input templates/research-update.json
 
@@ -147,6 +151,21 @@ python -m trading_os events fetch --since 2026-08-09T00:00:00+08:00 \
   --until 2026-08-09T07:30:00+08:00 --output tmp/event-packet.json
 python -m trading_os events complete --packet tmp/event-packet.json \
   --input templates/event-judgments.json
+```
+
+标准重做批次使用以下结构；`reason` 可放在批次层作为默认值，也可在公司项内逐家覆盖。`standard_id`、`batch_id` 和最终采用的原因会进入任务审计记录。该入口只接受 active `covered / ignore`，不会伪造经营失效；完成时仍走同一个 `research complete`：
+
+```json
+{
+  "standard_id": "owner-value-1.0",
+  "batch_id": "core-pool-2026-09",
+  "at": "2026-09-26T12:00:00+08:00",
+  "reason": "按现行标准重做估值与完整报告",
+  "companies": [
+    {"symbol": "CN:000001"},
+    {"symbol": "CN:000002", "reason": "复核发现估值路径与新标准不一致"}
+  ]
+}
 ```
 
 [研究结果模板](templates/research-result.json)只演示字段合同和可选写法，身份、数字、假设及来源均为虚构占位，必须替换并完成实际研究。机械校验负责结构化 `return_model` 合同、非空 `return_model_note` 和正文“基准持有人回报模型输入”章节是否存在；它不解析正文中的模型数字，正文与结构化输入是否一致由协调器验收时核对。CLI 不接收现价或 Agent 自报 IRR；动态 IRR 只在可视化研究台请求行情后现场计算。
