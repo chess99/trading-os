@@ -18,6 +18,20 @@ def _write(path: Path, payload: object) -> Path:
     return path
 
 
+def _write_standard_registry(tmp_path: Path, *standards: tuple[str, str]) -> Path:
+    (tmp_path / "research/standards").mkdir(parents=True, exist_ok=True)
+    return _write(
+        tmp_path / "research/standards/registry.json",
+        {
+            "schema_version": 1,
+            "active_standard": standards[0][0] if standards else None,
+            "standards": [
+                {"id": standard_id, "status": status} for standard_id, status in standards
+            ],
+        },
+    )
+
+
 def _call(tmp_path: Path, capsys: pytest.CaptureFixture[str], *args: str) -> dict:
     code = main(["--root", str(tmp_path), *args])
     captured = capsys.readouterr()
@@ -164,7 +178,7 @@ def test_help_contains_only_the_compact_workflow(capsys: pytest.CaptureFixture[s
     with pytest.raises(SystemExit) as research_exc:
         main(["research", "--help"])
     assert research_exc.value.code == 0
-    assert "enqueue" not in capsys.readouterr().out
+    assert "enqueue-standard" in capsys.readouterr().out
 
 
 def test_research_assets_package_exports_only_the_compact_flow():
@@ -276,6 +290,128 @@ def test_screen_record_only_enqueues_research_now(tmp_path: Path, capsys):
 
     assert (output["ignore"], output["research_now"]) == (2, 1)
     assert [task["symbol"] for task in output["enqueued"]] == ["CN:000003"]
+
+
+def test_standard_research_batch_is_separate_from_normal_dispatch(tmp_path: Path, capsys):
+    _write_standard_registry(tmp_path, ("owner-value-1.0", "released"))
+    screening = _write(
+        tmp_path / "screen.json",
+        {
+            "screen_id": "baseline",
+            "mode": "baseline",
+            "at": AT,
+            "decisions": [
+                {"symbol": "CN:000001", "route": "ignore", "reason": "暂不覆盖"},
+                {"symbol": "CN:000002", "route": "research_now", "reason": "常态研究"},
+            ],
+        },
+    )
+    _call(tmp_path, capsys, "screen", "record", "--input", str(screening))
+    state_before = (tmp_path / "coverage/cn-a/research_state.jsonl").read_text(encoding="utf-8")
+    batch_file = _write(
+        tmp_path / "standard-batch.json",
+        {
+            "standard_id": "owner-value-1.0",
+            "batch_id": "review-191",
+            "at": AT,
+            "reason": "按现行长期股东价值标准重做",
+            "companies": [{"symbol": "CN:000001"}],
+        },
+    )
+
+    queued = _call(
+        tmp_path,
+        capsys,
+        "research",
+        "enqueue-standard",
+        "--input",
+        str(batch_file),
+    )
+    assert queued["total"] == 1 and queued["deduplicated"] == 0
+    assert queued["enqueued"][0]["standard_id"] == "owner-value-1.0"
+    assert queued["enqueued"][0]["batch_id"] == "review-191"
+    assert (tmp_path / "coverage/cn-a/research_state.jsonl").read_text(
+        encoding="utf-8"
+    ) == state_before
+
+    dispatched = _call(
+        tmp_path,
+        capsys,
+        "research",
+        "next",
+        "--limit",
+        "10",
+        "--trigger-kind",
+        "standard_upgrade",
+        "--at",
+        AT,
+    )
+    assert [task["symbol"] for task in dispatched["tasks"]] == ["CN:000001"]
+    queue_rows = [
+        json.loads(line)
+        for line in (tmp_path / "coverage/cn-a/research_queue.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+    normal = next(row for row in queue_rows if row["symbol"] == "CN:000002")
+    assert normal["status"] == "queued"
+
+
+@pytest.mark.parametrize(
+    "registered, requested",
+    [
+        (("owner-value-2.0", "draft"), "owner-value-2.0"),
+        (("owner-value-1.0", "released"), "owner-value-unknown"),
+    ],
+)
+def test_standard_research_cli_rejects_unknown_or_unreleased_standard(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+    registered: tuple[str, str],
+    requested: str,
+):
+    _write_standard_registry(tmp_path, registered)
+    screening = _write(
+        tmp_path / "screen.json",
+        {
+            "screen_id": "baseline",
+            "mode": "baseline",
+            "at": AT,
+            "decisions": [
+                {"symbol": "CN:000001", "route": "ignore", "reason": "暂不覆盖"}
+            ],
+        },
+    )
+    _call(tmp_path, capsys, "screen", "record", "--input", str(screening))
+    batch_file = _write(
+        tmp_path / "standard-batch.json",
+        {
+            "standard_id": requested,
+            "batch_id": "review-191",
+            "at": AT,
+            "reason": "按目标标准重做",
+            "companies": [{"symbol": "CN:000001"}],
+        },
+    )
+
+    assert (
+        main(
+            [
+                "--root",
+                str(tmp_path),
+                "research",
+                "enqueue-standard",
+                "--input",
+                str(batch_file),
+            ]
+        )
+        == 1
+    )
+    error = json.loads(capsys.readouterr().err)
+    assert "不存在或尚未 released" in error["error"]
+    assert not (tmp_path / "coverage/cn-a/research_queue.jsonl").read_text(
+        encoding="utf-8"
+    ).strip()
 
 
 def test_screen_next_and_explicit_requeue_have_no_fixed_concurrency(tmp_path: Path, capsys):

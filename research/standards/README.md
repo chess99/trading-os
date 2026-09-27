@@ -45,6 +45,12 @@ cd dashboard && npm run data
 
 发现验收缺陷可用 `revoke` 代替 `accept`，同时传入公司、刚核对的两项摘要、`--expected-receipt`、验收者、说明和确认；撤销不改正文及估值。涉及经济判断改变时，仍需正常研究更新，不拿撤销登记代替事实层修正。
 
+### 标准升级要求正式重做时
+
+当新标准与旧报告不兼容、必须重做估值和完整报告时，使用 `research enqueue-standard` 创建 `standard_upgrade` 批次任务。任务绑定目标 `standard_id`、本轮复核 `batch_id` 和公司级原因，但不把标准变化伪装成经营事实：入队和领取期间保留原 `covered / ignore`、当前报告指针、估值字段和自选池，亦不创建 `invalidated` 日志。
+
+标准重做任务与常态研究共用现有队列及完成事务；用 `research next --trigger-kind standard_upgrade` 独立领取，避免混入常态积压。协调器完成实质验收后，仍由 `research complete` 追加新正式报告并原子更新公司状态，再按本节既有 `inspect / accept` 流程登记新报告。排队、生成候选或仅完成机械校验都不等于通过现行标准。
+
 ## 以后怎样升级
 
 “现行”是显式发布状态，不是最近一次提示词提交。草案不能设为现行。每次发布说明变化、影响范围、是否兼容及理由：
