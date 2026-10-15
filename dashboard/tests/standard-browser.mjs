@@ -36,7 +36,7 @@ try {
     await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ quotes: [] }) });
   });
   await page.goto("http://127.0.0.1:4173/");
-  await page.getByRole("tab", { name: /^现行有效/ }).waitFor();
+  await page.getByRole("tab", { name: /^最新周期模型/ }).waitFor();
   assert.equal(await page.locator("tbody tr[data-symbol]").count(), Math.min(80, qualified.length));
   for (const row of await page.locator("tbody tr[data-symbol]").evaluateAll((rows) => rows.map((item) => item.dataset.symbol))) {
     assert.ok(qualified.some((company) => company.symbol === row));
@@ -73,7 +73,7 @@ try {
   }
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("http://127.0.0.1:4173/");
-  await page.getByRole("tab", { name: /^现行有效/ }).waitFor();
+  await page.getByRole("tab", { name: /^最新周期模型/ }).waitFor();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 2);
   assert.equal(overflow, false, "移动端不应产生全页横向溢出；表格内部可以滚动");
   await page.screenshot({ path: new URL("current-mobile.png", output).pathname, fullPage: true });

@@ -18,11 +18,11 @@ export function canonical(value) {
   }
   return JSON.stringify(value ?? null);
 }
-// Identity binding, not a second valuation database. Review timestamps and
-// dynamic status are excluded; material invalidation is checked separately.
+// Identity binding, not a second valuation database. Review timestamps are
+// excluded; report freshness is represented by its explicit financial period.
 export function researchDigest(state) {
   const fields = ["symbol", "report_period", "basis_report_path", "information_cutoff", "summary", "key_logic", "risks",
-    "value_range", "valuation_note", "return_model", "return_model_note", "source_urls", "event_triggers"];
+    "value_range", "valuation_note", "return_model", "return_model_note", "source_urls"];
   return sha256(canonical(Object.fromEntries(fields.map((field) => [field, state[field] ?? null]))));
 }
 export function acceptancePath(reportPath) {
@@ -121,9 +121,7 @@ export function displayEligibility(state, metadata, policy) {
   const receipt = policy.receipts.get(state.basis_report_path);
   if (!receipt) return fail("pending_standard", "历史标准未确认，待按现行标准研究");
   if (receipt.revoked_at) return fail("needs_review", `验收已撤销：${receipt.revocation_reason}`);
-  if (state.status === "stale" || state.invalidation || !["covered", "ignore"].includes(state.status)) {
-    return fail("needs_update", "该报告已失效或正在更新，不回退到更早估值");
-  }
+  if (!["covered", "ignore"].includes(state.status)) return fail("pending_research", "尚无完成的周期研究");
   if (receipt.outcome !== state.status) return fail("needs_review", "研究结论状态已变化，需要重新验收");
   if (metadata.acceptanceStatus === "content_changed" || researchDigest(state) !== receipt.research_sha256) {
     return fail("needs_review", "正文或结构化研究已改变，需要重新验收");

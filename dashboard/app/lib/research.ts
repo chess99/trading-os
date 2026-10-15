@@ -1,8 +1,8 @@
 import { calculateIrrRange } from "./irr.mjs";
 import { isCurrentResult } from "./display-policy.mjs";
 
-export type ResearchStatus = "unseen" | "ignore" | "candidate" | "covered" | "stale" | "unregistered";
-export type DisplayState = "current" | "unpriced" | "pending_research" | "pending_standard" | "needs_update" | "needs_review" | "inactive";
+export type ResearchStatus = "unseen" | "ignore" | "covered" | "unregistered";
+export type DisplayState = "current" | "unpriced" | "pending_research" | "pending_standard" | "needs_review" | "inactive";
 export interface ReportVersion {
   period: string; path: string; sourcePath: string; informationCutoff: string | null;
   standardId: string | null; standardLabel: string; valueDefinition: string | null;
@@ -20,14 +20,14 @@ export interface Company {
   status: ResearchStatus; universeStatus: "active" | "inactive" | "unregistered";
   hasResearchState: boolean; inQualityPool: boolean; qualityTier: string | null;
   updatedAt: string | null; informationCutoff: string | null;
-  invalidation: { at?: string; reason?: string; update_path?: string } | null; candidateSince: string | null;
   display: { eligible: boolean; state: DisplayState; reason: string };
   standardId: string | null; standardLabel: string; acceptedAt: string | null;
   summary: string; valueRange: { currency: string; low: number; high: number } | null; valuationNote: string | null;
   returnModel: ReturnModel | null; returnModelNote: string | null;
   returnModelDisplayIssue?: { event_date: string; reason: string; source_url: string } | null;
   reportPeriod: string | null; basisReportPath: string | null; reportUpdatedAt: string | null;
-  latestReportPeriod: string | null; reports: ReportVersion[]; eventTriggerCount: number;
+  latestReportPeriod: string | null; pendingReportPeriod: string | null;
+  pendingTaskKind: "periodic" | "manual_rewrite" | null; reports: ReportVersion[];
 }
 export interface ResearchStandard {
   id: string; label: string; status: string; published_at: string; spec_revision: string;
@@ -36,7 +36,7 @@ export interface ResearchStandard {
 }
 export interface ProgressCounts {
   total: number; completed: number; valued: number; unpriced: number;
-  pending: number; updating: number; review: number; inactive: number;
+  pending: number; review: number; inactive: number;
 }
 export interface Catalog {
   schemaVersion: 2; generatedAt: string; standard: ResearchStandard; standards: ResearchStandard[];
@@ -51,10 +51,8 @@ export interface Quote {
   change: number | null; changePercent: number | null; quoteAt: string | null; source: "tencent" | "eastmoney";
 }
 export const STATUS_META: Record<ResearchStatus, { label: string; shortLabel: string; description: string }> = {
-  covered: { label: "持续覆盖", shortLabel: "已覆盖", description: "研究有效且值得持续维护，不代表买入建议。" },
-  ignore: { label: "暂不持续覆盖", shortLabel: "暂不覆盖", description: "可以是完成研究后的否定结论，不等于未研究。" },
-  stale: { label: "等待更新", shortLabel: "待更新", description: "新事实已使当前报告失效。" },
-  candidate: { label: "候选研究", shortLabel: "候选", description: "等待或正在完成研究。" },
+  covered: { label: "本周期：持续覆盖", shortLabel: "持续覆盖", description: "最近完成周期的研究结论，不代表今日推荐。" },
+  ignore: { label: "本周期：不持续覆盖", shortLabel: "不持续覆盖", description: "可以是完成研究后的否定结论，不等于未研究。" },
   unseen: { label: "尚未筛选", shortLabel: "未筛选", description: "尚未完成首次研究初筛。" },
   unregistered: { label: "待衔接研究状态", shortLabel: "待登记", description: "已在质量池，尚无研究状态记录；此占位不修改状态。" },
 };

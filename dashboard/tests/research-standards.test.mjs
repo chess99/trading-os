@@ -73,18 +73,14 @@ test("new date and covered state do not automatically certify a report", () => {
 test("body and every economically relevant structured field are bound independently", () => {
   const row = state(); const rules = policy(row);
   assert.equal(displayEligibility(row, metadata(row, rules, Buffer.from("rewritten")), rules).state, "needs_review");
-  for (const key of ["summary", "key_logic", "risks", "value_range", "valuation_note", "return_model", "return_model_note", "source_urls", "event_triggers"]) {
+  for (const key of ["summary", "key_logic", "risks", "value_range", "valuation_note", "return_model", "return_model_note", "source_urls"]) {
     const changed = { ...row, [key]: "changed" };
     assert.equal(displayEligibility(changed, metadata(row, rules), rules).state, "needs_review", key);
   }
   assert.equal(researchDigest({ ...row, updated_at: "later", last_update: { impact: "monitor" } }), researchDigest(row));
 });
-test("material invalidation hides estimates and never revives an older report", () => {
+test("a different basis period requires its own acceptance", () => {
   const row = state(); const rules = policy(row);
-  for (const changed of [{ ...row, status: "stale" }, { ...row, invalidation: { reason: "material" } }]) {
-    const output = projected(changed, rules);
-    assert.equal(output.display.state, "needs_update"); assert.equal(output.valueRange, null);
-  }
   const newer = { ...row, report_period: "2026-Q3", basis_report_path: sourcePath.replace("H1.md", "Q3.md") };
   assert.equal(projectCompany(newer, [metadata(row, rules)], {}, rules).display.state, "needs_review");
 });
@@ -99,7 +95,7 @@ test("qualified negative conclusions and null valuations remain visible", () => 
   const unpriced = projected(state({ value_range: null, valuation_note: "cannot bound the path" }));
   const rows = currentResults([negative, unpriced]);
   assert.equal(rows.length, 2); assert.equal(unpriced.display.state, "unpriced");
-  assert.deepEqual(progressCounts(rows), { total: 2, completed: 2, valued: 1, unpriced: 1, pending: 0, updating: 0, review: 0, inactive: 0 });
+  assert.deepEqual(progressCounts(rows), { total: 2, completed: 2, valued: 1, unpriced: 1, pending: 0, review: 0, inactive: 0 });
 });
 test("same selection drives current count and JSON/CSV export input", () => {
   const valid = projected(); const outside = projected(state({ symbol: "CN:000002" }), undefined, false);

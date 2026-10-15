@@ -2,7 +2,7 @@
 // Absence of an explicit eligibility result always means "not current".
 export function isCurrentResult(company, scope = "quality_pool") {
   return company?.display?.eligible === true
-    && company.universeStatus === "active" && ["covered", "ignore"].includes(company.status) && !company.invalidation
+    && company.universeStatus === "active" && ["covered", "ignore"].includes(company.status)
     && (scope === "all_standard" || company.inQualityPool === true);
 }
 export function scopedCompanies(companies, scope = "quality_pool") {
@@ -19,8 +19,8 @@ export function progressCounts(companies, scope = "quality_pool") {
     completed: currentResults(rows, "all_standard").length,
     valued: currentResults(rows, "all_standard").filter((company) => company.display.state === "current").length,
     unpriced: currentResults(rows, "all_standard").filter((company) => company.display.state === "unpriced").length,
-    pending: count(["pending_research", "pending_standard"]),
-    updating: count(["needs_update"]),
+    pending: rows.filter((company) => company.pendingReportPeriod
+      || ["pending_research", "pending_standard"].includes(company.display?.state)).length,
     review: count(["needs_review"]),
     inactive: count(["inactive"]),
   };
@@ -40,7 +40,6 @@ export const DISPLAY_LABELS = {
   unpriced: "研究完成 · 暂无法估值",
   pending_research: "待首次研究",
   pending_standard: "待按现行标准研究",
-  needs_update: "新版已失效 · 待更新",
   needs_review: "验收待复核",
   inactive: "不在当前在市范围",
 };

@@ -1,51 +1,47 @@
-# 全 A 股持续研究 Goal
+# 动态重点池财报周期研究 Goal
 
-> 在新的 Codex 任务中引用本文件。状态与执行细节以根 `AGENTS.md`、`playbooks/simple-research.md` 为准；单公司研究完整阅读 [主提示词](../company/standard-deep-research.md) 及其 [核验附录](../company/research-verification.md)。
+> 在新的 Codex 任务中引用本文件。状态与执行细节以根 `AGENTS.md`、`playbooks/simple-research.md` 为准；单公司研究完整阅读[主提示词](../company/standard-deep-research.md)及[核验附录](../company/research-verification.md)。
 
-持续维护全 A 股研究系统。只有没有有效基线时才跑全市场；基线完成后只处理新增公司及公司、财务、治理、资本结构和行业经营变量的新事实。股票价格不触发研究。
+## 目标
 
-## 状态模型
+按财报周期维护动态重点跟踪池中的完整公司研究。重点池来自 `screening/cn-a/value-quality/pool.json`，成员和 A/B 分层可以变化；退出不删除历史报告，进入后从最新财报周期开始研究。
 
-证券范围使用 `active / inactive`。公司状态使用 `unseen / ignore / candidate / covered / stale`；任务使用 `queued / running`。
+只允许两种任务：
 
-初筛只允许 `ignore / research_now`；`research_now` 写入 `candidate` 并创建任务。初筛不估值、不设置买点、不生成公司 Markdown，也不按数量目标填队列。
+- `periodic`：新的 `FY / Q1 / H1 / Q3` 周期槽位；
+- `manual_rewrite`：用户明确要求的同周期完整重写。
+
+不因政策、新闻、订单、治理、资本行动、行业变量或价格变化在周期中途创建报告。不维护 update、stale、公告扫描检查点或事件去重状态。
 
 ## 单公司任务
 
-一家公司由一个 Agent 使用统一深研规范端到端完成。最终结果只有 `covered / ignore`，两者都提交 `report_period` 并形成完整、自足的财报周期报告。同周期重研覆盖，跨周期新增；报告不得把商业、财务、估值或风险正文委托给历史版本。
+一家公司由一个 Agent 端到端完成。最终结果只有 `covered / ignore`，均须提交 `report_period` 和完整自足正文。先形成长期商业判断，再检验财务、必要资本、普通股归属、当前价值和持有人现金模型。
 
-先围绕少数决定性问题形成长期商业判断，再用财务、必要资本和普通股模型检验，最后编辑为结论先行的文章。按需参考并核验 `research/industries/` 产业专题。正文不固定 16 章，但研究内容和程序所需标题仍要完整；核验附录不是每份报告必须展示的检查清单。
+有前次周期报告时，复盘真正影响价值的旧假设；首次研究说明主要盲区。财报更新不是“新财报摘录＋旧正文”，必须重新形成整篇报告。
 
-当前价值、未来终值和投资者愿付价格，统一按主提示词的 [价值定义](../company/standard-deep-research.md#价值定义) 执行。允许有依据的前瞻判断进入核心路径，说明它改变哪些模型变量；不以未来尚未兑现为由一律计零，也不额外叠加无法解释的主观溢价。
+每份研究提交非空 `return_model_note`。能够可靠建模时同时提交五年 `return_model`；否则为 `null` 并说明决定性缺口。三年终值可选，但必须独立研究。
 
-长期拥有价值、价格评价与可靠错价分开判断；没有非共识发现不强制使用固定保留结论。协调器依 `playbooks/simple-research.md` 检查原证、关键因果链、相反解释、模型假设及表达；算术正确、章节齐全或语气坚定都不替代商业判断。
+## 运行
 
-每份新正式研究必须提交非空 `return_model_note`。能够可靠建模时同时提交 `return_model`，否则为 `null` 并说明缺口。V1 保持 `annual_common_equity_irr_v1`：五项年度普通股每股实际现金分配、独立研究的第五年末终值，三年终值可选且不得从五年值机械折算。接口不是长期经济寿命的上限；不同行业的经营预测和终值方法可不同，最终合同一致。
+财报季开始时：
 
-正文在“基准持有人回报模型输入”中保留年度分配、终值、权益桥、完全稀释股数及关键口径，可置于文末，不写入随现价变化的 IRR。证券价格、涨跌幅和区间穿越不进入研究状态或队列。展示层可以把实时价格与冻结模型输入机械求解为 IRR，但不能写回仓库或解释为投资授权、收益率门槛或交易建议。
+```bash
+python -m trading_os research enqueue-period --period <YYYY-FY|Q1|H1|Q3>
+python -m trading_os research next --limit <N> --trigger-kind periodic
+```
 
-## 增量运行
+人工重写时：
 
-公告扫描覆盖全部 active 公司。定期财报默认触发完整更新；任何正常化利润、估值、`return_model` 输入、核心逻辑、风险排序或 `covered / ignore` 变化，也必须生成完整新报告。
+```bash
+python -m trading_os research enqueue-rewrite \
+  --period <已有周期> --batch-id <批次> --input <公司及原因.json>
+python -m trading_os research next --limit <N> --trigger-kind manual_rewrite
+```
 
-财报更新重新形成整份报告，不把财报摘录拼接到旧正文。累计与单季口径分开，复盘前次关键假设、实际、偏差原因、判断变化和估值影响；全文只保留一套截止和一致结论，正文核心区间与结构化字段一致。两种估值方法差异超过 25% 时解释主次，核心路径、不同经济情景和投资决策安全边际分开。
+启动时读取 Git 状态、`research_state.jsonl`、`research_queue.jsonl`、动态重点池和 `basis_report_path` 所指报告。保留用户及并行修改，不重复已完成周期。
 
-未越过当前报告边界的事件可记录为 update：
-
-- `reaffirmed`：确认当前报告；
-- `monitor`：继续观察；
-- `invalidated`：报告失效，转 `stale` 并创建完整研究任务。
-
-update 不得修改正式估值、`return_model`、`return_model_note` 或结论。铜价、产品售价、运价、利率、汇率、价差、产能利用率等经营变量可以触发研究；公司股票收盘价不能。模型输入变化走完整研究，不写补丁式 update。
-
-## 恢复与写入
-
-启动时读取 Git 状态、`research_state.jsonl`、`research_queue.jsonl`、`research/watchlist.jsonl` 和 `basis_report_path` 所指报告。保留用户及其他并行修改，不重做已完成公司。
-
-单公司 Agent 不直接写共享 JSONL。协调器串行接收结果、原子写状态、重建自选池并运行 `python -m trading_os validate`。每个完整迭代只提交本轮修改。
-
-2026-09-18 的规范升级只调整方法、流程和写作，不启动历史或当前稿重写、不重算既有模型、不修改研究状态与队列，也不借用旧批量修订授权。新规范用于后续正常任务；文体变化本身不是研究失效事实。
+协调器串行接收结果、原子写状态并运行校验。完成后登记报告级 acceptance；同周期正文变化必须重新验收。
 
 ## 每轮报告
 
-向用户报告运行模式、信息截止时间、active/inactive 数、各研究状态数、研究队列、完成公司、研究日志、重大事件、验证与提交。不要报告价格命中、armed/rearm、收益率阈值、概率权重、仓位或多余流程层级。
+向用户报告目标财报周期、当时重点池规模、已有槽位、创建任务、完成公司、验证和提交。不要报告新闻触发、stale、价格命中、仓位或交易指令。

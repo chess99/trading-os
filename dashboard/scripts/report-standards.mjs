@@ -69,7 +69,7 @@ async function main() {
     const standard = policy.standards.get(values.standard);
     assert(standard?.status === "released", "只可按已发布标准验收");
     assert(state.universe_status === "active" && ["covered", "ignore"].includes(state.status)
-      && !state.invalidation, "当前报告失效、未完成或不在市，不能登记为现行结果");
+      , "周期报告未完成或证券不在市，不能登记为现行结果");
     receipt = { schema_version: 1, symbol: state.symbol, outcome: state.status, report_path: state.basis_report_path,
       report_sha256: reportSha, research_sha256: stateSha, information_cutoff: state.information_cutoff,
       standard_id: standard.id, spec_revision: standard.spec_revision, value_definition: standard.value_definition,
@@ -91,7 +91,7 @@ async function main() {
     assert(latest?.basis_report_path === state.basis_report_path && researchDigest(latest) === stateSha
       && sha256(await readFile(join(root, state.basis_report_path))) === reportSha, "研究快照并发变化，拒绝登记");
     if (command === "accept") assert(latest.universe_status === "active"
-      && latest.status === receipt.outcome && !latest.invalidation, "研究有效性并发变化，拒绝登记");
+      && latest.status === receipt.outcome, "研究状态并发变化，拒绝登记");
     const file = await open(temporary, "wx");
     try { await file.writeFile(`${JSON.stringify(receipt, null, 2)}\n`); await file.sync(); }
     finally { await file.close(); }

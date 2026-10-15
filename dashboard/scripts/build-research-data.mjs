@@ -38,7 +38,7 @@ async function collectReports(root, output, ticker, policy) {
       ...reportMetadata(sourcePath, body, policy) };
   }));
 }
-export function projectCompany(row, reports, member, policy) {
+export function projectCompany(row, reports, member, policy, task = null) {
   const metadata = reports.find((report) => report.sourcePath === row.basis_report_path);
   const display = displayEligibility(row, metadata, policy);
   const issue = row.last_revision?.display_issue;
@@ -49,7 +49,6 @@ export function projectCompany(row, reports, member, policy) {
     hasResearchState: row.hasResearchState !== false,
     inQualityPool: Boolean(member), qualityTier: member?.tier ?? null,
     updatedAt: row.updated_at ?? null, informationCutoff: row.information_cutoff ?? null,
-    invalidation: row.invalidation ?? null, candidateSince: row.candidate_since ?? null,
     display, standardId: metadata?.standardId ?? null, standardLabel: metadata?.standardLabel ?? "未验收",
     acceptedAt: metadata?.acceptedAt ?? null,
     // No old number or conclusion enters the current machine-readable catalog.
@@ -65,8 +64,9 @@ export function projectCompany(row, reports, member, policy) {
     reportPeriod: row.report_period ?? null,
     reportUpdatedAt: row.last_research_at ?? null,
     latestReportPeriod: reports[0]?.period ?? null,
+    pendingReportPeriod: task?.report_period ?? null,
+    pendingTaskKind: task?.trigger_kind ?? null,
     reports,
-    eventTriggerCount: (row.event_triggers ?? []).length,
   };
 }
 async function collectResearchDocuments(root, output) {
@@ -144,14 +144,16 @@ export async function buildResearchData(root = repositoryRoot) {
   await rm(output, { recursive: true, force: true });
   await mkdir(output, { recursive: true });
   await collectResearchDocuments(root, output);
+  const tasksBySymbol = new Map(queue.map((item) => [item.symbol, item]));
   const companies = [];
   for (const row of rows) {
     const ticker = row.symbol.replace(/^CN:/u, "");
     if (!/^\d{6}$/u.test(ticker)) throw new Error(`无效证券代码: ${row.symbol}`);
     const reports = await collectReports(root, output, ticker, policy);
-    companies.push(projectCompany(row, reports, members.get(row.symbol), policy));
+    companies.push(projectCompany(row, reports, members.get(row.symbol), policy,
+      tasksBySymbol.get(row.symbol) ?? null));
   }
-  const status = Object.fromEntries(["unseen", "ignore", "candidate", "covered", "stale", "unregistered"]
+  const status = Object.fromEntries(["unseen", "ignore", "covered", "unregistered"]
     .map((name) => [name, companies.filter((company) => company.status === name).length]));
   const queued = queue.filter((item) => item.status === "queued").length;
   const running = queue.filter((item) => item.status === "running").length;
@@ -173,7 +175,7 @@ export async function buildResearchData(root = repositoryRoot) {
     symbol: company.symbol, name: company.name, qualityTier: company.qualityTier,
     hasResearchState: company.hasResearchState, display: company.display,
     informationCutoff: company.informationCutoff, reportPeriod: company.reportPeriod,
-    basisReportPath: company.basisReportPath,
+    basisReportPath: company.basisReportPath, pendingReportPeriod: company.pendingReportPeriod,
   }));
   await writeFile(join(output, "research-progress.json"), JSON.stringify({ scope: catalog.scope,
     standard: catalog.standard, stats: catalog.stats.current, companies: progress }), "utf8");

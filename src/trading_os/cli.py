@@ -4,33 +4,20 @@ import argparse
 import json
 import sys
 from dataclasses import asdict, is_dataclass
-from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
 from typing import Any, Mapping, Sequence, TextIO
 
 from .industry_catalog import industry_catalog
-from .research_assets.market_data import (
-    DEFAULT_EVENT_SCAN_STATE_PATH,
-    MARKET_TIMEZONE,
-    Announcement,
-    MarketDataError,
-    advance_event_scan_state,
-    discover_cninfo_announcements_for_companies,
-    event_scan_state_payload,
-    read_event_scan_state,
-    unseen_event_announcements,
-    write_event_scan_state,
-)
 from .research_assets.research_flow import (
+    MANUAL_REWRITE_TRIGGER,
+    PERIODIC_TRIGGER,
     CompanyRef,
     ResearchFlow,
     ResearchFlowError,
+    ResearchRequest,
     ResearchResult,
-    ResearchUpdate,
     ReturnModel,
-    ScreenDecision,
-    StandardResearchRequest,
     ValueRange,
 )
 from .screening_pool import TIERS, QualityPoolStore
@@ -47,14 +34,14 @@ def _add_at(parser: argparse.ArgumentParser) -> None:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="trading_os",
-        description="由公司、财务、治理和行业新事实驱动的 A 股研究工作流",
+        description="按动态重点池和财报周期维护的 A 股研究工作流",
     )
     parser.add_argument("--root", default=".", help="仓库根目录（默认当前目录）")
     commands = parser.add_subparsers(dest="command", required=True)
 
     status = commands.add_parser("status", help="查看研究状态和当前任务计数")
     status.set_defaults(handler=_status)
-    validate = commands.add_parser("validate", help="只读校验状态、队列、观察池和当前报告")
+    validate = commands.add_parser("validate", help="只读校验状态、周期队列和报告")
     validate.set_defaults(handler=_validate)
 
     industry = commands.add_parser("industry", help="查阅产业框架和检查细分行业覆盖")
@@ -67,7 +54,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     quality_pool = commands.add_parser(
-        "quality-pool", help="独立维护价值质量筛选池；不改变单公司研究状态"
+        "quality-pool", help="维护财报周期排期所使用的动态重点跟踪池"
     )
     quality_pool_commands = quality_pool.add_subparsers(
         dest="quality_pool_command", required=True
@@ -91,14 +78,6 @@ def build_parser() -> argparse.ArgumentParser:
     quality_pool_list.add_argument("--tier", choices=TIERS)
     quality_pool_list.set_defaults(handler=_quality_pool_list)
 
-    state = commands.add_parser("state", help="维护公司状态模型和全市场基线")
-    state_commands = state.add_subparsers(dest="state_command", required=True)
-    rebaseline = state_commands.add_parser(
-        "prepare-rebaseline", help="保留有效覆盖，重置其余公司供全市场重筛"
-    )
-    _add_at(rebaseline)
-    rebaseline.set_defaults(handler=_state_prepare_rebaseline)
-
     universe = commands.add_parser("universe", help="维护全市场证券清单")
     universe_commands = universe.add_subparsers(dest="universe_command", required=True)
     register = universe_commands.add_parser("register", help="登记证券，已有判断不会被覆盖")
@@ -112,30 +91,28 @@ def build_parser() -> argparse.ArgumentParser:
     _add_at(sync)
     sync.set_defaults(handler=_universe_sync)
 
-    screen = commands.add_parser("screen", help="记录主 Agent 的批量初筛")
-    screen_commands = screen.add_subparsers(dest="screen_command", required=True)
-    record = screen_commands.add_parser("record", help="记录 ignore/research_now")
-    _add_input(record)
-    record.add_argument("--screen-id", help="覆盖输入文件中的 screen_id")
-    record.add_argument("--mode", choices=("baseline", "event"), help="覆盖输入中的筛选模式")
-    _add_at(record)
-    record.set_defaults(handler=_screen_record)
-
     research = commands.add_parser("research", help="管理单公司端到端研究任务")
     research_commands = research.add_subparsers(dest="research_command", required=True)
-    enqueue_standard = research_commands.add_parser(
-        "enqueue-standard", help="批量创建不改变当前报告状态的研究标准重做任务"
+    enqueue_period = research_commands.add_parser(
+        "enqueue-period", help="为动态重点跟踪池创建一个财报周期的研究任务"
     )
-    _add_input(enqueue_standard)
-    enqueue_standard.add_argument("--standard-id", help="覆盖输入文件中的 standard_id")
-    enqueue_standard.add_argument("--batch-id", help="覆盖输入文件中的 batch_id")
-    _add_at(enqueue_standard)
-    enqueue_standard.set_defaults(handler=_research_enqueue_standard)
+    enqueue_period.add_argument("--period", required=True, help="YYYY-FY/Q1/H1/Q3")
+    _add_at(enqueue_period)
+    enqueue_period.set_defaults(handler=_research_enqueue_period)
+    enqueue_rewrite = research_commands.add_parser(
+        "enqueue-rewrite", help="显式创建最新财报周期的人工重写任务"
+    )
+    _add_input(enqueue_rewrite)
+    enqueue_rewrite.add_argument("--period", required=True, help="要重写的最新财报周期")
+    enqueue_rewrite.add_argument("--batch-id", required=True, help="本次人工重写批次")
+    _add_at(enqueue_rewrite)
+    enqueue_rewrite.set_defaults(handler=_research_enqueue_rewrite)
     next_tasks = research_commands.add_parser("next", help="取下一批公司，数量由调用者决定")
     next_tasks.add_argument("--limit", required=True, type=int)
     next_tasks.add_argument(
         "--trigger-kind",
-        help="只领取指定触发类型；标准重做使用 standard_upgrade",
+        choices=(PERIODIC_TRIGGER, MANUAL_REWRITE_TRIGGER),
+        help="只领取财报周期或人工重写任务",
     )
     next_tasks.add_argument(
         "--from-end",
@@ -156,37 +133,6 @@ def build_parser() -> argparse.ArgumentParser:
     complete.add_argument("--task-id", help="覆盖输入文件中由 research next 返回的 task_id")
     _add_at(complete)
     complete.set_defaults(handler=_research_complete)
-
-    updates = commands.add_parser("updates", help="追加不改变正式结论的公司研究日志")
-    update_commands = updates.add_subparsers(dest="updates_command", required=True)
-    update_record = update_commands.add_parser(
-        "record", help="记录 reaffirmed/monitor，或宣告报告 invalidated"
-    )
-    _add_input(update_record)
-    _add_at(update_record)
-    update_record.set_defaults(handler=_updates_record)
-
-    watchlist = commands.add_parser("watchlist", help="查看或重建当前有效研究的确定性投影")
-    watchlist_commands = watchlist.add_subparsers(dest="watchlist_command", required=True)
-    build = watchlist_commands.add_parser("build", help="从研究状态重建观察池")
-    build.set_defaults(handler=_watchlist_build)
-    list_command = watchlist_commands.add_parser("list", help="列出观察池")
-    list_command.set_defaults(handler=_watchlist_list)
-    events = commands.add_parser("events", help="获取全市场公告并维护成功检查点")
-    event_commands = events.add_subparsers(dest="events_command", required=True)
-    event_status = event_commands.add_parser("status", help="查看当前公告扫描检查点")
-    event_status.set_defaults(handler=_events_status)
-    event_fetch = event_commands.add_parser(
-        "fetch", help="获取检查点之后的公告；首次运行必须显式提供起点"
-    )
-    event_fetch.add_argument("--since", help="首次扫描起点（带时区 ISO 时间）")
-    event_fetch.add_argument("--until", help="半开窗口终点（默认当前上海时间）")
-    event_fetch.add_argument("--output", help="将完整待判断 packet 写入仓库内临时 JSON")
-    event_fetch.set_defaults(handler=_events_fetch)
-    event_complete = event_commands.add_parser("complete", help="全部公告判断成功后推进检查点")
-    event_complete.add_argument("--packet", required=True, help="events fetch 的原始 JSON")
-    _add_input(event_complete)
-    event_complete.set_defaults(handler=_events_complete)
 
     return parser
 
@@ -252,18 +198,6 @@ def _reject_retired_dynamic_return_fields(payload: Mapping[str, Any]) -> None:
         )
 
 
-def _screen_decision(payload: Mapping[str, Any]) -> ScreenDecision:
-    _reject_retired_price_fields(payload)
-    return ScreenDecision(
-        symbol=payload["symbol"],
-        name=payload.get("name"),
-        route=payload["route"],
-        reason=payload["reason"],
-        event_triggers=payload.get("event_triggers") or (),
-        source_urls=payload.get("source_urls") or (),
-    )
-
-
 def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
     _reject_retired_price_fields(payload)
     _reject_retired_dynamic_return_fields(payload)
@@ -312,7 +246,6 @@ def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
         key_logic=payload.get("key_logic") or (),
         risks=payload.get("risks") or (),
         value_range=value_range,
-        event_triggers=payload.get("event_triggers") or (),
         source_urls=payload.get("source_urls") or (),
         information_cutoff=payload["information_cutoff"],
         report_period=payload["report_period"],
@@ -320,25 +253,6 @@ def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
         valuation_note=payload.get("valuation_note"),
         return_model=return_model,
         return_model_note=payload.get("return_model_note"),
-    )
-
-
-def _research_update(
-    payload: Mapping[str, Any], *, reviewed_at: str | None = None
-) -> ResearchUpdate:
-    _reject_retired_price_fields(payload)
-    return ResearchUpdate(
-        symbol=payload["symbol"],
-        title=payload["title"],
-        impact=payload["impact"],
-        reviewed_at=reviewed_at or payload["reviewed_at"],
-        information_cutoff=payload["information_cutoff"],
-        summary=payload["summary"],
-        analysis=payload["analysis"],
-        conclusion=payload["conclusion"],
-        source_urls=payload.get("source_urls") or (),
-        event_ids=payload.get("event_ids") or (),
-        invalidation_reason=payload.get("invalidation_reason"),
     )
 
 
@@ -432,13 +346,6 @@ def _quality_pool_rebuild(args: argparse.Namespace, stdin: TextIO) -> dict[str, 
     return {"ok": True, **_quality_pool(args).rebuild().status(), "projection_current": True}
 
 
-def _state_prepare_rebaseline(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    del stdin
-    flow = _flow(args)
-    reset = flow.prepare_rebaseline(at=args.at)
-    return {"reset": reset, "status": asdict(flow.validate())}
-
-
 def _universe_register(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     payload, _ = _load(args.input, stdin)
     companies = [
@@ -459,28 +366,6 @@ def _universe_sync(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     return _jsonable(_flow(args).sync_universe(companies, at=args.at))
 
 
-def _screen_record(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    payload, _ = _load(args.input, stdin)
-    decisions = [_screen_decision(item) for item in _records(payload, "decisions")]
-    metadata = payload if isinstance(payload, dict) else {}
-    screen_id = args.screen_id or metadata.get("screen_id")
-    if not screen_id:
-        raise ValueError("screen_id 必须由输入文件或 --screen-id 提供")
-    update = _flow(args).apply_screening(
-        decisions,
-        screen_id=screen_id,
-        mode=args.mode or metadata.get("mode", "baseline"),
-        at=args.at or metadata.get("at"),
-    )
-    return {
-        "total": update.total,
-        "ignore": update.ignored,
-        "research_now": update.candidates,
-        "enqueued": [_jsonable(task) for task in update.enqueued_tasks],
-        "deduplicated": update.deduplicated,
-    }
-
-
 def _research_next(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
     tasks = _flow(args).dispatch_tasks(
@@ -492,48 +377,51 @@ def _research_next(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     return {"count": len(tasks), "tasks": tasks}
 
 
-def _research_enqueue_standard(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+def _research_enqueue_period(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    del stdin
+    pool = _quality_pool(args).read()
+    flow = _flow(args)
+    flow.register_universe(
+        [CompanyRef(symbol=company.symbol, name=company.name) for company in pool.companies],
+        at=args.at,
+    )
+    update = flow.enqueue_research(
+        [
+            ResearchRequest(
+                symbol=company.symbol,
+                name=company.name,
+                reason=f"完成 {args.period} 财报周期完整研究",
+            )
+            for company in pool.companies
+        ],
+        report_period=args.period,
+        trigger_kind=PERIODIC_TRIGGER,
+        at=args.at,
+    )
+    return {
+        "total": update.total,
+        "enqueued": update.enqueued_tasks,
+        "deduplicated": update.deduplicated,
+    }
+
+
+def _research_enqueue_rewrite(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     payload, _ = _load(args.input, stdin)
     metadata = payload if isinstance(payload, dict) else {}
-    standard_id = args.standard_id or metadata.get("standard_id")
-    batch_id = args.batch_id or metadata.get("batch_id")
-    if not standard_id:
-        raise ValueError("standard_id 必须由输入文件或 --standard-id 提供")
-    if not batch_id:
-        raise ValueError("batch_id 必须由输入文件或 --batch-id 提供")
-    registry_path = Path(args.root) / "research/standards/registry.json"
-    try:
-        registry = json.loads(registry_path.read_text(encoding="utf-8"))
-    except FileNotFoundError:
-        raise ValueError(f"研究标准登记不存在: {registry_path}") from None
-    except json.JSONDecodeError as exc:
-        raise ValueError(f"研究标准登记不是合法 JSON: {registry_path}: {exc}") from None
-    if not isinstance(registry, dict) or not isinstance(registry.get("standards"), list):
-        raise ValueError(f"研究标准登记缺少 standards 数组: {registry_path}")
-    released_standard_ids = {
-        item.get("id")
-        for item in registry["standards"]
-        if isinstance(item, dict) and item.get("status") == "released"
-    }
-    if standard_id not in released_standard_ids:
-        raise ValueError(f"standard_id 不存在或尚未 released: {standard_id}")
     common_reason = metadata.get("reason")
     requests = []
     for item in _records(payload, "companies"):
         reason = item.get("reason") or common_reason
         if not reason:
-            raise ValueError(f"{item.get('symbol', '<unknown>')} 缺少标准重做原因")
-        requests.append(
-            StandardResearchRequest(
-                symbol=item["symbol"],
-                name=item.get("name"),
-                reason=reason,
-            )
-        )
-    update = _flow(args).enqueue_standard_research(
+            raise ValueError(f"{item.get('symbol', '<unknown>')} 缺少人工重写原因")
+        requests.append(ResearchRequest(
+            symbol=item["symbol"], name=item.get("name"), reason=reason,
+        ))
+    update = _flow(args).enqueue_research(
         requests,
-        standard_id=standard_id,
-        batch_id=batch_id,
+        report_period=args.period,
+        trigger_kind=MANUAL_REWRITE_TRIGGER,
+        batch_id=args.batch_id,
         at=args.at or metadata.get("at"),
     )
     return {
@@ -580,194 +468,6 @@ def _research_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
     }
 
 
-def _updates_record(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    payload, _ = _load(args.input, stdin)
-    if not isinstance(payload, dict):
-        raise ValueError("研究日志必须是 JSON 对象")
-    update_payload = payload.get("update", payload)
-    if not isinstance(update_payload, dict):
-        raise ValueError("update 必须是对象")
-    reviewed_at = args.at or payload.get("at")
-    record = _flow(args).record_update(_research_update(update_payload, reviewed_at=reviewed_at))
-    return _jsonable(record)
-
-
-def _watchlist_build(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    del stdin
-    flow = _flow(args)
-    path = flow.rebuild_watchlist()
-    return {"path": path.relative_to(flow.root).as_posix(), "count": len(flow.read_watchlist())}
-
-
-def _watchlist_list(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    del stdin
-    rows = _flow(args).read_watchlist()
-    return {"count": len(rows), "companies": rows}
-
-
-def _aware_iso(value: object, label: str) -> str:
-    if not isinstance(value, str) or not value.strip():
-        raise ValueError(f"{label} 必须是带时区的 ISO 时间")
-    try:
-        parsed = datetime.fromisoformat(value.strip())
-    except ValueError as exc:
-        raise ValueError(f"{label} 必须是带时区的 ISO 时间") from exc
-    if parsed.utcoffset() is None:
-        raise ValueError(f"{label} 必须包含 UTC offset")
-    return parsed.astimezone(MARKET_TIMEZONE).isoformat()
-
-
-def _event_state_path(flow: ResearchFlow) -> Path:
-    return flow.root / DEFAULT_EVENT_SCAN_STATE_PATH
-
-
-def _events_status(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    del stdin
-    flow = _flow(args)
-    state = read_event_scan_state(_event_state_path(flow))
-    return event_scan_state_payload(state)
-
-
-def _events_fetch(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    del stdin
-    flow = _flow(args)
-    state = read_event_scan_state(_event_state_path(flow))
-    if state.last_successful_at is None:
-        if args.since is None:
-            raise ValueError("首次公告扫描必须用 --since 显式设置起点")
-        scan_start = _aware_iso(args.since, "since")
-        fetch_start = scan_start
-    else:
-        if args.since is not None:
-            supplied = _aware_iso(args.since, "since")
-            if supplied != state.last_successful_at:
-                raise ValueError("--since 必须与当前 last_successful_at 完全一致")
-        scan_start = state.last_successful_at
-        previous_time = datetime.fromisoformat(scan_start).astimezone(MARKET_TIMEZONE)
-        fetch_start = (
-            (previous_time - timedelta(days=1))
-            .replace(
-                hour=0,
-                minute=0,
-                second=0,
-                microsecond=0,
-            )
-            .isoformat()
-        )
-    scan_end = (
-        _aware_iso(args.until, "until")
-        if args.until is not None
-        else datetime.now(MARKET_TIMEZONE).isoformat()
-    )
-    companies = tuple(row["symbol"] for row in flow.read_states())
-    discovered = discover_cninfo_announcements_for_companies(
-        companies,
-        fetch_start,
-        scan_end,
-    )
-    pending = unseen_event_announcements(state, discovered)
-    packet = {
-        "schema_version": 1,
-        "scan_start": scan_start,
-        "fetch_start": fetch_start,
-        "scan_end": scan_end,
-        "universe_count": len(companies),
-        "announcement_count": len(pending),
-        "already_seen_count": len(discovered) - len(pending),
-        "announcements": pending,
-    }
-    if args.output is None:
-        return packet
-    root = flow.root.resolve()
-    output = Path(args.output)
-    output = (flow.root / output).resolve() if not output.is_absolute() else output.resolve()
-    try:
-        output.relative_to(root)
-    except ValueError as exc:
-        raise ValueError("events fetch --output 必须位于仓库根目录内") from exc
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(
-        json.dumps(_jsonable(packet), ensure_ascii=False, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
-    return {
-        "packet_path": output.relative_to(root).as_posix(),
-        "scan_start": scan_start,
-        "fetch_start": fetch_start,
-        "scan_end": scan_end,
-        "universe_count": len(companies),
-        "announcement_count": len(pending),
-        "already_seen_count": len(discovered) - len(pending),
-    }
-
-
-def _announcement_from_payload(value: object) -> Announcement:
-    if not isinstance(value, Mapping):
-        raise ValueError("announcements 必须只包含对象")
-    return Announcement(
-        announcement_id=value["announcement_id"],
-        symbol=value["symbol"],
-        title=value["title"],
-        published_at=value["published_at"],
-        url=value["url"],
-    )
-
-
-def _events_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    packet, _ = _load(args.packet, stdin)
-    judgments, _ = _load(args.input, stdin)
-    if not isinstance(packet, dict):
-        raise ValueError("events fetch packet 必须是 JSON 对象")
-    if not isinstance(judgments, dict):
-        raise ValueError("公告判断结果必须是 JSON 对象")
-    if packet.get("schema_version") != 1:
-        raise ValueError("不支持的 events fetch packet 版本")
-    raw_announcements = packet.get("announcements")
-    if not isinstance(raw_announcements, list):
-        raise ValueError("packet announcements 必须是数组")
-    if packet.get("announcement_count") != len(raw_announcements):
-        raise ValueError("packet announcement_count 与 announcements 不一致")
-    judged_ids = judgments.get("successfully_judged_ids")
-    if not isinstance(judged_ids, list):
-        raise ValueError("successfully_judged_ids 必须是数组")
-
-    flow = _flow(args)
-    path = _event_state_path(flow)
-    previous = read_event_scan_state(path)
-    scan_start = _aware_iso(packet.get("scan_start"), "packet scan_start")
-    fetch_start = _aware_iso(packet.get("fetch_start"), "packet fetch_start")
-    scan_end = _aware_iso(packet.get("scan_end"), "packet scan_end")
-    if datetime.fromisoformat(fetch_start) > datetime.fromisoformat(scan_start):
-        raise ValueError("packet fetch_start 不得晚于 scan_start")
-    if datetime.fromisoformat(scan_end) <= datetime.fromisoformat(scan_start):
-        raise ValueError("packet scan_end 必须晚于 scan_start")
-    if previous.last_successful_at is not None and scan_start != previous.last_successful_at:
-        raise ValueError("packet scan_start 已落后于当前公告检查点")
-    announcements = tuple(_announcement_from_payload(item) for item in raw_announcements)
-    start_time = datetime.fromisoformat(fetch_start)
-    for announcement in announcements:
-        published_at = datetime.fromisoformat(
-            _aware_iso(
-                announcement.published_at,
-                f"公告 {announcement.announcement_id} published_at",
-            )
-        )
-        if published_at < start_time:
-            raise ValueError(f"公告 {announcement.announcement_id} 早于 packet scan_start")
-    next_state = advance_event_scan_state(
-        previous,
-        scanned_through=scan_end,
-        announcements=announcements,
-        successfully_judged_ids=judged_ids,
-    )
-    write_event_scan_state(next_state, path)
-    return {
-        "advanced": True,
-        "judged_count": len(judged_ids),
-        **event_scan_state_payload(next_state),
-    }
-
-
 def main(
     argv: Sequence[str] | None = None,
     *,
@@ -782,7 +482,6 @@ def main(
     try:
         result = args.handler(args, input_stream)
     except (
-        MarketDataError,
         ResearchFlowError,
         OSError,
         ValueError,

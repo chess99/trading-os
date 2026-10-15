@@ -101,21 +101,21 @@ export function DashboardClient() {
       <p>统一的是价值含义和验收标准，不是要求不同行业使用同一公式或相同资本成本。</p></details>
     <section className="standards-stats" aria-label="选定范围研究进度">
       <button onClick={() => changeView("progress")}><strong>{counts.total}</strong><span>{scope === "quality_pool" ? "重点跟踪公司" : "全市场公司"}</span></button>
-      <button onClick={() => changeView("current")}><strong>{counts.completed}</strong><span>新版有效结果</span></button>
+      <button onClick={() => changeView("current")}><strong>{counts.completed}</strong><span>最新周期模型</span></button>
       <button onClick={() => { changeView("progress"); setProgress("unpriced"); }}><strong>{counts.unpriced}</strong><span>已研究 · 暂无法估值</span></button>
-      <button onClick={() => changeView("progress")}><strong>{counts.pending}</strong><span>待首次研究 / 待升级</span></button>
-      <button onClick={() => changeView("progress")}><strong>{counts.updating + counts.review}</strong><span>新版待更新 / 待复核</span></button>
+      <button onClick={() => changeView("progress")}><strong>{counts.pending}</strong><span>待周期研究</span></button>
+      <button onClick={() => changeView("progress")}><strong>{counts.review}</strong><span>验收待复核</span></button>
     </section>
     <section aria-label="公司研究列表">
       <div className="standards-toolbar"><div className="standards-tabs" role="tablist" aria-label="研究视图">
-        {([["current", "现行有效"], ["progress", "跟踪进度"], ["market", "全市场"]] as const).map(([id, label]) =>
+        {([["current", "最新周期模型"], ["progress", "跟踪进度"], ["market", "全市场"]] as const).map(([id, label]) =>
           <button key={id} role="tab" aria-selected={view === id} onClick={() => changeView(id)}>{label}</button>)}</div>
         {view !== "market" && <label>范围 <select aria-label="研究范围" value={scope} onChange={(event) => { setScope(event.target.value as Scope); setIndustry("all"); setLimit(80); }}>
-          <option value="quality_pool">重点跟踪池 · {catalog.scope.count}家</option><option value="all_standard">全市场（现行页仍只显示有效结果）</option></select></label>}
+          <option value="quality_pool">重点跟踪池 · {catalog.scope.count}家</option><option value="all_standard">全市场（模型页只显示已验收周期）</option></select></label>}
         <input ref={search} aria-label="搜索公司" placeholder="搜索公司、代码、行业 /" value={query} onChange={(event) => { setQuery(event.target.value); setLimit(80); }} />
         <select aria-label="行业筛选" value={industry} onChange={(event) => setIndustry(event.target.value)}><option value="all">全部行业</option>{industries.map((name) => <option key={name}>{name}</option>)}</select>
-        {view === "current" && <select aria-label="当前研究排序" value={sort} onChange={(event) => setSort(event.target.value as Sort)}><option value="ticker">代码顺序</option><option value="updated">最近研究</option><option value="irr">模型年化回报</option><option value="value">相对价值下沿</option></select>}
-        {view === "progress" && <select aria-label="新版进度筛选" value={progress} onChange={(event) => setProgress(event.target.value)}><option value="all">全部进度</option>{Object.entries(DISPLAY_LABELS).map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select>}
+        {view === "current" && <select aria-label="周期模型排序" value={sort} onChange={(event) => setSort(event.target.value as Sort)}><option value="ticker">代码顺序</option><option value="updated">最近研究</option><option value="irr">模型年化回报</option><option value="value">相对价值下沿</option></select>}
+        {view === "progress" && <select aria-label="周期进度筛选" value={progress} onChange={(event) => setProgress(event.target.value)}><option value="all">全部进度</option>{Object.entries(DISPLAY_LABELS).map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select>}
       </div>
       <div className="standards-caption"><span>显示 {Math.min(limit, ordered.length)} / {ordered.length} 家{view === "current" ? ` · 已取得可比较行情 ${compared.length} 家，其中低于区间下沿 ${below} 家` : " · 不展示旧估值"}</span>
         {view === "current" ? <div><span>行情时间 {formatDate(quoteAt, true)}</span> <button disabled={quoteRefreshing} onClick={() => void refreshQuotes()}>{quoteRefreshing ? "刷新中" : "刷新"}</button>
@@ -123,7 +123,7 @@ export function DashboardClient() {
       {view === "current" && <p className="standards-hint">5年基准情景回报按现价机械派生，不是收益承诺或交易信号。只对本页现行结果计算；不同公司的资料日期与关键假设仍需分别阅读。</p>}
       <div className="standards-table-scroll"><table className="standards-table"><thead><tr><th>公司</th><th>行业</th>
         {view === "current" ? <><th>现价</th><th>合理价值</th><th>5年基准情景年化回报</th><th>相对下沿</th><th>相对中枢</th><th>当前结论</th><th>资料截止</th></>
-          : <><th>新版进度</th><th>研究状态</th><th>说明</th><th>报告版本</th></>}<th>阅读</th></tr></thead><tbody>
+          : <><th>周期进度</th><th>最近结论</th><th>说明</th><th>报告周期</th></>}<th>阅读</th></tr></thead><tbody>
         {ordered.slice(0, limit).map((company) => {
           const quote = quotes.get(company.ticker); const position = pricePosition(company, quote); const irr = returnIrr(company, quote, 5);
           return <tr key={company.symbol} data-symbol={company.symbol}><td><strong>{cleanCompanyName(company.name)}</strong><small>{company.ticker}{company.inQualityPool ? ` · ${company.qualityTier === "core_moat" ? "A" : "B"}` : ""}</small></td><td>{company.industry}</td>
@@ -131,7 +131,7 @@ export function DashboardClient() {
               <td title={returnModelTitle(company)}><strong>{formatIrr(irr?.midpoint)}</strong><small>{irr?.midpoint != null ? `低 ${formatIrr(irr.low)} · 高 ${formatIrr(irr.high)}` : company.returnModelDisplayIssue ? "现金路径待更新" : company.returnModel ? "行情暂缺或模型暂不可用" : company.returnModelNote ? "暂无法可靠建模" : "待后续完整研究补充"}</small></td>
               <td>{position.lowRatio == null ? "—" : `${position.lowRatio.toFixed(2)}×`}<small>{position.label}</small></td><td>{position.midpointRatio == null ? "—" : `${position.midpointRatio.toFixed(2)}×`}</td>
               <td className="summary-cell"><p>{company.summary}</p>{company.status === "ignore" && <small>研究后暂不持续覆盖</small>}</td><td>{formatDate(company.informationCutoff)}<small>验收 {formatDate(company.acceptedAt)}</small></td></>
-              : <><td>{DISPLAY_LABELS[company.display.state]}</td><td>{STATUS_META[company.status].label}</td><td className="summary-cell">{company.hasResearchState ? company.display.reason : "已进入重点跟踪池，待与研究状态衔接；未自动创建研究任务。"}</td><td>{company.latestReportPeriod ? `${company.latestReportPeriod}${company.reportUpdatedAt ? ` · ${formatDate(company.reportUpdatedAt)}` : ""}` : "尚无报告"}</td></>}
+              : <><td>{company.pendingReportPeriod ? `${company.pendingReportPeriod} · 待研究` : DISPLAY_LABELS[company.display.state]}</td><td>{STATUS_META[company.status].label}</td><td className="summary-cell">{company.pendingReportPeriod ? `${company.pendingTaskKind === "manual_rewrite" ? "人工重写" : "财报周期"}任务已排队` : company.hasResearchState ? company.display.reason : "已进入重点跟踪池，等待下一次周期排期。"}</td><td>{company.latestReportPeriod ? `${company.latestReportPeriod}${company.reportUpdatedAt ? ` · ${formatDate(company.reportUpdatedAt)}` : ""}` : "尚无报告"}</td></>}
             <td>{company.reports.length ? <a href={`/reports/${company.ticker}`}>阅读最新</a> : "—"}</td></tr>;
         })}</tbody></table></div>
       {!ordered.length && <div className="standards-empty"><strong>{view === "current" ? "暂无符合条件的现行研究" : "没有符合条件的公司"}</strong><p>不会使用旧估值补位；研报库仍可阅读已有研究周期。</p></div>}

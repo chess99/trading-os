@@ -5,853 +5,127 @@ from pathlib import Path
 
 import pytest
 
-import trading_os.cli as cli_module
 from trading_os.cli import main
-from trading_os.research_assets.market_data import Announcement
+from trading_os.research_assets.research_flow import (
+    PERIODIC_TRIGGER,
+    CompanyRef,
+    ResearchFlow,
+    ResearchRequest,
+)
 
 AT = "2026-08-08T17:00:00+08:00"
-ROOT = Path(__file__).resolve().parents[1]
-
-
-def _write(path: Path, payload: object) -> Path:
-    path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
-    return path
-
-
-def _write_standard_registry(tmp_path: Path, *standards: tuple[str, str]) -> Path:
-    (tmp_path / "research/standards").mkdir(parents=True, exist_ok=True)
-    return _write(
-        tmp_path / "research/standards/registry.json",
-        {
-            "schema_version": 1,
-            "active_standard": standards[0][0] if standards else None,
-            "standards": [
-                {"id": standard_id, "status": status} for standard_id, status in standards
-            ],
-        },
-    )
 
 
 def _call(tmp_path: Path, capsys: pytest.CaptureFixture[str], *args: str) -> dict:
     code = main(["--root", str(tmp_path), *args])
     captured = capsys.readouterr()
     assert code == 0, captured.err
-    assert captured.err == ""
     return json.loads(captured.out)
 
 
-def _full_result(symbol: str, task_id: str | None = None) -> dict:
-    payload = {
-        "symbol": symbol,
-        "name": "示例公司",
-        "outcome": "covered",
-        "summary": "需求成立，现金流仍需验证。",
-        "key_logic": ["需求增长", "现金流转化决定估值"],
-        "risks": ["客户集中", "资本开支回报不及预期"],
-        "value_range": {"low": 58, "high": 82, "currency": "CNY"},
-        "return_model": {
-            "schema_version": 1,
-            "method": "annual_common_equity_irr_v1",
-            "currency": "CNY",
-            "model_as_of": AT,
-            "base_case_distributions_per_share": [1, 1.1, 1.2, 1.3, 1.4],
-            "base_case_terminal_equity_value_range_per_share": {
-                "year_3": {"low": 65, "high": 78},
-                "year_5": {"low": 72, "high": 92},
-            },
+def _result(symbol: str, task_id: str) -> dict:
+    return {
+        "task_id": task_id,
+        "at": AT,
+        "result": {
+            "symbol": symbol,
+            "name": "示例公司",
+            "outcome": "covered",
+            "report_period": "2026-H1",
+            "information_cutoff": AT,
+            "summary": "需求成立，现金流仍需验证。",
+            "key_logic": ["需求增长"],
+            "risks": ["资本开支回报不及预期"],
+            "value_range": {"low": 58, "high": 82, "currency": "CNY"},
+            "valuation_note": "正常化盈利为主。",
+            "return_model": None,
+            "return_model_note": "暂不可靠构造五年持有人模型。",
+            "source_urls": ["https://example.com/report"],
+            "report_markdown": (
+                "# 示例公司\n\n信息截止：2026-08-08\n\n"
+                "## 一句话结论\n\n需求成立。\n\n"
+                "## 财务质量\n\n现金流仍需验证。\n\n"
+                "## 估值\n\n方法一为正常化PE，方法二为DCF；以前者为核心。\n\n"
+                "核心合理价值区间：58—82 元。\n\n"
+                "## 基准持有人回报模型输入\n\n当前无法可靠建模。\n\n"
+                "## 风险\n\n资本开支回报不足。\n\n"
+                "## 来源\n\nhttps://example.com/report"
+            ),
         },
-        "return_model_note": ("终值采用正常化每股收益与退出PE区间，并按完全稀释股本折算。"),
-        "event_triggers": ["下一期财报发布"],
-        "source_urls": ["https://example.com/report"],
-        "information_cutoff": AT,
-        "report_period": "2026-Q1",
-        "report_markdown": (
-            "# 示例公司\n\n"
-            "信息截止：2026-08-08\n\n"
-            "## 一句话结论\n\n需求成立，但现金流转化仍需验证。\n\n"
-            "## 财务质量与股东现金收益\n\n现金流转化仍需验证。\n\n"
-            "| 前次假设 | 本期实际 | 判断变化 | 估值影响 |\n"
-            "|---|---|---|---|\n| 需求增长 | 需求增长 | 不变 | 区间不变 |\n\n"
-            "## 估值与核心合理价值区间\n\n"
-            "方法一为正常化PE，方法二为现金流折现；以正常化PE为核心。\n\n"
-            "核心合理价值区间：58—82 元。\n\n"
-            "### 基准持有人回报模型输入\n\n"
-            "未来五年每股现金分配为1.0、1.1、1.2、1.3、1.4元；"
-            "三年终值65—78元，五年终值72—92元。\n\n"
-            "## 核心风险\n\n客户集中且资本开支回报可能不及预期。\n\n"
-            "## 来源清单\n\n- https://example.com/report"
-        ),
     }
-    return {"task_id": task_id, "at": AT, "result": payload} if task_id else payload
 
 
-def _screen_and_dispatch(
-    tmp_path: Path,
-    capsys: pytest.CaptureFixture[str],
-    symbol: str,
-    *,
-    trigger_id: str,
-) -> str:
-    source = _write(
-        tmp_path / f"screen-{trigger_id}.json",
-        {
-            "screen_id": trigger_id,
-            "mode": "event",
-            "at": AT,
-            "decisions": [
-                {
-                    "symbol": symbol,
-                    "route": "research_now",
-                    "reason": "值得完整研究",
-                }
-            ],
-        },
-    )
-    queued = _call(
-        tmp_path,
-        capsys,
-        "screen",
-        "record",
-        "--input",
-        str(source),
-    )
-    dispatched = _call(tmp_path, capsys, "research", "next", "--limit", "1", "--at", AT)
-    assert dispatched["count"] == 1
-    assert dispatched["tasks"][0]["task_id"] == queued["enqueued"][0]["task_id"]
-    return dispatched["tasks"][0]["task_id"]
-
-
-def test_help_contains_only_the_compact_workflow(capsys: pytest.CaptureFixture[str]):
-    with pytest.raises(SystemExit) as exc:
+def test_help_exposes_only_periodic_research_workflow(capsys):
+    with pytest.raises(SystemExit):
         main(["--help"])
-
-    assert exc.value.code == 0
     output = capsys.readouterr().out
-    for command in (
-        "status",
-        "validate",
-        "quality-pool",
-        "universe",
-        "screen",
-        "research",
-        "updates",
-        "watchlist",
-        "events",
-    ):
+    for command in ("quality-pool", "universe", "research", "validate"):
         assert command in output
-    for removed in ("underwriting", "challenger", "allocation", "calibration", "claim"):
-        assert removed not in output.lower()
-
-    with pytest.raises(SystemExit) as research_exc:
-        main(["research", "--help"])
-    assert research_exc.value.code == 0
-    assert "enqueue-standard" in capsys.readouterr().out
-
-
-def test_research_assets_package_exports_only_the_compact_flow():
-    import trading_os.research_assets as assets
-
-    assert assets.ResearchFlow
-    assert assets.ResearchResult
-    assert assets.ReturnModel
-    assert assets.ResearchUpdate
-    for removed in (
-        "AssetValidationError",
-        "CompanyTimelineError",
-        "DetailLevel",
-        "publish_rapid_triage_to_company_timeline",
-        "write_index",
-    ):
-        assert not hasattr(assets, removed)
-
-
-def test_empty_status_and_validate_are_readable(tmp_path: Path, capsys):
-    status = _call(tmp_path, capsys, "status")
-    assert status == {
-        "companies": 0,
-        "active": 0,
-        "candidates": 0,
-        "covered": 0,
-        "ignored": 0,
-        "queued": 0,
-        "inactive": 0,
-        "running": 0,
-        "stale": 0,
-        "unseen": 0,
-        "watchlist": 0,
-    }
-    validated = _call(tmp_path, capsys, "validate")
-    assert validated["ok"] is True
-
-
-@pytest.mark.parametrize("jsonl", [False, True])
-def test_universe_register_accepts_wrapper_json_and_jsonl(tmp_path: Path, capsys, jsonl: bool):
-    companies = [
-        {"symbol": "CN:000001", "name": "甲公司"},
-        {"symbol": "CN:000002", "name": "乙公司"},
-    ]
-    source = tmp_path / ("universe.jsonl" if jsonl else "universe.json")
-    if jsonl:
-        source.write_text(
-            "\n".join(json.dumps(item, ensure_ascii=False) for item in companies) + "\n",
-            encoding="utf-8",
-        )
-    else:
-        _write(source, {"companies": companies})
-
-    output = _call(tmp_path, capsys, "universe", "register", "--input", str(source), "--at", AT)
-
-    assert output == {"added": 2, "companies": 2}
-
-
-def test_universe_sync_uses_a_complete_active_snapshot(tmp_path: Path, capsys):
-    first = _write(
-        tmp_path / "first.json",
-        {"companies": [{"symbol": "CN:000001"}, {"symbol": "CN:000002"}]},
-    )
-    second = _write(
-        tmp_path / "second.json",
-        {"companies": [{"symbol": "CN:000002"}, {"symbol": "CN:000003"}]},
-    )
-    _call(tmp_path, capsys, "universe", "register", "--input", str(first), "--at", AT)
-
-    synced = _call(tmp_path, capsys, "universe", "sync", "--input", str(second), "--at", AT)
-    status = _call(tmp_path, capsys, "status")
-
-    assert synced == {
-        "added": 1,
-        "enqueued_tasks": [],
-        "inactivated": 1,
-        "reactivated": 0,
-        "renamed": 0,
-        "total": 2,
-    }
-    assert (status["companies"], status["active"], status["inactive"]) == (3, 2, 1)
-
-
-def test_screen_record_only_enqueues_research_now(tmp_path: Path, capsys):
-    source = _write(
-        tmp_path / "screen.json",
-        {
-            "screen_id": "baseline-2026-08-08",
-            "mode": "baseline",
-            "at": AT,
-            "decisions": [
-                {
-                    "symbol": "CN:000001",
-                    "route": "ignore",
-                    "reason": "暂不值得研究",
-                    "event_triggers": ["下一份年报出现业务转型"],
-                },
-                {
-                    "symbol": "CN:000002",
-                    "route": "ignore",
-                    "reason": "当前没有值得研究的新事实",
-                },
-                {"symbol": "CN:000003", "route": "research_now", "reason": "出现拐点"},
-            ],
-        },
-    )
-
-    output = _call(tmp_path, capsys, "screen", "record", "--input", str(source))
-
-    assert (output["ignore"], output["research_now"]) == (2, 1)
-    assert [task["symbol"] for task in output["enqueued"]] == ["CN:000003"]
-
-
-def test_standard_research_batch_is_separate_from_normal_dispatch(tmp_path: Path, capsys):
-    _write_standard_registry(tmp_path, ("owner-value-1.0", "released"))
-    screening = _write(
-        tmp_path / "screen.json",
-        {
-            "screen_id": "baseline",
-            "mode": "baseline",
-            "at": AT,
-            "decisions": [
-                {"symbol": "CN:000001", "route": "ignore", "reason": "暂不覆盖"},
-                {"symbol": "CN:000002", "route": "research_now", "reason": "常态研究"},
-            ],
-        },
-    )
-    _call(tmp_path, capsys, "screen", "record", "--input", str(screening))
-    state_before = (tmp_path / "coverage/cn-a/research_state.jsonl").read_text(encoding="utf-8")
-    batch_file = _write(
-        tmp_path / "standard-batch.json",
-        {
-            "standard_id": "owner-value-1.0",
-            "batch_id": "review-191",
-            "at": AT,
-            "reason": "按现行长期股东价值标准重做",
-            "companies": [{"symbol": "CN:000001"}],
-        },
-    )
-
-    queued = _call(
-        tmp_path,
-        capsys,
-        "research",
-        "enqueue-standard",
-        "--input",
-        str(batch_file),
-    )
-    assert queued["total"] == 1 and queued["deduplicated"] == 0
-    assert queued["enqueued"][0]["standard_id"] == "owner-value-1.0"
-    assert queued["enqueued"][0]["batch_id"] == "review-191"
-    assert (tmp_path / "coverage/cn-a/research_state.jsonl").read_text(
-        encoding="utf-8"
-    ) == state_before
-
-    dispatched = _call(
-        tmp_path,
-        capsys,
-        "research",
-        "next",
-        "--limit",
-        "10",
-        "--trigger-kind",
-        "standard_upgrade",
-        "--at",
-        AT,
-    )
-    assert [task["symbol"] for task in dispatched["tasks"]] == ["CN:000001"]
-    queue_rows = [
-        json.loads(line)
-        for line in (tmp_path / "coverage/cn-a/research_queue.jsonl")
-        .read_text(encoding="utf-8")
-        .splitlines()
-    ]
-    normal = next(row for row in queue_rows if row["symbol"] == "CN:000002")
-    assert normal["status"] == "queued"
-
-
-@pytest.mark.parametrize(
-    "registered, requested",
-    [
-        (("owner-value-2.0", "draft"), "owner-value-2.0"),
-        (("owner-value-1.0", "released"), "owner-value-unknown"),
-    ],
-)
-def test_standard_research_cli_rejects_unknown_or_unreleased_standard(
-    tmp_path: Path,
-    capsys: pytest.CaptureFixture[str],
-    registered: tuple[str, str],
-    requested: str,
-):
-    _write_standard_registry(tmp_path, registered)
-    screening = _write(
-        tmp_path / "screen.json",
-        {
-            "screen_id": "baseline",
-            "mode": "baseline",
-            "at": AT,
-            "decisions": [
-                {"symbol": "CN:000001", "route": "ignore", "reason": "暂不覆盖"}
-            ],
-        },
-    )
-    _call(tmp_path, capsys, "screen", "record", "--input", str(screening))
-    batch_file = _write(
-        tmp_path / "standard-batch.json",
-        {
-            "standard_id": requested,
-            "batch_id": "review-191",
-            "at": AT,
-            "reason": "按目标标准重做",
-            "companies": [{"symbol": "CN:000001"}],
-        },
-    )
-
-    assert (
-        main(
-            [
-                "--root",
-                str(tmp_path),
-                "research",
-                "enqueue-standard",
-                "--input",
-                str(batch_file),
-            ]
-        )
-        == 1
-    )
-    error = json.loads(capsys.readouterr().err)
-    assert "不存在或尚未 released" in error["error"]
-    assert not (tmp_path / "coverage/cn-a/research_queue.jsonl").read_text(
-        encoding="utf-8"
-    ).strip()
-
-
-def test_screen_next_and_explicit_requeue_have_no_fixed_concurrency(tmp_path: Path, capsys):
-    source = _write(
-        tmp_path / "three-research-tasks.json",
-        {
-            "screen_id": "2026-h1",
-            "mode": "event",
-            "at": AT,
-            "decisions": [
-                {"symbol": symbol, "route": "research_now", "reason": "半年报变化"}
-                for symbol in ("CN:000001", "CN:000002", "CN:000003")
-            ],
-        },
-    )
-    screened = _call(tmp_path, capsys, "screen", "record", "--input", str(source))
-    assert len(screened["enqueued"]) == 3
-
-    dispatched = _call(tmp_path, capsys, "research", "next", "--limit", "2", "--at", AT)
-    assert dispatched["count"] == 2
-    task_id = dispatched["tasks"][0]["task_id"]
-    restored = _call(tmp_path, capsys, "research", "requeue", task_id)
-    assert restored["task"]["status"] == "queued"
-
-    from_end = _call(
-        tmp_path,
-        capsys,
-        "research",
-        "next",
-        "--limit",
-        "1",
-        "--from-end",
-        "--at",
-        AT,
-    )
-    assert from_end["count"] == 1
-
-
-def test_research_complete_writes_dated_report_and_full_watchlist(tmp_path: Path, capsys):
-    task_id = _screen_and_dispatch(
-        tmp_path,
-        capsys,
-        "CN:601138",
-        trigger_id="initial",
-    )
-    result = _write(tmp_path / "result.json", _full_result("CN:601138", task_id))
-
-    completed = _call(tmp_path, capsys, "research", "complete", "--input", str(result))
-    listed = _call(tmp_path, capsys, "watchlist", "list")
-
-    assert completed["status"] == "covered"
-    assert completed["basis_report_path"] == ("research/companies/CN/601138/reports/2026-Q1.md")
-    assert (tmp_path / completed["basis_report_path"]).is_file()
-    company = listed["companies"][0]
-    assert company["key_logic"] == ["需求增长", "现金流转化决定估值"]
-    assert company["value_range"] == {"currency": "CNY", "high": 82.0, "low": 58.0}
-    assert completed["return_model"] == company["return_model"]
-    assert completed["return_model_note"] == company["return_model_note"]
-    assert company["return_model"]["base_case_distributions_per_share"] == [
-        1.0,
-        1.1,
-        1.2,
-        1.3,
-        1.4,
-    ]
-    assert "expected_irr" not in company
-    assert "price_levels" not in company
-
-
-def test_research_complete_requires_return_model_note(tmp_path: Path, capsys):
-    task_id = _screen_and_dispatch(
-        tmp_path,
-        capsys,
-        "CN:601138",
-        trigger_id="missing-return-note",
-    )
-    payload = _full_result("CN:601138", task_id)
-    del payload["result"]["return_model_note"]
-    source = _write(tmp_path / "missing-return-note.json", payload)
-
-    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
-    captured = capsys.readouterr()
-    assert code == 1
-    assert "return_model_note" in json.loads(captured.err)["error"]
-
-
-def test_research_complete_rejects_unexpected_return_model_fields(tmp_path: Path, capsys):
-    task_id = _screen_and_dispatch(
-        tmp_path,
-        capsys,
-        "CN:601138",
-        trigger_id="unexpected-return-field",
-    )
-    payload = _full_result("CN:601138", task_id)
-    payload["result"]["return_model"]["expected_irr"] = 0.12
-    source = _write(tmp_path / "unexpected-return-field.json", payload)
-
-    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
-    captured = capsys.readouterr()
-    assert code == 1
-    assert "version 1" in json.loads(captured.err)["error"]
-
-
-def test_research_complete_rejects_overflowing_return_model_number(tmp_path: Path, capsys):
-    task_id = _screen_and_dispatch(
-        tmp_path,
-        capsys,
-        "CN:601138",
-        trigger_id="overflowing-return-number",
-    )
-    payload = _full_result("CN:601138", task_id)
-    payload["result"]["return_model"]["base_case_distributions_per_share"][0] = 10**400
-    source = _write(tmp_path / "overflowing-return-number.json", payload)
-
-    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
-    captured = capsys.readouterr()
-    assert code == 1
-    assert "finite non-negative" in json.loads(captured.err)["error"]
-
-
-@pytest.mark.parametrize(
-    "field",
-    [
-        "expected_annual_return",
-        "expected_irr",
-        "current_irr",
-        "irr",
-        "year_3_irr",
-        "year_5_irr",
-    ],
-)
-def test_research_complete_rejects_dynamic_return_fields(tmp_path: Path, capsys, field: str):
-    task_id = _screen_and_dispatch(
-        tmp_path,
-        capsys,
-        "CN:601138",
-        trigger_id=f"dynamic-return-field:{field}",
-    )
-    payload = _full_result("CN:601138", task_id)
-    payload["result"][field] = 0.12
-    source = _write(tmp_path / f"dynamic-return-field-{field}.json", payload)
-
-    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
-    captured = capsys.readouterr()
-    assert code == 1
-    assert field in json.loads(captured.err)["error"]
-
-
-def test_research_complete_rejects_dynamic_return_field_on_envelope(tmp_path: Path, capsys):
-    task_id = _screen_and_dispatch(
-        tmp_path,
-        capsys,
-        "CN:601138",
-        trigger_id="dynamic-return-envelope",
-    )
-    payload = _full_result("CN:601138", task_id)
-    payload["expected_irr"] = 0.12
-    source = _write(tmp_path / "dynamic-return-envelope.json", payload)
-
-    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
-    captured = capsys.readouterr()
-    assert code == 1
-    assert "expected_irr" in json.loads(captured.err)["error"]
-
-
-def test_retired_security_price_fields_are_rejected(tmp_path: Path, capsys):
-    task_id = _screen_and_dispatch(tmp_path, capsys, "CN:601138", trigger_id="old-input")
-    payload = _full_result("CN:601138", task_id)
-    payload["result"]["price_levels"] = [{"id": "attention", "threshold": 55}]
-    source = _write(tmp_path / "old-result.json", payload)
-
-    code = main(["--root", str(tmp_path), "research", "complete", "--input", str(source)])
-    captured = capsys.readouterr()
-    assert code == 1
-    assert "已退役字段" in json.loads(captured.err)["error"]
-
-
-def test_watchlist_has_no_close_price_commands(capsys):
-    with pytest.raises(SystemExit) as exc:
-        main(["watchlist", "--help"])
-    assert exc.value.code == 0
-    output = capsys.readouterr().out
-    assert "build" in output and "list" in output
-    for removed in ("scan-close", "fetch-close", "run-close"):
+    for removed in ("events", "updates", "watchlist", "screen"):
         assert removed not in output
 
+    with pytest.raises(SystemExit):
+        main(["research", "--help"])
+    research = capsys.readouterr().out
+    assert "enqueue-period" in research and "enqueue-rewrite" in research
+    assert "enqueue-standard" not in research
 
-def test_watchlist_build_and_validate_detect_a_consistent_projection(tmp_path: Path, capsys):
-    task_id = _screen_and_dispatch(
-        tmp_path,
-        capsys,
-        "CN:601138",
-        trigger_id="watchlist-fixture",
+
+def test_empty_status_and_validate(tmp_path: Path, capsys):
+    assert _call(tmp_path, capsys, "status") == {
+        "active": 0,
+        "companies": 0,
+        "covered": 0,
+        "ignored": 0,
+        "inactive": 0,
+        "queued": 0,
+        "running": 0,
+        "unseen": 0,
+    }
+    assert _call(tmp_path, capsys, "validate")["ok"] is True
+
+
+def test_cli_completes_a_period_task(tmp_path: Path, capsys):
+    flow = ResearchFlow(tmp_path)
+    flow.register_universe([CompanyRef("CN:000001", "示例公司")], at=AT)
+    batch = flow.enqueue_research(
+        [ResearchRequest("CN:000001", "完成中报研究")],
+        report_period="2026-H1",
+        trigger_kind=PERIODIC_TRIGGER,
+        at=AT,
     )
-    result = _write(tmp_path / "result.json", _full_result("CN:601138", task_id))
-    _call(tmp_path, capsys, "research", "complete", "--input", str(result), "--at", AT)
-
-    built = _call(tmp_path, capsys, "watchlist", "build")
-    validated = _call(tmp_path, capsys, "validate")
-
-    assert built == {"count": 1, "path": "research/watchlist.jsonl"}
-    assert validated["status"]["covered"] == 1
-
-
-def test_updates_record_reaffirms_or_invalidates_without_patching_valuation(
-    tmp_path: Path,
-    capsys,
-):
-    task_id = _screen_and_dispatch(tmp_path, capsys, "CN:601138", trigger_id="initial")
-    result = _write(tmp_path / "result.json", _full_result("CN:601138", task_id))
-    completed = _call(tmp_path, capsys, "research", "complete", "--input", str(result))
-
-    update = _write(
-        tmp_path / "update.json",
-        {
-            "symbol": "CN:601138",
-            "title": "合同公告核对",
-            "impact": "reaffirmed",
-            "reviewed_at": "2026-08-09T17:00:00+08:00",
-            "information_cutoff": "2026-08-09T16:00:00+08:00",
-            "summary": "合同规模仍在原报告情景内。",
-            "analysis": "不改变正常化利润、核心逻辑、风险排序或价值区间。",
-            "conclusion": "当前正式报告继续有效。",
-            "event_ids": ["event-001"],
-            "source_urls": ["https://example.com/announcement"],
-        },
+    task = flow.start_task(batch.enqueued_tasks[0].task_id, at=AT)
+    source = tmp_path / "result.json"
+    source.write_text(
+        json.dumps(_result(task.symbol, task.task_id), ensure_ascii=False),
+        encoding="utf-8",
     )
-    recorded = _call(tmp_path, capsys, "updates", "record", "--input", str(update))
-    listed = _call(tmp_path, capsys, "watchlist", "list")
-    assert recorded["impact"] == "reaffirmed"
-    assert recorded["enqueued_task"] is None
-    assert listed["companies"][0]["basis_report_path"] == completed["basis_report_path"]
-    assert listed["companies"][0]["value_range"] == completed["value_range"]
-    assert (tmp_path / recorded["update_path"]).is_file()
+    completed = _call(tmp_path, capsys, "research", "complete", "--input", str(source))
+    assert completed["report_period"] == "2026-H1"
+    assert completed["basis_report_path"].endswith("/2026-H1.md")
 
-
-def test_events_fetch_requires_explicit_bootstrap_and_only_advances_after_exact_judgment(
-    tmp_path: Path,
-    capsys,
-    monkeypatch,
-):
-    universe = _write(
-        tmp_path / "universe.json",
-        {
-            "companies": [
-                {"symbol": "CN:000001", "name": "平安银行"},
-                {"symbol": "CN:601138", "name": "工业富联"},
-            ]
-        },
-    )
-    _call(
-        tmp_path,
-        capsys,
-        "universe",
-        "register",
-        "--input",
-        str(universe),
-        "--at",
-        AT,
-    )
-
-    code = main(["--root", str(tmp_path), "events", "fetch"])
-    error = json.loads(capsys.readouterr().err)
-    assert code == 1
-    assert "--since" in error["error"]
-
-    announcement = Announcement(
-        announcement_id="1225000001",
-        symbol="CN:000001",
-        title="2026年半年度报告",
-        published_at="2026-08-08T08:00:00+08:00",
-        url="https://static.cninfo.com.cn/finalpage/2026-08-08/1225000001.PDF",
-    )
-    calls: list[tuple[tuple[str, ...], str, str]] = []
-
-    def fake_discover(companies, start, end):
-        calls.append((tuple(companies), start, end))
-        return (announcement,) if len(calls) == 1 else ()
-
-    monkeypatch.setattr(
-        cli_module,
-        "discover_cninfo_announcements_for_companies",
-        fake_discover,
-    )
-    packet = _call(
-        tmp_path,
-        capsys,
-        "events",
-        "fetch",
-        "--since",
-        "2026-08-08T00:00:00+08:00",
-        "--until",
-        "2026-08-09T00:00:00+08:00",
-    )
-    packet_path = _write(tmp_path / "event-packet.json", packet)
-    incomplete = _write(tmp_path / "incomplete.json", {"successfully_judged_ids": []})
-
-    code = main(
-        [
-            "--root",
-            str(tmp_path),
-            "events",
-            "complete",
-            "--packet",
-            str(packet_path),
-            "--input",
-            str(incomplete),
-        ]
-    )
-    captured = capsys.readouterr()
-    assert code == 1
-    assert "missing" in json.loads(captured.err)["error"]
-    assert not (tmp_path / "coverage/cn-a/event_scan_state.json").exists()
-
-    complete = _write(
-        tmp_path / "complete.json",
-        {"successfully_judged_ids": ["1225000001"]},
-    )
-    advanced = _call(
-        tmp_path,
-        capsys,
-        "events",
-        "complete",
-        "--packet",
-        str(packet_path),
-        "--input",
-        str(complete),
-    )
-    assert advanced["advanced"] is True
-    assert advanced["last_successful_at"] == "2026-08-09T00:00:00+08:00"
-
-    next_packet = _call(
-        tmp_path,
-        capsys,
-        "events",
-        "fetch",
-        "--until",
-        "2026-08-10T00:00:00+08:00",
-    )
-    assert next_packet["announcement_count"] == 0
-    assert calls[0][0] == ("CN:000001", "CN:601138")
-    assert calls[1][1] == "2026-08-08T00:00:00+08:00"
-
-
-def test_events_fetch_can_write_a_utf8_packet_inside_the_repository(
-    tmp_path: Path,
-    capsys,
-    monkeypatch,
-):
-    monkeypatch.setattr(
-        cli_module,
-        "discover_cninfo_announcements_for_companies",
-        lambda _companies, _start, _end: (),
-    )
-    result = _call(
-        tmp_path,
-        capsys,
-        "events",
-        "fetch",
-        "--since",
-        "2026-08-08T00:00:00+08:00",
-        "--until",
-        "2026-08-09T00:00:00+08:00",
-        "--output",
-        "tmp/event-packet.json",
-    )
-
-    packet_path = tmp_path / result["packet_path"]
-    packet = json.loads(packet_path.read_text(encoding="utf-8"))
-    assert result["announcement_count"] == 0
-    assert packet["scan_start"] == "2026-08-08T00:00:00+08:00"
-    assert packet["announcements"] == []
-
-
-def test_research_complete_rejects_missing_task_id(tmp_path: Path, capsys):
-    result = _write(tmp_path / "result.json", _full_result("CN:601138"))
-
-    code = main(
-        [
-            "--root",
-            str(tmp_path),
-            "research",
-            "complete",
-            "--input",
-            str(result),
-            "--at",
-            AT,
-        ]
-    )
-
-    captured = capsys.readouterr()
-    assert code == 1
-    assert captured.out == ""
-    assert "task_id" in json.loads(captured.err)["error"]
-    assert not (tmp_path / "coverage/cn-a/research_state.jsonl").exists()
-
-
-def test_research_complete_rejects_a_task_that_was_not_dispatched(tmp_path: Path, capsys):
-    source = _write(
-        tmp_path / "queued-screen.json",
-        {
-            "screen_id": "not-dispatched",
-            "mode": "event",
-            "at": AT,
-            "decisions": [
-                {
-                    "symbol": "CN:601138",
-                    "route": "research_now",
-                    "reason": "值得完整研究",
-                }
-            ],
-        },
+    rewrite = tmp_path / "rewrite.json"
+    rewrite.write_text(
+        json.dumps(
+            {
+                "reason": "用户要求完整重写",
+                "companies": [{"symbol": "CN:000001"}],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
     )
     queued = _call(
         tmp_path,
         capsys,
-        "screen",
-        "record",
+        "research",
+        "enqueue-rewrite",
+        "--period",
+        "2026-H1",
+        "--batch-id",
+        "manual-001",
         "--input",
-        str(source),
+        str(rewrite),
     )
-    task_id = queued["enqueued"][0]["task_id"]
-    result = _write(tmp_path / "result.json", _full_result("CN:601138", task_id))
-
-    code = main(
-        [
-            "--root",
-            str(tmp_path),
-            "research",
-            "complete",
-            "--input",
-            str(result),
-            "--at",
-            AT,
-        ]
-    )
-
-    captured = capsys.readouterr()
-    assert code == 1
-    assert captured.out == ""
-    assert "must be running" in json.loads(captured.err)["error"]
-    dispatched = _call(tmp_path, capsys, "research", "next", "--limit", "1", "--at", AT)
-    assert dispatched["tasks"][0]["task_id"] == task_id
-
-
-def test_invalid_input_returns_one_compact_json_error(tmp_path: Path, capsys):
-    bad = tmp_path / "bad.json"
-    bad.write_text("{not json", encoding="utf-8")
-
-    code = main(["--root", str(tmp_path), "universe", "register", "--input", str(bad)])
-
-    captured = capsys.readouterr()
-    assert code == 1
-    assert captured.out == ""
-    error = json.loads(captured.err)
-    assert error["ok"] is False
-    assert error["error"]
-
-
-def test_input_templates_are_valid_and_contain_only_the_compact_model():
-    names = (
-        "universe.json",
-        "screen-decisions.json",
-        "research-result.json",
-        "research-update.json",
-        "event-judgments.json",
-    )
-    combined = ""
-    for name in names:
-        text = (ROOT / "templates" / name).read_text(encoding="utf-8")
-        assert json.loads(text)
-        combined += text.lower()
-    for removed in ("underwriting", "challenger", "allocation", "calibration", "claim"):
-        assert removed not in combined
-    for retired in ("price_levels", "price_monitor", "buy_below", "rearm_above"):
-        assert retired not in combined
+    assert queued["enqueued"][0]["trigger_kind"] == "manual_rewrite"
+    assert queued["enqueued"][0]["report_period"] == "2026-H1"
