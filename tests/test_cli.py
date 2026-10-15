@@ -64,6 +64,7 @@ def _full_result(symbol: str, task_id: str | None = None) -> dict:
         "event_triggers": ["下一期财报发布"],
         "source_urls": ["https://example.com/report"],
         "information_cutoff": AT,
+        "report_period": "2026-Q1",
         "report_markdown": (
             "# 示例公司\n\n"
             "信息截止：2026-08-08\n\n"
@@ -118,40 +119,6 @@ def _screen_and_dispatch(
     assert dispatched["count"] == 1
     assert dispatched["tasks"][0]["task_id"] == queued["enqueued"][0]["task_id"]
     return dispatched["tasks"][0]["task_id"]
-
-
-def test_scoped_current_revision_cli_updates_report_without_a_new_task(tmp_path, capsys):
-    symbol = "CN:000001"
-    task_id = _screen_and_dispatch(tmp_path, capsys, symbol, trigger_id="initial")
-    initial = _write(tmp_path / "initial.json", _full_result(symbol, task_id))
-    _call(tmp_path, capsys, "research", "complete", "--input", str(initial))
-    state_file = tmp_path / "coverage/cn-a/research_state.jsonl"
-    state = json.loads(state_file.read_text(encoding="utf-8").splitlines()[0])
-    report = tmp_path / state["report_path"]
-    expected = tmp_path / "original.md"
-    expected.write_text(report.read_text(encoding="utf-8"), encoding="utf-8")
-    scope = _write(tmp_path / "scope.json", {"reports": [
-        {"symbol": symbol, "report_path": state["report_path"], "eligible": True}
-    ]})
-    payload = _full_result(symbol)
-    payload["report_markdown"] = payload["report_markdown"].replace(
-        "现金流转化仍需验证。", "客户信用账期限制了利润的现金转换。"
-    )
-    candidate = _write(tmp_path / "revision.json", {
-        "at": "2026-09-15T12:00:00+08:00", "rationale": "核验客户账期与现金转换。",
-        "result": payload,
-    })
-    revised = _call(tmp_path, capsys, "reports", "revise-current", "--scope", str(scope),
-                    "--expected", str(expected), "--input", str(candidate))
-    assert revised["report_path"] == state["report_path"]
-    assert "信用账期" in report.read_text(encoding="utf-8")
-    assert (tmp_path / "coverage/cn-a/research_queue.jsonl").read_text(encoding="utf-8") == ""
-    assert len(list(report.parent.glob("*.md"))) == 1
-    _call(tmp_path, capsys, "validate")
-    # Reusing the reviewed original cannot overwrite a subsequent revision.
-    assert main(["--root", str(tmp_path), "reports", "revise-current", "--scope", str(scope),
-                 "--expected", str(expected), "--input", str(candidate)]) == 1
-    assert "changed since" in capsys.readouterr().err
 
 
 def test_help_contains_only_the_compact_workflow(capsys: pytest.CaptureFixture[str]):
@@ -463,8 +430,8 @@ def test_research_complete_writes_dated_report_and_full_watchlist(tmp_path: Path
     listed = _call(tmp_path, capsys, "watchlist", "list")
 
     assert completed["status"] == "covered"
-    assert completed["report_path"] == ("research/companies/CN/601138/reports/2026-08-08.md")
-    assert (tmp_path / completed["report_path"]).is_file()
+    assert completed["basis_report_path"] == ("research/companies/CN/601138/reports/2026-Q1.md")
+    assert (tmp_path / completed["basis_report_path"]).is_file()
     company = listed["companies"][0]
     assert company["key_logic"] == ["需求增长", "现金流转化决定估值"]
     assert company["value_range"] == {"currency": "CNY", "high": 82.0, "low": 58.0}
@@ -643,7 +610,7 @@ def test_updates_record_reaffirms_or_invalidates_without_patching_valuation(
     listed = _call(tmp_path, capsys, "watchlist", "list")
     assert recorded["impact"] == "reaffirmed"
     assert recorded["enqueued_task"] is None
-    assert listed["companies"][0]["report_path"] == completed["report_path"]
+    assert listed["companies"][0]["basis_report_path"] == completed["basis_report_path"]
     assert listed["companies"][0]["value_range"] == completed["value_range"]
     assert (tmp_path / recorded["update_path"]).is_file()
 

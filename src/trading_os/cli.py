@@ -10,7 +10,6 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence, TextIO
 
 from .industry_catalog import industry_catalog
-from .research_assets.legacy_salvage import LegacyReportSalvager
 from .research_assets.market_data import (
     DEFAULT_EVENT_SCAN_STATE_PATH,
     MARKET_TIMEZONE,
@@ -94,31 +93,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     state = commands.add_parser("state", help="维护公司状态模型和全市场基线")
     state_commands = state.add_subparsers(dest="state_command", required=True)
-    migrate_v3 = state_commands.add_parser(
-        "migrate-v3", help="迁移到无证券价格触发的事件驱动状态模型"
-    )
-    _add_at(migrate_v3)
-    migrate_v3.set_defaults(handler=_state_migrate_v3)
     rebaseline = state_commands.add_parser(
         "prepare-rebaseline", help="保留有效覆盖，重置其余公司供全市场重筛"
     )
     _add_at(rebaseline)
     rebaseline.set_defaults(handler=_state_prepare_rebaseline)
-
-    reports = commands.add_parser("reports", help="维护本机日期化正式研报时间线")
-    report_commands = reports.add_subparsers(dest="reports_command", required=True)
-    migrate_current = report_commands.add_parser(
-        "migrate-current", help="把旧 current.md 一次性迁入 reports/日期.md"
-    )
-    migrate_current.set_defaults(handler=_reports_migrate_current)
-    revise_current = report_commands.add_parser(
-        "revise-current", help="仅按本次用户授权清单修订当前中报报告"
-    )
-    _add_input(revise_current)
-    _add_at(revise_current)
-    revise_current.add_argument("--scope", required=True, help="冻结的本次资格清单 JSON")
-    revise_current.add_argument("--expected", required=True, help="审核前原文文件，防止并发覆盖")
-    revise_current.set_defaults(handler=_reports_revise_current)
 
     universe = commands.add_parser("universe", help="维护全市场证券清单")
     universe_commands = universe.add_subparsers(dest="universe_command", required=True)
@@ -209,18 +188,6 @@ def build_parser() -> argparse.ArgumentParser:
     _add_input(event_complete)
     event_complete.set_defaults(handler=_events_complete)
 
-    salvage = commands.add_parser("legacy-salvage", help="从固定恢复标签筛选并打捞旧研报")
-    salvage_commands = salvage.add_subparsers(dest="salvage_command", required=True)
-    candidates = salvage_commands.add_parser(
-        "candidates", help="只读列出旧报告候选；不会改变当前状态"
-    )
-    candidates.add_argument("--limit", type=int, default=200)
-    candidates.add_argument("--min-score", type=int, default=0)
-    candidates.set_defaults(handler=_legacy_salvage_candidates)
-    archive_salvage = salvage_commands.add_parser(
-        "archive-best", help="每家公司选一份最佳旧报告写入隔离档案"
-    )
-    archive_salvage.set_defaults(handler=_legacy_salvage_archive_best)
     return parser
 
 
@@ -348,6 +315,7 @@ def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
         event_triggers=payload.get("event_triggers") or (),
         source_urls=payload.get("source_urls") or (),
         information_cutoff=payload["information_cutoff"],
+        report_period=payload["report_period"],
         report_markdown=payload.get("report_markdown"),
         valuation_note=payload.get("valuation_note"),
         return_model=return_model,
@@ -416,32 +384,6 @@ def _industry_validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
     return {"ok": True, **industry_catalog(Path(args.root), require_complete=True)}
 
 
-def _reports_revise_current(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    from .report_revision import revise_current
-
-    payload, _ = _load(args.input, stdin)
-    scope, _ = _load(args.scope, stdin)
-    if not isinstance(payload, dict) or not isinstance(scope, dict):
-        raise ValueError("修订结果与资格清单必须为对象")
-    records = _records(scope, "reports")
-    eligible = [row for row in records if row.get("eligible") is True]
-    allowed = {row["symbol"]: row["report_path"] for row in eligible}
-    if len(allowed) != len(eligible):
-        raise ValueError("资格清单存在重复公司")
-    result = payload.get("result", payload)
-    if not isinstance(result, dict):
-        raise ValueError("result 必须为对象")
-    revised = revise_current(
-        Path(args.root), _research_result(result), allowed_reports=allowed,
-        expected_report=Path(args.expected).read_text(encoding="utf-8"),
-        reviewed_at=args.at or payload.get("at") or datetime.now().astimezone().isoformat(),
-        rationale=payload.get("rationale", ""),
-        display_issue=payload.get("post_cutoff_display_issue"),
-    )
-    return {"symbol": revised["symbol"], "report_path": revised["report_path"],
-            "status": revised["status"], "last_revision": revised.get("last_revision")}
-
-
 def _quality_pool(args: argparse.Namespace) -> QualityPoolStore:
     return QualityPoolStore(Path(args.root))
 
@@ -490,25 +432,11 @@ def _quality_pool_rebuild(args: argparse.Namespace, stdin: TextIO) -> dict[str, 
     return {"ok": True, **_quality_pool(args).rebuild().status(), "projection_current": True}
 
 
-def _state_migrate_v3(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    del stdin
-    flow = _flow(args)
-    migrated = flow.migrate_state_v3(at=args.at)
-    return {"migrated": migrated, "status": asdict(flow.validate())}
-
-
 def _state_prepare_rebaseline(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
     flow = _flow(args)
     reset = flow.prepare_rebaseline(at=args.at)
     return {"reset": reset, "status": asdict(flow.validate())}
-
-
-def _reports_migrate_current(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    del stdin
-    flow = _flow(args)
-    migrated = flow.migrate_current_reports()
-    return {"migrated": migrated, "status": asdict(flow.validate())}
 
 
 def _universe_register(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
@@ -647,7 +575,8 @@ def _research_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
         "value_range": state["value_range"],
         "return_model": state["return_model"],
         "return_model_note": state["return_model_note"],
-        "report_path": state["report_path"],
+        "report_period": state["report_period"],
+        "basis_report_path": state["basis_report_path"],
     }
 
 
@@ -837,19 +766,6 @@ def _events_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
         "judged_count": len(judged_ids),
         **event_scan_state_payload(next_state),
     }
-
-
-def _legacy_salvage_candidates(args: argparse.Namespace, stdin: TextIO) -> Any:
-    del stdin
-    return LegacyReportSalvager(Path(args.root)).list_candidates(
-        limit=args.limit,
-        min_score=args.min_score,
-    )
-
-
-def _legacy_salvage_archive_best(args: argparse.Namespace, stdin: TextIO) -> Any:
-    del stdin
-    return LegacyReportSalvager(Path(args.root)).archive_best()
 
 
 def main(

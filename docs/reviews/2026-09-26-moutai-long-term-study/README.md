@@ -286,6 +286,6 @@
 - **S7：五粮液2014年年度报告**，2015-04-17；第7页主要会计数据，第9—11页经营分析。[公告及全文](https://data.eastmoney.com/notices/detail/000858/AN201504160009230679.html)，[PDF](https://pdf.dfcfw.com/pdf/H2_AN201504160009230679_1.pdf)。
 - **S8：Berkshire Hathaway 2007股东信**，落款2008年2月；正文印刷第7—8页，喜诗糖果、资本效率及不同生意类型。[PDF](https://www.berkshirehathaway.com/letters/2007ltr.pdf)。
 - **S9：Berkshire Hathaway 2008股东信**，2009-02-27；正文印刷第22页，比亚迪插电汽车及权益表述。[PDF](https://www.berkshirehathaway.com/letters/2008ltr.pdf)。
-- **S10：对照报告**：[贵州茅台2026-09-26正式报告](../../../research/companies/CN/600519/reports/2026-09-26.md)，资料截止2026-08-15；本样稿不是对其验收登记的替代。
+- **S10：对照报告**：[贵州茅台2026-09-26正式报告](../../../research/companies/CN/600519/reports/2026-H1.md)，资料截止2026-08-15；本样稿不是对其验收登记的替代。
 
 上面引用的厂家历史数据用于约束判断，不能直接当作终端需求数据。2014年的事后结果只用于今天研究竞争耐久性，不写回当时的投资决策。所有模型变量和投资价格讨论都属于本次独立样稿，不进入正式估值和价格监控系统。

@@ -26,16 +26,14 @@ export function progressCounts(companies, scope = "quality_pool") {
   };
 }
 /** @param {string | null} [version] */
-export function readingContext(company, version = null, mode = "current") {
+export function readingContext(company, version = null) {
   if (!company) return { report: null, live: false, historical: false };
-  if (version || mode === "history") {
-    const report = version ? company.reports.find((item) => item.date === version) : company.reports[0];
-    // Explicit dated reading is a snapshot even when its path is current.
-    return { report: report ?? null, live: false, historical: true };
-  }
-  const report = isCurrentResult(company, "all_standard")
-    ? company.reports.find((item) => item.sourcePath === company.reportPath) : null;
-  return { report: report ?? null, live: Boolean(report), historical: false };
+  const report = version
+    ? company.reports.find((item) => item.period === version)
+    : company.reports[0];
+  const live = Boolean(report && isCurrentResult(company, "all_standard")
+    && report.sourcePath === company.basisReportPath);
+  return { report: report ?? null, live, historical: Boolean(report && !live) };
 }
 export const DISPLAY_LABELS = {
   current: "现行标准 · 已估值",

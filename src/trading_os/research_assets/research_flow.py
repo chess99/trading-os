@@ -22,7 +22,8 @@ QUEUE_PATH = Path("coverage/cn-a/research_queue.jsonl")
 
 _SYMBOL_RE = re.compile(r"^CN:\d{6}$")
 _DATED_MARKDOWN_RE = re.compile(r"^(?P<date>\d{4}-\d{2}-\d{2})(?:-(?P<sequence>\d{2}))?\.md$")
-_FORMAL_REPORT_RE = _DATED_MARKDOWN_RE
+_REPORT_PERIOD_RE = re.compile(r"^(?P<year>20\d{2})-(?P<period>FY|Q1|H1|Q3)$")
+_FORMAL_REPORT_RE = re.compile(r"^(?P<year>20\d{2})-(?P<period>FY|Q1|H1|Q3)\.md$")
 _SECURITY_PRICE_TRIGGER_RE = re.compile(
     r"收盘价|股价|价格线|价格触发|重新武装|重装触发器|关注价|买入价|安全边际价格|"
     r"价值区间下沿|重新复核价|研究买入观察区"
@@ -125,7 +126,7 @@ class StateCorruptionError(ResearchFlowError):
     """Raised when a persisted JSONL file is malformed or internally inconsistent."""
 
 
-STATE_SCHEMA_VERSION = 3
+STATE_SCHEMA_VERSION = 4
 
 
 class UniverseStatus(str, Enum):
@@ -214,6 +215,7 @@ class ResearchResult:
     event_triggers: Sequence[str]
     source_urls: Sequence[str]
     information_cutoff: str
+    report_period: str
     name: str | None = None
     report_markdown: str | None = None
     valuation_note: str | None = None
@@ -543,6 +545,38 @@ def _timestamp(value: str | datetime | None) -> str:
     return parsed.isoformat()
 
 
+def _report_period(value: object, *, information_cutoff: str | None = None) -> str:
+    """Normalize a financial reporting period such as ``2026-H1``.
+
+    The period names the latest periodic financial basis of a full report. A
+    rewrite within the same period replaces that period's file; the factual
+    cutoff remains a separate timestamp in the report and state.
+    """
+
+    normalized = _nonblank(value, "report_period") if isinstance(value, str) else ""
+    match = _REPORT_PERIOD_RE.fullmatch(normalized)
+    if match is None:
+        raise ValidationError("report_period must be YYYY-FY, YYYY-Q1, YYYY-H1, or YYYY-Q3")
+    if information_cutoff is not None:
+        year = int(match.group("year"))
+        month_day = {"Q1": (3, 31), "H1": (6, 30), "Q3": (9, 30), "FY": (12, 31)}[
+            match.group("period")
+        ]
+        cutoff = datetime.fromisoformat(information_cutoff)
+        period_end = datetime(year, *month_day, tzinfo=cutoff.tzinfo)
+        if period_end > cutoff:
+            raise ValidationError("report_period ends after information_cutoff")
+    return normalized
+
+
+def _report_period_key(value: str) -> tuple[int, int]:
+    match = _REPORT_PERIOD_RE.fullmatch(value)
+    if match is None:
+        raise ValidationError(f"invalid report period: {value}")
+    order = {"Q1": 1, "H1": 2, "Q3": 3, "FY": 4}
+    return int(match.group("year")), order[match.group("period")]
+
+
 def _value_range(value: ValueRange | None) -> dict[str, Any] | None:
     if value is None:
         return None
@@ -719,7 +753,8 @@ def _empty_state(symbol: str, name: str | None, at: str) -> dict[str, Any]:
         "last_screening": None,
         "last_research_at": None,
         "information_cutoff": None,
-        "report_path": None,
+        "report_period": None,
+        "basis_report_path": None,
         "valuation_note": None,
         "return_model": None,
         "return_model_note": None,
@@ -865,7 +900,8 @@ class ResearchFlow:
                 "source_urls": list(state.get("source_urls") or []),
                 "last_research_at": state.get("last_research_at"),
                 "information_cutoff": state.get("information_cutoff"),
-                "report_path": state.get("report_path"),
+                "report_period": state.get("report_period"),
+                "basis_report_path": state.get("basis_report_path"),
                 "valuation_note": state.get("valuation_note"),
                 "updated_at": state.get("updated_at"),
             }
@@ -934,184 +970,6 @@ class ResearchFlow:
         tasks.append(task)
         return task
 
-    def migrate_state_v3(self, *, at: str | datetime | None = None) -> int:
-        """Migrate legacy state into the event-driven schema.
-
-        A legacy ``watch`` without a formal report becomes ``candidate`` and
-        a legacy ``researched`` row becomes ``covered``. Version 2 rows lose
-        all security-price alert state and security-price event text. The
-        migration does not create research tasks.
-        """
-
-        timestamp = _timestamp(at)
-        with _exclusive_lock(self.lock_path):
-            rows = _read_jsonl(self.state_path)
-            if not rows:
-                return 0
-            versions = {row.get("schema_version") for row in rows}
-            if versions == {STATE_SCHEMA_VERSION}:
-                states: dict[str, dict[str, Any]] = {}
-                changed = 0
-                for row in rows:
-                    symbol = _symbol(row.get("symbol"))
-                    state = dict(row)
-                    migrated_screening = _migrated_screening(state.get("last_screening"))
-                    if migrated_screening != state.get("last_screening"):
-                        state["last_screening"] = migrated_screening
-                        changed += 1
-                    states[symbol] = state
-                if changed:
-                    self._write_states(states)
-                return changed
-            if versions == {2}:
-                states: dict[str, dict[str, Any]] = {}
-                for row in rows:
-                    symbol = _symbol(row.get("symbol"))
-                    state = dict(row)
-                    state["schema_version"] = STATE_SCHEMA_VERSION
-                    state.pop("price_levels", None)
-                    state.pop("price_monitor", None)
-                    state["event_triggers"] = _without_security_price_triggers(
-                        state.get("event_triggers")
-                    )
-                    state["last_screening"] = _migrated_screening(state.get("last_screening"))
-                    states[symbol] = state
-                tasks = self._tasks()
-                self._write_tasks(tasks)
-                self._write_states(states)
-                return len(rows)
-            if versions != {1}:
-                raise StateCorruptionError(
-                    f"cannot migrate mixed or unsupported state schemas: {versions}"
-                )
-
-            states: dict[str, dict[str, Any]] = {}
-            migrated_candidates: set[str] = set()
-            for row in rows:
-                symbol = _symbol(row.get("symbol"))
-                legacy_status = _nonblank(row.get("status"), "legacy status")
-                if legacy_status not in {"unseen", "ignore", "watch", "researched"}:
-                    raise StateCorruptionError(
-                        f"unsupported legacy company status for {symbol}: {legacy_status}"
-                    )
-                state = dict(row)
-                state.update(
-                    {
-                        "schema_version": STATE_SCHEMA_VERSION,
-                        "universe_status": UniverseStatus.ACTIVE.value,
-                        "information_cutoff": row.get("last_research_at"),
-                        "valuation_note": None,
-                        "candidate_since": None,
-                        "invalidation": None,
-                    }
-                )
-                state.pop("price_levels", None)
-                state.pop("price_monitor", None)
-                state["event_triggers"] = _without_security_price_triggers(
-                    state.get("event_triggers")
-                )
-                state["last_screening"] = _migrated_screening(state.get("last_screening"))
-                if legacy_status == "watch":
-                    state["status"] = CompanyStatus.CANDIDATE.value
-                    state["candidate_since"] = timestamp
-                    state["value_range"] = None
-                    state["report_path"] = None
-                    state["last_research_at"] = None
-                    state["information_cutoff"] = None
-                    migrated_candidates.add(symbol)
-                elif legacy_status == "researched":
-                    state["status"] = CompanyStatus.COVERED.value
-                elif legacy_status == "ignore":
-                    state["status"] = CompanyStatus.IGNORE.value
-                else:
-                    state["status"] = CompanyStatus.UNSEEN.value
-                states[symbol] = state
-
-            legacy_tasks = _read_jsonl(self.queue_path)
-            tasks: list[ResearchTask] = []
-            for row in legacy_tasks:
-                task_status = _nonblank(row.get("status"), "legacy task status")
-                if task_status not in {"queued", "dispatched"}:
-                    raise StateCorruptionError(f"unsupported legacy task status: {task_status}")
-                task = ResearchTask(
-                    task_id=_nonblank(row.get("task_id"), "task_id"),
-                    symbol=_symbol(row.get("symbol")),
-                    name=_optional_name(row.get("name")),
-                    trigger_kind=_nonblank(row.get("trigger_kind"), "trigger_kind"),
-                    trigger_id=_nonblank(row.get("trigger_id"), "trigger_id"),
-                    reason=_nonblank(row.get("reason"), "reason"),
-                    enqueued_at=_timestamp(row.get("enqueued_at")),
-                    status=(
-                        TaskStatus.RUNNING if task_status == "dispatched" else TaskStatus.QUEUED
-                    ),
-                    started_at=(
-                        _timestamp(row.get("dispatched_at")) if row.get("dispatched_at") else None
-                    ),
-                )
-                tasks.append(task)
-                state = states[task.symbol]
-                if state.get("report_path") is not None:
-                    state["status"] = CompanyStatus.STALE.value
-                    state["invalidation"] = {
-                        "at": timestamp,
-                        "reason": task.reason,
-                        "screen_id": task.trigger_id,
-                    }
-                else:
-                    state["status"] = CompanyStatus.CANDIDATE.value
-                    state["candidate_since"] = state.get("candidate_since") or timestamp
-
-            self._write_tasks(tasks)
-            self._write_states(states)
-        self.migrate_current_reports()
-        return len(rows)
-
-    def migrate_current_reports(self) -> int:
-        """Move legacy ``current.md`` files into the immutable dated timeline."""
-
-        created_targets: list[Path] = []
-        current_paths: list[Path] = []
-        with _exclusive_lock(self.lock_path):
-            states = self._states()
-            migrations: list[tuple[dict[str, Any], Path, Path]] = []
-            for symbol, state in states.items():
-                current = self._company_directory(symbol) / "current.md"
-                current_relative = current.relative_to(self.root).as_posix()
-                if state.get("report_path") != current_relative:
-                    continue
-                research_at = state.get("last_research_at")
-                if not research_at:
-                    raise StateCorruptionError(
-                        f"cannot date legacy current report without last_research_at: {symbol}"
-                    )
-                if not current.is_file():
-                    raise StateCorruptionError(f"legacy current report is missing for {symbol}")
-                report_date = _timestamp(research_at)[:10]
-                target = self._company_directory(symbol) / "reports" / f"{report_date}.md"
-                if target.exists() and target.read_bytes() != current.read_bytes():
-                    raise StateCorruptionError(
-                        f"dated report already exists with different content: {symbol}"
-                    )
-                migrations.append((state, current, target))
-
-            if not migrations:
-                return 0
-            try:
-                for state, current, target in migrations:
-                    if not target.exists():
-                        _atomic_write_text(target, current.read_text(encoding="utf-8"))
-                        created_targets.append(target)
-                    state["report_path"] = target.relative_to(self.root).as_posix()
-                    current_paths.append(current)
-                self._write_states(states)
-            except BaseException:
-                for target in created_targets:
-                    target.unlink(missing_ok=True)
-                raise
-        for current in current_paths:
-            current.unlink(missing_ok=True)
-        return len(current_paths)
-
     def prepare_rebaseline(self, *, at: str | datetime | None = None) -> int:
         """Reset active non-covered companies to unseen for a full manager pass."""
 
@@ -1138,7 +996,8 @@ class ResearchFlow:
                         "last_screening": None,
                         "last_research_at": None,
                         "information_cutoff": None,
-                        "report_path": None,
+                        "report_period": None,
+                        "basis_report_path": None,
                         "valuation_note": None,
                         "return_model": None,
                         "return_model_note": None,
@@ -1319,7 +1178,7 @@ class ResearchFlow:
                 item["symbol"]
                 for item in normalized
                 if item["route"] == ScreenRoute.IGNORE.value
-                and isinstance(states.get(item["symbol"], {}).get("report_path"), str)
+                and isinstance(states.get(item["symbol"], {}).get("basis_report_path"), str)
             )
             if direct_outcome_changes:
                 raise ValidationError(
@@ -1330,7 +1189,7 @@ class ResearchFlow:
                 item["symbol"]
                 for item in normalized
                 if item["route"] == ScreenRoute.RESEARCH_NOW.value
-                and isinstance(states.get(item["symbol"], {}).get("report_path"), str)
+                and isinstance(states.get(item["symbol"], {}).get("basis_report_path"), str)
             )
             if covered_research_now:
                 raise ValidationError(
@@ -1367,7 +1226,8 @@ class ResearchFlow:
                     state["source_urls"] = item["source_urls"]
                     state["last_research_at"] = None
                     state["information_cutoff"] = None
-                    state["report_path"] = None
+                    state["report_period"] = None
+                    state["basis_report_path"] = None
                     state["valuation_note"] = None
                     state["return_model"] = None
                     state["return_model_note"] = None
@@ -1375,7 +1235,7 @@ class ResearchFlow:
                     state["invalidation"] = None
                     tasks = [task for task in tasks if task.symbol != symbol]
                 elif item["route"] == ScreenRoute.RESEARCH_NOW.value:
-                    if state.get("report_path") is not None:
+                    if state.get("basis_report_path") is not None:
                         state["status"] = CompanyStatus.STALE.value
                         state["invalidation"] = {
                             "at": timestamp,
@@ -1654,6 +1514,10 @@ class ResearchFlow:
         event_triggers = _event_triggers(result.event_triggers)
         source_urls = _urls(result.source_urls)
         information_cutoff = _timestamp(result.information_cutoff)
+        report_period = _report_period(
+            result.report_period,
+            information_cutoff=information_cutoff,
+        )
         valuation_note = (
             _nonblank(result.valuation_note, "valuation_note")
             if result.valuation_note is not None
@@ -1774,6 +1638,7 @@ class ResearchFlow:
             "event_triggers": event_triggers,
             "source_urls": source_urls,
             "information_cutoff": information_cutoff,
+            "report_period": report_period,
             "report_markdown": report_markdown,
             "valuation_note": valuation_note,
             "return_model": return_model,
@@ -1789,10 +1654,10 @@ class ResearchFlow:
         if not reports_directory.is_dir():
             return ()
 
-        def order(path: Path) -> tuple[str, int]:
+        def order(path: Path) -> tuple[int, int]:
             match = _FORMAL_REPORT_RE.fullmatch(path.name)
             assert match is not None
-            return match.group("date"), int(match.group("sequence") or "1")
+            return _report_period_key(f"{match.group('year')}-{match.group('period')}")
 
         reports = [
             path
@@ -1801,25 +1666,19 @@ class ResearchFlow:
         ]
         return tuple(sorted(reports, key=order))
 
-    def _next_report_path(self, symbol: str, timestamp: str) -> Path:
-        report_date = _timestamp(timestamp)[:10]
+    def _report_path(self, symbol: str, report_period: str) -> Path:
+        normalized_period = _report_period(report_period)
         reports = self._formal_reports(symbol)
         if reports:
             newest_match = _FORMAL_REPORT_RE.fullmatch(reports[-1].name)
             assert newest_match is not None
-            if report_date < newest_match.group("date"):
+            newest_period = f"{newest_match.group('year')}-{newest_match.group('period')}"
+            if _report_period_key(normalized_period) < _report_period_key(newest_period):
                 raise ValidationError(
-                    f"research completion for {symbol} predates its newest formal report"
+                    f"research period for {symbol} predates its newest report period"
                 )
         reports_directory = self._company_directory(symbol) / "reports"
-        first = reports_directory / f"{report_date}.md"
-        if not first.exists():
-            return first
-        for sequence in range(2, 100):
-            candidate = reports_directory / f"{report_date}-{sequence:02d}.md"
-            if not candidate.exists():
-                return candidate
-        raise ValidationError(f"too many formal reports for {symbol} on {report_date}")
+        return reports_directory / f"{normalized_period}.md"
 
     def _updates(self, symbol: str) -> tuple[Path, ...]:
         updates_directory = self._company_directory(symbol) / "updates"
@@ -1955,7 +1814,7 @@ class ResearchFlow:
                 CompanyStatus.STALE.value,
             }:
                 raise ValidationError("research update requires a covered or stale company")
-            base_report = state.get("report_path")
+            base_report = state.get("basis_report_path")
             if not isinstance(base_report, str):
                 raise ValidationError("research update requires a current formal report")
             report_cutoff = _timestamp(state.get("information_cutoff"))
@@ -2069,7 +1928,7 @@ class ResearchFlow:
             current_state = states.get(normalized["symbol"])
             needs_comparison = task.trigger_kind == "update" or (
                 task.trigger_kind == STANDARD_UPGRADE_TRIGGER
-                and isinstance((current_state or {}).get("report_path"), str)
+                and isinstance((current_state or {}).get("basis_report_path"), str)
             )
             if needs_comparison and not _has_refresh_comparison_table(
                 normalized["report_markdown"]
@@ -2086,7 +1945,7 @@ class ResearchFlow:
                 ResearchOutcome.IGNORE.value: CompanyStatus.IGNORE.value,
                 ResearchOutcome.COVERED.value: CompanyStatus.COVERED.value,
             }[normalized["outcome"]]
-            report_path = self._next_report_path(normalized["symbol"], timestamp)
+            report_path = self._report_path(normalized["symbol"], normalized["report_period"])
             report_relative = report_path.relative_to(self.root).as_posix()
             report_content = normalized["report_markdown"].rstrip() + "\n"
             _atomic_write_text(report_path, report_content)
@@ -2106,7 +1965,8 @@ class ResearchFlow:
                     "source_urls": normalized["source_urls"],
                     "last_research_at": timestamp,
                     "information_cutoff": normalized["information_cutoff"],
-                    "report_path": report_relative,
+                    "report_period": normalized["report_period"],
+                    "basis_report_path": report_relative,
                     "valuation_note": normalized["valuation_note"],
                     "return_model": normalized["return_model"],
                     "return_model_note": normalized["return_model_note"],
@@ -2171,7 +2031,7 @@ class ResearchFlow:
                         )
                     if (
                         has_return_contract
-                        and state.get("report_path") is not None
+                        and state.get("basis_report_path") is not None
                         and return_model_note is None
                     ):
                         raise StateCorruptionError(
@@ -2208,7 +2068,8 @@ class ResearchFlow:
                         raise StateCorruptionError(
                             f"processed_triggers for {symbol} must be a unique list"
                         )
-                    report_path = state.get("report_path")
+                    report_path = state.get("basis_report_path")
+                    report_period = state.get("report_period")
                     if report_path is not None:
                         expected_prefix = (self._company_directory(symbol) / "reports").relative_to(
                             self.root
@@ -2216,12 +2077,22 @@ class ResearchFlow:
                         if not isinstance(report_path, str) or not report_path.startswith(
                             expected_prefix
                         ):
-                            raise StateCorruptionError(f"report_path mismatch for {symbol}")
+                            raise StateCorruptionError(f"basis_report_path mismatch for {symbol}")
                         report_name = report_path.removeprefix(expected_prefix)
-                        if not _FORMAL_REPORT_RE.fullmatch(report_name):
+                        match = _FORMAL_REPORT_RE.fullmatch(report_name)
+                        if match is None:
                             raise StateCorruptionError(
-                                f"report_path is not a dated formal report for {symbol}"
+                                f"basis_report_path is not a period report for {symbol}"
                             )
+                        expected_period = f"{match.group('year')}-{match.group('period')}"
+                        if report_period != expected_period:
+                            raise StateCorruptionError(
+                                f"report_period does not match basis_report_path for {symbol}"
+                            )
+                        _report_period(
+                            report_period,
+                            information_cutoff=_timestamp(state.get("information_cutoff")),
+                        )
                         expected_report = self.root / report_path
                         if not expected_report.is_file():
                             raise StateCorruptionError(f"current report is missing for {symbol}")
@@ -2234,8 +2105,12 @@ class ResearchFlow:
                         reports = self._formal_reports(symbol)
                         if not reports or expected_report != reports[-1]:
                             raise StateCorruptionError(
-                                f"report_path is not the latest formal report for {symbol}"
+                                f"basis_report_path is not the latest report period for {symbol}"
                             )
+                    elif report_period is not None:
+                        raise StateCorruptionError(
+                            f"report_period requires basis_report_path for {symbol}"
+                        )
 
                     updates_directory = self._company_directory(symbol) / "updates"
                     if updates_directory.is_dir():
@@ -2332,7 +2207,7 @@ class ResearchFlow:
                         base_report_name = base_report.removeprefix(expected_report_prefix)
                         if not _FORMAL_REPORT_RE.fullmatch(base_report_name):
                             raise StateCorruptionError(
-                                f"last_update base_report is not dated for {symbol}"
+                                f"last_update base_report is not a period report for {symbol}"
                             )
                         base_report_file = self.root / base_report
                         if (

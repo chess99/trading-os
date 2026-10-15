@@ -54,6 +54,7 @@ def _covered(symbol: str) -> ResearchResult:
         name="示例公司",
         outcome="covered",
         information_cutoff=AT,
+        report_period="2026-Q1",
         summary="需求增长成立，但现金流转化仍需后续财报验证。",
         key_logic=("核心产品需求增长", "现金流转化决定估值上限"),
         risks=("客户集中", "资本开支回报不及预期"),
@@ -89,6 +90,7 @@ def _ignored(symbol: str) -> ResearchResult:
         name="示例公司",
         outcome="ignore",
         information_cutoff=AT,
+        report_period="2026-Q1",
         summary="正式研究后仍不值得持续覆盖。",
         key_logic=("增长依赖持续融资",),
         risks=("普通股持续稀释",),
@@ -168,7 +170,7 @@ def test_standard_upgrade_research_preserves_current_state_until_completion(tmp_
     assert flow.state_path.read_text(encoding="utf-8") == original_state_text
     assert flow.watchlist_path.read_text(encoding="utf-8") == original_watchlist_text
     assert flow.read_states()[0]["status"] == "covered"
-    assert flow.read_states()[0]["report_path"] == original["report_path"]
+    assert flow.read_states()[0]["basis_report_path"] == original["basis_report_path"]
     flow.validate()
 
     dispatched = flow.dispatch_tasks(
@@ -179,8 +181,8 @@ def test_standard_upgrade_research_preserves_current_state_until_completion(tmp_
     assert dispatched[0].task_id == task.task_id
     revised = flow.apply_result(_covered(symbol), task_id=task.task_id, at=LATER)
     assert revised["status"] == "covered"
-    assert revised["report_path"] != original["report_path"]
-    assert len(list((tmp_path / "research/companies/CN/601138/reports").glob("*.md"))) == 2
+    assert revised["basis_report_path"] == original["basis_report_path"]
+    assert len(list((tmp_path / "research/companies/CN/601138/reports").glob("*.md"))) == 1
     assert "standard_upgrade:owner-value-1.0:core-pool-2026-09" in revised["processed_triggers"]
     flow.validate()
 
@@ -217,7 +219,7 @@ def test_standard_upgrade_accepts_ignore_and_dispatch_filter_keeps_normal_queue(
 
     completed = flow.apply_result(_ignored("CN:000001"), task_id=standard.task_id, at=AT)
     assert completed["status"] == "ignore"
-    assert completed["report_path"].endswith("/reports/2026-08-08.md")
+    assert completed["basis_report_path"].endswith("/reports/2026-Q1.md")
     flow.validate()
 
 
@@ -379,9 +381,9 @@ def test_formal_result_is_self_contained_and_watchlist_has_no_price_state(tmp_pa
     assert state["return_model_note"].startswith("终值采用")
     assert "expected_irr" not in state
     assert "price_levels" not in state and "price_monitor" not in state
-    assert (tmp_path / state["report_path"]).is_file()
+    assert (tmp_path / state["basis_report_path"]).is_file()
     watch = flow.read_watchlist()[0]
-    assert watch["report_path"] == state["report_path"]
+    assert watch["basis_report_path"] == state["basis_report_path"]
     assert watch["return_model"] == state["return_model"]
     assert watch["return_model_note"] == state["return_model_note"]
     assert "expected_irr" not in watch
@@ -711,7 +713,7 @@ def test_reaffirmed_update_writes_log_and_advances_auditable_receipt(tmp_path: P
     after = flow.read_states()[0]
     assert record.impact.value == "reaffirmed"
     assert record.status.value == "covered" and record.enqueued_task is None
-    assert after["report_path"] == before["report_path"]
+    assert after["basis_report_path"] == before["basis_report_path"]
     assert after["information_cutoff"] == before["information_cutoff"]
     assert after["value_range"] == before["value_range"]
     assert after["updated_at"] == LATER
@@ -723,10 +725,10 @@ def test_reaffirmed_update_writes_log_and_advances_auditable_receipt(tmp_path: P
         "event_ids": ["event-001"],
         "summary": "公司披露一项合同，规模仍在原报告情景内。",
         "source_urls": ["https://example.com/announcement"],
-        "base_report": before["report_path"],
+        "base_report": before["basis_report_path"],
     }
     text = (tmp_path / record.update_path).read_text(encoding="utf-8")
-    assert "确认原报告" in text and before["report_path"] in text
+    assert "确认原报告" in text and before["basis_report_path"] in text
     flow.validate()
 
 
@@ -736,7 +738,7 @@ def test_monitor_update_also_leaves_current_conclusion_untouched(tmp_path: Path)
     record = flow.record_update(_update("CN:601138", "monitor"))
     after = flow.read_states()[0]
     assert record.impact.value == "monitor"
-    for field in ("report_path", "information_cutoff", "value_range", "summary"):
+    for field in ("basis_report_path", "information_cutoff", "value_range", "summary"):
         assert after[field] == before[field]
     assert after["last_update"]["impact"] == "monitor"
     assert after["last_update"]["path"] == record.update_path
@@ -758,7 +760,7 @@ def test_invalidated_update_marks_stale_and_enqueues_one_full_research(tmp_path:
     record = flow.record_update(_update("CN:601138", "invalidated"))
     state = flow.read_states()[0]
     assert record.status.value == "stale"
-    assert state["report_path"] == before["report_path"]
+    assert state["basis_report_path"] == before["basis_report_path"]
     assert state["invalidation"]["update_path"] == record.update_path
     assert record.enqueued_task is not None
     assert record.enqueued_task.trigger_kind == "update"
@@ -798,7 +800,7 @@ def test_stale_cannot_be_reaffirmed_and_update_cannot_predate_report(tmp_path: P
         )
 
 
-def test_same_day_full_refresh_appends_complete_report(tmp_path: Path):
+def test_same_period_full_refresh_replaces_complete_report(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     first = _complete(flow, _covered("CN:601138"))
     refresh = flow.record_update(
@@ -819,8 +821,9 @@ def test_same_day_full_refresh_appends_complete_report(tmp_path: Path):
         task_id=refresh.enqueued_task.task_id,
         at=AT,
     )
-    assert first["report_path"].endswith("2026-08-08.md")
-    assert second["report_path"].endswith("2026-08-08-02.md")
+    assert first["basis_report_path"].endswith("2026-Q1.md")
+    assert second["basis_report_path"] == first["basis_report_path"]
+    assert len(list((tmp_path / second["basis_report_path"]).parent.glob("*.md"))) == 1
     assert second["value_range"]["low"] == 62
     flow.validate()
 
@@ -856,58 +859,8 @@ def test_ignore_keeps_formal_report_outside_watchlist(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     state = _complete(flow, _ignored("CN:000333"))
     assert state["status"] == "ignore"
-    assert (tmp_path / state["report_path"]).is_file()
+    assert (tmp_path / state["basis_report_path"]).is_file()
     assert flow.read_watchlist() == ()
-    flow.validate()
-
-
-def test_v2_to_v3_migration_removes_price_state_and_only_security_price_triggers(
-    tmp_path: Path,
-):
-    state_path = tmp_path / "coverage/cn-a/research_state.jsonl"
-    state_path.parent.mkdir(parents=True)
-    report_path = tmp_path / "research/companies/CN/000001/reports/2026-08-08.md"
-    report_path.parent.mkdir(parents=True)
-    report_path.write_text(
-        "# 完整研究\n\n独立说明业务、财务、治理、估值和风险。\n",
-        encoding="utf-8",
-    )
-    row = {
-        "schema_version": 2,
-        "symbol": "CN:000001",
-        "name": "示例公司",
-        "universe_status": "active",
-        "status": "covered",
-        "updated_at": AT,
-        "summary": "已有研究",
-        "key_logic": ["逻辑"],
-        "risks": ["风险"],
-        "value_range": {"low": 10.0, "high": 20.0, "currency": "CNY"},
-        "valuation_note": None,
-        "price_levels": [{"id": "attention", "threshold": 10}],
-        "price_monitor": {"levels": {}},
-        "event_triggers": ["收盘价跌至 10 元", "铜价持续上涨", "下一期财报"],
-        "source_urls": ["https://example.com/report"],
-        "last_screening": {
-            "event_triggers": ["股价回到低位", "产品售价下调"],
-            "price_levels": [{"id": "attention", "threshold": 10}],
-        },
-        "last_research_at": AT,
-        "information_cutoff": AT,
-        "report_path": "research/companies/CN/000001/reports/2026-08-08.md",
-        "candidate_since": None,
-        "invalidation": None,
-        "processed_triggers": [],
-    }
-    state_path.write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")
-    flow = ResearchFlow(tmp_path)
-    assert flow.migrate_state_v3(at=LATER) == 1
-    state = flow.read_states()[0]
-    assert state["schema_version"] == 3
-    assert "price_levels" not in state and "price_monitor" not in state
-    assert state["event_triggers"] == ["铜价持续上涨", "下一期财报"]
-    assert state["last_screening"]["event_triggers"] == ["产品售价下调"]
-    assert "price_levels" not in state["last_screening"]
     flow.validate()
 
 
@@ -948,6 +901,7 @@ def test_validation_detects_corrupt_projection_and_duplicate_tasks(tmp_path: Pat
             replace(_covered("CN:000001"), value_range=None, valuation_note=None),
             "value_range or valuation_note",
         ),
+        (replace(_covered("CN:000001"), report_period="2026-Q3"), "ends after"),
         (replace(_covered("CN:000001"), source_urls=("not-a-url",)), "absolute http"),
     ],
 )
@@ -964,7 +918,7 @@ def test_duplicate_state_fails_closed(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     flow.state_path.parent.mkdir(parents=True)
     row = {
-        "schema_version": 3,
+        "schema_version": 4,
         "symbol": "CN:000001",
         "universe_status": "active",
         "status": "ignore",

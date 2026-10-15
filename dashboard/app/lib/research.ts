@@ -4,7 +4,7 @@ import { isCurrentResult } from "./display-policy.mjs";
 export type ResearchStatus = "unseen" | "ignore" | "candidate" | "covered" | "stale" | "unregistered";
 export type DisplayState = "current" | "unpriced" | "pending_research" | "pending_standard" | "needs_update" | "needs_review" | "inactive";
 export interface ReportVersion {
-  date: string; path: string; sourcePath: string; informationCutoff: string | null;
+  period: string; path: string; sourcePath: string; informationCutoff: string | null;
   standardId: string | null; standardLabel: string; valueDefinition: string | null;
   acceptedAt: string | null; compatible: boolean; acceptanceStatus: string;
 }
@@ -26,7 +26,8 @@ export interface Company {
   summary: string; valueRange: { currency: string; low: number; high: number } | null; valuationNote: string | null;
   returnModel: ReturnModel | null; returnModelNote: string | null;
   returnModelDisplayIssue?: { event_date: string; reason: string; source_url: string } | null;
-  reportPath: string | null; reportDate: string | null; reports: ReportVersion[]; eventTriggerCount: number;
+  reportPeriod: string | null; basisReportPath: string | null; reportUpdatedAt: string | null;
+  latestReportPeriod: string | null; reports: ReportVersion[]; eventTriggerCount: number;
 }
 export interface ResearchStandard {
   id: string; label: string; status: string; published_at: string; spec_revision: string;

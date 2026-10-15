@@ -27,7 +27,7 @@ async function main() {
     for (const receipt of policy.receipts.values()) {
       const body = await readFile(join(root, receipt.report_path));
       assert(receipt.revoked_at || sha256(body) === receipt.report_sha256, `报告内容已变化: ${receipt.report_path}`);
-      const state = states.find((row) => row.report_path === receipt.report_path);
+      const state = states.find((row) => row.basis_report_path === receipt.report_path);
       assert(receipt.revoked_at || !state || researchDigest(state) === receipt.research_sha256,
         `当前结构化研究与验收不一致: ${receipt.report_path}`);
       assert(receipt.revoked_at || !state || !["covered", "ignore"].includes(state.status)
@@ -38,19 +38,20 @@ async function main() {
   }
   assert(/^CN:\d{6}$/u.test(values.symbol ?? ""), "必须指定单家公司 --symbol CN:xxxxxx");
   const state = states.find((row) => row.symbol === values.symbol);
-  assert(state?.report_path, "该公司没有当前正式报告，不可根据历史文件猜测当前指针");
-  const target = join(root, acceptancePath(state.report_path));
-  const body = await readFile(join(root, state.report_path));
+  assert(state?.basis_report_path, "该公司没有研究依据报告，不可根据其他周期猜测");
+  const target = join(root, acceptancePath(state.basis_report_path));
+  const body = await readFile(join(root, state.basis_report_path));
   const reportSha = sha256(body);
   const stateSha = researchDigest(state);
   let previous;
   try { previous = await readFile(target, "utf8"); }
   catch (error) { if (error.code !== "ENOENT") throw error; }
   if (command === "inspect") {
-    emit({ symbol: state.symbol, report_path: state.report_path, report_sha256: reportSha,
+    emit({ symbol: state.symbol, report_period: state.report_period,
+      basis_report_path: state.basis_report_path, report_sha256: reportSha,
       research_sha256: stateSha, information_cutoff: state.information_cutoff,
       receipt_sha256: previous ? sha256(previous) : null,
-      report: reportMetadata(state.report_path, body, policy) });
+      report: reportMetadata(state.basis_report_path, body, policy) });
     return;
   }
   assert(values["confirm-review"] && values.note?.trim() && values.reviewer?.trim(),
@@ -69,7 +70,7 @@ async function main() {
     assert(standard?.status === "released", "只可按已发布标准验收");
     assert(state.universe_status === "active" && ["covered", "ignore"].includes(state.status)
       && !state.invalidation, "当前报告失效、未完成或不在市，不能登记为现行结果");
-    receipt = { schema_version: 1, symbol: state.symbol, outcome: state.status, report_path: state.report_path,
+    receipt = { schema_version: 1, symbol: state.symbol, outcome: state.status, report_path: state.basis_report_path,
       report_sha256: reportSha, research_sha256: stateSha, information_cutoff: state.information_cutoff,
       standard_id: standard.id, spec_revision: standard.spec_revision, value_definition: standard.value_definition,
       accepted_at: at, reviewer: values.reviewer, review_note: values.note,
@@ -87,8 +88,8 @@ async function main() {
     assert(current === previous, "验收记录并发变化，拒绝覆盖");
     const latest = (await readFile(join(root, "coverage/cn-a/research_state.jsonl"), "utf8"))
       .split(/\r?\n/u).filter(Boolean).map((line) => JSON.parse(line)).find((row) => row.symbol === state.symbol);
-    assert(latest?.report_path === state.report_path && researchDigest(latest) === stateSha
-      && sha256(await readFile(join(root, state.report_path))) === reportSha, "研究快照并发变化，拒绝登记");
+    assert(latest?.basis_report_path === state.basis_report_path && researchDigest(latest) === stateSha
+      && sha256(await readFile(join(root, state.basis_report_path))) === reportSha, "研究快照并发变化，拒绝登记");
     if (command === "accept") assert(latest.universe_status === "active"
       && latest.status === receipt.outcome && !latest.invalidation, "研究有效性并发变化，拒绝登记");
     const file = await open(temporary, "wx");
@@ -98,6 +99,6 @@ async function main() {
   } finally {
     await rm(temporary, { force: true }); await lock.close(); await rm(`${target}.lock`, { force: true });
   }
-  emit({ ok: true, path: acceptancePath(state.report_path), receipt });
+  emit({ ok: true, path: acceptancePath(state.basis_report_path), receipt });
 }
 main().catch((error) => { console.error(error.message); process.exitCode = 1; });

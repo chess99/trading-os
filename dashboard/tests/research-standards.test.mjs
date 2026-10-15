@@ -12,24 +12,25 @@ import { buildResearchData, projectCompany, makeExports } from "../scripts/build
 
 const registry = JSON.parse(await readFile(new URL("../../research/standards/registry.json", import.meta.url), "utf8"));
 const body = Buffer.from("# 示例\n信息截止：2026-09-18\n## 一句话结论\n判断成立。\n核心合理价值区间：10—20 元。\n");
-const sourcePath = "research/companies/CN/000001/reports/2026-09-18.md";
+const sourcePath = "research/companies/CN/000001/reports/2026-H1.md";
 function state(overrides = {}) {
-  return { symbol: "CN:000001", name: "测试公司", report_path: sourcePath,
+  return { symbol: "CN:000001", name: "测试公司", report_period: "2026-H1",
+    basis_report_path: sourcePath, last_research_at: "2026-09-18T20:00:00+08:00",
     information_cutoff: "2026-09-18T20:00:00+08:00", status: "covered", universe_status: "active",
     summary: "基准判断", key_logic: ["长期能力"], risks: ["资本回报"], value_range: { low: 10, high: 20, currency: "CNY" },
     return_model: null, return_model_note: "模型缺口说明", ...overrides };
 }
 function receipt(row, overrides = {}) {
-  return { schema_version: 1, symbol: row.symbol, outcome: row.status, report_path: row.report_path,
+  return { schema_version: 1, symbol: row.symbol, outcome: row.status, report_path: row.basis_report_path,
     report_sha256: sha256(body), research_sha256: researchDigest(row), information_cutoff: row.information_cutoff,
     standard_id: "owner-value-1.0", spec_revision: registry.standards[0].spec_revision,
     value_definition: registry.standards[0].value_definition, accepted_at: "2026-09-23T10:00:00+08:00",
     source_revision: "a".repeat(40), reviewer: "test", review_note: "仅测试验收结构", revoked_at: null, ...overrides };
 }
 function policy(row = state(), overrides = {}) {
-  return { ...validateRegistry(structuredClone(registry)), receipts: new Map([[row.report_path, receipt(row, overrides)]]) };
+  return { ...validateRegistry(structuredClone(registry)), receipts: new Map([[row.basis_report_path, receipt(row, overrides)]]) };
 }
-function metadata(row, rules, content = body) { return { date: "2026-09-18", path: "/data/reports/000001/2026-09-18.md", ...reportMetadata(row.report_path, content, rules) }; }
+function metadata(row, rules, content = body) { return { period: row.report_period, path: `/data/reports/000001/${row.report_period}.md`, ...reportMetadata(row.basis_report_path, content, rules) }; }
 function projected(row = state(), rules = policy(row), member = true) {
   return projectCompany(row, [metadata(row, rules)], member ? { tier: "core_moat" } : null, rules);
 }
@@ -84,7 +85,7 @@ test("material invalidation hides estimates and never revives an older report", 
     const output = projected(changed, rules);
     assert.equal(output.display.state, "needs_update"); assert.equal(output.valueRange, null);
   }
-  const newer = { ...row, report_path: sourcePath.replace("18.md", "23.md") };
+  const newer = { ...row, report_period: "2026-Q3", basis_report_path: sourcePath.replace("H1.md", "Q3.md") };
   assert.equal(projectCompany(newer, [metadata(row, rules)], {}, rules).display.state, "needs_review");
 });
 test("revocation, inactivity and changed outcome are distinct from normal completion", () => {
@@ -107,13 +108,12 @@ test("same selection drives current count and JSON/CSV export input", () => {
   assert.deepEqual(makeExports(catalog, "quality_pool").companies, currentResults(catalog.companies));
   assert.equal(makeExports(catalog, "all_standard").count, 2);
 });
-test("all explicit dated reads suppress live panels, even for the current file", () => {
+test("the basis period stays live while other periods are historical", () => {
   const company = projected();
   assert.equal(readingContext(company).live, true);
-  assert.equal(readingContext(company, "2026-09-18").live, false);
-  assert.equal(readingContext(company, null, "history").live, false);
-  assert.equal(readingContext(company, "1999-01-01").report, null);
-  assert.equal(readingContext({ ...company, display: { eligible: false } }).report, null);
+  assert.equal(readingContext(company, "2026-H1").live, true);
+  assert.equal(readingContext(company, "1999-Q1").report, null);
+  assert.equal(readingContext({ ...company, display: { eligible: false } }).live, false);
 });
 test("acceptance validates identity, standard definition, timezone and audit explanation", () => {
   const row = state(); const rules = policy(row); const record = receipt(row);
@@ -136,8 +136,8 @@ async function fixture() {
 test("catalog build redacts legacy fields, retains exact history, and includes pool-only progress", async () => {
   const { root, row, save } = await fixture();
   try {
-    const legacy = state({ symbol: "CN:000002", name: "历史公司", report_path: sourcePath.replace("000001", "000002"), summary: "旧结论不应泄露", value_range: { low: 991237, high: 991238, currency: "CNY" } });
-    await save(legacy.report_path, body);
+    const legacy = state({ symbol: "CN:000002", name: "历史公司", basis_report_path: sourcePath.replace("000001", "000002"), summary: "旧结论不应泄露", value_range: { low: 991237, high: 991238, currency: "CNY" } });
+    await save(legacy.basis_report_path, body);
     await save("coverage/cn-a/research_state.jsonl", [row, legacy].map(JSON.stringify).join("\n") + "\n");
     await save(acceptancePath(sourcePath), receipt(row));
     const catalog = await buildResearchData(root);
@@ -145,7 +145,7 @@ test("catalog build redacts legacy fields, retains exact history, and includes p
     assert.equal(catalog.stats.researchStateRows, 2); assert.equal(catalog.companies.length, 3);
     assert.equal(catalog.companies.find((item) => item.symbol === "CN:000003").hasResearchState, false);
     assert.ok(!JSON.stringify(catalog).includes("991237")); assert.ok(!JSON.stringify(catalog).includes("旧结论不应泄露"));
-    assert.deepEqual(await readFile(join(root, "dashboard/public/data/reports/000002/2026-09-18.md")), body);
+    assert.deepEqual(await readFile(join(root, "dashboard/public/data/reports/000002/2026-H1.md")), body);
     const exported = JSON.parse(await readFile(join(root, "dashboard/public/data/current-research.json"), "utf8"));
     assert.equal(exported.count, 1); assert.equal(exported.companies[0].symbol, row.symbol);
     assert.ok(!(await readFile(join(root, "dashboard/public/data/current-research.csv"), "utf8")).includes("历史公司"));

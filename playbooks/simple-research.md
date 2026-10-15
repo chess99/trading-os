@@ -41,22 +41,24 @@
 
 同一研究者连续完成三个动作，不新增调度阶段或角色：先调查决定性问题并形成长期商业判断，再用财务、资本和普通股模型检验，最后编辑成结论先行的完整文章。编辑应删冗余、补判断；发现逻辑矛盾就回到模型修正，不能以润色代替研究。
 
-结果只有 `covered / ignore`。worker 先只返回结构化候选；协调器完成商业判断、事实和模型核验及表达验收后，才通过 `research complete` 向以下目录原子追加正式报告：
+结果只有 `covered / ignore`。worker 先只返回结构化候选并显式提交 `report_period`；协调器完成商业判断、事实和模型核验及表达验收后，才通过 `research complete` 写入对应财报周期：
 
 ```text
-research/companies/CN/{ticker}/reports/YYYY-MM-DD.md
-research/companies/CN/{ticker}/reports/YYYY-MM-DD-02.md
+research/companies/CN/{ticker}/reports/YYYY-FY.md
+research/companies/CN/{ticker}/reports/YYYY-Q1.md
+research/companies/CN/{ticker}/reports/YYYY-H1.md
+research/companies/CN/{ticker}/reports/YYYY-Q3.md
 ```
 
 报告覆盖商业模式、竞争、行业、财务质量、普通股归属、治理、资本配置、价格评价、估值、持有人模型、风险、结论和来源，不要求各项独立成章。正文遵守主提示词的最低结构，不固定 16 章。不得写“详见前序报告”“历史分析继续有效”“沿时间线回看”来跳过正文。
 
-候选结果未通过验收时直接丢弃并重新排队：不写报告文件，不推进 `report_path`，不占用同日 `-02/-03` 序号。只有通过验收的报告才进入不可变正式时间线。若历史中发现能够确认从未完成验收的误入稿，按数据修复删除该稿及其补写的质量审计日志，恢复前一份合格报告和原始研究任务；这不构成删除合格历史报告。
+候选结果未通过验收时直接丢弃并重新排队：不写报告文件，不推进 `basis_report_path`。通过验收后，同周期完整重研覆盖该周期文件并重新登记，跨周期才新增文件。Git 保存同周期修改历史，产品不提供旧修订入口。
 
 ### 研究标准升级触发的正式重做
 
 现行标准升级要求重做估值和报告时，不得伪造经营事件、`invalidated` 日志或 `stale` 状态。协调器使用 `research enqueue-standard` 批量创建 `standard_upgrade` 任务，每家公司保留原 `covered / ignore`、当前正式报告及全部结构化研究字段。任务必须绑定实际采用的 `standard_id`、可追踪的 `batch_id` 和公司级具体原因；同一公司仍最多一个活动任务，同一标准与批次重复入队会被去重。
 
-标准重做与常态积压共用原子队列，但消费者应用 `research next --trigger-kind standard_upgrade` 单独领取，避免误消费常态任务。worker 与协调器仍执行本文件、统一深研提示词及核验附录的完整要求；有前次正式报告时必须完成前次假设复盘。验收通过后仍只使用 `research complete` 追加新正式报告、原子更新结构化状态并移除任务，不建立第二套完成入口。随后按[现行研究展示标准](../research/standards/README.md)登记新报告；入队本身不构成验收。
+标准重做与常态积压共用原子队列，但消费者应用 `research next --trigger-kind standard_upgrade` 单独领取，避免误消费常态任务。worker 与协调器仍执行本文件、统一深研提示词及核验附录的完整要求；有前次正式报告时必须完成前次假设复盘。验收通过后仍只使用 `research complete` 更新所属周期报告、原子更新结构化状态并移除任务，不建立第二套完成入口。随后按[现行研究展示标准](../research/standards/README.md)重新登记；入队本身不构成验收。
 
 每次新正式研究必须提交非空 `return_model_note`。能可靠构造时同时提交 `return_model`，否则为 `null` 并解释实质缺口；`value_range` 无法可靠形成时同样以 `null` 和 `valuation_note` 说明。未来尚未兑现或未被承诺，不单独构成留空理由。
 
@@ -100,12 +102,6 @@ PDF 抽取文本和财务勾稽可作为底稿，不未经整理直接进入报�
 ### 长期精选
 
 [长期精选](../selection/principles.md)在有效完整研究之上作横向取舍，依[精选流程](../prompts/selection/long-term-selection.md)维护普通 Markdown 卡片。入选不等于当前买入，研究覆盖池仍是所有 active covered 的确定性投影。精选不改研究状态、质量池或估值，价格和 IRR 不作统一排名；公司报告变化或失效后，旧卡在重新确认前按待复核处理。
-
-### 既有当前稿修订例外
-
-用户在[专项系统迭代](../docs/reviews/2026-09-system-upgrade/README.md)中明确授权，按冻结清单审核并原路径修订已吸收2026中报的当前报告。依[修订规范](../prompts/company/current-report-review.md)提交完整候选，协调器验收后使用专用维护入口同步报告、研究字段和覆盖池。原信息截止、未解决的更晚失效事实及队列保留；其他历史稿不动。此次例外结束后，常规正式报告仍追加且不可变。
-
-2026-09-18 的规范与写作升级不使用上述例外，不修改历史或当前公司报告、研究状态、队列、自选池或模型数据。新规范供后续正常研究使用；文体升级本身不触发重算、重写或旧报告失效。
 
 ## 公司研究日志
 
@@ -195,25 +191,16 @@ covered/ignore + standard_upgrade -> 保持原状态与当前报告 -> research_
 - `coverage/cn-a/research_queue.jsonl`：当前任务；
 - `research/companies/CN/{ticker}/reports/`：完整正式报告；
 - `research/companies/CN/{ticker}/updates/`：研究日志；
-- `research/companies/CN/{ticker}/legacy/`：隔离旧稿；
 - `research/watchlist.jsonl`：active covered 的确定性投影；
 - `coverage/cn-a/event_scan_state.json`：公告扫描检查点。
 
 共享 JSONL 只由协调器原子写入。worker 只返回最终结构化结果。状态变更后重建自选池并执行 `python -m trading_os validate`。
 
-一次性迁移：
-
-```bash
-python -m trading_os state migrate-v3 --at <带时区时间>
-```
-
-v3 删除证券价格层、价格运行状态和证券价格型事件条件，保留财报、公司事件及经营变量触发。
-
 ## 验收
 
 - active 范围没有遗留 `unseen`；
 - 常态活动任务只属于 `candidate / stale`；`standard_upgrade` 任务只属于 active `covered / ignore`，并完整保存标准、批次和原因；
-- current 报告是最新、非空、自足的日期化完整报告；
+- `basis_report_path` 与 `report_period` 一致，所指文件是最新、非空、自足的财报周期完整报告；
 - 状态和自选池不存在证券价格触发字段；
 - update 没有修改正式估值或结论，invalidated 正确创建完整研究任务；
 - 每份新正式结果均有非空 `return_model_note`，且 `return_model` 合格或为 `null` 并说明不可可靠建模的原因；模型以五年为主、可选三年终值独立形成，当前价值未被用作未来终值；

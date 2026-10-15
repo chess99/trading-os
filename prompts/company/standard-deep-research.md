@@ -144,7 +144,7 @@
 
 ## 最终结构化结果
 
-只返回与任务绑定的 JSON，字段合同不变。以下是字段形态，不是公司事实或可直接提交的研究内容；具体模型规则以附录为准。
+只返回与任务绑定的 JSON。以下是字段形态，不是公司事实或可直接提交的研究内容；具体模型规则以附录为准。
 
 ```json
 {
@@ -154,6 +154,7 @@
     "symbol": "CN:000000",
     "name": "公司名称",
     "outcome": "covered 或 ignore",
+    "report_period": "最新完整财务基础对应的 YYYY-FY / YYYY-Q1 / YYYY-H1 / YYYY-Q3",
     "information_cutoff": "信息截止时间，带时区 ISO 时间",
     "summary": "明确的主判断",
     "key_logic": ["支撑判断的公司特定逻辑"],

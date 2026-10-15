@@ -4,7 +4,7 @@ import { resolve, join } from "node:path";
 
 export const REGISTRY_PATH = "research/standards/registry.json";
 export const ACCEPTANCES_PATH = "research/standards/acceptances";
-const REPORT_PATH = /^research\/companies\/CN\/(\d{6})\/reports\/(\d{4}-\d{2}-\d{2}(?:-\d{2})?)\.md$/u;
+const REPORT_PATH = /^research\/companies\/CN\/(\d{6})\/reports\/((?:20\d{2})-(?:FY|Q1|H1|Q3))\.md$/u;
 const SHA = /^[a-f0-9]{64}$/u;
 const ID = /^[a-z0-9][a-z0-9._-]*$/u;
 const nonblank = (value) => typeof value === "string" && value.trim().length > 0;
@@ -21,7 +21,7 @@ export function canonical(value) {
 // Identity binding, not a second valuation database. Review timestamps and
 // dynamic status are excluded; material invalidation is checked separately.
 export function researchDigest(state) {
-  const fields = ["symbol", "report_path", "information_cutoff", "summary", "key_logic", "risks",
+  const fields = ["symbol", "report_period", "basis_report_path", "information_cutoff", "summary", "key_logic", "risks",
     "value_range", "valuation_note", "return_model", "return_model_note", "source_urls", "event_triggers"];
   return sha256(canonical(Object.fromEntries(fields.map((field) => [field, state[field] ?? null]))));
 }
@@ -115,9 +115,10 @@ export function reportMetadata(sourcePath, body, policy) {
 }
 export function displayEligibility(state, metadata, policy) {
   const fail = (stateCode, reason) => ({ eligible: false, state: stateCode, reason });
-  if (!state?.report_path) return fail("pending_research", "尚无当前正式报告");
-  if (!metadata || metadata.sourcePath !== state.report_path) return fail("needs_review", "当前指针对应的报告缺失，未回退到旧稿");
-  const receipt = policy.receipts.get(state.report_path);
+  if (state?.universe_status === "inactive") return fail("inactive", "证券不在当前在市范围，仅保留历史研究");
+  if (!state?.basis_report_path) return fail("pending_research", "尚无研究依据报告");
+  if (!metadata || metadata.sourcePath !== state.basis_report_path) return fail("needs_review", "研究依据报告缺失，未回退到其他周期");
+  const receipt = policy.receipts.get(state.basis_report_path);
   if (!receipt) return fail("pending_standard", "历史标准未确认，待按现行标准研究");
   if (receipt.revoked_at) return fail("needs_review", `验收已撤销：${receipt.revocation_reason}`);
   if (state.status === "stale" || state.invalidation || !["covered", "ignore"].includes(state.status)) {

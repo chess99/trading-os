@@ -12,7 +12,7 @@
 
 ## 单公司任务
 
-一家公司由一个 Agent 使用统一深研规范端到端完成。最终结果只有 `covered / ignore`，两者都追加完整、自足的日期化正式报告。报告不得把商业、财务、估值或风险正文委托给历史版本。
+一家公司由一个 Agent 使用统一深研规范端到端完成。最终结果只有 `covered / ignore`，两者都提交 `report_period` 并形成完整、自足的财报周期报告。同周期重研覆盖，跨周期新增；报告不得把商业、财务、估值或风险正文委托给历史版本。
 
 先围绕少数决定性问题形成长期商业判断，再用财务、必要资本和普通股模型检验，最后编辑为结论先行的文章。按需参考并核验 `research/industries/` 产业专题。正文不固定 16 章，但研究内容和程序所需标题仍要完整；核验附录不是每份报告必须展示的检查清单。
 
@@ -40,7 +40,7 @@ update 不得修改正式估值、`return_model`、`return_model_note` 或结论
 
 ## 恢复与写入
 
-启动时读取 Git 状态、`research_state.jsonl`、`research_queue.jsonl`、`research/watchlist.jsonl` 和 current 正式报告。保留用户及其他并行修改，不重做已完成公司。
+启动时读取 Git 状态、`research_state.jsonl`、`research_queue.jsonl`、`research/watchlist.jsonl` 和 `basis_report_path` 所指报告。保留用户及其他并行修改，不重做已完成公司。
 
 单公司 Agent 不直接写共享 JSONL。协调器串行接收结果、原子写状态、重建自选池并运行 `python -m trading_os validate`。每个完整迭代只提交本轮修改。
 

@@ -8,8 +8,8 @@ Trading OS 是一套面向 A 股、由新事实驱动的轻量研究工作流。
 
 1. 主 Agent 对全市场压缩事实只判断 `ignore / research_now`。
 2. `research_now` 把公司标记为 `candidate` 并创建唯一研究任务；一家公司由一个 Agent 用统一提示词端到端完成。
-3. 正式结果只有 `covered / ignore`；worker 先返回候选 JSON，协调器验收通过后才原子追加一份脱离历史版本也能独立阅读的完整报告。
-4. 财报、公告、治理、资本结构及行业经营变量触发研究；定期财报以及任何估值或结论变化，都生成新的完整正式报告。
+3. 正式结果只有 `covered / ignore`；worker 先返回候选 JSON，协调器验收通过后才按财报周期写入一份脱离历史版本也能独立阅读的完整报告。
+4. 财报、公告、治理、资本结构及行业经营变量触发研究；同一财报周期的完整重研覆盖该周期文件，进入下一财报周期才新增文件。
 5. 不改变正式结论的事件可以写研究日志；日志只能 `reaffirmed / monitor / invalidated`，不能充当报告补丁。
 6. 证券价格不进入研究触发、公司状态或队列。展示层可以把实时价格与 `value_range` 机械比较，但这不是买入信号或投资决策。
 7. 正式研究冻结五年为主的 `return_model` 输入；展示层再把实时价格代入统一公式机械求解 IRR。研究仓库不保存随价格漂移的 IRR，也不设置收益率门槛、概率权重或价格触发状态。
@@ -35,11 +35,9 @@ Trading OS 是一套面向 A 股、由新事实驱动的轻量研究工作流。
 
 研究地图默认按代码显示；回报和估值排序可手动选择。已确认的期后分红或资本行动若使旧现金模型不再匹配现价，会显示现金路径待更新。日常本地开发使用已验证的Workers兼容日期，生产构建保留部署日期，两者都继续使用同一套应用代码。
 
-产业和精选中的日期化报告链接保留原引用版本；引用不可用时明确提示，不自动换成最新报告。阅读历史正文时，页面另标明当前研究状态、截止和摘要，避免混淆判断时点。
+产业和精选中的报告链接绑定财报周期；同周期重研后链接自然指向该周期的最新完整正文。阅读历史周期时不加载现价或现行摘要。
 
-[2026-09全层迭代](docs/reviews/2026-09-system-upgrade/README.md)包含用户授权的中报当前稿原路径修订例外。仅清单内报告可使用 `reports revise-current --scope <清单> --expected <审核前原文> --input <完整候选>`；正常研究继续追加正式报告，历史归档不参与该专项修订。
-
-2026-09-18 的长期判断与写作规范升级不使用该修订例外，只调整规范、流程和模板；历史与当前公司报告、研究状态、队列、自选池、精选名单及既有模型保持不变。新规范用于后续正常研究任务。
+2026-09-18 的长期判断与写作规范升级当时只调整规范、流程和模板，没有据此改写公司判断、研究状态、队列、自选池、精选名单或既有模型。
 
 ## 当前事实源
 
@@ -49,16 +47,15 @@ coverage/cn-a/research_queue.jsonl                       当前 queued/running �
 coverage/cn-a/screening_baseline.json                    全市场初筛基线
 coverage/cn-a/event_scan_state.json                      公告扫描成功检查点
 research/watchlist.jsonl                                 active covered 的确定性投影
-research/companies/CN/{代码}/reports/YYYY-MM-DD[-NN].md 完整正式报告时间线
+research/companies/CN/{代码}/reports/YYYY-{FY|Q1|H1|Q3}.md 财报周期完整报告
 research/companies/CN/{代码}/updates/YYYY-MM-DD[-NN].md 研究日志
-research/companies/CN/{代码}/legacy/YYYY-MM-DD.md        隔离旧稿
 screening/cn-a/value-quality/pool.json                    独立价值质量池唯一结果源
 screening/cn-a/value-quality/current.md                   由当前池生成的可读投影
 ```
 
-`research_state.jsonl.report_path` 指向该公司最新合格正式报告，这个指针就是 current；同一天再次完成并通过验收的正式研究才依次写为 `-02`、`-03`。正式报告必须自足，禁止用“参见前序报告”替代商业、财务或估值正文。未通过验收的候选稿直接丢弃并重新排队，不创建报告文件、不推进指针，也不占序号；能够确认从未完成验收的历史误入稿可按数据修复删除，合格历史报告仍不可变。
+研究结果显式提交 `report_period`，只允许 `YYYY-FY / YYYY-Q1 / YYYY-H1 / YYYY-Q3`。`research_state.jsonl.basis_report_path` 与 `report_period` 绑定结构化状态所依据的周期报告；它不是网页范围或“推荐名单”。同周期再次完成研究会以完整正文覆盖同一文件，并重新验收；跨周期才新增文件。未通过验收的候选稿直接丢弃并重新排队，不写报告。
 
-财报更新不是给旧正文增加摘录：必须重写完整报告，区分累计与单季口径，逐项复核关键数字和截止日，并说明前次假设与本期实际如何改变判断和估值。新结果会拒绝已知拼接模板、财报原始片段、重复或冲突截止日、退役价格线，以及与结构化 `value_range` 不一致的正文核心合理价值区间；这些规则不追溯改写历史报告。
+财报更新不是给旧正文增加摘录：必须重写完整报告，区分累计与单季口径，逐项复核关键数字和截止日，并说明前次假设与本期实际如何改变判断和估值。新结果会拒绝已知拼接模板、财报原始片段、重复或冲突截止日、退役价格线，以及与结构化 `value_range` 不一致的正文核心合理价值区间。
 
 每份新正式结果都必须包含非空 `return_model_note`；能够可靠建模时同时包含结构化 `return_model`，否则包含 `return_model: null`，并在 note 中说明原因。V1 固定使用 `annual_common_equity_irr_v1`：
 
@@ -125,9 +122,6 @@ python -m trading_os validate
 # 独立价值质量池（不会改变单公司研究）
 python -m trading_os quality-pool status
 python -m trading_os quality-pool validate
-
-# 一次性从 schema v1/v2 迁移到无证券价格触发的 v3
-python -m trading_os state migrate-v3 --at 2026-08-14T17:00:00+08:00
 
 # 记录初筛、派发并完成完整研究
 python -m trading_os screen record --input templates/screen-decisions.json
