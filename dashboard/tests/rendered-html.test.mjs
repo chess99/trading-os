@@ -47,10 +47,10 @@ test("report library and detail route render", async () => {
   assert.equal(library.status, 200); assert.equal(detail.status, 200);
   assert.match(await library.text(), /研报库/); assert.match(await detail.text(), /研报详情/);
 });
-test("historical reader binds selected metadata, never current summary or live prices", async () => {
+test("report reader binds period metadata and gates live prices", async () => {
   const reader = await readFile(new URL("../app/components/report-workspace.tsx", import.meta.url), "utf8");
   assert.match(reader, /readingContext/); assert.match(reader, /context\.report\.informationCutoff/);
-  assert.match(reader, /!context\.live/); assert.match(reader, /context\.live &&/);
+  assert.match(reader, /context\.historical/); assert.match(reader, /context\.live &&/);
   assert.doesNotMatch(reader, /当前研究摘要|上方状态、行情与右侧摘要来自当前研究/);
 });
 test("industry and selection routes retain original exported research documents", async () => {
@@ -79,12 +79,12 @@ test("production projection matches qualified state rows and redacts all unquali
     assert.ok(!("currentIrr" in company) && !("lastClose" in company));
     const source = sources.get(company.symbol);
     if (company.display.eligible) {
-      assert.ok(source); assert.equal(company.reportPath, source.report_path);
+      assert.ok(source); assert.equal(company.basisReportPath, source.basis_report_path);
       assert.deepEqual(company.valueRange, source.value_range ?? null);
       assert.deepEqual(company.returnModel, source.return_model ?? null);
       assert.equal(company.returnModelNote, source.return_model_note ?? null);
       assert.equal(company.summary, source.summary);
-      assert.ok(company.reports.some((report) => report.sourcePath === company.reportPath && report.compatible));
+      assert.ok(company.reports.some((report) => report.sourcePath === company.basisReportPath && report.compatible));
     } else {
       assert.equal(company.valueRange, null); assert.equal(company.returnModel, null); assert.equal(company.returnModelNote, null); assert.equal(company.summary, "");
     }

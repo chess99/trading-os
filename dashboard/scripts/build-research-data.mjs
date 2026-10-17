@@ -16,10 +16,15 @@ function parseJsonLines(text, label) {
     catch (error) { throw new Error(`${label}:${index + 1} is not valid JSON`, { cause: error }); }
   });
 }
-async function collectReports(root, output, ticker, policy) {
+async function collectReports(root, output, ticker, policy, state) {
   const directory = join(root, "research/companies/CN", ticker, "reports");
   let files;
-  try { files = (await readdir(directory)).filter((name) => /^\d{4}-\d{2}-\d{2}(?:-\d{2})?\.md$/u.test(name)).sort().reverse(); }
+  const periodKey = (name) => {
+    const match = /^(20\d{2})-(FY|Q1|H1|Q3)\.md$/u.exec(name);
+    const order = { Q1: 1, H1: 2, Q3: 3, FY: 4 };
+    return match ? Number(match[1]) * 10 + order[match[2]] : -1;
+  };
+  try { files = (await readdir(directory)).filter((name) => /^(?:20\d{2})-(?:FY|Q1|H1|Q3)\.md$/u.test(name)).sort((a, b) => periodKey(b) - periodKey(a)); }
   catch (error) { if (error.code === "ENOENT") return []; throw error; }
   const destination = join(output, "reports", ticker);
   assertInside(output, destination);
@@ -28,22 +33,22 @@ async function collectReports(root, output, ticker, policy) {
     const sourcePath = `research/companies/CN/${ticker}/reports/${filename}`;
     const body = await readFile(join(root, sourcePath));
     await copyFile(join(root, sourcePath), join(destination, filename));
-    return { date: filename.replace(/\.md$/u, ""), path: `/data/reports/${ticker}/${filename}`,
-      ...reportMetadata(sourcePath, body, policy) };
+    const title = /^#\s+(.+)$/mu.exec(body.toString("utf8"))?.[1] ?? ticker;
+    return { period: filename.replace(/\.md$/u, ""), path: `/data/reports/${ticker}/${filename}`, title,
+      ...reportMetadata(sourcePath, body, policy, state) };
   }));
 }
-export function projectCompany(row, reports, member, policy) {
-  const metadata = reports.find((report) => report.sourcePath === row.report_path);
-  const display = displayEligibility(row, metadata, policy);
+export function projectCompany(row, reports, member, policy, task = null) {
+  const metadata = reports.find((report) => report.sourcePath === row.basis_report_path);
+  const display = displayEligibility(row, metadata);
   const issue = row.last_revision?.display_issue;
   return {
-    symbol: row.symbol, ticker: row.symbol.replace(/^CN:/u, ""), name: row.name,
+    symbol: row.symbol, ticker: row.symbol.replace(/^CN:/u, ""), name: row.name || reports[0]?.title || row.symbol,
     exchange: row.exchange ?? "—", industry: row.industry || member?.industry || "未分类",
     status: row.status, universeStatus: row.universe_status ?? "unregistered",
     hasResearchState: row.hasResearchState !== false,
     inQualityPool: Boolean(member), qualityTier: member?.tier ?? null,
     updatedAt: row.updated_at ?? null, informationCutoff: row.information_cutoff ?? null,
-    invalidation: row.invalidation ?? null, candidateSince: row.candidate_since ?? null,
     display, standardId: metadata?.standardId ?? null, standardLabel: metadata?.standardLabel ?? "未验收",
     acceptedAt: metadata?.acceptedAt ?? null,
     // No old number or conclusion enters the current machine-readable catalog.
@@ -53,10 +58,15 @@ export function projectCompany(row, reports, member, policy) {
     valuationNote: display.eligible ? row.valuation_note ?? null : null,
     returnModel: display.eligible ? row.return_model ?? null : null,
     returnModelNote: display.eligible ? row.return_model_note ?? null : null,
-    returnModelDisplayIssue: display.eligible && issue?.base_report === row.report_path
+    returnModelDisplayIssue: display.eligible && issue?.base_report === row.basis_report_path
       && issue?.model_as_of === row.information_cutoff ? issue : null,
-    reportPath: row.report_path ?? null, reportDate: metadata?.date ?? null, reports,
-    eventTriggerCount: (row.event_triggers ?? []).length,
+    basisReportPath: row.basis_report_path ?? null,
+    reportPeriod: row.report_period ?? null,
+    reportUpdatedAt: row.last_research_at ?? null,
+    latestReportPeriod: reports[0]?.period ?? null,
+    pendingReportPeriod: task?.report_period ?? null,
+    pendingTaskKind: task?.trigger_kind ?? null,
+    reports,
   };
 }
 async function collectResearchDocuments(root, output) {
@@ -99,7 +109,7 @@ function csvCell(value) {
 async function exportCurrent(output, catalog, scope, basename) {
   const data = makeExports(catalog, scope);
   await writeFile(join(output, `${basename}.json`), `${JSON.stringify(data)}\n`, "utf8");
-  const lines = [["公司", "代码", "研究标准", "资料截止", "验收时间", "价值低端", "价值高端", "币种", "研究结论", "当前摘要"]];
+  const lines = [["公司", "代码", "研究标准", "资料截止", "完成入库", "价值低端", "价值高端", "币种", "研究结论", "当前摘要"]];
   for (const company of data.companies) lines.push([company.name, company.symbol, company.standardId,
     company.informationCutoff, company.acceptedAt, company.valueRange?.low, company.valueRange?.high,
     company.valueRange?.currency, company.status, company.summary]);
@@ -120,28 +130,37 @@ export async function buildResearchData(root = repositoryRoot) {
   const stateSymbols = new Set(states.map((row) => row.symbol));
   if (stateSymbols.size !== states.length) throw new Error("研究状态代码重复");
   const sourceStateCount = states.length;
-  // Pool-only identities are progress placeholders, not new research-state rows.
+  const companyDirectories = await readdir(join(root, "research/companies/CN"), { withFileTypes: true });
+  const archiveSymbols = companyDirectories.filter((entry) => entry.isDirectory() && /^\d{6}$/u.test(entry.name))
+    .map((entry) => `CN:${entry.name}`).filter((symbol) => !stateSymbols.has(symbol) && !members.has(symbol));
+  // Pool-only identities are progress placeholders; archive-only identities
+  // make every retained report readable without creating research state.
   const rows = [...states, ...pool.companies.filter((member) => !stateSymbols.has(member.symbol))
     .map((member) => ({ symbol: member.symbol, name: member.name, industry: member.industry,
-      status: "unregistered", hasResearchState: false, report_path: null }))];
+      status: "unregistered", hasResearchState: false, report_period: null,
+      basis_report_path: null })), ...archiveSymbols.map((symbol) => ({ symbol, name: null,
+      industry: "历史档案", status: "unregistered", universe_status: "inactive",
+      hasResearchState: false, report_period: null, basis_report_path: null }))];
   await rm(output, { recursive: true, force: true });
   await mkdir(output, { recursive: true });
   await collectResearchDocuments(root, output);
+  const tasksBySymbol = new Map(queue.map((item) => [item.symbol, item]));
   const companies = [];
   for (const row of rows) {
     const ticker = row.symbol.replace(/^CN:/u, "");
     if (!/^\d{6}$/u.test(ticker)) throw new Error(`无效证券代码: ${row.symbol}`);
-    const reports = row.report_path ? await collectReports(root, output, ticker, policy) : [];
-    companies.push(projectCompany(row, reports, members.get(row.symbol), policy));
+    const reports = await collectReports(root, output, ticker, policy, row);
+    companies.push(projectCompany(row, reports, members.get(row.symbol), policy,
+      tasksBySymbol.get(row.symbol) ?? null));
   }
-  const status = Object.fromEntries(["unseen", "ignore", "candidate", "covered", "stale", "unregistered"]
+  const status = Object.fromEntries(["unseen", "ignore", "covered", "unregistered"]
     .map((name) => [name, companies.filter((company) => company.status === name).length]));
   const queued = queue.filter((item) => item.status === "queued").length;
   const running = queue.filter((item) => item.status === "running").length;
   const catalog = {
     schemaVersion: 2, generatedAt: new Date().toISOString(), standard: policy.active,
     standards: policy.registry.standards,
-    scope: { id: "quality_pool", label: "核心研究池", asOf: pool.as_of, count: members.size },
+    scope: { id: "quality_pool", label: "重点跟踪池", asOf: pool.as_of, count: members.size },
     stats: { total: companies.length, researchStateRows: sourceStateCount,
       active: states.filter((row) => row.universe_status === "active").length,
       reports: companies.filter((company) => company.reports.length).length,
@@ -155,7 +174,8 @@ export async function buildResearchData(root = repositoryRoot) {
   const progress = companies.filter((company) => company.inQualityPool).map((company) => ({
     symbol: company.symbol, name: company.name, qualityTier: company.qualityTier,
     hasResearchState: company.hasResearchState, display: company.display,
-    informationCutoff: company.informationCutoff, reportPath: company.reportPath,
+    informationCutoff: company.informationCutoff, reportPeriod: company.reportPeriod,
+    basisReportPath: company.basisReportPath, pendingReportPeriod: company.pendingReportPeriod,
   }));
   await writeFile(join(output, "research-progress.json"), JSON.stringify({ scope: catalog.scope,
     standard: catalog.standard, stats: catalog.stats.current, companies: progress }), "utf8");
