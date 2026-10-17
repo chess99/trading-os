@@ -41,6 +41,15 @@ _REPORT_STITCHING_RE = re.compile(
     r"鉴于当前价值区间使用跨周期正常化经营而非单期利润直接年化|"
     r"(?:主要会计数据表|合并利润表主要数据).{0,30}可复核摘录如下"
 )
+# Only high-confidence delivery/process leaks are mechanical failures. Ordinary
+# contrasts, customer/user analysis and model assumptions require editorial review.
+_REPORT_PROCESS_LEAK_RE = re.compile(
+    r"(?:按|按照|根据|回应|针对)(?:你|您)的(?:要求|建议|问题|反馈)|"
+    r"你(?:提到|指出|希望我们)|(?:本次|本轮|上次|上轮)(?:的)?(?:对话|聊天)|"
+    r"仓库统一的(?:三|五|十)年接口|协调器验收|research complete|"
+    r"(?:任务ID|任务编号|task_id)\s*[:：=]",
+    re.IGNORECASE,
+)
 _REPORT_INFORMATION_CUTOFF_RE = re.compile(
     r"信息截止(?:时间|时点|日)?\s*[：:=为]?\s*"
     r"(?P<year>20\d{2})[-年/](?P<month>\d{1,2})[-月/](?P<day>\d{1,2})日?"
@@ -1174,6 +1183,15 @@ class ResearchFlow:
             raise ValidationError("research result requires at least one source URL")
         if report_markdown is None:
             raise ValidationError("research result requires report_markdown")
+        reader_text = "\n".join((
+            report_markdown, summary, *key_logic, *risks,
+            valuation_note or "", return_model_note or "",
+        ))
+        if _REPORT_PROCESS_LEAK_RE.search(reader_text):
+            raise ValidationError(
+                "reader-facing research must not include user conversation or workflow notes; "
+                "keep them in working papers"
+            )
         if _REPORT_DEFERRAL_RE.search(report_markdown):
             raise ValidationError(
                 "formal report must be self-contained and must not defer core analysis "

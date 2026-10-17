@@ -2,6 +2,8 @@
 
 这是研究资产的只读展示，不维护第二套公司估值或研究状态，也不因价格变动创建任务。所有完整报告统一按财报周期保存在 `reports/`。
 
+**线上地址：** [trading-os-dashboard.csz99126.workers.dev](https://trading-os-dashboard.csz99126.workers.dev)
+
 ## 默认展示
 
 **最新周期模型**默认使用动态重点跟踪池，只显示状态依据报告中按现行兼容标准完成的结果。报告按财报周期和资料截止理解，不声明在今天仍然有效；最新周期没有兼容标准结果时不回退旧模型。
@@ -37,7 +39,19 @@ npm run lint
 
 ## 部署
 
-网页是构建时只读快照。更改仓库后需在现有部署环境重新构建发布；本功能不自动获取部署权限、不自动部署。
+网页是构建时只读快照。Cloudflare Workers Builds连接GitHub仓库，`main`每次推送后直接重新生成资料投影并部署，不等待GitHub Actions检查完成。
+
+Cloudflare项目使用下列设置：
+
+- 生产分支：`main`
+- 根目录：仓库根目录
+- 构建命令：`cd dashboard && npm ci --no-audit --no-fund && npm run build`
+- 部署命令：`cd dashboard && npx wrangler deploy --config dist/server/wrangler.json`
+- Node.js：`22.13.0`或更高版本
+
+必须从仓库根目录开始构建，因为数据生成步骤会读取外层的`coverage/`、`research/`、`screening/`和`selection/`。`dashboard/public/data/`与`dashboard/dist/`都是构建产物，不提交到Git。
+
+需要手动复核部署包或补发时仍可使用：
 
 ```bash
 npx wrangler login
@@ -45,4 +59,4 @@ npm run deploy:dry-run
 npm run deploy
 ```
 
-仍使用构建输出 `dist/server/wrangler.json`部署到Cloudflare Workers。没有授权登录时，不以其他账号或连接绕过；本地/CI构建与实际上线分别报告。
+仍使用构建输出`dist/server/wrangler.json`部署到Cloudflare Workers，生产Worker名称为`trading-os-dashboard`。没有授权登录时，不以其他账号或连接绕过；本地/CI构建与实际上线分别报告。
