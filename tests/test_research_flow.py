@@ -124,6 +124,42 @@ def test_periodic_research_creates_one_period_slot(tmp_path: Path):
     flow.validate()
 
 
+@pytest.mark.parametrize("field,leak", [
+    ("report_markdown", "按照你的要求，本报告扩大长期研究。"),
+    ("report_markdown", "持有人模型保持仓库统一的五年接口。"),
+    ("summary", "本轮对话形成了最新判断。"),
+    ("key_logic", "回应您的问题，公司值得拥有。"),
+    ("risks", "协调器验收后继续观察。"),
+    ("return_model_note", "task_id: internal-123"),
+])
+def test_process_notes_are_rejected_before_any_research_write(tmp_path, field, leak):
+    flow = ResearchFlow(tmp_path)
+    task_id = _enqueue(flow, "CN:000001", "2026-H1")
+    original = _result("CN:000001")
+    value = getattr(original, field)
+    replacement = (*value, leak) if isinstance(value, tuple) else value + "\n" + leak
+    candidate = replace(original, **{field: replacement})
+    before_state = (tmp_path / "coverage/cn-a/research_state.jsonl").read_bytes()
+    before_queue = (tmp_path / "coverage/cn-a/research_queue.jsonl").read_bytes()
+    with pytest.raises(ValidationError, match="user conversation or workflow notes"):
+        flow.apply_result(candidate, task_id=task_id, at=AT)
+    assert (tmp_path / "coverage/cn-a/research_state.jsonl").read_bytes() == before_state
+    assert (tmp_path / "coverage/cn-a/research_queue.jsonl").read_bytes() == before_queue
+    assert not (tmp_path / "research/companies/CN/000001/reports/2026-H1.md").exists()
+
+
+def test_customer_analysis_and_necessary_accounting_contrasts_are_allowed(tmp_path):
+    flow = ResearchFlow(tmp_path)
+    task_id = _enqueue(flow, "CN:000001", "2026-H1")
+    original = _result("CN:000001")
+    candidate = replace(original, report_markdown=original.report_markdown + (
+        "\n用户反馈显示续费率提高。模型不把会计利润当作现金分配。"
+        "这不是新增收益，而是已确认应收股利到账。\n"
+    ))
+    flow.apply_result(candidate, task_id=task_id, at=AT)
+    flow.validate()
+
+
 def test_completion_requires_a_released_active_standard(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     task_id = _enqueue(flow, "CN:000001", "2026-H1")
