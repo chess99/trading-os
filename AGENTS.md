@@ -75,10 +75,8 @@
 
 ## 现行标准与历史展示
 
-执行新研究的协调验收或修改网页前，再读 [现行研究展示标准](research/standards/README.md)。`research/standards/registry.json` 发布现行标准及显式兼容版本；报告级验收登记绑定具体正文与结构化结果，不另存估值、不增加审批角色。
+执行新研究的协调验收或修改网页前，再读 [现行研究展示标准](research/standards/README.md)。`research/standards/registry.json` 发布现行标准及显式兼容版本；协调器实质验收后调用 `research complete`，由它把当时的标准 ID、规范版本和完成时间与最新周期状态一次写入，不另建报告级登记、哈希或撤销文件。
 
-沿用同一协调器完成实质验收及 `research complete` 后，使用 `node dashboard/scripts/report-standards.mjs inspect/accept` 对刚验收的当前版本登记，随该轮正式输出提交。登记必须保留事实截止、实际采用的规范版本及具体验收说明，不按报告日期、covered、当前文件指针或模型数字自动认证。缺少登记的报告不会进入默认当前研究，但仍可主动查阅历史。
+网页默认动态重点跟踪池并展示最新周期中按现行兼容标准完成的模型；暂无法估值及研究后ignore不自动排除。全市场仍可按财报周期阅读已有报告，非最新周期不加载现价或其他版本摘要。范围、结论、标准兼容和资料时点分别处理。
 
-网页默认动态重点跟踪池并展示最新周期中通过现行兼容标准验收的模型；暂无法估值及研究后ignore不自动排除。全市场仍可按财报周期阅读已有报告，非最新周期不加载现价或其他版本摘要。范围、结论、标准兼容和资料时点分别处理。
-
-网页与导出改动运行 `node dashboard/scripts/report-standards.mjs validate`，并执行dashboard测试、类型检查及浏览器隔离测试。原研究状态校验仍须通过。2026-09-23本轮只实现版本登记与展示隔离，不重做企业估值、不启动批量研究，也不自动部署到生产站点。
+网页与导出改动运行 `node dashboard/scripts/report-standards.mjs validate`，并执行dashboard测试、类型检查及浏览器隔离测试；原研究状态校验仍须通过。该脚本只做 registry 与状态一致性校验，不提供第二次验收流程。

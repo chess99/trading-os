@@ -14,6 +14,25 @@ from trading_os.research_assets.research_flow import (
 )
 
 AT = "2026-08-08T17:00:00+08:00"
+STANDARD_ID = "owner-value-1.0"
+SPEC_REVISION = "320545a7e5878afab2eb781fbb9ee4a91deff304"
+
+
+def _write_registry(root: Path) -> None:
+    path = root / "research/standards/registry.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "active_standard": STANDARD_ID,
+                "standards": [
+                    {"id": STANDARD_ID, "status": "released", "spec_revision": SPEC_REVISION}
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
 
 
 def _call(tmp_path: Path, capsys: pytest.CaptureFixture[str], *args: str) -> dict:
@@ -86,6 +105,7 @@ def test_empty_status_and_validate(tmp_path: Path, capsys):
 
 
 def test_cli_completes_a_period_task(tmp_path: Path, capsys):
+    _write_registry(tmp_path)
     flow = ResearchFlow(tmp_path)
     flow.register_universe([CompanyRef("CN:000001", "示例公司")], at=AT)
     batch = flow.enqueue_research(
@@ -103,6 +123,9 @@ def test_cli_completes_a_period_task(tmp_path: Path, capsys):
     completed = _call(tmp_path, capsys, "research", "complete", "--input", str(source))
     assert completed["report_period"] == "2026-H1"
     assert completed["basis_report_path"].endswith("/2026-H1.md")
+    assert completed["standard_id"] == STANDARD_ID
+    assert completed["spec_revision"] == SPEC_REVISION
+    assert completed["accepted_at"] == AT
 
     rewrite = tmp_path / "rewrite.json"
     rewrite.write_text(

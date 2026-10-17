@@ -6,7 +6,7 @@ export type DisplayState = "current" | "unpriced" | "pending_research" | "pendin
 export interface ReportVersion {
   period: string; path: string; sourcePath: string; informationCutoff: string | null;
   standardId: string | null; standardLabel: string; valueDefinition: string | null;
-  acceptedAt: string | null; compatible: boolean; acceptanceStatus: string;
+  acceptedAt: string | null; compatible: boolean;
 }
 export interface TerminalEquityValueRange { low: number; high: number }
 export interface ReturnModel {

@@ -21,7 +21,7 @@ Trading OS 是一套按财报周期维护 A 股长期研究的轻量工作流。
 | 动态重点跟踪池 | 哪些公司值得持续投入完整研究？ | [质量池规范](prompts/screening/cn-a-value-quality.md)，`pool.json` |
 | 财报周期排期 | 本季哪些池内公司尚缺完整报告？ | `research enqueue-period --period ...` |
 | 单公司研究 | 商业经济学、当前价值和条件现金回报如何？ | [完整深研](prompts/company/standard-deep-research.md)，周期报告 |
-| 协调验收 | 正文、证据、模型和结构化结果是否一致？ | [验收流程](playbooks/simple-research.md)，acceptance |
+| 协调验收 | 正文、证据、模型和结构化结果是否一致？ | [验收流程](playbooks/simple-research.md)，`research complete` |
 | 产业知识 | 利润由谁创造、谁取得，如何跨公司验证？ | [产业框架](research/industries/README.md) |
 | 长期精选 | 哪些更值得长期拥有和等待？ | [精选原则](selection/principles.md)、[当前精选](selection/current.md) |
 
@@ -34,7 +34,6 @@ research/companies/CN/{代码}/reports/YYYY-{FY|Q1|H1|Q3}.md 财报周期完整�
 screening/cn-a/value-quality/pool.json                      动态重点跟踪池
 screening/cn-a/value-quality/current.md                     由当前池确定性生成的可读投影
 research/standards/registry.json                            现行研究标准
-research/standards/acceptances/{代码}/{周期}.json           周期报告验收登记
 ```
 
 `basis_report_path` 和 `report_period` 只绑定结构化状态所依据的最新周期报告，不宣称报告在今天仍然“有效”。每份报告按自身财报周期、信息截止和研究标准阅读。`covered / ignore` 是该周期的研究结论，不是事件驱动状态。
@@ -112,7 +111,7 @@ python -m trading_os research next --limit 4 --trigger-kind manual_rewrite
 
 ## 可视化研究台
 
-`dashboard/` 从仓库确定性生成。默认范围是动态重点跟踪池；“最新周期模型”只展示最新依据报告中通过现行兼容标准验收的结构化结果。非最新周期只阅读正文，不加载现价或参与排序。
+`dashboard/` 从仓库确定性生成。默认范围是动态重点跟踪池；“最新周期模型”只展示最新依据报告中按现行兼容标准完成的结构化结果。`research complete` 会把当时标准写入研究状态，不另建验收文件。非最新周期只阅读正文，不加载现价或参与排序。
 
 实时行情仅用于把现价与报告冻结的 `value_range`、`return_model` 机械比较。行情缺失或公式无法求解时显示 `—`；这些派生值不触发研究，也不是交易建议。
 

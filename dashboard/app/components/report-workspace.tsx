@@ -83,14 +83,12 @@ export function ReportWorkspace({ initialTicker }: { initialTicker?: string }) {
     <section className="standards-reading" aria-label="所选报告">
       {selected ? <><header><span className="section-eyebrow">{context.live ? "CURRENT STANDARD" : "RESEARCH ARCHIVE"}</span><h2>{selected.name}</h2>
         {context.report ? <><p className="standards-meta">研究周期 {context.report.period} · 资料截止 {formatDate(context.report.informationCutoff)} · {context.report.standardLabel}</p>
-          {context.report.sourcePath === selected.basisReportPath && <p className="standards-meta">报告更新 {formatDate(selected.reportUpdatedAt, true)} · 验收时间 {formatDate(context.report.acceptedAt, true)}</p>}</> : <p>该研究周期不存在</p>}
+          {context.report.sourcePath === selected.basisReportPath && <p className="standards-meta">报告更新 {formatDate(selected.reportUpdatedAt, true)} · 完成入库 {formatDate(context.report.acceptedAt, true)}</p>}</> : <p>该研究周期不存在</p>}
         {context.live && <div className="standards-reader-price" data-testid="live-research-panel"><span>{STATUS_META[selected.status].label}</span><strong>现价 ¥{formatPrice(quote?.price)}</strong><span>行情 {formatDate(quote?.quoteAt, true)}</span><p>{selected.summary}</p></div>}
         {selected.reports.length > 0 && <label>研究周期<select aria-label="研究周期" value={context.report?.period ?? ""} onChange={(event) => { setVersion(event.target.value); setQuoteSnapshot(null); window.history.replaceState({}, "", `/reports/${selected.ticker}?version=${event.target.value}`); }}>
           {!context.report && <option value="" disabled>选择研究周期</option>}{selected.reports.map((report) => <option key={report.sourcePath} value={report.period}>{report.period} · {report.standardLabel}{report.sourcePath === selected.basisReportPath ? " · 状态依据" : ""}</option>)}</select></label>}
       </header>
-      {context.historical && <div className="standards-history-note" data-testid="historical-notice"><strong>历史研究周期</strong><p>本报告保留该周期最后一次完整研究，不加载现价、不参与现行结果排序。</p>
-        {context.report?.acceptanceStatus === "content_changed" && <p>该正文与原验收记录不一致，原验收不适用于当前内容。</p>}
-        {context.report?.acceptanceStatus === "revoked" && <p>该版本验收已撤销。</p>}</div>}
+      {context.historical && <div className="standards-history-note" data-testid="historical-notice"><strong>历史研究周期</strong><p>本报告保留该周期最后一次完整研究，不加载现价、不参与现行结果排序。</p></div>}
       {!context.report ? <div className="standards-empty"><strong>所选研究周期不存在</strong></div>
         : bodyError?.path === path ? <p role="alert">{bodyError.message}</p>
           : !markdown ? <p aria-busy="true">正在读取所选报告…</p>

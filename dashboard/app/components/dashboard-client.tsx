@@ -96,7 +96,7 @@ export function DashboardClient() {
       <p>重点跟踪池随筛选动态变化；现行结果与全市场研究档案使用同一套报告。</p></div>
       <a className="standards-link" href="/reports">打开研报库 ↗</a></header>
     <details className="standards-banner"><summary>现行标准：{catalog.standard.label} · {catalog.standard.value_label}</summary>
-      <p>发布于 {formatDate(catalog.standard.published_at)}；规范提交 {catalog.standard.spec_revision.slice(0, 7)}。资料截止与验收日期分别标明。</p>
+      <p>发布于 {formatDate(catalog.standard.published_at)}；规范提交 {catalog.standard.spec_revision.slice(0, 7)}。资料截止与研究完成日期分别标明。</p>
       <p>{catalog.standard.compatibility_note}</p><p>兼容版本：{catalog.standard.compatible_with.join("、")}。{catalog.standard.change_note}</p>
       <p>统一的是价值含义和验收标准，不是要求不同行业使用同一公式或相同资本成本。</p></details>
     <section className="standards-stats" aria-label="选定范围研究进度">

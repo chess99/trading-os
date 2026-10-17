@@ -16,7 +16,7 @@ function parseJsonLines(text, label) {
     catch (error) { throw new Error(`${label}:${index + 1} is not valid JSON`, { cause: error }); }
   });
 }
-async function collectReports(root, output, ticker, policy) {
+async function collectReports(root, output, ticker, policy, state) {
   const directory = join(root, "research/companies/CN", ticker, "reports");
   let files;
   const periodKey = (name) => {
@@ -35,12 +35,12 @@ async function collectReports(root, output, ticker, policy) {
     await copyFile(join(root, sourcePath), join(destination, filename));
     const title = /^#\s+(.+)$/mu.exec(body.toString("utf8"))?.[1] ?? ticker;
     return { period: filename.replace(/\.md$/u, ""), path: `/data/reports/${ticker}/${filename}`, title,
-      ...reportMetadata(sourcePath, body, policy) };
+      ...reportMetadata(sourcePath, body, policy, state) };
   }));
 }
 export function projectCompany(row, reports, member, policy, task = null) {
   const metadata = reports.find((report) => report.sourcePath === row.basis_report_path);
-  const display = displayEligibility(row, metadata, policy);
+  const display = displayEligibility(row, metadata);
   const issue = row.last_revision?.display_issue;
   return {
     symbol: row.symbol, ticker: row.symbol.replace(/^CN:/u, ""), name: row.name || reports[0]?.title || row.symbol,
@@ -109,7 +109,7 @@ function csvCell(value) {
 async function exportCurrent(output, catalog, scope, basename) {
   const data = makeExports(catalog, scope);
   await writeFile(join(output, `${basename}.json`), `${JSON.stringify(data)}\n`, "utf8");
-  const lines = [["公司", "代码", "研究标准", "资料截止", "验收时间", "价值低端", "价值高端", "币种", "研究结论", "当前摘要"]];
+  const lines = [["公司", "代码", "研究标准", "资料截止", "完成入库", "价值低端", "价值高端", "币种", "研究结论", "当前摘要"]];
   for (const company of data.companies) lines.push([company.name, company.symbol, company.standardId,
     company.informationCutoff, company.acceptedAt, company.valueRange?.low, company.valueRange?.high,
     company.valueRange?.currency, company.status, company.summary]);
@@ -149,7 +149,7 @@ export async function buildResearchData(root = repositoryRoot) {
   for (const row of rows) {
     const ticker = row.symbol.replace(/^CN:/u, "");
     if (!/^\d{6}$/u.test(ticker)) throw new Error(`无效证券代码: ${row.symbol}`);
-    const reports = await collectReports(root, output, ticker, policy);
+    const reports = await collectReports(root, output, ticker, policy, row);
     companies.push(projectCompany(row, reports, members.get(row.symbol), policy,
       tasksBySymbol.get(row.symbol) ?? null));
   }

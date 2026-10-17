@@ -18,8 +18,11 @@ from urllib.parse import urlsplit
 
 STATE_PATH = Path("coverage/cn-a/research_state.jsonl")
 QUEUE_PATH = Path("coverage/cn-a/research_queue.jsonl")
+STANDARDS_REGISTRY_PATH = Path("research/standards/registry.json")
 
 _SYMBOL_RE = re.compile(r"^CN:\d{6}$")
+_STANDARD_ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
+_SPEC_REVISION_RE = re.compile(r"^[a-f0-9]{40}$")
 _DATED_MARKDOWN_RE = re.compile(r"^(?P<date>\d{4}-\d{2}-\d{2})(?:-(?P<sequence>\d{2}))?\.md$")
 _REPORT_PERIOD_RE = re.compile(r"^(?P<year>20\d{2})-(?P<period>FY|Q1|H1|Q3)$")
 _FORMAL_REPORT_RE = re.compile(r"^(?P<year>20\d{2})-(?P<period>FY|Q1|H1|Q3)\.md$")
@@ -121,7 +124,7 @@ class StateCorruptionError(ResearchFlowError):
     """Raised when a persisted JSONL file is malformed or internally inconsistent."""
 
 
-STATE_SCHEMA_VERSION = 5
+STATE_SCHEMA_VERSION = 6
 
 
 class UniverseStatus(str, Enum):
@@ -358,6 +361,43 @@ def _read_jsonl(path: Path) -> list[dict[str, Any]]:
             raise StateCorruptionError(f"{path}:{line_number}: each JSONL row must be an object")
         records.append(item)
     return records
+
+
+def _standards_registry(root: Path) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
+    path = root / STANDARDS_REGISTRY_PATH
+    try:
+        registry = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ValidationError("research standards registry is missing") from exc
+    except json.JSONDecodeError as exc:
+        raise ValidationError("research standards registry is not valid JSON") from exc
+    if not isinstance(registry, dict) or registry.get("schema_version") != 1:
+        raise ValidationError("unsupported research standards registry schema")
+    raw_standards = registry.get("standards")
+    if not isinstance(raw_standards, list) or not raw_standards:
+        raise ValidationError("research standards registry has no standards")
+    standards: dict[str, dict[str, Any]] = {}
+    for item in raw_standards:
+        if not isinstance(item, dict):
+            raise ValidationError("research standard must be an object")
+        standard_id = item.get("id")
+        if (
+            not isinstance(standard_id, str)
+            or not _STANDARD_ID_RE.fullmatch(standard_id)
+            or standard_id in standards
+        ):
+            raise ValidationError("research standard ID is missing, invalid, or duplicated")
+        if item.get("status") not in {"draft", "released", "retired"}:
+            raise ValidationError(f"research standard has invalid status: {standard_id}")
+        if not _SPEC_REVISION_RE.fullmatch(str(item.get("spec_revision", ""))):
+            raise ValidationError(
+                f"research standard must bind a full spec revision: {standard_id}"
+            )
+        standards[standard_id] = item
+    active = standards.get(registry.get("active_standard"))
+    if active is None or active.get("status") != "released":
+        raise ValidationError("active research standard must be released")
+    return active, standards
 
 
 def _enum_value(value: Enum | str, enum_type: type[Enum], label: str) -> str:
@@ -650,6 +690,9 @@ def _empty_state(symbol: str, name: str | None, at: str) -> dict[str, Any]:
         "valuation_note": None,
         "return_model": None,
         "return_model_note": None,
+        "standard_id": None,
+        "spec_revision": None,
+        "accepted_at": None,
     }
 
 
@@ -1277,6 +1320,7 @@ class ResearchFlow:
         wanted = _nonblank(task_id, "task_id")
         timestamp = _timestamp(at)
         with _exclusive_lock(self.lock_path):
+            active_standard, _ = _standards_registry(self.root)
             states = self._states()
             tasks = self._tasks()
             task = next((item for item in tasks if item.task_id == wanted), None)
@@ -1331,6 +1375,9 @@ class ResearchFlow:
                     "valuation_note": normalized["valuation_note"],
                     "return_model": normalized["return_model"],
                     "return_model_note": normalized["return_model_note"],
+                    "standard_id": active_standard["id"],
+                    "spec_revision": active_standard["spec_revision"],
+                    "accepted_at": timestamp,
                 }
             )
             tasks = [item for item in tasks if item.task_id != task.task_id]
@@ -1344,6 +1391,7 @@ class ResearchFlow:
         with _thread_lock(self.lock_path):
             states = self._states()
             tasks = self._tasks()
+            standards: dict[str, dict[str, Any]] | None = None
             counts = {status.value: 0 for status in CompanyStatus}
             universe_counts = {status.value: 0 for status in UniverseStatus}
             try:
@@ -1377,6 +1425,46 @@ class ResearchFlow:
 
                     report_path = state.get("basis_report_path")
                     report_period = state.get("report_period")
+                    standard_stamp = (
+                        state.get("standard_id"),
+                        state.get("spec_revision"),
+                        state.get("accepted_at"),
+                    )
+                    if any(value is not None for value in standard_stamp) and not all(
+                        value is not None for value in standard_stamp
+                    ):
+                        raise StateCorruptionError(
+                            f"research standard stamp is incomplete for {symbol}"
+                        )
+                    if all(value is not None for value in standard_stamp):
+                        if report_path is None:
+                            raise StateCorruptionError(
+                                f"research standard stamp has no report for {symbol}"
+                            )
+                        if standards is None:
+                            try:
+                                _, standards = _standards_registry(self.root)
+                            except ValidationError as exc:
+                                raise StateCorruptionError(str(exc)) from exc
+                        standard = standards.get(state["standard_id"])
+                        if standard is None or standard.get("status") == "draft":
+                            raise StateCorruptionError(
+                                f"research standard is unknown or draft for {symbol}"
+                            )
+                        if state["spec_revision"] != standard["spec_revision"]:
+                            raise StateCorruptionError(
+                                f"research standard revision mismatch for {symbol}"
+                            )
+                        accepted_at = _timestamp(state["accepted_at"])
+                        information_cutoff_value = state.get("information_cutoff")
+                        if information_cutoff_value is not None and datetime.fromisoformat(
+                            accepted_at.replace("Z", "+00:00")
+                        ) < datetime.fromisoformat(
+                            _timestamp(information_cutoff_value).replace("Z", "+00:00")
+                        ):
+                            raise StateCorruptionError(
+                                f"research acceptance predates information cutoff for {symbol}"
+                            )
                     if report_path is not None:
                         expected_prefix = (self._company_directory(symbol) / "reports").relative_to(
                             self.root
@@ -1509,6 +1597,7 @@ __all__ = [
     "ReturnModel",
     "ResearchTask",
     "STATE_PATH",
+    "STANDARDS_REGISTRY_PATH",
     "MANUAL_REWRITE_TRIGGER",
     "PERIODIC_TRIGGER",
     "StateCorruptionError",

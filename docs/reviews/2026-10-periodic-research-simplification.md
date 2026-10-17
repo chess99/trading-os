@@ -16,11 +16,11 @@
 - 301家旧 `candidate` 因不在动态重点池且不再执行旧全市场排期，转为 `ignore`。
 - 清空421个事件更新任务和301个旧初筛任务；迁移后队列为空。
 - 删除 `research/watchlist.jsonl`，重点跟踪范围只由动态质量池定义。
-- 状态 schema 升至 v5，公司状态只保留 `unseen / ignore / covered`。
+- 状态 schema 当时升至 v5，公司状态只保留 `unseen / ignore / covered`；2026-10-17 标准信息并入状态后升至 v6。
 
 ## 新队列
 
 - `periodic`：`research enqueue-period --period <周期>` 读取当时的动态重点池，只创建缺失槽位。
 - `manual_rewrite`：`research enqueue-rewrite` 只接受已存在周期，必须由用户明确要求并提供具体原因。
 
-新标准默认在下一财报周期采用，不自动触发中途批量重写。报告级 acceptance 继续负责方法与内容质量，不承担事实时效判断。
+新标准默认在下一财报周期采用，不自动触发中途批量重写。2026-10-17 起不再使用独立报告级 acceptance；方法与内容质量由协调器在 `research complete` 前实质验收，采用的标准随完成状态一次写入。

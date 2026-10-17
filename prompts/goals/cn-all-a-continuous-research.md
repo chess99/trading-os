@@ -40,7 +40,7 @@ python -m trading_os research next --limit <N> --trigger-kind manual_rewrite
 
 启动时读取 Git 状态、`research_state.jsonl`、`research_queue.jsonl`、动态重点池和 `basis_report_path` 所指报告。保留用户及并行修改，不重复已完成周期。
 
-协调器串行接收结果、原子写状态并运行校验。完成后登记报告级 acceptance；同周期正文变化必须重新验收。
+协调器串行接收结果、完成实质验收后用 `research complete` 原子写报告、状态及当时的现行标准，并运行校验。同周期正文变化必须重新走完整研究和验收，不另建 acceptance 文件。
 
 ## 每轮报告
 

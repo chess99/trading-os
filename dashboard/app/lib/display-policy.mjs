@@ -40,6 +40,6 @@ export const DISPLAY_LABELS = {
   unpriced: "研究完成 · 暂无法估值",
   pending_research: "待首次研究",
   pending_standard: "待按现行标准研究",
-  needs_review: "验收待复核",
+  needs_review: "研究状态需修复",
   inactive: "不在当前在市范围",
 };

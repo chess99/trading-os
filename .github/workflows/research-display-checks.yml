@@ -36,7 +36,7 @@ jobs:
           node-version: '22'
           cache: npm
           cache-dependency-path: dashboard/package-lock.json
-      - name: Verify acceptance bindings
+      - name: Verify research standard state
         run: node dashboard/scripts/report-standards.mjs validate
       - name: Install dashboard
         working-directory: dashboard

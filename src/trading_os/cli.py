@@ -465,6 +465,9 @@ def _research_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
         "return_model_note": state["return_model_note"],
         "report_period": state["report_period"],
         "basis_report_path": state["basis_report_path"],
+        "standard_id": state["standard_id"],
+        "spec_revision": state["spec_revision"],
+        "accepted_at": state["accepted_at"],
     }
 
 

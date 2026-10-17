@@ -1,104 +1,48 @@
-import { readFile, mkdir, open, rename, rm } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { dirname, resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { acceptancePath, loadStandards, reportMetadata, researchDigest, sha256,
-  validateAcceptance } from "./lib/research-standards.mjs";
+import { loadStandards } from "./lib/research-standards.mjs";
 
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
-  root: { type: "string" }, symbol: { type: "string" }, standard: { type: "string" },
-  "report-sha": { type: "string" }, "research-sha": { type: "string" },
-  "expected-receipt": { type: "string" }, "source-revision": { type: "string" },
-  reviewer: { type: "string" }, note: { type: "string" }, at: { type: "string" },
-  "confirm-review": { type: "boolean", default: false },
+  root: { type: "string" },
 } });
 const root = resolve(values.root ?? join(dirname(fileURLToPath(import.meta.url)), "../.."));
 const command = positionals[0];
 const assert = (ok, message) => { if (!ok) throw new Error(message); };
-const emit = (payload) => process.stdout.write(`${JSON.stringify(payload, null, 2)}\n`);
+const nonblank = (value) => typeof value === "string" && value.trim().length > 0;
+const timestamp = (value) => nonblank(value) && /(?:Z|[+-]\d{2}:\d{2})$/u.test(value) && Number.isFinite(Date.parse(value));
+const reportPath = /^research\/companies\/CN\/(\d{6})\/reports\/(20\d{2}-(?:FY|Q1|H1|Q3))\.md$/u;
 
 async function main() {
-  assert(["inspect", "accept", "revoke", "validate"].includes(command),
-    "用法: node dashboard/scripts/report-standards.mjs inspect|accept|revoke|validate [--symbol CN:xxxxxx]");
+  assert(command === "validate" && positionals.length === 1,
+    "用法: node dashboard/scripts/report-standards.mjs validate");
   const policy = await loadStandards(root);
   const states = (await readFile(join(root, "coverage/cn-a/research_state.jsonl"), "utf8"))
     .split(/\r?\n/u).filter(Boolean).map((line) => JSON.parse(line));
-  if (command === "validate") {
-    for (const receipt of policy.receipts.values()) {
-      const body = await readFile(join(root, receipt.report_path));
-      assert(receipt.revoked_at || sha256(body) === receipt.report_sha256, `报告内容已变化: ${receipt.report_path}`);
-      const state = states.find((row) => row.basis_report_path === receipt.report_path);
-      assert(receipt.revoked_at || !state || researchDigest(state) === receipt.research_sha256,
-        `当前结构化研究与验收不一致: ${receipt.report_path}`);
-      assert(receipt.revoked_at || !state || !["covered", "ignore"].includes(state.status)
-        || state.status === receipt.outcome, `当前结论状态与验收不一致: ${receipt.report_path}`);
-    }
-    emit({ ok: true, active_standard: policy.active.id, acceptances: policy.receipts.size });
-    return;
+  let stampedResults = 0;
+  let compatibleResults = 0;
+  for (const state of states) {
+    const stamp = [state.standard_id, state.spec_revision, state.accepted_at];
+    if (stamp.every((value) => value == null)) continue;
+    assert(stamp.every(nonblank), `研究标准信息不完整: ${state.symbol}`);
+    const match = reportPath.exec(state.basis_report_path ?? "");
+    assert(match && state.symbol === `CN:${match[1]}` && state.report_period === match[2],
+      `研究标准对应报告路径不正确: ${state.symbol}`);
+    assert(["covered", "ignore"].includes(state.status), `标准标记只适用于已完成研究: ${state.symbol}`);
+    const standard = policy.standards.get(state.standard_id);
+    assert(standard && standard.status !== "draft", `研究标准不存在或仍是草案: ${state.symbol}`);
+    assert(state.spec_revision === standard.spec_revision, `研究标准版本不匹配: ${state.symbol}`);
+    assert(timestamp(state.accepted_at), `研究完成时间必须有时区: ${state.symbol}`);
+    assert(timestamp(state.information_cutoff)
+      && Date.parse(state.accepted_at) >= Date.parse(state.information_cutoff), `研究完成时间/资料截止不合法: ${state.symbol}`);
+    const report = await readFile(join(root, state.basis_report_path), "utf8");
+    assert(report.trim(), `研究依据报告为空: ${state.symbol}`);
+    stampedResults += 1;
+    if (policy.active.compatible_with.includes(state.standard_id)) compatibleResults += 1;
   }
-  assert(/^CN:\d{6}$/u.test(values.symbol ?? ""), "必须指定单家公司 --symbol CN:xxxxxx");
-  const state = states.find((row) => row.symbol === values.symbol);
-  assert(state?.basis_report_path, "该公司没有研究依据报告，不可根据其他周期猜测");
-  const target = join(root, acceptancePath(state.basis_report_path));
-  const body = await readFile(join(root, state.basis_report_path));
-  const reportSha = sha256(body);
-  const stateSha = researchDigest(state);
-  let previous;
-  try { previous = await readFile(target, "utf8"); }
-  catch (error) { if (error.code !== "ENOENT") throw error; }
-  if (command === "inspect") {
-    emit({ symbol: state.symbol, report_period: state.report_period,
-      basis_report_path: state.basis_report_path, report_sha256: reportSha,
-      research_sha256: stateSha, information_cutoff: state.information_cutoff,
-      receipt_sha256: previous ? sha256(previous) : null,
-      report: reportMetadata(state.basis_report_path, body, policy) });
-    return;
-  }
-  assert(values["confirm-review"] && values.note?.trim() && values.reviewer?.trim(),
-    "写入必须确认已实质验收，并给出 --confirm-review --reviewer --note；哈希校验不代替研究验收");
-  assert(values["report-sha"] === reportSha && values["research-sha"] === stateSha,
-    "正文或研究结果与已检查快照不同，请重新读取后验收");
-  assert(!previous || values["expected-receipt"] === sha256(previous), "已有验收记录，替换须提供 --expected-receipt");
-  const at = values.at ?? new Date().toISOString();
-  let receipt;
-  if (command === "revoke") {
-    assert(previous, "没有可撤销的验收记录");
-    receipt = { ...JSON.parse(previous), revoked_at: at, revocation_reason: values.note,
-      revoked_by: values.reviewer };
-  } else {
-    const standard = policy.standards.get(values.standard);
-    assert(standard?.status === "released", "只可按已发布标准验收");
-    assert(state.universe_status === "active" && ["covered", "ignore"].includes(state.status)
-      , "周期报告未完成或证券不在市，不能登记为现行结果");
-    receipt = { schema_version: 1, symbol: state.symbol, outcome: state.status, report_path: state.basis_report_path,
-      report_sha256: reportSha, research_sha256: stateSha, information_cutoff: state.information_cutoff,
-      standard_id: standard.id, spec_revision: standard.spec_revision, value_definition: standard.value_definition,
-      accepted_at: at, reviewer: values.reviewer, review_note: values.note,
-      source_revision: values["source-revision"], revoked_at: null };
-  }
-  validateAcceptance(receipt, policy);
-  await mkdir(dirname(target), { recursive: true });
-  // Per-report lock and compare-and-swap protect local concurrent coordinators.
-  // Normal git conflict checks are still required when committing from other hosts.
-  const lock = await open(`${target}.lock`, "wx");
-  const temporary = `${target}.${process.pid}.tmp`;
-  try {
-    let current;
-    try { current = await readFile(target, "utf8"); } catch (error) { if (error.code !== "ENOENT") throw error; }
-    assert(current === previous, "验收记录并发变化，拒绝覆盖");
-    const latest = (await readFile(join(root, "coverage/cn-a/research_state.jsonl"), "utf8"))
-      .split(/\r?\n/u).filter(Boolean).map((line) => JSON.parse(line)).find((row) => row.symbol === state.symbol);
-    assert(latest?.basis_report_path === state.basis_report_path && researchDigest(latest) === stateSha
-      && sha256(await readFile(join(root, state.basis_report_path))) === reportSha, "研究快照并发变化，拒绝登记");
-    if (command === "accept") assert(latest.universe_status === "active"
-      && latest.status === receipt.outcome, "研究状态并发变化，拒绝登记");
-    const file = await open(temporary, "wx");
-    try { await file.writeFile(`${JSON.stringify(receipt, null, 2)}\n`); await file.sync(); }
-    finally { await file.close(); }
-    await rename(temporary, target);
-  } finally {
-    await rm(temporary, { force: true }); await lock.close(); await rm(`${target}.lock`, { force: true });
-  }
-  emit({ ok: true, path: acceptancePath(state.basis_report_path), receipt });
+  process.stdout.write(`${JSON.stringify({ ok: true, active_standard: policy.active.id,
+    stamped_results: stampedResults, compatible_results: compatibleResults }, null, 2)}\n`);
 }
+
 main().catch((error) => { console.error(error.message); process.exitCode = 1; });

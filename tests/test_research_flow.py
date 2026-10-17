@@ -21,6 +21,29 @@ from trading_os.research_assets.research_flow import (
 
 AT = "2026-08-08T17:00:00+08:00"
 LATER = "2026-09-01T17:00:00+08:00"
+STANDARD_ID = "owner-value-1.0"
+SPEC_REVISION = "320545a7e5878afab2eb781fbb9ee4a91deff304"
+
+
+def _write_registry(root: Path) -> None:
+    path = root / "research/standards/registry.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "active_standard": STANDARD_ID,
+                "standards": [
+                    {
+                        "id": STANDARD_ID,
+                        "status": "released",
+                        "spec_revision": SPEC_REVISION,
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
 
 
 def _model(as_of: str = AT) -> ReturnModel:
@@ -75,6 +98,7 @@ def _enqueue(
     kind: str = PERIODIC_TRIGGER,
     at: str = AT,
 ) -> str:
+    _write_registry(flow.root)
     flow.register_universe([CompanyRef(symbol, "示例公司")], at=at)
     batch = flow.enqueue_research(
         [ResearchRequest(symbol, "完成财报周期完整研究")],
@@ -93,8 +117,38 @@ def test_periodic_research_creates_one_period_slot(tmp_path: Path):
     state = flow.apply_result(_result("CN:000001"), task_id=task_id, at=AT)
     assert state["basis_report_path"].endswith("/reports/2026-H1.md")
     assert state["report_period"] == "2026-H1"
+    assert state["standard_id"] == STANDARD_ID
+    assert state["spec_revision"] == SPEC_REVISION
+    assert state["accepted_at"] == AT
     assert flow.list_tasks() == ()
     flow.validate()
+
+
+def test_completion_requires_a_released_active_standard(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    task_id = _enqueue(flow, "CN:000001", "2026-H1")
+    (tmp_path / "research/standards/registry.json").unlink()
+    with pytest.raises(ValidationError, match="registry is missing"):
+        flow.apply_result(_result("CN:000001"), task_id=task_id, at=AT)
+
+    _write_registry(tmp_path)
+    registry_path = tmp_path / "research/standards/registry.json"
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    registry["standards"][0]["status"] = "draft"
+    registry_path.write_text(json.dumps(registry), encoding="utf-8")
+    with pytest.raises(ValidationError, match="must be released"):
+        flow.apply_result(_result("CN:000001"), task_id=task_id, at=AT)
+
+
+def test_validation_rejects_an_incomplete_standard_stamp(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    task_id = _enqueue(flow, "CN:000001", "2026-H1")
+    flow.apply_result(_result("CN:000001"), task_id=task_id, at=AT)
+    row = json.loads(flow.state_path.read_text(encoding="utf-8"))
+    row["accepted_at"] = None
+    flow.state_path.write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")
+    with pytest.raises(StateCorruptionError, match="standard stamp is incomplete"):
+        flow.validate()
 
 
 def test_next_period_adds_a_slot_and_same_period_manual_rewrite_overwrites(tmp_path: Path):
@@ -177,7 +231,7 @@ def test_validation_rejects_retired_event_fields(tmp_path: Path):
     flow = ResearchFlow(tmp_path)
     flow.state_path.parent.mkdir(parents=True)
     row = {
-        "schema_version": 5,
+        "schema_version": 6,
         "symbol": "CN:000001",
         "name": "示例公司",
         "universe_status": "active",
@@ -195,6 +249,9 @@ def test_validation_rejects_retired_event_fields(tmp_path: Path):
         "valuation_note": None,
         "return_model": None,
         "return_model_note": None,
+        "standard_id": None,
+        "spec_revision": None,
+        "accepted_at": None,
         "last_update": {"impact": "monitor"},
     }
     flow.state_path.write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")

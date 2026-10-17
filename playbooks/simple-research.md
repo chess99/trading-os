@@ -95,9 +95,9 @@ research/companies/CN/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md
 5. 对可估计的未知形成有依据的范围；决定性路径无法约束时允许 `null`。
 6. 删除估值表后，读者仍应理解为什么值得或不值得长期拥有。
 
-## 验收登记
+## 标准写入
 
-`research complete` 后，按[现行研究展示标准](../research/standards/README.md)登记报告。登记绑定正文及结构化摘要；同周期正文重写后旧登记自然不再匹配，必须重新实质验收。
+协调器完成上述实质验收后调用 `research complete`。该命令按[现行研究展示标准](../research/standards/README.md)自动把 active standard 写入最新周期状态，不再追加独立登记。同周期重写必须重新完成完整验收，随后一次覆盖报告、结构化结果和标准信息。
 
 ## 唯一事实源
 
