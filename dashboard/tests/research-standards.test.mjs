@@ -33,7 +33,8 @@ function projected(row = state(), rules = policy(), member = true) {
 test("missing and malformed registry never imply legacy compatibility", () => {
   assert.throws(() => validateRegistry(null));
   assert.throws(() => validateRegistry({ ...registry, active_standard: "missing" }));
-  const draft = structuredClone(registry); draft.standards[0].status = "draft";
+  const draft = structuredClone(registry);
+  draft.standards.find((item) => item.id === draft.active_standard).status = "draft";
   assert.throws(() => validateRegistry(draft), /草案/);
   const duplicate = structuredClone(registry); duplicate.standards.push(duplicate.standards[0]);
   assert.throws(() => validateRegistry(duplicate), /重复/);
@@ -41,11 +42,11 @@ test("missing and malformed registry never imply legacy compatibility", () => {
 
 test("explicit compatible minor release preserves the completed standard label", () => {
   const config = structuredClone(registry);
-  config.standards.push({ ...config.standards[0], id: "owner-value-1.1", change_kind: "minor",
-    compatible_with: ["owner-value-1.1", "owner-value-1.0"] });
-  config.active_standard = "owner-value-1.1";
+  config.standards.push({ ...standard, id: "test-compatible-minor", change_kind: "minor",
+    compatible_with: ["test-compatible-minor", standard.id] });
+  config.active_standard = "test-compatible-minor";
   const row = state(); const rules = policy(config); const meta = metadata(row, rules);
-  assert.equal(meta.standardId, "owner-value-1.0");
+  assert.equal(meta.standardId, standard.id);
   assert.equal(displayEligibility(row, meta).eligible, true);
 });
 
