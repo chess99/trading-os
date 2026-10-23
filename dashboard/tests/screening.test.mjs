@@ -21,3 +21,22 @@ test("foreign identity, duplicate symbol and valuation contamination stop export
   const price = structuredClone(original); price.companies[0].valueRange = { low: 1, high: 2 };
   assert.throws(() => projectScreeningPool(price, screeningMarkets[1]), /非合同/);
 });
+
+test("v3 covers every reviewed identity and retains source-indexed operating metrics", async () => {
+  for (const id of ["hk", "us"]) {
+    const original = await pool(id);
+    assert.equal(original.schema_version, 3);
+    const included = new Set(original.companies.map((c) => c.symbol));
+    const excluded = new Set(original.review.exclusions.map((c) => c.symbol));
+    assert.deepEqual(new Set([...included, ...excluded]), new Set(original.review.reviewed_symbols));
+    assert.ok([...included].every((symbol) => !excluded.has(symbol)));
+    for (const c of original.companies) {
+      assert.ok(c.research_question && c.issuer && c.metrics.items.length);
+      for (const item of c.metrics.items) assert.ok(item.period && c.sources[item.source]);
+      if (c.metrics.history.length) assert.ok(c.sources[c.metrics.history_source]);
+    }
+    const broken = structuredClone(original);
+    broken.companies[0].metrics.items[0].source = 99;
+    assert.throws(() => projectScreeningPool(broken, screeningMarkets.find((m) => m.id === id)), /来源/);
+  }
+});

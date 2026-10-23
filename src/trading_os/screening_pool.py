@@ -115,6 +115,41 @@ def _sources(value: object) -> tuple[dict[str, str], ...]:
     return tuple(result)
 
 
+def _metrics(value: object, sources: list, as_of: str) -> dict[str, Any]:
+    m = _object(value, {"as_of", "basis", "items", "history", "history_metric",
+                        "history_source", "note"}, "metrics")
+    observed = _date(m["as_of"], "metrics.as_of")
+    if observed > as_of:
+        raise QualityPoolError("指标核对日期不能晚于筛选日期")
+    items = []
+    for item in _array(m["items"], "metrics.items"):
+        item = _object(item, {"label", "value", "period", "source"}, "metric")
+        if type(item["source"]) is not int or not 0 <= item["source"] < len(sources):
+            raise QualityPoolError("指标来源序号无效")
+        items.append({**{k: _text(item[k], f"metric.{k}")
+                         for k in ("label", "value", "period")}, "source": item["source"]})
+    if not 1 <= len(items) <= 6 or len({i["label"] for i in items}) != len(items):
+        raise QualityPoolError("每家公司须有1—6个不重复经营指标")
+    history = []
+    for item in _array(m["history"], "metrics.history"):
+        item = _object(item, {"period", "value"}, "history item")
+        history.append({k: _text(item[k], f"history.{k}") for k in item})
+    if len({h["period"] for h in history}) != len(history) or len(history) > 10:
+        raise QualityPoolError("历史期间必须唯一且不超过10个")
+    if history:
+        if (type(m["history_source"]) is not int
+                or not 0 <= m["history_source"] < len(sources)):
+            raise QualityPoolError("历史指标来源序号无效")
+        metric = _text(m["history_metric"], "history_metric")
+    else:
+        if m["history_source"] is not None or m["history_metric"] is not None:
+            raise QualityPoolError("空历史不应指定指标或来源")
+        metric = None
+    return {"as_of": observed, "basis": _text(m["basis"], "basis"), "items": items,
+            "history": history, "history_metric": metric,
+            "history_source": m["history_source"], "note": _text(m["note"], "note")}
+
+
 @dataclass(frozen=True)
 class QualityPoolCompany:
     symbol: str
@@ -127,6 +162,9 @@ class QualityPoolCompany:
     risks: str
     tier_reason: str
     sources: tuple[dict[str, str], ...]
+    issuer: str | None = None
+    research_question: str | None = None
+    metrics: dict[str, Any] | None = None
 
 
 @dataclass(frozen=True)
@@ -140,7 +178,12 @@ class QualityPool:
     companies: tuple[QualityPoolCompany, ...]
 
     def payload(self) -> dict[str, Any]:
-        return json.loads(json.dumps(asdict(self), ensure_ascii=False))
+        result = json.loads(json.dumps(asdict(self), ensure_ascii=False))
+        if self.schema_version == 2:
+            for company in result["companies"]:
+                for key in ("issuer", "research_question", "metrics"):
+                    company.pop(key, None)
+        return result
 
     def status(self) -> dict[str, Any]:
         tiers = Counter(c.tier for c in self.companies)
@@ -171,8 +214,9 @@ def parse_quality_pool(payload: object) -> QualityPool:
         },
         "价值质量池 v2",
     )
-    if type(p["schema_version"]) is not int or p["schema_version"] != 2:
-        raise QualityPoolError("仅支持 schema_version=2；旧池需补齐判断卡和独立证券清单")
+    if type(p["schema_version"]) is not int or p["schema_version"] not in (2, 3):
+        raise QualityPoolError("仅支持 schema_version=2 或 3")
+    extended = p["schema_version"] == 3
     as_of = _date(p["as_of"], "as_of")
     u = _object(p["universe"], {"as_of", "sources", "securities"}, "universe")
     universe_date = _date(u["as_of"], "universe.as_of")
@@ -196,7 +240,7 @@ def parse_quality_pool(payload: object) -> QualityPool:
             "scope_note",
             "omission_check",
             "admission_check",
-        },
+        } | ({"exclusions"} if extended else set()),
         "review",
     )
     baseline_date = _date(r["baseline_as_of"], "review.baseline_as_of")
@@ -210,6 +254,17 @@ def parse_quality_pool(payload: object) -> QualityPool:
         review[field] = sorted(symbols)
     for field in ("scope_note", "omission_check", "admission_check"):
         review[field] = _text(r[field], field)
+    if extended:
+        exclusions = []
+        for exclusion in _array(r["exclusions"], "exclusions"):
+            exclusion = _object(exclusion, {"symbol", "reason"}, "exclusion")
+            symbol = _symbol(exclusion["symbol"])
+            if symbol not in review["reviewed_symbols"]:
+                raise QualityPoolError("排除对象必须属于实际复核范围")
+            exclusions.append({"symbol": symbol, "reason": _text(exclusion["reason"], "reason")})
+        if len({e["symbol"] for e in exclusions}) != len(exclusions):
+            raise QualityPoolError("排除对象重复")
+        review["exclusions"] = sorted(exclusions, key=lambda e: e["symbol"])
     companies = []
     seen = set()
     for raw in _array(p["companies"], "companies"):
@@ -223,7 +278,7 @@ def parse_quality_pool(payload: object) -> QualityPool:
                 "group",
                 "sources",
                 *_CARD_FIELDS,
-            },
+            } | ({"issuer", "research_question", "metrics"} if extended else set()),
             "company（不得耦合单公司研究、行情或交易字段）",
         )
         symbol = _symbol(c["symbol"])
@@ -242,14 +297,22 @@ def parse_quality_pool(payload: object) -> QualityPool:
                 tier=c["tier"],
                 group=c["group"],
                 sources=_sources(c["sources"]),
+                issuer=_symbol(c["issuer"]) if extended else None,
+                research_question=_text(c["research_question"], "research_question")
+                if extended else None,
+                metrics=_metrics(c["metrics"], c["sources"], as_of) if extended else None,
                 **{f: _text(c[f], f"{symbol}.{f}") for f in _CARD_FIELDS},
             )
         )
     if not seen <= set(review["reviewed_symbols"]):
         raise QualityPoolError("入池公司必须包含在本轮 reviewed_symbols 中")
+    if extended:
+        excluded = {e["symbol"] for e in review["exclusions"]}
+        if seen & excluded or seen | excluded != set(review["reviewed_symbols"]):
+            raise QualityPoolError("实际复核范围必须由入选及排除对象完整且互斥地组成")
     companies.sort(key=lambda c: (TIERS.index(c.tier), GROUPS.index(c.group), c.symbol))
     return QualityPool(
-        2,
+        p["schema_version"],
         as_of,
         _text(p["methodology"], "methodology", screened=False),
         _text(p["philosophy"], "philosophy"),
@@ -307,6 +370,12 @@ def render_current_pool(pool: QualityPool) -> str:
                         "- 普通股现金：" + _markdown(c.owner_cash),
                         "- 主要反证：" + _markdown(c.risks),
                         "- 分层理由：" + _markdown(c.tier_reason),
+                        *(["- 关键研究问题：" + _markdown(c.research_question)]
+                          if c.research_question else []),
+                        *(["- 指标（" + c.metrics["basis"] + "）：" + "；".join(
+                            f"{item['label']} {item['value']}（{item['period']}）"
+                            for item in c.metrics["items"]), "- 指标口径：" + c.metrics["note"]]
+                          if c.metrics else []),
                         "- 来源："
                         + "；".join(
                             f"[{_markdown(src['title'])}](<{src['url']}>)" for src in c.sources
@@ -314,6 +383,11 @@ def render_current_pool(pool: QualityPool) -> str:
                         "",
                     ]
                 )
+    if pool.review.get("exclusions"):
+        lines.extend(["## 范围内未纳入公司", ""])
+        for item in pool.review["exclusions"]:
+            lines.append(f"- {item['symbol']} {pool.universe['securities'][item['symbol']]}："
+                         + _markdown(item["reason"]))
     return "\n".join(lines).rstrip() + "\n"
 
 

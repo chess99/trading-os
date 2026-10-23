@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { AppHeader } from "../components/app-header";
 import { ScreeningClient } from "../components/screening-client";
-export const metadata: Metadata = { title: "第一层筛选", description: "A股、港股与美股长期商业质量判断，阅读竞争优势、普通股现金及反证。" };
+export const metadata: Metadata = { title: "公司池", description: "跨市场比较企业的竞争优势、资本效率、现金质量与长期风险。" };
 export default function ScreeningPage() {
   return <><AppHeader active="screening" /><ScreeningClient /></>;
 }
