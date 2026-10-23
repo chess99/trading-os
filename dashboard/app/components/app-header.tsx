@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 
 interface AppHeaderProps {
-  active: "dashboard" | "reports" | "industries" | "selection";
+  active: "screening" | "dashboard" | "reports" | "industries" | "selection";
 }
 
 export function AppHeader({ active }: AppHeaderProps) {
@@ -17,6 +17,9 @@ export function AppHeader({ active }: AppHeaderProps) {
         </span>
       </a>
       <nav className="primary-nav" aria-label="主导航">
+        <a className={active === "screening" ? "is-active" : ""} href="/screening">
+          第一层筛选
+        </a>
         <a className={active === "dashboard" ? "is-active" : ""} href="/">
           研究决策台
         </a>

@@ -56,6 +56,10 @@ def build_parser() -> argparse.ArgumentParser:
     quality_pool = commands.add_parser(
         "quality-pool", help="维护财报周期排期所使用的动态重点跟踪池"
     )
+    quality_pool.add_argument(
+        "--market", choices=("cn-a", "hk", "us"), default="cn-a",
+        help="筛选市场；港美股仅维护第一层，不创建周期任务",
+    )
     quality_pool_commands = quality_pool.add_subparsers(
         dest="quality_pool_command", required=True
     )
@@ -299,7 +303,7 @@ def _industry_validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
 
 
 def _quality_pool(args: argparse.Namespace) -> QualityPoolStore:
-    return QualityPoolStore(Path(args.root))
+    return QualityPoolStore(Path(args.root), getattr(args, "market", "cn-a"))
 
 
 def _quality_pool_status(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:

@@ -37,7 +37,9 @@ GROUP_TITLES = dict(
     )
 )
 _CARD_FIELDS = {"moat", "owner_cash", "risks", "tier_reason"}
-_SYMBOL_RE = re.compile(r"CN:[0-9]{6}")
+MARKETS = ("cn-a", "hk", "us")
+MARKET_PREFIXES = {"cn-a": "CN:", "hk": "HK:", "us": "US:"}
+_SYMBOL_RE = re.compile(r"(?:CN:[0-9]{6}|HK:[0-9]{5}|US:[A-Z]{1,5}(?:[.-][A-Z])?)")
 # Explicit contamination only; product prices and loan yields are operating facts.
 _FORBIDDEN = re.compile(
     r"股价|现价|市值|估值|折价|目标价|买入价|关注价|安全边际|仓位|买入|卖出|加仓|减仓|"
@@ -81,7 +83,7 @@ def _date(value: object, label: str) -> str:
 
 def _symbol(value: object) -> str:
     if not isinstance(value, str) or not _SYMBOL_RE.fullmatch(value):
-        raise QualityPoolError("证券代码必须形如 CN:600000")
+        raise QualityPoolError("证券代码必须形如 CN:600000、HK:00700 或 US:MSFT")
     return value
 
 
@@ -263,8 +265,11 @@ def _markdown(value: str) -> str:
 
 def render_current_pool(pool: QualityPool) -> str:
     s = pool.status()
+    markets = {symbol[:2] for symbol in pool.universe["securities"]}
+    title = {"CN": "全 A 股价值质量池", "HK": "港股精选价值质量池",
+             "US": "美股精选价值质量池"}.get(next(iter(markets)), "跨市场价值质量池")
     lines = [
-        "# 全 A 股价值质量池",
+        "# " + (title if len(markets) == 1 else "跨市场价值质量池"),
         "",
         f"筛选复核日期：{pool.as_of}。方法：{pool.methodology}。",
         "",
@@ -363,13 +368,21 @@ class PoolWriteResult:
 
 
 class QualityPoolStore:
-    def __init__(self, root: Path):
+    def __init__(self, root: Path, market: str = "cn-a"):
+        if market not in MARKETS:
+            raise QualityPoolError("不支持的筛选市场")
+        self.market = market
         self.root = root.resolve()
-        self.pool_path = self.root / POOL_PATH
-        self.current_path = self.root / CURRENT_PATH
+        self.pool_path = self.root / "screening" / market / "value-quality/pool.json"
+        self.current_path = self.pool_path.with_name("current.md")
         self.lock_path = self.pool_path.with_suffix(".json.lock")
 
     def _validate_methodology(self, pool: QualityPool) -> None:
+        if any(
+            not symbol.startswith(MARKET_PREFIXES[self.market])
+            for symbol in pool.universe["securities"]
+        ):
+            raise QualityPoolError("证券清单与目标市场不一致")
         path = (self.root / pool.methodology).resolve()
         if not path.is_relative_to(self.root) or not path.is_file():
             raise QualityPoolError("methodology 必须指向仓库内存在的文件")

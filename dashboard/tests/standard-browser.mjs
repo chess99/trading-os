@@ -78,6 +78,36 @@ try {
   assert.equal(overflow, false, "移动端不应产生全页横向溢出；表格内部可以滚动");
   await page.screenshot({ path: new URL("current-mobile.png", output).pathname, fullPage: true });
   passed.push("移动端布局无全页横向溢出");
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  quoteRequests.length = 0;
+  await page.goto("http://127.0.0.1:4173/screening");
+  await page.getByRole("heading", { name: "把视野放到五至十年" }).waitFor();
+  const screening = JSON.parse(await readFile(new URL("../public/data/screening-pools.json", import.meta.url), "utf8"));
+  for (const [market, label] of [["hk", "港股"], ["us", "美股"]]) {
+    await page.getByRole("button", { name: new RegExp(`^${label}`) }).click();
+    const expected = screening.pools.find((pool) => pool.market === market).companies;
+    assert.equal(await page.locator("article[data-symbol]").count(), expected.length);
+    await page.getByLabel("质量层级").selectOption("quality_research");
+    assert.equal(await page.locator("article[data-symbol]").count(), expected.filter((c) => c.tier === "quality_research").length);
+    await page.getByLabel("质量层级").selectOption("all");
+  }
+  await page.getByLabel("搜索公司或关键问题").fill("MSFT");
+  assert.equal(await page.locator("article[data-symbol]").count(), 1);
+  await page.locator("article summary").click();
+  assert.ok(await page.locator("article a[target=_blank]").count() > 0);
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await page.screenshot({ path: new URL("screening-desktop.png", output).pathname, fullPage: true });
+  await page.getByLabel("搜索公司或关键问题").fill("not-a-company-xyz");
+  await page.getByRole("heading", { name: "没有符合条件的公司" }).waitFor();
+  await page.getByRole("button", { name: "清除筛选条件" }).click();
+  await page.getByRole("button", { name: /^港股/ }).click();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator("article summary").first().click();
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 2), false);
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await page.screenshot({ path: new URL("screening-mobile.png", output).pathname, fullPage: true });
+  assert.equal(quoteRequests.length, 0, "第一层不得请求行情");
+  passed.push("港美股筛选、层级、搜索、来源、空结果及移动端通过，第一层无行情请求");
   assert.deepEqual(errors, [], "页面运行时错误");
   const summary = { ok: true, standard: catalog.standard.id, pool: catalog.scope.count,
     currentResults: qualified.length, checks: passed };

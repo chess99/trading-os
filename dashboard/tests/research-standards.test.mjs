@@ -122,9 +122,14 @@ async function fixture() {
   await save(sourcePath, body);
   await save("coverage/cn-a/research_state.jsonl", `${JSON.stringify(row)}\n`);
   await save("coverage/cn-a/research_queue.jsonl", "");
-  await save("screening/cn-a/value-quality/pool.json", { schema_version: 2, as_of: "2026-09-18",
-    companies: [{ symbol: row.symbol, name: row.name, tier: "core_moat" },
-      { symbol: "CN:000003", name: "待研究公司", tier: "quality_research" }] });
+  for (const [market, identities] of [["cn-a", { [row.symbol]: row.name, "CN:000003": "待研究公司" }],
+    ["hk", { "HK:00700": "港股样本" }], ["us", { "US:V": "美股样本" }]]) {
+    await save(`screening/${market}/value-quality/pool.json`, { schema_version: 2, as_of: "2026-09-18",
+      universe: { securities: identities }, review: { reviewed_symbols: Object.keys(identities), scope_note: "测试样本" },
+      companies: Object.entries(identities).map(([symbol, name]) => ({ symbol, name, tier: "core_moat",
+        industry: "服务", group: "consumer_brand_network", moat: "网络", owner_cash: "现金", risks: "竞争",
+        tier_reason: "持续复核", sources: [{ title: "披露", url: "https://example.com/report" }] })) });
+  }
   return { root, row, save };
 }
 
@@ -138,6 +143,9 @@ test("catalog build redacts historical fields, retains reports, and includes poo
     await save(historical.basis_report_path, body);
     await save("coverage/cn-a/research_state.jsonl", [row, historical].map(JSON.stringify).join("\n") + "\n");
     const catalog = await buildResearchData(root);
+    const screening = JSON.parse(await readFile(join(root, "dashboard/public/data/screening-pools.json"), "utf8"));
+    assert.equal(screening.pools.length, 3);
+    assert.ok(catalog.companies.every((company) => company.symbol.startsWith("CN:")));
     assert.equal(catalog.stats.current.completed, 1); assert.equal(catalog.stats.current.total, 2);
     assert.equal(catalog.stats.researchStateRows, 2); assert.equal(catalog.companies.length, 3);
     assert.equal(catalog.companies.find((item) => item.symbol === "CN:000003").hasResearchState, false);

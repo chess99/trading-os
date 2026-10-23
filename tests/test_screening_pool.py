@@ -324,3 +324,36 @@ def test_unreadable_encoding_projection_is_recoverable(tmp_path):
     store.pool_path.write_bytes(b"\xff")
     with pytest.raises(QualityPoolError, match="无法读取"):
         store.read()
+
+
+@pytest.mark.parametrize("market,symbol", [("hk", "HK:00700"), ("us", "US:BRK.B")])
+def test_market_pool_isolated_from_cn_and_research(tmp_path, capsys, market, symbol):
+    _prepare_methodology(tmp_path)
+    original = _pool_payload()
+    QualityPoolStore(tmp_path).replace(original)
+    cn_before = (tmp_path / "screening/cn-a/value-quality/pool.json").read_bytes()
+    payload = _pool_payload()
+    company = payload["companies"][0]
+    company["symbol"] = symbol
+    payload["companies"] = [company]
+    payload["universe"]["securities"] = {symbol: company["name"]}
+    payload["review"]["reviewed_symbols"] = [symbol]
+    payload["review"]["baseline_count"] = 1
+    source = _write(tmp_path / "foreign.json", payload)
+    _call(tmp_path, capsys, "quality-pool", "--market", market, "replace", "--input", str(source))
+    result = _call(tmp_path, capsys, "quality-pool", "--market", market, "validate")
+    assert result["status"]["pool_count"] == 1
+    assert QualityPoolStore(tmp_path, market).read().companies[0].symbol == symbol
+    assert (tmp_path / "screening/cn-a/value-quality/pool.json").read_bytes() == cn_before
+    assert not (tmp_path / "coverage").exists()
+    assert not (tmp_path / "research").exists()
+    with pytest.raises(QualityPoolError, match="目标市场"):
+        QualityPoolStore(tmp_path).replace(payload)
+
+
+@pytest.mark.parametrize("symbol", ["HK:700", "HK:007000", "US:msft", "US:../V", "JP:7203"])
+def test_market_symbols_reject_ambiguous_or_path_values(symbol):
+    payload = _pool_payload()
+    payload["universe"]["securities"] = {symbol: "示例"}
+    with pytest.raises(QualityPoolError):
+        parse_quality_pool(payload)
