@@ -93,8 +93,9 @@ export function DashboardClient() {
   const exportName = scope === "quality_pool" ? "current-research" : "all-current-research";
   return <main className="standards-workspace">
     <header className="standards-heading"><div><span className="section-eyebrow">RESEARCH CONSOLE</span><h1>研究控制台</h1>
-      <p>重点跟踪池随筛选动态变化；现行结果与全市场研究档案使用同一套报告。</p></div>
+      <p>A股公司研究与周期档案；港美股已纳入独立第一层筛选。</p></div>
       <a className="standards-link" href="/reports">打开研报库 ↗</a></header>
+    <p className="standards-banner"><a href="/screening">进入 A股 · 港股 · 美股第一层筛选 →</a> · 查看长期竞争优势、普通股现金与反证；港美股公司深研暂未开展。</p>
     <details className="standards-banner"><summary>现行标准：{catalog.standard.label} · {catalog.standard.value_label}</summary>
       <p>发布于 {formatDate(catalog.standard.published_at)}；规范提交 {catalog.standard.spec_revision.slice(0, 7)}。资料截止与研究完成日期分别标明。</p>
       <p>{catalog.standard.compatibility_note}</p><p>兼容版本：{catalog.standard.compatible_with.join("、")}。{catalog.standard.change_note}</p>

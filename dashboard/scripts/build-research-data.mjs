@@ -2,6 +2,7 @@ import { copyFile, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promi
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadStandards, reportMetadata, displayEligibility } from "./lib/research-standards.mjs";
+import { loadScreeningData } from "./lib/screening-data.mjs";
 import { currentResults, progressCounts } from "../app/lib/display-policy.mjs";
 
 const dashboardRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -123,6 +124,7 @@ export async function buildResearchData(root = repositoryRoot) {
   const policy = await loadStandards(root);
   const pool = JSON.parse(await readFile(join(root, policy.registry.scope_source), "utf8"));
   if (pool.schema_version !== 2 || !Array.isArray(pool.companies)) throw new Error("质量池缺失或格式不正确");
+  const screening = await loadScreeningData(root);
   const members = new Map(pool.companies.map((company) => [company.symbol, company]));
   if (members.size !== pool.companies.length) throw new Error("质量池存在重复代码");
   const states = parseJsonLines(await readFile(join(root, "coverage/cn-a/research_state.jsonl"), "utf8"), "research_state");
@@ -144,6 +146,7 @@ export async function buildResearchData(root = repositoryRoot) {
   await rm(output, { recursive: true, force: true });
   await mkdir(output, { recursive: true });
   await collectResearchDocuments(root, output);
+  await writeFile(join(output, "screening-pools.json"), JSON.stringify(screening, null, 2) + "\n", "utf8");
   const tasksBySymbol = new Map(queue.map((item) => [item.symbol, item]));
   const companies = [];
   for (const row of rows) {

@@ -7,6 +7,7 @@
 - 全市场状态：`coverage/cn-a/research_state.jsonl`。
 - 当前研究队列：`coverage/cn-a/research_queue.jsonl`。
 - 公司报告：`research/companies/CN/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md`。一个财报周期只保留一份完整研究；同周期重研覆盖该文件，下一周期才新增文件。`basis_report_path` 精确绑定结构化研究状态所依据的报告，`report_period` 保存对应周期；它们不是网页展示范围。
+- 港美股第一层精选池：`screening/hk/value-quality/pool.json`、`screening/us/value-quality/pool.json`；规范见 `prompts/screening/international-value-quality.md`。使用 `quality-pool --market hk|us` 维护，暂不接入正式深研与周期排期。
 - 独立价值质量池：`screening/cn-a/value-quality/pool.json`；筛选规范见 `prompts/screening/cn-a-value-quality.md`，可读投影 `current.md` 只能由池文件确定性生成。
 
 公司报告进入 Git。worker 返回的结构化 JSON 和 `report_markdown` 在验收前只是候选稿；验收失败直接丢弃，不写报告。同周期重研以完整新正文覆盖原周期文件，并同步结构化状态；Git 保存修改历史，但网页不提供同周期旧修订入口。不同周期报告并存，不使用 `stale`、事件日志或新闻触发表达报告状态。
@@ -27,7 +28,7 @@
 
 ## 独立价值质量筛选层
 
-价值质量筛选只维护 `screening/cn-a/value-quality/pool.json`，不得在筛选事务中修改研究状态、队列或公司报告。财报季排期命令读取当时的动态池成员创建周期任务；成员退出后不删除历史报告，成员进入后可从最新财报周期开始研究。
+价值质量筛选按市场只维护 `screening/{cn-a|hk|us}/value-quality/pool.json`，不得在筛选事务中修改研究状态、队列或公司报告。财报季排期命令读取当时的动态池成员创建周期任务；成员退出后不删除历史报告，成员进入后可从最新财报周期开始研究。
 
 筛选可以独立获取公开信息，也可以把正式报告当作普通参考，但公司研究状态不是入池条件。池中不得保存现价、估值、回报率、仓位、交易动作、任务 ID、报告路径或 `return_model`。结果只维护当前全量版本，历史通过 Git 查看；`current.md` 禁止手改。池成员和 A/B 分层允许随每轮筛选增删调整，任何代码或展示不得把某次池规模写成固定名单。
 

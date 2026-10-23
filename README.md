@@ -1,6 +1,6 @@
 # Trading OS
 
-Trading OS 是一套按财报周期维护 A 股长期研究的轻量工作流。主要产品是动态重点跟踪池、完整公司报告及其结构化模型；网站只是只读展示。系统不做自动交易，也不因价格、政策、新闻或单项公告在周期中途启动研究。
+Trading OS 是一套覆盖 A股、港股和美股第一层质量筛选，并按财报周期维护 A 股长期公司研究的轻量工作流。主要产品是动态重点跟踪池、完整公司报告及其结构化模型；网站只是只读展示。系统不做自动交易，也不因价格、政策、新闻或单项公告在周期中途启动研究。
 
 ## 核心机制
 
@@ -60,6 +60,17 @@ research/standards/registry.json                            现行研究标准
 财报更新必须重新形成完整报告，区分累计、单季、同比和环比口径，复盘前次关键假设，并重新核验股本、普通股归属、正常化经营、估值和模型。不能把新财报摘录拼接到旧正文。
 
 每份新结果都必须包含非空 `return_model_note`；能可靠建模时同时提交 `return_model`，否则为 `null` 并说明决定性缺口。五年模型包括未来五项每股实际现金分配和独立第五年终值；三年终值可选，但必须独立研究。
+
+## 港美股第一层筛选
+
+网页 `/screening` 聚合三个市场，支持市场、A/B层级、行业与关键问题筛选，完整展示竞争优势、普通股现金、反证、分层理由和来源。港美股采用小样本，范围与资料缺口逐池披露；本轮不开展公司深研，不创建周期任务。详见 [港美股规范](prompts/screening/international-value-quality.md)。
+
+```bash
+python -m trading_os quality-pool --market hk status
+python -m trading_os quality-pool --market us validate
+```
+
+默认市场仍为 `cn-a`。港美股分别保存于 `screening/hk/value-quality/` 和 `screening/us/value-quality/`；同样以 JSON 为唯一结果源、命令生成 `current.md`。正式公司研究与行情接口仍限 A 股。
 
 ## 动态重点跟踪池
 
