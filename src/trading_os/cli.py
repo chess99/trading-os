@@ -34,9 +34,12 @@ def _add_at(parser: argparse.ArgumentParser) -> None:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="trading_os",
-        description="按动态重点池和财报周期维护的 A 股研究工作流",
+        description="跨市场财报周期研究工作流",
     )
     parser.add_argument("--root", default=".", help="仓库根目录（默认当前目录）")
+    parser.add_argument(
+        "--market", dest="research_market", choices=("cn-a", "hk", "us"), default="cn-a"
+    )
     commands = parser.add_subparsers(dest="command", required=True)
 
     status = commands.add_parser("status", help="查看研究状态和当前任务计数")
@@ -57,12 +60,12 @@ def build_parser() -> argparse.ArgumentParser:
         "quality-pool", help="维护财报周期排期所使用的动态重点跟踪池"
     )
     quality_pool.add_argument(
-        "--market", choices=("cn-a", "hk", "us"), default="cn-a",
-        help="筛选市场；港美股仅维护第一层，不创建周期任务",
+        "--market",
+        choices=("cn-a", "hk", "us"),
+        default=argparse.SUPPRESS,
+        help="独立维护各市场质量池",
     )
-    quality_pool_commands = quality_pool.add_subparsers(
-        dest="quality_pool_command", required=True
-    )
+    quality_pool_commands = quality_pool.add_subparsers(dest="quality_pool_command", required=True)
     quality_pool_status = quality_pool_commands.add_parser("status", help="查看当前池计数")
     quality_pool_status.set_defaults(handler=_quality_pool_status)
     quality_pool_validate = quality_pool_commands.add_parser(
@@ -96,13 +99,26 @@ def build_parser() -> argparse.ArgumentParser:
     sync.set_defaults(handler=_universe_sync)
 
     research = commands.add_parser("research", help="管理单公司端到端研究任务")
+    research.add_argument(
+        "--market", dest="research_market", choices=("cn-a", "hk", "us"), default=argparse.SUPPRESS
+    )
     research_commands = research.add_subparsers(dest="research_command", required=True)
     enqueue_period = research_commands.add_parser(
         "enqueue-period", help="为动态重点跟踪池创建一个财报周期的研究任务"
     )
+    enqueue_period.add_argument(
+        "--disclosures", help="已披露财报清单JSON；按目标周期选择有资料的公司"
+    )
     enqueue_period.add_argument("--period", required=True, help="YYYY-FY/Q1/H1/Q3")
     _add_at(enqueue_period)
     enqueue_period.set_defaults(handler=_research_enqueue_period)
+    enqueue_latest = research_commands.add_parser(
+        "enqueue-latest", help="按已披露财务期末选择最新槽位"
+    )
+    _add_input(enqueue_latest)
+    _add_at(enqueue_latest)
+    enqueue_latest.add_argument("--apply", action="store_true", help="写入研究队列；默认只预览")
+    enqueue_latest.set_defaults(handler=_research_enqueue_latest)
     enqueue_rewrite = research_commands.add_parser(
         "enqueue-rewrite", help="显式创建最新财报周期的人工重写任务"
     )
@@ -254,6 +270,8 @@ def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
         information_cutoff=payload["information_cutoff"],
         report_period=payload["report_period"],
         report_markdown=payload.get("report_markdown"),
+        financial_basis=payload.get("financial_basis"),
+        security_basis=payload.get("security_basis"),
         valuation_note=payload.get("valuation_note"),
         return_model=return_model,
         return_model_note=payload.get("return_model_note"),
@@ -279,7 +297,7 @@ def _emit(payload: Any, stream: TextIO) -> None:
 
 
 def _flow(args: argparse.Namespace) -> ResearchFlow:
-    return ResearchFlow(Path(args.root))
+    return ResearchFlow(Path(args.root), market=args.research_market)
 
 
 def _status(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
@@ -303,7 +321,7 @@ def _industry_validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
 
 
 def _quality_pool(args: argparse.Namespace) -> QualityPoolStore:
-    return QualityPoolStore(Path(args.root), getattr(args, "market", "cn-a"))
+    return QualityPoolStore(Path(args.root), getattr(args, "market", args.research_market))
 
 
 def _quality_pool_status(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
@@ -315,9 +333,13 @@ def _quality_pool_status(args: argparse.Namespace, stdin: TextIO) -> dict[str, A
 
 def _quality_pool_validate(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
-    return {"ok": True, "status": {
-        **_quality_pool(args).validate().status(), "projection_current": True,
-    }}
+    return {
+        "ok": True,
+        "status": {
+            **_quality_pool(args).validate().status(),
+            "projection_current": True,
+        },
+    }
 
 
 def _quality_pool_replace(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
@@ -341,8 +363,11 @@ def _quality_pool_list(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
     companies = [
         company for company in pool.companies if args.tier is None or company.tier == args.tier
     ]
-    return {"count": len(companies), "companies": companies,
-            "projection_current": store.projection_current(pool)}
+    return {
+        "count": len(companies),
+        "companies": companies,
+        "projection_current": store.projection_current(pool),
+    }
 
 
 def _quality_pool_rebuild(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
@@ -383,6 +408,12 @@ def _research_next(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
 
 def _research_enqueue_period(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
+    if args.research_market != "cn-a" and not args.disclosures:
+        raise ResearchFlowError(
+            "港美股排期须提供 --disclosures；可使用 enqueue-latest 预览最新已披露周期"
+        )
+    if args.disclosures:
+        return _schedule_disclosures(args, args.disclosures, apply=True, period=args.period)
     pool = _quality_pool(args).read()
     flow = _flow(args)
     flow.register_universe(
@@ -409,6 +440,85 @@ def _research_enqueue_period(args: argparse.Namespace, stdin: TextIO) -> dict[st
     }
 
 
+def _schedule_disclosures(args, source, *, apply=False, period=None, stdin=None):
+    from .research_assets.research_flow import _financial_basis, _report_period, _timestamp
+
+    payload, _ = _load(source, stdin or sys.stdin)
+    records = payload.get("disclosures", []) if isinstance(payload, dict) else payload
+    pool = _quality_pool(args).read()
+    members = {c.symbol: c for c in pool.companies}
+    now = _timestamp(args.at)
+    latest = {}
+    for record in records:
+        symbol = record["symbol"]
+        if symbol not in members:
+            raise ResearchFlowError(f"披露不属于目标市场质量池: {symbol}")
+        basis = _financial_basis(record["financial_basis"], cutoff=now)
+        if basis is None:
+            raise ResearchFlowError("披露依据不能为空")
+        slot = _report_period(record["report_period"])
+        if period and slot != period:
+            continue
+        item = {
+            "symbol": symbol,
+            "name": members[symbol].name,
+            "report_period": slot,
+            "financial_basis": basis,
+        }
+        if (
+            symbol not in latest
+            or basis["period_end"] > latest[symbol]["financial_basis"]["period_end"]
+        ):
+            latest[symbol] = item
+        elif (
+            basis["period_end"] == latest[symbol]["financial_basis"]["period_end"]
+            and item != latest[symbol]
+        ):
+            raise ResearchFlowError(f"相同期末存在冲突披露，请明确使用版本: {symbol}")
+    plan = sorted(latest.values(), key=lambda item: item["symbol"])
+    result = {
+        "market": args.research_market,
+        "plan": plan,
+        "missing_disclosures": sorted(members.keys() - latest.keys()),
+        "applied": apply,
+    }
+    if apply:
+        flow = _flow(args)
+        # Existing slots and active tasks are explicit skips.
+        tasks = flow._tasks()
+        planned = []
+        skipped = []
+        for item in plan:
+            path = flow._report_path(item["symbol"], item["report_period"])
+            if path.exists() or any(t.symbol == item["symbol"] for t in tasks):
+                skipped.append(item["symbol"])
+            else:
+                planned.append(item)
+        flow.register_universe([CompanyRef(c.symbol, c.name) for c in pool.companies], at=now)
+        enqueued = []
+        for item in planned:
+            update = flow.enqueue_research(
+                [
+                    ResearchRequest(
+                        item["symbol"],
+                        "按最新已披露财报完成完整研究",
+                        item["name"],
+                        item["financial_basis"],
+                    )
+                ],
+                report_period=item["report_period"],
+                trigger_kind=PERIODIC_TRIGGER,
+                at=now,
+            )
+            enqueued.extend(update.enqueued_tasks)
+        result.update(enqueued=enqueued, skipped=skipped)
+    return result
+
+
+def _research_enqueue_latest(args, stdin):
+    return _schedule_disclosures(args, args.input, apply=args.apply, stdin=stdin)
+
+
 def _research_enqueue_rewrite(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     payload, _ = _load(args.input, stdin)
     metadata = payload if isinstance(payload, dict) else {}
@@ -418,9 +528,13 @@ def _research_enqueue_rewrite(args: argparse.Namespace, stdin: TextIO) -> dict[s
         reason = item.get("reason") or common_reason
         if not reason:
             raise ValueError(f"{item.get('symbol', '<unknown>')} 缺少人工重写原因")
-        requests.append(ResearchRequest(
-            symbol=item["symbol"], name=item.get("name"), reason=reason,
-        ))
+        requests.append(
+            ResearchRequest(
+                symbol=item["symbol"],
+                name=item.get("name"),
+                reason=reason,
+            )
+        )
     update = _flow(args).enqueue_research(
         requests,
         report_period=args.period,

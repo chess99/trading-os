@@ -152,3 +152,58 @@ def test_cli_completes_a_period_task(tmp_path: Path, capsys):
     )
     assert queued["enqueued"][0]["trigger_kind"] == "manual_rewrite"
     assert queued["enqueued"][0]["report_period"] == "2026-H1"
+
+
+def test_latest_disclosure_preview_respects_fiscal_end_without_writing_tasks(tmp_path, capsys):
+    from test_screening_pool import _pool_payload, _prepare_methodology
+
+    from trading_os.screening_pool import QualityPoolStore
+
+    _prepare_methodology(tmp_path)
+    payload = _pool_payload()
+    c = payload["companies"][0]
+    c["symbol"] = "US:MSFT"
+    payload["companies"] = [c]
+    payload["universe"]["securities"] = {"US:MSFT": c["name"]}
+    payload["review"]["reviewed_symbols"] = ["US:MSFT"]
+    QualityPoolStore(tmp_path, "us").replace(payload)
+    source = tmp_path / "disclosures.json"
+    source.write_text(
+        json.dumps(
+            {
+                "disclosures": [
+                    {
+                        "symbol": "US:MSFT",
+                        "report_period": period,
+                        "financial_basis": {
+                            "period_end": end,
+                            "published_on": published,
+                            "source_url": "https://example.com/results",
+                        },
+                    }
+                    for period, end, published in [
+                        ("2026-H1", "2025-12-31", "2026-01-28"),
+                        ("2026-FY", "2026-06-30", "2026-07-29"),
+                    ]
+                ]
+            }
+        )
+    )
+    args = (
+        "research",
+        "--market",
+        "us",
+        "enqueue-latest",
+        "--input",
+        str(source),
+        "--at",
+        "2026-10-24T09:00:00+08:00",
+    )
+    preview = _call(tmp_path, capsys, *args)
+    assert preview["plan"][0]["report_period"] == "2026-FY"
+    assert not (tmp_path / "coverage/us/research_queue.jsonl").exists()
+    applied = _call(tmp_path, capsys, *args, "--apply")
+    assert len(applied["enqueued"]) == 1
+    assert applied["enqueued"][0]["financial_basis"]["period_end"] == "2026-06-30"
+    repeated = _call(tmp_path, capsys, *args, "--apply")
+    assert repeated["skipped"] == ["US:MSFT"]

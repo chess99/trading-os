@@ -6,7 +6,12 @@ on:
       - 'dashboard/**'
       - 'research/standards/**'
       - 'research/companies/**/reports/**'
-      - 'coverage/cn-a/research_state.jsonl'
+      - 'coverage/**/research_state.jsonl'
+      - 'coverage/**/research_queue.jsonl'
+      - 'research/industries/**'
+      - 'selection/**'
+      - 'src/trading_os/**'
+      - 'tests/**'
       - 'screening/**/value-quality/pool.json'
       - '.github/workflows/research-display-checks.yml'
   workflow_dispatch:
@@ -31,6 +36,8 @@ jobs:
           python -m pip install -e '.[dev]'
           python -m pytest -q
           python -m trading_os validate
+          python -m trading_os --market hk validate
+          python -m trading_os --market us validate
           python -m trading_os quality-pool --market hk validate
           python -m trading_os quality-pool --market us validate
       - uses: actions/setup-node@v4

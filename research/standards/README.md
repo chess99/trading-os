@@ -11,7 +11,7 @@
 ## 唯一配置与状态
 
 - `registry.json`：正式发布的研究标准、冻结的规范提交、价值语义标识、默认范围及显式兼容关系。
-- `coverage/cn-a/research_state.jsonl`：最近完成周期及其 `standard_id`、`spec_revision`、`accepted_at`。这三个字段随 `research complete` 一次写入，不另建报告级登记文件。
+- `coverage/{cn-a|hk|us}/research_state.jsonl`：最近完成周期及其 `standard_id`、`spec_revision`、`accepted_at`。这三个字段随 `research complete` 一次写入，不另建报告级登记文件。
 - 报告正文、估值和模型继续只存在正式周期报告及研究状态中，不保存摘要、哈希、撤销记录或第二份估值。
 - 展示目录、进度、JSON/CSV 导出均由这些源数据确定性生成到 `dashboard/public/data/`，禁止手改。旧估值在生成目录时就被置空，不只在页面隐藏。
 
@@ -51,3 +51,5 @@ npm run lint
 ```
 
 `report-standards.mjs` 现在只校验 registry 与状态中的标准字段，不再提供 `inspect / accept / revoke`。工程检查只证明配置、状态和展示关系正常，不重新认证公司的商业预测。网页仍是构建时快照；提交代码不是部署。
+
+跨市场状态沿用同一标准声明。港美股数值结果还必须明确实际财务期末、交易币种和证券单位；资格不足时停止数值展示，历史正文保持可读。

@@ -4,10 +4,10 @@
 
 ## 唯一事实源
 
-- 全市场状态：`coverage/cn-a/research_state.jsonl`。
-- 当前研究队列：`coverage/cn-a/research_queue.jsonl`。
-- 公司报告：`research/companies/CN/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md`。一个财报周期只保留一份完整研究；同周期重研覆盖该文件，下一周期才新增文件。`basis_report_path` 精确绑定结构化研究状态所依据的报告，`report_period` 保存对应周期；它们不是网页展示范围。
-- 港美股第一层精选池：`screening/hk/value-quality/pool.json`、`screening/us/value-quality/pool.json`；规范见 `prompts/screening/international-value-quality.md`。使用 `quality-pool --market hk|us` 维护，暂不接入正式深研与周期排期。
+- 分市场状态：`coverage/{cn-a|hk|us}/research_state.jsonl`。
+- 分市场研究队列：`coverage/{cn-a|hk|us}/research_queue.jsonl`。
+- 公司报告：`research/companies/{CN|HK|US}/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md`。一个财报周期只保留一份完整研究；同周期重研覆盖该文件，下一周期才新增文件。`basis_report_path` 精确绑定结构化研究状态所依据的报告，`report_period` 保存对应周期；它们不是网页展示范围。
+- 港美股第一层精选池：`screening/hk/value-quality/pool.json`、`screening/us/value-quality/pool.json`；规范见 `prompts/screening/international-value-quality.md`。使用 `quality-pool --market hk|us` 维护，与同市场正式研究及周期排期关联。
 - 独立价值质量池：`screening/cn-a/value-quality/pool.json`；筛选规范见 `prompts/screening/cn-a-value-quality.md`，可读投影 `current.md` 只能由池文件确定性生成。
 
 公司报告进入 Git。worker 返回的结构化 JSON 和 `report_markdown` 在验收前只是候选稿；验收失败直接丢弃，不写报告。同周期重研以完整新正文覆盖原周期文件，并同步结构化状态；Git 保存修改历史，但网页不提供同周期旧修订入口。不同周期报告并存，不使用 `stale`、事件日志或新闻触发表达报告状态。
@@ -89,3 +89,11 @@
 界面围绕研究者的浏览、比较、检索和阅读任务设计。优先呈现判断、关键问题及必要证据；执行计划、对话约定、模型身份和交付汇报留在对话，不写入产品内容。资料时点和重要口径限制以靠近相关信息的简洁说明呈现。
 
 面向读者的文档直接解释用途、事实与判断。避免无必要的“不是……而是……”及预设读者错误观点的反驳句。工程文档保留真实需要的接口、维护与验证说明，不用任务复述填充正文。
+
+## 跨市场研究
+
+港股和美股使用同一完整研究标准，并阅读 `prompts/company/cross-market.md`。研究台包含公司池、跟踪进度、最新周期模型与全部档案，顶层保留研究台、研报库、产业研究和长期精选。
+
+研究命令通过 `research --market cn-a|hk|us` 选择状态分区；全局 `--market` 适用于状态与校验。港美股排期须有实际已披露的财务依据。`enqueue-latest` 默认预览，显式 `--apply` 才写队列。A/H等同发行人的并行任务互斥。
+
+外国公司报告槽位使用发行人财年；`financial_basis`同时保存实际期末、披露日和来源。正式结果另需`security_basis`，明确交易币种、普通股/ADS/类别及换算单位。最新财报由已披露的实际期末决定；港股未披露季度结果时使用最新半年或全年资料，不制造季度槽位。跨期保留旧报告并在新报告检验旧假设。

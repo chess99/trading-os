@@ -17,10 +17,7 @@ export function AppHeader({ active }: AppHeaderProps) {
         </span>
       </a>
       <nav className="primary-nav" aria-label="主导航">
-        <a className={active === "screening" ? "is-active" : ""} href="/screening">
-          公司池
-        </a>
-        <a className={active === "dashboard" ? "is-active" : ""} href="/">
+        <a className={(active === "dashboard" || active === "screening") ? "is-active" : ""} href="/">
           研究决策台
         </a>
         <a className={active === "reports" ? "is-active" : ""} href="/reports">
