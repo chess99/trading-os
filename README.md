@@ -61,16 +61,18 @@ research/standards/registry.json                            现行研究标准
 
 每份新结果都必须包含非空 `return_model_note`；能可靠建模时同时提交 `return_model`，否则为 `null` 并说明决定性缺口。五年模型包括未来五项每股实际现金分配和独立第五年终值；三年终值可选，但必须独立研究。
 
-## 港美股第一层筛选
+## 跨市场公司池
 
-网页 `/screening` 聚合三个市场，支持市场、A/B层级、行业与关键问题筛选，完整展示竞争优势、普通股现金、反证、分层理由和来源。港美股采用小样本，范围与资料缺口逐池披露；本轮不开展公司深研，不创建周期任务。详见 [港美股规范](prompts/screening/international-value-quality.md)。
+网页 `/screening` 提供A股、港股、美股的商业质量池，可按市场、行业、层级和关键问题检索。列表用于横向比较，详情提供经营指标、年度资本回报、竞争优势、股东现金与反证。A/H等同一发行人的不同证券在全部市场视图合并计数。
+
+港美股采用 [v3筛选合同](prompts/screening/international-value-quality.md)，保留完整的范围内取舍、每项指标的期间和公开来源。A股v2数据保持兼容。初筛结果用于确定研究对象，公司报告与估值由财报周期研究流程维护。
 
 ```bash
 python -m trading_os quality-pool --market hk status
 python -m trading_os quality-pool --market us validate
 ```
 
-默认市场仍为 `cn-a`。港美股分别保存于 `screening/hk/value-quality/` 和 `screening/us/value-quality/`；同样以 JSON 为唯一结果源、命令生成 `current.md`。正式公司研究与行情接口仍限 A 股。
+默认市场为 `cn-a`。各市场JSON保存于 `screening/{cn-a|hk|us}/value-quality/`，`current.md`由维护命令生成。当前财报周期排期与行情接口使用A股证券范围。
 
 ## 动态重点跟踪池
 

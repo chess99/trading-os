@@ -123,7 +123,7 @@ export async function buildResearchData(root = repositoryRoot) {
   // malformed policy is an error, never a reason to show the old full catalog.
   const policy = await loadStandards(root);
   const pool = JSON.parse(await readFile(join(root, policy.registry.scope_source), "utf8"));
-  if (pool.schema_version !== 2 || !Array.isArray(pool.companies)) throw new Error("质量池缺失或格式不正确");
+  if (![2, 3].includes(pool.schema_version) || !Array.isArray(pool.companies)) throw new Error("质量池缺失或格式不正确");
   const screening = await loadScreeningData(root);
   const members = new Map(pool.companies.map((company) => [company.symbol, company]));
   if (members.size !== pool.companies.length) throw new Error("质量池存在重复代码");

@@ -1,68 +1,1685 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "as_of": "2026-10-23",
   "methodology": "prompts/screening/international-value-quality.md",
-  "philosophy": "以五至十年普通股所有者视角检验竞争优势、必要投入、现金归属与资本纪律；事实来自已读披露，长期判断为分析推断。",
+  "philosophy": "从可理解的客户价值、长期竞争优势、必要资本与普通股现金出发，选择值得持续研究的企业。",
   "universe": {
     "as_of": "2026-10-23",
     "sources": [
       {
-        "title": "2026H1业绩公告：经营、非IFRS调节、流动性，第3—17页",
-        "url": "https://www.tencent.com/wp-content/uploads/2026/08/E700_IRA.pdf"
+        "title": "证券身份与财务统计入口",
+        "url": "https://stockanalysis.com/quote/hkg/"
       },
       {
-        "title": "2025全年业绩：现金市场、Corporate Funds及财务回顾，含2024比较",
-        "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0226/2026022600166.pdf"
-      },
-      {
-        "title": "2025全年业绩：自由盈余、资本及母公司资源，第35—39页（印刷页）",
-        "url": "https://www.aia.com/content/dam/group-wise/en/docs/investor-relations/2026/AIA%20Group%202025%20Annual%20Results%20Ann%20(Eng).pdf"
+        "title": "指数成分参考入口",
+        "url": "https://en.wikipedia.org/wiki/Hang_Seng_Index"
       }
     ],
     "securities": {
+      "HK:00001": "长和",
+      "HK:00002": "中电控股",
+      "HK:00003": "香港中华煤气",
+      "HK:00005": "汇丰控股 HSBC",
+      "HK:00006": "电能实业",
+      "HK:00016": "新鸿基地产",
+      "HK:00019": "太古股份A",
+      "HK:00027": "银河娱乐",
+      "HK:00101": "恒隆地产",
+      "HK:00116": "周生生",
+      "HK:00144": "招商局港口",
+      "HK:00151": "中国旺旺",
+      "HK:00168": "青岛啤酒",
+      "HK:00175": "吉利汽车",
+      "HK:00220": "统一企业中国",
+      "HK:00241": "阿里健康",
+      "HK:00288": "万洲国际",
+      "HK:00291": "华润啤酒",
+      "HK:00300": "美的集团",
+      "HK:00316": "东方海外国际",
+      "HK:00322": "康师傅控股",
+      "HK:00345": "维他奶国际",
+      "HK:00384": "中国燃气",
       "HK:00388": "香港交易所",
+      "HK:00522": "ASMPT",
+      "HK:00551": "裕元集团",
+      "HK:00669": "创科实业",
+      "HK:00688": "中国海外发展",
       "HK:00700": "腾讯控股",
-      "HK:01299": "友邦保险"
+      "HK:00772": "阅文集团",
+      "HK:00780": "同程旅行",
+      "HK:00788": "中国铁塔",
+      "HK:00823": "领展房产基金",
+      "HK:00857": "中国石油股份",
+      "HK:00883": "中国海洋石油",
+      "HK:00902": "华能国际电力",
+      "HK:00914": "海螺水泥",
+      "HK:00939": "建设银行",
+      "HK:00941": "中国移动",
+      "HK:00968": "信义光能",
+      "HK:00992": "联想集团",
+      "HK:01024": "快手",
+      "HK:01038": "长江基建集团",
+      "HK:01088": "中国神华",
+      "HK:01093": "石药集团",
+      "HK:01099": "国药控股",
+      "HK:01177": "中国生物制药",
+      "HK:01193": "华润燃气",
+      "HK:01199": "中远海运港口",
+      "HK:01211": "比亚迪",
+      "HK:01276": "恒瑞医药",
+      "HK:01299": "友邦保险",
+      "HK:01308": "海丰国际",
+      "HK:01368": "特步国际",
+      "HK:01398": "工商银行",
+      "HK:01801": "信达生物",
+      "HK:01810": "小米集团",
+      "HK:01836": "九兴控股",
+      "HK:01876": "百威亚太",
+      "HK:01880": "中国中免",
+      "HK:01919": "中远海控",
+      "HK:01928": "金沙中国",
+      "HK:01929": "周大福",
+      "HK:02018": "瑞声科技",
+      "HK:02020": "安踏体育",
+      "HK:02269": "药明生物",
+      "HK:02313": "申洲国际",
+      "HK:02318": "中国平安",
+      "HK:02319": "蒙牛乳业",
+      "HK:02331": "李宁",
+      "HK:02333": "长城汽车",
+      "HK:02338": "潍柴动力",
+      "HK:02359": "药明康德",
+      "HK:02378": "保诚 Prudential",
+      "HK:02382": "舜宇光学科技",
+      "HK:02460": "华润饮料",
+      "HK:02607": "上海医药",
+      "HK:02688": "新奥能源",
+      "HK:03288": "海天味业",
+      "HK:03606": "福耀玻璃",
+      "HK:03690": "美团",
+      "HK:03692": "翰森制药",
+      "HK:03750": "宁德时代",
+      "HK:03800": "协鑫科技",
+      "HK:03933": "联邦制药",
+      "HK:03968": "招商银行",
+      "HK:03988": "中国银行",
+      "HK:03998": "波司登",
+      "HK:06618": "京东健康",
+      "HK:06690": "海尔智家",
+      "HK:06862": "海底捞",
+      "HK:09618": "京东集团",
+      "HK:09626": "哔哩哔哩",
+      "HK:09633": "农夫山泉",
+      "HK:09926": "康方生物",
+      "HK:09961": "携程集团 Trip.com",
+      "HK:09987": "百胜中国",
+      "HK:09988": "阿里巴巴",
+      "HK:09992": "泡泡玛特",
+      "HK:09999": "网易"
     }
   },
   "review": {
     "baseline_as_of": "2026-10-23",
-    "baseline_count": 3,
-    "missing_baseline_symbols": [],
-    "reviewed_symbols": [
-      "HK:00388",
-      "HK:00700",
-      "HK:01299"
+    "baseline_count": 97,
+    "missing_baseline_symbols": [
+      "HK:00914",
+      "HK:01880",
+      "HK:02607"
     ],
-    "scope_note": "港股主动收窄至平台、交易基础设施和寿险三种机制，仅复核这3家，不代表港股全市场。腾讯读取2026H1关键章节及2025同期比较，年度文件未解析；港交所和友邦读取2025年度经营、现金或资本章节及2024比较，2026中期仅摘要。未完成全部附注、独立客户访谈及完整周期现金重建。 基线日期表示本次整理日，各公司期间不同；基线只指已读关键材料，不表示完整多年财务数据库。 港交所另读2022全年业绩中的2021—2022逆风比较；未把逆风后的恢复速度假定为常态。",
-    "omission_check": "覆盖平台、金融网络与保险；消费品牌、公用事业、医药及工业尚未覆盖。阿里巴巴、网易、保诚等近邻未逐家复核，未入样本不能解释为被否决。",
-    "admission_check": "重点检验高增长伴随资本投入、客户激励和监管资本消耗；区分合并现金、母公司可用资金和实际分配。A层仍保留反证，B层必须写清升级条件；未据证券行情或单年利润增速选取。"
+    "reviewed_symbols": [
+      "HK:00001",
+      "HK:00002",
+      "HK:00003",
+      "HK:00005",
+      "HK:00006",
+      "HK:00016",
+      "HK:00019",
+      "HK:00027",
+      "HK:00101",
+      "HK:00116",
+      "HK:00144",
+      "HK:00151",
+      "HK:00168",
+      "HK:00175",
+      "HK:00220",
+      "HK:00241",
+      "HK:00288",
+      "HK:00291",
+      "HK:00300",
+      "HK:00316",
+      "HK:00322",
+      "HK:00345",
+      "HK:00384",
+      "HK:00388",
+      "HK:00522",
+      "HK:00551",
+      "HK:00669",
+      "HK:00688",
+      "HK:00700",
+      "HK:00772",
+      "HK:00780",
+      "HK:00788",
+      "HK:00823",
+      "HK:00857",
+      "HK:00883",
+      "HK:00902",
+      "HK:00914",
+      "HK:00939",
+      "HK:00941",
+      "HK:00968",
+      "HK:00992",
+      "HK:01024",
+      "HK:01038",
+      "HK:01088",
+      "HK:01093",
+      "HK:01099",
+      "HK:01177",
+      "HK:01193",
+      "HK:01199",
+      "HK:01211",
+      "HK:01276",
+      "HK:01299",
+      "HK:01308",
+      "HK:01368",
+      "HK:01398",
+      "HK:01801",
+      "HK:01810",
+      "HK:01836",
+      "HK:01876",
+      "HK:01880",
+      "HK:01919",
+      "HK:01928",
+      "HK:01929",
+      "HK:02018",
+      "HK:02020",
+      "HK:02269",
+      "HK:02313",
+      "HK:02318",
+      "HK:02319",
+      "HK:02331",
+      "HK:02333",
+      "HK:02338",
+      "HK:02359",
+      "HK:02378",
+      "HK:02382",
+      "HK:02460",
+      "HK:02607",
+      "HK:02688",
+      "HK:03288",
+      "HK:03606",
+      "HK:03690",
+      "HK:03692",
+      "HK:03750",
+      "HK:03800",
+      "HK:03933",
+      "HK:03968",
+      "HK:03988",
+      "HK:03998",
+      "HK:06618",
+      "HK:06690",
+      "HK:06862",
+      "HK:09618",
+      "HK:09626",
+      "HK:09633",
+      "HK:09926",
+      "HK:09961",
+      "HK:09987",
+      "HK:09988",
+      "HK:09992",
+      "HK:09999"
+    ],
+    "scope_note": "覆盖平台、消费品牌、工业制造、医药、金融、公用资产与资源等100个证券条目，包含港股独有企业及A/H双重上市发行人。 名单保留入选和未纳入理由；财务初筛采用公开标准化指标，核心候选补查年度资本回报，金融与权益法企业改用适配口径。指标期间逐项标注，资料访问日为2026-10-23。此范围为跨行业候选集合，不含全部上市证券。",
+    "omission_check": "按消费、金融网络、科技、医疗、工业服务、运输和长寿命资产做行业交叉检查；同时比较品牌与渠道、设备与耗材、平台与履约、资产与资本配置。相关行业的未纳入公司列明具体原因；同一发行人通过issuer标识合并计数。 家电、调味品、连锁餐饮及成熟创新药纳入同行交叉比较，避免遗漏多地上市的相同经营主体。",
+    "admission_check": "剔除将周期高点、融资规模、客户资金或一次性授权收入当作护城河的解释；对回购放大ROE、净现金放大ROIC、权益法收入分母和金融现金口径单独处理。A层看多年兑现，B层保留具体可验证问题。",
+    "exclusions": [
+      {
+        "symbol": "HK:00001",
+        "reason": "部分港口与零售资产有质量，复杂集团、债务与跨业务配置使好分部难直接转为好普通股。"
+      },
+      {
+        "symbol": "HK:00003",
+        "reason": "成熟本地燃气较稳，外部业务与资本配置增加复杂度，整体现金回报须先穿透。"
+      },
+      {
+        "symbol": "HK:00016",
+        "reason": "开发和投资物业资本占用大，单期现金可能来自项目结算，未形成足够可预见的长期剩余回报。"
+      },
+      {
+        "symbol": "HK:00019",
+        "reason": "品牌和服务资产有价值，但航空、地产和集团配置混合，整体资本回报与现金归属尚需先拆清。"
+      },
+      {
+        "symbol": "HK:00101",
+        "reason": "优质物业位置不等于优质新增资本回报，较重债务与需求变化压低出租资产的经营回收。"
+      },
+      {
+        "symbol": "HK:00116",
+        "reason": "珠宝品牌有基础，但库存及金价影响较大，尚未形成优于已选珠宝样本的清晰研究理由。"
+      },
+      {
+        "symbol": "HK:00144",
+        "reason": "港口位置具稀缺性，但联营上划、项目债务与新增资本回报尚难形成足够明确的股东现金判断。"
+      },
+      {
+        "symbol": "HK:00241",
+        "reason": "药品渠道有基础，生态依赖与低现金率限制独立竞争优势的辨识度。"
+      },
+      {
+        "symbol": "HK:00288",
+        "reason": "肉制品与屠宰具有规模，但生猪周期、原料与集团结构使稳定超额资本回报的辨识度较低。"
+      },
+      {
+        "symbol": "HK:00316",
+        "reason": "经营效率可能较强，仍需穿越运价和换船周期；不把周期现金高点视为永久优势。"
+      },
+      {
+        "symbol": "HK:00345",
+        "reason": "品牌仍有消费基础，但区域需求与竞争变化后，长期增长和资本回报的优势尚未充分恢复。"
+      },
+      {
+        "symbol": "HK:00384",
+        "reason": "较重负债、接驳与售气结构变化影响现金，网络地位尚不足以抵消资本回收不确定性。"
+      },
+      {
+        "symbol": "HK:00522",
+        "reason": "封装设备有技术位置，但产品结构、设备周期及现金回报波动尚难归一为稳定优势。"
+      },
+      {
+        "symbol": "HK:00551",
+        "reason": "制鞋规模与客户关系存在，但客户议价、人工和资本需求限制回报，未见足够强的利润归属机制。"
+      },
+      {
+        "symbol": "HK:00688",
+        "reason": "开发能力与融资基础较好，需求、项目结算及土地资本占用仍使长期股东现金难以预见。"
+      },
+      {
+        "symbol": "HK:00772",
+        "reason": "内容IP有使用价值，但制作波动、平台分成与持续现金较弱，暂难确认可重复复利机制。"
+      },
+      {
+        "symbol": "HK:00788",
+        "reason": "铁塔网络具有进入门槛，但主要客户同时具有股东影响力，资本回报和利润分配约束仍较强。"
+      },
+      {
+        "symbol": "HK:00857",
+        "reason": "资源与网络体量大，资本配置、政策职责及商品周期使普通股剩余回报的辨识度低于已选能源样本。"
+      },
+      {
+        "symbol": "HK:00902",
+        "reason": "发电需求与装机规模不足以证明质量，燃料、电价、债务及资本投入共同限制稳定超额回报。"
+      },
+      {
+        "symbol": "HK:00914",
+        "reason": "低到岸成本是真优势，但需求缩量和供给竞争持续限制回报，暂不据现金存量扩大跟踪。"
+      },
+      {
+        "symbol": "HK:00939",
+        "reason": "低成本存款有基础，信用与政策职责仍需穿透，暂未发现优于已选银行样本的差异化研究理由。"
+      },
+      {
+        "symbol": "HK:00968",
+        "reason": "光伏玻璃的成本与规模优势存在，供给扩张和价格竞争仍可能让利润长期停留在低水平。"
+      },
+      {
+        "symbol": "HK:00992",
+        "reason": "全球渠道与供应链有规模，硬件议价与薄现金率使长期超额回报机制不足以仅凭份额确认。"
+      },
+      {
+        "symbol": "HK:01099",
+        "reason": "配送规模与渠道有价值，但薄利、应收和营运资本较重，长期超额回报机制不够清晰。"
+      },
+      {
+        "symbol": "HK:01193",
+        "reason": "地域管网存在，但价差传导、应收与资本投入使当前现金回报较弱，暂优先跟踪更清晰的网络样本。"
+      },
+      {
+        "symbol": "HK:01199",
+        "reason": "港口网络有使用价值，较低回报和债务、联营结构削弱普通股现金可预见性。"
+      },
+      {
+        "symbol": "HK:01368",
+        "reason": "专业跑步有定位，但品牌和渠道相对优势及扩张后的股东现金尚不足以支撑优先研究。"
+      },
+      {
+        "symbol": "HK:01398",
+        "reason": "规模负债优势存在，贷款配置与信用成本决定资本回报，暂未形成足够鲜明的增量研究理由。"
+      },
+      {
+        "symbol": "HK:01801",
+        "reason": "药品商业化已有进展，但高现金率可能受合作首付款影响；持续产品收益和研发回收还需更长记录。"
+      },
+      {
+        "symbol": "HK:01836",
+        "reason": "鞋履工艺和客户关系有基础，但当前现金转换、客户集中与增长投入仍缺足够的跨周期支撑。"
+      },
+      {
+        "symbol": "HK:01880",
+        "reason": "免税采购和货盘有基础，品牌与机场分成、库存及并购资本使现金回报尚不够清晰。"
+      },
+      {
+        "symbol": "HK:01919",
+        "reason": "航运网络规模大，但运价与新增运力主导盈利，当前现金尚不足以证明稳定超额回报。"
+      },
+      {
+        "symbol": "HK:02018",
+        "reason": "声学等工艺具竞争力，但客户议价和多产品资本投入使普通股长期回报仍不够清晰。"
+      },
+      {
+        "symbol": "HK:02319",
+        "reason": "乳业品牌有基础，但需求、原奶周期、库存和减值令当前资本回报偏弱，需先看到渠道与现金改善。"
+      },
+      {
+        "symbol": "HK:02333",
+        "reason": "产品品牌存在，但细分车型需求、价格竞争与新技术投入使资本效率和现金持续性不足够稳定。"
+      },
+      {
+        "symbol": "HK:02460",
+        "reason": "包装水品牌已商业化，但竞争与扩产后的现金记录较短，尚不足以确认独立于渠道背景的长期优势。"
+      },
+      {
+        "symbol": "HK:02607",
+        "reason": "医药工业与分销需分别研究，当前缺少可比较的集团现金及资本材料，未凭行业规模纳入。"
+      },
+      {
+        "symbol": "HK:03800",
+        "reason": "技术降本不能消除硅料供给周期，亏损、债务和持续投入使股东现金缺乏可预见性。"
+      },
+      {
+        "symbol": "HK:03933",
+        "reason": "药物及原料规模存在，商品属性、债务和资本回报不足以证明稳定差异化优势。"
+      },
+      {
+        "symbol": "HK:03988",
+        "reason": "跨境网络有价值，但复杂信用及资本结构使新增普通股回报需更多穿透材料。"
+      },
+      {
+        "symbol": "HK:09626",
+        "reason": "社区黏性与内容价值存在，现金记录和持续商业化仍不足以证明长期普通股回报。"
+      },
+      {
+        "symbol": "HK:09926",
+        "reason": "临床和商业化潜力存在，但当前亏损、产品集中及全球试验依赖使长期股东现金尚难预见。"
+      }
+    ]
   },
   "companies": [
     {
-      "symbol": "HK:00388",
-      "name": "香港交易所",
-      "industry": "交易与清算基础设施",
+      "symbol": "HK:02020",
+      "name": "安踏体育",
+      "industry": "运动服饰",
       "tier": "core_moat",
-      "group": "infrastructure_finance_resource",
-      "moat": "长期判断：发行人、交易流动性、清算与互联互通形成联合网络，竞争者难靠更低收费独立复制。2025/2024现金市场交易费随成交扩大，说明经营弹性，也说明不能把旺市增长当常态；低迷时仍需观察上市与风险管理需求。",
-      "owner_cash": "股东可用的Corporate Funds必须与保证金及清算所资金分开。2025总部购置、系统更新与分配消耗自有资金；公司资金投资收益还含非经常权益收益。高利润率支持现金创造，但必要系统投入、清算风险准备和母公司分配优先于自由使用全部账面现金。",
-      "risks": "最强反证是跨境资本渠道永久收缩或流动性迁往别处；低利率同时压低保证金投资收益。LME操作和监管风险可能伤害网络信任；总部和相邻业务投入可能降低资本纪律。不能把交易旺季外推十年。",
-      "tier_reason": "A：制度与参与者网络共同支撑长期基础需求，2022年成交降25%、归母利润降20%，仍有现金股息；与2024—2025恢复对照，支持网络在逆风中仍有经济价值。成交周期反证影响盈利幅度，尚未证明网络被替代；若长期流动性份额流失、清算重大失误反复发生或扩张持续吞噬现金，应降级。2026中期仅核到官方摘要，未重核全套表格。",
+      "group": "consumer_brand_network",
+      "moat": "品牌运营、零售渠道与供应链组织支持多品牌消费需求。",
+      "owner_cash": "成熟品牌现金较好，门店库存、租赁和品牌并购应完整计入。",
+      "risks": "渠道库存、多品牌管理复杂度与新收购资本回报下降。",
+      "tier_reason": "多年经营与现金体现品牌运营能力，仍需按品牌分拆新增回报。",
       "sources": [
         {
-          "title": "2025全年业绩：现金市场、Corporate Funds及财务回顾，含2024比较",
-          "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0226/2026022600166.pdf"
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/2020/statistics/"
         },
         {
-          "title": "2026中期官方概要；仅摘要更新，非全文核验",
-          "url": "https://www.hkexgroup.com/Investor-Relations?sc_lang=en"
-        },
-        {
-          "title": "2022全年业绩：2021—2022收入、分配与成交逆风，第3—5页",
-          "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2023/0223/2023022300153.pdf"
+          "title": "年度资本回报历史 · 标准化口径",
+          "url": "https://stockanalysis.com/quote/hkg/2020/financials/ratios/"
         }
-      ]
+      ],
+      "issuer": "HK:02020",
+      "research_question": "多品牌复制能否维持单品牌的库存效率和投入回报？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "23.30%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "23.57%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "1.15",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY 2025",
+            "value": "22.35%"
+          },
+          {
+            "period": "FY 2024",
+            "value": "26.12%"
+          },
+          {
+            "period": "FY 2023",
+            "value": "33.11%"
+          },
+          {
+            "period": "FY 2022",
+            "value": "31.88%"
+          },
+          {
+            "period": "FY 2021",
+            "value": "36.44%"
+          }
+        ],
+        "history_metric": "ROIC",
+        "history_source": 1,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:03288",
+      "name": "海天味业",
+      "industry": "调味发酵品Ⅱ",
+      "tier": "core_moat",
+      "group": "consumer_brand_network",
+      "moat": "全国餐饮与家庭渠道、产品组合和发酵制造规模形成稳定复购。",
+      "owner_cash": "预收与低应收降低占款，多年资本投入后仍产生现金；半年季节性不能年化。",
+      "risks": "零添加、餐饮及平台促销影响同品净价，留存与新增产能若不能产生现金会削弱规模优势。",
+      "tier_reason": "高频调味需求、全国渠道与制造效率有多年收现依据；竞争限制提价但尚未抹去成本与配送优势，不能仅凭高毛利认定。",
+      "sources": [
+        {
+          "title": "海天味业2025年度报告公开转载：三年财务与现金",
+          "url": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12024835&stockid=603288"
+        },
+        {
+          "title": "海天味业:海天味业2026年半年度报告（2026-08-27），全文",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225510979.PDF"
+        }
+      ],
+      "issuer": "CN:603288",
+      "research_question": "充分计入渠道和新品投入后，高频调味需求能否保持现金与资本回报？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "年度报告",
+        "items": [
+          {
+            "label": "加权ROE",
+            "value": "19.59%",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "经营现金净额",
+            "value": "77.46亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY2025",
+            "value": "19.59%"
+          },
+          {
+            "period": "FY2024",
+            "value": "21.77%"
+          },
+          {
+            "period": "FY2023",
+            "value": "20.72%"
+          }
+        ],
+        "history_metric": "加权ROE",
+        "history_source": 0,
+        "note": "2024采用重述口径；合并经营现金尚需扣购建，季度预收具有季节性。"
+      }
+    },
+    {
+      "symbol": "HK:03998",
+      "name": "波司登",
+      "industry": "服饰品牌",
+      "tier": "core_moat",
+      "group": "consumer_brand_network",
+      "moat": "羽绒产品研发、品牌与渠道集中经营形成细分品类优势。",
+      "owner_cash": "季节性销售需匹配库存、预付款与门店投入，全年现金比单季更重要。",
+      "risks": "暖冬、品牌高端化受阻与库存促销反噬。",
+      "tier_reason": "多年品牌现金与资本回报支持资格，气候和品类集中仍是边界。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/3998/statistics/"
+        },
+        {
+          "title": "年度资本回报历史 · 标准化口径",
+          "url": "https://stockanalysis.com/quote/hkg/3998/financials/ratios/"
+        }
+      ],
+      "issuer": "HK:03998",
+      "research_question": "在正常冬季和较低提价幅度下，产品复购与库存效率如何？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "81.25%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "19.38%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.25",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY 2026",
+            "value": "68.69%"
+          },
+          {
+            "period": "FY 2025",
+            "value": "65.41%"
+          },
+          {
+            "period": "FY 2024",
+            "value": "59.30%"
+          },
+          {
+            "period": "FY 2023",
+            "value": "36.52%"
+          },
+          {
+            "period": "FY 2022",
+            "value": "34.30%"
+          }
+        ],
+        "history_metric": "ROIC",
+        "history_source": 1,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:06690",
+      "name": "海尔智家",
+      "industry": "白色家电",
+      "tier": "core_moat",
+      "group": "consumer_brand_network",
+      "moat": "冰洗品牌、安装售后网络及海外本土经营形成复合优势。",
+      "owner_cash": "冰洗及本地品牌有多年经营现金；租赁、少数、财务公司权利、并购和母实际子股利决定公众可得部分。",
+      "risks": "海外费用与暖通产能可能长期高于收入回报，渠道回款和复杂跨境资金不能凭合并余额推定。",
+      "tier_reason": "全球本地品牌、冰洗和安装服务经过多年验证；近期区域压力与新暖通资本未推翻存量优势，但不得把相邻扩张作为核心资格证明。",
+      "sources": [
+        {
+          "title": "海尔智家2025年度经营业绩摘要",
+          "url": "https://www.haier.com/global/press-events/news/20260402_288863.shtml"
+        },
+        {
+          "title": "海尔智家:海尔智家股份有限公司2026年半年度报告（2026-08-28），全文",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225522691.PDF"
+        }
+      ],
+      "issuer": "CN:600690",
+      "research_question": "海外本土经营和新增暖通资本能否持续改善每股现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "营业收入",
+            "value": "3,023.5亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "归母净利润",
+            "value": "195.5亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "集团年度口径；跨境子公司、财务公司资金和新增暖通投入须单独穿透。"
+      }
+    },
+    {
+      "symbol": "HK:09633",
+      "name": "农夫山泉",
+      "industry": "食品饮料",
+      "tier": "core_moat",
+      "group": "consumer_brand_network",
+      "moat": "水源布局、品牌和高密度分销共同降低到货成本并支持复购。",
+      "owner_cash": "成熟饮料现金较好，水源产线、渠道和新品营销需要持续投入。",
+      "risks": "低价竞争、品牌信任事件和新品扩张成本。",
+      "tier_reason": "多年现金与品牌渠道支持资格，极高ROIC需考虑净现金分母效应。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/9633/statistics/"
+        },
+        {
+          "title": "年度资本回报历史 · 标准化口径",
+          "url": "https://stockanalysis.com/quote/hkg/9633/financials/ratios/"
+        }
+      ],
+      "issuer": "HK:09633",
+      "research_question": "包装水与茶饮分别能维持多强的终端复购及渠道利润？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROE",
+            "value": "50.00%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "25.05%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.21",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY 2025",
+            "value": "44.23%"
+          },
+          {
+            "period": "FY 2024",
+            "value": "39.84%"
+          },
+          {
+            "period": "FY 2023",
+            "value": "45.88%"
+          },
+          {
+            "period": "FY 2022",
+            "value": "37.90%"
+          },
+          {
+            "period": "FY 2021",
+            "value": "39.53%"
+          }
+        ],
+        "history_metric": "ROE",
+        "history_source": 1,
+        "note": "净现金与周转结构可能放大ROIC，历史展示改用ROE；仍需核真实维持资本和渠道投入。"
+      }
+    },
+    {
+      "symbol": "HK:09999",
+      "name": "网易",
+      "industry": "游戏与数字内容",
+      "tier": "core_moat",
+      "group": "consumer_brand_network",
+      "moat": "长线游戏运营、研发组织与玩家社区支持重复付费和持续内容迭代。",
+      "owner_cash": "成熟游戏现金较好，持续研发与内容更新不可省略，净现金会放大ROIC。",
+      "risks": "新品失败、版号与玩家迁移，海外扩张不一定复制国内效率。",
+      "tier_reason": "长线产品和现金记录支持研发运营优势，须监测产品集中与继任梯队。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/9999/statistics/"
+        },
+        {
+          "title": "年度资本回报历史 · 标准化口径",
+          "url": "https://stockanalysis.com/quote/hkg/9999/financials/ratios/"
+        }
+      ],
+      "issuer": "HK:09999",
+      "research_question": "核心游戏老化后，研发组织能否持续复制长生命周期产品？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROE",
+            "value": "20.37%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "42.79%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.29",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY 2025",
+            "value": "22.63%"
+          },
+          {
+            "period": "FY 2024",
+            "value": "22.36%"
+          },
+          {
+            "period": "FY 2023",
+            "value": "24.78%"
+          },
+          {
+            "period": "FY 2022",
+            "value": "18.45%"
+          },
+          {
+            "period": "FY 2021",
+            "value": "17.57%"
+          }
+        ],
+        "history_metric": "ROE",
+        "history_source": 1,
+        "note": "较大净现金压低投入资本分母，极高ROIC不直接表示新增项目回报，历史展示改用ROE。"
+      }
+    },
+    {
+      "symbol": "HK:01276",
+      "name": "恒瑞医药",
+      "industry": "化学制药",
+      "tier": "core_moat",
+      "group": "healthcare_platform",
+      "moat": "从抗肿瘤药延伸至代谢、自免与心血管，已形成多款创新药的临床开发、注册和商业化能力；客户选择须依具体疗效与可及性，不能只凭管线数量。",
+      "owner_cash": "多年销售支持持续大额研发和正经营现金，2023—2025年经营现金约76.44、74.23、112.35亿元；授权首付款、里程碑与普通药品回款分开，研发资本化仍是实际投入。",
+      "risks": "成熟创新药受医保续约和同类竞争侵蚀，2026H1扣非利润与经营现金下降；海外授权收入有条件且不连续，持续研发失败及关联许可转让会影响普通股回报。",
+      "tier_reason": "重复商业化与多年现金基础支持组织能力，依据并非尚未获批管线。新药接续仍能分散单品退坡，但授权时点不能掩盖现有产品的价格和竞争压力。",
+      "sources": [
+        {
+          "title": "恒瑞医药公开财务汇总与经营评述",
+          "url": "https://market.weidn.com/cn/company/a/600276/"
+        },
+        {
+          "title": "恒瑞医药2026年半年度报告（全文中的业务、财务及治理章节）",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225483600.PDF"
+        }
+      ],
+      "issuer": "CN:600276",
+      "research_question": "扣除项目性授权款与失败研发后，成熟创新药接续能产生多少持续现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公开财务汇总",
+        "items": [
+          {
+            "label": "经营现金净额",
+            "value": "112.35亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "经营现金净额·半年",
+            "value": "19.87亿元人民币",
+            "period": "2026H1",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "全年与半年单独阅读，不能直接混配或年化；经营现金波动须分解药品回款、授权时点及研发投入。"
+      }
+    },
+    {
+      "symbol": "HK:00300",
+      "name": "美的集团",
+      "industry": "家电与工业制造",
+      "tier": "core_moat",
+      "group": "technology_industrial",
+      "moat": "多品类采购、核心部件、渠道与全球供应链共同形成交付和成本优势。",
+      "owner_cash": "成熟家电收现较好，供应商信用、完整资本和金融资金需分开。",
+      "risks": "海外建厂、并购与新工业业务低回报，结算周期反转。",
+      "tier_reason": "成熟业务的多年资本和现金记录支持资格，新业务不能继承旧回报。",
+      "sources": [
+        {
+          "title": "美的集团2025年度经营与现金摘要（2026-08-07）",
+          "url": "https://www.midea.com/ph/news/midea-achieves-a-record-high-ranking-of-no--231-on-fortune-global-500"
+        },
+        {
+          "title": "同发行人定期披露参考 · 美的集团:2026年半年度报告（2026-08-29）",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-29/1225531404.PDF"
+        }
+      ],
+      "issuer": "CN:000333",
+      "research_question": "工业与海外扩张的新增资本能否达到成熟家电的现金效率？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "营业收入",
+            "value": "4,585亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "经营现金净额",
+            "value": "533亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "归母净利润",
+            "value": "439.5亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "公司经营摘要，经营现金尚未扣购建及并购，也未剥离金融资金与结算周期影响。"
+      }
+    },
+    {
+      "symbol": "HK:00669",
+      "name": "创科实业",
+      "industry": "工具与专业制造",
+      "tier": "core_moat",
+      "group": "technology_industrial",
+      "moat": "专业工具品牌、电池平台与渠道服务形成用户设备生态。",
+      "owner_cash": "品牌工具产生现金，研发、库存、渠道应收和工厂投入需要协调。",
+      "risks": "渠道客户集中、竞争电池平台和贸易成本。",
+      "tier_reason": "多年资本回报与现金支持专业用户生态。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0669/statistics/"
+        },
+        {
+          "title": "年度资本回报历史 · 标准化口径",
+          "url": "https://stockanalysis.com/quote/hkg/0669/financials/ratios/"
+        }
+      ],
+      "issuer": "HK:00669",
+      "research_question": "电池平台的持续复购能否抵消渠道与周期需求波动？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "19.14%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "12.48%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.83",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY 2025",
+            "value": "17.63%"
+          },
+          {
+            "period": "FY 2024",
+            "value": "16.02%"
+          },
+          {
+            "period": "FY 2023",
+            "value": "13.98%"
+          },
+          {
+            "period": "FY 2022",
+            "value": "15.91%"
+          },
+          {
+            "period": "FY 2021",
+            "value": "20.95%"
+          }
+        ],
+        "history_metric": "ROIC",
+        "history_source": 1,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:02313",
+      "name": "申洲国际",
+      "industry": "纺织与专业制造",
+      "tier": "core_moat",
+      "group": "technology_industrial",
+      "moat": "面料、染整、成衣一体化与可靠交付形成客户认证和协作门槛。",
+      "owner_cash": "制造现金需扣海外工厂、维护与营运资本，不能只看订单增长。",
+      "risks": "品牌客户集中、人工成本与海外产能利用率。",
+      "tier_reason": "多年回报支持一体化效率，优势源于质量交期与工艺协同。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/2313/statistics/"
+        },
+        {
+          "title": "年度资本回报历史 · 标准化口径",
+          "url": "https://stockanalysis.com/quote/hkg/2313/financials/ratios/"
+        }
+      ],
+      "issuer": "HK:02313",
+      "research_question": "海外基地成熟后，良率和交付优势能否维持投入资本回报？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "18.34%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "8.52%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "2.32",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY 2025",
+            "value": "21.23%"
+          },
+          {
+            "period": "FY 2024",
+            "value": "19.61%"
+          },
+          {
+            "period": "FY 2023",
+            "value": "13.43%"
+          },
+          {
+            "period": "FY 2022",
+            "value": "13.06%"
+          },
+          {
+            "period": "FY 2021",
+            "value": "13.52%"
+          }
+        ],
+        "history_metric": "ROIC",
+        "history_source": 1,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:03606",
+      "name": "福耀玻璃",
+      "industry": "汽车零部件",
+      "tier": "core_moat",
+      "group": "technology_industrial",
+      "moat": "安全玻璃认证、同步开发与全球就近制造提高客户替换成本。",
+      "owner_cash": "跨客户制造产生现金，新厂、原片、能源与海外配套投入需完整扣除。",
+      "risks": "新产能利用率、关税、劳务能源和整车采购压力。",
+      "tier_reason": "认证与制造协同能够跨车型复用，长期现金记录支持优势。",
+      "sources": [
+        {
+          "title": "福耀玻璃2025年度报告公开转载：经营和现金",
+          "url": "https://vip.stock.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12000286"
+        },
+        {
+          "title": "同发行人定期披露参考 · 福耀玻璃:福耀玻璃2026年半年度报告（2026-08-19）",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-19/1225479532.PDF"
+        }
+      ],
+      "issuer": "CN:600660",
+      "research_question": "海外及高附加值产能能否在合理利用率下维持资本回报？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "营业收入",
+            "value": "457.87亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "经营现金净额",
+            "value": "120.55亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "集团合并现金，需扣资本开支与租赁；不能将全部合并现金直接视为母公司分配能力。"
+      }
+    },
+    {
+      "symbol": "HK:03750",
+      "name": "宁德时代",
+      "industry": "电池与储能",
+      "tier": "core_moat",
+      "group": "technology_industrial",
+      "moat": "研发、良率、客户认证和规模供应链共同降低客户全寿命使用成本。",
+      "owner_cash": "交付产生现金，需扣完整研发、扩产和营运投入，预收具有履约义务。",
+      "risks": "技术替代、竞争降价、贸易限制和新增产能回报下降。",
+      "tier_reason": "跨产品和客户的制造技术优势已有多年兑现，扩张需保持资本纪律。",
+      "sources": [
+        {
+          "title": "宁德时代2025年度经营与现金摘要",
+          "url": "https://www.catl.com/en/news/6773.html"
+        },
+        {
+          "title": "同发行人定期披露参考 · 宁德时代:2026年半年度报告（2026-07-25）",
+          "url": "https://np-cnotice-stock.eastmoney.com/api/content/ann?art_code=AN202607241827324638&client_source=web&page_index=1"
+        }
+      ],
+      "issuer": "CN:300750",
+      "research_question": "新技术与海外产能的单位现金回报能否接近成熟业务？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "营业收入",
+            "value": "4,237亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "经营现金净额",
+            "value": "1,332亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "研发投入",
+            "value": "221亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "经营现金尚未扣资本投入，研发费用已经影响经营利润，后续现金分析需防重复扣减；同一发行人的A/H经营数据共用。"
+      }
+    },
+    {
+      "symbol": "HK:00388",
+      "name": "香港交易所",
+      "industry": "交易与清算",
+      "tier": "core_moat",
+      "group": "infrastructure_finance_resource",
+      "moat": "发行人、交易流动性、清算与互联互通构成相互依赖的金融网络。",
+      "owner_cash": "交易服务产生现金，客户保证金和清算资金应与股东自有资金分离。",
+      "risks": "跨境渠道收缩、市场份额外迁、系统事故及低利率影响收益。",
+      "tier_reason": "成熟网络经历成交周期仍能分配现金，旺市收入不可外推。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0388/statistics/"
+        },
+        {
+          "title": "年度资本回报历史 · 标准化口径",
+          "url": "https://stockanalysis.com/quote/hkg/0388/financials/ratios/"
+        }
+      ],
+      "issuer": "HK:00388",
+      "research_question": "低成交与低利率同时出现时，核心网络仍能创造多少现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "56.49%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "57.28%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.04",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY 2025",
+            "value": "56.49%"
+          },
+          {
+            "period": "FY 2024",
+            "value": "52.95%"
+          },
+          {
+            "period": "FY 2023",
+            "value": "58.85%"
+          },
+          {
+            "period": "FY 2022",
+            "value": "51.62%"
+          },
+          {
+            "period": "FY 2021",
+            "value": "63.42%"
+          }
+        ],
+        "history_metric": "ROIC",
+        "history_source": 1,
+        "note": "客户保证金及清算资金不可视作股东净现金；交易所指标需结合自有资金、清算资本和系统投入。"
+      }
+    },
+    {
+      "symbol": "HK:00883",
+      "name": "中国海洋石油",
+      "industry": "能源与资源",
+      "tier": "core_moat",
+      "group": "infrastructure_finance_resource",
+      "moat": "低成本海上资源组合、开发与运营能力形成可辨认成本优势。",
+      "owner_cash": "现金必须扣维持产量、储量接续和弃置义务，资源储量有寿命。",
+      "risks": "油价低谷、储量接续成本和大型项目回报下降。",
+      "tier_reason": "成本与工程体系已有跨周期记录，资源消耗要求持续资本纪律。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0883/statistics/"
+        },
+        {
+          "title": "年度资本回报历史 · 标准化口径",
+          "url": "https://stockanalysis.com/quote/hkg/0883/financials/ratios/"
+        }
+      ],
+      "issuer": "CN:600938",
+      "research_question": "中性油价下，接续新储量后仍能维持多高普通股现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "21.90%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "29.24%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.25",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY 2025",
+            "value": "18.94%"
+          },
+          {
+            "period": "FY 2024",
+            "value": "21.96%"
+          },
+          {
+            "period": "FY 2023",
+            "value": "21.21%"
+          },
+          {
+            "period": "FY 2022",
+            "value": "28.34%"
+          },
+          {
+            "period": "FY 2021",
+            "value": "15.11%"
+          }
+        ],
+        "history_metric": "ROIC",
+        "history_source": 1,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:00941",
+      "name": "中国移动",
+      "industry": "通信运营",
+      "tier": "core_moat",
+      "group": "infrastructure_finance_resource",
+      "moat": "全国网络、频谱与客户密度形成规模成本和覆盖优势。",
+      "owner_cash": "成熟通信产生现金，网络维护、租赁和新算力投入必须计足。",
+      "risks": "资费压力、低回报算力扩张和受限资金影响分配。",
+      "tier_reason": "基础通信长期收现与分配支持核心资格，新业务独立考核。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0941/statistics/"
+        },
+        {
+          "title": "年度资本回报历史 · 标准化口径",
+          "url": "https://stockanalysis.com/quote/hkg/0941/financials/ratios/"
+        }
+      ],
+      "issuer": "CN:600941",
+      "research_question": "新增算力投入能否改善普通股现金，而非只扩大收入规模？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "8.73%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "10.97%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.36",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY 2025",
+            "value": "10.38%"
+          },
+          {
+            "period": "FY 2024",
+            "value": "10.50%"
+          },
+          {
+            "period": "FY 2023",
+            "value": "10.14%"
+          },
+          {
+            "period": "FY 2022",
+            "value": "11.65%"
+          },
+          {
+            "period": "FY 2021",
+            "value": "12.28%"
+          }
+        ],
+        "history_metric": "ROIC",
+        "history_source": 1,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:03968",
+      "name": "招商银行",
+      "industry": "银行",
+      "tier": "core_moat",
+      "group": "infrastructure_finance_resource",
+      "moat": "零售账户、低成本存款与财富服务形成资金和客户关系优势。",
+      "owner_cash": "利润须扣真实信用损失和监管资本留存，拨备和存款不是自由现金。",
+      "risks": "信用卡与零售贷款损失、地产风险滞后和息差下降。",
+      "tier_reason": "长期负债与客户优势有记录，资本缓冲允许克制扩张。",
+      "sources": [
+        {
+          "title": "招商银行2025年度业绩数据摘要",
+          "url": "https://s3gw.cmbimg.com/lb5001-cmbweb-prd-1255000097/cmbir/20260408/84edf174-c5e6-4eb2-a60c-34715531016a.pdf"
+        },
+        {
+          "title": "同发行人定期披露参考 · 招商银行:招商银行股份有限公司2026年半年度报告（2026-08-29）",
+          "url": "https://np-cnotice-stock.eastmoney.com/api/content/ann?art_code=AN202608281828637732&client_source=web&page_index=1"
+        }
+      ],
+      "issuer": "CN:600036",
+      "research_question": "低息差环境中，存款和财富关系能否继续产生超过信用成本的回报？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "ROAE",
+            "value": "13.44%",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "不良率",
+            "value": "0.94%",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "核心一级资本",
+            "value": "14.16%",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "集团普通股口径；资本采用公司披露方法，银行现金流不套用工业企业FCF。信用损失仍需结合迁徙与新增不良。"
+      }
+    },
+    {
+      "symbol": "HK:00027",
+      "name": "银河娱乐",
+      "industry": "酒店与综合度假村",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "综合物业、品牌与服务组织支持高质量旅游客流。",
+      "owner_cash": "成熟物业产生现金，扩建、维护和监管承诺需完整扣除。",
+      "risks": "客流周期、行业供给增加与牌照边界。",
+      "tier_reason": "较低债务提供缓冲，扩建资本能否创造增量现金仍关键。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0027/statistics/"
+        }
+      ],
+      "issuer": "HK:00027",
+      "research_question": "新增物业能否提高集团现金，而非分流原有客户？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "12.74%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "22.34%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.19",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:00151",
+      "name": "中国旺旺",
+      "industry": "食品饮料",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "传统品类品牌、渠道覆盖和成熟产能支撑重复购买。",
+      "owner_cash": "成熟业务资本需求相对有限，现金分配需兼顾产品更新与渠道维护。",
+      "risks": "核心客群老化、新品不足和渠道变化。",
+      "tier_reason": "成熟品牌现金有基础，长期需求是否稳定仍需验证。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0151/statistics/"
+        }
+      ],
+      "issuer": "HK:00151",
+      "research_question": "产品和渠道更新能否守住复购，而无需持续提高促销费用？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "32.80%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "13.95%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.50",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:00168",
+      "name": "青岛啤酒",
+      "industry": "食品饮料",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "品牌、区域基地和经销网络形成复购与物流效率。",
+      "owner_cash": "啤酒经营收现，季节预收和工厂改造应按完整年度衡量。",
+      "risks": "销量成熟、渠道费用和消费者价格敏感度提高。",
+      "tier_reason": "品牌与现金支持研究，吨酒收益对需求压力的补偿仍需验证。",
+      "sources": [
+        {
+          "title": "青岛啤酒2025年度报告摘要公开转载",
+          "url": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12022953&stockid=600600"
+        },
+        {
+          "title": "同发行人定期披露参考 · 青岛啤酒:青岛啤酒股份有限公司2026年半年度报告全文（2026-08-27）",
+          "url": "https://np-cnotice-stock.eastmoney.com/api/content/ann?art_code=AN202608261828493590&client_source=web&page_index=1"
+        }
+      ],
+      "issuer": "CN:600600",
+      "research_question": "产品结构改善能否持续提高扣除渠道和工厂投入后的现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "加权ROE",
+            "value": "15.50%",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "经营现金净额",
+            "value": "45.93亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "年度集团口径，经营现金同比下降10.91%；现金需扣工厂维护及更新，季节预收不能机械年化。"
+      }
+    },
+    {
+      "symbol": "HK:00220",
+      "name": "统一企业中国",
+      "industry": "食品饮料",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "即饮茶、饮料与方便面品牌结合区域分销形成复购基础。",
+      "owner_cash": "生产与渠道周转产生现金，广告、设备和库存仍需持续投入。",
+      "risks": "新品依赖、渠道补贴和同行竞争。",
+      "tier_reason": "品牌品类已有商业化基础，现金持续性和扩品回报需要核验。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0220/statistics/"
+        },
+        {
+          "title": "统一企业中国2025年度报告转载 · 管理层现金回顾",
+          "url": "https://financialfilings.com/filings/uni-president-china-holdings-ltd/annual-report/2026/37359183/"
+        }
+      ],
+      "issuer": "HK:00220",
+      "research_question": "核心饮料增长能否在维持渠道健康的同时改善全部资本回报？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "29.60%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "经营现金净额",
+            "value": "32.844亿元人民币",
+            "period": "FY2025",
+            "source": 1
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.69",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "年度现金取自公司报告转载，TTM统计页未提供现金项；年度资本投入含租赁使用权资产，不能直接以该数与经营现金相减计算现金FCF。"
+      }
+    },
+    {
+      "symbol": "HK:00291",
+      "name": "华润啤酒",
+      "industry": "食品饮料",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "品牌、区域规模和经销网络形成供货与渠道效率。",
+      "owner_cash": "成熟啤酒产生现金，工厂调整、渠道费用和白酒投资占用资本。",
+      "risks": "行业销量下降、高端化不及预期和跨品类配置失误。",
+      "tier_reason": "规模渠道已商业化，新增品类与整体资本回报仍需证明。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0291/statistics/"
+        }
+      ],
+      "issuer": "HK:00291",
+      "research_question": "扣除渠道投入后，高端产品增长能否抵消销量压力？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "11.89%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "15.07%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.65",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:00322",
+      "name": "康师傅控股",
+      "industry": "食品饮料",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "方便面与饮料品牌、广泛渠道和生产布局形成规模优势。",
+      "owner_cash": "现金来自高周转消费品，工厂维护、渠道应收和原料占用需要扣实。",
+      "risks": "价格竞争、品类需求变化与渠道费用侵蚀利润。",
+      "tier_reason": "规模供应与现金记录支持研究，产品组合的持续性需检验。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0322/statistics/"
+        }
+      ],
+      "issuer": "HK:00322",
+      "research_question": "成本波动和消费升级下，核心品类能否守住单位现金收益？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "35.58%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "7.16%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "1.72",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
     },
     {
       "symbol": "HK:00700",
@@ -70,37 +1687,1740 @@
       "industry": "社交与数字内容",
       "tier": "quality_research",
       "group": "consumer_brand_network",
-      "moat": "长期判断：社交关系、商户服务与开发者生态相互连接，迁移需要联系人和服务共同迁移；用户总量进入成熟期后，关键是互动质量与商户效率。2026H1披露微信及WeChat月活14.39亿，但流量不自动产生高回报，游戏、广告和云须分别检验。",
-      "owner_cash": "2026Q2披露算力采购预付款影响自由现金，剔除该项后的公司口径为376亿元人民币。预付款仍是实际资金占用，不能按调整后数字全额分配；还要扣内容、租赁、必要再投资并核少数权益、股票激励与跨境上划。投资组合账面增值不等于普通股现金。",
-      "risks": "最强反证是AI入口替代用户行为，同时算力与获客成本常态化上升。若广告现金增量赶不上持续投入，平台优势仍在但股东所得可能下降。支付监管、游戏许可与VIE执行也可能限制现金归属。",
-      "tier_reason": "B：既有网络与商业化成立；本轮只读取2026H1经营和现金章节及同期比较，2025年度文件未成功解析，尚不足以重建完整多年现金桥。未来5—10年检验社交留存、商户复购和投入后每股现金；多期证明算力投入可自我融资且净稀释受控后再考虑A。",
+      "moat": "社交关系、商户服务与开发者生态连接，用户迁移需要联系人和服务共同变化。",
+      "owner_cash": "游戏广告收现较强，算力预付款、内容、租赁和激励需计入长期现金。",
+      "risks": "AI入口改变用户行为，算力与获客投入常态化上升，监管限制现金归属。",
+      "tier_reason": "网络优势已兑现，新增AI投入的股东回报仍需验证。",
       "sources": [
         {
-          "title": "2026H1业绩公告：经营、非IFRS调节、流动性，第3—17页",
-          "url": "https://www.tencent.com/wp-content/uploads/2026/08/E700_IRA.pdf"
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0700/statistics/"
+        },
+        {
+          "title": "年度资本回报历史 · 标准化口径",
+          "url": "https://stockanalysis.com/quote/hkg/0700/financials/ratios/"
         }
-      ]
+      ],
+      "issuer": "HK:00700",
+      "research_question": "投入完整算力成本后，广告与游戏生态还能提高多少每股现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "18.27%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "20.97%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "1.56",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY 2025",
+            "value": "17.71%"
+          },
+          {
+            "period": "FY 2024",
+            "value": "17.45%"
+          },
+          {
+            "period": "FY 2023",
+            "value": "13.89%"
+          },
+          {
+            "period": "FY 2022",
+            "value": "11.13%"
+          },
+          {
+            "period": "FY 2021",
+            "value": "13.00%"
+          }
+        ],
+        "history_metric": "ROIC",
+        "history_source": 1,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:00780",
+      "name": "同程旅行",
+      "industry": "在线旅行",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "交通入口、下沉用户覆盖与交叉销售积累交易网络。",
+      "owner_cash": "轻平台可收现，但流量采购、合作方分成与收购支出决定实际回报。",
+      "risks": "入口依赖、竞争补贴和并购分流资金。",
+      "tier_reason": "用户入口已商业化，独立品牌与渠道依赖需要检验。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0780/statistics/"
+        }
+      ],
+      "issuer": "HK:00780",
+      "research_question": "离开主要流量合作方后，客户留存和单位获客收益还能有多强？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "17.94%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "16.57%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "1.09",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:01024",
+      "name": "快手",
+      "industry": "社交与数字内容",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "创作者、用户关系和直播电商形成互动与交易网络。",
+      "owner_cash": "广告电商收现需扣内容分成、流量激励、算力及股权激励。",
+      "risks": "用户时长竞争、商业化过度与内容监管。",
+      "tier_reason": "平台已实现商业化，现金留存与长期用户关系需继续检验。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/1024/statistics/"
+        }
+      ],
+      "issuer": "HK:01024",
+      "research_question": "减少流量补贴后，创作者与用户生态还能否保持活跃和回报？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "29.44%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "6.16%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "1.61",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
     },
     {
       "symbol": "HK:01299",
       "name": "友邦保险",
       "industry": "寿险与健康险",
       "tier": "quality_research",
-      "group": "infrastructure_finance_resource",
-      "moat": "长期判断：代理人训练、承保经验与长期客户关系相互积累；老保单释放与新业务叠加有复利潜力。2026中期公司披露渠道增长，但销售排名是公司自述，不能单独证明保单质量；长期要看继续率、理赔体验和新业务资金回收。",
-      "owner_cash": "2025净自由盈余44.51亿美元，较2024的40.20亿增加；同期子公司上划50.45亿美元低于2024的56.42亿。净盈余、上划和实际分配是不同口径；还须扣新业务资本、总部费用和融资成本。不能把保费、合同服务边际或内含价值当作当期可分配现金。",
-      "risks": "最强反证是新业务增长依赖更高保证成本或渠道佣金，账面盈利增长而资本回收变慢。利差、退保、医疗赔付与各地资本规则可能共同压低上划；2025股东资本比率下降说明分配会消耗缓冲。",
-      "tier_reason": "B：分销和存量保单机制值得长期跟踪，现金与母公司桥已有披露，但本轮未穿透各地上划限制和长期假设。升级需跨利率周期的保单兑现、投资经验及上划支持分配。2026H1官方摘要仅作为更新线索，不能拿半年增长替代完整年度压力检验。",
+      "group": "consumer_brand_network",
+      "moat": "代理人训练、承保经验和长期客户关系支持保单续收与新业务。",
+      "owner_cash": "需从经营盈余扣新业务资本并核子公司上划，保费和会计利润不等同股东现金。",
+      "risks": "退保、赔付与长期利差，跨地区资本规则限制分配。",
+      "tier_reason": "分销和存量保单有价值，长期假设与上划机制决定现金质量。",
       "sources": [
         {
-          "title": "2025全年业绩：自由盈余、资本及母公司资源，第35—39页（印刷页）",
+          "title": "友邦2025全年业绩：自由盈余与母公司资金",
           "url": "https://www.aia.com/content/dam/group-wise/en/docs/investor-relations/2026/AIA%20Group%202025%20Annual%20Results%20Ann%20(Eng).pdf"
+        }
+      ],
+      "issuer": "HK:01299",
+      "research_question": "新业务投资回收、存量保单释放和母公司分配能否长期闭合？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "净自由盈余生成",
+            "value": "44.51亿美元",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "子公司上划",
+            "value": "50.45亿美元",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "股东资本比率",
+            "value": "221%",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "公司自由盈余与母公司上划为不同口径，前者不等于后者；资本留存、市场波动与新业务投资均影响分配。"
+      }
+    },
+    {
+      "symbol": "HK:01876",
+      "name": "百威亚太",
+      "industry": "食品饮料",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "国际品牌与本地销售网络有消费者和渠道基础。",
+      "owner_cash": "啤酒业务可收现，但工厂利用、经销商库存与营销投入影响回报。",
+      "risks": "高端消费疲软、渠道竞争和资本效率长期偏低。",
+      "tier_reason": "品牌商业化成熟，资本回报和销量恢复决定研究价值。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/1876/statistics/"
+        }
+      ],
+      "issuer": "HK:01876",
+      "research_question": "在成熟市场销量不增长时，品牌组合能否恢复合理资本回报？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "7.37%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "15.84%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.21",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:01928",
+      "name": "金沙中国",
+      "industry": "酒店与综合度假村",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "澳门集群物业、会展和客房配套支持客流与综合服务能力。",
+      "owner_cash": "经营现金需覆盖翻新、非博彩承诺、租赁和债务。",
+      "risks": "旅游需求、监管、牌照期限与高杠杆叠加。",
+      "tier_reason": "既有设施和客流网络成熟，完整周期资本回报需验证。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/1928/statistics/"
+        }
+      ],
+      "issuer": "HK:01928",
+      "research_question": "保持物业吸引力并履行全部承诺后，仍能分配多少现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "18.31%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "21.83%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "3.13",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:01929",
+      "name": "周大福",
+      "industry": "珠宝与零售",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "品牌信任、门店网络和设计货品支持贵金属消费的渠道选择。",
+      "owner_cash": "黄金库存、租赁和加盟回款占用现金，金价上涨不等于新增经营能力。",
+      "risks": "库存价值波动、消费疲弱与加盟商回报下降。",
+      "tier_reason": "品牌渠道有基础，但低现金转换需穿透库存及金价影响。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/1929/statistics/"
+        }
+      ],
+      "issuer": "HK:01929",
+      "research_question": "剔除金价和库存变动后，每家门店真正创造多少现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "27.33%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "0.77%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "1.34",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:02331",
+      "name": "李宁",
+      "industry": "运动服饰",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "本土运动品牌认知与设计渠道有消费者基础。",
+      "owner_cash": "现金受终端折扣、批发结算和库存影响，门店更新不可忽略。",
+      "risks": "品牌热度回落、产品定位不清和渠道库存。",
+      "tier_reason": "品牌仍有辨识度，真实复购与渠道回报需进一步验证。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/2331/statistics/"
+        }
+      ],
+      "issuer": "HK:02331",
+      "research_question": "减少促销后，核心产品与渠道是否仍有稳定复购？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "19.56%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "6.79%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.37",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:02378",
+      "name": "保诚 Prudential",
+      "industry": "寿险与健康险",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "亚洲和非洲的代理人、银行渠道与长期保障产品积累客户关系。",
+      "owner_cash": "存量业务产生自由盈余，需扣新业务投入、总部成本和当地资本留存。",
+      "risks": "渠道质量、长期收益假设和区域资本上划不及预期。",
+      "tier_reason": "业务有成熟分销基础，盈余兑现与新业务回收仍需验证。",
+      "sources": [
+        {
+          "title": "保诚2025年度业绩：自由盈余与资本",
+          "url": "https://www.prudentialplc.com/en/newsroom/company-news/2026/prudential-plc-2025-full-year-results/"
+        }
+      ],
+      "issuer": "HK:02378",
+      "research_question": "渠道扩张后的真实保单现金能否覆盖新业务资本并支持上划？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "经营自由盈余",
+            "value": "30.59亿美元",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "自由盈余比率",
+            "value": "221%",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "股东偿付覆盖率",
+            "value": "262%",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "经营自由盈余来自存量保险与资管业务，仍需扣新业务和总部等投入；公司自定义资本口径，不能与其他保险商直接排名。"
+      }
+    },
+    {
+      "symbol": "HK:03690",
+      "name": "美团",
+      "industry": "本地生活平台",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "商户、消费者与骑手密度相互强化，匹配效率降低同城履约成本。",
+      "owner_cash": "订单规模可产生现金，竞争补贴、骑手保障及新业务投入会改变单位经济性。",
+      "risks": "流量入口与即时零售竞争，补贴和履约责任削弱网络收益。",
+      "tier_reason": "本地网络有真实使用价值，当前竞争使现金可持续性需要重新验证。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/3690/statistics/"
+        }
+      ],
+      "issuer": "HK:03690",
+      "research_question": "补贴充分正常化后，订单密度能带来多大的单位现金优势？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "-51.56%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF代理",
+            "value": "负值",
+            "period": "TTM",
+            "source": 0
+          },
+          {
+            "label": "经营利润率",
+            "value": "-12.05%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "标准化经营现金扣资本开支后为负，需优先核投入和周转的可持续性。TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:06862",
+      "name": "海底捞",
+      "industry": "连锁餐饮",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "品牌服务、门店组织与供应链配合支持餐饮体验和复购，运营执行比单一产品配方更重要。",
+      "owner_cash": "门店当期收现，人工、租赁、装修与关店成本决定真实单位现金。",
+      "risks": "消费者性价比要求、服务成本、门店饱和与多品牌扩张失误。",
+      "tier_reason": "服务品牌与单店模式有商业基础，扩张后的资本纪律和同店需求仍需检验。",
+      "sources": [
+        {
+          "title": "海底捞财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/6862/statistics/"
+        }
+      ],
+      "issuer": "HK:06862",
+      "research_question": "同店客流和翻台率能否在不增加促销及资本负担下维持？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "48.84%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "7.88%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.80",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "门店轻净资本可能放大ROIC，仍需计入完整租赁、装修维护与关店支出。"
+      }
+    },
+    {
+      "symbol": "HK:09618",
+      "name": "京东集团",
+      "industry": "电商与物流",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "自营供货、仓配网络与商品服务提高确定性，适用于履约要求较高的品类。",
+      "owner_cash": "零售利润薄，库存、物流设施、商户结算和新业务补贴影响现金。",
+      "risks": "价格竞争压低经济利益，物流扩张与补贴降低资本回报。",
+      "tier_reason": "履约能力已商业化，普通股现金需要穿透零售和物流分部。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/9618/statistics/"
+        }
+      ],
+      "issuer": "HK:09618",
+      "research_question": "客户为可靠履约支付的价值能否覆盖仓配和服务的完整成本？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "1.06%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "2.13%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "4.11",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:09961",
+      "name": "携程集团 Trip.com",
+      "industry": "在线旅行",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "供应商库存、用户信任、客服和高频交易数据形成旅行服务网络。",
+      "owner_cash": "平台收现较好，客户预付款有履约义务；海外获客与投资配置影响现金。",
+      "risks": "供应商直销、流量竞争和国际扩张费用。",
+      "tier_reason": "成熟服务网络值得长期研究，海外增长的现金回收仍需验证。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/9961/statistics/"
         },
         {
-          "title": "2026H1官方业绩摘要，2026-08-20",
-          "url": "https://www.aia.com/en/media-centre/press-releases/2026/aia-group-press-release-20260820"
+          "title": "携程FY2021—2025现金流量表 · 标准化口径，人民币百万元",
+          "url": "https://stockanalysis.com/quote/hkg/9961/financials/cash-flow-statement/"
         }
-      ]
+      ],
+      "issuer": "HK:09961",
+      "research_question": "海外获客投入回收后，跨市场网络能否产生持久利润？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "7.57%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "年度FCF率",
+            "value": "21.76%",
+            "period": "FY2025",
+            "source": 1
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "2.31",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY2025",
+            "value": "143.79亿元人民币"
+          },
+          {
+            "period": "FY2024",
+            "value": "196.25亿元人民币"
+          },
+          {
+            "period": "FY2023",
+            "value": "220.04亿元人民币"
+          },
+          {
+            "period": "FY2022",
+            "value": "26.41亿元人民币"
+          },
+          {
+            "period": "FY2021",
+            "value": "24.75亿元人民币"
+          }
+        ],
+        "history_metric": "经营现金净额",
+        "history_source": 1,
+        "note": "滚动统计页未提供现金项，现金改用FY2025年度表，不能与TTM利润混配。年度经营现金下降，需核营运资金、税款及投资收益调整。"
+      }
+    },
+    {
+      "symbol": "HK:09987",
+      "name": "百胜中国",
+      "industry": "连锁餐饮",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "肯德基等品牌授权、本地供应链和门店运营积累构成规模服务网络，适应中国消费者的产品组织有价值。",
+      "owner_cash": "直营门店产生现金，租赁、门店改造、数字平台费用与品牌授权费必须充分扣除。",
+      "risks": "消费价格压力、外卖平台分成、单店成熟与品牌授权关系影响回报。",
+      "tier_reason": "成熟品牌和本地运营已商业化，低线城市扩张与单店资本回收仍需验证。",
+      "sources": [
+        {
+          "title": "百胜中国同发行人美股财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/stocks/yumc/statistics/"
+        }
+      ],
+      "issuer": "HK:09987",
+      "research_question": "在较低客单价和完整平台费用下，新门店能否维持合理回收期？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "14.86%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "7.56%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.81",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "采用同发行人美股公开集团财务比率；FCF仍需核租赁与维持资本。"
+      }
+    },
+    {
+      "symbol": "HK:09988",
+      "name": "阿里巴巴",
+      "industry": "电商与云平台",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "商户、消费者与交易工具有规模基础，云服务另有企业部署与迁移成本。",
+      "owner_cash": "成熟商业产生现金，即时零售补贴、云资本开支和营运资金可能吞噬利润。",
+      "risks": "零售竞争持续补贴、商户流量分散和新算力回报偏低。",
+      "tier_reason": "平台仍有商业价值，资本效率下降使集团现金成为核心问题。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/9988/statistics/"
+        }
+      ],
+      "issuer": "HK:09988",
+      "research_question": "停止依赖补贴后，电商与云各自能形成多少可持续剩余现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "3.08%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF代理",
+            "value": "负值",
+            "period": "TTM",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "2.68",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "标准化经营现金扣资本开支后为负，需优先核投入和周转的可持续性。TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:09992",
+      "name": "泡泡玛特",
+      "industry": "品牌与文化消费",
+      "tier": "quality_research",
+      "group": "consumer_brand_network",
+      "moat": "IP运营、设计师关系、零售触达与粉丝社区形成消费品牌平台。",
+      "owner_cash": "货品周转产生现金，IP授权、库存与海外门店扩张需要资本。",
+      "risks": "爆款集中、审美迁移、库存和授权关系变化。",
+      "tier_reason": "商业化强，但多代IP持续复购尚需更长历史检验。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/9992/statistics/"
+        }
+      ],
+      "issuer": "HK:09992",
+      "research_question": "单一爆款降温后，平台能否继续创造新IP并保持库存回报？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "108.41%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "17.57%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.19",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:01093",
+      "name": "石药集团",
+      "industry": "医药",
+      "tier": "quality_research",
+      "group": "healthcare_platform",
+      "moat": "成熟药物销售、研发管线与临床注册形成商业平台。",
+      "owner_cash": "成熟产品现金支持研发，合作首付款与处置收益应区别于持续经营。",
+      "risks": "集采、专利到期、研发失败和授权收入波动。",
+      "tier_reason": "既有产品与研发商业化支持研究，新品替代和现金质量需验证。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/1093/statistics/"
+        }
+      ],
+      "issuer": "HK:01093",
+      "research_question": "剔除一次性授权款后，新产品能否覆盖旧品降价与研发投入？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "31.65%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "37.68%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.07",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:01177",
+      "name": "中国生物制药",
+      "industry": "医药",
+      "tier": "quality_research",
+      "group": "healthcare_platform",
+      "moat": "研发、注册与医院覆盖形成多产品商业化基础。",
+      "owner_cash": "经营收现需扣持续研发和并购，联营收益与实际现金分派分开。",
+      "risks": "集采、管线兑现与集团资本配置。",
+      "tier_reason": "商业平台已有产品支撑，完整研发资本回报仍需核算。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/1177/statistics/"
+        }
+      ],
+      "issuer": "HK:01177",
+      "research_question": "新产品现金能否稳定替代成熟药物的价格与专利压力？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "20.62%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "26.77%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "1.63",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:02269",
+      "name": "药明生物",
+      "industry": "生物药研发生产服务",
+      "tier": "quality_research",
+      "group": "healthcare_platform",
+      "moat": "工艺开发、质量体系和客户项目历史形成生物药服务切换成本。",
+      "owner_cash": "新基地和商业化产能需大量资本，现金要结合在手项目阶段和利用率。",
+      "risks": "地缘准入、客户融资、项目失败及产能过剩。",
+      "tier_reason": "工艺服务有真实客户价值，准入与投入回报决定长期现金。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/2269/statistics/"
+        }
+      ],
+      "issuer": "HK:02269",
+      "research_question": "现有基地在保守订单假设下能否实现合理回收？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "13.88%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "17.80%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.30",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:02359",
+      "name": "药明康德",
+      "industry": "药物研发生产服务",
+      "tier": "quality_research",
+      "group": "healthcare_platform",
+      "moat": "发现、工艺开发与商业化连续服务降低客户项目迁移意愿。",
+      "owner_cash": "平台产生经营现金，新基地、租赁及项目营运资本需扣实，处置款不可外推。",
+      "risks": "市场准入、重点客户集中及新产能利用。",
+      "tier_reason": "平台与现金已商业化，地缘边界和新增资本回报仍须验证。",
+      "sources": [
+        {
+          "title": "药明康德2025年度业绩：公司调整口径",
+          "url": "https://www.wuxiapptec.cn/news/wuxi-news/umhjsmiz9m1gckio5iwivj6h"
+        },
+        {
+          "title": "同发行人定期披露参考 · 药明康德2026年半年度报告（全文中的业务、财务及治理章节）",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-08-04/1225455027.PDF"
+        }
+      ],
+      "issuer": "CN:603259",
+      "research_question": "在可持续准入与保守订单下，扩产能否提高普通股现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "经调整经营现金",
+            "value": "166.7亿元人民币",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "该值为公司经调整口径；正式现金流量表、资产处置与持续业务需分别复核，不能直接当作可分配现金。"
+      }
+    },
+    {
+      "symbol": "HK:03692",
+      "name": "翰森制药",
+      "industry": "医药",
+      "tier": "quality_research",
+      "group": "healthcare_platform",
+      "moat": "成熟治疗领域产品与创新研发平台积累临床及商业化经验。",
+      "owner_cash": "利润和现金可能受合作授权款影响，研发不能因当期现金充足而被忽略。",
+      "risks": "授权款非经常、单品集中和管线失败。",
+      "tier_reason": "商业化与现金基础较好，须区分可重复产品收益和项目性收入。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/3692/statistics/"
+        }
+      ],
+      "issuer": "HK:03692",
+      "research_question": "持续销售利润能否在不依赖大额授权首付款下覆盖研发？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "108.98%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "31.14%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.67",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:06618",
+      "name": "京东健康",
+      "industry": "医疗服务与平台",
+      "tier": "quality_research",
+      "group": "healthcare_platform",
+      "moat": "药品供应链、配送可靠性与在线医疗服务入口形成用户基础。",
+      "owner_cash": "零售收现较快，供应商结算、医疗服务投入与母公司关系影响归属。",
+      "risks": "药品监管、竞争降价、获客成本与生态依赖。",
+      "tier_reason": "供应与履约已商业化，独立服务黏性和现金可分配性仍需验证。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/6618/statistics/"
+        }
+      ],
+      "issuer": "HK:06618",
+      "research_question": "健康服务能否形成独立复购，并提高扣除获客后的现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "31.10%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "10.17%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.17",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:00175",
+      "name": "吉利汽车",
+      "industry": "汽车",
+      "tier": "quality_research",
+      "group": "technology_industrial",
+      "moat": "车型平台、研发协同与制造规模形成产品迭代和成本基础。",
+      "owner_cash": "现金受供应商结算、研发与多品牌产能投入影响。",
+      "risks": "价格竞争、集团内资源分配和技术路线变化。",
+      "tier_reason": "平台能力与规模有辨识度，整合后的普通股回报仍需核清。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0175/statistics/"
+        }
+      ],
+      "issuer": "HK:00175",
+      "research_question": "共享平台和品牌整合能否减少重复投入并提高每车现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "24.35%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "12.67%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.62",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:01211",
+      "name": "比亚迪",
+      "industry": "汽车与电池",
+      "tier": "quality_research",
+      "group": "technology_industrial",
+      "moat": "电池、功率电子与整车协同形成成本和迭代优势。",
+      "owner_cash": "营运周转支持扩张，完整产能、研发、供应商付款与海外投入须计足。",
+      "risks": "价格竞争、扩产速度和海外合规成本吞噬规模收益。",
+      "tier_reason": "整合能力真实，竞争后的普通股现金需要跨周期验证。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/1211/statistics/"
+        }
+      ],
+      "issuer": "CN:002594",
+      "research_question": "充分支付供应商与维持研发后，规模增长能留下多少现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "12.40%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF代理",
+            "value": "负值",
+            "period": "TTM",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "1.04",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "标准化经营现金扣资本开支后为负，需优先核投入和周转的可持续性。TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:01810",
+      "name": "小米集团",
+      "industry": "消费电子与汽车",
+      "tier": "quality_research",
+      "group": "technology_industrial",
+      "moat": "品牌、渠道、用户生态及供应链支持多品类分销。",
+      "owner_cash": "硬件薄利、互联网服务与汽车投资的资金性质不同，需拆分现金。",
+      "risks": "汽车资本密度、手机竞争及生态客户黏性不足。",
+      "tier_reason": "分销和产品组织有基础，新增汽车业务改变整体资本结构。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/1810/statistics/"
+        }
+      ],
+      "issuer": "HK:01810",
+      "research_question": "新汽车业务能否自我造血，同时保住成熟业务现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "8.79%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF代理",
+            "value": "负值",
+            "period": "TTM",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "1.45",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "标准化经营现金扣资本开支后为负，需优先核投入和周转的可持续性。TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:02338",
+      "name": "潍柴动力",
+      "industry": "动力系统与工业装备",
+      "tier": "quality_research",
+      "group": "technology_industrial",
+      "moat": "发动机、动力总成与渠道服务积累装机和客户维护关系。",
+      "owner_cash": "制造现金受库存和订单周期影响，集团物流设备等分部需要独立资本考核。",
+      "risks": "重卡周期、新能源替代与并购分部回报偏低。",
+      "tier_reason": "存量动力服务有基础，技术转型和集团配置仍待验证。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/2338/statistics/"
+        }
+      ],
+      "issuer": "CN:000338",
+      "research_question": "动力系统转型后，原有服务网络能否继续创造高质量现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "13.43%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "11.13%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "2.04",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:02382",
+      "name": "舜宇光学科技",
+      "industry": "光学与精密制造",
+      "tier": "quality_research",
+      "group": "technology_industrial",
+      "moat": "光学设计、制造良率和客户认证积累形成精密产品门槛。",
+      "owner_cash": "生产现金受产品结构、设备迭代和客户结算影响。",
+      "risks": "手机客户议价、技术代际和车载扩张回报不足。",
+      "tier_reason": "工艺优势已商业化，产品升级能否提高整体现金仍需验证。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/2382/statistics/"
+        }
+      ],
+      "issuer": "HK:02382",
+      "research_question": "车载及高端光学扩张能否改善全部资本回报？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "21.90%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "8.87%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.95",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:00002",
+      "name": "中电控股",
+      "industry": "公用事业",
+      "tier": "quality_research",
+      "group": "infrastructure_finance_resource",
+      "moat": "受监管电网与供电资产提供地域服务基础，运营可靠性重要。",
+      "owner_cash": "股东现金受准许回报、维护资本及海外资产投入约束。",
+      "risks": "监管重定价、燃料成本与海外项目损失。",
+      "tier_reason": "本地网络有长期需求，集团回报仍需剥离不同监管体系。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0002/statistics/"
+        }
+      ],
+      "issuer": "HK:00002",
+      "research_question": "各地区准许回报能否覆盖真实维护与融资成本？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "4.84%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "10.58%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "2.80",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:00005",
+      "name": "汇丰控股 HSBC",
+      "industry": "银行",
+      "tier": "quality_research",
+      "group": "infrastructure_finance_resource",
+      "moat": "国际交易银行、香港存款基础和跨境财富关系支持资金与服务网络。",
+      "owner_cash": "盈利要覆盖信用损失和普通股资本，重大交易及重组消耗资本缓冲。",
+      "risks": "商业地产信用、利率下降及跨境监管影响利润与分配。",
+      "tier_reason": "客户网络有优势，重组后正常化收益与资本生成仍需验证。",
+      "sources": [
+        {
+          "title": "汇丰2025年度业绩：回报、信用与资本",
+          "url": "https://www.hsbc.com/news-and-views/news/media-releases/2026/hsbc-holdings-plc-annual-results-2025"
+        }
+      ],
+      "issuer": "HK:00005",
+      "research_question": "剔除利率顺风与特殊项目后，跨境服务能带来多高的资本回报？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "RoTE",
+            "value": "13.3%",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "CET1",
+            "value": "14.9%",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "信用成本",
+            "value": "39基点",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "RoTE为报告口径；剔除特殊项目的RoTE为17.2%。资本指标为2025年末，2026年恒生交易消耗资本，不能视作当前资本水平。"
+      }
+    },
+    {
+      "symbol": "HK:00006",
+      "name": "电能实业",
+      "industry": "公用事业投资",
+      "tier": "quality_research",
+      "group": "infrastructure_finance_resource",
+      "moat": "成熟受监管能源网络的股权组合提供长期服务现金基础。",
+      "owner_cash": "应看联营实际分红与母公司现金，合并收入分母不能衡量整体资产收益。",
+      "risks": "海外监管、汇率、资产更新及上划受限。",
+      "tier_reason": "基础资产稳定性较好，权益法与母公司分配需穿透。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/0006/statistics/"
+        }
+      ],
+      "issuer": "HK:00006",
+      "research_question": "组合调整后，存续资产上划与处置资金再投资能否提高持续每股现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "报表ROE",
+            "value": "18.64%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/权益",
+            "value": "0.03",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "大量联营和合营采用权益法，合并收入与经营收益口径不同，不展示工业企业ROIC及FCF率。 资产处置收益会提高报表ROE，不能外推为存续资产回报。"
+      }
+    },
+    {
+      "symbol": "HK:00823",
+      "name": "领展房产基金",
+      "industry": "商业物业",
+      "tier": "quality_research",
+      "group": "infrastructure_finance_resource",
+      "moat": "贴近日常消费的零售物业和运营服务提供租户集聚与便利价值。",
+      "owner_cash": "应看可分派收入、维持性资本、租户改造及债务，重估损益需剔除。",
+      "risks": "租户经营压力、融资成本与海外扩张回报不足。",
+      "tier_reason": "成熟物业有使用价值，融资及资本配置决定分配韧性。",
+      "sources": [
+        {
+          "title": "领展2025/2026年度财务摘要与五年记录",
+          "url": "https://www.linkreit.com/en/investor-relations/financial-highlights/"
+        }
+      ],
+      "issuer": "HK:00823",
+      "research_question": "扣足维护和债务成本后，同店租金能支撑多少稳定分派？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "可分派金额",
+            "value": "65.77亿港元",
+            "period": "FY2025/26 · 3月末",
+            "source": 0
+          },
+          {
+            "label": "净负债比率",
+            "value": "23.9%",
+            "period": "FY2025/26 · 3月末",
+            "source": 0
+          },
+          {
+            "label": "物业净收入",
+            "value": "102.30亿港元",
+            "period": "FY2025/26 · 3月末",
+            "source": 0
+          }
+        ],
+        "history": [
+          {
+            "period": "FY2025/26",
+            "value": "65.77亿港元"
+          },
+          {
+            "period": "FY2024/25",
+            "value": "70.25亿港元"
+          },
+          {
+            "period": "FY2023/24",
+            "value": "67.18亿港元"
+          },
+          {
+            "period": "FY2022/23",
+            "value": "63.11亿港元"
+          },
+          {
+            "period": "FY2021/22",
+            "value": "64.19亿港元"
+          }
+        ],
+        "history_metric": "可分派金额",
+        "history_source": 0,
+        "note": "截至2026年3月31日止年度。公司可分派金额仍需结合维持资本、租户投入和融资评价；净负债比率随资产重估变化。"
+      }
+    },
+    {
+      "symbol": "HK:01038",
+      "name": "长江基建集团",
+      "industry": "基础设施投资",
+      "tier": "quality_research",
+      "group": "infrastructure_finance_resource",
+      "moat": "多地区公用事业与基础设施组合有成熟运营和合同关系。",
+      "owner_cash": "权益法收益不等于收到现金，资产端债务及母公司配置需要共同核对。",
+      "risks": "监管回报下调、并购和汇率损耗股东所得。",
+      "tier_reason": "运营资产具长期需求，复杂权益结构与配置回报限制确定性。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/1038/statistics/"
+        }
+      ],
+      "issuer": "HK:01038",
+      "research_question": "组合调整后，存续资产上划与处置资金再投资能否提高持续每股现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "报表ROE",
+            "value": "17.16%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/权益",
+            "value": "0.14",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "权益法资产与项目债务需穿透，合并收入不能作为全组合收益分母，不展示工业企业ROIC及FCF率。 资产处置收益会提高报表ROE，不能外推为存续资产回报。"
+      }
+    },
+    {
+      "symbol": "HK:01088",
+      "name": "中国神华",
+      "industry": "能源与资源",
+      "tier": "quality_research",
+      "group": "infrastructure_finance_resource",
+      "moat": "煤矿、铁路、港口与电力一体化降低到岸成本并提高运输保障。",
+      "owner_cash": "成熟资产收现，煤矿接续、设备维护与新资产投入必须扣足。",
+      "risks": "煤价和电价变化、新组合资本回报及股东分配约束。",
+      "tier_reason": "运输和资源协同有优势，新资产组合的现金归属仍需验证。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/1088/statistics/"
+        }
+      ],
+      "issuer": "CN:601088",
+      "research_question": "新增资产与接续资本能否维持原有一体化成本和现金优势？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "10.31%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "11.19%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "1.62",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:01308",
+      "name": "海丰国际",
+      "industry": "区域航运与物流",
+      "tier": "quality_research",
+      "group": "infrastructure_finance_resource",
+      "moat": "亚洲区域航线密度、港口服务和客户货源关系形成运营效率。",
+      "owner_cash": "船舶更换与维护不可省略，应按正常运价及完整船龄周期看现金。",
+      "risks": "新增运力、贸易周期和运价回落。",
+      "tier_reason": "区域网络与成本有优势，较强当期现金仍需正常化检验。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/1308/statistics/"
+        }
+      ],
+      "issuer": "HK:01308",
+      "research_question": "恢复正常运价并计足换船支出后，能保留多少长期现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "54.26%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "35.24%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "0.24",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
+    },
+    {
+      "symbol": "HK:02318",
+      "name": "中国平安",
+      "industry": "综合保险",
+      "tier": "quality_research",
+      "group": "infrastructure_finance_resource",
+      "moat": "寿险代理服务、财险定价理赔数据与客户基础有可辨认优势。",
+      "owner_cash": "必须先满足赔付、负债匹配和偿付资本，再看子公司向母公司的分配。",
+      "risks": "低利率、历史资产风险和集团非核心业务投入消耗股东剩余。",
+      "tier_reason": "续收和承保已有兑现，集团资本配置仍影响可归属现金。",
+      "sources": [
+        {
+          "title": "中国平安2025年度报告摘要：承保与经营",
+          "url": "https://static.cninfo.com.cn/finalpage/2026-03-27/1225038326.PDF"
+        },
+        {
+          "title": "同发行人定期披露参考 · 中国平安:中国平安2025年年度报告（2026-03-27）",
+          "url": "https://np-cnotice-stock.eastmoney.com/api/content/ann?art_code=AN202603261820776830&client_source=web&page_index=1"
+        }
+      ],
+      "issuer": "CN:601318",
+      "research_question": "寿险、财险及非核心业务分别贡献和消耗多少普通股现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "公司披露",
+        "items": [
+          {
+            "label": "财险综合成本率",
+            "value": "96.8%",
+            "period": "FY2025",
+            "source": 0
+          },
+          {
+            "label": "基本每股营运收益",
+            "value": "7.66元人民币",
+            "period": "FY2025",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "财险指标为分部口径，营运收益为集团公司定义口径；两者不能替代母公司可分配现金或偿付资本分析。"
+      }
+    },
+    {
+      "symbol": "HK:02688",
+      "name": "新奥能源",
+      "industry": "城市燃气与能源服务",
+      "tier": "quality_research",
+      "group": "infrastructure_finance_resource",
+      "moat": "城市燃气管网、客户连接和能源服务形成地域网络。",
+      "owner_cash": "售气现金需扣管网维护、接驳与综合能源投入，应收回款影响转换。",
+      "risks": "气源与终端价格传导、工业客户需求及新项目回报。",
+      "tier_reason": "网络与客户基础真实，受监管价差及再投资限制长期回报。",
+      "sources": [
+        {
+          "title": "Stock Analysis 财务统计 · 2026-10-23访问",
+          "url": "https://stockanalysis.com/quote/hkg/2688/statistics/"
+        }
+      ],
+      "issuer": "HK:02688",
+      "research_question": "顺价和回款恢复后，存量网络能留下多少可持续现金？",
+      "metrics": {
+        "as_of": "2026-10-23",
+        "basis": "标准化财务",
+        "items": [
+          {
+            "label": "ROIC",
+            "value": "7.17%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "FCF率",
+            "value": "4.19%",
+            "period": "TTM / 最近财报",
+            "source": 0
+          },
+          {
+            "label": "债务/EBITDA",
+            "value": "1.65",
+            "period": "TTM / 最近财报",
+            "source": 0
+          }
+        ],
+        "history": [],
+        "history_metric": null,
+        "history_source": null,
+        "note": "TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。"
+      }
     }
   ]
 }

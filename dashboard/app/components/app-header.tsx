@@ -13,12 +13,12 @@ export function AppHeader({ active }: AppHeaderProps) {
         </span>
         <span className="brand-copy">
           <strong>Trading OS</strong>
-          <span>全市场研究系统</span>
+          <span>长期企业研究</span>
         </span>
       </a>
       <nav className="primary-nav" aria-label="主导航">
         <a className={active === "screening" ? "is-active" : ""} href="/screening">
-          第一层筛选
+          公司池
         </a>
         <a className={active === "dashboard" ? "is-active" : ""} href="/">
           研究决策台
