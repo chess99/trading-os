@@ -168,6 +168,49 @@ try {
   assert.doesNotMatch(await page.locator("body").innerText(), /本轮完成筛选|暂不开展公司深研|首批采用精选样本/);
   passed.push("跨市场筛选、分页、A/H合并、指标来源、链接恢复、CSV导出及取舍理由通过");
   passed.push("手机详情弹层、键盘关闭与布局通过，公司池无行情请求");
+  for (const width of [360, 390, 820, 1440]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto(`${baseURL}/?view=pool`);
+    await page.locator(".pool-market-bar").waitFor();
+    const navigation = page.getByRole("tablist", { name: "研究视图", exact: true });
+    const baseline = await navigation.boundingBox();
+    for (const name of ["跟踪进度", "最新周期模型", "全部档案", "公司池"]) {
+      await page.getByRole("tab", { name, exact: true }).click();
+      await page.locator("tbody tr[data-symbol]").first().waitFor();
+      const box = await navigation.boundingBox();
+      assert.ok(Math.abs(box.y - baseline.y) <= 1, `${width}px ${name}: 视图切换不移动导航`);
+      assert.equal(await page.evaluate(() => scrollY), 0, "视图切换不滚动页面");
+      const row = await page.locator("tbody tr[data-symbol]").first().boundingBox();
+      assert.ok(row.y < 510, `${width}px ${name}: 首屏应直接看到公司`);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false);
+      if (width === 390 || width === 1440) await page.screenshot({ path: new URL(`compact-${width}-${name}.png`, output).pathname });
+    }
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole("tab", { name: "最新周期模型", exact: true }).click();
+  assert.equal(await page.getByLabel("行业筛选").isVisible(), false);
+  await page.getByRole("button", { name: "筛选", exact: true }).click();
+  await page.getByLabel("行业筛选").selectOption("白色家电");
+  const filteredRows = await page.locator("tbody tr[data-symbol]").count();
+  assert.ok(filteredRows > 0 && filteredRows < qualified.length);
+  await page.getByRole("button", { name: "筛选 ·", exact: true }).click();
+  assert.equal(await page.getByLabel("行业筛选").isVisible(), false);
+  assert.equal(await page.locator("tbody tr[data-symbol]").count(), filteredRows, "折叠筛选保留条件");
+  const firstReportLink = page.locator("tbody tr[data-symbol] .research-company-link").first();
+  assert.match(await firstReportLink.getAttribute("href"), /^\/reports\//);
+  await page.getByRole("button", { name: "研究口径", exact: true }).click();
+  await page.getByRole("dialog", { name: "研究口径", exact: true }).waitFor();
+  await page.keyboard.press("Escape");
+  assert.equal(await page.locator("dialog[open]").count(), 0);
+  assert.equal(await page.evaluate(() => document.activeElement.textContent), "研究口径");
+  await page.locator(".standards-table-scroll").evaluate((node) => { node.scrollLeft = 200; });
+  await page.getByRole("tab", { name: "跟踪进度", exact: true }).click();
+  assert.equal(await page.locator(".standards-table-scroll").evaluate((node) => node.scrollLeft), 0);
+  await page.keyboard.press("ArrowRight");
+  assert.equal(await page.getByRole("tab", { name: "最新周期模型", exact: true }).getAttribute("aria-selected"), "true");
+  await page.keyboard.press("Home");
+  assert.equal(await page.getByRole("tab", { name: "公司池", exact: true }).getAttribute("aria-selected"), "true");
+  passed.push("360–1440px视图切换导航稳定、首屏可见公司；手机筛选、研报入口、弹层与键盘操作通过");
   assert.deepEqual(errors, [], "页面运行时错误");
   const summary = { ok: true, standard: catalog.standard.id, pool: catalog.scope.count,
     currentResults: qualified.length, checks: passed };
