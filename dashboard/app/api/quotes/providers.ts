@@ -1,3 +1,4 @@
+import { normalizeQuoteKey, quoteCode, parseForeignTencent } from "../../lib/market-quotes.mjs";
 import type { Quote } from "../../lib/research";
 
 const TENCENT_ENDPOINT = "https://qt.gtimg.cn/q=";
@@ -5,10 +6,11 @@ const EASTMONEY_ENDPOINT = "https://push2.eastmoney.com/api/qt/ulist.np/get";
 const TICKER_PATTERN = /^\d{6}$/u;
 
 export function normalizeTickers(values: string[]) {
-  return [...new Set(values.map((value) => value.trim()).filter((value) => TICKER_PATTERN.test(value)))];
+  return [...new Set(values.map(normalizeQuoteKey).filter((value): value is string => value !== null))];
 }
 
 function exchangePrefix(ticker: string) {
+  if (ticker.startsWith("920")) return "bj";
   if (/^(?:5|6|9)/u.test(ticker)) return "sh";
   if (/^(?:4|8)/u.test(ticker) || ticker.startsWith("920")) return "bj";
   return "sz";
@@ -32,8 +34,9 @@ function isoFromTencent(value: string) {
 
 export async function fetchTencentQuotes(tickers: string[]): Promise<Quote[]> {
   if (!tickers.length) return [];
-  const codes = tickers.map((ticker) => `${exchangePrefix(ticker)}${ticker}`);
+  const codes = tickers.map(quoteCode);
   const response = await fetch(`${TENCENT_ENDPOINT}${codes.join(",")}`, {
+    signal: AbortSignal.timeout(8000),
     headers: {
       Accept: "text/plain,*/*",
       Referer: "https://gu.qq.com/",
@@ -57,6 +60,7 @@ export async function fetchTencentQuotes(tickers: string[]): Promise<Quote[]> {
       explicitPercent ?? (previousClose && change !== null ? (change / previousClose) * 100 : null);
     quotes.push({
       symbol: `CN:${match[1]}`,
+      currency: "CNY",
       ticker: match[1],
       name: fields[1] || match[1],
       price,
@@ -67,7 +71,7 @@ export async function fetchTencentQuotes(tickers: string[]): Promise<Quote[]> {
       source: "tencent",
     });
   }
-  return quotes;
+  return [...quotes, ...parseForeignTencent(text, tickers) as Quote[]];
 }
 
 interface EastmoneyRow {
@@ -104,6 +108,7 @@ export async function fetchEastmoneyQuotes(tickers: string[]): Promise<Quote[]> 
     return [
       {
         symbol: `CN:${ticker}`,
+        currency: "CNY",
         ticker,
         name: String(row.f14 ?? ticker),
         price,
@@ -131,14 +136,14 @@ export async function fetchQuotesWithFallback(tickers: string[]) {
     // The secondary provider below keeps the dashboard usable when Tencent is unavailable.
   }
 
-  const missingAfterTencent = normalized.filter((ticker) => !byTicker.has(ticker));
+  const missingAfterTencent = normalized.filter((ticker) => !byTicker.has(ticker) && TICKER_PATTERN.test(ticker));
   if (missingAfterTencent.length) {
     try {
       const quotes = await fetchEastmoneyQuotes(missingAfterTencent);
       quotes.forEach((quote) => byTicker.set(quote.ticker, quote));
       if (quotes.length) providers.push("eastmoney");
     } catch {
-      // The client will use the last validated closing price for any remaining symbols.
+      // Unavailable prices stay empty; no stale or cross-currency fallback.
     }
   }
 

@@ -59,7 +59,8 @@ test("industry and selection routes retain original exported research documents"
   assert.match(await industry.text(), /产业研究/); assert.match(await selection.text(), /长期精选/);
   const { documents } = JSON.parse(await readFile(new URL("../public/data/documents.json", import.meta.url), "utf8"));
   assert.ok(documents.some((doc) => doc.id === "selection-current"));
-  assert.ok(documents.some((doc) => doc.id === "industry-guide"));
+  assert.ok(documents.some((doc) => doc.id === "cross-market-guide"));
+  assert.ok(documents.every((doc) => !doc.sourcePath.startsWith("prompts/") && !doc.sourcePath.endsWith("README.md")));
   for (const doc of documents) {
     const original = await readFile(new URL(`../../${doc.sourcePath}`, import.meta.url), "utf8");
     const projection = await readFile(new URL(`../public${doc.path}`, import.meta.url), "utf8");
@@ -68,12 +69,11 @@ test("industry and selection routes retain original exported research documents"
 });
 test("production projection matches qualified state rows and redacts all unqualified values", async () => {
   const catalog = JSON.parse(await readFile(new URL("../public/data/research-catalog.json", import.meta.url), "utf8"));
-  const rows = (await readFile(new URL("../../coverage/cn-a/research_state.jsonl", import.meta.url), "utf8"))
-    .split(/\r?\n/u).filter(Boolean).map((line) => JSON.parse(line));
+  const rows = (await Promise.all(["cn-a", "hk", "us"].map(async (m) => (await readFile(new URL(`../../coverage/${m}/research_state.jsonl`, import.meta.url), "utf8")).split(/\r?\n/u).filter(Boolean).map(JSON.parse)))).flat();
   const sources = new Map(rows.map((row) => [row.symbol, row]));
-  const pool = JSON.parse(await readFile(new URL("../../screening/cn-a/value-quality/pool.json", import.meta.url), "utf8"));
+  const pools = await Promise.all(["cn-a", "hk", "us"].map(async (m) => JSON.parse(await readFile(new URL(`../../screening/${m}/value-quality/pool.json`, import.meta.url), "utf8"))));
   assert.equal(catalog.stats.researchStateRows, rows.length);
-  assert.equal(catalog.scope.count, pool.companies.length);
+  assert.equal(catalog.scope.count, pools.reduce((n,p) => n + p.companies.length, 0));
   for (const company of catalog.companies) {
     assert.ok(!JSON.stringify(company).includes("legacy/"));
     assert.ok(!("currentIrr" in company) && !("lastClose" in company));

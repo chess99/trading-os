@@ -10,7 +10,7 @@ import threading
 import time
 from contextlib import contextmanager
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from enum import Enum
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Mapping, Sequence
@@ -20,7 +20,8 @@ STATE_PATH = Path("coverage/cn-a/research_state.jsonl")
 QUEUE_PATH = Path("coverage/cn-a/research_queue.jsonl")
 STANDARDS_REGISTRY_PATH = Path("research/standards/registry.json")
 
-_SYMBOL_RE = re.compile(r"^CN:\d{6}$")
+_SYMBOL_RE = re.compile(r"^(?:CN:[0-9]{6}|HK:[0-9]{5}|US:[A-Z]{1,5}(?:[.-][A-Z])?)$")
+MARKETS = {"cn-a": "CN", "hk": "HK", "us": "US"}
 _STANDARD_ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 _SPEC_REVISION_RE = re.compile(r"^[a-f0-9]{40}$")
 _DATED_MARKDOWN_RE = re.compile(r"^(?P<date>\d{4}-\d{2}-\d{2})(?:-(?P<sequence>\d{2}))?\.md$")
@@ -200,6 +201,8 @@ class ResearchResult:
     valuation_note: str | None = None
     return_model: ReturnModel | None = None
     return_model_note: str | None = None
+    financial_basis: Mapping[str, str] | None = None
+    security_basis: Mapping[str, Any] | None = None
 
 
 @dataclass(frozen=True)
@@ -214,6 +217,7 @@ class ResearchTask:
     report_period: str
     name: str | None = None
     started_at: str | None = None
+    financial_basis: Mapping[str, str] | None = None
 
     @property
     def trigger_key(self) -> str:
@@ -225,6 +229,7 @@ class ResearchRequest:
     symbol: str
     reason: str
     name: str | None = None
+    financial_basis: Mapping[str, str] | None = None
 
 
 @dataclass(frozen=True)
@@ -311,7 +316,7 @@ def _replace_file(source: Path, target: Path) -> None:
         except PermissionError as error:
             if getattr(error, "winerror", None) not in {5, 32, 33} or attempt == 6:
                 raise
-            time.sleep(0.025 * (2 ** attempt))
+            time.sleep(0.025 * (2**attempt))
 
 
 def _atomic_write_jsonl(path: Path, records: Iterable[Mapping[str, Any]]) -> Path:
@@ -421,7 +426,7 @@ def _enum_value(value: Enum | str, enum_type: type[Enum], label: str) -> str:
 def _symbol(value: str) -> str:
     normalized = str(value).strip().upper()
     if not _SYMBOL_RE.fullmatch(normalized):
-        raise ValidationError("symbol must use the CN:000000 form")
+        raise ValidationError("symbol must use CN:000000, HK:00000, or US:TICKER")
     return normalized
 
 
@@ -486,6 +491,49 @@ def _timestamp(value: str | datetime | None) -> str:
     if parsed.tzinfo is None or parsed.utcoffset() is None:
         raise ValidationError("timestamp must include a timezone")
     return parsed.isoformat()
+
+
+def _financial_basis(value: object, *, cutoff: str | None = None) -> dict[str, str] | None:
+    if value is None:
+        return None
+    if not isinstance(value, Mapping) or set(value) != {"period_end", "published_on", "source_url"}:
+        raise ValidationError("financial_basis requires period_end, published_on, source_url")
+    for key in ("period_end", "published_on"):
+        try:
+            if date.fromisoformat(value[key]).isoformat() != value[key]:
+                raise ValueError()
+        except (TypeError, ValueError):
+            raise ValidationError(f"invalid financial_basis.{key}") from None
+    if value["period_end"] > value["published_on"]:
+        raise ValidationError("financial period ends after publication")
+    if cutoff and value["published_on"] > cutoff[:10]:
+        raise ValidationError("financial disclosure is not yet published at cutoff")
+    _urls([value["source_url"]])
+    return dict(value)
+
+
+def _security_basis(value: object, symbol: str) -> dict[str, Any] | None:
+    if value is None:
+        if not symbol.startswith("CN:"):
+            raise ValidationError("foreign research requires security_basis")
+        return None
+    if not isinstance(value, Mapping) or set(value) != {
+        "currency",
+        "unit",
+        "ordinary_shares_per_unit",
+        "source_url",
+    }:
+        raise ValidationError("security_basis fields are incomplete")
+    currency = {"CN": "CNY", "HK": "HKD", "US": "USD"}[symbol[:2]]
+    if value["currency"] != currency:
+        raise ValidationError("security_basis currency must match the listed security")
+    if value["unit"] not in {"ordinary_share", "ADS", "share_class"}:
+        raise ValidationError("unknown listed security unit")
+    ratio = _return_model_number(value["ordinary_shares_per_unit"], "ordinary_shares_per_unit")
+    if ratio <= 0:
+        raise ValidationError("ordinary_shares_per_unit must be positive")
+    _urls([value["source_url"]])
+    return dict(value)
 
 
 def _report_period(value: object, *, information_cutoff: str | None = None) -> str:
@@ -573,8 +621,8 @@ def _normalized_return_model_payload(
     if method != _RETURN_MODEL_METHOD:
         raise ValidationError(f"return_model.method must be {_RETURN_MODEL_METHOD}")
     currency = _return_model_text(value["currency"], "return_model.currency")
-    if currency != "CNY":
-        raise ValidationError("return_model.currency must be CNY")
+    if currency not in {"CNY", "HKD", "USD"}:
+        raise ValidationError("return_model.currency must be CNY, HKD or USD")
     if value_range is not None and currency != value_range.get("currency"):
         raise ValidationError("return_model.currency must match value_range.currency")
     model_as_of = _timestamp(_return_model_text(value["model_as_of"], "return_model.model_as_of"))
@@ -718,6 +766,7 @@ def _task_from_row(row: Mapping[str, Any]) -> ResearchTask:
             report_period=_report_period(row["report_period"]),
             name=_optional_name(row.get("name")),
             started_at=(_timestamp(row["started_at"]) if row.get("started_at") else None),
+            financial_basis=_financial_basis(row.get("financial_basis"), cutoff=row["enqueued_at"]),
         )
     except KeyError as exc:
         raise StateCorruptionError(f"queue row is missing {exc.args[0]}") from exc
@@ -739,6 +788,7 @@ def _task_row(task: ResearchTask) -> dict[str, Any]:
         "status": task.status.value,
         "report_period": task.report_period,
         "started_at": task.started_at,
+        **({"financial_basis": task.financial_basis} if task.financial_basis else {}),
     }
     return row
 
@@ -755,13 +805,23 @@ class ResearchFlow:
         self,
         root: str | Path,
         *,
-        state_path: str | Path = STATE_PATH,
-        queue_path: str | Path = QUEUE_PATH,
+        state_path: str | Path | None = None,
+        queue_path: str | Path | None = None,
+        market: str = "cn-a",
     ) -> None:
+        if market not in MARKETS:
+            raise ValidationError("unknown research market")
+        self.market = market
         self.root = Path(root)
-        self.state_path = self._resolve(state_path)
-        self.queue_path = self._resolve(queue_path)
+        self.state_path = self._resolve(state_path or f"coverage/{market}/research_state.jsonl")
+        self.queue_path = self._resolve(queue_path or f"coverage/{market}/research_queue.jsonl")
         self.lock_path = self.state_path.with_suffix(self.state_path.suffix + ".lock")
+
+    def _market_symbol(self, value: str) -> str:
+        symbol = _symbol(value)
+        if symbol.split(":")[0] != MARKETS[self.market]:
+            raise ValidationError("security belongs to another research market")
+        return symbol
 
     def _resolve(self, value: str | Path) -> Path:
         path = Path(value)
@@ -772,7 +832,7 @@ class ResearchFlow:
         states: dict[str, dict[str, Any]] = {}
         for row in rows:
             try:
-                symbol = _symbol(row["symbol"])
+                symbol = self._market_symbol(row["symbol"])
                 _enum_value(row["universe_status"], UniverseStatus, "universe status")
                 _enum_value(row["status"], CompanyStatus, "company status")
             except KeyError as exc:
@@ -786,6 +846,9 @@ class ResearchFlow:
         tasks = [_task_from_row(row) for row in _read_jsonl(self.queue_path)]
         seen: set[str] = set()
         for task in tasks:
+            self._market_symbol(task.symbol)
+            if self.market != "cn-a" and task.financial_basis is None:
+                raise StateCorruptionError("foreign task is missing financial_basis")
             expected_id = _task_id(task.symbol, task.trigger_key)
             if task.task_id != expected_id:
                 raise StateCorruptionError(
@@ -814,6 +877,7 @@ class ResearchFlow:
         report_period: str,
         reason: str,
         at: str,
+        financial_basis: Mapping[str, str] | None = None,
     ) -> ResearchTask | None:
         kind = _nonblank(trigger_kind, "trigger_kind")
         if kind not in {PERIODIC_TRIGGER, MANUAL_REWRITE_TRIGGER}:
@@ -822,9 +886,8 @@ class ResearchFlow:
         period = _report_period(report_period)
         trigger_key = f"{kind}:{period}:{identifier}"
         identifier_hash = _task_id(symbol, trigger_key)
-        if (
-            any(task.task_id == identifier_hash for task in tasks)
-            or any(task.symbol == symbol for task in tasks)
+        if any(task.task_id == identifier_hash for task in tasks) or any(
+            task.symbol == symbol for task in tasks
         ):
             return None
         task = ResearchTask(
@@ -837,6 +900,7 @@ class ResearchFlow:
             enqueued_at=at,
             status=TaskStatus.QUEUED,
             report_period=period,
+            financial_basis=financial_basis,
         )
         tasks.append(task)
         return task
@@ -850,7 +914,7 @@ class ResearchFlow:
         normalized: list[tuple[str, str | None]] = []
         seen: set[str] = set()
         for company in companies:
-            symbol = _symbol(company.symbol)
+            symbol = self._market_symbol(company.symbol)
             if symbol in seen:
                 raise ValidationError(f"duplicate company in input: {symbol}")
             seen.add(symbol)
@@ -876,7 +940,7 @@ class ResearchFlow:
         timestamp = _timestamp(at)
         snapshot: dict[str, str | None] = {}
         for company in companies:
-            symbol = _symbol(company.symbol)
+            symbol = self._market_symbol(company.symbol)
             if symbol in snapshot:
                 raise ValidationError(f"duplicate company in input: {symbol}")
             snapshot[symbol] = _optional_name(company.name)
@@ -947,19 +1011,48 @@ class ResearchFlow:
         normalized: list[dict[str, Any]] = []
         seen: set[str] = set()
         for request in requests:
-            symbol = _symbol(request.symbol)
+            symbol = self._market_symbol(request.symbol)
             if symbol in seen:
                 raise ValidationError(f"duplicate research request for {symbol}")
             seen.add(symbol)
-            normalized.append({
-                "symbol": symbol,
-                "name": _optional_name(request.name),
-                "reason": _nonblank(request.reason, "reason"),
-            })
+            normalized.append(
+                {
+                    "symbol": symbol,
+                    "name": _optional_name(request.name),
+                    "reason": _nonblank(request.reason, "reason"),
+                    "financial_basis": _financial_basis(request.financial_basis, cutoff=timestamp),
+                }
+            )
 
-        with _exclusive_lock(self.lock_path):
+        with (
+            _exclusive_lock(self.root / "coverage/.research-schedule.lock"),
+            _exclusive_lock(self.lock_path),
+        ):
             states = self._states()
             tasks = self._tasks()
+            issuers = {}
+            for market in MARKETS:
+                pool_path = self.root / f"screening/{market}/value-quality/pool.json"
+                if pool_path.exists():
+                    for company in json.loads(pool_path.read_text(encoding="utf-8"))["companies"]:
+                        issuers[company["symbol"]] = company.get("issuer", company["symbol"])
+            other_issuers = set()
+            for market in MARKETS:
+                if market != self.market:
+                    for row in _read_jsonl(self.root / f"coverage/{market}/research_queue.jsonl"):
+                        other_issuers.add(issuers.get(row["symbol"], row["symbol"]))
+            for item in normalized:
+                if issuers.get(item["symbol"], item["symbol"]) in other_issuers:
+                    raise ValidationError("issuer already has an active task in another market")
+                if self.market != "cn-a" and not item["financial_basis"]:
+                    if kind == MANUAL_REWRITE_TRIGGER:
+                        item["financial_basis"] = (states.get(item["symbol"]) or {}).get(
+                            "financial_basis"
+                        )
+                    if not item["financial_basis"]:
+                        raise ValidationError(
+                            "foreign scheduling requires published financial_basis"
+                        )
             invalid: list[str] = []
             conflicts: list[str] = []
             for item in normalized:
@@ -1002,6 +1095,7 @@ class ResearchFlow:
                     report_period=period,
                     reason=item["reason"],
                     at=timestamp,
+                    financial_basis=item["financial_basis"],
                 )
                 if task is None:
                     deduplicated += 1
@@ -1068,6 +1162,7 @@ class ResearchFlow:
                         enqueued_at=task.enqueued_at,
                         status=TaskStatus.RUNNING,
                         report_period=task.report_period,
+                        financial_basis=task.financial_basis,
                         started_at=timestamp,
                     )
                     running.append(task)
@@ -1097,6 +1192,7 @@ class ResearchFlow:
                 enqueued_at=current.enqueued_at,
                 status=TaskStatus.QUEUED,
                 report_period=current.report_period,
+                financial_basis=current.financial_basis,
                 started_at=None,
             )
             self._write_tasks([restored if task.task_id == wanted else task for task in tasks])
@@ -1136,6 +1232,7 @@ class ResearchFlow:
                 enqueued_at=current.enqueued_at,
                 status=TaskStatus.RUNNING,
                 report_period=current.report_period,
+                financial_basis=current.financial_basis,
                 started_at=timestamp,
             )
             self._write_tasks([started if task.task_id == wanted else task for task in tasks])
@@ -1151,9 +1248,18 @@ class ResearchFlow:
         value_range = _value_range(result.value_range)
         source_urls = _urls(result.source_urls)
         information_cutoff = _timestamp(result.information_cutoff)
+        financial_basis = _financial_basis(result.financial_basis, cutoff=information_cutoff)
+        security_basis = _security_basis(result.security_basis, symbol)
+        if not symbol.startswith("CN:") and not financial_basis:
+            raise ValidationError("foreign result requires financial_basis")
+        expected_currency = {"CN": "CNY", "HK": "HKD", "US": "USD"}[symbol[:2]]
+        if value_range and value_range["currency"] != expected_currency:
+            raise ValidationError("value_range currency must match listed security")
+        if result.return_model and result.return_model.currency != expected_currency:
+            raise ValidationError("return_model currency must match listed security")
         report_period = _report_period(
             result.report_period,
-            information_cutoff=information_cutoff,
+            information_cutoff=information_cutoff if symbol.startswith("CN:") else None,
         )
         valuation_note = (
             _nonblank(result.valuation_note, "valuation_note")
@@ -1183,10 +1289,23 @@ class ResearchFlow:
             raise ValidationError("research result requires at least one source URL")
         if report_markdown is None:
             raise ValidationError("research result requires report_markdown")
-        reader_text = "\n".join((
-            report_markdown, summary, *key_logic, *risks,
-            valuation_note or "", return_model_note or "",
-        ))
+        if not symbol.startswith("CN:"):
+            for label, key in (("财务期末", "period_end"), ("财报披露", "published_on")):
+                matches = re.findall(label + r"[：:]\s*(\d{4}-\d{2}-\d{2})", report_markdown)
+                if matches != [financial_basis[key]]:
+                    raise ValidationError(
+                        "foreign report financial dates must match financial_basis"
+                    )
+        reader_text = "\n".join(
+            (
+                report_markdown,
+                summary,
+                *key_logic,
+                *risks,
+                valuation_note or "",
+                return_model_note or "",
+            )
+        )
         if _REPORT_PROCESS_LEAK_RE.search(reader_text):
             raise ValidationError(
                 "reader-facing research must not include user conversation or workflow notes; "
@@ -1284,6 +1403,8 @@ class ResearchFlow:
             "source_urls": source_urls,
             "information_cutoff": information_cutoff,
             "report_period": report_period,
+            "financial_basis": financial_basis,
+            "security_basis": security_basis,
             "report_markdown": report_markdown,
             "valuation_note": valuation_note,
             "return_model": return_model,
@@ -1291,8 +1412,8 @@ class ResearchFlow:
         }
 
     def _company_directory(self, symbol: str) -> Path:
-        ticker = _symbol(symbol).split(":", 1)[1]
-        return self.root / "research" / "companies" / "CN" / ticker
+        market, ticker = self._market_symbol(symbol).split(":", 1)
+        return self.root / "research" / "companies" / market / ticker
 
     def _formal_reports(self, symbol: str) -> tuple[Path, ...]:
         reports_directory = self._company_directory(symbol) / "reports"
@@ -1335,6 +1456,7 @@ class ResearchFlow:
         """Apply the worker's single final answer and remove its current task."""
 
         normalized = self._normalized_result(result)
+        self._market_symbol(normalized["symbol"])
         wanted = _nonblank(task_id, "task_id")
         timestamp = _timestamp(at)
         with _exclusive_lock(self.lock_path):
@@ -1350,10 +1472,22 @@ class ResearchFlow:
                 raise ValidationError("research result symbol does not match task symbol")
             if task.report_period != normalized["report_period"]:
                 raise ValidationError("research result period does not match task period")
+            if task.financial_basis and normalized["financial_basis"] != task.financial_basis:
+                raise ValidationError("result financial_basis does not match scheduled disclosure")
             current_state = states.get(normalized["symbol"])
-            needs_comparison = isinstance(
-                (current_state or {}).get("basis_report_path"), str
-            )
+            if (
+                current_state
+                and normalized["financial_basis"]
+                and current_state.get("financial_basis")
+            ):
+                old_end = current_state["financial_basis"]["period_end"]
+                new_end = normalized["financial_basis"]["period_end"]
+                if new_end < old_end or (
+                    normalized["report_period"] != current_state["report_period"]
+                    and new_end <= old_end
+                ):
+                    raise ValidationError("new report period must advance the financial period end")
+            needs_comparison = isinstance((current_state or {}).get("basis_report_path"), str)
             if needs_comparison and not _has_refresh_comparison_table(
                 normalized["report_markdown"]
             ):
@@ -1389,6 +1523,14 @@ class ResearchFlow:
                     "last_research_at": timestamp,
                     "information_cutoff": normalized["information_cutoff"],
                     "report_period": normalized["report_period"],
+                    **(
+                        {
+                            "financial_basis": normalized["financial_basis"],
+                            "security_basis": normalized["security_basis"],
+                        }
+                        if normalized["financial_basis"]
+                        else {}
+                    ),
                     "basis_report_path": report_relative,
                     "valuation_note": normalized["valuation_note"],
                     "return_model": normalized["return_model"],
@@ -1427,8 +1569,12 @@ class ResearchFlow:
                     _strings(state.get("risks") or [], "risk")
                     _urls(state.get("source_urls") or [])
                     removed_fields = {
-                        "event_triggers", "last_screening", "candidate_since",
-                        "invalidation", "last_update", "processed_triggers",
+                        "event_triggers",
+                        "last_screening",
+                        "candidate_since",
+                        "invalidation",
+                        "last_update",
+                        "processed_triggers",
                     }.intersection(state)
                     if removed_fields:
                         raise StateCorruptionError(
@@ -1504,12 +1650,24 @@ class ResearchFlow:
                                 f"report_period does not match basis_report_path for {symbol}"
                             )
                         information_cutoff = _timestamp(state.get("information_cutoff"))
-                        _report_period(report_period, information_cutoff=information_cutoff)
+                        _report_period(
+                            report_period,
+                            information_cutoff=(
+                                information_cutoff if self.market == "cn-a" else None
+                            ),
+                        )
+                        if self.market != "cn-a":
+                            if not _financial_basis(
+                                state.get("financial_basis"), cutoff=information_cutoff
+                            ):
+                                raise StateCorruptionError("foreign report lacks financial_basis")
+                            _security_basis(state.get("security_basis"), symbol)
                         _timestamp(state.get("last_research_at"))
                         expected_report = self.root / report_path
-                        if not expected_report.is_file() or not expected_report.read_text(
-                            encoding="utf-8"
-                        ).strip():
+                        if (
+                            not expected_report.is_file()
+                            or not expected_report.read_text(encoding="utf-8").strip()
+                        ):
                             raise StateCorruptionError(
                                 f"basis report is missing or blank for {symbol}"
                             )
@@ -1600,6 +1758,7 @@ class ResearchFlow:
         with _exclusive_lock(self.lock_path):
             states = self._states()
         return tuple(dict(states[symbol]) for symbol in sorted(states))
+
 
 __all__ = [
     "CompanyRef",

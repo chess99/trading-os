@@ -1,22 +1,26 @@
+import { matchingQuoteCurrency } from "./market-quotes.mjs";
 import { calculateIrrRange } from "./irr.mjs";
 import { isCurrentResult } from "./display-policy.mjs";
 
 export type ResearchStatus = "unseen" | "ignore" | "covered" | "unregistered";
 export type DisplayState = "current" | "unpriced" | "pending_research" | "pending_standard" | "needs_review" | "inactive";
 export interface ReportVersion {
-  period: string; path: string; sourcePath: string; informationCutoff: string | null;
+  period: string; periodEnd?: string | null; path: string; sourcePath: string; informationCutoff: string | null;
   standardId: string | null; standardLabel: string; valueDefinition: string | null;
   acceptedAt: string | null; compatible: boolean;
 }
 export interface TerminalEquityValueRange { low: number; high: number }
 export interface ReturnModel {
-  schema_version: 1; method: "annual_common_equity_irr_v1"; currency: "CNY"; model_as_of: string;
+  schema_version: 1; method: "annual_common_equity_irr_v1"; currency: "CNY" | "HKD" | "USD"; model_as_of: string;
   base_case_distributions_per_share: number[];
   base_case_terminal_equity_value_range_per_share: { year_5: TerminalEquityValueRange; year_3?: TerminalEquityValueRange };
 }
 export interface IrrRange { low: number | null; midpoint: number | null; high: number | null }
 export interface Company {
-  symbol: string; ticker: string; name: string; exchange: string; industry: string;
+  symbol: string; ticker: string; code: string; market: "CN" | "HK" | "US"; issuer: string;
+  quoteCurrency: string; financialBasis: { period_end: string; published_on: string; source_url: string } | null;
+  securityBasis: { currency: string; unit: string; ordinary_shares_per_unit: number; source_url: string } | null;
+  name: string; exchange: string; industry: string;
   status: ResearchStatus; universeStatus: "active" | "inactive" | "unregistered";
   hasResearchState: boolean; inQualityPool: boolean; qualityTier: string | null;
   updatedAt: string | null; informationCutoff: string | null;
@@ -48,12 +52,13 @@ export interface Catalog {
 }
 export interface Quote {
   symbol: string; ticker: string; name: string; price: number; previousClose: number | null;
-  change: number | null; changePercent: number | null; quoteAt: string | null; source: "tencent" | "eastmoney";
+  currency?: string;
+  change: number | null; changePercent: number | null; quoteAt: string | null; source: "tencent" | "eastmoney" | "yahoo";
 }
 export const STATUS_META: Record<ResearchStatus, { label: string; shortLabel: string; description: string }> = {
   covered: { label: "本周期：持续覆盖", shortLabel: "持续覆盖", description: "最近完成周期的研究结论，不代表今日推荐。" },
   ignore: { label: "本周期：不持续覆盖", shortLabel: "不持续覆盖", description: "可以是完成研究后的否定结论，不等于未研究。" },
-  unseen: { label: "尚未筛选", shortLabel: "未筛选", description: "尚未完成首次研究初筛。" },
+  unseen: { label: "尚无公司研究", shortLabel: "待研究", description: "尚未完成首次完整公司研究。" },
   unregistered: { label: "待衔接研究状态", shortLabel: "待登记", description: "已在质量池，尚无研究状态记录；此占位不修改状态。" },
 };
 export async function loadCatalog(signal?: AbortSignal): Promise<Catalog> {
@@ -83,7 +88,8 @@ export async function loadQuotes(tickers: string[], signal?: AbortSignal): Promi
   return payloads.flatMap((payload) => payload.quotes);
 }
 export function pricePosition(company: Company, quote?: Quote) {
-  const price = quote?.price ?? null;
+  const matching = matchingQuoteCurrency(quote, company.quoteCurrency ?? company.valueRange?.currency ?? "CNY");
+  const price = matching && quote ? quote.price : null;
   const range = isCurrentResult(company, "all_standard") ? company.valueRange : null;
   if (price === null || !range || range.low <= 0 || range.high < range.low) {
     return { price, lowRatio: null, midpointRatio: null, label: "—" };
@@ -94,6 +100,7 @@ export function pricePosition(company: Company, quote?: Quote) {
 export function returnIrr(company: Company, quote: Quote | undefined, horizonYears: 3 | 5): IrrRange | null {
   if (!isCurrentResult(company, "all_standard") || company.returnModelDisplayIssue) return null;
   if (!company.returnModel || company.returnModel.model_as_of !== company.informationCutoff) return null;
+  if (!matchingQuoteCurrency(quote, company.returnModel.currency)) return null;
   return calculateIrrRange(quote?.price, company.returnModel, horizonYears);
 }
 export function formatPrice(value: number | null | undefined) {
@@ -110,3 +117,6 @@ export function formatDate(value: string | null | undefined, withTime = false) {
     ...(withTime ? { hour: "2-digit", minute: "2-digit", hour12: false } : {}) }).format(date);
 }
 export function cleanCompanyName(name: string) { return name.replace(/\s+/gu, " ").trim(); }
+
+export const MARKET_LABELS = { all: "全部市场", CN: "A股", HK: "港股", US: "美股" };
+export function currencyLabel(currency?: string) { return ({ CNY: "¥", HKD: "HK$", USD: "US$" } as Record<string,string>)[currency ?? "CNY"] ?? currency ?? ""; }

@@ -18,10 +18,11 @@ const groupNames: Record<string, string> = { consumer_brand_network: "消费与�
 function readerText(value: string) { return value.replace(/^(?:保留[AB]|由[AB]转[AB])[:：]\s*/u, ""); }
 function csvCell(value: string) { return `"${(/^[=+@-]/u.test(value) ? "'" + value : value).replaceAll('"', '""')}"`; }
 
-export function ScreeningClient() {
+export function ScreeningClient({ embedded = false, initialMarket = "all", onMarketChange }: { embedded?: boolean; initialMarket?: string; onMarketChange?: (market: string) => void }) {
+  const Container = embedded ? "section" : "main";
   const [data, setData] = useState<Data | null>(null);
   const [error, setError] = useState("");
-  const [market, setMarket] = useState("all");
+  const [market, setMarket] = useState(initialMarket);
   const [tier, setTier] = useState("all");
   const [group, setGroup] = useState("all");
   const [industry, setIndustry] = useState("all");
@@ -58,6 +59,7 @@ export function ScreeningClient() {
   useEffect(() => {
     if (!data) return;
     const params = new URLSearchParams();
+    if (embedded) params.set("view", "pool");
     if (market !== "all") params.set("market", market);
     if (tier !== "all") params.set("tier", tier);
     if (query) params.set("q", query);
@@ -65,8 +67,8 @@ export function ScreeningClient() {
     if (industry !== "all") params.set("industry", industry);
     if (mode === "excluded") params.set("view", mode);
     if (selected) params.set("company", selected);
-    window.history.replaceState(null, "", `/screening${params.size ? "?" + params.toString() : ""}`);
-  }, [data, market, tier, query, selected, group, industry, mode]);
+    window.history.replaceState(null, "", `${embedded ? "/" : "/screening"}${params.size ? "?" + params.toString() : ""}`);
+  }, [data, market, tier, query, selected, group, industry, mode, embedded]);
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
       if (event.key === "/" && !["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement?.tagName ?? "") && !dialog.current?.open) {
@@ -111,7 +113,7 @@ export function ScreeningClient() {
   function resetResults() { setPage(0); setSelected(null); }
   function clear() { setTier("all"); setGroup("all"); setIndustry("all"); setQuery(""); resetResults(); }
   function changeMarket(next: string) {
-    setMarket(next); setIndustry("all"); resetResults();
+    setMarket(next); onMarketChange?.(next); setIndustry("all"); resetResults();
     if (next !== "all" && !data?.pools.find((pool) => pool.market === next)?.hasExclusions) setMode("selected");
   }
   const total = mode === "selected" ? filtered.length : excluded.length;
@@ -137,11 +139,11 @@ export function ScreeningClient() {
     <details className="pool-sources"><summary>资料来源 · {active.sources.length}</summary><ul>{active.sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a></li>)}</ul></details>
     <p className="pool-detail-meta">判断更新 {active.asOf}</p>
   </> : activeExcluded ? <><div className="pool-detail-heading"><span>未纳入</span><button type="button" onClick={() => setSelected(null)} aria-label="关闭公司详情">×</button></div><h2>{activeExcluded.name}</h2><p className="pool-detail-meta">{activeExcluded.marketLabel} · {activeExcluded.symbol}</p><h3>筛选判断</h3><p>{activeExcluded.reason}</p></> : <div className="pool-detail-empty"><span>研究笔记</span><h2>选择一家公司</h2><p>查看经营指标、竞争优势与需要进一步回答的问题。</p></div>;
-  if (error) return <main className="company-pool"><h1>商业质量池</h1><p role="alert">{error}</p></main>;
-  if (!data) return <main className="company-pool"><h1>商业质量池</h1><p>正在读取公司资料…</p></main>;
+  if (error) return <Container className={`company-pool${embedded ? " embedded-pool" : ""}`}><h1>商业质量池</h1><p role="alert">{error}</p></Container>;
+  if (!data) return <Container className={`company-pool${embedded ? " embedded-pool" : ""}`}><h1>商业质量池</h1><p>正在读取公司资料…</p></Container>;
   const uniqueCount = new Set(data.pools.flatMap((pool) => pool.companies.map((c) => c.issuer ?? c.symbol))).size;
-  return <main className="company-pool">
-    <header className="pool-heading"><div><p className="pool-eyebrow">COMPANY RESEARCH</p><h1>商业质量池</h1><p>寻找竞争优势能够持续转化为股东现金的企业。</p></div><div className="pool-heading-actions"><span><strong>{uniqueCount}</strong> 家公司</span><button type="button" onClick={download}>导出当前列表 ↓</button></div></header>
+  return <Container className={`company-pool${embedded ? " embedded-pool" : ""}`}>
+    <header className="pool-heading"><div><p className="pool-eyebrow">COMPANY RESEARCH</p><h1>商业质量池</h1><p>寻找竞争优势能够持续转化为股东现金的企业。</p></div><div className="pool-heading-actions"><span><strong>{uniqueCount}</strong> 家公司 · 全市场</span><button type="button" onClick={download}>导出当前列表 ↓</button></div></header>
     <div className="pool-market-bar"><nav aria-label="市场筛选"><button type="button" aria-pressed={market === "all"} onClick={() => changeMarket("all")}>全部市场</button>{data.pools.map((pool) => <button type="button" key={pool.market} aria-pressed={market === pool.market} onClick={() => changeMarket(pool.market)}>{pool.label}<span>{pool.companies.length}</span></button>)}</nav>
       <details className="pool-method"><summary>筛选方法与范围</summary><div><h2>长期商业质量</h2><p>A · 核心护城河：优势与普通股现金有多年兑现。B · 质量研究：优势已商业化，仍有决定性问题需要验证。</p><p>结合客户选择、资本效率、必要投入、现金归属和治理判断。价格吸引力在公司估值中另行讨论。</p>
         {pools.map((pool) => <section key={pool.market}><h3>{pool.label} · 更新 {pool.asOf}</h3><p>{pool.review.scope_note}</p><p>复核 {pool.review.reviewed_symbols.length} 个证券条目 · 入选 {pool.companies.length}</p></section>)}
@@ -159,5 +161,5 @@ export function ScreeningClient() {
       <footer className="pool-pagination"><span>{total ? page*30+1 : 0}–{Math.min((page+1)*30,total)} / {total}</span><div><button disabled={page === 0} type="button" onClick={() => setPage(page-1)}>上一页</button><span>{page+1} / {pages}</span><button disabled={page+1 >= pages} type="button" onClick={() => setPage(page+1)}>下一页</button></div></footer></section>
       {!mobile && <aside ref={detailPanel} className="pool-detail" aria-label="公司判断详情">{detail}</aside>}</div>
     {mobile && <dialog ref={dialog} className="pool-detail pool-dialog" onCancel={() => setSelected(null)} onClose={() => setSelected(null)}>{detail}</dialog>}
-  </main>;
+  </Container>;
 }

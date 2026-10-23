@@ -53,9 +53,7 @@ def _model(as_of: str = AT) -> ReturnModel:
         currency="CNY",
         model_as_of=as_of,
         base_case_distributions_per_share=(1, 1.1, 1.2, 1.3, 1.4),
-        base_case_terminal_equity_value_range_per_share={
-            "year_5": {"low": 72, "high": 92}
-        },
+        base_case_terminal_equity_value_range_per_share={"year_5": {"low": 72, "high": 92}},
     )
 
 
@@ -124,14 +122,17 @@ def test_periodic_research_creates_one_period_slot(tmp_path: Path):
     flow.validate()
 
 
-@pytest.mark.parametrize("field,leak", [
-    ("report_markdown", "按照你的要求，本报告扩大长期研究。"),
-    ("report_markdown", "持有人模型保持仓库统一的五年接口。"),
-    ("summary", "本轮对话形成了最新判断。"),
-    ("key_logic", "回应您的问题，公司值得拥有。"),
-    ("risks", "协调器验收后继续观察。"),
-    ("return_model_note", "task_id: internal-123"),
-])
+@pytest.mark.parametrize(
+    "field,leak",
+    [
+        ("report_markdown", "按照你的要求，本报告扩大长期研究。"),
+        ("report_markdown", "持有人模型保持仓库统一的五年接口。"),
+        ("summary", "本轮对话形成了最新判断。"),
+        ("key_logic", "回应您的问题，公司值得拥有。"),
+        ("risks", "协调器验收后继续观察。"),
+        ("return_model_note", "task_id: internal-123"),
+    ],
+)
 def test_process_notes_are_rejected_before_any_research_write(tmp_path, field, leak):
     flow = ResearchFlow(tmp_path)
     task_id = _enqueue(flow, "CN:000001", "2026-H1")
@@ -152,10 +153,14 @@ def test_customer_analysis_and_necessary_accounting_contrasts_are_allowed(tmp_pa
     flow = ResearchFlow(tmp_path)
     task_id = _enqueue(flow, "CN:000001", "2026-H1")
     original = _result("CN:000001")
-    candidate = replace(original, report_markdown=original.report_markdown + (
-        "\n用户反馈显示续费率提高。模型不把会计利润当作现金分配。"
-        "这不是新增收益，而是已确认应收股利到账。\n"
-    ))
+    candidate = replace(
+        original,
+        report_markdown=original.report_markdown
+        + (
+            "\n用户反馈显示续费率提高。模型不把会计利润当作现金分配。"
+            "这不是新增收益，而是已确认应收股利到账。\n"
+        ),
+    )
     flow.apply_result(candidate, task_id=task_id, at=AT)
     flow.validate()
 
@@ -202,9 +207,7 @@ def test_next_period_adds_a_slot_and_same_period_manual_rewrite_overwrites(tmp_p
     revised = replace(
         _result("CN:000001", at=AT),
         value_range=ValueRange(62, 88),
-        report_markdown=_result("CN:000001", at=AT).report_markdown.replace(
-            "58—82", "62—88"
-        ),
+        report_markdown=_result("CN:000001", at=AT).report_markdown.replace("58—82", "62—88"),
     )
     state = flow.apply_result(revised, task_id=rewrite, at=LATER)
     assert state["basis_report_path"].endswith("2026-H1.md")
@@ -258,9 +261,7 @@ def test_result_must_match_task_period(tmp_path: Path):
 def test_period_cannot_end_after_information_cutoff(tmp_path: Path):
     del tmp_path
     with pytest.raises(ValidationError, match="ends after"):
-        ResearchFlow._normalized_result(
-            _result("CN:000001", "2026-Q3", at=AT)
-        )
+        ResearchFlow._normalized_result(_result("CN:000001", "2026-Q3", at=AT))
 
 
 def test_validation_rejects_retired_event_fields(tmp_path: Path):
@@ -302,3 +303,147 @@ def test_universe_sync_keeps_reports_and_cancels_tasks_for_inactive_security(tmp
     assert update.inactivated == 1
     assert flow.list_tasks() == ()
     assert flow.read_states()[0]["universe_status"] == "inactive"
+
+
+def _foreign_result(
+    symbol, period, basis, *, at="2026-10-24T09:00:00+08:00", unit="ordinary_share"
+):
+    currency = "HKD" if symbol.startswith("HK:") else "USD"
+    result = _result(symbol, period, at=at)
+    return replace(
+        result,
+        financial_basis=basis,
+        security_basis={
+            "currency": currency,
+            "unit": unit,
+            "ordinary_shares_per_unit": 5 if unit == "ADS" else 1,
+            "source_url": "https://example.com/share-rights",
+        },
+        value_range=ValueRange(58, 82, currency),
+        return_model=replace(result.return_model, currency=currency),
+        report_markdown=result.report_markdown
+        + f"\n财务期末：{basis['period_end']}\n财报披露：{basis['published_on']}\n",
+    )
+
+
+@pytest.mark.parametrize(
+    "market,symbol,period,end",
+    [
+        ("hk", "HK:00700", "2026-H1", "2026-06-30"),
+        ("us", "US:MSFT", "2026-FY", "2026-06-30"),
+        ("us", "US:TSM", "2026-Q3", "2026-09-30"),
+    ],
+)
+def test_foreign_full_lifecycle_with_actual_fiscal_end(tmp_path, market, symbol, period, end):
+    _write_registry(tmp_path)
+    flow = ResearchFlow(tmp_path, market=market)
+    at = "2026-10-24T09:00:00+08:00"
+    basis = {
+        "period_end": end,
+        "published_on": "2026-10-20",
+        "source_url": "https://example.com/filing",
+    }
+    flow.register_universe([CompanyRef(symbol, "海外公司")], at=at)
+    task = flow.enqueue_research(
+        [ResearchRequest(symbol, "财报研究", financial_basis=basis)],
+        report_period=period,
+        trigger_kind=PERIODIC_TRIGGER,
+        at=at,
+    ).enqueued_tasks[0]
+    started = flow.dispatch_tasks(limit=1, at=at)[0]
+    assert started.financial_basis == basis
+    result = _foreign_result(
+        symbol, period, basis, unit="ADS" if symbol.endswith("TSM") else "ordinary_share"
+    )
+    state = flow.apply_result(result, task_id=task.task_id, at=at)
+    assert (
+        state["basis_report_path"]
+        == f"research/companies/{symbol[:2]}/{symbol[3:]}/reports/{period}.md"
+    )
+    assert state["financial_basis"] == basis
+    assert flow.validate().covered == 1
+    assert not (tmp_path / "coverage/cn-a/research_state.jsonl").exists()
+    rewrite = flow.enqueue_research(
+        [ResearchRequest(symbol, "重新检验")],
+        report_period=period,
+        trigger_kind=MANUAL_REWRITE_TRIGGER,
+        batch_id="rewrite",
+        at=at,
+    ).enqueued_tasks[0]
+    assert rewrite.financial_basis == basis
+
+
+def test_foreign_dates_currency_and_security_units_fail_closed(tmp_path):
+    flow = ResearchFlow(tmp_path, market="us")
+    with pytest.raises(ValidationError, match="another research market"):
+        flow.register_universe([CompanyRef("HK:00700")])
+    basis = {
+        "period_end": "2026-06-30",
+        "published_on": "2026-07-29",
+        "source_url": "https://example.com/fy",
+    }
+    result = _foreign_result("US:MSFT", "2026-FY", basis)
+    for broken in [
+        replace(result, financial_basis=None),
+        replace(result, security_basis=None),
+        replace(result, value_range=ValueRange(58, 82, "CNY")),
+        replace(result, financial_basis={**basis, "published_on": "2026-12-01"}),
+    ]:
+        with pytest.raises(ValidationError):
+            flow._normalized_result(broken)
+
+
+def test_foreign_next_slot_preserves_prior_report_and_requires_comparison(tmp_path):
+    _write_registry(tmp_path)
+    flow = ResearchFlow(tmp_path, market="us")
+    symbol = "US:MSFT"
+    at = "2026-10-30T09:00:00+08:00"
+    flow.register_universe([CompanyRef(symbol)], at=at)
+    bases = [("2026-FY", "2026-06-30", "2026-07-29"), ("2027-Q1", "2026-09-30", "2026-10-29")]
+    for period, end, publication in bases:
+        basis = {
+            "period_end": end,
+            "published_on": publication,
+            "source_url": "https://example.com/results",
+        }
+        task = flow.enqueue_research(
+            [ResearchRequest(symbol, "周期研究", financial_basis=basis)],
+            report_period=period,
+            trigger_kind=PERIODIC_TRIGGER,
+            at=at,
+        ).enqueued_tasks[0]
+        flow.dispatch_tasks(limit=1, at=at)
+        flow.apply_result(
+            _foreign_result(symbol, period, basis, at=at), task_id=task.task_id, at=at
+        )
+    assert len(list((tmp_path / "research/companies/US/MSFT/reports").glob("*.md"))) == 2
+    assert flow.validate().covered == 1
+
+
+def test_same_issuer_cannot_run_in_two_market_queues(tmp_path):
+    for market, symbol in [("cn-a", "CN:600036"), ("hk", "HK:03968")]:
+        path = tmp_path / f"screening/{market}/value-quality/pool.json"
+        path.parent.mkdir(parents=True)
+        path.write_text(json.dumps({"companies": [{"symbol": symbol, "issuer": "CN:600036"}]}))
+    cn = ResearchFlow(tmp_path)
+    cn.register_universe([CompanyRef("CN:600036")], at=AT)
+    cn.enqueue_research(
+        [ResearchRequest("CN:600036", "周期")],
+        report_period="2026-H1",
+        trigger_kind=PERIODIC_TRIGGER,
+        at=AT,
+    )
+    hk = ResearchFlow(tmp_path, market="hk")
+    hk.register_universe([CompanyRef("HK:03968")], at=AT)
+    basis = {
+        "period_end": "2026-06-30",
+        "published_on": "2026-08-01",
+        "source_url": "https://example.com/h1",
+    }
+    with pytest.raises(ValidationError, match="issuer"):
+        hk.enqueue_research(
+            [ResearchRequest("HK:03968", "周期", financial_basis=basis)],
+            report_period="2026-H1",
+            trigger_kind=PERIODIC_TRIGGER,
+            at=AT,
+        )

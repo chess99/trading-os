@@ -17,8 +17,10 @@ function parseJsonLines(text, label) {
     catch (error) { throw new Error(`${label}:${index + 1} is not valid JSON`, { cause: error }); }
   });
 }
-async function collectReports(root, output, ticker, policy, state) {
-  const directory = join(root, "research/companies/CN", ticker, "reports");
+async function collectReports(root, output, symbol, policy, state) {
+  const [market, ticker] = symbol.split(":");
+  const route = market === "CN" ? ticker : `${market}-${ticker}`;
+  const directory = join(root, "research/companies", market, ticker, "reports");
   let files;
   const periodKey = (name) => {
     const match = /^(20\d{2})-(FY|Q1|H1|Q3)\.md$/u.exec(name);
@@ -27,15 +29,15 @@ async function collectReports(root, output, ticker, policy, state) {
   };
   try { files = (await readdir(directory)).filter((name) => /^(?:20\d{2})-(?:FY|Q1|H1|Q3)\.md$/u.test(name)).sort((a, b) => periodKey(b) - periodKey(a)); }
   catch (error) { if (error.code === "ENOENT") return []; throw error; }
-  const destination = join(output, "reports", ticker);
+  const destination = join(output, "reports", route);
   assertInside(output, destination);
   await mkdir(destination, { recursive: true });
   return Promise.all(files.map(async (filename) => {
-    const sourcePath = `research/companies/CN/${ticker}/reports/${filename}`;
+    const sourcePath = `research/companies/${market}/${ticker}/reports/${filename}`;
     const body = await readFile(join(root, sourcePath));
     await copyFile(join(root, sourcePath), join(destination, filename));
     const title = /^#\s+(.+)$/mu.exec(body.toString("utf8"))?.[1] ?? ticker;
-    return { period: filename.replace(/\.md$/u, ""), path: `/data/reports/${ticker}/${filename}`, title,
+    return { period: filename.replace(/\.md$/u, ""), path: `/data/reports/${route}/${filename}`, title,
       ...reportMetadata(sourcePath, body, policy, state) };
   }));
 }
@@ -44,7 +46,11 @@ export function projectCompany(row, reports, member, policy, task = null) {
   const display = displayEligibility(row, metadata);
   const issue = row.last_revision?.display_issue;
   return {
-    symbol: row.symbol, ticker: row.symbol.replace(/^CN:/u, ""), name: row.name || reports[0]?.title || row.symbol,
+    symbol: row.symbol, ticker: row.symbol.startsWith("CN:") ? row.symbol.slice(3) : row.symbol.replace(":", "-"),
+    code: row.symbol.slice(3), market: row.symbol.slice(0, 2),
+    quoteCurrency: ({ CN: "CNY", HK: "HKD", US: "USD" })[row.symbol.slice(0,2)],
+    issuer: member?.issuer ?? row.symbol, financialBasis: row.financial_basis ?? null,
+    securityBasis: row.security_basis ?? null, name: row.name || reports[0]?.title || row.symbol,
     exchange: row.exchange ?? "—", industry: row.industry || member?.industry || "未分类",
     status: row.status, universeStatus: row.universe_status ?? "unregistered",
     hasResearchState: row.hasResearchState !== false,
@@ -70,17 +76,19 @@ export function projectCompany(row, reports, member, policy, task = null) {
     reports,
   };
 }
-async function collectResearchDocuments(root, output) {
+async function collectResearchDocuments(root, output, screening) {
   let sectors;
   try { sectors = (await readdir(join(root, "research/industries/sectors"))).filter((file) => file.endsWith(".md")).sort(); }
   catch (error) { if (error.code !== "ENOENT") throw error; sectors = []; }
+  let aliases = {};
+  try { aliases = JSON.parse(await readFile(join(root, "research/industries/market-routes.json"), "utf8")); }
+  catch (error) { if (error.code !== "ENOENT") throw error; }
   const sources = [
     ...sectors.map((file) => ({ id: file.slice(0, -3), kind: "industry", path: `research/industries/sectors/${file}` })),
     { id: "automotive-lighting", kind: "industry", path: "research/industries/automotive-lighting.md" },
-    { id: "industry-guide", kind: "industry", path: "research/industries/README.md" },
+    { id: "cross-market-guide", kind: "industry", path: "research/industries/cross-market-guide.md" },
     { id: "selection-current", kind: "selection", path: "selection/current.md" },
     { id: "selection-principles", kind: "selection", path: "selection/principles.md" },
-    { id: "selection-process", kind: "selection", path: "prompts/selection/long-term-selection.md" },
   ];
   const documents = [];
   const destination = join(output, "documents");
@@ -93,7 +101,14 @@ async function collectResearchDocuments(root, output) {
     const industries = /^适用二级行业：\s*(.+)$/mu.exec(markdown)?.[1].split("、").map((name) => name.trim().replace(/。$/u, "")) ?? [];
     const path = `/data/documents/${source.id}.md`;
     await writeFile(join(output, path.replace("/data/", "")), markdown, "utf8");
-    documents.push({ ...source, sourcePath: source.path, path, title, industries });
+    const expandedIndustries = [...new Set([...industries, ...Object.entries(aliases).filter(([,id]) => id === source.id).map(([name]) => name)])];
+    const companyReferences = screening.pools.flatMap((pool) => pool.companies.map((company) => ({
+      symbol: company.symbol, name: company.name, industry: company.industry, market: company.symbol.slice(0,2),
+      reportHref: `/reports/${company.symbol.startsWith("CN:") ? company.symbol.slice(3) : company.symbol.replace(":", "-")}`,
+    }))).filter((company) => source.kind === "selection" || source.id.endsWith("guide") || expandedIndustries.includes(company.industry));
+    const markets = source.kind === "selection" || source.id.endsWith("guide") ? ["CN", "HK", "US"]
+      : [...new Set(["CN", ...companyReferences.map((company) => company.market)])];
+    documents.push({ ...source, sourcePath: source.path, path, title, industries: expandedIndustries, markets, companyReferences });
   }
   await writeFile(join(output, "documents.json"), JSON.stringify({ documents }, null, 2), "utf8");
 }
@@ -125,19 +140,32 @@ export async function buildResearchData(root = repositoryRoot) {
   const pool = JSON.parse(await readFile(join(root, policy.registry.scope_source), "utf8"));
   if (![2, 3].includes(pool.schema_version) || !Array.isArray(pool.companies)) throw new Error("质量池缺失或格式不正确");
   const screening = await loadScreeningData(root);
-  const members = new Map(pool.companies.map((company) => [company.symbol, company]));
-  if (members.size !== pool.companies.length) throw new Error("质量池存在重复代码");
-  const states = parseJsonLines(await readFile(join(root, "coverage/cn-a/research_state.jsonl"), "utf8"), "research_state");
-  const queue = parseJsonLines(await readFile(join(root, "coverage/cn-a/research_queue.jsonl"), "utf8"), "research_queue");
+  const poolCompanies = screening.pools.flatMap((item) => item.companies);
+  const members = new Map(poolCompanies.map((company) => [company.symbol, company]));
+  if (members.size !== poolCompanies.length) throw new Error("质量池存在重复代码");
+  async function rowsFor(market, filename) {
+    try { return parseJsonLines(await readFile(join(root, `coverage/${market}/${filename}.jsonl`), "utf8"), filename); }
+    catch (error) { if (error.code === "ENOENT" && market !== "cn-a") return []; throw error; }
+  }
+  const states = (await Promise.all(["cn-a", "hk", "us"].map((m) => rowsFor(m, "research_state")))).flat();
+  const queue = (await Promise.all(["cn-a", "hk", "us"].map((m) => rowsFor(m, "research_queue")))).flat();
   const stateSymbols = new Set(states.map((row) => row.symbol));
   if (stateSymbols.size !== states.length) throw new Error("研究状态代码重复");
   const sourceStateCount = states.length;
-  const companyDirectories = await readdir(join(root, "research/companies/CN"), { withFileTypes: true });
-  const archiveSymbols = companyDirectories.filter((entry) => entry.isDirectory() && /^\d{6}$/u.test(entry.name))
-    .map((entry) => `CN:${entry.name}`).filter((symbol) => !stateSymbols.has(symbol) && !members.has(symbol));
+  const archiveSymbols = [];
+  for (const market of ["CN", "HK", "US"]) {
+    let directories;
+    try { directories = await readdir(join(root, "research/companies", market), { withFileTypes: true }); }
+    catch (error) { if (error.code === "ENOENT") continue; throw error; }
+    for (const entry of directories) {
+      const symbol = `${market}:${entry.name}`;
+      if (entry.isDirectory() && /^(?:CN:[0-9]{6}|HK:[0-9]{5}|US:[A-Z]{1,5}(?:[.-][A-Z])?)$/u.test(symbol)
+        && !stateSymbols.has(symbol) && !members.has(symbol)) archiveSymbols.push(symbol);
+    }
+  }
   // Pool-only identities are progress placeholders; archive-only identities
   // make every retained report readable without creating research state.
-  const rows = [...states, ...pool.companies.filter((member) => !stateSymbols.has(member.symbol))
+  const rows = [...states, ...poolCompanies.filter((member) => !stateSymbols.has(member.symbol))
     .map((member) => ({ symbol: member.symbol, name: member.name, industry: member.industry,
       status: "unregistered", hasResearchState: false, report_period: null,
       basis_report_path: null })), ...archiveSymbols.map((symbol) => ({ symbol, name: null,
@@ -145,14 +173,13 @@ export async function buildResearchData(root = repositoryRoot) {
       hasResearchState: false, report_period: null, basis_report_path: null }))];
   await rm(output, { recursive: true, force: true });
   await mkdir(output, { recursive: true });
-  await collectResearchDocuments(root, output);
+  await collectResearchDocuments(root, output, screening);
   await writeFile(join(output, "screening-pools.json"), JSON.stringify(screening, null, 2) + "\n", "utf8");
   const tasksBySymbol = new Map(queue.map((item) => [item.symbol, item]));
   const companies = [];
   for (const row of rows) {
-    const ticker = row.symbol.replace(/^CN:/u, "");
-    if (!/^\d{6}$/u.test(ticker)) throw new Error(`无效证券代码: ${row.symbol}`);
-    const reports = await collectReports(root, output, ticker, policy, row);
+    if (!/^(?:CN:[0-9]{6}|HK:[0-9]{5}|US:[A-Z]{1,5}(?:[.-][A-Z])?)$/u.test(row.symbol)) throw new Error(`无效证券代码: ${row.symbol}`);
+    const reports = await collectReports(root, output, row.symbol, policy, row);
     companies.push(projectCompany(row, reports, members.get(row.symbol), policy,
       tasksBySymbol.get(row.symbol) ?? null));
   }
@@ -163,7 +190,7 @@ export async function buildResearchData(root = repositoryRoot) {
   const catalog = {
     schemaVersion: 2, generatedAt: new Date().toISOString(), standard: policy.active,
     standards: policy.registry.standards,
-    scope: { id: "quality_pool", label: "重点跟踪池", asOf: pool.as_of, count: members.size },
+    scope: { id: "quality_pool", label: "重点跟踪池", asOf: screening.pools.map((p) => p.asOf).sort().at(-1), count: members.size },
     stats: { total: companies.length, researchStateRows: sourceStateCount,
       active: states.filter((row) => row.universe_status === "active").length,
       reports: companies.filter((company) => company.reports.length).length,
@@ -174,6 +201,11 @@ export async function buildResearchData(root = repositoryRoot) {
   await writeFile(join(output, "research-catalog.json"), `${JSON.stringify(catalog)}\n`, "utf8");
   await exportCurrent(output, catalog, "quality_pool", "current-research");
   await exportCurrent(output, catalog, "all_standard", "all-current-research");
+  for (const market of ["CN", "HK", "US"]) {
+    const subset = { ...catalog, companies: companies.filter((c) => c.market === market) };
+    await exportCurrent(output, subset, "quality_pool", `current-research-${market}`);
+    await exportCurrent(output, subset, "all_standard", `all-current-research-${market}`);
+  }
   const progress = companies.filter((company) => company.inQualityPool).map((company) => ({
     symbol: company.symbol, name: company.name, qualityTier: company.qualityTier,
     hasResearchState: company.hasResearchState, display: company.display,
