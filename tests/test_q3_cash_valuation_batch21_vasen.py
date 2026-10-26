@@ -138,3 +138,15 @@ def test_vasen_actual_functions_registration_capital_and_original_holder():
  assert extended[:240]==rows
  for r in [.10,.085]:
   for k in ['pv','tv5']:assert abs(m['value'](extended,r)[k]-m['value'](rows,r)[k])<1e-6
+
+def test_vasen_registered_not_paid_in_and_unknown_opening_budget():
+ import runpy,copy
+ m=runpy.run_path(str(ROOT/'2026-Q3.py'))
+ e=dict(re=0.,reserve=5.,registered_capital=20.,paid_capital=10.)
+ assert m['accrue_legal'](e,10.)==1. and e['re']==9.
+ b=copy.deepcopy(m['BUDGET']);b['subs_paid_ratio']=[.5]*4
+ assert [r['dps'] for r in m['path'](b)]==[r['dps'] for r in m['path'](m['BUDGET'])]
+ b=copy.deepcopy(m['BUDGET']);b.update(opening_reserve_full=False,subs_legal_opening=[0.]*4)
+ z=m['value'](m['path'](b),.10)
+ assert round(z['pv'],5)==4.76975  # Published diagnostic at five-decimal display precision, not independent proof.
+ assert m['path'](b)[0]['dps']<m['path'](m['BUDGET'])[0]['dps']

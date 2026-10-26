@@ -16,15 +16,15 @@ BUDGET=dict(revenue0=4.95,revenue1=4.90,margin1=.147,parent_cost=.12,
  jv_book=.36784975989,jv_cash=.30,jv_year=5,other_book=.555418655,
  other_cash=.35,other_year=8,receivable=.03,receivable_year=6,
  parent_cash=1.45,parent_retained=.75,core_cash=[.25,.10,.12,.08],
- parent_floor=.25,subs_floor=.30,margin_shift=0.0,receivable_shock=0.0,capital_release_year=12,minimum_parent_capital=.50)
+ parent_floor=.25,subs_floor=.30,margin_shift=0.0,receivable_shock=0.0,capital_release_year=12,minimum_parent_capital=.50,subs_legal_opening=[.45,.18,.20,.10],subs_paid_ratio=[1.,1.,1.,1.])
 
 def initial(b):
     p=dict(name='上市母公司',cash=b['parent_cash'],re=b['parent_retained'],reserve=.796038994,capital=1.592037988,
-      fixed=.15,nwc=.10,debt=0.,losses=[],div_receivable=0.,loan_receivable=0.)
+      fixed=.15,nwc=.10,debt=0.,losses=[],div_receivable=0.,loan_receivable=0.,registered_capital=1.592037988,paid_capital=1.592037988,external_shares=SHARES,treasury_shares=.02017)
     s=[]
     for i in range(4):
-        s.append(dict(name=NAMES[i],cash=b['core_cash'][i],re=[.45,.18,.20,.10][i],
-          reserve=CAP[i]*.5 if b['opening_reserve_full'] else 0.,capital=CAP[i],
+        s.append(dict(name=NAMES[i],cash=b['core_cash'][i],re=b['subs_legal_opening'][i],
+          reserve=CAP[i]*.5 if b['opening_reserve_full'] else 0.,capital=CAP[i],registered_capital=CAP[i],paid_capital=CAP[i]*b['subs_paid_ratio'][i],
           fixed=[.90,.28,.32,.20][i],nwc=[.16,.07,.08,.04][i],debt=0.,losses=[],div_payable=0.))
     return p,s
 
@@ -42,7 +42,7 @@ def accrue_legal(e,net_profit):
     before=e['re'];e['re']+=net_profit
     # First absorb losses, then reserve 10% of remaining current profit, capped at 50% REGISTERED capital.
     eligible=max(0.,net_profit-max(0.,-before))
-    reserve=min(.1*eligible,max(0.,.5*e['capital']-e['reserve']))
+    reserve=min(.1*eligible,max(0.,.5*e['registered_capital']-e['reserve']))
     e['reserve']+=reserve;e['re']-=reserve
     return reserve
 
@@ -62,10 +62,17 @@ def financing(e,floor,limit):
     return draw-repay
 
 def capital_payment(e,floor,minimum):
-    # Paid-in assumed equal to registered: actual cash return reduces both and outstanding shares.
+    """Conditional creditor-process-approved repayment at par to EXTERNAL holders.
+    Treasury shares are not cancelled in this budget and receive no company cash.
+    Registered and paid nominal capital shrink by the actual refund; no legal profit.
+    """
     if e['re']< -1e-12 or e['debt']>0:return 0.
-    paid=min(max(0.,e['cash']-floor),max(0.,e['capital']-minimum))
-    e['cash']-=paid;e['capital']-=paid
+    external=e['external_shares']
+    paid=min(max(0.,e['cash']-floor),max(0.,e['registered_capital']-minimum),
+             max(0.,e['paid_capital']-e['treasury_shares']),external)
+    e['cash']-=paid;e['registered_capital']-=paid;e['paid_capital']-=paid
+    e['capital']=e['registered_capital'];e['external_shares']-=paid
+    assert abs(e['registered_capital']-e['external_shares']-e['treasury_shares'])<1e-9
     return paid
 
 def collect_old_dividend(e):
@@ -122,9 +129,9 @@ def path(b,years=240):
             gross_upstream+=declared;cash_upstream+=received
             group_np+=np;group_cash+=fcf;allcapex+=capex;allwc+=wc
             assert abs(e['cash']-(startcash-oldpaid+settlement*w+fcf+fund-received))<1e-7
-            assert e['cash']>=-1e-9 and e['re']>=-1e-9 and e['reserve']<=.5*e['capital']+1e-9
+            assert e['cash']>=-1e-9 and e['re']>=-1e-9 and e['reserve']<=.5*e['registered_capital']+1e-9
             subrows.append(dict(name=e['name'],opening_cash=startcash,operating_pretax=op,interest=interest,tax=cash_tax,np=np,
-              reserve_add=reserve,legal_retained=e['re'],reserve=e['reserve'],paid_capital=e['capital'],cash=e['cash'],debt=e['debt'],
+              reserve_add=reserve,legal_retained=e['re'],reserve=e['reserve'],registered_capital=e['registered_capital'],paid_capital=e['paid_capital'],cash=e['cash'],debt=e['debt'],
               depreciation=da,capex=capex,nwc=e['nwc'],delta_nwc=wc,fcf=fcf,settlement=settlement*w,declared=declared,
               paid=received+oldpaid,payable=e['div_payable'],net_borrowing=fund,fixed=e['fixed']))
         # Parent recognizes declaration, not collection, as new exempt investment income.
@@ -158,9 +165,9 @@ def path(b,years=240):
         out.append(dict(year=y,revenue=rev,core_net_margin=margin,group_net_profit=group_np,
           capex=allcapex,delta_nwc=allwc,economic_fcf=group_cash,nonop_cash=nonop_cash,nonop_profit=nonop_profit,
           ordinary=ordinary,special=extra,capital_return=capital_return,distribution=distribution,dps=distribution/SHARES,
-          current_outstanding_shares=p['capital']-.02017,shares_per_initial_share=(p['capital']-.02017)/SHARES,
+          current_outstanding_shares=p['external_shares'],shares_per_initial_share=p['external_shares']/SHARES,
           cash=endcash,debt=p['debt']+sum(e['debt'] for e in subs),net_borrowing=netfund,
-          parent=dict(cash=p['cash'],retained=p['re'],reserve=p['reserve'],capital=p['capital'],net_profit=parent_np,
+          parent=dict(cash=p['cash'],retained=p['re'],reserve=p['reserve'],capital=p['registered_capital'],registered_capital=p['registered_capital'],paid_capital=p['paid_capital'],external_shares=p['external_shares'],treasury_shares=p['treasury_shares'],net_profit=parent_np,
              tax=parent_tax,interest=parent_interest,own_operating=parent_op,declared_upstream=gross_upstream,
              received_upstream=cash_upstream+parent_old_received,div_receivable=p['div_receivable'],settlement=settlement,
              ordinary=ordinary,special=extra,capital_return=capital_return,debt=p['debt'],tax_losses=copy.deepcopy(p['losses'])),
@@ -183,6 +190,9 @@ def scenarios():
     b=copy.deepcopy(BUDGET);b['margin_shift']=-.01;cases['margin_minus_1pp']=b
     b=copy.deepcopy(BUDGET);b.update(upstream_lag=1,opening_reserve_full=False,settlement=[.50,.20],parent_cash=1.25,core_cash=[.342,.138,.166,.104],receivable_shock=.20,other_year=15);cases['cash_legal_delay']=b
     b=copy.deepcopy(BUDGET);b['capital_release_year']=25;cases['capital_release_delayed']=b
+    b=copy.deepcopy(BUDGET);b['opening_reserve_full']=False;cases['reserve_zero_only']=b
+    b=copy.deepcopy(BUDGET);b.update(opening_reserve_full=False,subs_legal_opening=[0.]*4);cases['sub_legal_zero_only']=b
+    b=copy.deepcopy(BUDGET);b.update(opening_reserve_full=False,subs_legal_opening=[0.]*4,parent_retained=0.);cases['all_legal_zero_boundary']=b
     return cases
 
 def auxiliary():
@@ -226,10 +236,10 @@ def boundary_diagnostics():
     return dict(zero_distribution_required_investment=failed,positive_cash_floor=positive)
 
 def tests():
-    e=dict(cash=10.,re=-2.,reserve=0.,capital=10.,losses=[])
+    e=dict(cash=10.,re=-2.,reserve=0.,capital=10.,registered_capital=10.,paid_capital=10.,losses=[])
     assert abs(accrue_legal(e,5.)-.3)<1e-12 and abs(e['re']-2.7)<1e-12
     assert payment(e,10.,0.)==2.7 and abs(e['cash']-7.3)<1e-12
-    e=dict(cash=10.,re=0.,reserve=4.9,capital=10.,losses=[])
+    e=dict(cash=10.,re=0.,reserve=4.9,capital=10.,registered_capital=10.,paid_capital=10.,losses=[])
     assert abs(accrue_legal(e,4.)-.1)<1e-12 and abs(e['re']-3.9)<1e-12
     assert payment(e,2.,9.)==1.;assert payment(e,8.,9.)==0.
     e=dict(losses=[]);assert tax(e,-2.,.25,1)==0.;assert tax(e,1.,.25,2)==0.;assert abs(tax(e,3.,.25,3)-.5)<1e-12
@@ -240,11 +250,13 @@ def tests():
     e=dict(name='test',cash=-.1,debt=0.);assert abs(financing(e,.1,.25)-.2)<1e-12
     try:financing(dict(name='test',cash=-1.,debt=0.),.1,.25);raise AssertionError('unlimited borrowing')
     except ValueError:pass
-    e=dict(cash=3.,re=0.,reserve=1.,capital=2.,debt=0.,div_receivable=.4)
+    e=dict(cash=3.,re=0.,reserve=1.,capital=2.,registered_capital=2.,paid_capital=2.,external_shares=2.,treasury_shares=0.,debt=0.,div_receivable=.4)
     assert collect_old_dividend(e)==.4 and e['re']==0. and e['cash']==3.4
     assert capital_payment(e,2.,1.)==1. and e['capital']==1. and e['re']==0.
     assert capital_payment(dict(cash=3.,re=-1.,capital=2.,debt=0.),0.,0.)==0.
-    return 'passed: old receivable no earnings, pro-rata capital reduction, loss-before-reserve, cap, shared distribution pool, cash floor, loss expiry, PV/TV, finite finance'
+    e=dict(cash=10.,re=0.,reserve=5.,capital=20.,registered_capital=20.,paid_capital=10.,losses=[])
+    assert accrue_legal(e,10.)==1. and e['re']==9.
+    return 'passed: registered20-paid10-reserve5-profit10 retains1; old receivable no earnings, pro-rata capital reduction, loss-before-reserve, cap, shared distribution pool, cash floor, loss expiry, PV/TV, finite finance'
 
 def main():
     result=dict(symbol='CN:002372',unit='CNY billion; DPS CNY',shares=SHARES,budget=BUDGET,tests=tests(),scenarios={})

@@ -6,7 +6,7 @@ import json, math
 from pathlib import Path
 NAMES=['P','A','E','D','C','H','U']; S=.977170720
 # cash, lock, debt, capital, reserve, U, fixed, WC, tax, limit, ownership
-START=[[2.85,.428,1.85,.97717072,.761622037,4.06127034,2.7,2.25,.15,2.15,1],[.25,0,.4,.389198642,.1,.212523832,.82,.45,.15,.65,.685],[.28,0,.4,.0002,0,-.1,.5,.5,.30,.7,1],[.033,0,0,.030950195,.015475098,.010605832,.04,.04,.25,.03,1],[.02,0,.016,.0115,.00575,.043466671,.035,.015,.25,.05,1],[0,0,0,.0002,0,0,0,0,0,0,1],[0,0,0,.0002,0,0,0,0,0,0,1]]
+START=[[2.85,.428,1.85,.97717072,.48858536,4.06127034,2.7,2.25,.15,2.15,1],[.25,0,.4,.389198642,0.,0.,.82,.45,.15,.65,.685],[.28,0,.4,None,0,-.1,.5,.5,.30,.7,1],[.033,0,0,.030950195,0.,0.,.04,.04,.25,.03,1],[.02,0,.016,.0115,0.,0.,.035,.015,.25,.05,1],[0,0,0,None,0,0,0,0,0,0,1],[0,0,0,None,0,0,0,0,0,0,1]]
 R=[[6.6,7.2,7.8,8.3,8.7],[1.4,1.48,1.56,1.63,1.7],[1.3,1.5,1.65,1.8,1.9],[.2,.21,.22,.23,.24],[1.3,1.36,1.42,1.48,1.54]]
 M=[[.08,.09,.1,.105,.11],[.03,.035,.04,.045,.05],[0,.03,.05,.06,.07],[.01,.015,.02,.025,.03],[.003,.004,.005,.006,.007]]
 K=[[5.05,5.15,5.35,5.55,5.75],[1.31,1.35,1.39,1.43,1.47],[1.08,1.12,1.16,1.2,1.24],[.082,.084,.086,.088,.09],[.052,.054,.056,.058,.06]]
@@ -76,3 +76,28 @@ def test_jiuli_actual_chain_handcases_failure_and_common_y5():
   conv=f['convergence'][name]
   for k in ['PV','TV5']:assert abs(conv['240'][k]-conv['320'][k])<1e-6
  z=f['scenarios']['no_refinance_zero_D'];assert not z['feasible'] and z['PV'] is None and z['TV5'] is None
+
+def test_jiuli_registered_threshold_and_budget_identity():
+ import runpy
+ m=runpy.run_path(str(ROOT/'2026-Q3.py'))
+ # Paid-in can be 10 while registered is 20. Threshold uses registered, not paid-in.
+ assert m['legal_step'](0,5,20,10,True)==(9.,6.,1.)
+ assert abs(m['legal_step'](-6,0,20,10,True)[2]-.4)<1e-12
+ assert m['legal_step'](0,0,None,10,False)==(10,0,0)
+ assert m['OPEN']['P']['reserve']==m['OPEN']['P']['capital']/2
+ for e in ['A','D','C']:
+  assert m['OPEN'][e]['retained']==0 and m['OPEN'][e]['reserve']==0
+ for e in ['E','H','U']: assert m['OPEN'][e]['capital'] is None
+ row=m['run'](m['SCENARIOS']['base'],1)['years'][0]
+ for e in ['A','D','C','E','H','U']:
+  x=row['entities'][e]
+  assert x['actual_individual_statutory_reserve'] is None
+  assert x['actual_individual_legal_retained'] is None
+  assert x['declared_D']<=max(0,x['distribution_capacity_budget_before_D'])+1e-10
+
+def test_jiuli_static_metadata_pack_is_lossless():
+ import runpy
+ m=runpy.run_path(str(ROOT/'2026-Q3.py'))
+ for c in m['SCENARIOS'].values():
+  full=m['run'](c)
+  assert m['expand'](m['pack'](full))==full

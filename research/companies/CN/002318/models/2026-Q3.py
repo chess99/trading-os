@@ -2,20 +2,32 @@
 """CN:002318. CNY billion, year-end cash flows. No network/input dependency.
 Model years are rolling twelve-month budgets after 2026-10-26, not FY guidance.
 All future single-entity inputs are research budgets, NOT disclosed precision.
+Outputs use column/value tables plus entity_static_metadata; expand(scenario without
+assumptions) returns every original annual field, including static identity fields.
 """
 import json, math, copy
 from pathlib import Path
 SHARES=.977170720
 IDS=['P','A','E','D','C','H','U']
-# parent, alloy, EBK operating budget, Qiancheng, perforation, German holding, Europe holding
+# Parent: individual distributable account. Subsidiaries: economic remittance-capacity
+# budgets anchored to named entities, NOT certified individual legal balances.
+# Domestic subsidiary disclosed net assets include unknown capital/surplus reserves:
+# do not infer opening distributable profits by subtracting registered capital.
+# Core excludes ALL old domestic subsidiary surplus and allows a finite 10% future
+# appropriation budget until 50% of disclosed registered capital. This is an upper
+# incremental retention allowance, not a claim that actual opening reserve is zero.
+# Foreign nodes use no PRC reserve rule; local approval/solvency and 5% friction
+# remain conditional economic assumptions. No notional EUR conversion is used
+# to create statutory capacity. No future equity issuance or capital change assumed.
+# Ordinary and excess distributions consume the same budget and available cash.
 OPEN={
-'P':dict(cash=2.85,locked=.428,debt=1.85,capital=.97717072,reserve=.761622037,retained=4.06127034,fixed=2.70,wc=2.25,own=1,tax=.15,limit=2.15),
-'A':dict(cash=.25,locked=0,debt=.4,capital=.389198642,reserve=.10,retained=.212523832,fixed=.82,wc=.45,own=.685,tax=.15,limit=.65),
-'E':dict(cash=.28,locked=0,debt=.4,capital=.0002,reserve=0,retained=-.10,fixed=.50,wc=.50,own=1,tax=.30,limit=.70),
-'D':dict(cash=.033,locked=0,debt=0,capital=.030950195,reserve=.015475098,retained=.010605832,fixed=.04,wc=.04,own=1,tax=.25,limit=.03),
-'C':dict(cash=.02,locked=0,debt=.016,capital=.0115,reserve=.00575,retained=.043466671,fixed=.035,wc=.015,own=1,tax=.25,limit=.05),
-'H':dict(cash=0,locked=0,debt=0,capital=.0002,reserve=0,retained=0,fixed=0,wc=0,own=1,tax=0,limit=0),
-'U':dict(cash=0,locked=0,debt=0,capital=.0002,reserve=0,retained=0,fixed=0,wc=0,own=1,tax=0,limit=0)}
+'P':dict(cash=2.85,locked=.428,debt=1.85,capital=.97717072,reserve=.48858536,retained=4.06127034,fixed=2.70,wc=2.25,own=1,tax=.15,limit=2.15),
+'A':dict(cash=.25,locked=0,debt=.4,capital=.389198642,reserve=0.,retained=0.,fixed=.82,wc=.45,own=.685,tax=.15,limit=.65),
+'E':dict(cash=.28,locked=0,debt=.4,capital=None,reserve=0,retained=-.10,fixed=.50,wc=.50,own=1,tax=.30,limit=.70),
+'D':dict(cash=.033,locked=0,debt=0,capital=.030950195,reserve=0.,retained=0.,fixed=.04,wc=.04,own=1,tax=.25,limit=.03),
+'C':dict(cash=.02,locked=0,debt=.016,capital=.0115,reserve=0.,retained=0.,fixed=.035,wc=.015,own=1,tax=.25,limit=.05),
+'H':dict(cash=0,locked=0,debt=0,capital=None,reserve=0,retained=0,fixed=0,wc=0,own=1,tax=0,limit=0),
+'U':dict(cash=0,locked=0,debt=0,capital=None,reserve=0,retained=0,fixed=0,wc=0,own=1,tax=0,limit=0)}
 BASE={
 'P':{'rev':[6.6,7.2,7.8,8.3,8.7],'m':[.08,.09,.10,.105,.11],'k':[5.05,5.15,5.35,5.55,5.75],'mature':.095,'fixedshare':.56},
 'A':{'rev':[1.4,1.48,1.56,1.63,1.7],'m':[.03,.035,.04,.045,.05],'k':[1.31,1.35,1.39,1.43,1.47],'mature':.045,'fixedshare':.65},
@@ -37,6 +49,8 @@ SCENARIOS={
 'locked_longer':dict(r=.10,margin=0,g=.02,growth=.03,kind='base',unlock=5),
 'parent_cash_shift':dict(r=.10,margin=0,g=.02,growth=.03,kind='base',cashshift=.3),
 'foreign_legal_loss':dict(r=.10,margin=0,g=.02,growth=.03,kind='base',foreignloss=.3),
+'domestic_prior_loss_100m':dict(r=.10,margin=0,g=.02,growth=.03,kind='base',domestic_loss=.1),
+'domestic_reserves_already_full':dict(r=.10,margin=0,g=.02,growth=.03,kind='base',domestic_full_reserve=True),
 'no_refinance_zero_D':dict(r=.10,margin=0,g=.02,growth=.03,kind='cycle',no_refi=True,zero_D=True)}
 def target(e,y,c):
     b=BASE[e];i=min(y,5)-1;rev=b['rev'][i];m=b['m'][i]+(0 if c.get('freeze_first5') and y<=5 else c['margin'])*(.1 if e=='C' else .5 if e in ['A','D'] else 1);k=b['k'][i]
@@ -54,10 +68,10 @@ def target(e,y,c):
     if c['kind']=='up': rev*=1.08; k*=1.05
     k*=c.get('capital',1)
     return rev,m,k*b['fixedshare'],k*(1-b['fixedshare'])
-def legal_step(retained,reserve,paid,net,domestic):
+def legal_step(retained,reserve,registered,net,domestic):
     # only positive profit AFTER covering opening accumulated losses supports appropriation
     assess=max(0,net-max(0,-retained))
-    appropriation=min(max(0,paid*.5-reserve),assess*.1) if domestic else 0
+    appropriation=min(max(0,registered*.5-reserve),assess*.1) if domestic else 0
     return retained+net-appropriation,reserve+appropriation,appropriation
 
 def run(c,n=240,opening=None,overrides=None):
@@ -65,6 +79,10 @@ def run(c,n=240,opening=None,overrides=None):
     if c.get('cashshift'):
         ss['P']['cash']-=c['cashshift'];ss['E']['cash']+=c['cashshift']
     if c.get('foreignloss'):ss['E']['retained']-=c['foreignloss']
+    if c.get('domestic_loss'):
+        for e in ('A','D','C'):ss[e]['retained']-=c['domestic_loss']*{'A':.8,'D':.1,'C':.1}[e]
+    if c.get('domestic_full_reserve'):
+        for e in ('A','D','C'):ss[e]['reserve']=ss[e]['capital']/2
     for s in ss.values():s.update(receivable=0,payable=0)
     years=[];pv=tv=0.;failed=None
     for y in range(1,n+1):
@@ -124,7 +142,7 @@ def run(c,n=240,opening=None,overrides=None):
             assert d<=max(0,u)+1e-8 and paid<=room+1e-8
             assert s['retained']>=-1e-8 or d==0
             assert abs(cash-(o['cash']+cfo-capex-extra+inc['received']-repayment+borrow-oldpay-paid))<1e-7*max(1,abs(cash))
-            rows[e]=dict(revenue=rev,ebit_margin=m,ebit=ebit,deposit_income=income,interest=interest,tax=tax,net_income=net,upstream_declared=inc['declared'],upstream_received=inc['received'],legal_income=legal_income,noncash_awards=noncash_awards,opening_retained=o['retained'],reserve_add=appropriation,reserve=res,paid_capital=s['capital'],legal_available_before_D=u,declared_D=d,current_D_paid=paid,old_D_paid=oldpay,D_payable=s['payable'],D_receivable=s['receivable'],retained=s['retained'],cash_open=o['cash'],cash_end=cash,locked_end=locked,required_cash=required,fixed_open=o['fixed'],fixed_end=f,wc_open=o['wc'],wc_end=w,DA=dep,capex=capex,delta_wc=dw,CFO=cfo,old_obligations_and_buyback=extra,debt_open=o['debt'],gross_maturity=o['debt'],gross_rollover=o['debt']-repayment,repayment=repayment,new_debt=borrow,debt_end=debt,debt_ceiling=s['limit'],funding_gap=gap)
+            rows[e]=dict(revenue=rev,ebit_margin=m,ebit=ebit,deposit_income=income,interest=interest,tax=tax,net_income=net,upstream_declared=inc['declared'],upstream_received=inc['received'],legal_income=legal_income,noncash_awards=noncash_awards,opening_retained=o['retained'],reserve_add=appropriation,reserve=res,registered_capital=s['capital'],distribution_capacity_budget_before_D=u,account_scope=('parent_forecast_from_individual_balance' if e=='P' else 'economic_remittance_capacity_budget'),actual_individual_statutory_reserve=None,actual_individual_legal_retained=None,reserve_state_kind=('registered_half_equivalent_full_status_not_disclosed_amount' if e=='P' else 'bounded_incremental_retention_budget_not_actual_reserve'),registered_capital_currency=('CNY' if e in ['P','A','D','C'] else 'EUR'),registered_capital_native=(25000 if e in ['E','H','U'] else s['capital']*1e9),declared_D=d,current_D_paid=paid,old_D_paid=oldpay,D_payable=s['payable'],D_receivable=s['receivable'],retained=s['retained'],cash_open=o['cash'],cash_end=cash,locked_end=locked,required_cash=required,fixed_open=o['fixed'],fixed_end=f,wc_open=o['wc'],wc_end=w,DA=dep,capex=capex,delta_wc=dw,CFO=cfo,old_obligations_and_buyback=extra,debt_open=o['debt'],gross_maturity=o['debt'],gross_rollover=o['debt']-repayment,repayment=repayment,new_debt=borrow,debt_end=debt,debt_ceiling=s['limit'],funding_gap=gap)
         group_before=sum(rows[e]['cash_open'] for e in IDS)
         group_after=sum(rows[e]['cash_end'] for e in IDS)
         external_flow=sum(rows[e]['CFO']-rows[e]['capex']-rows[e]['old_obligations_and_buyback']-rows[e]['repayment']+rows[e]['new_debt'] for e in IDS)-rows['P']['current_D_paid']-total_minority-.05*(rows['U']['current_D_paid']+rows['U']['old_D_paid'])
@@ -138,13 +156,26 @@ def run(c,n=240,opening=None,overrides=None):
         if failed:break
     return {'feasible':failed is None,'failure':failed,'PV':pv if failed is None else None,'TV5':tv if failed is None else None,'DPS5':[z['DPS'] for z in years[:5]],'years':years}
 def pack(result):
-    r=copy.deepcopy(result); yrs=r.pop('years'); columns=list(yrs[0]['entities']['P']);names=[k for k in yrs[0] if k!='entities']
+    # Static identity metadata is stored once per entity, never discarded.
+    r=copy.deepcopy(result); yrs=r.pop('years')
+    static=['account_scope','actual_individual_statutory_reserve','actual_individual_legal_retained',
+            'reserve_state_kind','registered_capital_currency','registered_capital_native']
+    metadata={e:{k:yrs[0]['entities'][e][k] for k in static} for e in IDS}
+    for z in yrs:
+        for e in IDS:
+            assert {k:z['entities'][e][k] for k in static}==metadata[e]
+    columns=[k for k in yrs[0]['entities']['P'] if k not in static]
+    names=[k for k in yrs[0] if k!='entities']
     r['annual_columns']=names;r['annual_values']=[[z[k] for k in names] for z in yrs]
-    r['entity_columns']=columns;r['entity_values']={e:[[z['entities'][e][k] for k in columns] for z in yrs] for e in IDS};return r
+    r['entity_columns']=columns;r['entity_values']={e:[[z['entities'][e][k] for k in columns] for z in yrs] for e in IDS}
+    r['entity_static_metadata']=metadata
+    return r
+
 def expand(p):
     p=copy.deepcopy(p);names=p.pop('annual_columns');vals=p.pop('annual_values');cols=p.pop('entity_columns');ev=p.pop('entity_values')
+    metadata=p.pop('entity_static_metadata',{})
     p['years']=[dict(zip(names,v)) for v in vals]
-    for i,z in enumerate(p['years']):z['entities']={e:dict(zip(cols,ev[e][i])) for e in IDS}
+    for i,z in enumerate(p['years']):z['entities']={e:{**dict(zip(cols,ev[e][i])),**metadata.get(e,{})} for e in IDS}
     return p
 
 def boundary():
@@ -176,7 +207,7 @@ def secondary():
     vals=[(ebit*k-.045*k*.315+bridge)/SHARES for k in (10,12)]
     return {'segments':seg,'EBIT_bn':ebit,'EV_EBIT':[10,12],'bridge_bn':bridge,'PV_range':vals,'note':'current normalized capacity earnings cross-check, independent volume/mix; embeds maintenance and normal capex via EBIT and industrial multiples, weaker than explicit payout method'}
 def main():
-    out={'symbol':'CN:002318','units':'CNY billion except per share','shares_bn':SHARES,'opening_budget':OPEN,'business_budget':BASE,'scenarios':{},'boundary':boundary(),'secondary':secondary(),'convergence':{}}
+    out={'symbol':'CN:002318','units':'CNY billion except per share','shares_bn':SHARES,'opening_budget':OPEN,'account_schema':{'monetary_unit':'CNY billion unless native capital explicitly labelled','reserve':'Forecast state only: parent registered/2 equivalent of documented full status, subsidiaries accumulated bounded retention allowance; not actual statutory reserve','retained':'Parent future distributable-profit forecast; subsidiary economic remittance-capacity accumulator, not disclosed individual legal balance','foreign_capital':'CNY value null, EUR25000 native disclosure in rows; no PRC rule or placeholder FX','sources':'entity-audit.json has actual disclosures, null unknowns and exact table/page identity'},'business_budget':BASE,'scenarios':{},'boundary':boundary(),'secondary':secondary(),'convergence':{}}
     for name,c in SCENARIOS.items():
         r=run(c);p=pack(r);assert expand(p)==r
         out['scenarios'][name]={'assumptions':c,**p}
