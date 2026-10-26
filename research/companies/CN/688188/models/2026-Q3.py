@@ -30,8 +30,20 @@ def settle(cash, retained, reserve, capital, profit, noncash, investment, floor,
     d=min(max(desired,0),max(legal,0),max(liquid-floor,0)) if failure<1e-8 else 0.
     return dict(cash=liquid-d,retained=legal-d,reserve=reserve+appropriation,dividend=d,legal_before=legal,appropriation=appropriation,draw=draw,repay=repay,debt=debt,funding_failure=failure)
 
+def proportional_capital_return(cash,capital,shares,holding_units,capital_surplus,amount,cancel_fraction,friction,floor):
+    """Conditional pro-rata approved capital reduction; not a dividend or accounting profit.
+    Price=amount/(shares*cancel_fraction), can exceed face; transaction costs debit equity.
+    Creditors/solvency approval is a scenario precondition, not inferred from cash alone.
+    """
+    assert 0<cancel_fraction<1 and amount>=0 and friction>=0
+    face=capital*cancel_fraction;cost=amount*friction
+    assert amount>=face and capital_surplus>=amount-face+cost
+    assert cash-floor>=amount+cost
+    receipt_per_original_share=holding_units*amount/shares
+    return dict(cash=cash-amount-cost,capital=capital-face,shares=shares*(1-cancel_fraction),holding_units=holding_units*(1-cancel_fraction),capital_surplus=capital_surplus-(amount-face)-cost,receipt_per_original_share=receipt_per_original_share,capital_face_cancelled=face,capital_return=amount,friction=cost,cancellation_price=amount/(shares*cancel_fraction),legal_profit_created=0.)
+
 def run(s,n=600,records=True):
-    p=copy.deepcopy(s); names=['parent','bochu_nc','boci','precision']; ownership=[1,1,.9275,.946964]
+    p=copy.deepcopy(s); p.setdefault('release_restricted_year',8); names=['parent','bochu_nc','boci','precision']; ownership=[1,1,.9275,.946964]
     # H1 parent actual cash+trading assets 4323.784810; Q3 aggregate 5730.572263.
     # Q3 legal-entity allocation is a budget, NOT a disclosed Q3 standalone sheet.
     cash=[4500.,806.0990022124001,380.,25.0034]; re=[1881.95245753,200.,300.,-1.9109]
@@ -48,7 +60,7 @@ def run(s,n=600,records=True):
         cap[0]=405.557343
         registration_queue[1+registration_delay]=405.984426-405.557343
     restricted=[999.4403,24.984,0.,11.2534]
-    precision_op=-4.
+    precision_op=-4.; holding_units=1.; capital_surplus=2872.37790885
     pv=tv=0.; rows=[]; maxfail=0.; cum_minor=0.; d5=[]
     for y in range(1,n+1):
         cap[0]+=registration_queue.pop(y,0.)
@@ -71,10 +83,10 @@ def run(s,n=600,records=True):
         newshares=([1+3.5314*.30,3.5314*.30+.8039/3,3.5314*.40+.8039/3,.8039/3][y-1] if y<=4 else 0.)
         if p.get('no_issue'): newshares=0
         proceeds=(35.+3.5314*.30*50.7 if y==1 else newshares*50.7) if y<=4 and not p.get('no_issue') else 0.
-        shares+=newshares
+        shares+=newshares; capital_surplus+=proceeds-newshares
         if registration_delay:registration_queue[y+registration_delay]=registration_queue.get(y+registration_delay,0.)+newshares
         else:cap[0]+=newshares
-        start_cash=cash.copy(); start_re=re.copy(); start_debt=debt.copy(); start_pay=payable.copy()
+        start_cash=cash.copy(); start_res=res.copy(); start_re=re.copy(); start_debt=debt.copy(); start_pay=payable.copy()
         # Direct Precision 75%; indirect 19.6964% and Boci 92.75% are
         # separately governed pass-through routes. No partnership 50% pool.
         channel_in=[payable[3]*.196964,payable[2]*.9275]
@@ -162,19 +174,26 @@ def run(s,n=600,records=True):
             expected=start_cash[i]+old_received[i]-start_pay[i]+internal_flow[i]+(-transfer if i==0 else transfer if i==1 else 0)+ownprofit[i]+sbc*([.8,.1,.1,0.][i])-investments[i]+(proceeds if i==0 else 0)+z['draw']-z['repay']-(d if i==0 else 0)
             assert abs(cash[i]-expected)<max(1e-6,abs(cash[i])*1e-12)
             assert re[i]>=-1e-8 or d==0
-            assert res[i]<=cap[i]*.5+1e-8
+            assert res[i]<=max(start_res[i],cap[i]*.5)+1e-8 # capital reduction need not destroy existing reserve
             assert d<=max(z['legal_before'],0)+1e-8
             maxfail=max(maxfail,z['funding_failure'])
             node[i]=dict(name=names[i],restricted_open=restricted_open[i],financial_interest_base=interest_base[i],restricted_interest_base=restricted_interest_base[i],restricted_financial_income=restricted_income[i],restricted_transfer=restricted_transfer[i],eligible_project_spending=eligible_spend[i],qualified_project_spending=qualified_spend[i],project_spending_from_own_funds=eligible_spend[i]-qualified_spend[i],restricted_close=restricted[i],conditional_authorised_release=conditional_authorised_release[i],internal_project_cash_flow=internal_flow[i],intercompany_loan_receivable=(intercompany[0] if i==0 else intercompany[1] if i==1 else 0),intercompany_loan_payable=(intercompany[0] if i==1 else intercompany[1] if i==2 else 0),cash_open=start_cash[i],cash_close=cash[i],retained_open=start_re[i],retained_close=re[i],reserve=res[i],registered_capital_budget=cap[i],own_profit=ownprofit[i],declared_investment_income=investment_income,prior_dividend_received=old_received[i],prior_payable_paid=start_pay[i],new_declaration=d,ordinary_requested=ordinary,release_requested=release,legal_profit_before_distribution=z['legal_before'],reserve_appropriation=z['appropriation'],investment=investments[i],noncash_compensation=sbc*([.8,.1,.1,0.][i]),financial_income=fin[i],liquidity_floor=floors[i],debt_close=debt[i],debt_draw=z['draw'],debt_repaid=z['repay'],funding_failure=z['funding_failure'],dividend_payable=payable[i],dividend_receivable=receivable[i],invested_capital=invcap[i],capital_inflow=proceeds if i==0 else 0)
         receivable=[declarations[1]+declarations[3]*.75+channel_forward[0],channel_forward[1],0.,0.]
         for i in range(4):node[i]['dividend_receivable']=receivable[i]
         prior_forward=channel_forward.copy()
-        dist=declarations[0]/shares+(old_common/405.557343 if y==1 else 0)
+        dist=holding_units*declarations[0]/shares+(old_common/405.557343 if y==1 else 0)
+        capital_event=None
+        if y==p.get('capital_return_year',0):
+            capital_event=proportional_capital_return(cash[0],cap[0],shares,holding_units,capital_surplus,p['capital_return_amount'],p['capital_cancel_fraction'],p.get('capital_return_friction',.01),floors[0])
+            cash[0]=capital_event['cash'];cap[0]=capital_event['capital'];shares=capital_event['shares'];holding_units=capital_event['holding_units'];capital_surplus=capital_event['capital_surplus'];dist+=capital_event['receipt_per_original_share']
+            node[0]['cash_close']=cash[0];node[0]['registered_capital_budget']=cap[0]
+        # Capital return changes cash/equity/shares, never reserve or legal profit.
+
         pv+=dist/(1+p['r'])**y
         if y>5: tv+=dist/(1+p['r'])**(y-5)
         if y<=5:d5.append(dist)
         cum_minor+=minor_paid
-        if records:rows.append(dict(unregistered_paid_share_face=sum(registration_queue.values()),indirect_channel_cash=transit_cash.copy(),indirect_channel_received=channel_in,indirect_channel_paid=channel_out,indirect_forward_declared=channel_forward.copy(),year=y,revenue=rev,operating_cash_net_margin=margin,operating_cash_profit=op,net_investment=investment,incremental_roic=iroic,maintenance_capex=rev*.02,depreciation=rev*.02,shares=shares,new_shares=newshares,capital_inflow=proceeds,minority_cash_paid=minor_paid,ordinary_shareholder_cash=declarations[0],old_dividend_paid=old_common,distribution_per_share=dist,nodes=node))
+        if records:rows.append(dict(capital_return_event=capital_event,original_share_holding_units=holding_units,mother_capital_surplus_budget=capital_surplus,unregistered_paid_share_face=sum(registration_queue.values()),indirect_channel_cash=transit_cash.copy(),indirect_channel_received=channel_in,indirect_channel_paid=channel_out,indirect_forward_declared=channel_forward.copy(),year=y,revenue=rev,operating_cash_net_margin=margin,operating_cash_profit=op,net_investment=investment,incremental_roic=iroic,maintenance_capex=rev*.02,depreciation=rev*.02,shares=shares,new_shares=newshares,capital_inflow=proceeds,minority_cash_paid=minor_paid,ordinary_shareholder_cash=declarations[0],old_dividend_paid=old_common,distribution_per_share=dist,nodes=node))
         lastprofit=op
         if maxfail>1e-7:break
     return dict(pv=pv if maxfail<1e-7 else None,terminal_year5=tv if maxfail<1e-7 else None,distributions=d5,terminal_pv_share=((tv/(1+p['r'])**5)/pv if maxfail<1e-7 else None),stopped_at_year=y,maximum_funding_failure=maxfail,feasible=maxfail<1e-7,rows=rows)
@@ -193,6 +212,9 @@ def auxiliary():
     return result
 
 def tests():
+    cr=proportional_capital_return(20.,10.,10.,1.,20.,8.,.2,.05,2.)
+    assert cr['cash']==11.6 and cr['capital']==8. and cr['shares']==8. and cr['holding_units']==.8 and cr['receipt_per_original_share']==.8 and cr['legal_profit_created']==0.
+    assert cr['cancellation_price']==4. # face1 is not the mandatory return price
     registered_not_paid=settle(100,0,5,20,10,0,0,0,100,0,0)
     assert registered_not_paid['appropriation']==1 # paid10 cannot cap statutory reserve
     a=settle(100,20,5,10,10,0,0,10,50,0,0)
@@ -210,7 +232,7 @@ def tests():
     failed=run(dict(SCENARIOS['base'],extra_capital=1000000.,zero_distributions=True),5,True)
     assert not failed['feasible'] and failed['pv'] is None and failed['terminal_year5'] is None
     assert len(failed['rows'])==1 and all(n['new_declaration']==0 for n in failed['rows'][0]['nodes'])
-    return dict(full_run_zero_dividend_capital_failure=failed,capped_reserve=a,loss_recovery=b,unrecovered_loss=c,zero_dividend_failure=d,old_receivable=e,shared_legal_budget=f)
+    return dict(profit_zero_capital_return=cr,full_run_zero_dividend_capital_failure=failed,capped_reserve=a,loss_recovery=b,unrecovered_loss=c,zero_dividend_failure=d,old_receivable=e,shared_legal_budget=f)
 
 def decode_rows(packed,schema):
     """Pure lossless table decoder: no model parameters or external state."""
@@ -239,10 +261,11 @@ def expand_output(envelope):
 
 def build():
     out={'symbol':'CN:688188','period':'2026-Q3','currency_unit':'CNY million','share_unit':'million','as_of':'2026-10-26T11:00:00+00:00','scenarios':{},'sensitivities':{},'production_hand_tests':tests(),'auxiliary':auxiliary()}
+    out['project_completion_policy']={'release_year_budget':8,'evidence':'H1募投专项PDF41-42预计2028年12月可使用；2026-014 PDF12贷款至实施完成、允许续期；历史2023/2025结项补流支持有限实现路径，不是未来批准事实','mechanics':'不增加现金或法定利润，解除用途下限后仍按主体分配、少数和在途时序支付；Y8为模型项目贷款回收完毕的保守结项预算，Y10/15延期敏感'}
     out['input_evidence']={'units': 'CNY million', 'mother_statutory_reserve': {'value': 144.3649635, 'status': '事实：母权益表与法定明细交叉勾稽，不是直接拿合并余额代母', 'source_url': 'https://static.cninfo.com.cn/finalpage/2026-04-10/1225091045.PDF', 'pdf_pages': [138, 220], 'h1_confirmation_url': 'https://static.cninfo.com.cn/finalpage/2026-08-18/1225477071.PDF', 'h1_pdf_pages': [65, 76, 77, 145]}, 'bochu_nc_reserve': {'value': 0, 'status': '未披露逐户余额；有限保守预算，至注册60的一半30停止'}, 'boci_reserve': {'value': 0, 'status': '未披露逐户余额；有限保守预算，至注册32的一半16停止'}, 'precision_reserve': {'value': 0, 'status': '2026年4月新设且H1亏损的事实约束推断，不是独立储备余额表披露', 'registered_capital': 55, 'direct_parent_investment': 41.25, 'direct_ownership': 0.75, 'indirect_effective_ownership': 0.196964}, 'registered_capital_timing': 'H1 PDF79公司概况明确注册405.557343百万元；母Q3起始405.984426及未来新股份面值是预计登记预算，0.427083差额注册时序未独立核。缴款额与溢价不全部增加注册资本。', 'opening_retained': '母H1已知2117.98683116减宣派236.03437363=1881.95245753；数控200/波刺300为预算，精密-1.9109为H1新设损失期初代理。', 'indirect_routes': '平台是经济转款渠道，核心额外一年转宣派；0/2年边界。不对合伙应用公司法公积、不赋额外存量资产价值。', 'residual_entities': '其他小额公司未逐法人映射，未来经营贡献归入经营预算；不将四账户代表为全集团已审法定账。'}
     for k,p in SCENARIOS.items():out['scenarios'][k]=run(p)
     out['holder_conditionals']={k:run(dict(SCENARIOS[k],prefix_base=True,release=.15)) for k in ['core_low','core_high']}
-    for label,change in {'registration_delay_1y':{'registration_delay':1},'registration_delay_2y':{'registration_delay':2},'unmapped_profit_haircut_2pct':{'unmapped_profit_haircut':.02},'unmapped_profit_haircut_3pct':{'unmapped_profit_haircut':.03},'indirect_route_same_year':{'indirect_route_delay':0},'indirect_route_delay_2y':{'indirect_route_delay':2},'r_plus_1pp':{'r':.10},'r_minus_1pp':{'r':.08},'long_margin_minus_5pp':{'mt':.35},'incremental_return_15pct':{'roi':.35,'rt':.15},'no_subsidiary_upstream':{'no_upstream':True},'no_extra_principal_release':{'release':0},'collection_delay_200m':{'settlement_delay':200},'projects_plus_300m':{'extra_capital':100},'financial_yield_1pct':{'yield':.01},'tail_growth_0pct':{'tail_g':0},'zero_sub_opening_legal_profit':{'no_opening_sub_earnings':True},'parent_cash_500m_lower':{'parent_cash_shift':500},'conditional_approved_restricted_release_y8':{'release_restricted_year':8}}.items():
+    for label,change in {'registration_delay_1y':{'registration_delay':1},'registration_delay_2y':{'registration_delay':2},'unmapped_profit_haircut_2pct':{'unmapped_profit_haircut':.02},'unmapped_profit_haircut_3pct':{'unmapped_profit_haircut':.03},'indirect_route_same_year':{'indirect_route_delay':0},'indirect_route_delay_2y':{'indirect_route_delay':2},'r_plus_1pp':{'r':.10},'r_minus_1pp':{'r':.08},'long_margin_minus_5pp':{'mt':.35},'incremental_return_15pct':{'roi':.35,'rt':.15},'no_subsidiary_upstream':{'no_upstream':True},'no_extra_principal_release':{'release':0},'collection_delay_200m':{'settlement_delay':200},'projects_plus_300m':{'extra_capital':100},'financial_yield_1pct':{'yield':.01},'tail_growth_0pct':{'tail_g':0},'zero_sub_opening_legal_profit':{'no_opening_sub_earnings':True},'parent_cash_500m_lower':{'parent_cash_shift':500},'project_completion_release_delay_y10':{'release_restricted_year':10},'project_completion_release_delay_y15':{'release_restricted_year':15},'restricted_never_released_extreme':{'release_restricted_year':0},'capital_return_y10_300m':{'capital_return_year':10,'capital_return_amount':300.,'capital_cancel_fraction':.10},'capital_return_y20_300m':{'capital_return_year':20,'capital_return_amount':300.,'capital_cancel_fraction':.10},'capital_return_y10_600m':{'capital_return_year':10,'capital_return_amount':600.,'capital_cancel_fraction':.20}}.items():
         out['sensitivities'][label]=run(dict(SCENARIOS['base'],**change))
     out['convergence']={}
     for k,p in SCENARIOS.items():

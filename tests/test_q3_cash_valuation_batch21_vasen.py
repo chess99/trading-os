@@ -1,123 +1,97 @@
-#!/usr/bin/env python3
-"""Independent reconstruction from frozen source-budget only; no production imports or inspection.
-First finishes separate arithmetic, only then opens delivered output for comparison.
-Units billion CNY. Row 0 parent, rows 1..4 disclosed core subsidiaries.
+"""Independent literal economic loop for adopted core and -1pp margin.
+No production code, imports, AST or result data used as calculation inputs.
+Amounts CNY bn; nominal capital, shareholder claim and cash are separate.
 """
-import json,pathlib
-ROOT=pathlib.Path(__file__).resolve().parents[1]/'research/companies/CN/002372/models'
-B={'unit': 'CNY billion', 'shares': 1.571867988, 'registered_shares': 1.592037988, 'parent_cash': 1.45, 'parent_retained': 0.75, 'parent_reserve': 0.796038994, 'core_cash': [0.25, 0.1, 0.12, 0.08], 'core_capital': [0.32, 0.1, 0.08, 0.06], 'core_retained': [0.45, 0.18, 0.2, 0.1], 'core_profit_weights': [0.46, 0.19, 0.23, 0.12], 'core_initial_fixed': [0.9, 0.28, 0.32, 0.2], 'core_initial_nwc': [0.16, 0.07, 0.08, 0.04], 'revenue_year0': 4.95, 'revenue_year1': 4.9, 'margin_year1': 0.147, 'parent_cost_year1': 0.12, 'core_tax': 0.15, 'interest_yield': 0.012, 'parent_tax': 0.25, 'growth_2_to_5': [0.02, 0.03, 0.03, 0.025], 'margin_2_to_5': [0.148, 0.149, 0.15, 0.15], 'terminal_growth': 0.015, 'terminal_margin': 0.14, 'core_nwc_ratio': 0.07142857142857142, 'growth_fixed_ratio': 0.6, 'maintenance_ratio': 0.04081632653061224, 'committed_build': [0.1, 0.05], 'parent_settlement': [0.3, 0.2], 'parent_minimum_cash': 0.25, 'sub_minimum_cash': 0.3, 'jointventure_book': 0.36784975989, 'jointventure_proceeds': 0.3, 'jointventure_year': 5, 'other_investment_book': 0.555418655, 'other_investment_proceeds': 0.35, 'other_investment_year': 8, 'old_receivable_recovery': 0.03, 'old_receivable_year': 6, 'minority_cash_and_other_working_cash_excluded': 0.1308818324, 'ordinary_payout': 0.8, 'special_release_fraction': 0.2, 'discount_rates': [0.1, 0.085], 'forecast_start': '2026-10-26', 'notes': 'Independent literal research budget frozen BEFORE either valuation implementation. Not imported by production; independent verifier may read only this budget plus its own literal algorithms.', 'capital_release_year': 12, 'minimum_parent_capital': 0.5, 'shares_repurchased_pro_rata_at_par': 1.0, 'acquisition_payable': 0.00304348433}
+import json
+from pathlib import Path
 
-def recompute(margin_adjustment=0):
-    cash=[B['parent_cash']]+B['core_cash'][:]
-    undistributed=[B['parent_retained']]+B['core_retained'][:]
-    registered=[B['registered_shares']]+B['core_capital'][:]
-    reserve=[B['parent_reserve']]+[x/2 for x in registered[1:]]
+def literal(margin_shift,jv_net=.30):
+    shares0=1.571867988;capital=1.592037988;treasury=.02017
+    weights=[.46,.19,.23,.12]
+    cash=[.25,.10,.12,.08];retained=[.45,.18,.20,.10]
     nwc=[.16,.07,.08,.04]
-    weights=B['core_profit_weights'];revenue=B['revenue_year0'];prior=revenue
-    holder_cash=[];summaries=[];taxloss=[];group_earnings_pool=2.32064890364
-    for period in range(1,241):
-        if period==1:revenue=B['revenue_year1'];net_margin=B['margin_year1']
-        elif period<6:
-            revenue*=1+B['growth_2_to_5'][period-2];net_margin=B['margin_2_to_5'][period-2]
+    mother_cash=1.45;mother_retained=.75;consolidated_retained=2.32064890364
+    oldrev=4.95;rows=[]
+    for year in range(1,241):
+        if year==1:rev=4.9; margin=.147
+        elif year<=5:
+            rev=oldrev*(1+[.02,.03,.03,.025][year-2]);margin=[.148,.149,.15,.15][year-2]
+        elif year<=10:
+            rev=oldrev*(1+.025+(.015-.025)*(year-5)/5);margin=.15+(.14-.15)*(year-5)/5
+        else:rev=oldrev*1.015; margin=.14
+        margin+=margin_shift;scale=rev/4.9
+        settlement=.30 if year==1 else .20 if year==2 else 0
+        mother_cash-=settlement
+        parent_profit=-.12*scale+mother_cash*.012
+        # Before exempt dividends parent taxable income negative; no immediate loss tax credit.
+        assert parent_profit<0
+        mother_cash+=parent_profit;group_profit=parent_profit
+        subdeclared=[]
+        for i,w in enumerate(weights):
+            cash[i]+=settlement*w
+            operating_aftertax=rev*margin*w
+            interest_aftertax=cash[i]*.012*.85
+            profit=operating_aftertax+interest_aftertax
+            target_nwc=rev*(.35/4.9)*w
+            incremental_fixed=max(0,rev-oldrev)*.6*w
+            commitment=(.10 if year==1 else .05 if year==2 else 0)*w
+            # Maintenance exactly equals depreciation, so only incremental cash investment remains.
+            cash[i]+=profit-incremental_fixed-commitment-(target_nwc-nwc[i]);nwc[i]=target_nwc
+            retained[i]+=profit # original mature reserve already equals fixed registered half
+            floor=.30*scale*w
+            assert cash[i]>=floor-1e-9
+            declared=min(retained[i],max(0,cash[i]-floor))
+            cash[i]-=declared;retained[i]-=declared
+            mother_cash+=declared;parent_profit+=declared;group_profit+=profit;subdeclared.append(declared)
+        nonop_profit=0
+        if year==1:mother_cash-=.00304348433
+        if year==5:mother_cash+=jv_net;nonop_profit=jv_net-.36784975989
+        if year==8:mother_cash+=.35;nonop_profit=.35-.555418655
+        if year==6:mother_cash+=.03
+        mother_retained+=parent_profit+nonop_profit
+        consolidated_retained+=group_profit+nonop_profit
+        floor=.25*scale;available=max(0,mother_cash-floor)
+        assert mother_cash>=floor-1e-9
+        if year<=5:
+            ordinary=max(0,min(.8*max(0,group_profit),consolidated_retained,mother_retained,available))
+            mother_retained-=ordinary;mother_cash-=ordinary;consolidated_retained-=ordinary
+            extra=max(0,min(.2*max(0,mother_cash-floor),consolidated_retained,mother_retained,mother_cash-floor))
+            mother_retained-=extra;mother_cash-=extra;consolidated_retained-=extra
         else:
-            fade=min(1.,(period-5)/5.)
-            growth=B['growth_2_to_5'][-1]*(1-fade)+B['terminal_growth']*fade
-            revenue*=1+growth
-            net_margin=B['margin_2_to_5'][-1]*(1-fade)+B['terminal_margin']*fade
-        net_margin+=margin_adjustment
-        ratio=revenue/4.9
-        settling=B['parent_settlement'][period-1] if period<3 else 0.
-        cash[0]-=settling
-        own=-B['parent_cost_year1']*ratio+cash[0]*B['interest_yield']
-        taxloss=[(expiry,amount) for expiry,amount in taxloss if expiry>=period and amount>1e-12]
-        if own<0:taxloss.append((period+5,-own));parent_tax=0.
-        else:
-            balance=own;remaining=[]
-            for expiry,amount in taxloss:
-                offset=min(balance,amount);balance-=offset;remaining.append((expiry,amount-offset))
-            taxloss=remaining;parent_tax=balance*B['parent_tax']
-        own-=parent_tax;cash[0]+=own
-        group_profit=own;parent_profit=own;reserve_total=0.;subs_paid=[]
-        for j,w in enumerate(weights,1):
-            cash[j]+=settling*w
-            taxed_profit=revenue*net_margin*w/(1-B['core_tax'])+cash[j]*B['interest_yield']
-            profit=taxed_profit*(1-B['core_tax'])
-            group_profit+=profit
-            retained_before=undistributed[j]
-            eligible=max(0.,profit-max(0.,-retained_before))
-            allocate=min(.1*eligible,max(0.,registered[j]/2-reserve[j]))
-            reserve[j]+=allocate;reserve_total+=allocate;undistributed[j]+=profit-allocate
-            next_nwc=revenue*B['core_nwc_ratio']*w
-            fixed_add=max(revenue-prior,0.)*B['growth_fixed_ratio']*w
-            construction=B['committed_build'][period-1]*w if period<3 else 0.
-            # Maintenance exactly offsets depreciation, therefore cancelled here rather than copied as FCF terms.
-            cash[j]+=profit-fixed_add-construction-(next_nwc-nwc[j-1]);nwc[j-1]=next_nwc
-            floor=B['sub_minimum_cash']*ratio*w
-            paid=min(max(0.,undistributed[j]),max(0.,cash[j]-floor))
-            cash[j]-=paid;undistributed[j]-=paid;cash[0]+=paid;parent_profit+=paid;subs_paid.append(paid)
-        asset_profit=0.
-        if period==1:cash[0]-=B['acquisition_payable']
-        for original,proceeds,year in [(B['jointventure_book'],B['jointventure_proceeds'],B['jointventure_year']),
-                                       (B['other_investment_book'],B['other_investment_proceeds'],B['other_investment_year'])]:
-            if period==year:
-                # Both are loss realisations under baseline and one-factor margin diagnostic.
-                assert proceeds<=original
-                cash[0]+=proceeds;asset_profit+=proceeds-original
-        if period==B['old_receivable_year']:cash[0]+=B['old_receivable_recovery']
-        parent_profit+=asset_profit
-        eligible=max(0.,parent_profit-max(0.,-undistributed[0]))
-        allocate=min(.1*eligible,max(0.,registered[0]/2-reserve[0]))
-        reserve[0]+=allocate;undistributed[0]+=parent_profit-allocate
-        group_earnings_pool+=group_profit+asset_profit-reserve_total-allocate
-        floor=B['parent_minimum_cash']*ratio
-        legal=min(max(0.,undistributed[0]),max(0.,group_earnings_pool))
-        if period<6:
-            ordinary=min(B['ordinary_payout']*max(0.,group_profit),legal,max(0.,cash[0]-floor))
-            cash[0]-=ordinary;undistributed[0]-=ordinary;group_earnings_pool-=ordinary
-            legal=min(max(0.,undistributed[0]),max(0.,group_earnings_pool))
-            special=min(B['special_release_fraction']*max(0.,cash[0]-floor),legal)
-            cash[0]-=special;undistributed[0]-=special;group_earnings_pool-=special
-            payment=ordinary+special
-        else:
-            payment=min(legal,max(0.,cash[0]-floor))
-            cash[0]-=payment;undistributed[0]-=payment;group_earnings_pool-=payment
-        reduction=0.
-        if period>=B['capital_release_year'] and undistributed[0]>=-1e-12:
-            reduction=min(max(0.,cash[0]-floor),max(0.,registered[0]-B['minimum_parent_capital']))
-            cash[0]-=reduction;registered[0]-=reduction
-        payment+=reduction
-        assert min(cash)>=0
-        holder_cash.append(payment/B['shares'])
-        summaries.append(dict(year=period,dps=payment/B['shares'],cash=sum(cash),parent_retained=undistributed[0],
-                              parent_cash=cash[0],upstream=sum(subs_paid),capital_return=reduction))
-        prior=revenue
-    valuation=[]
-    for discount in B['discount_rates']:
-        today=0.;terminal=0.;first5=0.
-        for t,payment in enumerate(holder_cash,1):
-            today+=payment*pow(1+discount,-t)
-            if t<=5:first5+=payment*pow(1+discount,-t)
-            else:terminal+=payment*pow(1+discount,5-t)
-        valuation.append(dict(pv=today,tv5=terminal,pv_first5=first5,r=discount))
-    return dict(valuation=valuation,annual=summaries)
+            ordinary=max(0,min(available,consolidated_retained,mother_retained));extra=0
+            mother_retained-=ordinary;mother_cash-=ordinary;consolidated_retained-=ordinary
+        returned=0
+        if year>=12 and mother_retained>=-1e-12:
+            returned=min(max(0,mother_cash-floor),max(0,capital-.50),capital-treasury)
+            mother_cash-=returned;capital-=returned
+        distribution=ordinary+extra+returned
+        rows.append({'year':year,'D':distribution,'dps':distribution/shares0,'parent_cash':mother_cash,'parent_retained':mother_retained,'sub_cash':cash[:],'sub_retained':retained[:],'upstream':subdeclared,'capital':capital,'capital_return':returned})
+        oldrev=rev
+    vals=[]
+    for rate in [.1,.085]:
+        first=sum(x['dps']/(1+rate)**x['year'] for x in rows[:5])
+        tv=sum(x['dps']/(1+rate)**(x['year']-5) for x in rows[5:])
+        vals.append({'r':rate,'PV':first+tv/(1+rate)**5,'TV5':tv,'first5PV':first})
+    return {'rows':rows,'values':vals}
 
+ROOT=Path(__file__).resolve().parents[1]/'research/companies/CN/002372/models'
 
-def test_vasen_independent_literal_cash_legal_and_margin():
- independent={'base':recompute(),'margin_minus_1pp':recompute(-.01)}
- # All estimates now completed. Output is read only as comparison oracle, never used to calculate.
- production=json.loads((ROOT/'2026-Q3-output.json').read_text())
- checks=[]
- for name,out in independent.items():
-     delivered=production['scenarios'][name]
-     for i in range(2):
-         for key in ['pv','tv5','pv_first5']:
-             error=out['valuation'][i][key]-delivered['valuation'][i][key]
-             assert abs(error)<1e-9,(name,i,key,error)
-             checks.append(dict(case=name,endpoint=i,metric=key,independent=out['valuation'][i][key],error=error))
-     for a,b in zip(out['annual'],delivered['annual']):
-         assert abs(a['dps']-b['dps'])<1e-9
-         assert abs(a['cash']-b['cash'])<1e-8
-         assert abs(a['parent_retained']-b['parent']['retained'])<1e-8
+def test_vasen_independent_literal_cash_legal_margin_and_tax():
+ result={name:literal(shift,cash) for name,shift,cash in [('base',0.,.30),('margin_minus_1pp',-.01,.30),('jv_extra_tax_zero_basis_boundary',0.,.225),('jv_extra_tax_half_proceeds_basis',0.,.2625)]}
+ # Read comparison targets only after completing every economic calculation.
+ target=json.loads((ROOT/'2026-Q3-output.json').read_text())
+ errors={}
+ for name,case in result.items():
+     t=target['scenarios'][name];maximum=0
+     for i,x in enumerate(case['rows']):
+         y=t['annual'][i]
+         values=[abs(x['D']-y['distribution']),abs(x['parent_cash']-y['parent']['cash']),abs(x['parent_retained']-y['parent']['retained']),abs(x['capital']-y['parent']['registered_capital'])]
+         for j in range(4):values += [abs(x['sub_cash'][j]-y['subsidiaries'][j]['cash']),abs(x['sub_retained'][j]-y['subsidiaries'][j]['legal_retained'])]
+         maximum=max(maximum,*values)
+     for i,x in enumerate(case['values']):
+         assert abs(x['PV']-t['valuation'][i]['pv'])<1e-9
+         assert abs(x['TV5']-t['valuation'][i]['tv5'])<1e-9
+     assert maximum<1e-8;errors[name]=maximum
 
 def test_vasen_actual_functions_registration_capital_and_original_holder():
  import runpy,copy

@@ -14,6 +14,8 @@ BUDGET=dict(revenue0=4.95,revenue1=4.90,margin1=.147,parent_cost=.12,
  commitments=[.10,.05],settlement=[.30,.20],yield_rate=.012,sub_tax=.15,
  parent_tax=.25,payout=.80,special=.20,upstream_lag=0,opening_reserve_full=True,
  jv_book=.36784975989,jv_cash=.30,jv_year=5,other_book=.555418655,
+ # Exit cash is an AFTER-tax/fee realization budget, not gross proceeds or proven tax basis.
+ exit_cash_is_net=True,
  other_cash=.35,other_year=8,receivable=.03,receivable_year=6,
  parent_cash=1.45,parent_retained=.75,core_cash=[.25,.10,.12,.08],
  parent_floor=.25,subs_floor=.30,margin_shift=0.0,receivable_shock=0.0,capital_release_year=12,minimum_parent_capital=.50,subs_legal_opening=[.45,.18,.20,.10],subs_paid_ratio=[1.,1.,1.,1.])
@@ -139,9 +141,13 @@ def path(b,years=240):
         nonop_cash=-.00304348433 if y==1 else 0.;nonop_profit=0.;asset_recovery={}
         for label,book,cash,when in [('jointventure',b['jv_book'],b['jv_cash'],b['jv_year']),('other_equity',b['other_book'],b['other_cash'],b['other_year'])]:
             if y==when:
-                gain=cash-book;extra_tax=tax(p,max(0.,gain),b['parent_tax'],y) if gain>0 else 0.
+                gain=cash-book
+                # Net recovery already deducts realization tax/fees. Carrying amount is NOT tax basis.
+                # Accounting gain below is after those costs; no separate cash tax is double charged.
+                assert b['exit_cash_is_net']
+                extra_tax=0.
                 # Asset disposal losses don't create immediate tax refunds; no future credit assumed absent substantiation.
-                nonop_cash+=cash-extra_tax;nonop_profit+=gain-extra_tax;asset_recovery[label]=dict(book=book,cash=cash,gain=gain,tax=extra_tax)
+                nonop_cash+=cash-extra_tax;nonop_profit+=gain-extra_tax;asset_recovery[label]=dict(book=book,net_cash_after_tax_fees=cash,after_cost_accounting_gain=gain,separate_cash_tax=extra_tax,tax_basis='not disclosed; net recovery budget')
         if y==b['receivable_year']:
             nonop_cash+=b['receivable'];asset_recovery['old_receivable']=dict(cash=b['receivable'],profit=0.)
         p['cash']+=nonop_cash;parent_np+=nonop_profit;pres=accrue_legal(p,parent_np)
@@ -193,6 +199,8 @@ def scenarios():
     b=copy.deepcopy(BUDGET);b['opening_reserve_full']=False;cases['reserve_zero_only']=b
     b=copy.deepcopy(BUDGET);b.update(opening_reserve_full=False,subs_legal_opening=[0.]*4);cases['sub_legal_zero_only']=b
     b=copy.deepcopy(BUDGET);b.update(opening_reserve_full=False,subs_legal_opening=[0.]*4,parent_retained=0.);cases['all_legal_zero_boundary']=b
+    b=copy.deepcopy(BUDGET);b['jv_cash']=.225;cases['jv_extra_tax_zero_basis_boundary']=b
+    b=copy.deepcopy(BUDGET);b['jv_cash']=.2625;cases['jv_extra_tax_half_proceeds_basis']=b
     return cases
 
 def auxiliary():
