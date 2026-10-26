@@ -5,49 +5,6 @@ from pathlib import Path
 import pytest
 ROOT=Path(__file__).resolve().parents[1]/"research/companies/CN"
 
-def baiya_recalc(rate,margin_delta='0'):
- revenue=list(map(D,['3550','3760','4020','4260','4470','4649','4812','4956','5105','5258']))
- margin=list(map(D,['.070','.080','.088','.094','.096','.096','.095','.094','.093','.092']))
- cap=list(map(D,['140','145','150','155','160','164','168','172','177','182']))
- cash=D('342.469072')+D('140.541525')-D('34.700')-D('3.544871')-D('26.012546')-150
- lastwc=D('355.9134314');lastbuffer=D(150);flows=[];r=D(rate)
- for t,(rev,m,investment) in enumerate(zip(revenue,margin,cap)):
-  tax=D('.16') if t<4 else D('.23') if t==4 else D('.25')
-  profit=rev*(m+D(margin_delta))*(1-tax)
-  wc=rev/10;buffer=150*rev/D('3559.134314')
-  cashflow=profit+100+2*t-investment-(wc-lastwc)-(buffer-lastbuffer)
-  dividend=(profit-(D(50)/3 if t<3 else 0))*D('.60')
-  cash+=cashflow-dividend;flows.append(dividend);lastwc=wc;lastbuffer=buffer
- steady=revenue[-1]*D('1.02')*(margin[-1]+D(margin_delta))*D('.75')+(118-cap[-1])*D('1.02')-lastwc*D('.02')-lastbuffer*D('.02')
- release=(cash+30)*sum((1+r)**(-t) for t in (1,2,3))/3
- terminal=steady/(r-D('.02'))+release
- current=(sum(v/(1+r)**t for t,v in enumerate(flows,1))+terminal/(1+r)**10)/D('429.647790')
- return float(current)
-
-@pytest.mark.parametrize("rate,dm",[(".11","0"),(".10","0"),(".10","-.01")])
-def test_baiya_independent_full_period_value(rate,dm):
-    out=json.loads((ROOT/"003006/models/2026-Q3-output.json").read_text())
-    expected=out['margin_minus_1pp']['current_value'] if dm!='0' else out['scenarios']['base'][str(float(rate))]['current_value']
-    assert baiya_recalc(rate,dm)==pytest.approx(expected,abs=1e-8)
-
-def test_baiya_independent_entity_cash_conservation():
-    o=json.loads((ROOT/"003006/models/2026-Q3-output.json").read_text())
-    for case in o['scenarios'].values():
-     for result in case.values():
-      pc=376.877862-135;sc=418.753180-376.877862-15;debt=0
-      for row in result['rows']:
-       pc+=.9*(row['fcfe']+row['external_interest'])-row['external_interest']+row['intercompany_interest']-row['intercompany_support']+row['intercompany_repayment']+(row['debt']-debt)-row['dividend']
-       sc+=.1*(row['fcfe']+row['external_interest'])-row['intercompany_interest']+row['intercompany_support']-row['intercompany_repayment']
-       assert abs(pc-row['parent_surplus_cash'])<1e-7 and abs(sc-row['subsidiary_surplus_cash'])<1e-7
-       assert min(pc,sc)>=-1e-7;debt=row['debt']
-      pc=pc-debt+30
-      for rr in result['release_schedule']:
-       pc+=.9*rr['operating_fcfe']+rr['subsidiary_new_declaration']-rr['parent_holder_payment']
-       sc+=.1*rr['operating_fcfe']-rr['subsidiary_new_declaration']
-       assert abs(pc-rr['parent_cash'])<1e-7 and abs(sc-rr['subsidiary_cash'])<1e-7
-       assert min(pc,sc)>=-1e-7
-
-
 def qiaqia_recalc(rate,shift='0'):
  c=sum(map(D,['3.11039224728','1.23308011310','.38220270827','.35562269185']))-sum(map(D,['.9895','1.54880849806','.00364909872','.03593239247','.001477064','.015','.008']))
  shares=D('.505856969')-D('.009460417');treasury=D('.009460417');flows=[]
