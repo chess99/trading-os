@@ -164,3 +164,43 @@ test("standard CLI validates state stamps without creating sidecar files", async
     await assert.rejects(readFile(join(root, "research/standards/acceptances/000001/2026-H1.json")));
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+
+test("model exports preserve company, period and source bytes without publishing unrelated files", async () => {
+  const { createHash } = await import("node:crypto");
+  const { researchResourceLink } = await import("../app/lib/report-reference.mjs");
+  const { root, save } = await fixture();
+  const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+  try {
+    for (const ticker of ["000001", "000002"]) {
+      for (const period of ["2026-H1", "2026-Q3"]) {
+        await save(`research/companies/CN/${ticker}/reports/${period}.md`, `# ${ticker} ${period}\n`);
+        for (const extension of [".py", "-output.json"]) {
+          const bytes = extension === ".py" ? `# ${ticker} ${period}\nprint('模型')\n`
+            : JSON.stringify({ ticker, period, value: `${ticker}/${period}` });
+          await save(`research/companies/CN/${ticker}/models/${period}${extension}`, bytes);
+        }
+      }
+    }
+    await save("research/companies/CN/000001/models/secret.txt", "not for publication");
+    await save("research/companies/CN/000001/models/2025-FY.py", "no corresponding report");
+    await buildResearchData(root);
+    for (const ticker of ["000001", "000002"]) for (const period of ["2026-H1", "2026-Q3"]) {
+      const source = `research/companies/CN/${ticker}/reports/${period}.md`;
+      for (const extension of [".py", "-output.json"]) {
+        const name = `${period}${extension}`;
+        const link = researchResourceLink(`../models/${name}`, source);
+        assert.equal(link, `/data/models/${ticker}/${name}`);
+        const original = await readFile(join(root, `research/companies/CN/${ticker}/models/${name}`));
+        const exported = await readFile(join(root, `dashboard/public${link}`));
+        assert.equal(digest(exported), digest(original), `${ticker} ${period} ${extension}`);
+        if (extension === "-output.json") {
+          assert.equal(JSON.parse(exported).ticker, ticker);
+          assert.equal(JSON.parse(exported).period, period);
+        }
+      }
+    }
+    for (const name of ["secret.txt", "2025-FY.py"]) {
+      await assert.rejects(readFile(join(root, "dashboard/public/data/models/000001", name)), { code: "ENOENT" });
+    }
+  } finally { await rm(root, { recursive: true, force: true }); }
+});

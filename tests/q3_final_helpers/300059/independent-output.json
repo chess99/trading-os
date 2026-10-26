@@ -1,0 +1,466 @@
+{
+  "status": "PASS independent literal all scenarios and all 54 annual scalar fields; exit metadata covered by separate hand-value tests",
+  "checks": {
+    "base": {
+      "annual_max_absolute_difference_bn": 1.2732925824820995e-11,
+      "pv_tv": [
+        7.149832426573647,
+        10.749861002223877
+      ],
+      "rows": 200
+    },
+    "cyclical_2027_2029": {
+      "annual_max_absolute_difference_bn": 8.185452315956354e-12,
+      "pv_tv": [
+        6.962263996424883,
+        10.440851998582737
+      ],
+      "rows": 200
+    },
+    "structural_2027_on": {
+      "annual_max_absolute_difference_bn": 2.842170943040401e-14,
+      "pv_tv": [
+        4.154247470814374,
+        5.814794254757875
+      ],
+      "rows": 20
+    },
+    "optimistic_2027_on": {
+      "annual_max_absolute_difference_bn": 7.275957614183426e-12,
+      "pv_tv": [
+        8.513539645150415,
+        12.99649604915806
+      ],
+      "rows": 200
+    },
+    "capital_10pct_2027": {
+      "annual_max_absolute_difference_bn": 7.275957614183426e-12,
+      "pv_tv": [
+        6.945221655145514,
+        10.412775648557984
+      ],
+      "rows": 200
+    },
+    "funding_plus100bp_2027_on": {
+      "annual_max_absolute_difference_bn": 7.275957614183426e-12,
+      "pv_tv": [
+        6.320377643271695,
+        9.383378401979096
+      ],
+      "rows": 200
+    },
+    "upstream_delayed_two_years": {
+      "annual_max_absolute_difference_bn": 7.275957614183426e-12,
+      "pv_tv": [
+        7.139706363074821,
+        10.733178851661027
+      ],
+      "rows": 200
+    },
+    "maturity_release_delayed_to2037": {
+      "annual_max_absolute_difference_bn": 9.094947017729282e-12,
+      "pv_tv": [
+        6.224417705425406,
+        9.225289512714362
+      ],
+      "rows": 200
+    },
+    "no_tax_expiry_after2030": {
+      "annual_max_absolute_difference_bn": 5.002220859751105e-12,
+      "pv_tv": [
+        7.724153298192027,
+        11.696024064783778
+      ],
+      "rows": 200
+    },
+    "nonsec_capacity_50pct": {
+      "annual_max_absolute_difference_bn": 1.2732925824820995e-11,
+      "pv_tv": [
+        7.148695596935938,
+        10.74798813591381
+      ],
+      "rows": 200
+    },
+    "nonsec_capacity_zero_until_exit": {
+      "annual_max_absolute_difference_bn": 3.552713678800501e-14,
+      "pv_tv": [
+        6.3278534273172236,
+        9.395694358227772
+      ],
+      "rows": 20
+    },
+    "principal_recovery_delayed_10years": {
+      "annual_max_absolute_difference_bn": 1.2732925824820995e-11,
+      "pv_tv": [
+        7.130032863314273,
+        10.717242275765186
+      ],
+      "rows": 200
+    },
+    "principal_recovery_half_then_balance": {
+      "annual_max_absolute_difference_bn": 1.2732925824820995e-11,
+      "pv_tv": [
+        7.145587775928793,
+        10.742868166246465
+      ],
+      "rows": 200
+    },
+    "parent_negative_2027": {
+      "annual_max_absolute_difference_bn": 1.7763568394002505e-15,
+      "pv_tv": null,
+      "rows": 1
+    },
+    "liquidity_failure": {
+      "annual_max_absolute_difference_bn": 1.7763568394002505e-15,
+      "pv_tv": null,
+      "rows": 1
+    }
+  },
+  "endpoints": {
+    "low": [
+      6.048813720716324,
+      9.377964245217948
+    ],
+    "high": [
+      7.821900898802658,
+      11.5766181743766
+    ]
+  },
+  "convergence": {
+    "120": {
+      "base": [
+        7.14983245157407,
+        10.749861043410744
+      ],
+      "cyclical_2027_2029": [
+        6.9622640214216185,
+        10.440852039763529
+      ],
+      "structural_2027_on": [
+        4.154247470814374,
+        5.814794254757875
+      ],
+      "optimistic_2027_on": [
+        8.5135396701541,
+        12.9964960903503
+      ],
+      "capital_10pct_2027": [
+        6.9452216801409525,
+        10.412775689736637
+      ],
+      "funding_plus100bp_2027_on": [
+        6.3203776682658335,
+        9.383378443155609
+      ],
+      "upstream_delayed_two_years": [
+        7.13970638807742,
+        10.733178892851479
+      ],
+      "maturity_release_delayed_to2037": [
+        6.224417730493011,
+        9.225289554011907
+      ],
+      "no_tax_expiry_after2030": [
+        7.724153323195495,
+        11.696024105975662
+      ],
+      "nonsec_capacity_50pct": [
+        7.148695621936362,
+        10.747988177100677
+      ],
+      "nonsec_capacity_zero_until_exit": [
+        6.3278534273172236,
+        9.395694358227772
+      ],
+      "principal_recovery_delayed_10years": [
+        7.130032888314696,
+        10.717242316952053
+      ],
+      "principal_recovery_half_then_balance": [
+        7.145587800929216,
+        10.742868207433332
+      ],
+      "parent_negative_2027": null,
+      "liquidity_failure": null
+    },
+    "160": {
+      "base": [
+        7.1498324270254665,
+        10.749861002968226
+      ],
+      "cyclical_2027_2029": [
+        6.962263996876702,
+        10.440851999327085
+      ],
+      "structural_2027_on": [
+        4.154247470814374,
+        5.814794254757875
+      ],
+      "optimistic_2027_on": [
+        8.513539645602235,
+        12.99649604990241
+      ],
+      "capital_10pct_2027": [
+        6.945221655597334,
+        10.412775649302333
+      ],
+      "funding_plus100bp_2027_on": [
+        6.320377643723514,
+        9.383378402723444
+      ],
+      "upstream_delayed_two_years": [
+        7.139706363526641,
+        10.733178852405377
+      ],
+      "maturity_release_delayed_to2037": [
+        6.224417705877233,
+        9.225289513458724
+      ],
+      "no_tax_expiry_after2030": [
+        7.724153298643847,
+        11.69602406552813
+      ],
+      "nonsec_capacity_50pct": [
+        7.148695597387758,
+        10.74798813665816
+      ],
+      "nonsec_capacity_zero_until_exit": [
+        6.3278534273172236,
+        9.395694358227772
+      ],
+      "principal_recovery_delayed_10years": [
+        7.130032863766093,
+        10.717242276509536
+      ],
+      "principal_recovery_half_then_balance": [
+        7.145587776380613,
+        10.742868166990815
+      ],
+      "parent_negative_2027": null,
+      "liquidity_failure": null
+    },
+    "200": {
+      "base": [
+        7.149832426573647,
+        10.749861002223877
+      ],
+      "cyclical_2027_2029": [
+        6.962263996424883,
+        10.440851998582737
+      ],
+      "structural_2027_on": [
+        4.154247470814374,
+        5.814794254757875
+      ],
+      "optimistic_2027_on": [
+        8.513539645150415,
+        12.99649604915806
+      ],
+      "capital_10pct_2027": [
+        6.945221655145514,
+        10.412775648557984
+      ],
+      "funding_plus100bp_2027_on": [
+        6.320377643271695,
+        9.383378401979096
+      ],
+      "upstream_delayed_two_years": [
+        7.139706363074821,
+        10.733178851661027
+      ],
+      "maturity_release_delayed_to2037": [
+        6.224417705425406,
+        9.225289512714362
+      ],
+      "no_tax_expiry_after2030": [
+        7.724153298192027,
+        11.696024064783778
+      ],
+      "nonsec_capacity_50pct": [
+        7.148695596935938,
+        10.74798813591381
+      ],
+      "nonsec_capacity_zero_until_exit": [
+        6.3278534273172236,
+        9.395694358227772
+      ],
+      "principal_recovery_delayed_10years": [
+        7.130032863314273,
+        10.717242275765186
+      ],
+      "principal_recovery_half_then_balance": [
+        7.145587775928793,
+        10.742868166246465
+      ],
+      "parent_negative_2027": null,
+      "liquidity_failure": null
+    },
+    "260": {
+      "base": [
+        7.149832426565185,
+        10.749861002209936
+      ],
+      "cyclical_2027_2029": [
+        6.9622639964164215,
+        10.440851998568796
+      ],
+      "structural_2027_on": [
+        4.154247470814374,
+        5.814794254757875
+      ],
+      "optimistic_2027_on": [
+        8.513539645141952,
+        12.996496049144119
+      ],
+      "capital_10pct_2027": [
+        6.945221655137052,
+        10.412775648544045
+      ],
+      "funding_plus100bp_2027_on": [
+        6.320377643263233,
+        9.383378401965155
+      ],
+      "upstream_delayed_two_years": [
+        7.139706363066359,
+        10.733178851647088
+      ],
+      "maturity_release_delayed_to2037": [
+        6.224417705416944,
+        9.225289512700423
+      ],
+      "no_tax_expiry_after2030": [
+        7.724153298183565,
+        11.696024064769839
+      ],
+      "nonsec_capacity_50pct": [
+        7.148695596927476,
+        10.747988135899869
+      ],
+      "nonsec_capacity_zero_until_exit": [
+        6.3278534273172236,
+        9.395694358227772
+      ],
+      "principal_recovery_delayed_10years": [
+        7.130032863305812,
+        10.717242275751245
+      ],
+      "principal_recovery_half_then_balance": [
+        7.1455877759203315,
+        10.742868166232524
+      ],
+      "parent_negative_2027": null,
+      "liquidity_failure": null
+    }
+  },
+  "max_absolute_annual_error_bn": 1.2732925824820995e-11,
+  "auxiliary": {
+    "low": 6.651952256407571,
+    "high": 7.509394999316935
+  },
+  "all_future_vintage_rebuild": {
+    "base/securities": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 3.637978807091713e-12
+    },
+    "base/other": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 2.7284841053187847e-12
+    },
+    "cyclical_2027_2029/securities": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 7.275957614183426e-12
+    },
+    "cyclical_2027_2029/other": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 2.2737367544323206e-12
+    },
+    "structural_2027_on/securities": {
+      "batch_count": 20,
+      "max_absolute_difference_bn": 2.6645352591003757e-14
+    },
+    "structural_2027_on/other": {
+      "batch_count": 21,
+      "max_absolute_difference_bn": 7.105427357601002e-15
+    },
+    "optimistic_2027_on/securities": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 7.275957614183426e-12
+    },
+    "optimistic_2027_on/other": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 2.7284841053187847e-12
+    },
+    "capital_10pct_2027/securities": {
+      "batch_count": 200,
+      "max_absolute_difference_bn": 2.7284841053187847e-12
+    },
+    "capital_10pct_2027/other": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 3.637978807091713e-12
+    },
+    "funding_plus100bp_2027_on/securities": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 5.002220859751105e-12
+    },
+    "funding_plus100bp_2027_on/other": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 1.8189894035458565e-12
+    },
+    "upstream_delayed_two_years/securities": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 3.183231456205249e-12
+    },
+    "upstream_delayed_two_years/other": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 2.7284841053187847e-12
+    },
+    "maturity_release_delayed_to2037/securities": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 2.7284841053187847e-12
+    },
+    "maturity_release_delayed_to2037/other": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 3.183231456205249e-12
+    },
+    "no_tax_expiry_after2030/securities": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 2.7284841053187847e-12
+    },
+    "no_tax_expiry_after2030/other": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 2.2737367544323206e-12
+    },
+    "nonsec_capacity_50pct/securities": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 3.637978807091713e-12
+    },
+    "nonsec_capacity_50pct/other": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 2.2737367544323206e-12
+    },
+    "nonsec_capacity_zero_until_exit/securities": {
+      "batch_count": 20,
+      "max_absolute_difference_bn": 7.105427357601002e-15
+    },
+    "nonsec_capacity_zero_until_exit/other": {
+      "batch_count": 21,
+      "max_absolute_difference_bn": 7.105427357601002e-15
+    },
+    "principal_recovery_delayed_10years/securities": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 3.637978807091713e-12
+    },
+    "principal_recovery_delayed_10years/other": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 2.7284841053187847e-12
+    },
+    "principal_recovery_half_then_balance/securities": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 3.637978807091713e-12
+    },
+    "principal_recovery_half_then_balance/other": {
+      "batch_count": 201,
+      "max_absolute_difference_bn": 2.7284841053187847e-12
+    }
+  }
+}

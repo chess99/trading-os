@@ -1,0 +1,56 @@
+{
+  "schema": "deterministic-xz-json-envelope-v1",
+  "payload_schema": "BNBM-entity-economic-budget-v2",
+  "payload_sha256": "f9c0264b2926e7d40f22f0903ac4dbb8e4f96ccc5d64477c7a713d49081bd270",
+  "uncompressed_bytes": 97501197,
+  "compression": {
+    "format": "xz",
+    "preset": 6,
+    "library": "Python standard library lzma"
+  },
+  "compressed_bytes": 4161468,
+  "compressed_sha256": "54bc5cd1493949a8a58c9727c669796962b7dc8bab78918a3410c79bc47d7ad8",
+  "expand": "python 2026-Q3.py --expand [target]; stdlib lzma.decompress(base64.b64decode(payload_xz_base64)); default expanded-output.json",
+  "value_range": {
+    "low": 14.67,
+    "high": 16.82,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-26T00:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.531392,
+      0.582824,
+      0.616686,
+      0.657298,
+      0.699162
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 19.899234,
+        "high": 22.226806
+      }
+    }
+  },
+  "tests": {
+    "registered20_paid10_reserve5_profit10_levy1": "pass",
+    "loss_coverage_first": "pass",
+    "reserve_already_full": "pass",
+    "registered_conversion_updates_ceiling": "pass",
+    "principal_not_profit_tax_basis_separate": "pass",
+    "finite_exit_debt_first_noncash_haircut": "pass",
+    "exit_cost_unfunded_not_hidden": "pass",
+    "minority_issue_register_not_valuation_proxy": "pass",
+    "profit_constrained_capital_return": "pass",
+    "minority_capital_real_equity": "pass",
+    "negative_EBIT_no_unconditional_refund": "pass",
+    "g0_maintenance_survives": "pass",
+    "old_receivable_not_new_profit": "pass",
+    "finite_finance_fails": "pass",
+    "actual_refunds_reduce_shares": "pass",
+    "mature_cash_not_frozen": "pass"
+  }
+}

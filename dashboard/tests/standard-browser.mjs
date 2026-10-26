@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { spawn } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { setTimeout as delay } from "node:timers/promises";
@@ -26,7 +27,8 @@ try {
     await delay(1000);
   }
   assert.ok(ready, `Dev server not ready: ${log}`);
-  browser = await chromium.launch({ headless: true });
+  browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+    ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH } : {}) });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   const quoteRequests = [];
   const errors = [];
@@ -71,6 +73,46 @@ try {
     assert.equal(await page.locator(".markdown-document").count(), 0);
     passed.push("周期引用保持历史身份；不存在的周期不自动回退");
   }
+  // Verify every completed Q3 model download, alongside history-isolation checks.
+  // Check the clicked download bytes, not HTTP 200 (an SPA fallback can return HTML).
+  const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+  let checkedDownloads = 0;
+  let expectedDownloads = 0;
+  const q3Companies = catalog.companies.filter((company) => company.reports.some((report) => report.period === "2026-Q3"));
+  for (const company of q3Companies) {
+    const report = company.reports.find((item) => item.period === "2026-Q3");
+    assert.ok(report, `${company.ticker} 2026-Q3 report must exist`);
+    const artifacts = [];
+    for (const extension of [".py", "-output.json"]) {
+      const filename = `${report.period}${extension}`;
+      let original;
+      try { original = await readFile(new URL(`../../research/companies/CN/${company.ticker}/models/${filename}`, import.meta.url)); }
+      catch (error) { if (error.code === "ENOENT") continue; throw error; }
+      artifacts.push({ filename, original });
+    }
+    if (!artifacts.length) continue;
+    assert.equal(artifacts.length, 2, `${company.ticker} model source/output must be a complete pair`);
+    expectedDownloads += artifacts.length;
+    await page.goto(`http://127.0.0.1:4173/reports/${company.ticker}?version=${report.period}`);
+    await page.locator(".markdown-document").waitFor();
+    for (const { filename, original } of artifacts) {
+      const path = `/data/models/${company.ticker}/${filename}`;
+      const link = page.locator(`.markdown-document a[href="${path}"]`).first();
+      await link.waitFor();
+      assert.equal(await link.getAttribute("download"), "");
+      const pendingDownload = page.waitForEvent("download");
+      await link.click();
+      const download = await pendingDownload;
+      assert.equal(download.suggestedFilename(), filename);
+      assert.equal(download.url(), `http://127.0.0.1:4173${path}`);
+      const downloaded = await readFile(await download.path());
+      assert.equal(digest(downloaded), digest(original), `${company.ticker} ${report.period} ${filename}`);
+      checkedDownloads++;
+    }
+  }
+  assert.ok(expectedDownloads >= 10, "五家试点的十个附件不能因新增研究而丢失");
+  assert.equal(checkedDownloads, expectedDownloads, "所有已完成 Q3 模型附件均须实际点击核对");
+  passed.push(`模型下载校验：${checkedDownloads} 个附件的公司、周期、文件名和 SHA-256 与源文件一致`);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("http://127.0.0.1:4173/");
   await page.getByRole("tab", { name: /^最新周期模型/ }).waitFor();
