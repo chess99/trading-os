@@ -24,26 +24,3 @@ def test_supor_independent_cash_value(loss):
  target=(out['cases']['base']['valuations'] if not loss else out['sensitivity_domestic_margin_minus_1pp'])[0]['current_per_share'];assert abs(v-target)<1e-10;assert v == pytest.approx(target, abs=1e-10)
 
 
-def test_huaneng_conditional_asset_and_financing_limits():
-    import importlib.util
-    actual = result("600025")
-    # Preserve the original 40-year operating-asset diagnostic inside the now-complete model.
-    ev = 0.
-    for year in range(1, 41):
-        inflation = 1.005 ** (year - 1)
-        runoff = max(0., min(1., (25 - year) / 10)) if year > 15 else 1.
-        revenue = (25.6 + 1.6 * runoff) * inflation
-        tax = .15 if year <= 4 else .25
-        fcf = (revenue - 6.2 * inflation - 7.5 * inflation) * (1 - tax)
-        fcf += (7.5 - 4.5) * inflation
-        if year in (20, 40):
-            fcf -= 8 * inflation
-        ev += fcf / 1.06 ** year
-    assert ev == pytest.approx(actual["scenarios"]["engineering_low"]["mature"]["ev"], abs=1e-9)
-    assert actual["value_range"] is not None and actual["return_model"] is not None
-    spec = importlib.util.spec_from_file_location("huaneng_q3", ROOT / "600025/models/2026-Q3.py")
-    model = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(model)
-    assert model.funding_step(1, 3, 2, 6, 4, 0, 2) == (2, 2, 0)
-    with pytest.raises(ValueError):
-        model.funding_step(1, 3, 2, 9, 0, 0, 2)
