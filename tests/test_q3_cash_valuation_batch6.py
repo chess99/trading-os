@@ -130,18 +130,7 @@ def rebuilt(rate,growth,roi,sub_start=3,wait=1):
 
 import pytest
 ROOT=Path(__file__).resolve().parents[1]/'research/companies/CN'
-@pytest.mark.parametrize('rate,g,roi,key', [('.10','.015','.14','core_low'),('.09','.02','.18','core_high'),('.105','.0175','.16','r_105')])
-def test_jiangzhong_raw_entity_rebuild(rate,g,roi,key):
- out=json.loads((ROOT/'600750/models/2026-Q3-output.json').read_text())
- actual=rebuilt(rate,g,roi)
- expected=out[key] if key!='r_105' else out['sensitivity'][key]
- for field in ['value','terminal_per_share','terminal_operating','terminal_financial']:
-  assert float(actual[field])==pytest.approx(expected[field],abs=1e-7)
- for a,b in zip(actual['rows'],expected['rows']):
-  assert float(a['cash']['p'])==pytest.approx(b['p_cash'],abs=1e-7)
-  assert float(a['cash']['j'])==pytest.approx(b['jcash'],abs=1e-7)
-  assert float(a['cash']['o'])==pytest.approx(b['other_n_cash'],abs=1e-7)
-
+# 江中完整纠正及独立复算移至 test_q3_jiangzhong_final.py。
 
 def tebao_recalc(ghscale=1.,r=.115):
     a={'hbv': [3250, 3350, 3350, 3300, 3200, 3100, 3000, 2900, 2800, 2700], 'gh': [800, 1050, 1300, 1500, 1650, 1800, 1930, 2050, 2150, 2220], 'other': [320, 350, 380, 400, 420, 440, 455, 465, 470, 470], 'new': [0, 0, 0, 100, 300, 450, 600, 700, 750, 780], 'rd': [500, 540, 580, 620, 650, 680, 700, 710, 710, 710], 'milestones': [80, 100, 160, 150, 120, 100, 80, 60, 50, 50], 'capex': [520, 470, 400, 330, 300, 300, 300, 300, 300, 300], 'da': [145, 165, 185, 210, 235, 255, 275, 290, 300, 300], 'gross': [0.887, 0.883, 0.878, 0.873, 0.868, 0.863, 0.858, 0.853, 0.85, 0.85], 'sell': [0.355, 0.35, 0.345, 0.34, 0.335, 0.335, 0.335, 0.335, 0.335, 0.335], 'admin': [0.085, 0.085, 0.085, 0.085, 0.085, 0.085, 0.085, 0.085, 0.085, 0.085], 'donation': [0.018, 0.018, 0.018, 0.018, 0.018, 0.018, 0.018, 0.018, 0.018, 0.018], 'research_sub': [90, 100, 110, 120, 130, 135, 140, 140, 140, 140], 'nwc_ratio': 0.34, 'nwc_open': 1471.73526582, 'tail_decay': -0.02, 'bank_limit': 1100.0, 'bank_rate': 0.035, 'yield': 0.012, 'payout': 0.3, 'b_payout': 0.6, 'old_settlement_years': 4, 'initial_cash': {'P': 2005.2855085, 'B': 195.0, 'R': 40.0}, 'initial_retained': {'P': 1950.0, 'B': 600.0, 'R': -100.0}, 'delay': 1, 'fund_recovery_year': 8, 'fund_recovery': 161.65239399, 'convert': False, 'zero_dividend': False, 'revenue_multiplier': 1.0, 'gh_multiplier': 1.0, 'shift_parent_to_sub': 0.0, 'reserve_extra': 0.0}
