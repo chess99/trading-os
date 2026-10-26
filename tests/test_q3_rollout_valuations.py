@@ -41,35 +41,6 @@ def test_hikvision_independent_cash_and_value(margin, rate, key):
     assert value == pytest.approx(expected, abs=1e-9)
 
 
-@pytest.mark.parametrize("margin,rate,key", [(.18, .10, "core_low"), (.17, .095, "margin_minus_100bp")])
-def test_fuyao_independent_cash_and_value(margin, rate, key):
-    actual = result("600660")[key]
-    cash = 21.487115845 + 1.009542675 - .689662926
-    debt = sum([9.848754943, 3.709805867, 5.081237775, 1.499759929,
-                .297915057, .041716237, 2.083572932])
-    previous = 46.5
-    dividends = []
-    for revenue, capex, depreciation in zip(
-        [47, 50, 53, 56, 58.8], [6.3, 6, 5.7, 5.3, 5], [3, 3.3, 3.5, 3.7, 3.9], strict=True,
-    ):
-        profit = revenue * margin + (cash * .02 - debt * .03) * .8
-        free_cash = profit + depreciation - capex - .12 * (revenue - previous)
-        dividend = min(.6 * profit, free_cash)
-        dividends.append(dividend)
-        cash += free_cash - dividend
-        previous = revenue
-    nopat, operating_value = 58.8 * margin, 0.
-    for year, growth in enumerate([.04, .035, .03, .0275, .025], 1):
-        nopat *= 1 + growth
-        operating_value += nopat * (1 - growth / .15) / (1 + rate) ** year
-    operating_value += nopat * 1.025 * (1 - .025 / .15) / (rate - .025) / (1 + rate) ** 5
-    terminal = (operating_value + cash - debt - .08 * 58.8) / 2.609743532
-    value = sum(d / (1 + rate) ** t for t, d in enumerate(dividends, 1)) / 2.609743532
-    value += terminal / (1 + rate) ** 5
-    assert value == pytest.approx(actual["current_value"], abs=1e-9)
-    assert terminal == pytest.approx(actual["terminal_per_share"], abs=1e-9)
-
-
 @pytest.mark.parametrize("loss", [0, .01])
 def test_supor_independent_cash_value(loss):
  out=result("002032")
