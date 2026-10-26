@@ -7,13 +7,13 @@ for comparison. Units RMB million. Different array-state implementation.
 import math,json,pathlib
 HERE=pathlib.Path(__file__).resolve().parents[1]/"research/companies/CN/688188/models"
 
-def calculate(growth,start_margin,end_margin,discount,initial_return,terminal_return,sweep,shock=0.,finalmargin=None,tail=0.02,prefix=False):
+def calculate(growth,start_margin,end_margin,discount,initial_return,terminal_return,sweep,shock=0.,finalmargin=None,tail=0.02,prefix=False,capital_return_amount=0.,cancel_fraction=0.,return_year=10):
     cash=[4500.,806.0990022124001,380.,25.0034]; earned=[1881.95245753,200.,300.,-1.9109]; reserve=[144.3649635,0.,0.,0.]; capital=[405.984426,60.,32.,55.]
     borrowing=[28.99906365,0.,0.,0.]; owing=[236.03437363,0.,0.,0.]; revenue=2500.; oldprofit=1150.; stock=405.984426
     loans=[0.,0.]
     previous_routes=[0.,0.]; forwarding=[0.,0.]; waiting=[0.,0.]
     protected=[999.4403,24.984,0.,11.2534]
-    precision_profit=-4.
+    precision_profit=-4.; original_units=1.
     total=0.; remainder=0.; first=[]; snapshots=[]
     for t in range(1,601):
         g=growth[t-1] if t<=10 else tail
@@ -47,6 +47,7 @@ def calculate(growth,start_margin,end_margin,discount,initial_return,terminal_re
             loans[0]-=repay;cash[0]+=repay;cash[1]-=repay
             protected[0]+=repay
             protected=[v*1.02 for v in protected]
+        if t==8:protected=[0.,0.,0.,0.]
         precision_profit=[-4,0,2,4,6][t-1] if t<=5 else precision_profit*(1+g)
         operating=[profit*.779,profit*.12-precision_profit,profit*.1,precision_profit]
         own=[operating[j]+cash[j]*.02-initialdebt[j]*.04-charge*[.8,.1,.1,0][j] for j in range(4)]
@@ -76,7 +77,11 @@ def calculate(growth,start_margin,end_margin,discount,initial_return,terminal_re
         waiting=[netpay[3]*.196964,netpay[2]*.9275]
         previous_routes=route_now[:]
         owing=[0,netpay[1],netpay[2],netpay[3]]
-        payout=netpay[0]/stock+(old_common/405.557343 if t==1 else 0)
+        payout=original_units*netpay[0]/stock+(old_common/405.557343 if t==1 else 0)
+        if t==return_year and capital_return_amount:
+            payout+=original_units*capital_return_amount/stock
+            cash[0]-=capital_return_amount*1.01
+            capital[0]*=1-cancel_fraction;stock*=1-cancel_fraction;original_units*=1-cancel_fraction
         total+=payout/((1+discount)**t)
         if t>5:remainder+=payout/((1+discount)**(t-5))
         if t<=5:first.append(payout)
@@ -87,6 +92,8 @@ def calculate(growth,start_margin,end_margin,discount,initial_return,terminal_re
 
 def test_bochu_independent_literal_entity_distributions():
  checks={
+  'capital_return_y10_300m':calculate([.15,.14,.12,.10,.08,.065,.05,.04,.03,.02],.46,.40,.09,.60,.25,.15,capital_return_amount=300.,cancel_fraction=.1),
+  'capital_return_y10_600m':calculate([.15,.14,.12,.10,.08,.065,.05,.04,.03,.02],.46,.40,.09,.60,.25,.15,capital_return_amount=600.,cancel_fraction=.2),
   'core_low':calculate([.13,.12,.10,.09,.07,.055,.045,.035,.025,.02],.45,.39,.095,.55,.25,.10),
   'core_high':calculate([.17,.15,.13,.11,.09,.07,.055,.04,.03,.02],.47,.41,.085,.65,.28,.20),
   'base':calculate([.15,.14,.12,.10,.08,.065,.05,.04,.03,.02],.46,.40,.09,.60,.25,.15),
@@ -113,14 +120,16 @@ def test_bochu_actual_functions_complete_restricted_fund_roundtrip():
  s=x['table_schema'];count=0
  for group,cases in tables.items():
   for key,values in cases.items():
+   previous_reserve=[144.3649635,0.,0.,0.]
    for v in values:
     row=dict(zip(s['row_columns'],v));nodes=[dict(zip(s['node_columns'],n)) for n in row['nodes']];count+=1
     for i,n in enumerate(nodes):
      def near(a,b):assert math.isclose(a,b,rel_tol=1e-11,abs_tol=1e-7),(group,key,row['year'],i,a,b)
      near(n['restricted_close'],n['restricted_open']+n['restricted_transfer']+n['restricted_financial_income']-n['qualified_project_spending']-n['conditional_authorised_release'])
-     near(n['cash_close'],n['financial_interest_base']+n['own_profit']+n['noncash_compensation']-n['investment']+n['capital_inflow']+n['debt_draw']-n['debt_repaid']-(n['new_declaration'] if i==0 else 0))
+     near(n['cash_close'],n['financial_interest_base']+n['own_profit']+n['noncash_compensation']-n['investment']+n['capital_inflow']+n['debt_draw']-n['debt_repaid']-(n['new_declaration'] if i==0 else 0)-((row['capital_return_event']['capital_return']+row['capital_return_event']['friction']) if i==0 and row['capital_return_event'] else 0))
      near(n['retained_close'],n['retained_open']+n['own_profit']+n['declared_investment_income']-n['reserve_appropriation']-n['new_declaration'])
-     assert n['reserve']<=n['registered_capital_budget']*.5+1e-7
+     assert n['reserve']<=max(previous_reserve[i],n['registered_capital_budget']*.5)+1e-7
+     previous_reserve[i]=n['reserve']
      assert n['new_declaration']<=max(n['legal_profit_before_distribution'],0)+1e-7
      if i==0:
       assert n['intercompany_loan_receivable']<=80+1e-7
