@@ -39,24 +39,17 @@ def test_catl_formal_dcf_constant_cash_perpetuity(monkeypatch):
     assert result["financial5"] == pytest.approx(0.0)
 
 
-def test_cti_formal_calc_perpetuity_and_retained_cash(monkeypatch):
+def test_cti_formal_payer_profit_cash_and_principal():
     model = load_model("300012")
-    for name in ("DA", "CAPEX", "NWC", "ACQUISITIONS", "RENT_GAP"):
-        monkeypatch.setattr(model, name, [0.0] * 5)
-    for name, value in {
-        "BASE_E": [1.0] * 5,
-        "DPS": [1.0] * 5,
-        "CASH": 1.0,
-        "SHARES": 1.0,
-    }.items():
-        monkeypatch.setattr(model, name, value)
-    result = model.calc(k=0.1, terminal_g=0, tail_g=[0.0] * 5)
-    # Unit perpetuity plus initial cash earning 1.5%, released at year 5.
-    expected_cash = 1.015**5
-    assert result["value_per_share"] == pytest.approx(10.0 + expected_cash / 1.1**5)
-    assert result["terminal_cash_y5_bn"] == pytest.approx(expected_cash)
-    assert result["terminal_share_y5"] == pytest.approx(10.0 + expected_cash)
-    assert result["immediate_fcfe_value_per_share"] == pytest.approx(11.0)
+    # Same owner_cash_step used in every annual production calc: legal profit and cash cap.
+    paid = model.owner_cash_step(0, 5, 20, 10, 100, 100, paid_capital=10)
+    assert paid["reserve_add"] == pytest.approx(1)
+    assert paid["paid"] == pytest.approx(9)
+    old_receivable = model.owner_cash_step(0, 0, 20, 0, 10, 10)
+    assert old_receivable["paid"] == 0
+    assert old_receivable["cash"] == 10
+    loss = model.owner_cash_step(-8, 0, 20, 10, 100, 100)
+    assert loss["paid"] == pytest.approx(1.8)
 
 
 def test_mobile_formal_calculate_constant_cash_perpetuity(monkeypatch):
