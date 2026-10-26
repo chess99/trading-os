@@ -73,16 +73,15 @@ try {
     assert.equal(await page.locator(".markdown-document").count(), 0);
     passed.push("周期引用保持历史身份；不存在的周期不自动回退");
   }
-  // Verify the pilot Q3 model downloads, alongside the history-isolation checks above.
+  // Verify every completed Q3 model download, alongside history-isolation checks.
   // Check the clicked download bytes, not HTTP 200 (an SPA fallback can return HTML).
   const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
   let checkedDownloads = 0;
-  const pilotTickers = ["300012", "300750", "600066", "600674", "600941"];
-  for (const ticker of pilotTickers) {
-    const company = catalog.companies.find((item) => item.ticker === ticker);
-    assert.ok(company, `${ticker} pilot company must exist`);
+  let expectedDownloads = 0;
+  const q3Companies = catalog.companies.filter((company) => company.reports.some((report) => report.period === "2026-Q3"));
+  for (const company of q3Companies) {
     const report = company.reports.find((item) => item.period === "2026-Q3");
-    assert.ok(report, `${ticker} 2026-Q3 report must exist`);
+    assert.ok(report, `${company.ticker} 2026-Q3 report must exist`);
     const artifacts = [];
     for (const extension of [".py", "-output.json"]) {
       const filename = `${report.period}${extension}`;
@@ -92,6 +91,8 @@ try {
       artifacts.push({ filename, original });
     }
     if (!artifacts.length) continue;
+    assert.equal(artifacts.length, 2, `${company.ticker} model source/output must be a complete pair`);
+    expectedDownloads += artifacts.length;
     await page.goto(`http://127.0.0.1:4173/reports/${company.ticker}?version=${report.period}`);
     await page.locator(".markdown-document").waitFor();
     for (const { filename, original } of artifacts) {
@@ -109,7 +110,8 @@ try {
       checkedDownloads++;
     }
   }
-  assert.equal(checkedDownloads, 10, "五家 Q3 试点公司应提供十个可复算模型附件");
+  assert.ok(expectedDownloads >= 10, "五家试点的十个附件不能因新增研究而丢失");
+  assert.equal(checkedDownloads, expectedDownloads, "所有已完成 Q3 模型附件均须实际点击核对");
   passed.push(`模型下载校验：${checkedDownloads} 个附件的公司、周期、文件名和 SHA-256 与源文件一致`);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("http://127.0.0.1:4173/");
