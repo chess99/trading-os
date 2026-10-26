@@ -138,7 +138,7 @@ def test_sieyuan_formal_value_and_actual_payment_hand_cases():
 def test_huaneng_conditional_asset_and_financing_limits():
     import importlib.util
     actual = result("600025")
-    # Conditional operating assets only, never assert a complete company valuation.
+    # Preserve the original 40-year operating-asset diagnostic inside the now-complete model.
     ev = 0.
     for year in range(1, 41):
         inflation = 1.005 ** (year - 1)
@@ -150,8 +150,8 @@ def test_huaneng_conditional_asset_and_financing_limits():
         if year in (20, 40):
             fcf -= 8 * inflation
         ev += fcf / 1.06 ** year
-    assert ev == pytest.approx(actual["mature_low"]["ev"], abs=1e-9)
-    assert actual["value_range"] is None and actual["return_model"] is None
+    assert ev == pytest.approx(actual["scenarios"]["engineering_low"]["mature"]["ev"], abs=1e-9)
+    assert actual["value_range"] is not None and actual["return_model"] is not None
     spec = importlib.util.spec_from_file_location("huaneng_q3", ROOT / "600025/models/2026-Q3.py")
     model = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(model)
