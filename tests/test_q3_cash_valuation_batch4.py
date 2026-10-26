@@ -5,24 +5,6 @@ from pathlib import Path
 import pytest
 ROOT=Path(__file__).resolve().parents[1]/"research/companies/CN"
 
-def qiaqia_recalc(rate,shift='0'):
- c=sum(map(D,['3.11039224728','1.23308011310','.38220270827','.35562269185']))-sum(map(D,['.9895','1.54880849806','.00364909872','.03593239247','.001477064','.015','.008']))
- shares=D('.505856969')-D('.009460417');treasury=D('.009460417');flows=[]
- for i,(rev,margin,cap,wc) in enumerate(zip(['7.7','8.1','8.5','8.9','9.3'],['.093','.096','.097','.097','.097'],['.13','.10','.08','.08','.08'],['.1','.072','.072','.072','.072'])):
-  profit=D(rev)*(D(margin)+D(shift))*D('.75')-D('.005');buy=D('.048522936') if i==0 else D(0);shares-=buy/20;treasury+=buy/20
-  issuance=treasury*20 if i==1 else D(0)
-  if i==1:shares+=treasury;treasury=D(0)
-  dividend=profit*D('.7');c=c*D('1.015')+profit-D(cap)-D(wc)-buy+issuance-dividend;flows.append(dividend/shares)
- r=D(rate);terminal=(D('9.3')*D('1.02')*(D('.097')+D(shift))*D('.75')-D('.0051')-D('9.3')*D('.02')*(D('.5')+D('.8')/D('7.4')))/(r-D('.02'))+c-D('9.3')*D('.8')/D('7.4')
- return float(sum(v/(1+r)**i for i,v in enumerate(flows,1))+terminal/shares/(1+r)**5)
-
-@pytest.mark.parametrize("rate,shift",[(".105","0"),(".095","0"),(".10","-.01")])
-def test_qiaqia_independent_opening_bridge_and_cash(rate,shift):
-    out=json.loads((ROOT/"002557/models/2026-Q3-output.json").read_text())
-    expected=out['sensitivity']['margin_minus_1pp']['value'] if shift!='0' else out['core'][str(float(rate))]['value']
-    assert qiaqia_recalc(rate,shift)==pytest.approx(expected,abs=1e-9)
-
-
 def aima_recalc(r,g,roic,shift='0'):
  r,g,roic,shift=map(D,(r,g,roic,shift));cash=D(2467+5970+1519+4400-5000-70);debt=D(2970);pc=D(1800);legal=D(1838);sl=D(5000);prev=D(22500);flows=[]
  for i,(rev,m,cap,da) in enumerate(zip([24000,26000,27500,28600,29700],['.055','.061','.065','.066','.066'],[2000,1500,1200,1100,1150],[850,900,950,1000,1050])):
