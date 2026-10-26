@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """CN:688188 2026-Q3. RMB million, million shares; standard-library only.
-Annual periods end on successive anniversaries of 2026-10-26. Four explicit
-legal payout nodes; residual small holding entities conservatively absorbed in the
-sales-node operating budget, not separately capitalised. No market price.
+Annual periods end on successive anniversaries of 2026-10-26. Four real operating-company reserve accounts; indirect ownership routes are
+economic cash-transmission channels, not fictitious Company Law reserve pools. No market price.
 """
 import json, math, pathlib, argparse, copy, gzip, base64, hashlib
 ROOT=pathlib.Path(__file__).resolve().parent
@@ -10,7 +9,7 @@ SCENARIOS={
  'base':dict(g=[.15,.14,.12,.10,.08,.065,.05,.04,.03,.02],m0=.46,mt=.40,r=.09,roi=.60,rt=.25,release=.15,up_start=3),
  'core_low':dict(g=[.13,.12,.10,.09,.07,.055,.045,.035,.025,.02],m0=.45,mt=.39,r=.095,roi=.55,rt=.25,release=.10,up_start=3),
  'core_high':dict(g=[.17,.15,.13,.11,.09,.07,.055,.04,.03,.02],m0=.47,mt=.41,r=.085,roi=.65,rt=.28,release=.20,up_start=3),
- 'cyclical':dict(g=[-.10,.02,.20,.15,.10,.07,.05,.04,.03,.02],m0=.38,mt=.40,r=.09,roi=.60,rt=.25,release=.15,up_start=4),
+ 'cyclical':dict(cycle=True,g=[-.10,.02,.20,.15,.10,.07,.05,.04,.03,.02],m0=.38,mt=.40,r=.09,roi=.60,rt=.25,release=.15,up_start=4),
  'structural':dict(g=[-.12,-.08,0,.02,.02,.02,.02,.02,.02,.02],m0=.32,mt=.25,r=.105,roi=.25,rt=.15,release=.10,up_start=5),
  'optimistic':dict(g=[.22,.20,.18,.15,.12,.09,.07,.05,.03,.02],m0=.48,mt=.43,r=.085,roi=.70,rt=.30,release=.20,up_start=3)
 }
@@ -42,10 +41,17 @@ def run(s,n=600,records=True):
     if p.get('parent_cash_shift'): cash[0]-=p['parent_cash_shift'];cash[1]+=p['parent_cash_shift']
     invcap=[400.,270.,200.,30.]; shares=405.984426; rev=2500.; lastprofit=1150.
     intercompany=[0.,0.]
+    channel_queue={}; prior_forward=[0.,0.]; transit_cash=[0.,0.]
+    registration_queue={}
+    registration_delay=int(p.get('registration_delay',0))
+    if registration_delay:
+        cap[0]=405.557343
+        registration_queue[1+registration_delay]=405.984426-405.557343
     restricted=[999.4403,24.984,0.,11.2534]
     precision_op=-4.
     pv=tv=0.; rows=[]; maxfail=0.; cum_minor=0.; d5=[]
     for y in range(1,n+1):
+        cap[0]+=registration_queue.pop(y,0.)
         growth=p['g'][min(y-1,9)] if y<=10 else p.get('tail_g',.02)
         if p.get('prefix_base') and y<=5: growth=SCENARIOS['base']['g'][y-1]
         previous_rev=rev; rev*=1+growth
@@ -65,9 +71,18 @@ def run(s,n=600,records=True):
         newshares=([1+3.5314*.30,3.5314*.30+.8039/3,3.5314*.40+.8039/3,.8039/3][y-1] if y<=4 else 0.)
         if p.get('no_issue'): newshares=0
         proceeds=(35.+3.5314*.30*50.7 if y==1 else newshares*50.7) if y<=4 and not p.get('no_issue') else 0.
-        shares+=newshares; cap[0]+=newshares
+        shares+=newshares
+        if registration_delay:registration_queue[y+registration_delay]=registration_queue.get(y+registration_delay,0.)+newshares
+        else:cap[0]+=newshares
         start_cash=cash.copy(); start_re=re.copy(); start_debt=debt.copy(); start_pay=payable.copy()
-        old_received=[payable[1]+payable[3]*.946964,payable[2]*.9275,0.,0.]
+        # Direct Precision 75%; indirect 19.6964% and Boci 92.75% are
+        # separately governed pass-through routes. No partnership 50% pool.
+        channel_in=[payable[3]*.196964,payable[2]*.9275]
+        channel_out=prior_forward.copy()
+        transit_cash=[transit_cash[i]+channel_in[i]-channel_out[i] for i in range(2)]
+        assert min(transit_cash)>-1e-7
+        old_received=[payable[1]+payable[3]*.75+channel_out[0],channel_out[1],0.,0.]
+        channel_forward=channel_queue.pop(y,[0.,0.])
         minor_paid=payable[2]*(1-.9275)+payable[3]*(1-.946964)
         old_common=payable[0]
         for i in range(4): cash[i]+=old_received[i]-payable[i]
@@ -109,14 +124,14 @@ def run(s,n=600,records=True):
         interest_base=cash.copy()
         fin=[max(interest_base[i],0)*p.get('yield',.02)-start_debt[i]*.04 for i in range(4)]
         precision_op=([-4.,0.,2.,4.,6.][y-1] if y<=5 else precision_op*(1+growth))
-        operational=[op*.779,op*.12-precision_op,op*.10,precision_op]
+        operational=[op*(.779-p.get('unmapped_profit_haircut',0.)),op*.12-precision_op,op*.10,precision_op]
         ownprofit=[operational[i]+fin[i]-sbc*([.8,.1,.1,0.][i]) for i in range(4)]
         investments=([608.8312/3+(investment-698.8312/3)*.35,80/3+(investment-698.8312/3)*.34,(investment-698.8312/3)*.30,10./3+(investment-698.8312/3)*.01] if y<=3 else [investment*.35,investment*.34,investment*.30,investment*.01])
         floors=[rev*.06+restricted[0],rev*.04+restricted[1],rev*.025+restricted[2],rev*.001+restricted[3]]
         declarations=[0.,0.,0.,0.]; legalprofit=ownprofit.copy(); node=[None]*4
         for i in [3,2,1,0]:
-            if i==0:legalprofit[i]+=declarations[1]+declarations[3]*.946964
-            if i==1:legalprofit[i]+=declarations[2]*.9275
+            if i==0:legalprofit[i]+=declarations[1]+declarations[3]*.75+channel_forward[0]
+            if i==1:legalprofit[i]+=channel_forward[1]
             # Investment income at declaration, NOT at receipt. Sub payables are
             # funded and earmarked at declaration; payment settles next year.
             investment_income=legalprofit[i]-ownprofit[i]
@@ -132,6 +147,12 @@ def run(s,n=600,records=True):
             if p.get('zero_distributions'):desired=0.
             z=settle(cash[i],re[i],res[i],cap[i],legalprofit[i],noncash,investments[i],floors[i],desired,debt[i],[200.,100.,50.,10.][i],proceeds if i==0 else 0)
             d=z['dividend']; declarations[i]=d
+            if i in (2,3):
+                route=0 if i==3 else 1
+                amount=d*(.196964 if i==3 else .9275)
+                lag=int(p.get('indirect_route_delay',1))
+                if lag==0:channel_forward[route]+=amount
+                else:channel_queue.setdefault(y+lag,[0.,0.])[route]+=amount
             if i>0:
                 # settle() subtracts d as though paid; restore earmarked cash
                 # and create next-period payable. RE stays reduced now.
@@ -144,13 +165,16 @@ def run(s,n=600,records=True):
             assert res[i]<=cap[i]*.5+1e-8
             assert d<=max(z['legal_before'],0)+1e-8
             maxfail=max(maxfail,z['funding_failure'])
-            node[i]=dict(name=names[i],restricted_open=restricted_open[i],financial_interest_base=interest_base[i],restricted_interest_base=restricted_interest_base[i],restricted_financial_income=restricted_income[i],restricted_transfer=restricted_transfer[i],eligible_project_spending=eligible_spend[i],qualified_project_spending=qualified_spend[i],project_spending_from_own_funds=eligible_spend[i]-qualified_spend[i],restricted_close=restricted[i],conditional_authorised_release=conditional_authorised_release[i],internal_project_cash_flow=internal_flow[i],intercompany_loan_receivable=(intercompany[0] if i==0 else intercompany[1] if i==1 else 0),intercompany_loan_payable=(intercompany[0] if i==1 else intercompany[1] if i==2 else 0),cash_open=start_cash[i],cash_close=cash[i],retained_open=start_re[i],retained_close=re[i],reserve=res[i],paid_in_capital=cap[i],own_profit=ownprofit[i],declared_investment_income=investment_income,prior_dividend_received=old_received[i],prior_payable_paid=start_pay[i],new_declaration=d,ordinary_requested=ordinary,release_requested=release,legal_profit_before_distribution=z['legal_before'],reserve_appropriation=z['appropriation'],investment=investments[i],noncash_compensation=sbc*([.8,.1,.1,0.][i]),financial_income=fin[i],liquidity_floor=floors[i],debt_close=debt[i],debt_draw=z['draw'],debt_repaid=z['repay'],funding_failure=z['funding_failure'],dividend_payable=payable[i],dividend_receivable=receivable[i],invested_capital=invcap[i],capital_inflow=proceeds if i==0 else 0)
+            node[i]=dict(name=names[i],restricted_open=restricted_open[i],financial_interest_base=interest_base[i],restricted_interest_base=restricted_interest_base[i],restricted_financial_income=restricted_income[i],restricted_transfer=restricted_transfer[i],eligible_project_spending=eligible_spend[i],qualified_project_spending=qualified_spend[i],project_spending_from_own_funds=eligible_spend[i]-qualified_spend[i],restricted_close=restricted[i],conditional_authorised_release=conditional_authorised_release[i],internal_project_cash_flow=internal_flow[i],intercompany_loan_receivable=(intercompany[0] if i==0 else intercompany[1] if i==1 else 0),intercompany_loan_payable=(intercompany[0] if i==1 else intercompany[1] if i==2 else 0),cash_open=start_cash[i],cash_close=cash[i],retained_open=start_re[i],retained_close=re[i],reserve=res[i],registered_capital_budget=cap[i],own_profit=ownprofit[i],declared_investment_income=investment_income,prior_dividend_received=old_received[i],prior_payable_paid=start_pay[i],new_declaration=d,ordinary_requested=ordinary,release_requested=release,legal_profit_before_distribution=z['legal_before'],reserve_appropriation=z['appropriation'],investment=investments[i],noncash_compensation=sbc*([.8,.1,.1,0.][i]),financial_income=fin[i],liquidity_floor=floors[i],debt_close=debt[i],debt_draw=z['draw'],debt_repaid=z['repay'],funding_failure=z['funding_failure'],dividend_payable=payable[i],dividend_receivable=receivable[i],invested_capital=invcap[i],capital_inflow=proceeds if i==0 else 0)
+        receivable=[declarations[1]+declarations[3]*.75+channel_forward[0],channel_forward[1],0.,0.]
+        for i in range(4):node[i]['dividend_receivable']=receivable[i]
+        prior_forward=channel_forward.copy()
         dist=declarations[0]/shares+(old_common/405.557343 if y==1 else 0)
         pv+=dist/(1+p['r'])**y
         if y>5: tv+=dist/(1+p['r'])**(y-5)
         if y<=5:d5.append(dist)
         cum_minor+=minor_paid
-        if records:rows.append(dict(year=y,revenue=rev,operating_cash_net_margin=margin,operating_cash_profit=op,net_investment=investment,incremental_roic=iroic,maintenance_capex=rev*.02,depreciation=rev*.02,shares=shares,new_shares=newshares,capital_inflow=proceeds,minority_cash_paid=minor_paid,ordinary_shareholder_cash=declarations[0],old_dividend_paid=old_common,distribution_per_share=dist,nodes=node))
+        if records:rows.append(dict(unregistered_paid_share_face=sum(registration_queue.values()),indirect_channel_cash=transit_cash.copy(),indirect_channel_received=channel_in,indirect_channel_paid=channel_out,indirect_forward_declared=channel_forward.copy(),year=y,revenue=rev,operating_cash_net_margin=margin,operating_cash_profit=op,net_investment=investment,incremental_roic=iroic,maintenance_capex=rev*.02,depreciation=rev*.02,shares=shares,new_shares=newshares,capital_inflow=proceeds,minority_cash_paid=minor_paid,ordinary_shareholder_cash=declarations[0],old_dividend_paid=old_common,distribution_per_share=dist,nodes=node))
         lastprofit=op
         if maxfail>1e-7:break
     return dict(pv=pv if maxfail<1e-7 else None,terminal_year5=tv if maxfail<1e-7 else None,distributions=d5,terminal_pv_share=((tv/(1+p['r'])**5)/pv if maxfail<1e-7 else None),stopped_at_year=y,maximum_funding_failure=maxfail,feasible=maxfail<1e-7,rows=rows)
@@ -169,6 +193,8 @@ def auxiliary():
     return result
 
 def tests():
+    registered_not_paid=settle(100,0,5,20,10,0,0,0,100,0,0)
+    assert registered_not_paid['appropriation']==1 # paid10 cannot cap statutory reserve
     a=settle(100,20,5,10,10,0,0,10,50,0,0)
     assert a['dividend']==30 and a['cash']==80 and a['retained']==0 # reserve cap already met
     b=settle(10,-20,0,100,30,0,0,0,100,0,0)
@@ -213,9 +239,10 @@ def expand_output(envelope):
 
 def build():
     out={'symbol':'CN:688188','period':'2026-Q3','currency_unit':'CNY million','share_unit':'million','as_of':'2026-10-26T11:00:00+00:00','scenarios':{},'sensitivities':{},'production_hand_tests':tests(),'auxiliary':auxiliary()}
+    out['input_evidence']={'units': 'CNY million', 'mother_statutory_reserve': {'value': 144.3649635, 'status': '事实：母权益表与法定明细交叉勾稽，不是直接拿合并余额代母', 'source_url': 'https://static.cninfo.com.cn/finalpage/2026-04-10/1225091045.PDF', 'pdf_pages': [138, 220], 'h1_confirmation_url': 'https://static.cninfo.com.cn/finalpage/2026-08-18/1225477071.PDF', 'h1_pdf_pages': [65, 76, 77, 145]}, 'bochu_nc_reserve': {'value': 0, 'status': '未披露逐户余额；有限保守预算，至注册60的一半30停止'}, 'boci_reserve': {'value': 0, 'status': '未披露逐户余额；有限保守预算，至注册32的一半16停止'}, 'precision_reserve': {'value': 0, 'status': '2026年4月新设且H1亏损的事实约束推断，不是独立储备余额表披露', 'registered_capital': 55, 'direct_parent_investment': 41.25, 'direct_ownership': 0.75, 'indirect_effective_ownership': 0.196964}, 'registered_capital_timing': 'H1 PDF79公司概况明确注册405.557343百万元；母Q3起始405.984426及未来新股份面值是预计登记预算，0.427083差额注册时序未独立核。缴款额与溢价不全部增加注册资本。', 'opening_retained': '母H1已知2117.98683116减宣派236.03437363=1881.95245753；数控200/波刺300为预算，精密-1.9109为H1新设损失期初代理。', 'indirect_routes': '平台是经济转款渠道，核心额外一年转宣派；0/2年边界。不对合伙应用公司法公积、不赋额外存量资产价值。', 'residual_entities': '其他小额公司未逐法人映射，未来经营贡献归入经营预算；不将四账户代表为全集团已审法定账。'}
     for k,p in SCENARIOS.items():out['scenarios'][k]=run(p)
     out['holder_conditionals']={k:run(dict(SCENARIOS[k],prefix_base=True,release=.15)) for k in ['core_low','core_high']}
-    for label,change in {'r_plus_1pp':{'r':.10},'r_minus_1pp':{'r':.08},'long_margin_minus_5pp':{'mt':.35},'incremental_return_15pct':{'roi':.35,'rt':.15},'no_subsidiary_upstream':{'no_upstream':True},'no_extra_principal_release':{'release':0},'collection_delay_200m':{'settlement_delay':200},'projects_plus_300m':{'extra_capital':100},'financial_yield_1pct':{'yield':.01},'tail_growth_0pct':{'tail_g':0},'zero_sub_opening_legal_profit':{'no_opening_sub_earnings':True},'parent_cash_500m_lower':{'parent_cash_shift':500},'conditional_approved_restricted_release_y8':{'release_restricted_year':8}}.items():
+    for label,change in {'registration_delay_1y':{'registration_delay':1},'registration_delay_2y':{'registration_delay':2},'unmapped_profit_haircut_2pct':{'unmapped_profit_haircut':.02},'unmapped_profit_haircut_3pct':{'unmapped_profit_haircut':.03},'indirect_route_same_year':{'indirect_route_delay':0},'indirect_route_delay_2y':{'indirect_route_delay':2},'r_plus_1pp':{'r':.10},'r_minus_1pp':{'r':.08},'long_margin_minus_5pp':{'mt':.35},'incremental_return_15pct':{'roi':.35,'rt':.15},'no_subsidiary_upstream':{'no_upstream':True},'no_extra_principal_release':{'release':0},'collection_delay_200m':{'settlement_delay':200},'projects_plus_300m':{'extra_capital':100},'financial_yield_1pct':{'yield':.01},'tail_growth_0pct':{'tail_g':0},'zero_sub_opening_legal_profit':{'no_opening_sub_earnings':True},'parent_cash_500m_lower':{'parent_cash_shift':500},'conditional_approved_restricted_release_y8':{'release_restricted_year':8}}.items():
         out['sensitivities'][label]=run(dict(SCENARIOS['base'],**change))
     out['convergence']={}
     for k,p in SCENARIOS.items():

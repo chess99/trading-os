@@ -11,6 +11,7 @@ def calculate(growth,start_margin,end_margin,discount,initial_return,terminal_re
     cash=[4500.,806.0990022124001,380.,25.0034]; earned=[1881.95245753,200.,300.,-1.9109]; reserve=[144.3649635,0.,0.,0.]; capital=[405.984426,60.,32.,55.]
     borrowing=[28.99906365,0.,0.,0.]; owing=[236.03437363,0.,0.,0.]; revenue=2500.; oldprofit=1150.; stock=405.984426
     loans=[0.,0.]
+    previous_routes=[0.,0.]; forwarding=[0.,0.]; waiting=[0.,0.]
     protected=[999.4403,24.984,0.,11.2534]
     precision_profit=-4.
     total=0.; remainder=0.; first=[]; snapshots=[]
@@ -31,7 +32,8 @@ def calculate(growth,start_margin,end_margin,discount,initial_return,terminal_re
         subscription=(35+1.05942*50.7) if t==1 else issue*50.7
         stock+=issue;capital[0]+=issue
         initialcash=cash[:];initialdebt=borrowing[:]
-        old_common=owing[0];receipts=[owing[1]+owing[3]*.946964,owing[2]*.9275,0,0]
+        old_common=owing[0];receipts=[owing[1]+owing[3]*.75+previous_routes[0],previous_routes[1],0,0]
+        route_now=waiting[:];waiting=[0.,0.]
         for j in range(4):cash[j]=cash[j]+receipts[j]-owing[j]
         if t<4:
             draw=max(104.984/3-protected[1],0)
@@ -50,7 +52,7 @@ def calculate(growth,start_margin,end_margin,discount,initial_return,terminal_re
         own=[operating[j]+cash[j]*.02-initialdebt[j]*.04-charge*[.8,.1,.1,0][j] for j in range(4)]
         netpay=[0.,0.,0.,0.];journal=[]
         for j in range(3,-1,-1):
-            dividend_income=netpay[1]+netpay[3]*.946964 if j==0 else netpay[2]*.9275 if j==1 else 0
+            dividend_income=netpay[1]+netpay[3]*.75+route_now[0] if j==0 else route_now[1] if j==1 else 0
             accounting=own[j]+dividend_income
             earnings_available=earned[j]+accounting
             setaside=min(max(earnings_available,0)*.1,max(accounting,0)*.1,max(capital[j]/2-reserve[j],0))
@@ -71,6 +73,8 @@ def calculate(growth,start_margin,end_margin,discount,initial_return,terminal_re
             cash[j]=liquid-(payment if j==0 else 0)
             netpay[j]=payment
             journal.append([j,cash[j],earned[j],reserve[j],payment,dividend_income,receipts[j],borrowing[j]])
+        waiting=[netpay[3]*.196964,netpay[2]*.9275]
+        previous_routes=route_now[:]
         owing=[0,netpay[1],netpay[2],netpay[3]]
         payout=netpay[0]/stock+(old_common/405.557343 if t==1 else 0)
         total+=payout/((1+discount)**t)
@@ -116,7 +120,7 @@ def test_bochu_actual_functions_complete_restricted_fund_roundtrip():
      near(n['restricted_close'],n['restricted_open']+n['restricted_transfer']+n['restricted_financial_income']-n['qualified_project_spending']-n['conditional_authorised_release'])
      near(n['cash_close'],n['financial_interest_base']+n['own_profit']+n['noncash_compensation']-n['investment']+n['capital_inflow']+n['debt_draw']-n['debt_repaid']-(n['new_declaration'] if i==0 else 0))
      near(n['retained_close'],n['retained_open']+n['own_profit']+n['declared_investment_income']-n['reserve_appropriation']-n['new_declaration'])
-     assert n['reserve']<=n['paid_in_capital']*.5+1e-7
+     assert n['reserve']<=n['registered_capital_budget']*.5+1e-7
      assert n['new_declaration']<=max(n['legal_profit_before_distribution'],0)+1e-7
      if i==0:
       assert n['intercompany_loan_receivable']<=80+1e-7
