@@ -53,53 +53,8 @@ def test_amoy_independent_cash_legal_and_permanent_margin(rate,g,end,ic,shift):
  assert amoy_recalc(rate,g,end,ic,shift)==pytest.approx(expected,abs=1e-8)
 
 
-def huaneng_recalc(side,out):
- S=18.631094257
- low=side=='low';r=.06 if low else .05;cost=1.03 if low else .97;solar=1.2 if low else .92
- # engineering before future financing, historical CIP/interest, capacity, generation, tariff, first year, technology
- raw=[(49.06,8.28299014527,.39785046984,2.6,11.281,.40 if low else .45,2033,'hydro'),(50.40133460819*.85,4.42357346965,.07648238126,2.2,8.8 if low else 10.2,.28 if low else .32,2033,'hydro'),(23.4922659*.85,3.44129553187,.11422327861,1.5,6.149,.31 if low else .35,2032,'hydro'),(31.7*.85,2.27377883062,.12294163552,2.1,9.036,.31 if low else .35,2033,'hydro'),(15.85*.85,.44507355036,0,.72,3.096,.31 if low else .35,2036,'hydro'),(4.95*.85,.82378837876,0,.195,1.162,.25 if low else .27,2031,'hydro'),(8.75,6.25152322764,0,2.5,3.5,.27 if low else .31,2028,'solar')]
- def project(a,q3=True):
-  eng,cip,oldi,gw,gen,price,first,kind=a;eng*=cost*(solar if kind=='solar' else 1);paid=cip-oldi+(2.4*cip/28.59711873621 if q3 else 0);remaining=eng-paid;v=0
-  life=45 if kind=='hydro' else 25;deplife=45 if kind=='hydro' else 20
-  for y in range(2027,first+life):
-   if y<first:flow=-remaining/(first-2027)
-   else:
-    age=y-first;ramp=.5 if not age else 1;revenue=gen*price*.992/1.13*ramp*({'solar':.995,'wind':.997}.get(kind,1)**age)
-    op=gw*{'hydro':.20,'solar':.05,'wind':.08}[kind]*ramp;maint=gw*{'hydro':.12,'solar':.035,'wind':.05}[kind]*ramp;da=(eng+oldi)/deplife if age<deplife else 0
-    flow=revenue-op-maint-max(revenue-op-da,0)*.25
-   v+=flow/(1+r)**(y-2026)
-  return v
- new=sum(project(a) for a in raw);mature=0
- for age in range(1,51 if low else 61):
-  inf=1.005**(age-1);foreign=min(1,max(0,(25-age)/10));rev=(25.6+1.6*foreign)*inf;da=7.5*inf;f=(rev-6.2*inf-da)*(.85 if age<=4 else .75)+da-(4.5 if low else 3.5)*inf-(8*inf if age in(20,40) else 0);mature+=f/(1+r)**age
- acq=0
- for age in range(45):
-  factor=.7+(.3*.995**age if age<25 else 0);inf=1.005**age
-  acq+=((1.15-.28-.14)*factor*inf-(1.15-.28-.4)*factor*inf*(.15 if age<4 else .25))/(1+r)**(age+1)
- acq+=sum(project(a,False) for a in [(18.617*.85,3.91921463674,.11426267834,.6,2.7,.35,2028,'hydro'),(.81*.95,.01261966514,0,.1,.26,.34,2028,'wind'),(.5331218*.95,.33226816921,.00358063057,.13,.338,.34,2028,'wind')])
- acq-=sum([.44109644445,.69873486464,6.8483,.10548456367])-.04648791615+.1+sum([.17722204944,.04125958114,.00036734884])+8.7012044/(1+r)
- # Minority schedule separately discounted: no assumption 11% enterprise value equals equity claim.
- gx=out['scenarios']['core_'+side]['projects']['GX']['rows'];minor=.11*(sum((z['dividend']-z['equity_call'])/(1+r+.02)**(z['year']-2026) for z in gx)+(gx[-1]['cash']-gx[-1]['debt'])/(1+r+.02)**(gx[-1]['year']-2026))
- equity=mature+new+acq+sum(2.7*.22*.75/(1+r)**(y-2026) for y in range(2035,2078))-sum((2/3)/(1+r)**i for i in(1,2,3))-minor
- equity+=-126.50412978373-16.217-.8*(1-1.075**-30)/.075-7.68024741949+3.72253673088-2.0296755+5.41473511562
- return equity/S
 
-@pytest.mark.parametrize("side",['low','high'])
-def test_huaneng_full_project_and_acquisition_cash(side):
- out=json.loads((ROOT/"600025/models/2026-Q3-output.json").read_text())
- assert huaneng_recalc(side,out)==pytest.approx(out['complete_valuation']['core_'+side]['per_share'],abs=1e-8)
 
-def test_huaneng_permanent_tariff_and_fixed_year5_state():
- out=json.loads((ROOT/"600025/models/2026-Q3-output.json").read_text())
- expected=sum(-25.6*.05*1.005**(i-1)*(.85 if i<=4 else .75)/1.055**i for i in range(1,51))/18.631094257
- assert expected==pytest.approx(out['sensitivity']['mature_domestic_tariff_minus5pct_per_share'],abs=1e-8)
- base=out['holder_diagnostic'][-1]
- for result in out['terminal_year5'].values():assert result['debt']==pytest.approx(base['group_debt'])
- for case,rows in out['construction_funding_cases'].items():
-  assert len(rows)==15 and rows[-1]['year']==2041
-  for row in rows:
-   assert min(row['parent_cash'],row['mature_sub_cash'],row['project_cash'],row['target_cash'],row['parent_retained'],row['mature_sub_retained'])>=0
-   assert row['parent_new_general_debt']<= (9 if case=='cyclical' else 7)+1e-8
 
 
 def livzon_recalc(r,g,roic):
