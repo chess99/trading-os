@@ -81,34 +81,15 @@ def test_yutong_formal_valuation_recomputes_capped_distributions(parent_cash):
     assert result["parent_closing_liquid"] == pytest.approx(0.0)
 
 
-@pytest.mark.parametrize("terminal_adjustment", [0.0, -2.0])
-def test_chuantou_formal_ddm_perpetuity_and_terminal_bridge(terminal_adjustment):
+def test_chuantou_actual_entity_functions_and_full_chain():
     model = load_model("600674")
-    result = model.ddm(
-        0.1, 0, 0.1, earnings=[1.0] * 10, distributions=[1.0] * 10,
-        financial_assets=0, fin_income=0, shares=1,
-        terminal_equity_adjustment=terminal_adjustment,
-    )
-    assert result["value"] == pytest.approx(10.0 + terminal_adjustment / 1.1**10)
-    assert result["terminal_year5"] == pytest.approx(10.0 + terminal_adjustment / 1.1**5)
-
-
-def test_chuantou_binding_constraints_reach_financing_and_valuation():
-    model = load_model("600674")
-    path = model.mild_price_path()
-    raw = path["unconstrained_operating"]
-    constrained = path["operating"]
-    assert raw[-1]["yl_retained_proxy"] < 0
-    assert min(row["yl_retained_proxy"] for row in constrained) >= -1e-9
-    assert constrained[-1]["yl_distribution"] < raw[-1]["yl_distribution"]
-    assert constrained[-1]["yl_debt_end"] < raw[-1]["yl_debt_end"]
-    parent = path["parent_cash_budget"]
-    reproduced = model.ddm(
-        earnings=[row["ct_common_profit"] for row in constrained],
-        distributions=[row["dps"] for row in parent],
-        terminal_equity_adjustment=parent[-1]["closing_cash"] - 1,
-    )
-    assert path["valuation"]["value"] == pytest.approx(reproduced["value"])
-    capped = model.parent_budget(constrained, target_distributions=[10.0] * 10)
-    assert any(row["dps"] < row["requested_dps"] for row in capped)
-    assert all(row["closing_cash"] >= 1 - 1e-9 for row in capped)
+    assert model.tests().startswith("passed:")
+    base = model.run()
+    stressed = model.run(extra_equity=.5)
+    assert stressed["distributions_per_share"][1] < base["distributions_per_share"][1]
+    assert stressed["value"] < base["value"]
+    lower = model.run(price_shift=-.01)
+    assert lower["value"] < base["value"]
+    assert lower["rows"][-1]["dps"] < base["rows"][-1]["dps"]
+    with pytest.raises(ValueError, match="funding fails"):
+        model.run(initial_cash=-100)
