@@ -1,6 +1,6 @@
 # 2026Q3研究入口
 
-更新于2026-10-26 23:14 UTC。重点池191家公司中，**59家完整研究已发布**；已取得官方Q3全文60家，尚有1家待完成研究，131家等待实际报告。原始财务期间与各报告资料截止时间分别保留，预约日期不替代实际披露。
+更新于2026-10-26 23:35 UTC。重点池191家公司中，**60家完整研究已发布**；已取得官方Q3全文60家，尚有0家待完成研究，131家等待实际报告。原始财务期间与各报告资料截止时间分别保留，预约日期不替代实际披露。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -63,6 +63,7 @@
 | 吉比特 603444 | [2026Q3](../../companies/CN/603444/reports/2026-Q3.md) | [Python](../../companies/CN/603444/models/2026-Q3.py) | [JSON](../../companies/CN/603444/models/2026-Q3-output.json) |
 | 爱玛科技 603529 | [2026Q3](../../companies/CN/603529/reports/2026-Q3.md) | [Python](../../companies/CN/603529/models/2026-Q3.py) | [JSON](../../companies/CN/603529/models/2026-Q3-output.json) |
 | 安图生物 603658 | [2026Q3](../../companies/CN/603658/reports/2026-Q3.md) | [Python](../../companies/CN/603658/models/2026-Q3.py) | [JSON](../../companies/CN/603658/models/2026-Q3-output.json) |
+| 金诚信 603979 | [2026Q3](../../companies/CN/603979/reports/2026-Q3.md) | [Python](../../companies/CN/603979/models/2026-Q3.py) | [JSON](../../companies/CN/603979/models/2026-Q3-output.json) |
 | 洛阳钼业 603993 | [2026Q3](../../companies/CN/603993/reports/2026-Q3.md) | [Python](../../companies/CN/603993/models/2026-Q3.py) | [JSON](../../companies/CN/603993/models/2026-Q3-output.json) |
 | 柏楚电子 688188 | [2026Q3](../../companies/CN/688188/reports/2026-Q3.md) | [Python](../../companies/CN/688188/models/2026-Q3.py) | [JSON](../../companies/CN/688188/models/2026-Q3-output.json) |
 | 特宝生物 688278 | [2026Q3](../../companies/CN/688278/reports/2026-Q3.md) | [Python](../../companies/CN/688278/models/2026-Q3.py) | [JSON](../../companies/CN/688278/models/2026-Q3-output.json) |
