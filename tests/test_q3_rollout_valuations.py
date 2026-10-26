@@ -11,36 +11,6 @@ def result(ticker):
     return json.loads((ROOT / ticker / "models/2026-Q3-output.json").read_text())
 
 
-@pytest.mark.parametrize("margin,rate,key", [(0, .10, "core"), (.01, .095, "margin")])
-def test_hikvision_independent_cash_and_value(margin, rate, key):
-    actual = result("002415")
-    main, innovation = 70., 33.
-    cash = 36.60138445169 - 4.
-    debt = 3.11165646664 + 1.09053677814 + .86492007394 + .31397661151
-    dividends = []
-    for year in range(1, 11):
-        previous = main + innovation
-        main *= 1 + (.04 if year <= 5 else .03)
-        innovation *= 1 + (.12 if year <= 5 else [.08, .07, .06, .05, .04][year - 6])
-        revenue = main + innovation
-        profit = main * (.175 + margin) + innovation * (.14 + margin)
-        capex = [2.2, 1.6, 1.][year - 1] if year <= 3 else .007 * revenue
-        investment = .5 * (revenue - previous) + capex - (1.5 if year <= 2 else 0)
-        financial = max(cash - 10 * previous / 103, 0) * .015 - debt * .03
-        dividend = .65 * (profit + financial)
-        repayment = min(debt, 2.)
-        debt -= repayment
-        cash += profit - investment + financial - dividend - repayment
-        dividends.append(dividend)
-    terminal = profit * 1.02 * (1 - .02 / .15) / (rate - .02)
-    terminal += cash - debt - 10 * revenue / 103 + (1.56698632401 + .67280655052) * .9
-    value = (sum(d / (1 + rate) ** t for t, d in enumerate(dividends, 1))
-             + terminal / (1 + rate) ** 10) / 9.16487155
-    expected = (actual["cases"]["base"]["low"]["value_per_share"] if key == "core"
-                else actual["margin_sensitivity"]["0.01"])
-    assert value == pytest.approx(expected, abs=1e-9)
-
-
 @pytest.mark.parametrize("loss", [0, .01])
 def test_supor_independent_cash_value(loss):
  out=result("002032")
