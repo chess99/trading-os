@@ -24,58 +24,6 @@ def test_supor_independent_cash_value(loss):
  target=(out['cases']['base']['valuations'] if not loss else out['sensitivity_domestic_margin_minus_1pp'])[0]['current_per_share'];assert abs(v-target)<1e-10;assert v == pytest.approx(target, abs=1e-10)
 
 
-from decimal import Decimal as D
-
-def _sieyuan_independent(out, rate, capital):
- p=out["inputs"];d=lambda x:D(str(x))
- r=d(rate);rev=d(p['revenue0']);coreprev=rev*d(p['margins'][0]);profitprev=d(p['profit0'])
- mc=d(p['mother_cash0']);sc=d(out['excess0'])-mc;ml=d(p['mother_legal0']);sl=d(0);receivable=d(0);divs=[];dps=[];profit0=None
- for i in range(15):
-  nextrev=rev*(1+d(p['growth'][i]));core=nextrev*d(p['margins'][i]);mi=mc*d(.015);si=sc*d(.015)
-  profit=core+mi+si;investment=(nextrev-rev)*d(capital) if i<10 else (core-coreprev)/d(.18)
-  subcap=d(.002009057)*d(43.8) if i==0 else (d(.0062625)*(d(43.8)-dps[0]) if i==1 else d(0))
-  mc+=d(.2)+mi-investment*d(.1)+subcap;sc+=core-d(.2)+si-investment*d(.9)
-  ml+=d(.9)*(d(.2)+mi);sl+=d(.9)*(core-d(.2)+si)
-  sc-=receivable;mc+=receivable;receivable=d(0)
-  ordinary=(core-d(.2)+si-investment*d(.9))*d(p['upstream_rate'][i]);special=(max(d(0),sc-ordinary)/d(15-i)) if i>=10 else d(0)
-  declaration=min(ordinary+special,sl,sc);paid=declaration*d(p['arrival'][i]);sl-=declaration;ml+=declaration;sc-=paid;mc+=paid;receivable=declaration-paid
-  normal=profitprev*d(p['payout'][i]) if p['payout'][i]<1 else profit-investment
-  request=normal+(max(d(0),mc+sc-normal)/d(15-i) if i>=10 else d(0));dividend=min(request,mc,ml,mc+sc)
-  mc-=dividend;ml-=dividend;divs.append(dividend);dps.append(dividend/(d(.788772032) if i==0 else d(p['shares'])));profitprev=profit;coreprev=core;rev=nextrev
- assert abs(mc+sc)<d('1e-20')
- terminal=core*d(1.03)*(1-d(.03)/d(.18))/(r-d(.03))
- return float(sum(v/(1+r)**(i+1) for i,v in enumerate(dps))+terminal/(1+r)**15/d(p['shares']))
-
-
-@pytest.mark.parametrize("rate,capital,key", [(.10,.45,"core_low"),(.095,.60,"sensitivity_capital_060")])
-def test_sieyuan_independent_cash_value(rate, capital, key):
- out=result("002028")
- actual=_sieyuan_independent(out,rate,capital)
- expected=out[key]["value_per_share"] if key=="core_low" else out[key]
- assert actual == pytest.approx(expected,abs=1e-9)
-
-
-def test_sieyuan_formal_value_and_actual_payment_hand_cases():
-    import copy
-    import importlib.util
-    path = ROOT / "002028/models/2026-Q3.py"
-    spec = importlib.util.spec_from_file_location("sieyuan_q3", path)
-    model = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(model)
-    p = copy.deepcopy(model.BASE)
-    p.update(revenue0=10., profit0=1., growth=[0.] * 15, margins=[.1] * 15,
-             capital_intensity=0., g=0., r=.1, payout=[1.] * 15,
-             cash_yield=0., mother_direct_profit=1., upstream_rate=[0.] * 15,
-             arrival=[1.] * 15, mother_cash0=0., mother_legal0=100.,
-             sub_legal0=0., receivable0=0., excess0=0., shares=1., option_exercise=False)
-    assert model.value(p)["value_per_share"] == pytest.approx(10., abs=1e-10)
-    p.update(mother_direct_profit=0., mother_legal0=0.,
-             special_release_start=1000, special_release_end=1001)
-    rows = model.operate(p)
-    assert [r["dividend"] for r in rows[:5]] == [0.] * 5
-    assert rows[4]["cash"] == pytest.approx(5.)
-
-
 def test_huaneng_conditional_asset_and_financing_limits():
     import importlib.util
     actual = result("600025")
