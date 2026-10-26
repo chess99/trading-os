@@ -1,203 +1,154 @@
-"""CFMOTO, CNY billion unless shares (billion) and per share CNY.
-Independent operating budget; no price input. Run writes 2026-Q3-output.json.
+"""CFMOTO 2026-Q3. CNY bn; shares bn. Stdlib, deterministic, no live price.
+Economic subsidiary remittance budget is NOT statutory accounts of a synthetic entity.
+Parent statutory accounts are separate; unknown subsidiary ledgers remain conditional.
 """
-import json, math, copy
+import json, math
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent
-S0=.153482763
-BOND=2.178763
-CONVERSION=241.70
-OLD_OPTIONS=.0023573
-NEW_OPTIONS=.004151875 # approved total incl 20% reserved; forecast not actual grant
-RESTRICTED=.0006
-CASH0=14.18865953524-.34007697939 # cash equivalents less NCI ring-fence
-PARENT_CASH0=7.65825519985 # H1 parent cash 8.15825519985 less 0.5 Q3 project/settlement buffer; no guessed Q3 addition
-BASE_REV=[9.4,5.8,8.2,2.5,1.7]
+S0=.153482763; BOND=2.178763; C0=14.18865953524-.34007697939; P0=7.65825519985
+REVENUE=[9.4,5.8,8.2,2.5,1.7]
 GROWTH=[[.12,.10,.09,.07,.05],[.15,.12,.10,.08,.06],[.14,.12,.10,.08,.06],[.20,.18,.15,.10,.08],[.12,.10,.09,.07,.05]]
+def statutory(retained,profit,reserve,registered):
+    earnings=retained+profit
+    add=min(max(registered*.5-reserve,0),.1*max(0,min(profit,earnings)))
+    return earnings-add,reserve+add,add
 
-def present_value(flows, terminal, r):
-    return sum(x/(1+r)**(i+1) for i,x in enumerate(flows))+terminal/(1+r)**len(flows)
+def realize(principal,cost_basis,fees,creditors,ownership=1.,tax=.25,share_count=None,cancel_fraction=0.):
+    """Conditional asset disposal / exit; failure is explicit before shareholder residual."""
+    gain=principal-cost_basis-fees
+    tax_due=max(0,gain)*tax
+    residual=principal-fees-tax_due-creditors
+    return dict(feasible=residual>=0,shortfall=max(0,-residual),cash_to_owner=residual*ownership if residual>=0 else None,
+                remaining_shares=None if share_count is None else share_count*(1-cancel_fraction) if residual>=0 else share_count,cancelled_shares=None if share_count is None else share_count*cancel_fraction if residual>=0 else 0.,accounting_profit=gain-tax_due,capital_recovery=min(principal-fees,cost_basis),creditors_paid=creditors if residual>=0 else None)
 
-def continuation(profit, r, growth, roic, stable_g=.03):
-    flows=[]; records=[]
-    for g in growth:
-        old=profit; profit*=1+g; investment=(profit-old)/roic
-        flows.append(profit-investment);records.append(dict(profit=profit,investment=investment,fcf=profit-investment))
-    final_profit=profit*(1+stable_g)
-    final_fcf=final_profit-(final_profit-profit)/roic
-    terminal=final_fcf/(r-stable_g)
-    return present_value(flows,terminal,r),records,terminal
+def reduce_lots(lots,limit):
+    # A cash need can consume deferred surplus; newest cohorts consumed first.
+    excess=sum(x[1] for x in lots)-max(0,limit)
+    for x in reversed(lots):
+        used=min(x[1],max(0,excess));x[1]-=used;excess-=used
+    return [x for x in lots if x[1]>1e-12]
 
-def legally_available(opening_retained, profit, reserve, paidcapital):
-    # Past losses are never erased; positive profit first covers cumulative deficit.
-    surplus_after_loss=opening_retained+profit
-    reserve_add=min(max(0.,.5*paidcapital-reserve),.1*max(0.,min(profit,surplus_after_loss)))
-    closing=surplus_after_loss-reserve_add
-    return closing,reserve+reserve_add
-
-def run(kind='base', margin_delta=0, parent_delay=0, capital_extra=0, convert=True, hand_case=False):
-    rev=BASE_REV[:]; prevtotal=sum(rev); nwc=-5.9
-    cash=CASH0; pc=PARENT_CASH0-parent_delay
-    # Parent delay parks receivables/settlements in other consolidated entities, not a group loss.
-    shares=S0; retained=4.15847860839; reserve=.083022672
-    zloss=-.50; zreserve=0; debt=0 if convert else BOND
-    cfp_legal=0.;other_legal=0.
-    rows=[]; failed=False
-    if hand_case:
-        cash=10.;pc=6.;shares=.1;retained=2.;reserve=.05;debt=0.;nwc=0.
-    opcap=4.0+nwc+8.0
-    for t in range(1 if hand_case else 5):
-        oldtotal=prevtotal
-        for i in range(5):rev[i]*=1+GROWTH[i][t]
-        # Scenario shocks apply to post-baseline segment revenue; annual path computed independently.
-        observed=rev[:]; margins=[.09,.12,.08,[-.04,-.01,.01,.025,.03][t],.12]
-        if kind=='cyclical':
-            factors=[.82,.9,.98,1,1]; observed[0]*=factors[t];observed[1]*=factors[t]
-            margins[0]-=[.025,.015,.005,0,0][t]; margins[1]-=[.015,.008,.003,0,0][t]
-        elif kind=='structural':
-            # From year 1 permanent US access loss, replacement designs and price concessions.
-            observed[0]*=.50; observed[1]*=.88; observed[2]*=.92
-            margins=[.015,.085,.065,-.08,.09]
-        elif kind=='upside':
-            observed=[v*(1+.025*(t+1)) for v in observed]
-            margins=[.105,.13,.09,[0,.02,.04,.05,.05][t],.13]
-        total=sum(observed)
-        margins=[m+margin_delta for m in margins]
-        op=sum(v*m for v,m in zip(observed,margins)) # after tax/NCI, before noncash award expense; leases are cash expenses
-        zprofit=observed[3]*margins[3]
-        sbc=[.15,.08,.04,.02,.02][t]
-        profit=op-sbc
-        depreciation=[.30,.38,.46,.53,.60][t] # nonlease only, H1 0.127bn anchor
-        capex=[1.8,1.7,1.5,1.3,1.2][t]+(capital_extra if t==0 else 0)
-        if kind=='cyclical':capex*=.95
-        if kind=='structural':capex=[1.8,1.5,1.2,1.0,1.0][t]
-        if kind=='upside':capex*=1.2
-        # Supplier-credit normalization from -5.9bn to -15% sales, not all liabilities deducted again.
-        ratio=[-.19,-.17,-.15,-.15,-.15][t]
-        if kind=='cyclical':ratio=[-.14,-.14,-.15,-.15,-.15][t]
-        if kind=='structural':ratio=-.10
-        nextnwc=total*ratio; delta_nwc=nextnwc-nwc
-        floor=8.*total/27.6
-        parentfloor=4.*total/27.6
-        if kind=='structural':floor=max(6.,floor)
-        # New funds and fully diluted shares are both recorded, never a free denominator change.
-        additions=0.;proceeds=0.
-        if t==0:
-            additions+=OLD_OPTIONS+RESTRICTED
-            proceeds+=OLD_OPTIONS*97.95+RESTRICTED*145.91
-            if convert:additions+=BOND/CONVERSION
-        if 1<=t<=3 and kind!='structural':
-            q=NEW_OPTIONS*[.3,.3,.4][t-1]
-            # Future dividends adjust exercise strike; budget reduces strike by cumulated per-share dividends.
-            strike=233.45-sum(x['distribution_per_share'] for x in rows)
-            additions+=q;proceeds+=q*max(0,strike)
-        shares+=additions
-        interest=debt*[.001,.003,.006,.015,.018][t]
-        fin=max(0,cash-8.*oldtotal/27.6)*.015
-        fcf=op+depreciation-capex-delta_nwc-interest
-        if hand_case:
-            # Passed through same cash -> statutory earnings -> actual payout chain.
-            op=1.;zprofit=0.;sbc=0.;profit=1.;depreciation=.2;capex=.3;delta_nwc=.1
-            shares=.1;proceeds=0.;interest=0.;fin=0.;floor=4.;parentfloor=2.
-        fcf=op+depreciation-capex-delta_nwc-interest
-        before=cash+fcf+fin+proceeds
-        # No subsidiary dividend is assumed. Parent cash generation reflects own operations and project funding.
-        parent_fin=.015*max(0,pc-4.*oldtotal/27.6)
-        if hand_case:parent_fin=0.
-        parentprofit=.60*(op-zprofit)-.75*sbc-interest+parent_fin
-        retained,reserve=legally_available(retained,parentprofit,reserve,shares)
-        # Zhejiang Hexin is not identical to the electric business. Standalone legal-profit budget,
-        # separate from consolidated electric product profit (intragroup pricing/eliminations differ).
-        hexin_profit=([-.15,-.10,0,.05,.10] if kind!='structural' else [-.25]*5)[t]
-        zloss,zreserve=legally_available(zloss,hexin_profit,zreserve,.01)
-        # Parent operational cash conversion 55%; remaining earnings settle through receivables; yearly extra funding .2bn.
-        parentfcf=.60*(op-zprofit)+.45*depreciation-.55*capex-.60*delta_nwc-.20-interest
-        if kind=='structural':parentfcf-=.25 # additional intercompany cash support, not a consolidated expense
-        pbefore=pc+parentfcf+proceeds+parent_fin
-        target=.40*max(0,profit+fin-interest)
-        distribution=max(0,min(target,retained,before-floor,pbefore-parentfloor))
-        # Financing cap 0: no new external loan is budgeted; conversion isn't cash financing.
-        shortfall=max(0,floor-before,parentfloor-pbefore)
-        if shortfall>1e-9:failed=True
-        retained-=distribution;cash=before-distribution;pc=pbefore-distribution
-        cfp_margin=(-.01 if kind=='structural' else (.08-[.025,.015,.005,0,0][t] if kind=='cyclical' else .08))
-        cfp_legal+=observed[0]*cfp_margin # CFP standalone net margin budget below H1 9.47%; no upstream before Y5
-        other_legal+=op*.12 # profitable wholly-owned subsidiaries only; excludes loss-making Hexin
-        assert cash+1e-9>=pc>=-1e-9 or shortfall>1e-9
-        assert cash-pc>=-1e-9
-        assert distribution<=max(0,retained+distribution)+1e-9
-        assert distribution<=max(0,pbefore-parentfloor)+1e-9
-        opcap+=capex-depreciation+delta_nwc+(floor-8.*oldtotal/27.6)
-        assert abs(cash-(rows[-1]['cash'] if rows else (10. if hand_case else CASH0))-fcf-fin-proceeds+distribution)<1e-8
-        rows.append(dict(year=t+1,revenue=total,segment_revenue=observed,cash_operating_profit=op,accounting_profit=profit,
-            depreciation=depreciation,capex=capex,delta_nwc=delta_nwc,nwc=nextnwc,fcf=fcf,financial_income=fin,
-            exercise_cash=proceeds,shares=shares,distribution=distribution,distribution_per_share=distribution/shares,
-            cash=cash,operating_cash_floor=floor,surplus_cash=cash-floor,parent_cash=pc,parent_floor=parentfloor,
-            parent_own_profit=parentprofit,parent_fcf=parentfcf,parent_financial_income=parent_fin,parent_retained=retained,parent_reserve=reserve,hexin_profit=hexin_profit,hexin_retained=zloss,
-            cfp_legal=cfp_legal,other_sub_legal=other_legal,upstream_declared=0.,upstream_received=0.,financing_shortfall=shortfall,debt=debt,operating_capital=opcap))
-        nwc=nextnwc;prevtotal=total
-    return dict(kind=kind,feasible=not failed,rows=rows)
-
-def value(path,r=.11,roic=.20,stable_g=.03,growth=None,multiple=None,release_delay=3):
-    if not path['feasible']:return dict(feasible=False,reason='zero distributions still cannot meet cash floor within zero new financing limit')
-    rows=path['rows'];last=rows[-1]
-    growth=growth or [.07,.06,.05,.04,.03]
-    ev,tail,tv=continuation(last['cash_operating_profit'],r,growth,roic,stable_g)
-    if multiple is not None:ev=last['cash_operating_profit']*multiple
-    # Restrained terminal liquidity excludes necessary cash; debt retained if unconverted (face plus 8% maturity premium).
-    debt=last['debt']*1.08
-    parent_release=min(max(0,last['parent_cash']-last['parent_floor']),max(0,last['parent_retained']),last['surplus_cash'])
-    subcash=max(0,last['surplus_cash']-parent_release)
-    # Non-parent location allocation is a forecast, not a claim of cash freely legally nettable.
-    cfp_release=min(subcash*.70,max(0,last['cfp_legal']))
-    other_release=min(subcash*.30,max(0,last['other_sub_legal']))
-    eligible=cfp_release+other_release
-    unreleasable=subcash-eligible
-    # 10% cross-border/friction allowance on CFP, three-year release delay, 1.5% net deposit carry.
-    cash_asset=parent_release+(cfp_release*.90+other_release)*((1.015)/(1+r))**release_delay
-    terminal=(ev+cash_asset-debt+.1651183581)/last['shares']
+def run(kind='base',r=.11,roic=.20,g=.03,margin=0.,delay=3,remit=.8,friction=.07,parent_delay=0.,extra_capex=0.,convert=False,horizon=320,inject_year=0,inject_cash=0.,old_options=.0023994,old_strike=102.15,source_inject_year=0,source_inject_cash=0.,source_inject_capacity=0.):
+    rev=REVENUE[:];nwc=-5.9;cash=C0;parent=P0-parent_delay;shares=S0
+    retained=4.15847860839;reserve=.083022672;debt=0 if convert else BOND
+    capacity=0.;pending=0.;capacity_queue={};lots=[[1+delay,max(0,cash-8.)]];rows=[];cum_dps=0.;op=0.;floor=8.;parentfloor=4.;capital=6.1
+    for y in range(1,horizon+1):
+        t=y-1;opening=cash;opening_parent=parent;opening_floor=floor;oldprofit=op
+        if y<=5:
+            rev=[v*(1+GROWTH[i][t]) for i,v in enumerate(rev)];obs=rev[:]
+            m=[.09,.12,.08,[-.04,-.01,.01,.025,.03][t],.12]
+            capex=[1.8,1.7,1.5,1.3,1.2][t]+(extra_capex if y==1 else 0);dep=[.30,.38,.46,.53,.60][t]
+            ratio=[-.19,-.17,-.15,-.15,-.15][t]
+            if kind=='cyclical':
+                obs[0]*=[.82,.9,.98,1,1][t];obs[1]*=[.82,.9,.98,1,1][t]
+                m[0]-=[.025,.015,.005,0,0][t];m[1]-=[.015,.008,.003,0,0][t];capex*=.95;ratio=[-.14,-.14,-.15,-.15,-.15][t]
+            if kind=='structural':
+                obs[0]*=.5;obs[1]*=.88;obs[2]*=.92;m=[.015,.085,.065,-.08,.09];capex=[1.8,1.5,1.2,1.,1.][t];ratio=-.1
+            if kind=='upside':obs=[v*(1+.025*y) for v in obs];m=[.105,.13,.09,[0,.02,.04,.05,.05][t],.13];capex*=1.2
+            m=[x+margin for x in m];sales=sum(obs);op=sum(v*x for v,x in zip(obs,m));electric=obs[3]*m[3]
+            newnwc=sales*ratio;dnwc=newnwc-nwc;nwc=newnwc;floor=8*sales/27.6
+            if kind=='structural':floor=max(6,floor)
+            netinvestment=capex-dep+dnwc+(floor-opening_floor)
+            ownop=.60*(op-electric);ownfcf=ownop+.45*dep-.55*capex-.60*dnwc-.20-(.25 if kind=='structural' else 0)
+            sbc=[.15,.08,.04,.02,.02][t]
+        else:
+            growth=([.02]*5 if kind=='structural' else [.07,.06,.05,.04,.03])[y-6] if y<=10 else g
+            op*=1+growth;sales*=1+growth
+            # Total reinvestment includes liquidity; maintenance >= depreciation is retained.
+            netinvestment=(op-oldprofit)/roic;floor*=1+growth
+            dep=.6*(sales/44.175);dnwc=0.;capex=dep+netinvestment-(floor-opening_floor)
+            if capex<dep:raise AssertionError('growth budget cannot maintain assets')
+            ownop=.60*op;ownfcf=.60*(op-netinvestment+(floor-opening_floor));sbc=0.;obs=[]
+        capital+=netinvestment;parentfloor=.5*floor
+        proceeds=0.;newshares=0.
+        if y==1:
+            newshares=old_options+.0006+(BOND/241.70 if convert else 0)
+            proceeds=old_options*old_strike+.0006*145.91
+        if y in [2,3,4] and kind!='structural':
+            add=.004151875*{2:.3,3:.3,4:.4}[y];newshares+=add;proceeds+=add*max(0,233.45-cum_dps)
+        shares+=newshares
+        interest=debt*[.001,.003,.006,.015,.018][t] if y<=5 else 0.
+        redemption=debt*1.08 if y==6 else 0.
+        premium=debt*.08 if y==6 else 0.
+        if y==6:debt=0.
+        fin=max(0,opening-opening_floor)*.015;parent_fin=max(0,opening_parent-.5*opening_floor)*.015
+        fcf=op+dep-capex-dnwc-interest-redemption
+        receipt=pending*(1-friction);tax=pending*friction;pending=0.
+        # Disclosed equity investment realized in year8 with 10% friction; proceeds remain outside parent, no fake dividend income.
+        sale=realize(.1651183581,.1651183581,.01651183581,0.) if y==8 else dict(cash_to_owner=0.,accounting_profit=0.)
+        investment_sale=sale["cash_to_owner"]
+        injected=inject_cash if y==inject_year else 0.
+        source_injected=source_inject_cash if y==source_inject_year else 0.
+        source_rights=source_inject_capacity if y==source_inject_year else 0.
+        cash+=fcf+fin+proceeds-tax+investment_sale+injected+source_injected
+        parent+=ownfcf+parent_fin+proceeds-interest-redemption+receipt+injected
+        source_fin=fin-parent_fin
+        subprofit=op-ownop-.25*sbc+source_fin+sale["accounting_profit"]
+        # Cash yield belongs to the same source budget as its underlying surplus.
+        # Pre-existing distribution rights in diagnostic injections are NOT current profit.
+        capacity+=source_rights
+        capacity+=capacity_queue.pop(y,0.)
+        if subprofit>=0:
+            capacity+=remit*subprofit
+            capacity_queue[y+3]=capacity_queue.get(y+3,0.)+(1-remit)*subprofit
+        else:capacity+=subprofit
+        # Conditional consolidated budget, excludes source-side cash needed for solvency and pending dividend.
+        subcash=cash-parent
+        declaration=min(max(0,capacity),max(0,subcash-.5*floor)) if y>5 else 0.
+        capacity-=declaration;pending=declaration
+        ownprofit=ownop-.75*sbc-interest-premium+parent_fin
+        # Only newly declared dividend enters parent profits; next-year receipt has no second income.
+        retained,reserve,addreserve=statutory(retained,ownprofit+declaration*(1-friction),reserve,shares)
+        # parent cash delay is an intercompany balance budget, not a permanent loss; release in year 4.
+        settlement=parent_delay if y==4 else 0.
+        parent+=settlement
+        debt_escrow=debt*1.08*min(1,y/5)
+        liquid_floor=floor+debt_escrow;payment_floor=parentfloor+debt_escrow
+        shortfall=max(0,liquid_floor-cash,payment_floor-parent,parent-cash)
+        if shortfall>1e-8:
+            rows.append(dict(year=y,feasible=False,cash=cash,parent_cash=parent,required_group_floor=liquid_floor,required_parent_floor=payment_floor,shortfall=shortfall,debt_redemption=redemption,distribution=0.))
+            return dict(feasible=False,kind=kind,rows=rows,failure_year=y,shortfall=shortfall,current=None,terminal=None)
+        target=0. if kind=="structural" and y<=5 else .4*max(0,op-sbc+fin-interest-premium)
+        ordinary=min(target,max(0,retained),max(0,cash-liquid_floor),max(0,parent-payment_floor))
+        cash-=ordinary;parent-=ordinary;retained-=ordinary
+        lots=reduce_lots(lots,cash-floor)
+        matured=sum(v for due,v in lots if due<=y)
+        special=0. if kind=="structural" and y<=5 else min(matured,max(0,retained),max(0,cash-liquid_floor),max(0,parent-payment_floor))
+        cash-=special;parent-=special;retained-=special
+        left=special
+        for lot in lots:
+            if lot[0]<=y:
+                d=min(left,lot[1]);lot[1]-=d;left-=d
+        lots=reduce_lots(lots,cash-floor)
+        newlot=max(0,cash-floor-sum(x[1] for x in lots))
+        if newlot>1e-12:lots.append([y+max(1,delay),newlot])
+        dps=(ordinary+special)/shares;cum_dps+=dps
+        assert abs(cash-opening-fcf-fin-proceeds+tax-investment_sale-injected-source_injected+ordinary+special)<1e-7*max(1,cash)
+        assert retained>=-1e-8 or ordinary+special==0
+        assert cash-parent>=-1e-7
+        rows.append(dict(year=y,feasible=True,revenue=sales,segment_revenue=obs,operating_profit=op,accounting_profit=op-sbc-interest-premium,consolidated_accounting_profit=op-sbc-interest-premium+fin+sale["accounting_profit"]-tax,net_investment=netinvestment,capex=capex,depreciation=dep,delta_nwc=dnwc,operating_capital=capital,cash_floor=floor,parent_floor=parentfloor,
+            fcf=fcf,financial_income=fin,shares=shares,new_shares=newshares,registered_capital_budget=shares,exercise_proceeds=proceeds,debt=debt,debt_interest=interest,debt_redemption=redemption,investment_sale_cash=investment_sale,investment_sale_profit=sale["accounting_profit"],
+            source_economic_profit=subprofit,source_financial_income=source_fin,source_sbc=.25*sbc,parent_financial_income=parent_fin,source_injected_cash=source_injected,source_injected_preexisting_capacity=source_rights,source_economic_budget=capacity,source_delayed_capacity=dict(capacity_queue),debt_escrow=debt_escrow,new_dividend_declared=declaration,old_dividend_receipt=receipt,remittance_friction=tax,pending_dividend=pending,parent_own_profit=ownprofit,parent_statutory_profit=ownprofit+declaration*(1-friction),parent_reserve=reserve,parent_reserve_add=addreserve,parent_retained=retained,parent_cash=parent,cash=cash,
+            ordinary=ordinary,special=special,distribution=ordinary+special,distribution_per_share=dps,queued_surplus=[x[:] for x in lots],financing=0.,shortfall=0.,injected_surplus=injected))
     flows=[x['distribution_per_share'] for x in rows]
-    current=present_value(flows,terminal,r)
-    return dict(feasible=True,current=current,terminal=terminal,business_value=ev,terminal_pv_share=(terminal/(1+r)**5)/current,
-                tail=tail,perpetuity_terminal=tv,terminal_surplus=last['surplus_cash'],terminal_cash_asset=cash_asset,
-                parent_release=parent_release,cfp_release=cfp_release,other_release=other_release,unreleased_excluded=unreleasable,
-                release_delay=release_delay,shares=last['shares'],r=r,roic=roic,g=stable_g)
+    pv=sum(d/(1+r)**(i+1) for i,d in enumerate(flows))
+    tv5=sum(d/(1+r)**(i-4) for i,d in enumerate(flows) if i>=5)
+    return dict(feasible=True,kind=kind,current=pv,terminal=tv5,terminal_pv_share=tv5/(1+r)**5/pv,rows=rows,parameters=dict(r=r,roic=roic,g=g,margin=margin,delay=delay,remit=remit,friction=friction,parent_delay=parent_delay,extra_capex=extra_capex,convert=convert,horizon=horizon,old_options=old_options,old_strike=old_strike,source_inject_year=source_inject_year,source_inject_cash=source_inject_cash,source_inject_capacity=source_inject_capacity))
 
-def all_results():
-    base=run();out={'inputs':dict(initial_cash=CASH0,parent_cash=PARENT_CASH0,bond=BOND,shares=S0,base_revenue=BASE_REV), 'base':base}
-    out['core_low']=value(base,.115,.16,.025)
-    out['core_high']=value(base,.105,.20,.03)
-    out['central']=value(base)
-    out['method2_low']=value(base,.115,multiple=12)
-    out['method2_high']=value(base,.105,multiple=15)
-    for kind in ['cyclical','structural','upside']:
-        p=run(kind,convert=kind!='structural')
-        v=value(p,.12 if kind=='structural' else .11,.12 if kind=='structural' else .20,.02 if kind=='structural' else .03,
-                 [.02]*5 if kind=='structural' else None)
-        out[kind]=dict(path=p,value=v)
-    out['sensitivities']={
-      'margin_minus_1pp':value(run(margin_delta=-.01)),
-      'roic_12pct':value(base,roic=.12),
-      'cash_release_delay_0':value(base,release_delay=0),
-      'cash_release_delay_5':value(base,release_delay=5),
-      'parent_delay_2bn':dict(path=run(parent_delay=2),value=value(run(parent_delay=2))),
-      'extra_capex_2bn':dict(path=run(capital_extra=2),value=value(run(capital_extra=2))),
-      'no_conversion':dict(path=run(convert=False),value=value(run(convert=False))),
-      'financing_failure':run(parent_delay=10)}
-    # Same formal valuation functions, independently hand-computable special cases.
-    assert abs(present_value([10]*5,100,.1)-100)<1e-10
-    ev,_,_=continuation(10,.1,[0]*5,.2,0)
-    assert abs(ev-100)<1e-10
-    loss,res=legally_available(-10,4,0,100);assert loss==-6 and res==0
-    loss,res=legally_available(-6,10,0,100);assert abs(loss-3.6)<1e-10 and abs(res-.4)<1e-10
-    assert not out['sensitivities']['financing_failure']['feasible']
-    hand=run(hand_case=True)['rows'][0]
-    # Opening group 10, op1 + dep.2 - capex.3 - WC.1 = .8, dividend .4 -> cash10.4.
-    # Parent6 + .6 + .09 -.165 -.06 -.2 -.4 = 5.865; retained2+.6-.4=2.2.
-    assert abs(hand['cash']-10.4)<1e-9 and abs(hand['parent_cash']-5.865)<1e-9
-    assert abs(hand['distribution_per_share']-4)<1e-9 and abs(hand['parent_retained']-2.2)<1e-9
-    out['tests']={'full_run_hand_case':hand,'formal_PV_hand_case':100,'formal_continuation_hand_case':100,'loss_carryforward':[-6,3.6], 'all_assertions_pass':True}
-    return out
+def results():
+    specs={'central':{},'core_low':dict(r=.115,roic=.16,g=.025),'core_high':dict(r=.105,roic=.20,g=.03),'cyclical':dict(kind='cyclical'),'structural':dict(kind='structural',r=.12,roic=.12,g=.02,convert=False),'upside':dict(kind='upside'),
+      'margin_minus_1pp':dict(margin=-.01),'roic_12pct':dict(roic=.12),'release_delay_5':dict(delay=5),'release_delay_1':dict(delay=1),'remit_50pct':dict(remit=.5),'friction_15pct':dict(friction=.15),'parent_delay_2bn':dict(parent_delay=2),'extra_capex_2bn':dict(extra_capex=2),'conversion':dict(convert=True),'financing_failure':dict(parent_delay=10)}
+    paths={k:run(**v) for k,v in specs.items()}
+    aux={}
+    for label,rate,multiple in [('low',.115,10),('high',.105,12)]:
+        row=paths['central']['rows'][4]
+        surplus=(row['cash']-row['cash_floor'])*.93*(1.015/(1+rate))**3
+        netdebt=row['debt']*1.08/(1+rate)
+        investment=.14860652229*.93/(1+rate)**4
+        terminal=(row['operating_profit']*multiple+surplus-netdebt+investment)/row['shares']
+        pv=sum(z['distribution_per_share']/(1+rate)**z['year'] for z in paths['central']['rows'][:5])+terminal/(1+rate)**5
+        aux[label]=dict(current=pv,terminal=terminal,multiple=multiple,r=rate,cash_asset=surplus,debt_present_at_year5=netdebt,investment_present_at_year5=investment)
+    return {'units':'CNY billion; shares billion; per share CNY','information_cutoff':'2026-10-26T00:00:00+00:00','specs':specs,'paths':paths,'auxiliary_earnings_multiple':aux}
 if __name__=='__main__':
-    out=all_results();(ROOT/'2026-Q3-output.json').write_text(json.dumps(out,ensure_ascii=False,indent=2))
-    print(json.dumps({k:{i:v for i,v in x.items() if i in ['current','terminal','feasible']} for k,x in out.items() if isinstance(x,dict)},indent=2))
+    out=results();(ROOT/'2026-Q3-output.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
+    print(json.dumps({k:{x:v[x] for x in ['feasible','current','terminal']} for k,v in out['paths'].items()},indent=2))

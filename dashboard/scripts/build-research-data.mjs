@@ -1,8 +1,11 @@
-import { copyFile, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { copyFile, lstat, mkdir, readFile, readdir, realpath, rm, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadStandards, reportMetadata, displayEligibility } from "./lib/research-standards.mjs";
 import { currentResults, progressCounts } from "../app/lib/display-policy.mjs";
+
+import { modelArtifactName, researchResourceLink } from "../app/lib/report-reference.mjs";
 
 const dashboardRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = resolve(dashboardRoot, "..");
@@ -33,19 +36,82 @@ async function collectReports(root, output, ticker, policy, state) {
     const sourcePath = `research/companies/CN/${ticker}/reports/${filename}`;
     const body = await readFile(join(root, sourcePath));
     await copyFile(join(root, sourcePath), join(destination, filename));
-    // Publish only the two known model artifacts belonging to this report period.
-    // Preserve the original bytes; these are downloads, never executed at build time.
+    // Keep the legacy source/output pair, then close over reader-linked allowed
+    // auxiliaries and the explicit split-output manifest. Never execute artifacts.
     const period = filename.replace(/\.md$/u, "");
-    for (const extension of [".py", "-output.json"]) {
-      const modelName = `${period}${extension}`;
+    const names = new Map([[`${period}.py`, false], [`${period}-output.json`, false]]);
+    const markdown = body.toString("utf8");
+    const hrefs = [
+      ...[...markdown.matchAll(/\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/gu)].map((m) => m[1]),
+      ...[...markdown.matchAll(/^\s*\[[^\]]+\]:\s*(\S+)/gmu)].map((m) => m[1]),
+    ];
+    for (const href of hrefs) {
+      const link = researchResourceLink(href, sourcePath);
+      const prefix = `/data/models/${ticker}/`;
+      if (!link?.startsWith(prefix)) continue;
+      const name = link.slice(prefix.length).split(/[?#]/u, 1)[0];
+      if (modelArtifactName(name, period)) names.set(name, true);
+    }
+    const artifactOrder = (a, b) => Number(b === `${period}-output.json`) - Number(a === `${period}-output.json`) || (a < b ? -1 : a > b ? 1 : 0);
+    const pending = [...names.keys()].sort(artifactOrder);
+    const exported = new Set();
+    const expectedFiles = new Map();
+    const canonicalModelDirectory = join(await realpath(root), "research/companies/CN", ticker, "models");
+    const modelDestination = join(output, "models", ticker);
+    assertInside(output, modelDestination);
+    while (pending.length) {
+      const modelName = pending.shift();
+      if (exported.has(modelName)) continue;
+      if (!modelArtifactName(modelName, period)) throw new Error(`Unsafe model artifact: ${modelName}`);
+      if (modelName.startsWith(`${period}-case-`) && !expectedFiles.has(modelName)) throw new Error(`Case artifact is absent from its split manifest: ${modelName}`);
       const modelSource = join(root, "research/companies/CN", ticker, "models", modelName);
       let modelBody;
-      try { modelBody = await readFile(modelSource); }
-      catch (error) { if (error.code === "ENOENT") continue; throw error; }
-      const modelDestination = join(output, "models", ticker);
-      assertInside(output, modelDestination);
+      try {
+        const stat = await lstat(modelSource);
+        if (!stat.isFile() || stat.isSymbolicLink()) throw new Error(`Model artifact must be a regular file: ${modelName}`);
+        if (await realpath(modelSource) !== join(canonicalModelDirectory, modelName)) throw new Error(`Model artifact escapes its company directory: ${modelName}`);
+        modelBody = await readFile(modelSource);
+      } catch (error) {
+        if (error.code === "ENOENT" && !names.get(modelName)) continue;
+        throw error;
+      }
+      const expected = expectedFiles.get(modelName);
+      if (expected && (modelBody.length !== expected.bytes
+          || createHash("sha256").update(modelBody).digest("hex") !== expected.file_sha256)) {
+        throw new Error(`Split model artifact does not match manifest: ${modelName}`);
+      }
       await mkdir(modelDestination, { recursive: true });
       await writeFile(join(modelDestination, modelName), modelBody);
+      exported.add(modelName);
+      if (modelName === `${period}-output.json`) {
+        let manifest;
+        try { manifest = JSON.parse(modelBody); } catch { /* Legacy bytes remain downloadable. */ }
+        if (manifest?.schema === "cn300033_complete_case_manifest_v1") {
+          if (!manifest.case_files || typeof manifest.case_files !== "object" || Array.isArray(manifest.case_files)) {
+            throw new Error("Invalid split model manifest");
+          }
+          const seen = new Set();
+          for (const [caseName, entry] of Object.entries(manifest.case_files).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0)) {
+            const name = entry?.file;
+            if (!/^[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*$/u.test(caseName)
+                || name !== `${period}-case-${caseName}.json` || !modelArtifactName(name, period)
+                || seen.has(name) || !Number.isSafeInteger(entry.bytes) || entry.bytes < 0
+                || !/^[a-f0-9]{64}$/u.test(entry.file_sha256 ?? "")) {
+              throw new Error(`Unsafe split model manifest entry: ${caseName}`);
+            }
+            seen.add(name); names.set(name, true); expectedFiles.set(name, entry);
+            // Manifest is processed before its dependencies; a reader-linked case
+            // already copied is also rechecked rather than bypassing its digest.
+            if (exported.has(name)) {
+              const bytes = await readFile(join(modelDestination, name));
+              if (bytes.length !== entry.bytes || createHash("sha256").update(bytes).digest("hex") !== entry.file_sha256) {
+                throw new Error(`Split model artifact does not match manifest: ${name}`);
+              }
+            } else pending.push(name);
+          }
+          pending.sort(artifactOrder);
+        }
+      }
     }
     const title = /^#\s+(.+)$/mu.exec(body.toString("utf8"))?.[1] ?? ticker;
     return { period: filename.replace(/\.md$/u, ""), path: `/data/reports/${ticker}/${filename}`, title,

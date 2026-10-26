@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """中国巨石: ownership cash waterfall. Python stdlib only; CNY billion.
-The 240-year integration is a convergence device, NOT a 240-year forecast.
-All legal-node budget allocations are estimates, not reported standalone accounts.
+The integration horizon is a convergence device, NOT a literal forecast.
+Only P is a legal distribution budget; ALL other rows are economic source budgets, not standalone legal accounts.
 No spot price, IRR, mechanical cash principal add-back or perpetual profit multiple.
 """
-import json, math, copy
+import json, math, copy, gzip, base64, hashlib, sys
 from pathlib import Path
 SHARES=4.003136728
 CUTOFF='2026-10-26T09:00:00+00:00'
@@ -14,8 +14,8 @@ NODES=[
  ('JJ','G',1.,.16,.16,.20,.60,.25,1.291,.383241303),
  ('CD','G',1.,.10,.13,.15,.80,1.20,1.5,0.),
  ('HA','G',1.,.20,.34,.25,2.30,3.00,1.99988347,1.204223357),
- ('EG','G',.7501,.08,.07,.25,.80,.20,.21,0.),
- ('US','P',.70,.04,.04,.10,.15,.15,1.4,0.),
+ ('EG','G',.7501,.08,.07,.25,.80,.20,None,0.),
+ ('US','P',.70,.04,.04,.10,.15,.15,None,0.),
  ('W','Z',.80,.01,.01,.059480663,.128548324,.10,.30,.361010719),
  ('L','Z',1.,0.,0.,.03,0.,1.50,.30,0.),
  ('Z','P',1.,0.,0.,0.,0.,.05,.60,0.),
@@ -91,288 +91,406 @@ def legal_step(retained,reserve,capital,profit):
     addition=min(max(0.,capital*.5-reserve),base*.1)
     return after-addition,reserve+addition,addition
 
+
+# Child rows are economic source budgets. Registered capital shown in NODES is metadata
+# ONLY; no child statutory computation uses it. Existing reserve/loss unknown != zero.
+# Governance retention 10% held three years represents future capacity availability,
+# not a local-law reserve. Foreign taxes are explicit scenario estimates.
+SCENARIOS['long_upstream_delay']=dict(SCENARIOS['base'],hold_years=5,hold_fraction=.25,lag=.4,description='All source budgets:25% earnings capacity postponed five years;40% declared payment lag')
+SCENARIOS['reserve_unknown']=dict(SCENARIOS['base'],parent_reserve=0.,description='Parent statutory portion unverified boundary: none of reported surplus reserve qualifies for cap')
+SCENARIOS['foreign_friction']=dict(SCENARIOS['base'],foreign_tax=.15,hold_years=5,description='Foreign withholding budget15%; all source capacity delayed5 years')
+SCENARIOS['same_year_parent_loss']=dict(SCENARIOS['base'],parent_loss=1.,description='Y2 parent real cash loss1bn reduces same-year lawful profit and cash')
+SCENARIOS['capital_return_fee_shortfall']=dict(SCENARIOS['base'],mandatory_fee=30.,description='Y1 compulsory fees30bn: no dividend and finite debt cannot fund; explicit failure')
+SCENARIOS['parent_retained_unreserved']['parent_reserve']=1.33955207603
+
 def node_step(a,p,inc_decl,inc_cash,loan_income,loan_repay_received,params):
-    """Actual production function; tested below with a hand-computable case."""
-    taxrate=params.get('tax',.18)
-    int_exp=a['debt']*params['rate']
-    loan_int=a['loan']*.025
-    financial_interest=a['cash']*.012
+    """Production waterfall. p['is_parent'] distinguishes legal from economic capacity."""
+    old=copy.deepcopy(a); parent=p.get('is_parent',False)
+    if p.get('capital_receipt',0.) > a.get('investment_cost',0.)+1e-9:
+        return dict(feasible=False,shortfall=p['capital_receipt']-a.get('investment_cost',0.),reason='capital receipt exceeds verified/budget cost basis; disposal gain requires separate model')
+    int_exp=a['debt']*params['rate']; loan_int=a['loan']*.025
+    financial_interest=a['cash']*params.get('deposit_rate',.012)
     taxable=p['ebit']+financial_interest+loan_income-int_exp-loan_int
-    tax=max(0.,taxable)*taxrate
-    own_profit=taxable-tax+p.get('affiliate_income',0.)
-    legal_profit=own_profit+inc_decl
-    capital=a['capital']+p.get('equity_in',0.)
-    available,reserve,res_add=legal_step(a['retained'],a['reserve'],capital,legal_profit)
-    # Old dividend receipt is already in inc_cash, never inc_decl.
-    pre=p.get('equity_in',0.)-p.get('equity_out',0.)+a['cash']+own_profit+p['dep']-p['capex']-p['dnwc']+inc_cash+loan_repay_received-a['payable']
-    # Own affiliate income equals cash paid; no additional affiliate principal is added.
+    tax=max(0.,taxable)*params.get('tax',.18)
+    fees=p.get('mandatory_fee',0.)
+    own_profit=taxable-tax+p.get('affiliate_income',0.)-p.get('real_loss',0.)-fees
+    profit=own_profit+inc_decl
+    capital=a['capital']+p.get('registration_delta',0.) # never automatic upon paid injection
+    held=[(t-1,v) for t,v in a['held'] if t>1]
+    reserve=a['reserve']; add=0.
+    if parent:
+        available,reserve,add=legal_step(a['retained'],reserve,capital,profit)
+        room=max(0.,available)
+    else:
+        available=a['retained']+profit
+        # Losses reduce the SAME year's capacity, no pooling profits against another row.
+        h=params.get('hold_fraction',.1)*max(0.,profit+min(0.,a['retained']))
+        held.append((params.get('hold_years',3),h))
+        room=max(0.,available-sum(v for _,v in held))
+    pre=(a['cash']+own_profit+p['dep']-p['capex']-p['dnwc']+inc_cash+
+         loan_repay_received-a['payable']+p.get('equity_in',0.)-p.get('equity_out',0.)+
+         p.get('capital_receipt',0.))
     draw=min(max(0.,p['minimum']-pre),max(0.,a['limit']-a['debt']))
     pre+=draw
     if pre+1e-10<p['minimum']:
-        return {'feasible':False,'shortfall':p['minimum']-pre,'cash_before_funding':pre-draw,'draw':draw,'legal_profit':legal_profit}
-    # Repay old shareholder loans, then a fraction of free cash to external creditors.
-    loanrepay=min(a['loan'],max(0.,pre-p['minimum'])*.10)
-    pre-=loanrepay
-    repay=min(a['debt']+draw,max(0.,pre-p['minimum'])*params.get('repay_fraction',.25))
-    pre-=repay
-    # Ordinary dividend uses legal profit first; excess cash sweep cannot reuse that legal room.
-    normal=min(max(0.,available),max(0.,pre-p['minimum']),max(0.,p['target']))
-    sweep=min(max(0.,available-normal),max(0.,pre-p['minimum']-normal)) if params['sweep'] else 0.
+        return dict(feasible=False,shortfall=p['minimum']-pre,cash_before_funding=pre-draw,draw=draw,profit=profit,mandatory_fee=fees)
+    loanrepay=min(a['loan'],max(0.,pre-p['minimum'])*.1); pre-=loanrepay
+    repay=min(a['debt']+draw,max(0.,pre-p['minimum'])*params.get('repay_fraction',.25)); pre-=repay
+    normal=min(room,max(0.,pre-p['minimum']),max(0.,p['target']))
+    sweep=min(max(0.,room-normal),max(0.,pre-p['minimum']-normal)) if params['sweep'] else 0.
     declare=normal+sweep
     paid_new=declare*(1-params['lag']); payable=declare-paid_new
-    endcash=pre-paid_new
-    debt=a['debt']+draw-repay
-    assert endcash+1e-9>=p['minimum']+payable
-    assert available-declare>=-1e-9 or available<0 and declare==0
-    # cash conservation includes all cash movements, not merely FCF identity.
-    expected=p.get('equity_in',0.)-p.get('equity_out',0.)+a['cash']+own_profit+p['dep']-p['capex']-p['dnwc']+inc_cash+loan_repay_received-a['payable']+draw-loanrepay-repay-paid_new
-    assert math.isclose(expected,endcash,abs_tol=1e-8)
-    receivable=a.get('dividend_receivable',0.)+inc_decl-inc_cash
-    assert receivable>=-1e-8
-    end=dict(dividend_receivable=receivable,cash=endcash,debt=debt,limit=a['limit'],capital=capital,reserve=reserve,retained=available-declare,loan=a['loan']-loanrepay,payable=payable)
-    row=dict(feasible=True,opening=copy.deepcopy(a),own_profit=own_profit,legal_profit=legal_profit,child_declarations=inc_decl,child_receipts=inc_cash,loan_interest_received=loan_income,loan_principal_received=loan_repay_received,interest_expense=int_exp,loan_interest_paid=loan_int,financial_interest=financial_interest,tax=tax,legal_available_before_dividend=available,reserve_addition=res_add,cash_before_new_financing=pre-draw+loanrepay+repay,draw=draw,external_principal_repaid=repay,shareholder_loan_repaid=loanrepay,old_dividend_paid=a['payable'],ordinary_declared=normal,excess_declared=sweep,new_dividend_declared=declare,new_dividend_paid=paid_new,total_dividend_paid=a['payable']+paid_new,end=end,**p)
-    return row
+    cash=pre-paid_new
+    # Only genuinely surplus financial cash, AFTER creditors and dividend reservation.
+    # Parent finite registered-capital reduction budget is conditional corporate action.
+    # Source capital recovery only for separately tracked new excess contributed basis.
+    surplus=max(0.,cash-p['minimum']-payable)
+    excess_basis=a.get('excess_basis',0.)+p.get('excess_basis_in',0.)
+    age=a.get('surplus_age',0)+1 if surplus>1e-9 else 0
+    capital_return=0.; return_fee=0.; shares=a['shares']
+    if params.get('capital_release',True) and age>=3 and surplus>0 and (parent or excess_basis>0):
+        # Do not return unneeded cash merely due to ordinary policy deferral. Only
+        # profit-capacity blocked cash or earmarked contributed financial principal.
+        blocked=max(0.,surplus-max(0.,available-declare)) if parent else min(surplus,excess_basis)
+        basis=capital*.95 if parent else excess_basis
+        capital_return=min(blocked,basis)/(1+params.get('return_fee_rate',.02))
+        return_fee=capital_return*params.get('return_fee_rate',.02)
+        # Real fee/loss reduces current legal retained, and never paid by clipping shortfall.
+        if cash-capital_return-return_fee < p['minimum']+payable-1e-9:
+            return dict(feasible=False,shortfall=p['minimum']+payable-(cash-capital_return-return_fee),profit=profit)
+        cash-=capital_return+return_fee
+        if parent:
+            available,reserve,add=legal_step(a['retained'],a['reserve'],a['capital']+p.get('registration_delta',0.),profit-return_fee)
+        else:
+            available-=return_fee
+            held[-1]=(held[-1][0],params.get('hold_fraction',.1)*max(0.,profit-return_fee+min(0.,a['retained'])))
+        if parent and capital_return:
+            shares*=1-capital_return/capital; capital-=capital_return
+        if not parent: excess_basis-=capital_return+return_fee
+    # If fee creates unlawful already-declared dividends, recompute ordinary payment
+    # before execution (the fee must not be ignored by max(0)).
+    if parent and declare>max(0.,available)+1e-10:
+        reduction=declare-max(0.,available); declare-=reduction
+        cash+=reduction*(1-params['lag']); payable=declare*params['lag']; paid_new=declare-payable
+        normal=min(normal,declare); sweep=declare-normal
+    end=dict(dividend_receivable=a['dividend_receivable']+inc_decl-inc_cash,
+             cash=cash,debt=a['debt']+draw-repay,limit=a['limit'],capital=capital,
+             reserve=reserve,retained=available-declare,loan=a['loan']-loanrepay,
+             payable=payable,held=held,surplus_age=age,shares=shares,excess_basis=excess_basis,
+             investment_cost=a.get('investment_cost',0.)+p.get('equity_out',0.)-p.get('capital_receipt',0.))
+    assert end['dividend_receivable']>=-1e-7
+    assert cash>=p['minimum']+payable-1e-8
+    expected=old['cash']+own_profit+p['dep']-p['capex']-p['dnwc']+inc_cash+loan_repay_received-old['payable']+p.get('equity_in',0.)-p.get('equity_out',0.)+p.get('capital_receipt',0.)+draw-loanrepay-repay-paid_new-capital_return-return_fee
+    assert math.isclose(cash,expected,abs_tol=1e-7)
+    return dict(feasible=True,opening=old,own_profit=own_profit-return_fee,
+       capacity_profit=profit-return_fee,child_declarations=inc_decl,child_receipts=inc_cash,
+       capital_receipts=p.get('capital_receipt',0.),interest_expense=int_exp,loan_interest_paid=loan_int,
+       loan_interest_received=loan_income,loan_principal_received=loan_repay_received,
+       financial_interest=financial_interest,tax=tax,reserve_addition=add,
+       legal_or_economic_capacity_before_distribution=available,draw=draw,
+       external_principal_repaid=repay,shareholder_loan_repaid=loanrepay,
+       old_dividend_paid=old['payable'],ordinary_declared=normal,excess_declared=sweep,
+       new_dividend_declared=declare,new_dividend_paid=paid_new,total_dividend_paid=old['payable']+paid_new,
+       capital_return=capital_return,capital_return_fee=return_fee,
+       original_holder_cash=old['payable']+paid_new+capital_return,end=end,**p)
 
 def initial():
     a={}
     for name,owner,share,pw,cw,cash,debt,head,capital,loan in NODES:
-        a[name]=dict(dividend_receivable=(.65 if name=='P' else 0.),cash=cash,debt=debt,limit=debt+head,capital=capital,reserve=(1.475234311 if name=='P' else 0.),retained=(.00385265745 if name=='P' else 0.),loan=loan,payable=(.65 if name=='G' else 0.))
+        a[name]=dict(dividend_receivable=.65 if name=='P' else 0.,cash=cash,debt=debt,
+           limit=debt+head,capital=SHARES if name=='P' else 0.,
+           reserve=1.33955207603 if name=='P' else 0.,
+           retained=.13953489229 if name=='P' else 0.,loan=loan,
+           payable=.65 if name=='G' else 0.,held=[],surplus_age=0,shares=SHARES if name=='P' else 1.,excess_basis=0.,investment_cost=10.46536040559 if name=='P' else 0.)
     return a
 
 def run(s,years=240,start_state=None,start_y=1,prior_revenue=24.,keep=True):
     a=copy.deepcopy(start_state) if start_state else initial()
-    if not start_state and 'opening_old_dividend' in s:
-        a['G']['payable']=s['opening_old_dividend']; a['P']['dividend_receivable']=s['opening_old_dividend']
-    if not start_state and 'parent_retained' in s:
-        a['P']['retained']=s['parent_retained']
-        if s['parent_retained']<1.: a['P']['reserve']=1.339552076
-    trace=[]; divs=[]; total_unremitted=0.; nwc=5.6; invested=44.; prev=prior_revenue
+    if not start_state:
+        if 'opening_old_dividend' in s:
+            a['G']['payable']=s['opening_old_dividend']; a['P']['dividend_receivable']=s['opening_old_dividend']
+        for key in ['parent_retained','parent_reserve']:
+            if key in s:a['P'][key.split('_')[1]]=s[key]
+    trace=[]; divs=[]; prev=prior_revenue; invested=44.; nwc=5.6
     for y in range(start_y,years+1):
-        op=parameters(y,s); rev=op['revenue']
-        dnwc=.20*(rev-prev)+(1. if y==1 else -.4 if y==2 else -.3 if y==3 else 0.)
-        # Preserve suppliers' and clients' funds; only normal operational change, no perpetual float draw.
-        shock=s['wc_shock']*(1 if y==s['start'] else -1 if y==s['start']+2 else 0)
-        rows={}; incomingD={n[0]:0. for n in NODES}; incomingC=incomingD.copy()
+        op=parameters(y,s); rev=op['revenue']; dnwc=.2*(rev-prev)+(1. if y==1 else -.4 if y==2 else -.3 if y==3 else 0.)
+        shock=s['wc_shock']*((y==s['start'])-(y==s['start']+2))
+        incomingD={n[0]:0. for n in NODES}; incomingC=incomingD.copy(); incomingK=incomingD.copy()
         interest_loans=sum(x['loan']*.025 for x in a.values()); loan_receipts=0.
-        owner_profit=0.; minority_profit=0.; minority_paid=0.; withholding=0.
-        oldsum=sum(v['cash'] for v in a.values()); payments=0.
+        owner_profit=minority_profit=minority_paid=withholding=payments=0.; rows={}; oldsum=sum(v['cash'] for v in a.values())
         for name,owner,share,pw,cw,_,_,_,_,_ in NODES:
-            revenue_weight=pw if name!='G' else .41
-            if name=='P': revenue_weight=0.
-            minimum=(.45 if name=='P' else .02 if name in ('Z','L') else 1.35*revenue_weight)*rev/24.
+            rw=.41 if name=='G' else 0. if name=='P' else pw
+            minimum=(.45 if name=='P' else .02 if name in ('Z','L') else 1.35*rw)*rev/24.
             ebit,dep,cap,ei,eo=node_budget(y,name,pw,cw,op,s)
-            target=1e9 if name!='P' else max(0.,owner_profit)*( .45 if y<=5 else .70 if y<=10 else 1.)
-            p=dict(ebit=ebit,dep=dep,capex=cap,equity_in=ei,equity_out=eo,dnwc=dnwc*revenue_weight+(shock if name=='P' else 0.),minimum=minimum,target=target,affiliate_income=(.10*(rev/24.) if name=='P' else 0.))
-            x=node_step(a[name],p,incomingD[name],incomingC[name],interest_loans if name=='P' else 0.,loan_receipts if name=='P' else 0.,dict(rate=(s['rate'] if y>=s['start'] else .03),lag=0. if name=='P' else (s['lag'] if y>=s['start'] else .15),sweep=y>=6,repay_fraction=.25))
+            target=1e9 if name!='P' else max(0.,owner_profit)*(.45 if y<=5 else .70 if y<=10 else 1.)
+            p=dict(is_parent=name=='P',ebit=ebit,dep=dep,capex=cap,equity_in=ei,equity_out=eo,
+              dnwc=dnwc*rw+(shock if name=='P' else 0.),minimum=minimum,target=target,
+              affiliate_income=.10*rev/24 if name=='P' else 0.,capital_receipt=incomingK[name],
+              real_loss=s.get('parent_loss',0.) if name=='P' and y==2 else 0.,
+              mandatory_fee=s.get('mandatory_fee',0.) if name=='P' and y==1 else 0.)
+            par=dict(rate=s['rate'] if y>=s['start'] else .03,lag=0. if name=='P' else s['lag'] if y>=s['start'] else .15,
+                     sweep=y>=6,repay_fraction=.25,hold_fraction=s.get('hold_fraction',.1),hold_years=s.get('hold_years',3),
+                     capital_release=s.get('capital_release',True))
+            x=node_step(a[name],p,incomingD[name],incomingC[name],interest_loans if name=='P' else 0.,loan_receipts if name=='P' else 0.,par)
             rows[name]=x
             if not x['feasible']:
-                return dict(feasible=False,failed_year=y,failed_node=name,shortfall=x['shortfall'],trace=trace+[{'year':y,'nodes':rows,'operating':op,'feasible':False}],value=None)
+                return dict(feasible=False,failed_year=y,failed_node=name,shortfall=x['shortfall'],trace=trace+[dict(year=y,nodes=rows,operating=op,feasible=False)],value=None)
             a[name]=x['end']; loan_receipts+=x['shareholder_loan_repaid']
-            # Parent group attribution for direct/indirect economic claims.
-            ownership=share if name not in ('Z','L','G','P') else 1.
-            owner_profit+=x['own_profit']*ownership; minority_profit+=x['own_profit']*(1-ownership)
+            owner_profit+=x['own_profit']*share; minority_profit+=x['own_profit']*(1-share)
             if owner:
-                # EG/US cash withholding: budget 5%, separately paid outside group.
-                wt=.05 if name in ('EG','US') else 0.
+                wt=s.get('foreign_tax',.05) if name in ('EG','US') else 0.
                 incomingD[owner]+=x['new_dividend_declared']*share*(1-wt)
                 incomingC[owner]+=x['total_dividend_paid']*share*(1-wt)
-                minority_paid+=x['total_dividend_paid']*(1-share)
+                incomingK[owner]+=x['capital_return']*share
+                minority_paid+=(x['total_dividend_paid']+x['capital_return'])*(1-share)
                 withholding+=x['total_dividend_paid']*share*wt
-            else:
-                payments=x['total_dividend_paid']
+            else:payments=x['original_holder_cash']
         nwc+=dnwc+shock; invested+=op['capex']-op['depreciation']+dnwc+shock
-        endsum=sum(v['cash'] for v in a.values())
-        # Internal dividends, loan principal/interest cancel. Foreign withholding remains external.
-        ownsum=sum(x['own_profit'] for x in rows.values())
+        endsum=sum(v['cash'] for v in a.values()); ownsum=sum(x['own_profit'] for x in rows.values())
         draws=sum(x['draw'] for x in rows.values()); repayments=sum(x['external_principal_repaid'] for x in rows.values())
-        cash_check=oldsum+ownsum+op['depreciation']-op['capex']-dnwc-shock+draws-repayments-payments-minority_paid-withholding
-        # Withholding on declaration (parent profit) versus actual cash has timing effect:
-        # ownsum excludes internal dividends, so net tax only in cash check above.
-        assert math.isclose(endsum,cash_check,rel_tol=1e-8,abs_tol=1e-7),(y,endsum,cash_check)
-        row=dict(year=y,calendar_label=2026+y,feasible=True,operating=op,delta_nwc=dnwc+shock,nwc=nwc,invested_capital=invested,owner_profit=owner_profit,minority_profit=minority_profit,minority_cash_paid=minority_paid,foreign_withholding=withholding,distribution=payments,distribution_per_share=payments/SHARES,group_cash=endsum,external_debt=sum(v['debt'] for v in a.values()),new_external_financing=draws,external_debt_repayment=repayments,nodes=rows)
-        trace.append(row); divs.append(payments/SHARES); prev=rev
+        assert math.isclose(endsum,oldsum+ownsum+op['depreciation']-op['capex']-dnwc-shock+draws-repayments-payments-minority_paid-withholding,rel_tol=1e-8,abs_tol=1e-7),(y,endsum)
+        trace.append(dict(year=y,calendar_label=2026+y,feasible=True,operating=op,delta_nwc=dnwc+shock,nwc=nwc,
+          invested_capital=invested,owner_profit=owner_profit,minority_profit=minority_profit,minority_cash_paid=minority_paid,
+          foreign_withholding=withholding,distribution=payments,distribution_per_share=payments/SHARES,
+          surviving_shares_billion=a['P']['shares'],cash_per_surviving_share=payments/a['P']['shares'],
+          group_cash=endsum,external_debt=sum(v['debt'] for v in a.values()),new_external_financing=draws,
+          external_debt_repayment=repayments,nodes=rows))
+        divs.append(payments/SHARES);prev=rev
     return dict(feasible=True,trace=trace,distributions=divs,closing_state=a)
 
-def pv(distributions,r,start=0): return sum(v/(1+r)**(i+1) for i,v in enumerate(distributions[start:]))
+def pv(d,r,start=0):return sum(v/(1+r)**(i+1) for i,v in enumerate(d[start:]))
 def valuation(x):
-    if not x['feasible']: return None
-    d=x['distributions']; rates=[.1025,.09]
-    return {'value_low':pv(d,rates[0]),'value_high':pv(d,rates[1]),'terminal_y5_low':pv(d,rates[0],5),'terminal_y5_high':pv(d,rates[1],5),'rate_low_value':rates[0],'rate_high_value':rates[1],'distribution_first5':d[:5],'tv5_pv_fraction_low':pv(d,rates[0],5)/(1+rates[0])**5/pv(d,rates[0]),'tv5_pv_fraction_high':pv(d,rates[1],5)/(1+rates[1])**5/pv(d,rates[1])}
+    if not x['feasible']:return None
+    d=x['distributions'];out={}
+    for tag,k in [('low',.1025),('high',.09)]:
+        out['value_'+tag]=pv(d,k);out['terminal_y5_'+tag]=pv(d,k,5)
+        out['tv5_pv_fraction_'+tag]=pv(d,k,5)/(1+k)**5/pv(d,k)
+    out['distribution_first5']=d[:5]
+    return out
 
-# Separate full-chain reconstruction: independent algebra for legal, financing and payouts.
-def independently_rebuild(s,years=240):
-    # Independently re-entered reported/budget inputs, no initial()/NODES use.
-    raw=[('JJ','G',1.,.16,.16,.2,.6,.85,1.291,.383241303),
-         ('CD','G',1.,.1,.13,.15,.8,2.,1.5,0.),
-         ('HA','G',1.,.2,.34,.25,2.3,5.3,1.99988347,1.204223357),
-         ('EG','G',.7501,.08,.07,.25,.8,1.,.21,0.),
-         ('US','P',.7,.04,.04,.1,.15,.3,1.4,0.),
-         ('W','Z',.8,.01,.01,.059480663,.128548324,.228548324,.3,.361010719),
-         ('L','Z',1.,0.,0.,.03,0.,1.5,.3,0.),
-         ('Z','P',1.,0.,0.,0.,0.,.05,.6,0.),
-         ('G','P',1.,.4,.25,.42,3.15,4.,5.255313048,1.317516638),
-         ('P',None,1.,.01,0.,.8,6.9,8.1,4.003136728,0.)]
-    state={n:dict(dividend_receivable=.65 if n=='P' else 0.,cash=c,debt=d,limit=l,capital=k,reserve=1.475234311 if n=='P' else 0.,retained=.00385265745 if n=='P' else 0.,loan=loan,payable=.65 if n=='G' else 0.) for n,up,own,w,cw,c,d,l,k,loan in raw}
-    records=[]; prev=24.; vals=[]
+def independently_rebuild(which,years=240):
+    """Literal re-entry and ledger reconstruction; no production functions/data read."""
+    specs=[('JJ','G',1,.16,.16,.2,.6,.85,.383241303),('CD','G',1,.10,.13,.15,.8,2,0),
+      ('HA','G',1,.20,.34,.25,2.3,5.3,1.204223357),('EG','G',.7501,.08,.07,.25,.8,1,0),
+      ('US','P',.70,.04,.04,.1,.15,.3,0),('W','Z',.80,.01,.01,.059480663,.128548324,.228548324,.361010719),
+      ('L','Z',1,0,0,.03,0,1.5,0),('Z','P',1,0,0,0,0,.05,0),('G','P',1,.4,.25,.42,3.15,4,1.317516638),
+      ('P',None,1,.01,0,.8,6.9,8.1,0)]
+    # Independent scenario literals, deliberately not taken from SCENARIOS.
+    cases={'base':(1,1.,0.,1.,1.,.03,.15,0.,.1,3,.05),
+      'margin_minus_2pp':(2,1.,-.02,1.,1.,.03,.15,0.,.1,3,.05),
+      'long_upstream_delay':(1,1.,0.,1.,1.,.03,.4,0.,.25,5,.05),
+      'structural':(2,.9,-.075,1.,1.08,.045,.2,.3,.1,3,.05),
+      'cycle':(1,1.,0.,1.,1.,.04,.25,.6,.1,3,.05),
+      'upside':(2,1.08,.02,1.1,1.12,.03,.15,0.,.1,3,.05),
+      'capex_plus_20pct':(1,1.,0.,1.,1.2,.03,.15,0.,.1,3,.05),
+      'foreign_friction':(1,1.,0.,1.,1.,.03,.15,0.,.1,5,.15)}
+    start,rf,ms,gf,cf,rate,lag,wc,hf,hy,wt=cases[which]
+    z={n:dict(cash=c,debt=d,limit=l,loan=b,capital=4.003136728 if n=='P' else 0.,
+      reserve=1.33955207603 if n=='P' else 0.,retained=.13953489229 if n=='P' else 0.,
+      payable=.65 if n=='G' else 0.,dividend_receivable=.65 if n=='P' else 0.,held=[],surplus_age=0,
+      shares=4.003136728 if n=='P' else 1.,excess_basis=0.,investment_cost=10.46536040559 if n=='P' else 0.)
+      for n,u,f,p,cw,c,d,l,b in specs}
+    records=[];distributions=[];last=24.
     for t in range(1,years+1):
-        # Independent reconstruction of original operating assumptions, not reading official outputs.
-        if t<6:
-            rr=(24.81,24.565,25.67,27.05,28.40)[t-1]; mm=(.29,.26,.25,.25,.25)[t-1]
-            dd=2.8+.15*(t-1); cc=(7.5,6.5,5.0,4.2,4.3)[t-1]
+        if t<=5:
+            sales=(24.81,24.565,25.67,27.05,28.4)[t-1];mar=(.29,.26,.25,.25,.25)[t-1]
+            depreciation=2.8+.15*(t-1);spend=(7.5,6.5,5.,4.2,4.3)[t-1]
         else:
-            factors=(1.04,1.035,1.03,1.025,1.02)
-            rr=28.4*math.prod(factors[:min(t-5,5)])*1.015**max(t-10,0)
-            mm=.25-.004*min(t-5,5); dd=3.4*rr/28.4
-            lastfactor=factors[t-6] if t<=10 else 1.015
-            cc=dd+1.6*rr*(1-1/lastfactor)
-        if t>=s['start']:
-            rr*=s['rev_factor']; mm+=s['margin_shift']; cc*=s['capex_factor']
-            if t>5: rr*=s['growth_factor']**min((t-5)/5,1)
-        if s is SCENARIOS['cycle'] and t<=3:
-            rr*=(.88,.92,.96)[t-1]; mm-=(.09,.07,.04)[t-1]
-        if s is SCENARIOS['unfundable'] and t==1: cc+=20
-        op=dict(revenue=rr,ebit=rr*mm,depreciation=dd,capex=cc)
-        rev=op['revenue']; netwc=(rev-prev)/5+(1. if t==1 else -.4 if t==2 else -.3 if t==3 else 0.)
-        shock=s['wc_shock']*((t==s['start'])-(t==s['start']+2)); dc={n[0]:[0.,0.] for n in raw}
-        ir=sum(z['loan'] for z in state.values())*.025; principal=0.; earn=0.; out=0.
-        rec={}
-        for name,up,own,w,cw,_,_,_,_,_ in raw:
-            z=state[name]; rw=.41 if name=='G' else 0. if name=='P' else w
-            floor=(.45 if name=='P' else .02 if name in ('Z','L') else 1.35*rw)*rev/24
-            cash_grids={1:[.6,1.2,3.,.3,.2,.1,.9,0.,1.2,0.],2:[.55,1.,2.4,.3,.2,.1,.82449,0.,1.12551,0.],3:[.55,.8,1.65,.3,.2,.1,.1,0.,1.3,0.]}
-            idx=[n[0] for n in raw].index(name)
-            capnode=cash_grids[t][idx]*op['capex']/(7.5,6.5,5.)[t-1] if t<=3 else op['capex']*(.025 if name=='L' else cw-(.025 if name=='G' else 0))
-            lp=(.02,.12,.22,.24,.25)[t-1] if t<=5 else .25*rev/28.4
-            ld=(.01,.05,.09,.10,.10)[t-1] if t<=5 else .10*rev/28.4
-            depnode=op['depreciation']*cw+(ld if name=='L' else -ld if name=='G' else 0)
-            equity=.3 if t==1 else .2 if t==2 else 0
-            ei=equity if name in ('L','Z') else 0; eo=equity if name in ('P','Z') else 0
-            wa=.13*rev/24-op['ebit']*.01
-            operating=op['ebit']*w+(wa if name=='W' else -wa if name=='G' else 0)+(lp if name=='L' else -lp if name=='G' else 0); interest=z['cash']*.012; cost=z['debt']*(s['rate'] if t>=s['start'] else .03)+z['loan']*.025
-            pretax=operating+interest-cost+(ir if name=='P' else 0.)
-            ownprofit=pretax-.18*max(pretax,0)+(.1*rev/24 if name=='P' else 0)
-            legal=ownprofit+dc[name][0]
-            replenish=min(max(.5*(z['capital']+ei)-z['reserve'],0),.1*max(legal+min(z['retained'],0),0))
-            room=z['retained']+legal-replenish
-            cash=ei-eo+z['cash']+ownprofit+depnode-capnode-netwc*rw-(shock if name=='P' else 0)+dc[name][1]+(principal if name=='P' else 0)-z['payable']
-            newdebt=min(max(floor-cash,0),max(z['limit']-z['debt'],0)); cash+=newdebt
-            if cash<floor-1e-10: return {'feasible':False,'year':t,'node':name}
-            interpay=min(z['loan'],.1*max(cash-floor,0)); cash-=interpay
-            redeem=min(z['debt']+newdebt,.25*max(cash-floor,0)); cash-=redeem
-            want=max(earn,0)*(.45 if t<=5 else .7 if t<=10 else 1) if name=='P' else 1e9
-            regular=min(max(room,0),max(cash-floor,0),max(want,0))
-            extra=min(max(room-regular,0),max(cash-floor-regular,0)) if t>=6 else 0
-            declared=regular+extra; lag=0 if name=='P' else (s['lag'] if t>=s['start'] else .15); paid=declared*(1-lag)
-            transfer=z['payable']+paid; cash-=paid
-            state[name]={'dividend_receivable':z.get('dividend_receivable',0)+dc[name][0]-dc[name][1],'cash':cash,'debt':z['debt']+newdebt-redeem,'limit':z['limit'],'capital':z['capital']+ei,'reserve':z['reserve']+replenish,'retained':room-declared,'loan':z['loan']-interpay,'payable':declared-paid}
-            earn+=ownprofit*own; principal+=interpay
-            if up:
-                factor=own*(.95 if name in ('EG','US') else 1)
-                dc[up][0]+=declared*factor; dc[up][1]+=transfer*factor
-            else: out=transfer/4.003136728
-            rec[name]=copy.deepcopy(state[name])
-        records.append({'year':t,'states':rec,'owner_profit':earn,'distribution_per_share':out}); vals.append(out); prev=rev
-    return dict(feasible=True,trace=records,distributions=vals,valuation={'low':sum(v*(1.1025)**(-i-1) for i,v in enumerate(vals)),'high':sum(v*(1.09)**(-i-1) for i,v in enumerate(vals)),'terminal_low':sum(v*(1.1025)**(-i-1) for i,v in enumerate(vals[5:])),'terminal_high':sum(v*(1.09)**(-i-1) for i,v in enumerate(vals[5:]))})
+            changes=(1.04,1.035,1.03,1.025,1.02)
+            sales=28.4*math.prod(changes[:min(5,t-5)])*1.015**max(0,t-10)
+            mar=.25-.004*min(5,t-5);depreciation=3.4*sales/28.4
+            spend=depreciation+1.6*sales*(1-1/(changes[t-6] if t<=10 else 1.015))
+        if t>=start:
+            sales*=rf;mar+=ms;spend*=cf
+            if t>5:sales*=gf**min(1,(t-5)/5)
+        if which=='cycle' and t<=3:sales*=(.88,.92,.96)[t-1];mar-=(.09,.07,.04)[t-1]
+        networking=(sales-last)/5+({1:1.,2:-.4,3:-.3}.get(t,0.));shock=wc*((t==start)-(t==start+2))
+        accrued={n:0. for n in z};received=accrued.copy();capital_cash=accrued.copy()
+        interinterest=sum(v['loan'] for v in z.values())/40;loanreturn=0.;earn=0.;row={};cashout=0.
+        for idx,(n,u,share,pw,cw,*_) in enumerate(specs):
+            old=z[n];rw=.41 if n=='G' else 0 if n=='P' else pw
+            floor=(.45 if n=='P' else .02 if n in ('L','Z') else 1.35*rw)*sales/24
+            grid={1:(.6,1.2,3.,.3,.2,.1,.9,0,1.2,0),2:(.55,1.,2.4,.3,.2,.1,.82449,0,1.12551,0),3:(.55,.8,1.65,.3,.2,.1,.1,0,1.3,0)}
+            capitalspend=grid[t][idx]*spend/(7.5,6.5,5)[t-1] if t<4 else spend*(.025 if n=='L' else cw-(.025 if n=='G' else 0))
+            wind=.13*sales/24-sales*mar*.01
+            lp=(.02,.12,.22,.24,.25)[t-1] if t<6 else .25*sales/28.4
+            ld=(.01,.05,.09,.1,.1)[t-1] if t<6 else .1*sales/28.4
+            eb=sales*mar*pw+(wind if n=='W' else -wind if n=='G' else 0)+(lp if n=='L' else -lp if n=='G' else 0)
+            dd=depreciation*cw+(ld if n=='L' else -ld if n=='G' else 0)
+            pretax=eb+old['cash']*.012+(interinterest if n=='P' else 0)-old['debt']*(rate if t>=start else .03)-old['loan']*.025
+            net=pretax-.18*max(pretax,0)+(.1*sales/24 if n=='P' else 0)
+            capacity=net+accrued[n]+old['retained'];held=[(age-1,v) for age,v in old['held'] if age>1]
+            if n=='P':
+                provision=min(max(0.,old['capital']/2-old['reserve']),max(0.,net+accrued[n]+min(old['retained'],0))/10)
+                capacity-=provision;usable=max(0,capacity)
+            else:
+                provision=0.;held.append((hy,hf*max(0,net+accrued[n]+min(old['retained'],0))))
+                usable=max(0,capacity-sum(v for age,v in held))
+            transfer=.3 if t==1 else .2 if t==2 else 0
+            add=transfer if n in ('L','Z') else 0;deduct=transfer if n in ('P','Z') else 0
+            money=old['cash']+net+dd-capitalspend-networking*rw-(shock if n=='P' else 0)+received[n]+(loanreturn if n=='P' else 0)-old['payable']+add-deduct+capital_cash[n]
+            borrowing=min(max(0,floor-money),max(0,old['limit']-old['debt']));money+=borrowing
+            if money<floor-1e-10:return dict(feasible=False,failed_year=t,failed_node=n)
+            lpay=min(old['loan'],.1*max(0,money-floor));money-=lpay
+            amort=min(old['debt']+borrowing,.25*max(0,money-floor));money-=amort
+            target=max(0,earn)*(.45 if t<=5 else .7 if t<=10 else 1) if n=='P' else 1e9
+            regular=min(usable,max(0,money-floor),target);extra=min(max(0,usable-regular),max(0,money-floor-regular)) if t>=6 else 0
+            declared=regular+extra;deferred=0 if n=='P' else lag if t>=start else .15
+            newpaid=declared*(1-deferred);payable=declared*deferred;money-=newpaid
+            excess=max(0,money-floor-payable);age=old['surplus_age']+1 if excess>1e-9 else 0
+            reduction=0.;fee=0.;capital=old['capital'];shares=old['shares'];basis=old['excess_basis']
+            if age>=3 and excess>0 and (n=='P' or basis>0):
+                blocked=max(0,excess-max(0,capacity-declared)) if n=='P' else min(excess,basis)
+                reduction=min(blocked,capital*.95 if n=='P' else basis)/1.02;fee=.02*reduction
+                money-=reduction+fee;capacity-=fee
+                if n=='P' and reduction:shares*=1-reduction/capital;capital-=reduction
+                if n!='P':basis-=reduction+fee
+            if n=='P' and declared>max(0,capacity)+1e-10:
+                undo=declared-max(0,capacity);declared-=undo;money+=undo*(1-deferred);payable=declared*deferred;newpaid=declared-payable
+            z[n]=dict(cash=money,debt=old['debt']+borrowing-amort,limit=old['limit'],loan=old['loan']-lpay,
+              capital=capital,reserve=old['reserve']+provision,retained=capacity-declared,
+              payable=payable,dividend_receivable=old['dividend_receivable']+accrued[n]-received[n],held=held,
+              surplus_age=age,shares=shares,excess_basis=basis,investment_cost=old['investment_cost']+deduct-capital_cash[n])
+            earn+=(net-fee)*share;loanreturn+=lpay
+            if u:
+                factor=share*(1-wt if n in ('EG','US') else 1)
+                accrued[u]+=declared*factor;received[u]+=(old['payable']+newpaid)*factor;capital_cash[u]+=reduction*share
+            else:cashout=(old['payable']+newpaid+reduction)/4.003136728
+            row[n]=copy.deepcopy(z[n])
+        records.append(dict(year=t,states=row,distribution_per_share=cashout));distributions.append(cashout);last=sales
+    return dict(feasible=True,trace=records,distributions=distributions,
+      value_low=sum(v/1.1025**(t+1) for t,v in enumerate(distributions)),
+      value_high=sum(v/1.09**(t+1) for t,v in enumerate(distributions)),
+      terminal_y5_low=sum(v/1.1025**(t+1) for t,v in enumerate(distributions[5:])),
+      terminal_y5_high=sum(v/1.09**(t+1) for t,v in enumerate(distributions[5:])))
 
 def tests():
-    a=dict(cash=1.,debt=0.,limit=0.,capital=2.,reserve=0.,retained=0.,loan=0.,payable=0.)
-    p=dict(ebit=1.,dep=.2,capex=.2,dnwc=0.,minimum=1.,target=1.,affiliate_income=0.)
-    x=node_step(a,p,0.,0.,0.,0.,dict(rate=0.,lag=0.,sweep=False,tax=0.,repay_fraction=0.))
-    # 1.012 profit incl .012 interest; reserve .1012; dividend .9108; close cash 1.1012.
-    assert abs(x['new_dividend_paid']-.9108)<1e-12 and abs(x['end']['cash']-1.1012)<1e-12
-    retained,res,add=legal_step(-2.,.9,2.,1.); assert retained==-1. and res==.9 and add==0.
-    retained,res,add=legal_step(-1.,.9,2.,3.); assert abs(retained-1.9)<1e-12 and res==1.
-    # Increasing paid-in capital reopens reserve capacity, no hard-coded cap.
-    assert legal_step(0.,1.,4.,2.)[1]==1.2
-    aold=dict(a,dividend_receivable=.5)
-    old=node_step(aold,p,0.,.5,0.,0.,dict(rate=0.,lag=0.,sweep=False,tax=0.,repay_fraction=0.))
-    assert abs(old['legal_profit']-x['legal_profit'])<1e-12
-    assert abs(old['end']['cash']-x['end']['cash']-.5)<1e-12
-    assert old['end']['dividend_receivable']==0.
-    p2=dict(p,capex=5.)
-    assert not node_step(a,p2,0.,0.,0.,0.,dict(rate=0.,lag=0.,sweep=False,tax=0.,repay_fraction=0.))['feasible']
-    return {'production_chain_hand_test':'pass','old_dividend_receipt_not_profit':'pass','loss_carryforward':'pass','changing_capital_reserve_cap':'pass','zero_distribution_funding_failure':'pass','hand_case':x}
+    a=dict(cash=1.,debt=0.,limit=0.,capital=20.,reserve=5.,retained=0.,loan=0.,payable=0.,
+      dividend_receivable=0.,held=[],surplus_age=0,shares=20.,excess_basis=0.,investment_cost=1.)
+    p=dict(is_parent=True,ebit=10.,dep=0.,capex=0.,dnwc=0.,minimum=0.,target=100.,affiliate_income=0.)
+    q=dict(rate=0.,lag=0.,sweep=True,tax=0.,repay_fraction=0.,deposit_rate=0.,capital_release=False)
+    x=node_step(a,p,0.,0.,0.,0.,q)
+    assert x['reserve_addition']==1. and x['new_dividend_paid']==9. # registered20, paid10 irrelevant
+    l=node_step(dict(a,retained=-3.),p,0.,0.,0.,0.,q)
+    assert abs(l['reserve_addition']-.7)<1e-12 and abs(l['new_dividend_paid']-6.3)<1e-12
+    full=node_step(dict(a,reserve=10.),p,0.,0.,0.,0.,q);assert full['reserve_addition']==0.
+    registered=node_step(dict(a,reserve=10.),dict(p,registration_delta=10.),0.,0.,0.,0.,q)
+    paid=node_step(dict(a,reserve=10.),dict(p,equity_in=10.),0.,0.,0.,0.,q)
+    assert registered['reserve_addition']==1. and paid['reserve_addition']==0.
+    old=node_step(dict(a,dividend_receivable=2.),p,0.,2.,0.,0.,q)
+    assert old['capacity_profit']==x['capacity_profit'] and old['end']['cash']==x['end']['cash']+2.
+    loss=node_step(a,dict(p,real_loss=12.),0.,0.,0.,0.,q)
+    assert not loss['feasible'] and loss['shortfall']==1.
+    neg=node_step(dict(a,cash=20.),dict(p,real_loss=12.),0.,0.,0.,0.,q)
+    assert neg['new_dividend_paid']==0. and neg['end']['retained']==-2.
+    fee2=node_step(a,dict(p,mandatory_fee=2.),0.,0.,0.,0.,q)
+    assert fee2['capacity_profit']==8. and abs(fee2['reserve_addition']-.8)<1e-12 and abs(fee2['new_dividend_paid']-7.2)<1e-12
+    fee=node_step(a,dict(p,mandatory_fee=12.),0.,0.,0.,0.,q)
+    assert not fee['feasible'] and fee['shortfall']==1.
+    failure=node_step(a,dict(p,capex=20.),0.,0.,0.,0.,q)
+    assert not failure['feasible'] and failure['shortfall']==9.
+    # Financial principal: no earnings, no liquidation of the operating business.
+    z=dict(a,cash=1.,reserve=10.);zero=dict(p,ebit=0.)
+    for t in range(3):
+        cr=node_step(z,zero,0.,0.,0.,0.,dict(q,capital_release=True));z=cr['end']
+    assert abs(cr['capital_return']-1/1.02)<1e-12
+    assert abs(cr['capital_return_fee']-.02/1.02)<1e-12
+    assert abs(z['cash'])<1e-12 and abs(z['shares']-(20-1/1.02))<1e-12
+    assert cr['new_dividend_paid']==0. and abs(z['retained']+.02/1.02)<1e-12
+    # Source recovery with 70% economic ownership: only original common owners'70% travels.
+    zz=dict(a,cash=1.,capital=0.,reserve=0.,excess_basis=1.,surplus_age=2)
+    source=node_step(zz,dict(zero,is_parent=False),0.,0.,0.,0.,dict(q,capital_release=True))
+    received=source['capital_return']*.7
+    parent=node_step(dict(a,cash=0.,investment_cost=.7),zero,0.,0.,0.,0.,dict(q,capital_release=False))
+    parent2=node_step(dict(a,cash=0.,investment_cost=.7),dict(zero,capital_receipt=received),0.,0.,0.,0.,q)
+    assert parent2['capacity_profit']==parent['capacity_profit']==0.
+    assert abs(parent2['end']['investment_cost']-(.7-received))<1e-12
+    assert abs(received+source['capital_return']*.3+source['capital_return_fee']-1.)<1e-12
+    # Any future year: incremental free financial cash is released promptly; actual chain.
+    b=run(SCENARIOS['base'],140);late=[]
+    for year in [7,40,80,120]:
+        row=b['trace'][year-1]['nodes']['P'];state=copy.deepcopy(row['opening']);state['cash']+=.1
+        args={k:row[k] for k in ['is_parent','ebit','dep','capex','equity_in','equity_out','dnwc','minimum','target','affiliate_income','capital_receipt','real_loss','mandatory_fee']}
+        params=dict(rate=.03,lag=0.,sweep=True,repay_fraction=.25,hold_fraction=.1,hold_years=3)
+        modified=node_step(state,args,row['child_declarations'],row['child_receipts'],row['loan_interest_received'],row['loan_principal_received'],params)
+        assert modified['feasible']
+        # Incremental cash either immediately reaches holders or repays real debt;
+        # residual is interest/timing reserve, checked by subsequent cash-floor state.
+        benefit=modified['original_holder_cash']-row['original_holder_cash']+modified['external_principal_repaid']-row['external_principal_repaid']
+        assert benefit>.099
+        late.append(dict(year=year,incremental_cash=.1,immediate_holder_or_creditor_benefit=benefit))
+    return dict(registered_not_paid=True,loss_first=True,full_reserve=True,registration_not_payment=True,
+      old_receipt_not_profit=True,same_year_loss_and_fee=True,zero_dividend_funding_failure=True,
+      finite_capital_recovery=dict(gross=cr['capital_return'],fee=cr['capital_return_fee'],remaining_shares=z['shares']),
+      minority_and_investment_basis=True,late_year_surplus_tests=late)
 
-def compact_output(original):
-    """Lossless column-schema/object table. [index] is a reference to objects[index].
-    Row tag 0 is an original list; tag -(schema+1) is an original dictionary.
-    Interning shares only EXACTLY identical data, never drops years or decimals.
-    """
-    schemas=[]; schema_ids={}; objects=[]; object_ids={}
-    def encode(x):
-        if not isinstance(x,(list,tuple,dict)): return x
-        if isinstance(x,dict):
-            keys=tuple(x.keys())
-            if keys not in schema_ids: schema_ids[keys]=len(schemas); schemas.append(list(keys))
-            row=[-schema_ids[keys]-1]+[encode(v) for v in x.values()]
-        else: row=[0]+[encode(v) for v in x]
-        signature=json.dumps(row,ensure_ascii=False,separators=(',',':'))
-        if signature not in object_ids: object_ids[signature]=len(objects); objects.append(row)
-        return [object_ids[signature]]
-    root=encode(original)
-    return {'encoding':'lossless-schema-object-table-v1','description':'All annual records retained. Use expand_output from linked Python model; object references share identical values only.','company':original['company'],'summary':original['summary'],'schemas':schemas,'objects':objects,'root':root}
-
+def compact_output(full):
+    raw=json.dumps(full,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
+    return dict(encoding='gzip-base64-json-v1',company='CN:600176',schema='Full JSON: scenarios contain every year and every economic source/parent state; values in CNY billion except per original share.',
+      summary=full['summary'],uncompressed_bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest(),
+      data=base64.b64encode(gzip.compress(raw,compresslevel=9,mtime=0)).decode())
 def expand_output(packed):
-    """Pure data decoder: does not run any economic calculation."""
-    if packed.get('encoding')!='lossless-schema-object-table-v1': return packed
-    result=[]
-    def read(v): return result[v[0]] if isinstance(v,list) else v
-    for row in packed['objects']:
-        values=[read(v) for v in row[1:]]
-        result.append(values if row[0]==0 else dict(zip(packed['schemas'][-row[0]-1],values)))
-    return read(packed['root'])
+    if packed.get('encoding')!='gzip-base64-json-v1':return packed
+    raw=gzip.decompress(base64.b64decode(packed['data']));assert hashlib.sha256(raw).hexdigest()==packed['sha256'];assert len(raw)==packed['uncompressed_bytes']
+    return json.loads(raw)
 
 def main():
-    output={'company':'CN:600176','information_cutoff':CUTOFF,'unit':'CNY billion except per share','fully_diluted_shares_billion':SHARES,'integration_years':240,'nodes':NODES,'node_names':NAMES,'assumptions':SCENARIOS,'tests':tests(),'scenarios':{}}
+    if len(sys.argv)>1 and sys.argv[1]=='--expand':
+        src=Path(sys.argv[2]) if len(sys.argv)>2 else Path(__file__).with_name('2026-Q3-output.json')
+        text=json.dumps(expand_output(json.loads(src.read_text())),ensure_ascii=False,indent=2)
+        if len(sys.argv)>3:Path(sys.argv[3]).write_text(text+'\n')
+        else:print(text)
+        return
+    output=dict(company='CN:600176',information_cutoff=CUTOFF,unit='CNY billion except per ORIGINAL share',
+       current_original_shares_billion=SHARES,source_budget_metadata=NODES,source_budget_columns=['budget_id','economic_aggregation_recipient_not_legal_parent','economic_ownership','profit_weight','capex_weight','opening_cash_budget','opening_external_debt_budget','finite_facility_budget','historical_registered_metadata_not_used_for_children','intercompany_loan'],
+       methodology='P: actual legal-person constrained budget. Other rows: economic source budgets NOT individual legal accounts; no foreign Chinese statutory rules. Paid support does not change registered capital.',
+       scenario_inputs=SCENARIOS,tests=tests(),scenarios={},independent_reconstruction={},integration_extension={})
     for name,s in SCENARIOS.items():
-        x=run(s); x['valuation']=valuation(x); output['scenarios'][name]=x
-    output['independent_reconstruction']={}
-    for name in ['base','margin_minus_2pp']:
-        raw_s=dict(start=1 if name=='base' else 2,rev_factor=1.,margin_shift=0. if name=='base' else -.02,growth_factor=1.,capex_factor=1.,rate=.03,lag=.15,wc_shock=0.)
-        x=independently_rebuild(raw_s); z=output['scenarios'][name]
-        assert x['feasible']==z['feasible']
-        if x['feasible']:
-            for u,v in zip(x['trace'],z['trace']):
-                assert math.isclose(u['distribution_per_share'],v['distribution_per_share'],abs_tol=1e-8)
-                for node in u['states']:
-                    for key,val in u['states'][node].items(): assert math.isclose(val,v['nodes'][node]['end'][key],rel_tol=1e-8,abs_tol=1e-7),(name,u['year'],node,key)
-            for aa,bb in [('low','value_low'),('high','value_high'),('terminal_low','terminal_y5_low'),('terminal_high','terminal_y5_high')]:
-                assert abs(x['valuation'][aa]-z['valuation'][bb])<1e-8
-        output['independent_reconstruction'][name]=x
-    # Entire tails are regenerated, retaining full annual outputs in every run.
-    output['integration_extension']={}
-    for n in [160,320]:
-        x=run(SCENARIOS['base'],n); x['valuation']=valuation(x); output['integration_extension'][str(n)]=x
-    b=output['scenarios']['base']; assert b['feasible']
-    # Fifth-year terminal explicitly restart the SAME physical/legal balance sheet.
+        x=run(s);x['valuation']=valuation(x);output['scenarios'][name]=x
+    for name in ['base','margin_minus_2pp','long_upstream_delay','cycle','structural','upside','capex_plus_20pct','foreign_friction']:
+        independent=independently_rebuild(name);actual=output['scenarios'][name]
+        assert independent['feasible']==actual['feasible']
+        for rr,aa in zip(independent['trace'],actual['trace']):
+            assert abs(rr['distribution_per_share']-aa['distribution_per_share'])<1e-7
+            for n,ss in rr['states'].items():
+                for k,v in ss.items():
+                    other=aa['nodes'][n]['end'][k]
+                    if isinstance(v,list):
+                        assert len(v)==len(other)
+                        assert all(t==u and math.isclose(x,y,rel_tol=1e-8,abs_tol=1e-7) for (t,x),(u,y) in zip(v,other))
+                    else:assert math.isclose(v,other,rel_tol=1e-8,abs_tol=1e-7),(name,rr['year'],n,k)
+        for key in ['value_low','value_high','terminal_y5_low','terminal_y5_high']:assert abs(independent[key]-actual['valuation'][key])<1e-7
+        output['independent_reconstruction'][name]=independent
+    b=output['scenarios']['base'];output['summary']=b['valuation']
+    output['all_scenario_tail_checks']={}
+    for name,scenario in SCENARIOS.items():
+        extended=run(scenario,320);original=output['scenarios'][name]
+        assert extended['feasible']==original['feasible']
+        if extended['feasible']:
+            vv=valuation(extended);delta={k:vv[k]-original['valuation'][k] for k in ['value_low','value_high','terminal_y5_low','terminal_y5_high']}
+            assert max(abs(v) for v in delta.values())<2e-5
+            worst=min(rr['end']['cash']-rr['minimum']-rr['end']['payable'] for yr in extended['trace'] for rr in yr['nodes'].values())
+            assert worst>=-1e-7
+            output['all_scenario_tail_checks'][name]=dict(years=320,valuation_delta_320_minus_240=delta,min_cash_after_operating_floor_and_old_declared_reservation=worst,all_320_year_cash_and_cost_assertions=True)
+        else:
+            assert extended['failed_year']==original['failed_year']
+            output['all_scenario_tail_checks'][name]=dict(feasible=False,failed_year=extended['failed_year'],failed_node=extended['failed_node'],shortfall=extended['shortfall'])
+    for count in [160,320]:
+        x=run(SCENARIOS['base'],count);x['valuation']=valuation(x);output['integration_extension'][str(count)]=x
+    assert abs(output['integration_extension']['320']['valuation']['value_high']-b['valuation']['value_high'])<1e-5
     restart=run(SCENARIOS['base'],240,{k:v['end'] for k,v in b['trace'][4]['nodes'].items()},6,b['trace'][4]['operating']['revenue'])
-    assert all(abs(x-y)<1e-9 for x,y in zip(restart['distributions'],b['distributions'][5:]))
-    output['same_year5_state_terminal_restart']={'verified':True,'opening_state':{k:v['end'] for k,v in b['trace'][4]['nodes'].items()},'valuation_low':pv(restart['distributions'],.1025),'valuation_high':pv(restart['distributions'],.09),'trace':restart['trace']}
-    for key in ['value_low','value_high']:
-        assert abs(output['integration_extension']['320']['valuation'][key]-b['valuation'][key])<1e-5
-    # Earnings-capitalization cross-check at a mature debt-free actual budget state.
-    # Use the SAME legal payouts/reinvestment, not a separately asserted profit multiple.
-    year=30; nxt=b['trace'][year]; ep=nxt['owner_profit']; payout=nxt['distribution']/ep; g=.015
-    aux={'capitalization_at_year':year,'next_owner_earnings':ep,'actual_budget_payout_ratio':payout,'g':g,'formula':'PV(actual D1..30)+E31*payout31/(k-g)/(1+k)^30/shares; no principal addition','shared_operating_assumptions':True}
+    assert all(abs(a-c)<1e-9 for a,c in zip(restart['distributions'],b['distributions'][5:]))
+    output['same_year5_restart']=restart
+    alt=run(dict(SCENARIOS['base'],mature_price_normalization=True));assert alt['feasible'];alt['valuation']=valuation(alt)
+    assert alt['trace'][:5]==b['trace'][:5]
+    ep=alt['trace'][30]['owner_profit'];payout=alt['trace'][30]['distribution']/ep
+    aux=dict(method='Normalized mature earning-power capitalization; independent lower selling prices after Y5; same physical capital and financing constraints',
+      capitalized_year=30,earnings_year31=ep,payout_ratio=payout,growth=.015,full_path=alt)
     for label,k in [('low',.1025),('high',.09)]:
-        aux[label]=pv(b['distributions'][:year],k)+(ep*payout/(k-g)/SHARES)/(1+k)**year
-        aux['implied_forward_PE_'+label]=payout/(k-g)
-    output['same_path_terminal_capitalization_check']=aux
-    alternative_inputs=dict(SCENARIOS['base'],mature_price_normalization=True,description='Independent mature earning-power perspective: from Y6 cloth price 6.0 CNY/m, coarse 4100 CNY/t; Y5 quantity base grows only 1.5%; existing cost retained; reinvestment follows physical volume, not falling price')
-    alternative=run(alternative_inputs); assert alternative['feasible']
-    assert alternative['trace'][:5]==b['trace'][:5]
-    alternative['valuation']=valuation(alternative)
-    year=30; nextrow=alternative['trace'][year]; earnings=nextrow['owner_profit']; payout=nextrow['distribution']/earnings
-    altpe={'method':'mature normalized earning-power capitalization after constrained transition','capitalization_at_year':year,'same_year5_state_verified':True,'inputs':alternative_inputs,'next_owner_earnings':earnings,'actual_budget_payout_ratio':payout,'g':.015,'formula':'PV(actual D1..30)+normalized E31*legal/cash payout31/(k-g)/(1+k)^30/shares; Y6+ independently normalized selling prices and volume growth; no principal add-back','complete_budget':alternative}
-    for label,k in [('low',.1025),('high',.09)]:
-        altpe[label]=pv(alternative['distributions'][:year],k)+(earnings*payout/(k-.015)/SHARES)/(1+k)**year
-        altpe['implied_forward_PE_'+label]=payout/(k-.015)
-        assert abs(altpe[label]-alternative['valuation']['value_'+label])<.01
-    output['auxiliary_normalized_PE']=altpe
-    output['summary']=b['valuation']
-    output['lossless_serialized_roundtrip_verification']={'status':'asserted every generation','comparison':'expand_output(json.loads(json.dumps(compact_output(full)))) == json.loads(json.dumps(full))','scope':'every key, number, year, node and scenario including independent rebuild and extensions','independent_rebuild_function':'independently_rebuild; raw tuples and raw_s literals separately entered'}
-    packed=compact_output(output)
-    assert expand_output(json.loads(json.dumps(packed,ensure_ascii=False,separators=(',',':'))))==json.loads(json.dumps(output,ensure_ascii=False,separators=(',',':'))), 'Lossless annual-data serialized round trip failed'
-    path=Path(__file__).with_name('2026-Q3-output.json'); path.write_text(json.dumps(packed,ensure_ascii=False,separators=(',',':'))+'\n')
-    print(json.dumps({'summary':output['summary'],'scenarios':{k:dict(feasible=v['feasible'],valuation=v['valuation'],failure=(v.get('failed_year'),v.get('failed_node'),v.get('shortfall'))) for k,v in output['scenarios'].items()},'auxiliary':{k:v for k,v in output['auxiliary_normalized_PE'].items() if k!='complete_budget'}},ensure_ascii=False,indent=2))
-if __name__=='__main__': main()
+        aux[label]=pv(alt['distributions'][:30],k)+ep*payout/(k-.015)/SHARES/(1+k)**30
+        assert abs(aux[label]-alt['valuation']['value_'+label])<.01
+    output['auxiliary']=aux
+    packed=compact_output(output);assert expand_output(packed)==json.loads(json.dumps(output))
+    Path(__file__).with_name('2026-Q3-output.json').write_text(json.dumps(packed,ensure_ascii=False,separators=(',',':'))+'\n')
+    print(json.dumps(dict(summary=output['summary'],auxiliary={k:v for k,v in aux.items() if k!='full_path'},tests=output['tests'],scenarios={k:dict(feasible=v['feasible'],valuation=v['valuation'],failure=[v.get('failed_year'),v.get('failed_node'),v.get('shortfall')]) for k,v in output['scenarios'].items()}),ensure_ascii=False,indent=2))
+if __name__=='__main__':main()

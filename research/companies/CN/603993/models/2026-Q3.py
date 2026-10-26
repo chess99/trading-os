@@ -59,7 +59,7 @@ def operation(name,t,scenario,inv):
   rate=tax
   # net cash cost of additional cobalt stock; draws release exactly historical cost.
   dstock=(cp-cs)*10000*FX/1e9*infl
-  # finite contractual stream reserve: 2026 H1 liability6.564 allocated over mining years as receipt haircut
+  # Economic delivery budget: H1 liability6.564 allocated over mine years; not verified exact contract delivery schedule.
   stream=(6.563914669/15)*infl
   oper+=stream*(.55 if name=='TFM' else .45)
   # final settlement payments for historic reserve royalty; no second opening debt deduction.
@@ -103,14 +103,6 @@ def liquidity(cash,debt,need,floor,limit):
  if debt+draw>limit+1e-8:raise ValueError('finite financing exhausted even before dividends')
  return cash+draw,debt+draw,draw
 
-RESERVE_CAP={'TFM':3.,'KFM':1.,'BR':.4,'BG':.2,'IXM':.5,'ODIN':.8}
-def retained_profit(legal,reserve,ni,cap):
- """Bounded governance earmark, not a claim about local statutory reserve law.
- Only earnings left AFTER restoring accumulated losses can be earmarked."""
- eligible=max(0.,legal+ni)-max(0.,legal)
- addition=min(max(0.,cap-reserve),.05*max(0.,eligible))
- return legal+ni-addition,reserve+addition,addition
-
 def cashpool(total,mother,balance,limit=10.):
  """Internal lender cash=total-mother; matched receivable/payable=balance.
  Repay from mother surplus first; transfer only existing lender cash. No income."""
@@ -121,97 +113,144 @@ def cashpool(total,mother,balance,limit=10.):
  if mother < -1e-8 or mother>total+1e-8:raise ValueError('mother liquidity fails')
  return mother,balance,loan,repayment
 
-def run(scenario='base',zero_dividend=False,force_need=0.):
- s=deepcopy(INIT); inv={'TFM':107718.6,'KFM':88133.4};closed=set();rows=[]
- cash=10.186334732;debt=22.159167733;legal=1.36615118;mothercash=4.186334732;recv=1.802341533
- # parent cash includes6 offshore treasury, not immediately available mother cash.
- parent_limit=36.;paid=0;old_paid=False;pool_balance=0.
- if scenario=='legal_zero':
-  for z in s.values():z['legal']=0.
- if scenario=='cash_shift':s['TFM']['cash']-=6.;s['IXM']['cash']+=6.
- for t in range(1,N+1):
-  before=sum(z['cash'] for z in s.values())+cash;profit=0.;inflow=0.;newlegal=0.;minor=0.;withtax=0.;capex=0.;finance=0.;subs={};external=0.;sub_injection=0.;closure_external=0.
-  # financial investments sell once. No interest on these investments also capitalized.
-  assetrelease=5.948578055 if t==1 else (7.951387165+.228973 if t==10 else 0.)
-  if t==1:assetrelease-=.228973
-  if t==N:assetrelease+=2.871809985
-  for name,z in s.items():
-   if name in closed:continue
-   o,newinv=operation(name,t,scenario,inv.get(name,0.));inv[name]=newinv
-   interest=z['debt']*.045;ni=o['ni']-interest;fcf=o['fcf']-interest
-   interest_income=z['cash']*.015;ni+=interest_income;fcf+=interest_income
-   profit+=ni*z['own'];capex+=o['capex'];external+=fcf
-   z['legal'],z['reserve'],reserve=retained_profit(z['legal'],z['reserve'],ni,RESERVE_CAP[name]*(2 if scenario=='reserve_double' else 1))
-   # Mature borrowers amortize bank debt, trade debt scales with nominal WC and remains matched.
-   repay=min(z['debt'],.25) if name!='IXM' else 0.
-   if name=='IXM' and scenario=='ixm_wc_shock' and t>=6:repay=max(z['debt']-34.,0.)
-   z['cash']+=fcf-repay;z['debt']-=repay;external-=repay
-   if name=='ODIN' and z['cash']<z['floor']:
-    inj=z['floor']-z['cash'];mothercash-=max(0.,inj-(cash-mothercash));cash-=inj;z['cash']+=inj;sub_injection+=inj
-   z['cash'],z['debt'],draw=liquidity(z['cash'],z['debt'],0,z['floor'],z['limit']);finance+=draw;external+=draw
-   # Collection of pre-existing dividend receivable: debit subsidiary payable / parent receivable only.
-   old=recv if name=='TFM' and t==1 else 0.
-   if old:
-    z['cash']-=old;inflow+=old;recv=0.;old_paid=True
-   end=LIFE[name]+(price(t,scenario)[5] if name=='ODIN' else 0)
-   if t==end or t==N:
-    recovery=WC[name]*(1.02**(t-1) if name=='IXM' else 1.)
-    if name in ('TFM','KFM'):recovery+=inv[name]*10000*FX/1e9*.75 # remaining inventory realization net recovery, no revenue duplication
-    restoration={'TFM':1.,'KFM':.6,'BR':.4,'BG':.3,'ODIN':.6,'IXM':0}[name]
-    closure_external+=recovery-z['debt']-restoration
-    pot=z['cash']+recovery-z['debt']-restoration
-    if pot<0:raise ValueError('negative closure equity')
-    declaration=0.;capital=pot;z['cash']=0;z['debt']=0;closed.add(name)
-    # closure financing and working-capital release are counted separately
-   else:
-    declaration=min(max(0,z['legal']),max(0,z['cash']-z['floor']),(.35 if t<=5 else .85)*max(ni,0)+(.05 if t<=5 else .5)*max(z['cash']-z['floor'],0))
-    if scenario=='remit_delay' and t<=2:declaration=0.
-    z['cash']-=declaration;z['legal']-=declaration;capital=0.
-   owner_decl=declaration*z['own'];tax=.05*owner_decl if name in ('TFM','KFM','BR','BG','ODIN') else 0.
-   received=owner_decl-tax+capital*z['own'];inflow+=received;newlegal+=owner_decl-tax
-   minor+=(declaration+capital)*(1-z['own']);withtax+=tax
-   subs[name]={**o,'net_profit':ni,'declaration':declaration,'old_receivable_paid':old,'capital_return':capital,'owner_receipt':received+old,'minority_distribution':(declaration+capital)*(1-z['own']),'cash':z['cash'],'debt':z['debt'],'legal_retained':z['legal'],'reserve':z['reserve'],'reserve_addition':reserve,'draw':draw}
-  # Domestic normalized mining earnings, resource replacement included and ends Y13.
-  domestic=(3.2 if t<=8 else max(0.,3.2-.64*(t-8))) *1.02**(t-1) if t<=13 else 0.
-  if scenario=='cycle' and t<=3:domestic*=.65
-  if scenario=='structural':domestic*=.75
-  domcap=(.45*1.02**(t-1) if t<=13 else 0);domdep=(.3*1.02**(t-1) if t<=13 else 0)
-  pi=debt*.045;ci=cash*.015
-  investment_income=.45 if t<=10 else 0.
-  domestic+=investment_income
-  domestic-=(.6 if t<=15 else .2)*1.02**(t-1) # holding-company overhead beyond mine costs
-  parentprofit=domestic+newlegal-pi+ci
-  profit+=domestic-pi+ci
-  legal+=parentprofit
-  pf=domestic+domdep-domcap-pi+ci
-  cash+=pf+inflow+assetrelease
-  # collected old dividends do not enter legal profit; reserves have already exceeded 50% registered capital.
-  mothercash+=pf+inflow # offshore asset proceeds require remittance/capital steps, not operating legal profit
-  planned_repay=min(debt,8.28 if t==1 else (5. if t<=4 else 1.))
-  mothercash-=max(0.,planned_repay-(cash-mothercash));cash-=planned_repay
-  debt-=planned_repay
-  cash,debt,draw=liquidity(cash,debt,force_need if t==1 else 0.,3. if t<N else 0.,parent_limit)
-  finance+=draw
-  parentdraw=draw
-  mothercash,pool_balance,pool_draw,pool_repayment=cashpool(cash,mothercash,pool_balance)
-  target=.30*max(profit,0) if t<=(10 if scenario=='payout_delay' else 5) else max(.75*max(profit,0),.90*max(cash-15.,0))
-  dividend=min(target,max(legal,0),max(mothercash-1.,0),max(cash-3.,0))
-  if zero_dividend:dividend=0.
-  finaldebt=0.
-  if t==N:
-   finaldebt=debt
-   dividend=max(0,cash-debt);debt=0.;legal=0. # orderly return of paid-in capital plus retained wealth
-  else:legal-=dividend
-  cash-=dividend+finaldebt;mothercash-=min(mothercash,dividend);paid+=dividend
-  if t==N:mothercash=0.;pool_balance=0.
-  after=cash+sum(z['cash'] for z in s.values())
-  expected=before+external+closure_external+pf+assetrelease+parentdraw-planned_repay-finaldebt-minor-withtax-dividend-(force_need if t==1 else 0.)
-  assert abs(after-expected)<1e-7, (t,after,expected)
-  assert cash>=-1e-7 and debt<=parent_limit+1e-7
-  assert all(z['cash']>=-1e-7 and z['debt']<=z['limit']+1e-7 for z in s.values())
-  rows.append(dict(year=t,subs=subs,common_profit=profit,domestic_profit=domestic,domestic_capex=domcap,parent_new_dividend_income=newlegal,parent_old_receivable_collection=1.802341533 if t==1 else 0.,parent_legal_profit=parentprofit,parent_legal_retained=legal,parent_cash=cash,mother_cash=mothercash,treasury_cash=cash-mothercash,cashpool_receivable=pool_balance,cashpool_payable=pool_balance,cashpool_draw=pool_draw,cashpool_repayment=pool_repayment,parent_debt=debt,draw=finance,capital_contribution=sub_injection,minority_distribution=minor,withholding=withtax,capex=capex+domcap,cash_conservation_error=after-expected,distribution=dividend,distribution_per_share=dividend/SHARES))
- assert old_paid and recv==0
- return rows
+# The six units are ECONOMIC FORECAST SEGMENTS, not invented legal persons.
+# No foreign registered-capital or statutory-reserve ledger is simulated.
+PARENT_REGISTERED=4.2788620352
+PARENT_STATUTORY=2.1599240583
+# Returnable premium BUDGET bounded by parent total capital reserve26.69447508784;
+# group disclosed share premium26.45911077155 is a corroborating bound, not a parent detail claim.
+PARENT_CAPITAL_PREMIUM=26.45911077155
+HK_COST=40.25373746363
+
+def china_profit(retained, statutory, income, registered, paid_in=None):
+    eligible=max(0.,retained+income)-max(0.,retained)
+    appropriation=min(max(0.,registered*.5-statutory), max(0.,eligible)*.1)
+    return retained+income-appropriation,statutory+appropriation,appropriation
+
+def disposal(cash, noncash, external_debt, closure_cost, ownership, haircut=.15, tax_basis=None, tax=.25):
+    realization=noncash*(1-haircut)
+    gain=realization-(noncash if tax_basis is None else tax_basis)-closure_cost
+    tax_paid=max(0.,gain)*tax # no immediate tax refund for losses
+    equity=cash+realization-external_debt-closure_cost-tax_paid
+    if equity< -1e-9: raise ValueError('exit cannot repay all external debt')
+    return dict(total=equity,owner=equity*ownership,minority=equity*(1-ownership),
+                gain=gain,tax=tax_paid,external=realization-external_debt-closure_cost-tax_paid)
+
+def recover_basis(proceeds,basis,final=False):
+    returned=min(proceeds,basis);remaining=basis-returned
+    gain=max(0.,proceeds-basis)-(remaining if final else 0.)
+    return (0. if final else remaining),returned,gain
+
+def capital_reduce(payment,registered,premium,shares):
+    base=registered+premium
+    if payment>base+1e-9:raise ValueError('capital return exceeds actual paid capital and premium')
+    ratio=1-payment/base if base else 1.
+    return registered*ratio,premium*ratio,shares*ratio
+
+def receipt(cash, income, amount, kind):
+    return cash+amount,income+(amount if kind=='dividend' else 0.)
+
+def run(scenario='base',zero_dividend=False,force_need=0.,horizon=32,budget_version='revised'):
+    s=deepcopy(INIT)
+    for z in s.values():
+        z.pop('legal');z.pop('reserve');z['economic_earnings_budget']=0.
+    inv={'TFM':107718.6,'KFM':88133.4};closed=set();rows=[];pending=[]
+    cash=10.186334732;debt=22.159167733;legal=1.36615118;mothercash=4.186334732
+    statutory=PARENT_STATUTORY;registered=PARENT_REGISTERED;premium=PARENT_CAPITAL_PREMIUM;shares=SHARES
+    basis=HK_COST;recv=1.802341533;pool=0.;parent_limit=36.;finalized=False
+    friction=.10 if scenario=='friction_10' else .05
+    delay=2 if scenario=='upstream_delay_2' else 0
+    exit_delay=(3 if scenario=='exit_delay_3' else 1) if budget_version=='revised' else 0
+    haircut=(.35 if scenario=='exit_haircut_35' else .15) if budget_version=='revised' else 0.
+    if scenario=='cash_shift':s['TFM']['cash']-=6;s['IXM']['cash']+=6
+    for t in range(1,horizon+1):
+        before=cash+sum(z['cash'] for z in s.values())+sum(x['amount'] for x in pending)
+        profit=0.;external=0.;minor=0.;taxes=0.;capex=0.;finance=0.;subs={};inflow=0.;newincome=0.;capreceived=0.;injtotal=0.;gain=0.
+        assetrelease=(5.948578055-.228973 if t==1 else (7.951387165+.228973 if t==10 else 0.))
+        if budget_version=='legacy' and t==horizon:assetrelease+=2.871809985
+        if budget_version=='revised' and t in (16,31):assetrelease+=2.0 if t==16 else .871809985
+        for name,z in s.items():
+            if name in closed:continue
+            o,iv=operation(name,t,scenario,inv.get(name,0.));inv[name]=iv
+            if budget_version=='revised' and name=='ODIN' and t==1 and scenario not in ('no_future_stream_financing','stream_funding_1'):o['fcf']-=1.
+            ni=o['ni']-z['debt']*.045+z['cash']*.015
+            fcf=o['fcf']-z['debt']*.045+z['cash']*.015
+            profit+=ni*z['own'];external+=fcf;capex+=o['capex'];z['economic_earnings_budget']+=ni
+            repay=min(z['debt'],.25) if name!='IXM' else 0.
+            if name=='IXM' and scenario=='ixm_wc_shock' and t>=6:repay=max(z['debt']-34,0)
+            z['cash']+=fcf-repay;z['debt']-=repay;external-=repay
+            if name=='ODIN' and z['cash']<z['floor']:
+                inj=z['floor']-z['cash'];cash-=inj;mothercash-=max(0.,inj-(cash+inj-mothercash));z['cash']+=inj;injtotal+=inj;basis+=inj
+            z['cash'],z['debt'],draw=liquidity(z['cash'],z['debt'],0,z['floor'],z['limit']);finance+=draw;external+=draw
+            old=recv if name=='TFM' and t==1 else 0.
+            if old:z['cash']-=old;inflow,newincome=receipt(inflow,newincome,old,'old_receivable');recv=0.
+            end=LIFE[name]+(price(t,scenario)[5] if name=='ODIN' else 0)
+            cap=0.;decl=0.;ex={}
+            if t==end:
+                wc=WC[name]*(1.02**(t if budget_version=='revised' else t-1) if name=='IXM' else 1.)
+                if name in ('TFM','KFM'):wc+=inv[name]*10000*FX/1e9*.75
+                restoration={'TFM':1.,'KFM':.6,'BR':.4,'BG':.3,'ODIN':.6,'IXM':0}[name]*(1.02**(t-1) if budget_version=='revised' else 1.)
+                ex=disposal(z['cash'],wc,z['debt'],restoration,z['own'],haircut)
+                external+=ex['external'];minor+=ex['minority'];cap=ex['owner'];z['cash']=0.;z['debt']=0.;closed.add(name)
+                # Exit cash is held in a settlement account. Cash itself is NOT haircut.
+                fee=cap*(friction if budget_version=='revised' else 0.);taxes+=fee;pending.append(dict(due=t+exit_delay,amount=cap-fee,kind='capital'))
+            else:
+                budget=(.35 if t<=5 else .85)*max(ni,0)+(.05 if t<=5 else .5)*max(z['cash']-z['floor'],0)
+                if scenario=='upstream_half':budget*=.5
+                if scenario=='remit_delay' and t<=2:budget=0.
+                decl=min(max(0.,z['economic_earnings_budget']),max(0.,z['cash']-z['floor']),budget)
+                z['cash']-=decl;z['economic_earnings_budget']-=decl
+                owner=decl*z['own'];minor+=decl*(1-z['own'])
+                fee=(friction if name!='IXM' or budget_version=='revised' else 0.)*owner;taxes+=fee;pending.append(dict(due=t+delay,amount=owner-fee,kind='dividend'))
+            subs[name]={**o,'net_profit':ni,'declaration_budget':decl,'economic_earnings_budget':z['economic_earnings_budget'],'cash':z['cash'],'debt':z['debt'],'draw':draw,'capital_gross_owner':cap,'exit':ex,'old_receivable_paid':old}
+        due=[x for x in pending if x['due']<=t];pending=[x for x in pending if x['due']>t]
+        for x in due:
+            inflow,newincome=receipt(inflow,newincome,x['amount'],x['kind'])
+            if x['kind']!='dividend':
+                capreceived+=x['amount'];basis,returned,g=recover_basis(x['amount'],basis);gain+=g
+        if len(closed)==len(s) and not pending and not finalized:
+            basis,_,g=recover_basis(0.,basis,True);gain+=g;finalized=True
+        domestic=(3.2 if t<=8 else max(0.,3.2-.64*(t-8)))*1.02**(t-1) if t<=13 else 0.
+        if scenario=='cycle' and t<=3:domestic*=.65
+        if scenario=='structural':domestic*=.75
+        domcap=.45*1.02**(t-1) if t<=13 else 0.;domdep=.3*1.02**(t-1) if t<=13 else 0.
+        domestic+=(.45 if t<=10 else 0.)-(.6 if t<=15 else .2)*1.02**(t-1)
+        pi=debt*.045;ci=cash*.015;profit+=domestic-pi+ci
+        gain_tax=max(0.,gain)*.25;taxes+=gain_tax
+        parentprofit=domestic+newincome-pi+ci+gain-gain_tax
+        legal,statutory,appropriation=china_profit(legal,statutory,parentprofit,registered)
+        pf=domestic+domdep-domcap-pi+ci
+        cash+=pf+inflow+assetrelease-gain_tax
+        mothercash+=pf+inflow+assetrelease-gain_tax # financial principal routed under capital reduction budget, not profit
+        repayment=min(debt,8.28 if t==1 else (5. if t<=4 else 1.))
+        mothercash-=max(0.,repayment-(cash-mothercash));cash-=repayment;debt-=repayment
+        need=force_need if t==1 else 0.
+        cash,debt,draw=liquidity(cash,debt,need,3. if t<horizon else 0.,parent_limit);finance+=draw
+        mothercash,pool,pl,pr=cashpool(cash,mothercash,pool)
+        target=.30*max(profit,0) if t<=(10 if scenario=='payout_delay' else 5) else max(.75*max(profit,0),.90*max(cash-15.,0))
+        dividend=min(target,max(legal,0),max(mothercash-1.,0),max(cash-3.,0))
+        if zero_dividend:dividend=0.
+        capital=0.;finaldebt=0.;exitfee=0.
+        legal-=dividend
+        # Legal capital return is proportional cancellation, not fabricated new profit.
+        if t>=15 and t<horizon and not zero_dividend:
+            capital=min(max(0.,target-dividend),max(0.,cash-15.-dividend),max(0.,mothercash-1.-dividend),max(0.,registered+premium-.5))
+            registered,premium,shares=capital_reduce(capital,registered,premium,shares)
+        if t==horizon:
+            if pending or len(closed)!=len(s):raise ValueError('horizon truncates unsettled owner cash')
+            exitfee=(.2*1.02**(t-1) if budget_version=='revised' else 0.);finaldebt=debt
+            capital=cash-debt-exitfee-dividend
+            if capital< -1e-8:raise ValueError('parent liquidation fails')
+            debt=0.;registered=0.;premium=0.;shares=0.
+        total=dividend+capital
+        cash-=total+finaldebt+exitfee;mothercash-=min(mothercash,total)
+        if t==horizon:mothercash=0.;pool=0.
+        after=cash+sum(z['cash'] for z in s.values())+sum(x['amount'] for x in pending)
+        expected=before+external+pf+assetrelease+draw-repayment-finaldebt-minor-taxes-total-need-exitfee
+        assert abs(after-expected)<2e-7,(scenario,t,after,expected)
+        assert -1e-7<=mothercash<=cash+1e-7 and cash>=-1e-7 and debt<=parent_limit+1e-7
+        rows.append(dict(year=t,subs=subs,common_profit=profit,domestic_profit=domestic,parent_new_dividend_income=newincome,parent_old_receivable_collection=1.802341533 if t==1 else 0.,parent_legal_profit=parentprofit,parent_legal_retained=legal,parent_statutory=statutory,appropriation=appropriation,parent_cash=cash,mother_cash=mothercash,parent_debt=debt,draw=finance,capital_contribution=injtotal,minority_distribution=minor,withholding=taxes,capex=capex+domcap,settlement_cash=sum(x['amount'] for x in pending),hk_investment_basis=basis,hk_capital_received=capreceived,hk_disposal_gain=gain,registered=registered,shares_outstanding=shares,holder_share_fraction=shares/SHARES,ordinary_dividend=dividend,capital_return=capital,distribution=total,distribution_per_share=total/SHARES,cash_conservation_error=after-expected))
+    return rows
 
 def valuation(rows,r):
  d=[x['distribution_per_share'] for x in rows]
@@ -230,52 +269,60 @@ def residual_income(roe):
   b+=income*retention
  return value/SHARES
 
-def tests():
- assert liquidity(10,0,3,2,5)==(7,0,0)
- assert liquidity(1,0,3,2,5)==(2,4,4)
- try:liquidity(1,0,9,2,5)
- except ValueError:pass
- else:raise AssertionError('financing fail test did not fail')
- assert retained_profit(-2.,0.,1.,.8)==(-1.,0.,0.)
- assert retained_profit(-1.,0.,2.,.8)==(.95,.05,.05)
- assert retained_profit(1.,.79,2.,.8)==(2.99,.8,.010000000000000009)
- assert cashpool(20.,0.,9.5)==(.5,10.,.5,0.)
- m,b,_,_=cashpool(20.,0.,9.5)
- assert m+(20.-m)==20. and b==10.
- assert cashpool(20.,0.,10.)==(0.,10.,0.,0.)
- assert cashpool(20.,4.,10.)==(1.,7.,0.,3.)
- try:cashpool(20.,-1.,10.)
- except ValueError:pass
- else:raise AssertionError('cumulative pool limit must fail')
- br=run('base');delayed=run('odin_delay')
- assert abs(br[2]['subs']['ODIN']['legal_retained']+.44406)<1e-10
- assert br[2]['subs']['ODIN']['reserve']==0.
- assert abs(br[3]['subs']['ODIN']['reserve_addition']-.06511849874703744)<1e-10
- assert sum(row['subs'].get('ODIN',{}).get('cu',0)>0 for row in br)==26
- assert sum(row['subs'].get('ODIN',{}).get('cu',0)>0 for row in delayed)==26
- assert (180000+280000+24*371000)*.044==412016. and 412016.<469000.
- assert abs(operation('ODIN',1,'base',0)[0]['fcf']-operation('ODIN',1,'no_future_stream_financing',0)[0]['fcf']-1.)<1e-10
- assert 'ODIN' in delayed[30]['subs'] and 'ODIN' not in delayed[31]['subs']
- # simplified genuine valuation chain: year1 payout10, year6 payout20 at10%; independently hand computed.
- op,_=operation('BR',1,'base',0.)
- assert abs(op['ni']-.924)<1e-10 and abs(op['fcf']-.774)<1e-10
- rr=[{'distribution_per_share':v} for v in [10,0,0,0,0,20]]
- q=valuation(rr,.1)
- assert abs(q['pv']-(10/1.1+20/1.771561))<1e-10
- assert abs(q['tv5']-20/1.1)<1e-10
- try:run('base',True,500.)
- except ValueError:pass
- else:raise AssertionError('zero-dividend insolvency must fail')
- return {'liquidity_hand_cases':True,'formal_pv_hand_case':True,'operating_hand_case':True,'loss_recovery_and_reserve_cap':True,'cashpool_cumulative_and_repayment':True,'zero_dividend_funding_failure':True}
+SCENARIOS=['base','cycle','structural','upside','copper_minus_10','copper_plus_10','tax_30','tax_50','cost_plus_15','ixm_wc_shock','remit_delay','legal_zero','cash_shift','payout_delay','odin_delay','reserve_double','no_future_stream_financing','stream_payment_22','friction_10','upstream_delay_2','exit_delay_3','exit_haircut_35','upstream_half','stream_funding_1']
+
+def actual_tests():
+    assert china_profit(0,5,10,20,10)==(9,6,1)
+    assert china_profit(-12,0,10,20,10)==(-2,0,0)
+    assert china_profit(-2,0,10,20,10)==(7.2,.8,.8)
+    assert china_profit(0,10,10,20,10)==(10,10,0)
+    assert china_profit(0,10,10,24,12)==(9,11,1)
+    assert receipt(2,3,5,'old_receivable')==(7,3)
+    assert receipt(2,3,5,'capital')==(7,3)
+    assert receipt(2,3,5,'dividend')==(7,8)
+    assert recover_basis(8,10)==(2,8,0)
+    assert recover_basis(8,10,True)==(0,8,-2)
+    assert recover_basis(12,10,True)==(0,10,2)
+    x=disposal(10,20,12,3,.8,.25);assert abs(x['owner']-8)<1e-9 and x['tax']==0
+    x=disposal(10,20,12,3,.5,.25);assert x['owner']==5
+    assert capital_reduce(5,4,16,20)==(3,12,15)
+    assert operation('ODIN',1,'base',0)[0]['ni']==-.15
+    try:disposal(1,10,15,1,1,.1)
+    except ValueError:pass
+    else:raise AssertionError('unpaid debt hidden by haircut')
+    try:run('base',True,500)
+    except ValueError:pass
+    else:raise AssertionError('infinite financing')
+    rr=[{'distribution_per_share':v} for v in [10,0,0,0,0,20]]
+    assert abs(valuation(rr,.1)['pv']-10/1.1-20/1.771561)<1e-9
+    br=run();assert br[0]['parent_old_receivable_collection']==1.802341533
+    assert br[-1]['parent_cash']<1e-8 and br[-1]['settlement_cash']==0
+    return {'registered_not_paid':True,'loss_first':True,'reserve_cap_and_conversion':True,'real_basis_gain_loss':True,'noncash_only_haircut_full_debt':True,'proportional_cancel':True,'no_negative_tax_refund':True,'no_infinite_finance':True,'terminal_cash_zero':True}
+
+LEGACY_SOURCE_GZIP_BASE64='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'
 
 def main():
- out={'units':'CNY billion; shares billion; price CNY/share','base_parameters':{'copper_usd_t':10500,'cobalt_usd_t':35000,'gold_usd_oz':3200,'fx':FX,'rates':RATES,'shares':SHARES,'finite_horizon':N},'tests':tests(),'scenarios':{}}
- for name in ['base','cycle','structural','upside','copper_minus_10','copper_plus_10','tax_30','tax_50','cost_plus_15','ixm_wc_shock','remit_delay','legal_zero','cash_shift','payout_delay','odin_delay','reserve_double','no_future_stream_financing','stream_payment_22']:
-  try:
-   rows=run(name);out['scenarios'][name]={'valuation':[valuation(rows,r) for r in RATES],'annual':rows}
-  except ValueError as e:out['scenarios'][name]={'feasible':False,'reason':str(e)}
- out['auxiliary_residual_income']=[residual_income(.18),residual_income(.22)]
- payload=json.dumps(out,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n'
- Path(__file__).with_name('2026-Q3-output.json').write_text(payload,encoding='utf-8')
- sys.stdout.write(payload)
+    out={'units':'CNY billion; billion shares; original-share holder cash','tests':actual_tests(),'scenarios':{},'method_only_same_economics':{},'auxiliary_residual_income':[residual_income(.18),residual_income(.22)]}
+    for scenario in SCENARIOS:
+        for key,budget in [('scenarios','revised'),('method_only_same_economics','legacy')]:
+            try:
+                rows=run(scenario,budget_version=budget,horizon=34 if scenario=='exit_delay_3' else 32)
+                out[key][scenario]={'feasible':True,'valuation':[valuation(rows,r) for r in RATES],'annual':rows}
+            except ValueError as e:out[key][scenario]={'feasible':False,'reason':str(e)}
+    import base64,gzip
+    legacy={'__name__':'legacy_snapshot'}
+    exec(gzip.decompress(base64.b64decode(LEGACY_SOURCE_GZIP_BASE64)),legacy)
+    out['old_same_economic_budget']={}
+    out['old_new_comparison']={}
+    for scenario in SCENARIOS[:18]:
+        try:
+            oldrows=legacy['run'](scenario)
+            oldval=[legacy['valuation'](oldrows,r) for r in RATES]
+            out['old_same_economic_budget'][scenario]={'annual':oldrows,'valuation':oldval}
+            new=out['method_only_same_economics'][scenario];core=out['scenarios'][scenario]
+            out['old_new_comparison'][scenario]={'old':oldval,'method_only':new.get('valuation'),'revised_budget':core.get('valuation'),'d_old':[a['distribution_per_share'] for a in oldrows[:5]],'d_new':[a['distribution_per_share'] for a in new.get('annual',[])[:5]],'d_core':[a['distribution_per_share'] for a in core.get('annual',[])[:5]]}
+        except ValueError as e:out['old_same_economic_budget'][scenario]={'feasible':False,'reason':str(e)}
+    text=json.dumps(out,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n'
+    Path(__file__).with_name('2026-Q3-output.json').write_text(text)
+    print(json.dumps({k:{n:q.get('valuation',q.get('reason')) for n,q in out[k].items()} for k in ['scenarios','method_only_same_economics']},indent=2))
 if __name__=='__main__':main()
