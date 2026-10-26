@@ -22,21 +22,18 @@ def load_model(ticker: str):
     return model
 
 
-def test_catl_formal_dcf_constant_cash_perpetuity(monkeypatch):
+def test_catl_formal_distribution_and_capital_functions():
     model = load_model("300750")
-    for name, value in {
-        "fcf": [10.0] * 10,
-        "profit": [10.0] * 10,
-        "financial": 0.0,
-        "other_financial": 0.0,
-        "dps": [10.0] * 5,
-    }.items():
-        monkeypatch.setattr(model, name, value)
-    result = model.dcf(r=0.1, g=0, buyback=0, shares=1)
-    # All operating cash is paid; no retained financial assets or buybacks.
-    assert result["per_share"] == pytest.approx(100.0)
-    assert result["terminal5"] == pytest.approx(100.0)
-    assert result["financial5"] == pytest.approx(0.0)
+    assert model.legal_step(0,5,20,10)[:3] == (9.,6.,1.)
+    assert model.legal_step(-8,0,20,10)[:3] == (1.8,.2,.2)
+    assert model.transfer(5,0,5) == (0,0,5)
+    assert model.capital_reduce(10,20,20,6,3,1) == (3,17,17,6)
+    sale=model.disposal(10,10,1,.25,.6)
+    assert sale['cash'] == pytest.approx(5.4)
+    assert sale['gain'] == pytest.approx(-.6)
+    insolvent=model.run(parent_start=0,parent_earn=0,scale=0,extra=200)
+    assert not insolvent['feasible']
+    assert all(row['new_financing']==0 for row in insolvent['rows'])
 
 
 def test_cti_formal_payer_profit_cash_and_principal():
@@ -52,17 +49,16 @@ def test_cti_formal_payer_profit_cash_and_principal():
     assert loss["paid"] == pytest.approx(1.8)
 
 
-def test_mobile_formal_calculate_constant_cash_perpetuity(monkeypatch):
+def test_mobile_actual_payment_kernel_and_full_chain():
     model = load_model("600941")
-    monkeypatch.setattr(model, "N", 1.0)
-    monkeypatch.setattr(model, "ASSOC_CASH", [0.0] * 5)
-    result = model.calculate(
-        r=0.1, g=0, profit=[10.0] * 5, cf=[10.0] * 5,
-        dps=[10.0] * 5, f0=0, assoc_terminal=0, yield_rate=0,
-    )
-    assert result["value"] == pytest.approx(100.0)
-    assert result["terminal_per_share"] == pytest.approx(100.0)
-    assert result["ending_financial_assets"] == pytest.approx(0.0)
+    assert model.selftests().startswith("9 actual-kernel")
+    cases = model.cases()
+    for name, args in cases.items():
+        actual = model.calculate(**args)
+        assert actual["feasible"], name
+        assert actual["value"] == pytest.approx(model.calculate(years=80, **args)["value"], abs=1e-9)
+    with pytest.raises(ValueError, match="unresolved surplus"):
+        model.calculate(upstream_scale=.1)
 
 
 @pytest.mark.parametrize("parent_cash", [1.0, 0.5])
