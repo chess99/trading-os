@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+"""Independent numerical audit. Literal assumptions independently transcribed
+from source/assumption sheet. Does not import/read/parse production code or
+parameters. Only after completing all arithmetic does it read final outputs
+for comparison. Units RMB million. Different array-state implementation.
+"""
+import math,json,pathlib
+HERE=pathlib.Path(__file__).resolve().parents[1]/"research/companies/CN/688188/models"
+
+def calculate(growth,start_margin,end_margin,discount,initial_return,terminal_return,sweep,shock=0.,finalmargin=None,tail=0.02,prefix=False):
+    cash=[4500.,806.0990022124001,380.,25.0034]; earned=[1881.95245753,200.,300.,-1.9109]; reserve=[144.3649635,0.,0.,0.]; capital=[405.984426,60.,32.,55.]
+    borrowing=[28.99906365,0.,0.,0.]; owing=[236.03437363,0.,0.,0.]; revenue=2500.; oldprofit=1150.; stock=405.984426
+    loans=[0.,0.]
+    protected=[999.4403,24.984,0.,11.2534]
+    precision_profit=-4.
+    total=0.; remainder=0.; first=[]; snapshots=[]
+    for t in range(1,601):
+        g=growth[t-1] if t<=10 else tail
+        if prefix and t<=5:g=[.15,.14,.12,.10,.08][t-1]
+        oldsales=revenue;revenue=revenue*(1+g)
+        m=start_margin+(end_margin-start_margin)*min(t-1,9)/9
+        if prefix:
+            m=.46-.06*(t-1)/9 if t<=5 else (.46-.06*4/9)+(end_margin-(.46-.06*4/9))*min(t-5,5)/5
+        profit=revenue*m
+        ret=initial_return+(terminal_return-initial_return)*min(t-1,9)/9
+        if prefix and t<=5:ret=.60-.35*(t-1)/9
+        netcapital=max(max(profit-oldprofit,0)/ret, (698.8312/3 if t<=3 else 0)+.15*max(revenue-oldsales,0))
+        if g<0:netcapital+=.06*(revenue-oldsales)
+        charge=[50.,35.,20.,5.][t-1] if t<5 else 0.
+        issue=[2.05942,1.3273866666666667,1.6805266666666667,.2679666666666667][t-1] if t<5 else 0.
+        subscription=(35+1.05942*50.7) if t==1 else issue*50.7
+        stock+=issue;capital[0]+=issue
+        initialcash=cash[:];initialdebt=borrowing[:]
+        old_common=owing[0];receipts=[owing[1]+owing[3]*.946964,owing[2]*.9275,0,0]
+        for j in range(4):cash[j]=cash[j]+receipts[j]-owing[j]
+        if t<4:
+            draw=max(104.984/3-protected[1],0)
+            loans[0]+=draw
+            cash[0]-=draw;cash[1]+=draw
+            protected[0]=(protected[0]-draw)*1.02-754.9289/3
+            protected[1]=(protected[1]+draw)*1.02-104.984/3
+            protected[3]=max(protected[3]*1.02-17/3,0)
+        else:
+            repay=min(loans[0],loans[0]/max(9-t,1),max(cash[1]-protected[1]*1.02-revenue*.04-netcapital*.34,0))
+            loans[0]-=repay;cash[0]+=repay;cash[1]-=repay
+            protected[0]+=repay
+            protected=[v*1.02 for v in protected]
+        precision_profit=[-4,0,2,4,6][t-1] if t<=5 else precision_profit*(1+g)
+        operating=[profit*.779,profit*.12-precision_profit,profit*.1,precision_profit]
+        own=[operating[j]+cash[j]*.02-initialdebt[j]*.04-charge*[.8,.1,.1,0][j] for j in range(4)]
+        netpay=[0.,0.,0.,0.];journal=[]
+        for j in range(3,-1,-1):
+            dividend_income=netpay[1]+netpay[3]*.946964 if j==0 else netpay[2]*.9275 if j==1 else 0
+            accounting=own[j]+dividend_income
+            earnings_available=earned[j]+accounting
+            setaside=min(max(earnings_available,0)*.1,max(accounting,0)*.1,max(capital[j]/2-reserve[j],0))
+            reserve[j]+=setaside;earnings_available-=setaside
+            capex=([608.8312/3+(netcapital-698.8312/3)*.35,80/3+(netcapital-698.8312/3)*.34,(netcapital-698.8312/3)*.30,10/3+(netcapital-698.8312/3)*.01][j] if t<=3 else netcapital*[.35,.34,.30,.01][j])
+            liquid=cash[j]+own[j]+charge*[.8,.1,.1,0][j]-capex+(subscription if j==0 else 0)
+            required=revenue*[.06,.04,.025,.001][j]+protected[j]
+            increase=min(max(required-liquid,0),max([200,100,50,10][j]-borrowing[j],0))
+            liquid+=increase;borrowing[j]+=increase
+            failure=max(required-liquid,0)
+            decrease=min(borrowing[j],max(liquid-required,0));liquid-=decrease;borrowing[j]-=decrease
+            if j==0:normal=max(own[0]+own[1]+own[2]*.9275+own[3]*.946964,0)*.55
+            else:normal=max(own[j],0)*.65 if t>=3 else 0
+            if t>5:normal=max(own[j]+dividend_income-capex,0)
+            release=sweep*max(cash[j]+own[j]+charge*[.8,.1,.1,0][j]-capex+(subscription if j==0 else 0)-required-normal,0) if t>5 else 0
+            payment=min(normal+release,max(earnings_available,0),max(liquid-required,0)) if failure<1e-8 else 0
+            earned[j]=earnings_available-payment
+            cash[j]=liquid-(payment if j==0 else 0)
+            netpay[j]=payment
+            journal.append([j,cash[j],earned[j],reserve[j],payment,dividend_income,receipts[j],borrowing[j]])
+        owing=[0,netpay[1],netpay[2],netpay[3]]
+        payout=netpay[0]/stock+(old_common/405.557343 if t==1 else 0)
+        total+=payout/((1+discount)**t)
+        if t>5:remainder+=payout/((1+discount)**(t-5))
+        if t<=5:first.append(payout)
+        if t in [1,3,5,10,100,300,600]:snapshots.append({'year':t,'cash_legal_journal':journal,'payout':payout,'shares':stock})
+        oldprofit=profit
+    return {'pv':total,'terminal_year5':remainder,'distributions':first,'snapshots':snapshots}
+
+
+def test_bochu_independent_literal_entity_distributions():
+ checks={
+  'core_low':calculate([.13,.12,.10,.09,.07,.055,.045,.035,.025,.02],.45,.39,.095,.55,.25,.10),
+  'core_high':calculate([.17,.15,.13,.11,.09,.07,.055,.04,.03,.02],.47,.41,.085,.65,.28,.20),
+  'base':calculate([.15,.14,.12,.10,.08,.065,.05,.04,.03,.02],.46,.40,.09,.60,.25,.15),
+  'r_plus_1pp':calculate([.15,.14,.12,.10,.08,.065,.05,.04,.03,.02],.46,.40,.10,.60,.25,.15),
+  'long_margin_minus_5pp':calculate([.15,.14,.12,.10,.08,.065,.05,.04,.03,.02],.46,.35,.09,.60,.25,.15),
+  'holder_low':calculate([.13,.12,.10,.09,.07,.055,.045,.035,.025,.02],.45,.39,.095,.55,.25,.15,prefix=True),
+  'holder_high':calculate([.17,.15,.13,.11,.09,.07,.055,.04,.03,.02],.47,.41,.085,.65,.28,.15,prefix=True)
+ }
+ # Output only is read after all independent calculations finish.
+ production=json.loads((HERE/'2026-Q3-output.json').read_text())
+ for label,calc in checks.items():
+     target=(production['holder_conditionals']['core_'+label.split('_')[1]] if label.startswith('holder_') else production['scenarios'].get(label,production['sensitivities'].get(label)))
+     calc['comparison']={field:calc[field]-target[field] for field in ['pv','terminal_year5']}
+     calc['distribution_max_error']=max(abs(a-b) for a,b in zip(calc['distributions'],target['distributions']))
+     assert max(abs(v) for v in calc['comparison'].values())<1e-8,(label,calc['comparison'])
+     assert calc['distribution_max_error']<1e-10
+
+def test_bochu_actual_functions_complete_restricted_fund_roundtrip():
+ import gzip,base64,hashlib,math
+ P=HERE
+ x=json.loads((P/'2026-Q3-output.json').read_text());p=x['annual_tables'];raw=gzip.decompress(base64.b64decode(p['data']));assert hashlib.sha256(raw).hexdigest()==p['expanded_sha256'];tables=json.loads(raw)
+ assert json.dumps(tables,ensure_ascii=False,separators=(',',':'),allow_nan=False).encode()==raw
+ assert base64.b64encode(gzip.compress(raw,compresslevel=9,mtime=0)).decode()==p['data']
+ s=x['table_schema'];count=0
+ for group,cases in tables.items():
+  for key,values in cases.items():
+   for v in values:
+    row=dict(zip(s['row_columns'],v));nodes=[dict(zip(s['node_columns'],n)) for n in row['nodes']];count+=1
+    for i,n in enumerate(nodes):
+     def near(a,b):assert math.isclose(a,b,rel_tol=1e-11,abs_tol=1e-7),(group,key,row['year'],i,a,b)
+     near(n['restricted_close'],n['restricted_open']+n['restricted_transfer']+n['restricted_financial_income']-n['qualified_project_spending']-n['conditional_authorised_release'])
+     near(n['cash_close'],n['financial_interest_base']+n['own_profit']+n['noncash_compensation']-n['investment']+n['capital_inflow']+n['debt_draw']-n['debt_repaid']-(n['new_declaration'] if i==0 else 0))
+     near(n['retained_close'],n['retained_open']+n['own_profit']+n['declared_investment_income']-n['reserve_appropriation']-n['new_declaration'])
+     assert n['reserve']<=n['paid_in_capital']*.5+1e-7
+     assert n['new_declaration']<=max(n['legal_profit_before_distribution'],0)+1e-7
+     if i==0:
+      assert n['intercompany_loan_receivable']<=80+1e-7
+      if row['year']>=4:near(n['restricted_transfer'],n['internal_project_cash_flow'])
+   assert x[group][key]['feasible']
+ for key in tables['holder_conditionals']:assert tables['holder_conditionals'][key][:5]==tables['scenarios']['base'][:5]
+ f=x['production_hand_tests']['full_run_zero_dividend_capital_failure'];assert len(f['rows'])==1 and f['pv'] is None and f['terminal_year5'] is None
+ 
+ import runpy
+ m=runpy.run_path(str(HERE/'2026-Q3.py'));t=m['tests']()
+ assert t['loss_recovery']['appropriation']==1
+ assert t['zero_dividend_failure']['funding_failure']==90
+ assert int.from_bytes(base64.b64decode(p['data'])[4:8],'little')==0
+ for group,cases in tables.items():
+  for key,values in cases.items():
+   for v in values:
+    row=dict(zip(s['row_columns'],v))
+    for n in row['nodes']:
+     n=dict(zip(s['node_columns'],n))
+     assert n['cash_close']-n['dividend_payable']>=n['liquidity_floor']-1e-7*max(1,n['liquidity_floor'])
+ for name,c in x['convergence'].items():
+  for field in ['pv','terminal_year5']:
+   assert abs(c['600'][field]-c['1200'][field])<1e-6
