@@ -68,6 +68,5 @@ out['holder_pv_high']=sum(dps[i]/1.09**(i+1) for i in range(5))+out['terminal5_h
 out['incremental_return_y1_y5']=(profit[4]-profit[0])/sum(reinvestment[1:5])
 assert len(dps)==5
 assert abs(SHARES0-SHARES5-BUYBACK/BUYBACK_P)<1e-10
-assert abs(100/.1-1000)<1e-10 # known zero-growth perpetuity case
 
 print(json.dumps(out,ensure_ascii=False,indent=2))

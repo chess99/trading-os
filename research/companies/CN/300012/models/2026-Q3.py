@@ -54,6 +54,7 @@ if __name__=='__main__':
  # Core range varies required equity capital cost, sustainable growth and return
  # while retaining one observed operating pathway, not all scenario extremes.
  out={'bridge_bn':BRIDGE,'net_extra_financial_assets_bn':CASH,'shares_bn':SHARES,'dps':DPS,'base':calc(),'core_low':calc(k=.095,terminal_g=.025,roi=.14),'core_high':calc(k=.085,terminal_g=.03,roi=.16),'sensitivity_roi12':calc(roi=.12),'sensitivity_k10':calc(k=.10),'cycle_weak':calc(earnings_factors=[.85,.9,.95,1,1],investment_scale=1.05),'structural_weak':calc(k=.10,terminal_g=.015,roi=.10,e_scale=.8,investment_scale=1.15,tail_g=[.02,.02,.02,.02,.02]),'optimistic':calc(k=.085,terminal_g=.035,roi=.18,e_scale=1.1,investment_scale=.95)}
+ out['sensitivity_roi12_scope']={'effective_year':6,'entity':'attributable_common_operating_business','changed':['incremental_return_year6_onward'],'frozen':['years1_5_earnings','years1_5_investment','years1_5_dividends','growth_rates','discount_rate']}
  capital0=8.39990558255-CASH
  capital5=capital0+sum(out['base']['reinvestment_bn'][:5])
  ri={}
@@ -69,8 +70,5 @@ if __name__=='__main__':
  out['dividend_cash_bn']=[d*SHARES for d in DPS]
  assert all(c>=d for c,d in zip(out['parent_cash_budget_bn'],out['dividend_cash_bn']))
  out['incremental_return_y1_to_y5']=(BASE_E[-1]-BASE_E[0])/sum(out['base']['reinvestment_bn'][1:5])
- # Independent constant-cash no-growth analytical sanity check.
- pv10=sum(1/1.1**t for t in range(1,11))+10/1.1**10
- assert abs(pv10-10)<1e-12
 
  print(json.dumps(out,ensure_ascii=False,indent=2))

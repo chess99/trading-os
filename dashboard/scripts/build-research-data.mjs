@@ -33,6 +33,20 @@ async function collectReports(root, output, ticker, policy, state) {
     const sourcePath = `research/companies/CN/${ticker}/reports/${filename}`;
     const body = await readFile(join(root, sourcePath));
     await copyFile(join(root, sourcePath), join(destination, filename));
+    // Publish only the two known model artifacts belonging to this report period.
+    // Preserve the original bytes; these are downloads, never executed at build time.
+    const period = filename.replace(/\.md$/u, "");
+    for (const extension of [".py", "-output.json"]) {
+      const modelName = `${period}${extension}`;
+      const modelSource = join(root, "research/companies/CN", ticker, "models", modelName);
+      let modelBody;
+      try { modelBody = await readFile(modelSource); }
+      catch (error) { if (error.code === "ENOENT") continue; throw error; }
+      const modelDestination = join(output, "models", ticker);
+      assertInside(output, modelDestination);
+      await mkdir(modelDestination, { recursive: true });
+      await writeFile(join(modelDestination, modelName), modelBody);
+    }
     const title = /^#\s+(.+)$/mu.exec(body.toString("utf8"))?.[1] ?? ticker;
     return { period: filename.replace(/\.md$/u, ""), path: `/data/reports/${ticker}/${filename}`, title,
       ...reportMetadata(sourcePath, body, policy, state) };

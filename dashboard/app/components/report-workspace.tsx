@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import { loadCatalog, loadQuotes, formatDate, formatPrice, STATUS_META,
   type Catalog, type Company, type Quote, type ReportVersion } from "../lib/research";
 import { readingContext } from "../lib/display-policy.mjs";
+import { researchResourceLink } from "../lib/report-reference.mjs";
 import "../standards.css";
 
 function nodeText(node: ReactNode): string {
@@ -96,7 +97,11 @@ export function ReportWorkspace({ initialTicker }: { initialTicker?: string }) {
               h1: ({ children }) => <h1 id={slug(nodeText(children))}>{children}</h1>,
               h2: ({ children }) => <h2 id={slug(nodeText(children))}>{children}</h2>,
               h3: ({ children }) => <h3 id={slug(nodeText(children))}>{children}</h3>,
-              a: ({ href, children }) => <a href={href} rel="noreferrer" target={href?.startsWith("http") ? "_blank" : undefined}>{children}</a>,
+              a: ({ href, children }) => {
+                const link = researchResourceLink(href, context.report?.sourcePath);
+                return link ? <a href={link} download={link.startsWith("/data/models/") || undefined}
+                  rel="noreferrer" target={/^(https?:|\/\/)/iu.test(link) ? "_blank" : undefined}>{children}</a> : <span>{children}</span>;
+              },
               table: ({ children }) => <div className="standards-table-scroll"><table>{children}</table></div>,
             }}>{markdown}</ReactMarkdown></article>}
       </> : <div className="standards-empty"><h2>{catalog ? "从左侧选择报告" : "正在读取研报库…"}</h2></div>}
