@@ -13,9 +13,23 @@ def profit_capacity(retained,reserve,registered,profit,continue_above_threshold=
  charge=.1*eligible if continue_above_threshold else min(.1*eligible,max(registered*.5-reserve,0.))
  return retained+profit-charge,reserve+charge,charge
 
+def capital_return_budget(available,registered,parent_investment_cost,requested,ownership=1.,friction=.02,parent_tax=.25,tax_basis_ratio=1.):
+ # Partial proportional capital reduction of a named company, not an ordinary dividend.
+ # Cost is parent's carrying cost of its interest; ownership unchanged when all owners reduce pro rata.
+ gross=min(max(available,0.),max(requested,0.),max(registered,0.))
+ allocated_cost=parent_investment_cost*gross/registered if registered else 0.
+ parent_gross=gross*ownership;fee=parent_gross*friction;proceeds=parent_gross-fee
+ disposal_profit=proceeds-allocated_cost
+ # Tax basis is NOT the disclosed accounting carrying value. Core uses a conditional
+ # paid-capital budget equal to registered capital; zero-basis sensitivity taxes all
+ # net proceeds and assumes no dividend exemption. No loss produces an immediate refund.
+ allocated_tax_basis=gross*ownership*tax_basis_ratio
+ tax=max(proceeds-allocated_tax_basis,0.)*parent_tax
+ return {'gross_capital_return':gross,'allocated_tax_basis_budget':allocated_tax_basis,'tax_basis_ratio_budget':tax_basis_ratio,'parent_cash':proceeds-tax,'parent_investment_cost_released':allocated_cost,'parent_profit':disposal_profit-tax,'parent_cash_tax':tax,'friction_cash':fee,'minority_cash':gross*(1-ownership),'registered_after':registered-gross,'parent_investment_cost_after':parent_investment_cost-allocated_cost,'ownership_after':ownership,'listed_shares_change':0.,'sub_capital_units_remaining_ratio':(registered-gross)/registered if registered else 0.}
+
 PARAMS={'base': {'revenue':[3550,3760,4020,4260,4470,4649,4812,4956,5105,5258], 'ebit_margin':[.070,.080,.088,.094,.096,.096,.095,.094,.093,.092], 'capex':[140,145,150,155,160,164,168,172,177,182], 'wc_ratio':.10,'g':.02},
 'cyclical':{'revenue':[3300,3510,3900,4170,4400,4576,4736,4878,5024,5175],'ebit_margin':[.025,.055,.080,.090,.096,.096,.095,.094,.093,.092],'capex':[125,130,145,150,158,162,166,170,175,180],'wc_ratio':.14,'g':.02},
-'structural':{'revenue':[3200,3040,2950,2950,2970,2990,3010,3030,3050,3070],'ebit_margin':[-.025,-.01,.015,.025,.03,.03,.03,.03,.03,.03],'capex':[120]*10,'wc_ratio':.18,'g':0},
+'structural':{'capital_recovery_policy':'periodic','capital_recovery_start_year':13,'capital_recovery_interval':5,'capital_recovery_friction':.02,'revenue':[3200,3040,2950,2950,2970,2990,3010,3030,3050,3070],'ebit_margin':[-.025,-.01,.015,.025,.03,.03,.03,.03,.03,.03],'capex':[120]*10,'wc_ratio':.18,'g':0},
 'optimistic':{'revenue':[3700,4070,4477,4870,5210,5523,5799,6031,6212,6398],'ebit_margin':[.085,.10,.112,.12,.122,.12,.118,.116,.114,.112],'capex':[155,165,180,195,205,215,225,230,235,240],'wc_ratio':.10,'g':.02}}
 def discounted(flows,r,terminal=0):
  return sum(v/(1+r)**(i+1) for i,v in enumerate(flows))+terminal/(1+r)**len(flows)
@@ -69,6 +83,7 @@ def release_cash(last, r, g, annual_ni, annual_fcf, years=3, verification_years=
  loan=last.get('intercompany_loan',0)
  repay=min(scash,loan);scash-=repay;pcash+=repay;loan-=repay
  lp=last['legal_retained']-(37.112891-30);ls=last['sub_legal_retained'];rp=last['parent_reserve'];rs=last['sub_reserve']
+ recovery_policy=last.get('capital_recovery_policy','none');recovery_start=last.get('capital_recovery_start_year',13)-10;recovery_interval=last.get('capital_recovery_interval',5);recovery_friction=last.get('capital_recovery_friction',.02);sub_investment_cost=54.433323;tax_basis_ratio=last.get('capital_recovery_tax_basis_ratio',1.)
  fraction=last.get('parent_fraction',.9);subfraction=1-fraction;preg=last.get('registered_parent_budget',429.647790);sreg=last.get('registered_sub',40.);continued=last.get('continue_reserve',False)
  ptarget=max(pcash,0)/years;starget=max(scash,0)/years;adjustment_pv=0.;schedule=[];first_ready=None
  assert pcash>=-1e-8 and scash>=-1e-8
@@ -87,14 +102,19 @@ def release_cash(last, r, g, annual_ni, annual_fcf, years=3, verification_years=
   # capacity later releases them, rather than treating delay as permanent loss.
   sub_div=min(scash,max(ls,0),subfraction*regular+max(starget,max(scash-subfraction*regular,0)/years))
   scash-=sub_div;ls-=sub_div;pcash+=sub_div
-  parent_profit=fraction*ni+internal_interest-pitax+sub_div
+  recovery=capital_return_budget(0,sreg,sub_investment_cost,0,friction=recovery_friction,tax_basis_ratio=tax_basis_ratio)
+  if recovery_policy=='periodic' and t>=recovery_start and (t-recovery_start)%recovery_interval==0:
+   # scash excludes the necessary operating buffer and all ordinary dividends just paid.
+   recovery=capital_return_budget(scash,sreg,sub_investment_cost,scash,friction=recovery_friction,tax_basis_ratio=tax_basis_ratio)
+   scash-=recovery['gross_capital_return'];pcash+=recovery['parent_cash'];sreg=recovery['registered_after'];sub_investment_cost=recovery['parent_investment_cost_after']
+  parent_profit=fraction*ni+internal_interest-pitax+sub_div+recovery['parent_profit']
   lp,rp,pr=profit_capacity(lp,rp,preg,parent_profit,continued)
-  holder_div=min(pcash,max(lp,0),fraction*regular+sub_div+max(ptarget,max(pcash-(fraction*regular+sub_div),0)/years))
+  holder_div=min(pcash,max(lp,0),fraction*regular+sub_div+recovery['parent_cash']+max(ptarget,max(pcash-(fraction*regular+sub_div+recovery['parent_cash']),0)/years))
   pcash-=holder_div;lp-=holder_div
   adjustment_pv+=(holder_div-regular)/(1+r)**t
   assert min(pcash,scash)>=-1e-8
-  assert abs(opening+regular-pitax-sitax-holder_div-pcash-scash)<1e-7
-  schedule.append(dict(year_after_10=t,opening_group_cash=opening,operating_fcfe=regular,subsidiary_new_declaration=sub_div,parent_holder_payment=holder_div,increment_vs_gordon_payment=holder_div-regular,parent_legal=lp,subsidiary_legal=ls,parent_cash=pcash,subsidiary_cash=scash,unreleased_cash=pcash+scash,intercompany_loan=loan,intercompany_parent_tax=pitax,intercompany_sub_tax=sitax,parent_reserve=rp,subsidiary_reserve=rs))
+  assert abs(opening+regular-pitax-sitax-recovery['friction_cash']-recovery['parent_cash_tax']-recovery['minority_cash']-holder_div-pcash-scash)<1e-7
+  schedule.append(dict(year_after_10=t,capital_recovery=recovery,subsidiary_registered_budget=sreg,parent_sub_investment_cost_remaining=sub_investment_cost,opening_group_cash=opening,operating_fcfe=regular,subsidiary_new_declaration=sub_div,parent_holder_payment=holder_div,increment_vs_gordon_payment=holder_div-regular,parent_legal=lp,subsidiary_legal=ls,parent_cash=pcash,subsidiary_cash=scash,unreleased_cash=pcash+scash,intercompany_loan=loan,intercompany_parent_tax=pitax,intercompany_sub_tax=sitax,parent_reserve=rp,subsidiary_reserve=rs))
   sub_next_reserve=profit_capacity(ls,rs,sreg,subfraction*ni*(1+g),continued)[2]
   next_sub=subfraction*regular*(1+g)
   next_p_profit=fraction*ni*(1+g)+next_sub
@@ -116,7 +136,10 @@ def release_cash(last, r, g, annual_ni, annual_fcf, years=3, verification_years=
 def value(p,r,release_years=3,**project_settings):
  rows=project(p,**project_settings)
  if not all(x['feasible'] for x in rows): return {'feasible':False,'rows':rows}
- g=p['g']; last=rows[-1]; rev=last['revenue']*(1+g)
+ g=p['g']; last=rows[-1]
+ for key in ['capital_recovery_policy','capital_recovery_start_year','capital_recovery_interval','capital_recovery_friction','capital_recovery_tax_basis_ratio']:
+  if key in p:last[key]=p[key]
+ rev=last['revenue']*(1+g)
  # Unlevered steady cash: debt settled at year ten from cash, no perpetual interest double count.
  terminal_ni=rev*p['ebit_margin'][-1]*.75
  terminal_fcf=terminal_ni+last['da']*(1+g)-p['capex'][-1]*(1+g)-last['revenue']*p['wc_ratio']*g-150*last['revenue']/3559.134314*g
@@ -126,8 +149,11 @@ def value(p,r,release_years=3,**project_settings):
  value0=discounted([x['dividend'] for x in rows[:5]],r,equity5)/SHARES
  return dict(feasible=True,current_value=value0,year5_terminal=equity5/SHARES,terminal_pv_share=(equity5/(1+r)**5/SHARES)/value0,tail_gordon_pv_share=(terminal_fcf/(r-g))/(1+r)**10/SHARES/value0,steady_fcfe=terminal_fcf,release_schedule=schedule,year10_release_pv=cash_pv,rows=rows)
 def run():
- out={'units':'CNY million; shares million','shares':SHARES,'entity_facts':ENTITY_FACTS,'state_scope':{'parent_legal_retained':'Forecast from conservative500m parent capacity budget; H1 individual583.177481m source, not Q3 actual','sub_legal_retained':'Economic remittance-capacity accumulator for named single subsidiary; actual opening retained unknown, no pooling across companies','sub_reserve':'Budget incremental retention allowance, not disclosed subsidiary statutory amount','parent_reserve':'Parent surplus171.647242m as statutory working assumption supported by same consolidated total classified entirely statutory; direct mother split not separately certified','registered_parent_budget':'Sharecapital429.647790m x par1 is registered-capital forecast proxy, not separately obtained registry extract','reserve_policy':'Core elects to stop at registered50%; continuation-after-threshold diagnostic explicitly allowed; past FY25 below threshold annual provision10% confirmed','capital_events':'No new share/capital injections assumed; paid parameter does not increase cash or alter registered threshold'},'parameters':PARAMS,'scenarios':{}}
+ out={'units':'CNY million; shares million','shares':SHARES,'entity_facts':ENTITY_FACTS,'state_scope':{'parent_legal_retained':'Forecast from conservative500m parent capacity budget; H1 individual583.177481m source, not Q3 actual','sub_legal_retained':'Economic remittance-capacity accumulator for named single subsidiary; actual opening retained unknown, no pooling across companies','sub_reserve':'Budget incremental retention allowance, not disclosed subsidiary statutory amount','parent_reserve':'Parent surplus171.647242m as statutory working assumption supported by same consolidated total classified entirely statutory; direct mother split not separately certified','registered_parent_budget':'Sharecapital429.647790m x par1 is registered-capital forecast proxy, not separately obtained registry extract','reserve_policy':'Core elects to stop at registered50%; continuation-after-threshold diagnostic explicitly allowed; past FY25 below threshold annual provision10% confirmed','capital_events':'No new injections; structural tail proportional capital reductions of named subsidiary start Y13 every five years only from excess cash. Equity percentage and listed shares unchanged; subsidiary nominal units/registration decline. Conditional on actual paid capital, creditor/solvency and registration process, not an announced plan','capital_recovery_basis':'Accounting cost54.433323m is disclosed mother investment cost. Tax basis is independently budgeted at registered40m, not certified; zero-basis25%cash-tax sensitivity. No immediate deduction of accounting losses. Historical subsidiary paid capital unknown.'},'parameters':PARAMS,'scenarios':{}}
  for name,p in PARAMS.items(): out['scenarios'][name]={str(r):value(p,r) for r in [.10,.11]}
+ out['capital_recovery_sensitivities']={}
+ for label,patch in [('dividend_only_reference',{'capital_recovery_policy':'none'}),('capital_recovery_start18',{'capital_recovery_start_year':18}),('capital_recovery_friction10',{'capital_recovery_friction':.10}),('zero_tax_basis',{'capital_recovery_tax_basis_ratio':0.})]:
+  q=copy.deepcopy(PARAMS['structural']);q.update(patch);out['capital_recovery_sensitivities'][label]={str(r):value(q,r) for r in [.10,.11]}
  base=out['scenarios']['base'];out['value_range']={'low':round(base['0.11']['current_value'],2),'high':round(base['0.1']['current_value'],2)}
  out['dps']=[round(x['dps'],4) for x in base['0.1']['rows'][:5]]
  out['year5']={'low':round(base['0.11']['year5_terminal'],2),'high':round(base['0.1']['year5_terminal'],2)}

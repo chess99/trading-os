@@ -2,10 +2,8 @@
 """CN:002318. CNY billion, year-end cash flows. No network/input dependency.
 Model years are rolling twelve-month budgets after 2026-10-26, not FY guidance.
 All future single-entity inputs are research budgets, NOT disclosed precision.
-Outputs use column/value tables plus entity_static_metadata; expand(scenario without
-assumptions) returns every original annual field, including static identity fields.
 """
-import json, math, copy
+import json, math, copy, gzip, base64, sys, hashlib
 from pathlib import Path
 SHARES=.977170720
 IDS=['P','A','E','D','C','H','U']
@@ -18,7 +16,7 @@ IDS=['P','A','E','D','C','H','U']
 # incremental retention allowance, not a claim that actual opening reserve is zero.
 # Foreign nodes use no PRC reserve rule; local approval/solvency and 5% friction
 # remain conditional economic assumptions. No notional EUR conversion is used
-# to create statutory capacity. No future equity issuance or capital change assumed.
+# to create statutory capacity. No equity issuance. Conditional proportional D capital return starts Y13 from excess cash only; registered nominal units decline, ownership/listed shares unchanged.
 # Ordinary and excess distributions consume the same budget and available cash.
 OPEN={
 'P':dict(cash=2.85,locked=.428,debt=1.85,capital=.97717072,reserve=.48858536,retained=4.06127034,fixed=2.70,wc=2.25,own=1,tax=.15,limit=2.15),
@@ -42,6 +40,10 @@ SCENARIOS={
 'core_high':dict(r=.095,margin=.005,g=.02,growth=.03,kind='base'),
 'cyclical':dict(r=.10,margin=0,g=.02,growth=.03,kind='cycle'),
 'structural':dict(r=.11,margin=-.025,g=0,growth=0,kind='structure'),
+'structural_dividend_only':dict(r=.11,margin=-.025,g=0,growth=0,kind='structure',capital_recovery=False),
+'structural_recovery_delay20':dict(r=.11,margin=-.025,g=0,growth=0,kind='structure',recovery_start=20),
+'structural_recovery_fee10':dict(r=.11,margin=-.025,g=0,growth=0,kind='structure',recovery_fee=.10),
+'structural_zero_tax_basis':dict(r=.11,margin=-.025,g=0,growth=0,kind='structure',recovery_tax_basis_ratio=0.),
 'upside':dict(r=.095,margin=.01,g=.025,growth=.04,kind='up'),
 'margin_minus_1pct':dict(r=.10,margin=-.01,g=.02,growth=.03,kind='base'),
 'capital_plus_15pct':dict(r=.10,margin=0,g=.02,growth=.03,kind='base',capital=1.15),
@@ -74,6 +76,20 @@ def legal_step(retained,reserve,registered,net,domestic):
     appropriation=min(max(0,registered*.5-reserve),assess*.1) if domestic else 0
     return retained+net-appropriation,reserve+appropriation,appropriation
 
+def capital_return_budget(available,registered,parent_investment_cost,requested,ownership=1.,friction=.02,parent_tax=.25,tax_basis_ratio=1.):
+ # Partial proportional capital reduction of a named company, not an ordinary dividend.
+ # Cost is parent's carrying cost of its interest; ownership unchanged when all owners reduce pro rata.
+ gross=min(max(available,0.),max(requested,0.),max(registered,0.))
+ allocated_cost=parent_investment_cost*gross/registered if registered else 0.
+ parent_gross=gross*ownership;fee=parent_gross*friction;proceeds=parent_gross-fee
+ disposal_profit=proceeds-allocated_cost
+ # Tax basis is NOT the disclosed accounting carrying value. Core uses a conditional
+ # paid-capital budget equal to registered capital; zero-basis sensitivity taxes all
+ # net proceeds and assumes no dividend exemption. No loss produces an immediate refund.
+ allocated_tax_basis=gross*ownership*tax_basis_ratio
+ tax=max(proceeds-allocated_tax_basis,0.)*parent_tax
+ return {'gross_capital_return':gross,'allocated_tax_basis_budget':allocated_tax_basis,'tax_basis_ratio_budget':tax_basis_ratio,'parent_cash':proceeds-tax,'parent_investment_cost_released':allocated_cost,'parent_profit':disposal_profit-tax,'parent_cash_tax':tax,'friction_cash':fee,'minority_cash':gross*(1-ownership),'registered_after':registered-gross,'parent_investment_cost_after':parent_investment_cost-allocated_cost,'ownership_after':ownership,'listed_shares_change':0.,'sub_capital_units_remaining_ratio':(registered-gross)/registered if registered else 0.}
+
 def run(c,n=240,opening=None,overrides=None):
     ss=copy.deepcopy(OPEN if opening is None else opening)
     if c.get('cashshift'):
@@ -84,9 +100,9 @@ def run(c,n=240,opening=None,overrides=None):
     if c.get('domestic_full_reserve'):
         for e in ('A','D','C'):ss[e]['reserve']=ss[e]['capital']/2
     for s in ss.values():s.update(receivable=0,payable=0)
-    years=[];pv=tv=0.;failed=None
+    years=[];pv=tv=0.;failed=None;d_investment_cost=.04251307794
     for y in range(1,n+1):
-        rows={};incoming={e:dict(declared=0,received=0) for e in IDS};total_minority=0
+        rows={};incoming={e:dict(declared=0,received=0,capital_profit=0,capital_received=0) for e in IDS};total_minority=0;capital_leakage=0
         for e in ['A','E','D','C','H','U','P']:
             s=ss[e];o=s.copy();op=e in BASE
             rev,m,f,w=target(e,y,c) if op else (0,0,0,0)
@@ -95,7 +111,7 @@ def run(c,n=240,opening=None,overrides=None):
             # Negative capex is actual sale at book value; no artificial depreciation/cash double count.
             ebit=rev*m;income=o['cash']*.015;interest=o['debt']*.03
             pre=ebit+income-interest;tax=max(0,pre)*s['tax'];noncash_awards=.165 if e=='P' and y<=3 and overrides is None else 0;net=pre-tax-noncash_awards
-            inc=incoming[e];legal_income=net+inc['declared']
+            inc=incoming[e];legal_income=net+inc['declared']+inc['capital_profit']
             u,res,appropriation=legal_step(o['retained'],o['reserve'],o['capital'],legal_income,e in ['P','A','D','C'])
             cfo=net+noncash_awards+dep-dw
             extra=(.2215+.0701+.10+.113127127) if e=='P' and y==1 and overrides is None else 0
@@ -124,7 +140,16 @@ def run(c,n=240,opening=None,overrides=None):
                 d=min(requested,max(0,u),room)
                 fraction=c.get('pay',.8) if op else 1
                 paid=d*fraction;new_ar=d-paid
-            cash-=paid;s.update(cash=cash,locked=locked,debt=debt,reserve=res,retained=u-d,fixed=f,wc=w,payable=o['payable']-oldpay+new_ar)
+            cash-=paid
+            recovery=capital_return_budget(0,0,0,0)
+            if e=='D' and c.get('capital_recovery',True) and y>=c.get('recovery_start',13) and (y-c.get('recovery_start',13))%5==0:
+                # Exclude locked/required cash and both old and newly declared dividend payables.
+                surplus=max(0,cash-locked-required-(o['payable']-oldpay+new_ar))
+                recovery=capital_return_budget(surplus,s['capital'],d_investment_cost,surplus,ownership=s['own'],friction=c.get('recovery_fee',.02),parent_tax=ss['P']['tax'],tax_basis_ratio=c.get('recovery_tax_basis_ratio',1.))
+                cash-=recovery['gross_capital_return'];s['capital']=recovery['registered_after'];d_investment_cost=recovery['parent_investment_cost_after']
+                incoming['P']['received']+=recovery['parent_cash'];incoming['P']['capital_received']+=recovery['parent_cash'];incoming['P']['capital_profit']+=recovery['parent_profit']
+                capital_leakage+=recovery['friction_cash']+recovery['parent_cash_tax']+recovery['minority_cash']
+            s.update(cash=cash,locked=locked,debt=debt,reserve=res,retained=u-d,fixed=f,wc=w,payable=o['payable']-oldpay+new_ar)
             # Payable provision is unavailable for any subsequent dividends/financing repayment.
             # Cash minimum is checked INCLUDING existing unpaid dividend obligations.
             gap=max(0,required+locked+s['payable']-cash)
@@ -141,14 +166,14 @@ def run(c,n=240,opening=None,overrides=None):
             assert debt<=s['limit']+1e-8
             assert d<=max(0,u)+1e-8 and paid<=room+1e-8
             assert s['retained']>=-1e-8 or d==0
-            assert abs(cash-(o['cash']+cfo-capex-extra+inc['received']-repayment+borrow-oldpay-paid))<1e-7*max(1,abs(cash))
-            rows[e]=dict(revenue=rev,ebit_margin=m,ebit=ebit,deposit_income=income,interest=interest,tax=tax,net_income=net,upstream_declared=inc['declared'],upstream_received=inc['received'],legal_income=legal_income,noncash_awards=noncash_awards,opening_retained=o['retained'],reserve_add=appropriation,reserve=res,registered_capital=s['capital'],distribution_capacity_budget_before_D=u,account_scope=('parent_forecast_from_individual_balance' if e=='P' else 'economic_remittance_capacity_budget'),actual_individual_statutory_reserve=None,actual_individual_legal_retained=None,reserve_state_kind=('registered_half_equivalent_full_status_not_disclosed_amount' if e=='P' else 'bounded_incremental_retention_budget_not_actual_reserve'),registered_capital_currency=('CNY' if e in ['P','A','D','C'] else 'EUR'),registered_capital_native=(25000 if e in ['E','H','U'] else s['capital']*1e9),declared_D=d,current_D_paid=paid,old_D_paid=oldpay,D_payable=s['payable'],D_receivable=s['receivable'],retained=s['retained'],cash_open=o['cash'],cash_end=cash,locked_end=locked,required_cash=required,fixed_open=o['fixed'],fixed_end=f,wc_open=o['wc'],wc_end=w,DA=dep,capex=capex,delta_wc=dw,CFO=cfo,old_obligations_and_buyback=extra,debt_open=o['debt'],gross_maturity=o['debt'],gross_rollover=o['debt']-repayment,repayment=repayment,new_debt=borrow,debt_end=debt,debt_ceiling=s['limit'],funding_gap=gap)
+            assert abs(cash-(o['cash']+cfo-capex-extra+inc['received']-repayment+borrow-oldpay-paid-recovery['gross_capital_return']))<1e-7*max(1,abs(cash))
+            rows[e]=dict(capital_recovery=recovery,capital_return_received=inc['capital_received'],capital_disposal_profit=inc['capital_profit'],revenue=rev,ebit_margin=m,ebit=ebit,deposit_income=income,interest=interest,tax=tax,net_income=net,upstream_declared=inc['declared'],upstream_received=inc['received'],legal_income=legal_income,noncash_awards=noncash_awards,opening_retained=o['retained'],reserve_add=appropriation,reserve=res,registered_capital=s['capital'],distribution_capacity_budget_before_D=u,account_scope=('parent_forecast_from_individual_balance' if e=='P' else 'economic_remittance_capacity_budget'),actual_individual_statutory_reserve=None,actual_individual_legal_retained=None,reserve_state_kind=('registered_half_equivalent_full_status_not_disclosed_amount' if e=='P' else 'bounded_incremental_retention_budget_not_actual_reserve'),registered_capital_currency=('CNY' if e in ['P','A','D','C'] else 'EUR'),registered_capital_native=(25000 if e in ['E','H','U'] else s['capital']*1e9),declared_D=d,current_D_paid=paid,old_D_paid=oldpay,D_payable=s['payable'],D_receivable=s['receivable'],retained=s['retained'],cash_open=o['cash'],cash_end=cash,locked_end=locked,required_cash=required,fixed_open=o['fixed'],fixed_end=f,wc_open=o['wc'],wc_end=w,DA=dep,capex=capex,delta_wc=dw,CFO=cfo,old_obligations_and_buyback=extra,debt_open=o['debt'],gross_maturity=o['debt'],gross_rollover=o['debt']-repayment,repayment=repayment,new_debt=borrow,debt_end=debt,debt_ceiling=s['limit'],funding_gap=gap)
         group_before=sum(rows[e]['cash_open'] for e in IDS)
         group_after=sum(rows[e]['cash_end'] for e in IDS)
-        external_flow=sum(rows[e]['CFO']-rows[e]['capex']-rows[e]['old_obligations_and_buyback']-rows[e]['repayment']+rows[e]['new_debt'] for e in IDS)-rows['P']['current_D_paid']-total_minority-.05*(rows['U']['current_D_paid']+rows['U']['old_D_paid'])
+        external_flow=sum(rows[e]['CFO']-rows[e]['capex']-rows[e]['old_obligations_and_buyback']-rows[e]['repayment']+rows[e]['new_debt'] for e in IDS)-rows['P']['current_D_paid']-total_minority-.05*(rows['U']['current_D_paid']+rows['U']['old_D_paid'])-capital_leakage
         assert abs(group_after-group_before-external_flow)<1e-7*max(1,group_after)
         dist=rows['P']['current_D_paid']/SHARES
-        np=sum(rows[e]['net_income']*ss[e]['own'] for e in BASE)-rows['U']['declared_D']*.05
+        np=sum(rows[e]['net_income']*ss[e]['own'] for e in BASE)-rows['U']['declared_D']*.05-capital_leakage
         consolidated=sum(rows[e]['revenue'] for e in BASE)-rows['C']['revenue']-.55*rows['A']['revenue']
         yr={'year':y,'shares_bn':SHARES,'entities':rows,'DPS':dist,'attributable_profit_bn':np,'group_revenue_proxy_bn':consolidated,'minority_cash_bn':total_minority,'cash_bn':sum(s['cash'] for s in ss.values()),'debt_bn':sum(s['debt'] for s in ss.values())}
         years.append(yr);pv+=dist/(1+c['r'])**y
@@ -156,26 +181,27 @@ def run(c,n=240,opening=None,overrides=None):
         if failed:break
     return {'feasible':failed is None,'failure':failed,'PV':pv if failed is None else None,'TV5':tv if failed is None else None,'DPS5':[z['DPS'] for z in years[:5]],'years':years}
 def pack(result):
-    # Static identity metadata is stored once per entity, never discarded.
     r=copy.deepcopy(result); yrs=r.pop('years')
-    static=['account_scope','actual_individual_statutory_reserve','actual_individual_legal_retained',
-            'reserve_state_kind','registered_capital_currency','registered_capital_native']
-    metadata={e:{k:yrs[0]['entities'][e][k] for k in static} for e in IDS}
-    for z in yrs:
-        for e in IDS:
-            assert {k:z['entities'][e][k] for k in static}==metadata[e]
-    columns=[k for k in yrs[0]['entities']['P'] if k not in static]
-    names=[k for k in yrs[0] if k!='entities']
-    r['annual_columns']=names;r['annual_values']=[[z[k] for k in names] for z in yrs]
-    r['entity_columns']=columns;r['entity_values']={e:[[z['entities'][e][k] for k in columns] for z in yrs] for e in IDS}
-    r['entity_static_metadata']=metadata
+    raw=json.dumps(yrs,ensure_ascii=False,separators=(',',':')).encode('utf-8')
+    r['annual_trace_sha256']=hashlib.sha256(raw).hexdigest()
+    r['annual_trace_encoding']='gzip-mtime0-base64-json-utf8'
+    r['annual_trace_years']=len(yrs)
+    r['annual_trace_schema']={'unit':'CNY billion except native currency capital and per-share figures','content':'Complete annual records including every entity and variable registered capital; no fields omitted','decode':'base64 decode, gzip decompress, UTF-8 JSON array; python model --expand output.json'}
+    r['annual_trace_gzip_base64']=base64.b64encode(gzip.compress(raw,compresslevel=9,mtime=0)).decode('ascii')
     return r
 
 def expand(p):
-    p=copy.deepcopy(p);names=p.pop('annual_columns');vals=p.pop('annual_values');cols=p.pop('entity_columns');ev=p.pop('entity_values')
-    metadata=p.pop('entity_static_metadata',{})
+    p=copy.deepcopy(p)
+    if 'annual_trace_gzip_base64' in p:
+        raw=p.pop('annual_trace_gzip_base64')
+        p.pop('annual_trace_encoding');p.pop('annual_trace_years');p.pop('annual_trace_schema')
+        decoded=gzip.decompress(base64.b64decode(raw))
+        assert hashlib.sha256(decoded).hexdigest()==p.pop('annual_trace_sha256'), 'annual trace SHA256 mismatch'
+        p['years']=json.loads(decoded.decode('utf-8'))
+        return p
+    names=p.pop('annual_columns');vals=p.pop('annual_values');cols=p.pop('entity_columns');ev=p.pop('entity_values')
     p['years']=[dict(zip(names,v)) for v in vals]
-    for i,z in enumerate(p['years']):z['entities']={e:{**dict(zip(cols,ev[e][i])),**metadata.get(e,{})} for e in IDS}
+    for i,z in enumerate(p['years']):z['entities']={e:dict(zip(cols,ev[e][i])) for e in IDS}
     return p
 
 def boundary():
@@ -207,7 +233,7 @@ def secondary():
     vals=[(ebit*k-.045*k*.315+bridge)/SHARES for k in (10,12)]
     return {'segments':seg,'EBIT_bn':ebit,'EV_EBIT':[10,12],'bridge_bn':bridge,'PV_range':vals,'note':'current normalized capacity earnings cross-check, independent volume/mix; embeds maintenance and normal capex via EBIT and industrial multiples, weaker than explicit payout method'}
 def main():
-    out={'symbol':'CN:002318','units':'CNY billion except per share','shares_bn':SHARES,'opening_budget':OPEN,'account_schema':{'monetary_unit':'CNY billion unless native capital explicitly labelled','reserve':'Forecast state only: parent registered/2 equivalent of documented full status, subsidiaries accumulated bounded retention allowance; not actual statutory reserve','retained':'Parent future distributable-profit forecast; subsidiary economic remittance-capacity accumulator, not disclosed individual legal balance','foreign_capital':'CNY value null, EUR25000 native disclosure in rows; no PRC rule or placeholder FX','sources':'entity-audit.json has actual disclosures, null unknowns and exact table/page identity'},'business_budget':BASE,'scenarios':{},'boundary':boundary(),'secondary':secondary(),'convergence':{}}
+    out={'symbol':'CN:002318','units':'CNY billion except per share','shares_bn':SHARES,'opening_budget':OPEN,'account_schema':{'monetary_unit':'CNY billion unless native capital explicitly labelled','reserve':'Forecast state only: parent registered/2 equivalent of documented full status, subsidiaries accumulated bounded retention allowance; not actual statutory reserve','retained':'Parent future distributable-profit forecast; subsidiary economic remittance-capacity accumulator, not disclosed individual legal balance','foreign_capital':'CNY value null, EUR25000 native disclosure in rows; no PRC rule or placeholder FX','capital_return':'Only named 湖州乾诚不锈钢管制造有限公司 conditional proportional reduction; H1 registered30.950195m vs mother carrying42.51307794m. Actual paid/tax basis unknown; registered amount used as paid-capital/tax budget with zero-basis sensitivity. Excess excludes required/locked/payables; 2% costs and no loss refund. Ordinary dividend and capital return distinct, nominal units decline, ownership/listed shares unchanged','sources':'entity-audit.json has actual disclosures, null unknowns and exact table/page identity'},'business_budget':BASE,'scenarios':{},'boundary':boundary(),'secondary':secondary(),'convergence':{}}
     for name,c in SCENARIOS.items():
         r=run(c);p=pack(r);assert expand(p)==r
         out['scenarios'][name]={'assumptions':c,**p}
@@ -221,4 +247,10 @@ def main():
     out['lossless_expand_verified']=True
     Path(__file__).with_name('2026-Q3-output.json').write_text(json.dumps(out,ensure_ascii=False,separators=(',',':')))
     print(json.dumps({k:{j:v[j] for j in ['feasible','failure','PV','TV5','DPS5']} for k,v in out['scenarios'].items()},indent=2))
-if __name__=='__main__':main()
+if __name__=='__main__':
+    if '--expand' in sys.argv:
+        i=sys.argv.index('--expand');source=Path(sys.argv[i+1]) if len(sys.argv)>i+1 else Path(__file__).with_name('2026-Q3-output.json')
+        data=json.loads(source.read_text())
+        data['scenarios']={k:expand(v) for k,v in data['scenarios'].items()}
+        print(json.dumps(data,ensure_ascii=False,indent=2))
+    else:main()

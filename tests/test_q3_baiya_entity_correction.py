@@ -8,7 +8,7 @@ M=[.070,.080,.088,.094,.096,.096,.095,.094,.093,.092]
 K=[140,145,150,155,160,164,168,172,177,182]
 S=429.647790
 
-def calc(rate,shift=0,frac=.9,continued=False,subloss=0,subreserve=0,structural=False):
+def calc(rate,shift=0,frac=.9,continued=False,subloss=0,subreserve=0,structural=False,recovery=True,recovery_start=3,recovery_fee=.02,taxbasisratio=1.):
  revenues=R if not structural else [3200,3040,2950,2950,2970,2990,3010,3030,3050,3070]
  margins=M if not structural else [-.025,-.01,.015,.025,.03,.03,.03,.03,.03,.03]
  capital=K if not structural else [120]*10
@@ -38,26 +38,34 @@ def calc(rate,shift=0,frac=.9,continued=False,subloss=0,subreserve=0,structural=
  ni=revenues[-1]*(1+g)*(margins[-1]+shift)*.75
  f=ni+118*(1+g)-capital[-1]*(1+g)-revenues[-1]*wr*g-150*revenues[-1]/3559.134314*g
  p=p-debt+30;pu-=7.112891
- pt=p/3;st=s/3;tail=[];adjust=0
+ pt=p/3;st=s/3;tail=[];adjust=0;sreg=40.;subcost=54.433323
  for j in range(1,501):
   annualni=ni*(1+g)**(j-1);annualf=f*(1+g)**(j-1);p+=frac*annualf;s+=(1-frac)*annualf
   intr=loan*.05;pit=(max(frac*annualni/.75+intr,0)-max(frac*annualni/.75,0))*.25;sit=(max((1-frac)*annualni/.75-intr,0)-max((1-frac)*annualni/.75,0))*.25;p+=intr-pit;s-=intr+sit
   if s<0:p+=s;loan-=s;s=0
   back=min(s,loan);s-=back;p+=back;loan-=back
-  sn=(1-frac)*annualni-intr-sit;sa=.1*max(0,sn+min(su,0));sa=sa if continued else min(sa,max(0,20-sr));su+=sn-sa;sr+=sa
+  sn=(1-frac)*annualni-intr-sit;sa=.1*max(0,sn+min(su,0));sa=sa if continued else min(sa,max(0,sreg/2-sr));su+=sn-sa;sr+=sa
   sd=min(s,max(0,su),(1-frac)*annualf+max(st,max(s-(1-frac)*annualf,0)/3));s-=sd;su-=sd;p+=sd
-  pn=frac*annualni+intr-pit+sd;pa=.1*max(0,pn+min(pu,0));pa=pa if continued else min(pa,max(0,S/2-pr));pu+=pn-pa;pr+=pa
-  div=min(p,max(0,pu),frac*annualf+sd+max(pt,max(p-(frac*annualf+sd),0)/3));p-=div;pu-=div
+  q=netcapital=capprofit=0.
+  if structural and recovery and j>=recovery_start and (j-recovery_start)%5==0:
+   q=min(max(s,0),sreg);basis=subcost*q/sreg if sreg else 0;netcapital=q*(1-recovery_fee);ctax=max(netcapital-q*taxbasisratio,0)*.25;netcapital-=ctax;capprofit=netcapital-basis;s-=q;p+=netcapital;sreg-=q;subcost-=basis
+  pn=frac*annualni+intr-pit+sd+capprofit;pa=.1*max(0,pn+min(pu,0));pa=pa if continued else min(pa,max(0,S/2-pr));pu+=pn-pa;pr+=pa
+  div=min(p,max(0,pu),frac*annualf+sd+netcapital+max(pt,max(p-(frac*annualf+sd+netcapital),0)/3));p-=div;pu-=div
   adjust+=(div-annualf)/(1+rate)**j;tail.append(dict(year=j,p=p,s=s,pu=pu,su=su,dividend=div,subdividend=sd))
-  nextreserve=.1*max(0,(1-frac)*annualni*(1+g)+min(su,0));nextreserve=nextreserve if continued else min(nextreserve,max(0,20-sr))
+  nextreserve=.1*max(0,(1-frac)*annualni*(1+g)+min(su,0));nextreserve=nextreserve if continued else min(nextreserve,max(0,sreg/2-sr))
   if p+s<1e-8 and (1-frac)*annualni*(1+g)-nextreserve+su>=(1-frac)*annualf*(1+g)-1e-8:break
  tv10=f/(rate-g)+adjust
  tv5=sum(rows[i]['dividend']/(1+rate)**(i-4) for i in range(5,10))+tv10/(1+rate)**5
  pv=sum(rows[i]['dividend']/(1+rate)**(i+1) for i in range(5))+tv5/(1+rate)**5
  return dict(PV=pv/S,TV5=tv5/S,D=[x['dividend']/S for x in rows[:5]],rows=rows,tail=tail)
-def test_baiya_seven_independent_entity_paths():
+
+def test_baiya_independent_eleven_full_paths():
  results={'base10':calc(.10),'base11':calc(.11),'margin_minus1pp':calc(.10,-.01)}
  results['structural']=calc(.1,structural=True)
+ results['structural_dividend_only']=calc(.1,structural=True,recovery=False)
+ results['structural_delayed18']=calc(.1,structural=True,recovery_start=8)
+ results['structural_fee10']=calc(.1,structural=True,recovery_fee=.10)
+ results['zero_basis']=calc(.1,structural=True,taxbasisratio=0.)
  results['continue_reserve']=calc(.1,continued=True)
  results['parent70']=calc(.1,frac=.7)
  results['sub_loss20']=calc(.1,subloss=-20)
@@ -74,6 +82,8 @@ def test_baiya_seven_independent_entity_paths():
   assert max(abs(v) for v in diff[name].values())<1e-8
   for x,y in zip(a['rows'],b['rows']):
    for i,j in [('parent_cash','parent_surplus_cash'),('sub_cash','subsidiary_surplus_cash'),('parent_retained','legal_retained'),('sub_retained','sub_legal_retained'),('parent_reserve','parent_reserve'),('sub_reserve','sub_reserve')]:assert abs(x[i]-y[j])<1e-7,(name,i,x[i],y[j])
+ for key,label in [('structural_dividend_only','dividend_only_reference'),('structural_delayed18','capital_recovery_start18'),('structural_fee10','capital_recovery_friction10'),('zero_basis','zero_tax_basis')]:
+  a=results[key];b=o['capital_recovery_sensitivities'][label]['0.1'];diff[key]={'PV':a['PV']-b['current_value'],'TV5':a['TV5']-b['year5_terminal']};assert max(abs(v) for v in diff[key].values())<1e-8
  results['differences']=diff;results['pass']=True
 
 def test_baiya_actual_tail_and_tax():
@@ -81,9 +91,10 @@ def test_baiya_actual_tail_and_tax():
  spec=importlib.util.spec_from_file_location('m',D/'2026-Q3.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
  o=json.loads((D/'2026-Q3-output.json').read_text());results={}
  cases=[(n,r,v) for n,rs in o['scenarios'].items() for r,v in rs.items()]+[(n,r,v) for n,rs in o['entity_method_sensitivities'].items() for r,v in rs.items()]
+ cases += [(n,r,v) for n,rs in o['capital_recovery_sensitivities'].items() for r,v in rs.items()]
  for n,r,v in cases:
   if not v['feasible']:continue
-  p=m.PARAMS.get(n,m.PARAMS['base']);last=v['rows'][-1];g=p['g'];ni=last['revenue']*(1+g)*p['ebit_margin'][-1]*.75
+  p=m.PARAMS.get(n,m.PARAMS['structural'] if n in o['capital_recovery_sensitivities'] else m.PARAMS['base']);last=v['rows'][-1];g=p['g'];ni=last['revenue']*(1+g)*p['ebit_margin'][-1]*.75
   pv,tail=m.release_cash(last,float(r),g,ni,v['steady_fcfe'],verification_years=100)
   short=v['release_schedule'];extra=tail[len(short):]
   assert len(extra)>=100,(n,r,len(short),len(tail))
@@ -128,3 +139,34 @@ def test_baiya_actual_registered_capital_and_cash_examples():
  f=m.project(m.PARAMS['structural'],opening_cash=0,parent_cash=0,legal=0,limit=0)
  assert not f[0]['feasible'] and f[0]['dividend']==0
  checks['zero_dividend_does_not_cure_unfunded_path']={'pass':True,'year1':f[0]}
+
+
+def test_baiya_actual_capital_recovery():
+ import importlib.util
+ sp=importlib.util.spec_from_file_location('m',D/'2026-Q3.py');m=importlib.util.module_from_spec(sp);sp.loader.exec_module(m)
+ t={}
+ a=m.capital_return_budget(10,40,54.433323,10,friction=.02)
+ assert a['parent_cash']==9.8 and a['registered_after']==30 and a['parent_cash_tax']==0
+ assert abs(a['parent_profit']-(9.8-54.433323/4))<1e-9
+ assert a['ownership_after']==1 and a['listed_shares_change']==0
+ t['real_Baiya_cost_registration_cash_profit_split']=a
+ b=m.capital_return_budget(5,20,10,5,ownership=.8,friction=.1,parent_tax=.25,tax_basis_ratio=.5)
+ assert abs(b['parent_cash']-3.2)<1e-9 and abs(b['parent_profit']-.7)<1e-9 and b['minority_cash']==.9999999999999998
+ assert b['registered_after']==15 and b['ownership_after']==.8
+ t['different_rights_real_function_positive_disposal_tax']=b
+ c=m.capital_return_budget(2,40,54.433323,10)
+ assert c['gross_capital_return']==2 and c['registered_after']==38
+ t['cannot_use_required_cash_outside_available_surplus']=c
+ # actual production release at Y13 with zero statutory sub profit balance, so
+ # capital return is not incorrectly constrained by an ordinary-dividend test.
+ o=json.loads((D/'2026-Q3-output.json').read_text());r=o['scenarios']['structural']['0.1']['release_schedule'];x=r[2]
+ assert x['subsidiary_legal']==0 and x['capital_recovery']['gross_capital_return']>8 and x['capital_recovery']['parent_profit']<0
+ assert x['capital_recovery']['parent_cash_tax']==0 and x['subsidiary_cash']==0
+ assert len(r)==18 and r[-1]['gordon_capacity_proven']
+ t['actual_profit_limited_but_capital_return_available']=x
+ # Entire aggregate cash reconciliation includes fee leak but never principal profit.
+ for name,v in o['capital_recovery_sensitivities'].items():
+  for rate,path in v.items():
+   for z in path['release_schedule']:
+    k=z['capital_recovery'];expected=z['opening_group_cash']+z['operating_fcfe']-z['intercompany_parent_tax']-z['intercompany_sub_tax']-z['parent_holder_payment']-k['friction_cash']-k['parent_cash_tax']-k['minority_cash']
+    assert abs(z['unreleased_cash']-expected)<1e-7
