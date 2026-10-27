@@ -1,7 +1,5 @@
-import { AppHeader } from "../components/app-header";
-import { ResearchDocuments } from "../components/research-documents";
-import "../standards.css";
+import { redirect } from "next/navigation";
 
 export default function SelectionPage() {
-  return <><AppHeader active="selection" /><ResearchDocuments kind="selection" /></>;
+  redirect("/?view=pool");
 }

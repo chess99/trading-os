@@ -53,14 +53,14 @@ test("report reader binds period metadata and gates live prices", async () => {
   assert.match(reader, /context\.historical/); assert.match(reader, /context\.live &&/);
   assert.doesNotMatch(reader, /当前研究摘要|上方状态、行情与右侧摘要来自当前研究/);
 });
-test("industry and selection routes retain original exported research documents", async () => {
-  const [industry, selection] = await Promise.all([render("/industries"), render("/selection")]);
-  assert.equal(industry.status, 200); assert.equal(selection.status, 200);
-  assert.match(await industry.text(), /产业研究/); assert.match(await selection.text(), /长期精选/);
+test("industry and macro publish reports separately from methods and internal instructions", async () => {
+  const [industry, macro, home] = await Promise.all([render("/industries"), render("/macro"), render("/")]);
+  assert.equal(industry.status, 200); assert.equal(macro.status, 200);
+  assert.match(await industry.text(), /行业研究/); assert.match(await macro.text(), /宏观与市场/);
+  const homeHtml = await home.text(); assert.match(homeHtml, /价值投资研究/); assert.doesNotMatch(homeHtml, /长期精选|长期企业研究/);
   const { documents } = JSON.parse(await readFile(new URL("../public/data/documents.json", import.meta.url), "utf8"));
-  assert.ok(documents.some((doc) => doc.id === "selection-current"));
-  assert.ok(documents.some((doc) => doc.id === "cross-market-guide"));
-  assert.ok(documents.every((doc) => !doc.sourcePath.startsWith("prompts/") && !doc.sourcePath.endsWith("README.md")));
+  assert.ok(documents.some((doc) => doc.id === "valuation-context" && doc.type === "reference"));
+  assert.ok(documents.every((doc) => !doc.sourcePath.startsWith("prompts/") && !doc.sourcePath.includes("/sectors/") && !doc.sourcePath.endsWith("README.md")));
   for (const doc of documents) {
     const original = await readFile(new URL(`../../${doc.sourcePath}`, import.meta.url), "utf8");
     const projection = await readFile(new URL(`../public${doc.path}`, import.meta.url), "utf8");

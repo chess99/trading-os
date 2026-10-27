@@ -2,6 +2,7 @@ import { copyFile, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promi
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadStandards, reportMetadata, displayEligibility } from "./lib/research-standards.mjs";
+import { loadPublications } from "./lib/publications.mjs";
 import { loadScreeningData } from "./lib/screening-data.mjs";
 import { currentResults, progressCounts } from "../app/lib/display-policy.mjs";
 
@@ -76,41 +77,11 @@ export function projectCompany(row, reports, member, policy, task = null) {
     reports,
   };
 }
-async function collectResearchDocuments(root, output, screening) {
-  let sectors;
-  try { sectors = (await readdir(join(root, "research/industries/sectors"))).filter((file) => file.endsWith(".md")).sort(); }
-  catch (error) { if (error.code !== "ENOENT") throw error; sectors = []; }
-  let aliases = {};
-  try { aliases = JSON.parse(await readFile(join(root, "research/industries/market-routes.json"), "utf8")); }
-  catch (error) { if (error.code !== "ENOENT") throw error; }
-  const sources = [
-    ...sectors.map((file) => ({ id: file.slice(0, -3), kind: "industry", path: `research/industries/sectors/${file}` })),
-    { id: "automotive-lighting", kind: "industry", path: "research/industries/automotive-lighting.md" },
-    { id: "cross-market-guide", kind: "industry", path: "research/industries/cross-market-guide.md" },
-    { id: "selection-current", kind: "selection", path: "selection/current.md" },
-    { id: "selection-principles", kind: "selection", path: "selection/principles.md" },
-  ];
-  const documents = [];
-  const destination = join(output, "documents");
-  await mkdir(destination, { recursive: true });
-  for (const source of sources) {
-    let markdown;
-    try { markdown = await readFile(join(root, source.path), "utf8"); }
-    catch (error) { if (error.code === "ENOENT") continue; throw error; }
-    const title = /^#\s+(.+)$/mu.exec(markdown)?.[1] ?? source.id;
-    const industries = /^适用二级行业：\s*(.+)$/mu.exec(markdown)?.[1].split("、").map((name) => name.trim().replace(/。$/u, "")) ?? [];
-    const path = `/data/documents/${source.id}.md`;
-    await writeFile(join(output, path.replace("/data/", "")), markdown, "utf8");
-    const expandedIndustries = [...new Set([...industries, ...Object.entries(aliases).filter(([,id]) => id === source.id).map(([name]) => name)])];
-    const companyReferences = screening.pools.flatMap((pool) => pool.companies.map((company) => ({
-      symbol: company.symbol, name: company.name, industry: company.industry, market: company.symbol.slice(0,2),
-      reportHref: `/reports/${company.symbol.startsWith("CN:") ? company.symbol.slice(3) : company.symbol.replace(":", "-")}`,
-    }))).filter((company) => source.kind === "selection" || source.id.endsWith("guide") || expandedIndustries.includes(company.industry));
-    const markets = source.kind === "selection" || source.id.endsWith("guide") ? ["CN", "HK", "US"]
-      : [...new Set(["CN", ...companyReferences.map((company) => company.market)])];
-    documents.push({ ...source, sourcePath: source.path, path, title, industries: expandedIndustries, markets, companyReferences });
-  }
-  await writeFile(join(output, "documents.json"), JSON.stringify({ documents }, null, 2), "utf8");
+async function collectResearchDocuments(output, publications) {
+  await mkdir(join(output, "documents"), { recursive: true });
+  for (const doc of publications) await writeFile(join(output, "documents", `${doc.id}.md`), doc.markdown, "utf8");
+  const documents = publications.map((doc) => { const metadata = { ...doc }; delete metadata.markdown; return metadata; });
+  await writeFile(join(output, "documents.json"), JSON.stringify({ schemaVersion: 1, documents }, null, 2), "utf8");
 }
 export function makeExports(catalog, scope) {
   const companies = currentResults(catalog.companies, scope);
@@ -171,9 +142,10 @@ export async function buildResearchData(root = repositoryRoot) {
       basis_report_path: null })), ...archiveSymbols.map((symbol) => ({ symbol, name: null,
       industry: "历史档案", status: "unregistered", universe_status: "inactive",
       hasResearchState: false, report_period: null, basis_report_path: null }))];
+  const publications = await loadPublications(root);
   await rm(output, { recursive: true, force: true });
   await mkdir(output, { recursive: true });
-  await collectResearchDocuments(root, output, screening);
+  await collectResearchDocuments(output, publications);
   await writeFile(join(output, "screening-pools.json"), JSON.stringify(screening, null, 2) + "\n", "utf8");
   const tasksBySymbol = new Map(queue.map((item) => [item.symbol, item]));
   const companies = [];
