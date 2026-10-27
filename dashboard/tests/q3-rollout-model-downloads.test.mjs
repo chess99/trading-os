@@ -17,6 +17,21 @@ test("every completed 2026 Q3 report exposes its own reproducible model artifact
     const markdown = await readFile(new URL(`../../${expectedSource}`, import.meta.url), "utf8");
     const links = [...markdown.matchAll(/\[[^\]]+\]\(([^)]+)\)/gu)]
       .map((match) => researchResourceLink(match[1], expectedSource));
+    // Validate every declared local model attachment, including auxiliary files.
+    for (const match of markdown.matchAll(/\[[^\]]+\]\(([^)]+)\)/gu)) {
+      const href = match[1];
+      if (!href.startsWith("../models/")) continue;
+      const resolved = researchResourceLink(href, expectedSource);
+      assert.ok(resolved, `${company.ticker}: invalid declared model link ${href}`);
+      const path = resolved.split(/[?#]/u, 1)[0];
+      assert.ok(path.startsWith(`/data/models/${company.ticker}/`),
+        `${company.ticker}: cross-company attachment ${href}`);
+      const filename = path.split("/").at(-1);
+      const source = await readFile(new URL(
+        `../../research/companies/CN/${company.ticker}/models/${filename}`, import.meta.url));
+      const exported = await readFile(new URL(`../public${path}`, import.meta.url));
+      assert.equal(digest(exported), digest(source), `${company.ticker}: attachment mismatch ${href}`);
+    }
     // A genuinely unmodellable result may have no model; any existing model must ship
     // as a complete, linked source/output pair. This does not require a false valuation.
     let model;

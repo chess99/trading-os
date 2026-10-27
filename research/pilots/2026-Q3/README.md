@@ -1,6 +1,6 @@
 # 2026Q3研究入口
 
-更新于2026-10-26 23:35 UTC。重点池191家公司中，**60家完整研究已发布**；已取得官方Q3全文60家，尚有0家待完成研究，131家等待实际报告。原始财务期间与各报告资料截止时间分别保留，预约日期不替代实际披露。
+更新于2026-10-27。本地恢复交付快照含重点池191家公司中的**63家完整研究**；远端已核发布仍为60家，本批新增3家待提交并核验；已取得官方Q3全文82家，另19家已披露研究的交付文件待恢复及重新验收，109家等待实际报告。完成研究但暂不估值的结果明确保留空值，不等于持有人模型已可用于投资估值。原始财务期间与各报告资料截止时间分别保留，预约日期不替代实际披露。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -13,6 +13,7 @@
 | 丽珠集团 000513 | [2026Q3](../../companies/CN/000513/reports/2026-Q3.md) | [Python](../../companies/CN/000513/models/2026-Q3.py) | [JSON](../../companies/CN/000513/models/2026-Q3-output.json) |
 | 格力电器 000651 | [2026Q3](../../companies/CN/000651/reports/2026-Q3.md) | [Python](../../companies/CN/000651/models/2026-Q3.py) | [JSON](../../companies/CN/000651/models/2026-Q3-output.json) |
 | 北新建材 000786 | [2026Q3](../../companies/CN/000786/reports/2026-Q3.md) | [Python](../../companies/CN/000786/models/2026-Q3.py) | [JSON](../../companies/CN/000786/models/2026-Q3-output.json) |
+| 五粮液 000858 | [2026Q3](../../companies/CN/000858/reports/2026-Q3.md) | [Python](../../companies/CN/000858/models/2026-Q3.py) | [JSON](../../companies/CN/000858/models/2026-Q3-output.json) |
 | 新洋丰 000902 | [2026Q3](../../companies/CN/000902/reports/2026-Q3.md) | [Python](../../companies/CN/000902/models/2026-Q3.py) | [JSON](../../companies/CN/000902/models/2026-Q3-output.json) |
 | 海信家电 000921 | [2026Q3](../../companies/CN/000921/reports/2026-Q3.md) | [Python](../../companies/CN/000921/models/2026-Q3.py) | [JSON](../../companies/CN/000921/models/2026-Q3-output.json) |
 | 华润三九 000999 | [2026Q3](../../companies/CN/000999/reports/2026-Q3.md) | [Python](../../companies/CN/000999/models/2026-Q3.py) | [JSON](../../companies/CN/000999/models/2026-Q3-output.json) |
@@ -25,6 +26,7 @@
 | 久立特材 002318 | [2026Q3](../../companies/CN/002318/reports/2026-Q3.md) | [Python](../../companies/CN/002318/models/2026-Q3.py) | [JSON](../../companies/CN/002318/models/2026-Q3-output.json) |
 | 伟星新材 002372 | [2026Q3](../../companies/CN/002372/reports/2026-Q3.md) | [Python](../../companies/CN/002372/models/2026-Q3.py) | [JSON](../../companies/CN/002372/models/2026-Q3-output.json) |
 | 海康威视 002415 | [2026Q3](../../companies/CN/002415/reports/2026-Q3.md) | [Python](../../companies/CN/002415/models/2026-Q3.py) | [JSON](../../companies/CN/002415/models/2026-Q3-output.json) |
+| 沪电股份 002463 | [2026Q3](../../companies/CN/002463/reports/2026-Q3.md) | [Python](../../companies/CN/002463/models/2026-Q3.py) | [JSON](../../companies/CN/002463/models/2026-Q3-output.json) |
 | 洽洽食品 002557 | [2026Q3](../../companies/CN/002557/reports/2026-Q3.md) | [Python](../../companies/CN/002557/models/2026-Q3.py) | [JSON](../../companies/CN/002557/models/2026-Q3-output.json) |
 | 卫星化学 002648 | [2026Q3](../../companies/CN/002648/reports/2026-Q3.md) | [Python](../../companies/CN/002648/models/2026-Q3.py) | [JSON](../../companies/CN/002648/models/2026-Q3-output.json) |
 | 盐津铺子 002847 | [2026Q3](../../companies/CN/002847/reports/2026-Q3.md) | [Python](../../companies/CN/002847/models/2026-Q3.py) | [JSON](../../companies/CN/002847/models/2026-Q3-output.json) |
@@ -63,6 +65,7 @@
 | 吉比特 603444 | [2026Q3](../../companies/CN/603444/reports/2026-Q3.md) | [Python](../../companies/CN/603444/models/2026-Q3.py) | [JSON](../../companies/CN/603444/models/2026-Q3-output.json) |
 | 爱玛科技 603529 | [2026Q3](../../companies/CN/603529/reports/2026-Q3.md) | [Python](../../companies/CN/603529/models/2026-Q3.py) | [JSON](../../companies/CN/603529/models/2026-Q3-output.json) |
 | 安图生物 603658 | [2026Q3](../../companies/CN/603658/reports/2026-Q3.md) | [Python](../../companies/CN/603658/models/2026-Q3.py) | [JSON](../../companies/CN/603658/models/2026-Q3-output.json) |
+| 顾家家居 603816 | [2026Q3](../../companies/CN/603816/reports/2026-Q3.md) | [Python](../../companies/CN/603816/models/2026-Q3.py) | [JSON](../../companies/CN/603816/models/2026-Q3-output.json) |
 | 金诚信 603979 | [2026Q3](../../companies/CN/603979/reports/2026-Q3.md) | [Python](../../companies/CN/603979/models/2026-Q3.py) | [JSON](../../companies/CN/603979/models/2026-Q3-output.json) |
 | 洛阳钼业 603993 | [2026Q3](../../companies/CN/603993/reports/2026-Q3.md) | [Python](../../companies/CN/603993/models/2026-Q3.py) | [JSON](../../companies/CN/603993/models/2026-Q3-output.json) |
 | 柏楚电子 688188 | [2026Q3](../../companies/CN/688188/reports/2026-Q3.md) | [Python](../../companies/CN/688188/models/2026-Q3.py) | [JSON](../../companies/CN/688188/models/2026-Q3-output.json) |

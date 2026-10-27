@@ -1,9 +1,9 @@
 """隔离重跑正式Q3模型；公司模型内的手算特例随正式计算链执行。"""
 import json
-from pathlib import Path
 import shutil
 import subprocess
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -19,9 +19,12 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
     # Amoy's published reader artifact is the documented expanded interface;
     # its default CLI emits an envelope. Generate the exact published form.
     args = ["--expand"] if model.parent.parent.name == "300685" else []
+    # Serial measured consumer runtimes: 248.480s and 525.087s respectively.
+    # Bounded transport budgets retain every numerical and byte assertion.
+    timeout = {"002847": 600, "600309": 1200}.get(model.parent.parent.name, 240)
     result = subprocess.run(
         [sys.executable, str(copied), *args], cwd=tmp_path.parent,
-        capture_output=True, text=True, timeout=240, check=False,
+        capture_output=True, text=True, timeout=timeout, check=False,
     )
     assert result.returncode == 0, result.stderr
     output = "2026-Q3-output.json"
@@ -29,7 +32,9 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
     # Earlier single-file models emit their complete JSON to stdout; newer ones
     # save beside __file__. Both are supported reproducible public interfaces.
     generated = tmp_path / output
-    actual = json.loads(generated.read_text() if generated.exists() else result.stdout)
+    if not generated.exists():
+        generated.write_text(result.stdout)
+    actual = json.loads(generated.read_text())
     assert actual == expected
 
     # Every published sibling case is part of the public transport contract.
@@ -42,5 +47,24 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
         assert (tmp_path / case.name).read_bytes() == case.read_bytes(), case.name
     # Corrected single-file producers promise exact deterministic main bytes.
     migrated = json.loads((ROOT / "tests/q3-final-test-migration.json").read_text())
-    if model.parent.parent.name in {entry["code"] for entry in migrated["companies"]}:
+    restored_codes = {
+        "600276", "603298", "688111", "000729", "000858", "000895",
+        "002027", "301498", "603816", "300529", "300832", "688578",
+        "002001", "002463", "300596", "301696", "603197", "688300",
+        "600377", "600926", "601985", "603568",
+    }
+    migrated_codes = {entry["code"] for entry in migrated["companies"]}
+    if model.parent.parent.name in migrated_codes | restored_codes:
         assert generated.read_bytes() == (model.parent / output).read_bytes()
+
+    # Checkers consume only files recreated in the isolated consumer directory.
+    verifications = set(model.parent.glob("2026-Q3*verification.py"))
+    verifications.update(model.parent.glob("2026-Q3-independent-recompute.py"))
+    for verification in sorted(verifications):
+        check_copy = tmp_path / verification.name
+        shutil.copyfile(verification, check_copy)
+        checked = subprocess.run(
+            [sys.executable, str(check_copy)], cwd=tmp_path.parent,
+            capture_output=True, text=True, timeout=240, check=False,
+        )
+        assert checked.returncode == 0, checked.stderr
