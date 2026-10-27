@@ -1,8 +1,10 @@
 # Trading OS
 
-Trading OS 是一套覆盖 A股、港股和美股第一层质量筛选，并按财报周期维护跨市场公司研究的轻量工作流。主要产品是动态重点跟踪池、完整公司报告及其结构化模型；网站只是只读展示。系统不做自动交易，也不因价格、政策、新闻或单项公告在周期中途启动研究。
+Trading OS 是覆盖A股、港股与美股的价值投资研究工作台。个股研究关注长期股东现金、资本配置与价格；行业研究解释供需、竞争和利润归属；宏观与市场研究提供周期、资金条件及估值参照。研究成果低频积累，网页用于检索、比较和阅读。
 
-## 核心机制
+整体结构与取舍见[工作台设计](docs/design/investment-workbench.md)，报告更新方式见[发布与阅读规则](research/README.md)。
+
+## 公司研究核心机制
 
 1. 价值质量筛选从全市场维护一个可增删、可调整 A/B 分层的重点跟踪池。
 2. 财报季使用 `research enqueue-period`，只为当时池内公司创建缺失的 `FY / Q1 / H1 / Q3` 周期槽位。
@@ -14,16 +16,15 @@ Trading OS 是一套覆盖 A股、港股和美股第一层质量筛选，并按�
 
 单公司研究使用[主提示词](prompts/company/standard-deep-research.md)和[核验附录](prompts/company/research-verification.md)。先形成长期商业判断，再检验财务、必要资本、普通股归属、估值和持有人现金。报告结论先行、自足可读，不把核心推理委托给旧周期。
 
-## 研究分层
+## 研究板块
 
-| 层 | 回答的问题 | 入口与结果 |
+| 板块 | 留存成果 | 入口 |
 |---|---|---|
-| 动态重点跟踪池 | 哪些公司值得持续投入完整研究？ | [质量池规范](prompts/screening/cn-a-value-quality.md)，`pool.json` |
-| 财报周期排期 | 本季哪些池内公司尚缺完整报告？ | `research enqueue-period --period ...` |
-| 单公司研究 | 商业经济学、当前价值和条件现金回报如何？ | [完整深研](prompts/company/standard-deep-research.md)，周期报告 |
-| 协调验收 | 正文、证据、模型和结构化结果是否一致？ | [验收流程](playbooks/simple-research.md)，`research complete` |
-| 产业知识 | 利润由谁创造、谁取得，如何跨公司验证？ | [产业框架](research/industries/README.md) |
-| 长期精选 | 哪些更值得长期拥有和等待？ | [精选原则](selection/principles.md)、[当前精选](selection/current.md) |
+| 个股研究 | 商业质量初筛、完整财报周期研报与模型 | [初筛规范](prompts/screening/cn-a-value-quality.md)、[公司深研](prompts/company/standard-deep-research.md) |
+| 行业研究 | 细分行业的历史、现状、竞争、前景与重要历史版本 | [行业研究规范](prompts/industry-research.md) |
+| 宏观与市场 | 主题报告、必要的环境综述、指标与方法 | [宏观研究规范](prompts/macro-research.md) |
+
+个股研究保留初筛和完整深研两个层次。行业与宏观采用主题及重要时点报告，季度复核不强制产出。日常市场观察仅保留[执行规范](prompts/daily-market-observation.md)，每日结果在仓库外使用。
 
 ## 唯一事实源
 
@@ -33,7 +34,9 @@ coverage/cn-a/research_queue.jsonl                         当前 periodic / man
 research/companies/CN/{代码}/reports/YYYY-{FY|Q1|H1|Q3}.md 财报周期完整报告
 screening/cn-a/value-quality/pool.json                      动态重点跟踪池
 screening/cn-a/value-quality/current.md                     由当前池确定性生成的可读投影
-research/standards/registry.json                            现行研究标准
+research/standards/registry.json                            公司研究展示标准
+research/publications.json                                 行业、宏观报告与方法的发布目录
+research/{industries|macro}/{主题}/reports/YYYY-MM-DD.md     重要时点的完整报告
 ```
 
 `basis_report_path` 和 `report_period` 只绑定结构化状态所依据的最新周期报告，不宣称报告在今天仍然“有效”。每份报告按自身财报周期、信息截止和研究标准阅读。`covered / ignore` 是该周期的研究结论，不是事件驱动状态。

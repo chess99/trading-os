@@ -9,11 +9,14 @@ on:
       - 'coverage/**/research_state.jsonl'
       - 'coverage/**/research_queue.jsonl'
       - 'research/industries/**'
-      - 'selection/**'
+      - 'research/macro/**'
+      - 'research/publications.json'
       - 'src/trading_os/**'
       - 'tests/**'
       - 'screening/**/value-quality/pool.json'
       - '.github/workflows/research-display-checks.yml'
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -67,7 +70,7 @@ jobs:
         working-directory: dashboard
         run: node tests/standard-browser.mjs
       - name: Verify source data unchanged
-        run: git diff --exit-code -- coverage research screening selection dashboard/package-lock.json
+        run: git diff --exit-code -- coverage research screening dashboard/package-lock.json
       - name: Test artifacts
         if: always()
         uses: actions/upload-artifact@v4

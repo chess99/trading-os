@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 
 interface AppHeaderProps {
-  active: "screening" | "dashboard" | "reports" | "industries" | "selection";
+  active: "screening" | "dashboard" | "reports" | "industries" | "macro";
 }
 
 export function AppHeader({ active }: AppHeaderProps) {
@@ -13,21 +13,21 @@ export function AppHeader({ active }: AppHeaderProps) {
         </span>
         <span className="brand-copy">
           <strong>Trading OS</strong>
-          <span>长期企业研究</span>
+          <span>价值投资研究</span>
         </span>
       </a>
       <nav className="primary-nav" aria-label="主导航">
         <a className={(active === "dashboard" || active === "screening") ? "is-active" : ""} href="/">
-          研究决策台
+          个股研究
         </a>
         <a className={active === "reports" ? "is-active" : ""} href="/reports">
           研报库
         </a>
         <a className={active === "industries" ? "is-active" : ""} href="/industries">
-          产业研究
+          行业研究
         </a>
-        <a className={active === "selection" ? "is-active" : ""} href="/selection">
-          长期精选
+        <a className={active === "macro" ? "is-active" : ""} href="/macro">
+          宏观与市场
         </a>
       </nav>
     </header>
