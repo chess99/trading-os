@@ -1,6 +1,6 @@
 # 2026Q3研究入口
 
-更新于2026-10-27。本地恢复交付快照含重点池191家公司中的**63家完整研究**；远端已核发布仍为60家，本批新增3家待提交并核验；已取得官方Q3全文82家，另19家已披露研究的交付文件待恢复及重新验收，109家等待实际报告。完成研究但暂不估值的结果明确保留空值，不等于持有人模型已可用于投资估值。原始财务期间与各报告资料截止时间分别保留，预约日期不替代实际披露。
+更新于2026-10-27。本地恢复交付快照含重点池191家公司中的**67家完整研究**；远端已核发布63家，本批新增燕京啤酒、乖宝宠物、杭州银行、金山办公4家待提交并核验。已取得官方Q3全文82家，另15家已披露研究的交付文件待恢复及重新验收，109家等待实际报告。完成研究但暂不估值的结果明确保留空值，不等于持有人模型已可用于投资估值。原始财务期间与各报告资料截止时间分别保留，预约日期不替代实际披露。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -8,6 +8,10 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 燕京啤酒 000729 | [2026Q3](../../companies/CN/000729/reports/2026-Q3.md) | [Python](../../companies/CN/000729/models/2026-Q3.py) | [JSON](../../companies/CN/000729/models/2026-Q3-output.json) |
+| 乖宝宠物 301498 | [2026Q3](../../companies/CN/301498/reports/2026-Q3.md) | [Python](../../companies/CN/301498/models/2026-Q3.py) | [JSON](../../companies/CN/301498/models/2026-Q3-output.json) |
+| 杭州银行 600926 | [2026Q3](../../companies/CN/600926/reports/2026-Q3.md) | [Python](../../companies/CN/600926/models/2026-Q3.py) | [JSON](../../companies/CN/600926/models/2026-Q3-output.json) |
+| 金山办公 688111 | [2026Q3](../../companies/CN/688111/reports/2026-Q3.md) | [Python](../../companies/CN/688111/models/2026-Q3.py) | [JSON](../../companies/CN/688111/models/2026-Q3-output.json) |
 | 中兴通讯 000063 | [2026Q3](../../companies/CN/000063/reports/2026-Q3.md) | [Python](../../companies/CN/000063/models/2026-Q3.py) | [JSON](../../companies/CN/000063/models/2026-Q3-output.json) |
 | 东阿阿胶 000423 | [2026Q3](../../companies/CN/000423/reports/2026-Q3.md) | [Python](../../companies/CN/000423/models/2026-Q3.py) | [JSON](../../companies/CN/000423/models/2026-Q3-output.json) |
 | 丽珠集团 000513 | [2026Q3](../../companies/CN/000513/reports/2026-Q3.md) | [Python](../../companies/CN/000513/models/2026-Q3.py) | [JSON](../../companies/CN/000513/models/2026-Q3-output.json) |
