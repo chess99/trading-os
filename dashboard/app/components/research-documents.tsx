@@ -112,8 +112,11 @@ export function ResearchDocuments({ kind }: { kind: Document["kind"] }) {
       <p>{topic || version ? "可清除筛选后查看现有主题。" : "调整市场或关键词，查看已发布内容。"}</p>
       {(topic || version || query || market !== "all") && <button onClick={() => { setQuery(""); update("", "", type, "all"); }}>查看全部主题</button>}
     </section> : <div className="publication-layout">
-      <aside className="publication-sidebar">{topics.length > 1 && <select className="publication-mobile-topics" aria-label="选择研究主题" value={current.topic} onChange={(e) => update(e.target.value)}>{topics.map((d) => <option key={d.topic} value={d.topic}>{d.title}</option>)}</select>}<nav aria-label="研究主题" className="publication-list">{topics.map((d) => <button key={d.topic} aria-current={d.topic === current.topic ? "true" : undefined} onClick={() => update(d.topic)}><strong>{d.title}</strong><span>{d.publishedOn} · {d.status === "withdrawn" ? "已撤回" : d.type === "report" ? "研究报告" : "指标与方法"}</span><p>{d.summary}</p></button>)}</nav>
-      {outline.length > 3 && <details key={current.id} className="publication-outline"><summary>本文目录</summary><nav aria-label="本文目录">{outline.map((item) => <a key={item.id} href={`#${item.id}`}>{item.title}</a>)}</nav></details>}</aside>
+      <aside className="publication-sidebar">
+        {topics.length > 1 && <select className="publication-mobile-topics" aria-label="选择研究主题" value={current.topic} onChange={(e) => update(e.target.value)}>{topics.map((d) => <option key={d.topic} value={d.topic}>{d.title.split("：")[0]}</option>)}</select>}
+        {outline.length > 3 && <details key={current.id} className="publication-outline"><summary>本文目录</summary><nav aria-label="本文目录">{outline.map((item) => <a key={item.id} href={`#${item.id}`}>{item.title}</a>)}</nav></details>}
+        <nav aria-label="研究主题" className="publication-list">{topics.map((d) => <button key={d.topic} title={d.title} aria-label={d.title} aria-current={d.topic === current.topic ? "true" : undefined} onClick={() => update(d.topic)}><strong>{d.title.split("：")[0]}</strong><span>{d.publishedOn}{d.status === "withdrawn" ? " · 已撤回" : ""}</span></button>)}</nav>
+      </aside>
       <article className="research-document-body" aria-live="polite">
         <header className="publication-meta"><details><summary>{current.type === "report" ? `资料截止 ${current.informationCutoff}` : `指标与方法 · ${current.publishedOn}`} · 范围</summary>
           <p>版本：{current.version} · 适用市场：{current.markets.map((m) => MARKET_LABELS[m as keyof typeof MARKET_LABELS]).join("、")} · 覆盖地域：{current.regions.join("、")}</p></details>
