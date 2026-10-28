@@ -1,6 +1,6 @@
 # 2026Q3研究入口
 
-更新于2026-10-27。本地恢复交付快照含重点池191家公司中的**67家完整研究**；远端已核发布63家，本批新增燕京啤酒、乖宝宠物、杭州银行、金山办公4家待提交并核验。已取得官方Q3全文82家，另15家已披露研究的交付文件待恢复及重新验收，109家等待实际报告。完成研究但暂不估值的结果明确保留空值，不等于持有人模型已可用于投资估值。原始财务期间与各报告资料截止时间分别保留，预约日期不替代实际披露。
+更新于2026-10-27。本提交含重点池191家公司中的**71家完整研究**，本批增加杭叉集团、分众传媒、中国核电、恒瑞医药。已取得官方Q3全文82家，其中11家研究尚未完成交付，109家等待实际报告。完成研究但暂不估值的结果明确保留空值，不等于持有人模型已可用于投资估值。原始财务期间与各报告资料截止分别保留，预约日期不替代实际披露。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -8,6 +8,10 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 恒瑞医药 600276 | [2026Q3](../../companies/CN/600276/reports/2026-Q3.md) | [Python](../../companies/CN/600276/models/2026-Q3.py) | [JSON](../../companies/CN/600276/models/2026-Q3-output.json) |
+| 中国核电 601985 | [2026Q3](../../companies/CN/601985/reports/2026-Q3.md) | [Python](../../companies/CN/601985/models/2026-Q3.py) | [JSON](../../companies/CN/601985/models/2026-Q3-output.json) |
+| 分众传媒 002027 | [2026Q3](../../companies/CN/002027/reports/2026-Q3.md) | [Python](../../companies/CN/002027/models/2026-Q3.py) | [JSON](../../companies/CN/002027/models/2026-Q3-output.json) |
+| 杭叉集团 603298 | [2026Q3](../../companies/CN/603298/reports/2026-Q3.md) | [Python](../../companies/CN/603298/models/2026-Q3.py) | [JSON](../../companies/CN/603298/models/2026-Q3-output.json) |
 | 燕京啤酒 000729 | [2026Q3](../../companies/CN/000729/reports/2026-Q3.md) | [Python](../../companies/CN/000729/models/2026-Q3.py) | [JSON](../../companies/CN/000729/models/2026-Q3-output.json) |
 | 乖宝宠物 301498 | [2026Q3](../../companies/CN/301498/reports/2026-Q3.md) | [Python](../../companies/CN/301498/models/2026-Q3.py) | [JSON](../../companies/CN/301498/models/2026-Q3-output.json) |
 | 杭州银行 600926 | [2026Q3](../../companies/CN/600926/reports/2026-Q3.md) | [Python](../../companies/CN/600926/models/2026-Q3.py) | [JSON](../../companies/CN/600926/models/2026-Q3-output.json) |
