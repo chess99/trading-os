@@ -90,6 +90,10 @@ export function ResearchDocuments({ kind }: { kind: Document["kind"] }) {
     const target = documents?.find((d) => `/${d.sourcePath}` === resolved.pathname);
     return target ? `${target.kind === "industry" ? "/industries" : "/macro"}?topic=${target.topic}&version=${target.version}&view=${target.type}` : undefined;
   }
+  const outline = body.path === path && !body.error ? body.text.split("\n").flatMap((line, index) => {
+    const match = /^##\s+(.+)$/u.exec(line);
+    return match ? [{ id: `section-${index + 1}`, title: match[1] }] : [];
+  }) : [];
   const reportCount = new Set(available.filter((d) => d.type === "report" && d.status === "published").map((d) => d.topic)).size;
   const referenceCount = available.filter((d) => d.type === "reference" && d.status === "published").length;
 
@@ -108,14 +112,15 @@ export function ResearchDocuments({ kind }: { kind: Document["kind"] }) {
       <p>{topic || version ? "可清除筛选后查看现有主题。" : "调整市场或关键词，查看已发布内容。"}</p>
       {(topic || version || query || market !== "all") && <button onClick={() => { setQuery(""); update("", "", type, "all"); }}>查看全部主题</button>}
     </section> : <div className="publication-layout">
-      <nav aria-label="研究主题" className="publication-list">{topics.map((d) => <button key={d.topic} aria-current={d.topic === current.topic ? "true" : undefined} onClick={() => update(d.topic)}><strong>{d.title}</strong><span>{d.publishedOn} · {d.status === "withdrawn" ? "已撤回" : d.type === "report" ? "研究报告" : "指标与方法"}</span><p>{d.summary}</p></button>)}</nav>
+      <aside className="publication-sidebar">{topics.length > 1 && <select className="publication-mobile-topics" aria-label="选择研究主题" value={current.topic} onChange={(e) => update(e.target.value)}>{topics.map((d) => <option key={d.topic} value={d.topic}>{d.title}</option>)}</select>}<nav aria-label="研究主题" className="publication-list">{topics.map((d) => <button key={d.topic} aria-current={d.topic === current.topic ? "true" : undefined} onClick={() => update(d.topic)}><strong>{d.title}</strong><span>{d.publishedOn} · {d.status === "withdrawn" ? "已撤回" : d.type === "report" ? "研究报告" : "指标与方法"}</span><p>{d.summary}</p></button>)}</nav>
+      {outline.length > 3 && <details key={current.id} className="publication-outline"><summary>本文目录</summary><nav aria-label="本文目录">{outline.map((item) => <a key={item.id} href={`#${item.id}`}>{item.title}</a>)}</nav></details>}</aside>
       <article className="research-document-body" aria-live="polite">
-        <header className="publication-meta"><span>{current.type === "report" ? "研究报告" : "指标与方法"} · {current.version}{current.informationCutoff ? ` · 资料截止 ${current.informationCutoff}` : ""}</span>
-          <p>适用市场：{current.markets.map((m) => MARKET_LABELS[m as keyof typeof MARKET_LABELS]).join("、")} · 覆盖地域：{current.regions.join("、")}</p>
+        <header className="publication-meta"><details><summary>{current.type === "report" ? `资料截止 ${current.informationCutoff}` : `指标与方法 · ${current.publishedOn}`} · 范围</summary>
+          <p>版本：{current.version} · 适用市场：{current.markets.map((m) => MARKET_LABELS[m as keyof typeof MARKET_LABELS]).join("、")} · 覆盖地域：{current.regions.join("、")}</p></details>
           {versions.length > 1 && <label>报告版本<select aria-label="报告版本" value={current.version} onChange={(e) => update(current.topic, e.target.value)}>{versions.map((d) => <option key={d.id} value={d.version}>{d.version}{d.status === "withdrawn" ? " · 已撤回" : ""}</option>)}</select></label>}
         </header>
         {current.status === "withdrawn" && <p role="alert" className="publication-withdrawn">本报告已撤回：{current.withdrawalReason}</p>}
-        {body.path !== path ? <p>正在读取正文…</p> : body.error ? <p role="alert">{body.error}</p> : <div className="markdown-document"><ReactMarkdown remarkPlugins={[remarkGfm]} components={{a: ({href, children}) => { const link = documentLink(href); return link ? <a href={link}>{children}</a> : <span>{children}</span>; }}}>{body.text}</ReactMarkdown></div>}
+        {body.path !== path ? <p>正在读取正文…</p> : body.error ? <p role="alert">{body.error}</p> : <div className="markdown-document"><ReactMarkdown remarkPlugins={[remarkGfm]} components={{h2: ({node, children}) => <h2 id={`section-${node?.position?.start.line}`}>{children}</h2>, a: ({href, children}) => { const link = documentLink(href); return link ? <a href={link}>{children}</a> : <span>{children}</span>; }}}>{body.text}</ReactMarkdown></div>}
       </article>
     </div>}
   </main>;

@@ -96,6 +96,16 @@ try {
   await page.getByLabel("适用市场").selectOption("HK");
   if (publications.some((d) => d.kind === "industry" && d.type === "report" && d.markets.includes("HK"))) await page.locator(".research-document-body h1").waitFor();
   else { await page.getByRole("heading", { name: "暂无行业研究报告", exact: true }).waitFor(); assert.equal(await page.locator(".markdown-document").count(),0); }
+  if (await page.locator(".publication-outline").count()) {
+    await page.locator(".publication-outline summary").click();
+    const outlineLinks = page.getByRole("navigation", { name: "本文目录", exact:true }).locator("a");
+    assert.ok(await outlineLinks.count() > 3);
+    const anchor = await outlineLinks.first().getAttribute("href");
+    assert.equal(await page.locator(anchor).count(),1);
+    await outlineLinks.first().click();
+    assert.equal(new URL(page.url()).hash,anchor);
+    await page.evaluate(() => window.scrollTo({top:0,behavior:"instant"}));
+  }
   await page.screenshot({ path: new URL("industry-library.png", output).pathname });
   await page.goto(`${baseURL}/macro`);
   await page.getByLabel("适用市场").selectOption("US");
