@@ -96,7 +96,39 @@ try {
   await page.getByLabel("适用市场").selectOption("HK");
   if (publications.some((d) => d.kind === "industry" && d.type === "report" && d.markets.includes("HK"))) await page.locator(".research-document-body h1").waitFor();
   else { await page.getByRole("heading", { name: "暂无行业研究报告", exact: true }).waitFor(); assert.equal(await page.locator(".markdown-document").count(),0); }
+  if (await page.locator(".publication-outline").count()) {
+    await page.locator(".publication-outline summary").click();
+    const outlineLinks = page.getByRole("navigation", { name: "本文目录", exact:true }).locator("a");
+    assert.ok(await outlineLinks.count() > 3);
+    const anchor = await outlineLinks.first().getAttribute("href");
+    assert.equal(await page.locator(anchor).count(),1);
+    await outlineLinks.first().click();
+    assert.equal(new URL(page.url()).hash,anchor);
+    await page.evaluate(() => window.scrollTo({top:0,behavior:"instant"}));
+  }
   await page.screenshot({ path: new URL("industry-library.png", output).pathname });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(`${baseURL}/industries`);
+  const mobileTopics = page.getByLabel("选择研究主题", { exact: true });
+  if (new Set(publications.filter((d) => d.kind === "industry" && d.type === "report").map((d) => d.topic)).size > 1) {
+    await mobileTopics.waitFor();
+    const lastTopic = mobileTopics.locator("option").last();
+    const topicId = await lastTopic.getAttribute("value");
+    const topicLabel = await lastTopic.innerText();
+    await mobileTopics.selectOption(topicId);
+    const heading = page.locator(".research-document-body h1");
+    await heading.filter({ hasText: topicLabel }).waitFor();
+    assert.ok((await heading.boundingBox()).y < 700, "移动端应在首屏进入报告标题，无需翻过行业卡片");
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false);
+    await page.getByLabel("搜索研究主题").fill(topicLabel);
+    await heading.filter({ hasText: topicLabel }).waitFor();
+    assert.equal(await page.locator(".publication-list button").count(), 1);
+    await page.getByLabel("搜索研究主题").fill("");
+    await mobileTopics.waitFor();
+    await page.screenshot({ path: new URL("industry-mobile.png", output).pathname });
+    passed.push("多主题行业目录支持移动选择与搜索，首屏可见正文标题且无横向溢出");
+  }
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(`${baseURL}/macro`);
   await page.getByLabel("适用市场").selectOption("US");
   await page.locator(".research-document-body .markdown-document h1").waitFor();
