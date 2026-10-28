@@ -1,6 +1,6 @@
 # 2026Q3研究入口
 
-更新于2026-10-27。本提交含重点池191家公司中的**71家完整研究**，本批增加杭叉集团、分众传媒、中国核电、恒瑞医药。已取得官方Q3全文82家，其中11家研究尚未完成交付，109家等待实际报告。完成研究但暂不估值的结果明确保留空值，不等于持有人模型已可用于投资估值。原始财务期间与各报告资料截止分别保留，预约日期不替代实际披露。
+更新于2026-10-27。本提交含重点池191家公司中的**77家完整研究**，本批增加双汇发展、新和成、新产业、艾力斯、健帆生物、宁沪高速。已取得官方Q3全文82家，其中5家研究尚未完成交付，109家等待实际报告。完成研究但暂不估值的结果明确保留空值，不等于持有人模型已可用于投资估值。原始财务期间与各报告资料截止分别保留，预约日期不替代实际披露。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -8,6 +8,12 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 宁沪高速 600377 | [2026Q3](../../companies/CN/600377/reports/2026-Q3.md) | [Python](../../companies/CN/600377/models/2026-Q3.py) | [JSON](../../companies/CN/600377/models/2026-Q3-output.json) |
+| 健帆生物 300529 | [2026Q3](../../companies/CN/300529/reports/2026-Q3.md) | [Python](../../companies/CN/300529/models/2026-Q3.py) | [JSON](../../companies/CN/300529/models/2026-Q3-output.json) |
+| 艾力斯 688578 | [2026Q3](../../companies/CN/688578/reports/2026-Q3.md) | [Python](../../companies/CN/688578/models/2026-Q3.py) | [JSON](../../companies/CN/688578/models/2026-Q3-output.json) |
+| 新产业 300832 | [2026Q3](../../companies/CN/300832/reports/2026-Q3.md) | [Python](../../companies/CN/300832/models/2026-Q3.py) | [JSON](../../companies/CN/300832/models/2026-Q3-output.json) |
+| 新和成 002001 | [2026Q3](../../companies/CN/002001/reports/2026-Q3.md) | [Python](../../companies/CN/002001/models/2026-Q3.py) | [JSON](../../companies/CN/002001/models/2026-Q3-output.json) |
+| 双汇发展 000895 | [2026Q3](../../companies/CN/000895/reports/2026-Q3.md) | [Python](../../companies/CN/000895/models/2026-Q3.py) | [JSON](../../companies/CN/000895/models/2026-Q3-output.json) |
 | 恒瑞医药 600276 | [2026Q3](../../companies/CN/600276/reports/2026-Q3.md) | [Python](../../companies/CN/600276/models/2026-Q3.py) | [JSON](../../companies/CN/600276/models/2026-Q3-output.json) |
 | 中国核电 601985 | [2026Q3](../../companies/CN/601985/reports/2026-Q3.md) | [Python](../../companies/CN/601985/models/2026-Q3.py) | [JSON](../../companies/CN/601985/models/2026-Q3-output.json) |
 | 分众传媒 002027 | [2026Q3](../../companies/CN/002027/reports/2026-Q3.md) | [Python](../../companies/CN/002027/models/2026-Q3.py) | [JSON](../../companies/CN/002027/models/2026-Q3-output.json) |
