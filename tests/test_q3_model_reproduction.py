@@ -1,4 +1,5 @@
 """隔离重跑正式Q3模型；公司模型内的手算特例随正式计算链执行。"""
+
 import json
 import shutil
 import subprocess
@@ -23,8 +24,12 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
     # Bounded transport budgets retain every numerical and byte assertion.
     timeout = {"002847": 600, "600309": 1200}.get(model.parent.parent.name, 240)
     result = subprocess.run(
-        [sys.executable, str(copied), *args], cwd=tmp_path.parent,
-        capture_output=True, text=True, timeout=timeout, check=False,
+        [sys.executable, str(copied), *args],
+        cwd=tmp_path.parent,
+        capture_output=True,
+        text=True,
+        timeout=timeout,
+        check=False,
     )
     assert result.returncode == 0, result.stderr
     output = "2026-Q3-output.json"
@@ -48,13 +53,63 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
     # Corrected single-file producers promise exact deterministic main bytes.
     migrated = json.loads((ROOT / "tests/q3-final-test-migration.json").read_text())
     restored_codes = {
-        "600276", "603298", "688111", "000729", "000858", "000895",
-        "002027", "301498", "603816", "300529", "300832", "688578",
-        "002001", "002463", "300596", "301696", "603197", "688300",
-        "600377", "600926", "601985", "603568",
+        "600276",
+        "603298",
+        "688111",
+        "000729",
+        "000858",
+        "000895",
+        "002027",
+        "301498",
+        "603816",
+        "300529",
+        "300832",
+        "688578",
+        "002001",
+        "002463",
+        "300596",
+        "301696",
+        "603197",
+        "688300",
+        "600377",
+        "600926",
+        "601985",
+        "603568",
+    }
+    newly_disclosed_codes = {
+        "300487",
+        "600761",
+        "688271",
+        "688581",
+        "601009",
+        "300573",
+        "002595",
+        "003816",
+        "600585",
+        "601799",
+        "600809",
+        "601601",
+        "601318",
+        "300408",
+        "603855",
+        "002050",
+        "600600",
+        "603501",
+        "601091",
+        "603345",
+        "002422",
+        "300705",
+        "300394",
+        "300896",
+        "603606",
+        "688617",
+        "603871",
+        "601838",
+        "600886",
+        "600406",
     }
     migrated_codes = {entry["code"] for entry in migrated["companies"]}
-    if model.parent.parent.name in migrated_codes | restored_codes:
+    if model.parent.parent.name in migrated_codes | restored_codes | newly_disclosed_codes:
         assert generated.read_bytes() == (model.parent / output).read_bytes()
 
     # Checkers consume only files recreated in the isolated consumer directory.
@@ -64,7 +119,11 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
         check_copy = tmp_path / verification.name
         shutil.copyfile(verification, check_copy)
         checked = subprocess.run(
-            [sys.executable, str(check_copy)], cwd=tmp_path.parent,
-            capture_output=True, text=True, timeout=240, check=False,
+            [sys.executable, str(check_copy)],
+            cwd=tmp_path.parent,
+            capture_output=True,
+            text=True,
+            timeout=240,
+            check=False,
         )
         assert checked.returncode == 0, checked.stderr
