@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { xzManifestEntry, verifyXzBytes } from "../scripts/lib/model-xz.mjs";
 import { researchResourceLink } from "../app/lib/report-reference.mjs";
 
 // Discover completed reports, not a frozen pool or a list of expected future reports.
@@ -44,7 +45,17 @@ test("every completed 2026 Q3 report exposes its own reproducible model artifact
       const original = suffix === ".py" ? model : await readFile(new URL(`../../research/companies/CN/${company.ticker}/models/${filename}`, import.meta.url));
       const exported = await readFile(new URL(`../public${path}`, import.meta.url));
       assert.equal(digest(exported), digest(original), `${company.ticker}: wrong company/period/content at ${path}`);
-      if (suffix === "-output.json") assert.doesNotThrow(() => JSON.parse(exported));
+      if (suffix === "-output.json") {
+        const transport = JSON.parse(exported);
+        if (transport.schema === "trading_os_lossless_json_xz_v1") {
+          xzManifestEntry(transport, "2026-Q3");
+          assert.ok(links.includes(`/data/models/${company.ticker}/${transport.file}`), "complete XZ output must have a reader download link");
+          const xz = await readFile(new URL(`../public/data/models/${company.ticker}/${transport.file}`, import.meta.url));
+          const sourceXz = await readFile(new URL(`../../research/companies/CN/${company.ticker}/models/${transport.file}`, import.meta.url));
+          assert.deepEqual(xz, sourceXz);
+          verifyXzBytes(xz, transport);
+        }
+      }
       checked++;
     }
   }

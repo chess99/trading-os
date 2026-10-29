@@ -1,6 +1,8 @@
 """隔离重跑正式Q3模型；公司模型内的手算特例随正式计算链执行。"""
 
+import hashlib
 import json
+import lzma
 import shutil
 import subprocess
 import sys
@@ -23,24 +25,82 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
     # Serial measured consumer runtimes: 248.480s and 525.087s respectively.
     # Bounded transport budgets retain every numerical and byte assertion.
     timeout = {"002847": 600, "600309": 1200}.get(model.parent.parent.name, 240)
-    result = subprocess.run(
-        [sys.executable, str(copied), *args],
-        cwd=tmp_path.parent,
-        capture_output=True,
-        text=True,
-        timeout=timeout,
-        check=False,
-    )
+    # Keep complete stdout on disk, not in the pytest parent's heap while a
+    # separate checker also loads a large complete annual output.
+    stdout_path = tmp_path / ".producer-stdout"
+    with stdout_path.open("wb") as stdout:
+        result = subprocess.run(
+            [sys.executable, str(copied), *args],
+            cwd=tmp_path.parent,
+            stdout=stdout,
+            stderr=subprocess.PIPE,
+            timeout=timeout,
+            check=False,
+        )
     assert result.returncode == 0, result.stderr
     output = "2026-Q3-output.json"
-    expected = json.loads((model.parent / output).read_text())
-    # Earlier single-file models emit their complete JSON to stdout; newer ones
-    # save beside __file__. Both are supported reproducible public interfaces.
+    expected_path = model.parent / output
+    # Transport descriptors are small and have a closed publication schema;
+    # ordinary full JSON is parsed in the isolated semantic comparator below.
+    transport = (
+        json.loads(expected_path.read_bytes())
+        if expected_path.stat().st_size <= 4096
+        else None
+    )
+    if isinstance(transport, dict) and transport.get("schema") == "trading_os_lossless_json_xz_v1":
+        assert transport["artifact_kind"] == "transport_manifest_not_model_result"
+        assert transport["file"] == "2026-Q3-output.json.xz"
+        assert 0 < transport["compressed_bytes"] <= 100 * 1024**2
+        assert 0 < transport["expanded_bytes"] <= 512 * 1024**2
+        compressed_path = model.parent / transport["file"]
+        assert compressed_path.is_file() and not compressed_path.is_symlink()
+        expected_path = tmp_path / ".expected-full-json"
+        encoded_hash, decoded_hash = hashlib.sha256(), hashlib.sha256()
+        encoded_size = decoded_size = 0
+        decoder = lzma.LZMADecompressor(format=lzma.FORMAT_XZ, memlimit=256 * 1024**2)
+        with compressed_path.open("rb") as encoded, expected_path.open("wb") as decoded:
+            while chunk := encoded.read(64 * 1024):
+                assert not decoder.eof
+                encoded_size += len(chunk)
+                assert encoded_size <= transport["compressed_bytes"]
+                encoded_hash.update(chunk)
+                data = chunk
+                while True:
+                    part = decoder.decompress(data, max_length=1024 * 1024)
+                    data = b""
+                    decoded_size += len(part)
+                    assert decoded_size <= transport["expanded_bytes"]
+                    decoded_hash.update(part)
+                    decoded.write(part)
+                    if decoder.needs_input or decoder.eof:
+                        break
+                assert not decoder.unused_data
+        assert decoder.eof and not decoder.unused_data
+        assert encoded_size == transport["compressed_bytes"]
+        assert encoded_hash.hexdigest() == transport["compressed_sha256"]
+        assert decoded_size == transport["expanded_bytes"]
+        assert decoded_hash.hexdigest() == transport["expanded_sha256"]
+        del decoder
+    # Both public producer interfaces retain exact binary stdout/file bytes.
     generated = tmp_path / output
     if not generated.exists():
-        generated.write_text(result.stdout)
-    actual = json.loads(generated.read_text())
-    assert actual == expected
+        stdout_path.replace(generated)
+    else:
+        stdout_path.unlink()
+    # Preserve the complete JSON semantic equality assertion, in a child which
+    # exits before any independent checker starts. No annual data are omitted.
+    semantic = subprocess.run(
+        [sys.executable, "-I", "-S", "-c",
+         "import json,sys; "
+         "a=json.load(open(sys.argv[1],encoding='utf-8')); "
+         "b=json.load(open(sys.argv[2],encoding='utf-8')); assert a==b",
+         str(generated), str(expected_path)],
+        cwd=tmp_path.parent,
+        capture_output=True,
+        timeout=240,
+        check=False,
+    )
+    assert semantic.returncode == 0, semantic.stderr
 
     # Every published sibling case is part of the public transport contract.
     # In particular 300033 has 54 case JSON files, not merely its small index.
@@ -77,6 +137,8 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
         "603568",
     }
     newly_disclosed_codes = {
+        "920982",
+        "300979",
         "300487",
         "600761",
         "688271",
@@ -110,7 +172,14 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
     }
     migrated_codes = {entry["code"] for entry in migrated["companies"]}
     if model.parent.parent.name in migrated_codes | restored_codes | newly_disclosed_codes:
-        assert generated.read_bytes() == (model.parent / output).read_bytes()
+        assert generated.stat().st_size == expected_path.stat().st_size
+        with generated.open("rb") as actual, expected_path.open("rb") as expected:
+            while block := actual.read(1024 * 1024):
+                assert block == expected.read(len(block))
+            assert expected.read(1) == b""
+    # The full expected file is no longer needed after semantic/byte checks.
+    if expected_path.parent == tmp_path:
+        expected_path.unlink()
 
     # Checkers consume only files recreated in the isolated consumer directory.
     verifications = set(model.parent.glob("2026-Q3*verification.py"))
