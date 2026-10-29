@@ -1,6 +1,6 @@
 # 2026Q3研究入口
 
-更新于2026-10-29。本提交含重点池191家公司中的**115家完整研究**，本批增加惠泰医疗V3、锦波生物V2。2026-10-29 00:00正式披露核查已确认115家全文，已正式披露的115家公司均已完成本地研究与模型工程交付准备，76家继续等待实际披露；尚有远端提交审批，不把本地准备记作PR完成。惠泰全部年度输出使用无损XZ，锦波为普通完整JSON；此前五粮液资本行动窄修与四个暂不估值双null保持。实际远端交付以PR核验为准。
+更新于2026-10-29。重点池191家公司中，已正式披露的**115家完整研究**及配套模型均已进入[PR #1](https://github.com/chess99/trading-os/pull/1)，最近一批为惠泰医疗V3、锦波生物V2。2026-10-29 00:00正式披露核查已确认115家全文；76家继续等待实际披露并核查延期或更正，不因10月30日经过而结束。提交审批已成功，累计交付提交 `fb62951f3d4c8f261f002df5dae060cd9d47eccc` 的117个变更文件已逐项核对远端完整字节、哈希和路径集合。惠泰、锦波全部年度输出均使用无损XZ，展开后的完整JSON不变；此前五粮液资本行动窄修与四个暂不估值双null保持。PR尚未合并，main并行改动未集成，当前API报告 `mergeable=false`，不表示可合并。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -19,15 +19,15 @@
 | 星宇股份 601799 | [2026Q3](../../companies/CN/601799/reports/2026-Q3.md) | [Python](../../companies/CN/601799/models/2026-Q3.py) | [完整输出](../../companies/CN/601799/models/2026-Q3-output.json.xz) |
 | 东方电缆 603606 | [2026Q3](../../companies/CN/603606/reports/2026-Q3.md) | [Python](../../companies/CN/603606/models/2026-Q3.py) | [完整输出](../../companies/CN/603606/models/2026-Q3-output.json.xz) |
 | 豪威集团 603501 | [2026Q3](../../companies/CN/603501/reports/2026-Q3.md) | [Python](../../companies/CN/603501/models/2026-Q3.py) | [完整输出](../../companies/CN/603501/models/2026-Q3-output.json.xz) |
-| 山西汾酒 600809 | [2026Q3](../../companies/CN/600809/reports/2026-Q3.md) | [Python](../../companies/CN/600809/models/2026-Q3.py) | [JSON](../../companies/CN/600809/models/2026-Q3-output.json.xz) |
-| 沈鼓集团 601091 | [2026Q3](../../companies/CN/601091/reports/2026-Q3.md) | [Python](../../companies/CN/601091/models/2026-Q3.py) | [JSON](../../companies/CN/601091/models/2026-Q3-output.json.xz) |
-| 国投电力 600886 | [2026Q3](../../companies/CN/600886/reports/2026-Q3.md) | [Python](../../companies/CN/600886/models/2026-Q3.py) | [JSON](../../companies/CN/600886/models/2026-Q3-output.json.xz) |
-| 海螺水泥 600585 | [2026Q3](../../companies/CN/600585/reports/2026-Q3.md) | [Python](../../companies/CN/600585/models/2026-Q3.py) | [JSON](../../companies/CN/600585/models/2026-Q3-output.json.xz) |
-| 安徽合力 600761 | [2026Q3](../../companies/CN/600761/reports/2026-Q3.md) | [Python](../../companies/CN/600761/models/2026-Q3.py) | [JSON](../../companies/CN/600761/models/2026-Q3-output.json.xz) |
-| 中国太保 601601 | [2026Q3](../../companies/CN/601601/reports/2026-Q3.md) | [Python](../../companies/CN/601601/models/2026-Q3.py) | [JSON](../../companies/CN/601601/models/2026-Q3-output.json.xz) |
-| 国电南瑞 600406 | [2026Q3](../../companies/CN/600406/reports/2026-Q3.md) | [Python](../../companies/CN/600406/models/2026-Q3.py) | [JSON](../../companies/CN/600406/models/2026-Q3-output.json.xz) |
+| 山西汾酒 600809 | [2026Q3](../../companies/CN/600809/reports/2026-Q3.md) | [Python](../../companies/CN/600809/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/600809/models/2026-Q3-output.json.xz) |
+| 沈鼓集团 601091 | [2026Q3](../../companies/CN/601091/reports/2026-Q3.md) | [Python](../../companies/CN/601091/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/601091/models/2026-Q3-output.json.xz) |
+| 国投电力 600886 | [2026Q3](../../companies/CN/600886/reports/2026-Q3.md) | [Python](../../companies/CN/600886/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/600886/models/2026-Q3-output.json.xz) |
+| 海螺水泥 600585 | [2026Q3](../../companies/CN/600585/reports/2026-Q3.md) | [Python](../../companies/CN/600585/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/600585/models/2026-Q3-output.json.xz) |
+| 安徽合力 600761 | [2026Q3](../../companies/CN/600761/reports/2026-Q3.md) | [Python](../../companies/CN/600761/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/600761/models/2026-Q3-output.json.xz) |
+| 中国太保 601601 | [2026Q3](../../companies/CN/601601/reports/2026-Q3.md) | [Python](../../companies/CN/601601/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/601601/models/2026-Q3-output.json.xz) |
+| 国电南瑞 600406 | [2026Q3](../../companies/CN/600406/reports/2026-Q3.md) | [Python](../../companies/CN/600406/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/600406/models/2026-Q3-output.json.xz) |
 | 爱美客 300896 | [2026Q3](../../companies/CN/300896/reports/2026-Q3.md) | [Python](../../companies/CN/300896/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/300896/models/2026-Q3-output.json.xz) |
-| 青岛啤酒 600600 | [2026Q3](../../companies/CN/600600/reports/2026-Q3.md) | [Python](../../companies/CN/600600/models/2026-Q3.py) | [JSON](../../companies/CN/600600/models/2026-Q3-output.json.xz) |
+| 青岛啤酒 600600 | [2026Q3](../../companies/CN/600600/reports/2026-Q3.md) | [Python](../../companies/CN/600600/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/600600/models/2026-Q3-output.json.xz) |
 | 三环集团 300408 | [2026Q3](../../companies/CN/300408/reports/2026-Q3.md) | [Python](../../companies/CN/300408/models/2026-Q3.py) | [JSON](../../companies/CN/300408/models/2026-Q3-output.json) |
 | 科伦药业 002422 | [2026Q3](../../companies/CN/002422/reports/2026-Q3.md) | [Python](../../companies/CN/002422/models/2026-Q3.py) | [JSON](../../companies/CN/002422/models/2026-Q3-output.json) |
 | 蓝晓科技 300487 | [2026Q3](../../companies/CN/300487/reports/2026-Q3.md) | [Python](../../companies/CN/300487/models/2026-Q3.py) | [JSON](../../companies/CN/300487/models/2026-Q3-output.json) |
@@ -178,4 +178,4 @@
 
 ### 完整输出传输适配
 
-本提交从已发布95家基线累计承接至115家研究，以无损XZ解决提交请求体大小上限。涉及14份普通JSON的传输转换及星宇XZ的无损重压；模型源码和展开后的完整年度JSON逐字不变，旧独立核验经济断言完整保留。所有压缩与展开大小/SHA均在各公司传输说明中，说明本身不含估值结果。此前各批工程验收和父链证据保留；此次另做累计工程验收，不改经济研究或增加披露公司。76家未披露继续等待，远端完成以PR提交核验为准。
+本提交从已发布95家基线累计承接至115家研究，以无损XZ解决提交请求体大小上限。涉及14份普通JSON的传输转换及星宇XZ的无损重压；模型源码和展开后的完整年度JSON逐字不变，旧独立核验经济断言完整保留。所有压缩与展开大小/SHA均在各公司传输说明中，说明本身不含估值结果。此前各批工程验收和父链证据保留；此次另做累计工程验收，不改经济研究或增加披露公司。76家未披露继续等待；累计交付已进入PR #1并完成上述远端核验。
