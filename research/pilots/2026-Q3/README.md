@@ -1,6 +1,6 @@
 # 2026Q3研究入口
 
-更新于2026-10-28。本提交含重点池191家公司中的**83家完整研究**，本批增加爱博医疗。已取得官方Q3全文83家，这83家公司均已完成研究交付，108家等待实际报告。完成研究但暂不估值的结果明确保留空值，不等于持有人模型已可用于投资估值。原始财务期间与各报告资料截止分别保留，预约日期不替代实际披露。
+更新于2026-10-28。本提交含重点池191家公司中的**86家完整研究**，本批增加豪迈科技、南京银行、三花智控。已核官方Q3全文113家，其中27家尚待完整研究与交付，78家等待实际披露。完成但暂不估值的结果继续保留空值；预约日期不替代实际披露。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -8,6 +8,9 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 豪迈科技 002595 | [2026Q3](../../companies/CN/002595/reports/2026-Q3.md) | [Python](../../companies/CN/002595/models/2026-Q3.py) | [JSON](../../companies/CN/002595/models/2026-Q3-output.json) |
+| 南京银行 601009 | [2026Q3](../../companies/CN/601009/reports/2026-Q3.md) | [Python](../../companies/CN/601009/models/2026-Q3.py) | [JSON](../../companies/CN/601009/models/2026-Q3-output.json) |
+| 三花智控 002050 | [2026Q3](../../companies/CN/002050/reports/2026-Q3.md) | [Python](../../companies/CN/002050/models/2026-Q3.py) | [JSON](../../companies/CN/002050/models/2026-Q3-output.json) |
 | 爱博医疗 688050 | [2026Q3](../../companies/CN/688050/reports/2026-Q3.md) | [Python](../../companies/CN/688050/models/2026-Q3.py) | [JSON](../../companies/CN/688050/models/2026-Q3-output.json) |
 | 三瑞智能 301696 | [2026Q3](../../companies/CN/301696/reports/2026-Q3.md) | [Python](../../companies/CN/301696/models/2026-Q3.py) | [JSON](../../companies/CN/301696/models/2026-Q3-output.json) |
 | 伟明环保 603568 | [2026Q3](../../companies/CN/603568/reports/2026-Q3.md) | [Python](../../companies/CN/603568/models/2026-Q3.py) | [JSON](../../companies/CN/603568/models/2026-Q3-output.json) |
