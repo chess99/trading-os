@@ -9,7 +9,7 @@ export function referencedReport(reports, version) {
 
 // A closed artifact vocabulary, not a general repository-file endpoint.
 export function modelArtifactName(filename, period) {
-  const match = /^((?:20\d{2})-(?:FY|Q1|H1|Q3))(\.py|-output\.json|-case-[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*\.json|-sources-assumptions\.md|-independent-recompute\.py)$/u.exec(filename);
+  const match = /^((?:20\d{2})-(?:FY|Q1|H1|Q3))(\.py|-output\.json|-output\.json\.xz|-case-[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*\.json|-sources-assumptions\.md|-independent-recompute\.py)$/u.exec(filename);
   return Boolean(match && (!period || match[1] === period));
 }
 

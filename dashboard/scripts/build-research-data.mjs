@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { loadStandards, reportMetadata, displayEligibility } from "./lib/research-standards.mjs";
 import { currentResults, progressCounts } from "../app/lib/display-policy.mjs";
 
+import { xzManifestEntry, verifyXzBytes } from "./lib/model-xz.mjs";
 import { modelArtifactName, researchResourceLink } from "../app/lib/report-reference.mjs";
 
 const dashboardRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -56,6 +57,7 @@ async function collectReports(root, output, ticker, policy, state) {
     const pending = [...names.keys()].sort(artifactOrder);
     const exported = new Set();
     const expectedFiles = new Map();
+    const xzManifests = new Map();
     const canonicalModelDirectory = join(await realpath(root), "research/companies/CN", ticker, "models");
     const modelDestination = join(output, "models", ticker);
     assertInside(output, modelDestination);
@@ -64,6 +66,7 @@ async function collectReports(root, output, ticker, policy, state) {
       if (exported.has(modelName)) continue;
       if (!modelArtifactName(modelName, period)) throw new Error(`Unsafe model artifact: ${modelName}`);
       if (modelName.startsWith(`${period}-case-`) && !expectedFiles.has(modelName)) throw new Error(`Case artifact is absent from its split manifest: ${modelName}`);
+      if (modelName.endsWith("-output.json.xz") && !xzManifests.has(modelName)) throw new Error(`XZ artifact is absent from its transport manifest: ${modelName}`);
       const modelSource = join(root, "research/companies/CN", ticker, "models", modelName);
       let modelBody;
       try {
@@ -80,12 +83,21 @@ async function collectReports(root, output, ticker, policy, state) {
           || createHash("sha256").update(modelBody).digest("hex") !== expected.file_sha256)) {
         throw new Error(`Split model artifact does not match manifest: ${modelName}`);
       }
+      if (xzManifests.has(modelName)) verifyXzBytes(modelBody, xzManifests.get(modelName));
       await mkdir(modelDestination, { recursive: true });
       await writeFile(join(modelDestination, modelName), modelBody);
       exported.add(modelName);
       if (modelName === `${period}-output.json`) {
         let manifest;
         try { manifest = JSON.parse(modelBody); } catch { /* Legacy bytes remain downloadable. */ }
+        if (manifest?.schema === "trading_os_lossless_json_xz_v1") {
+          const entry = xzManifestEntry(manifest, period);
+          names.set(entry.file, true);
+          xzManifests.set(entry.file, manifest);
+          expectedFiles.set(entry.file, { bytes: entry.compressed_bytes, file_sha256: entry.compressed_sha256 });
+          pending.push(entry.file);
+          pending.sort(artifactOrder);
+        }
         if (manifest?.schema === "cn300033_complete_case_manifest_v1") {
           if (!manifest.case_files || typeof manifest.case_files !== "object" || Array.isArray(manifest.case_files)) {
             throw new Error("Invalid split model manifest");

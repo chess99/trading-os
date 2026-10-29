@@ -5,16 +5,16 @@ from pathlib import Path
 P=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('valuation',P/'2026-Q3.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 
-INDEPENDENT_FACTS={'shares_issued': 3881608005, 'treasury_shares': 16127753, 'cash_equivalents': 108.63124653495, 'monetary': 111.72980995956, 'old_dividends_payable': 2.12458530952, 'nci_book': 2.5198060925, 'other_current_liability': 23.76726500238, 'reg_goods_latest_H1': 4.5069221677, 'parent_cash_H1': 56.97642199697, 'parent_retained_H1': 40.95815603573, 'parent_reserve': 20.271654476, 'parent_registered_capital': 3.881608005, 'parent_receivable_dividend_H1': 0.53424809295, 'sales_registered_capital': 0.2, 'sales_ownership': 0.95, 'sales_profit_H1': 5.00338154234}
-INDEPENDENT_PARAMETERS={'volume': [23000, 24300, 25600, 26700, 27500], 'realization': [1.4, 1.4, 1.41, 1.42, 1.42], 'other_wine': [7.0, 7.2, 7.4, 7.7, 7.9], 'non_wine': [3.0, 3.0, 3.05, 3.1, 3.1], 'gm_core': [0.865, 0.865, 0.87, 0.87, 0.87], 'gm_other': [0.59, 0.6, 0.6, 0.61, 0.61], 'gm_non': 0.1, 'selling': [0.205, 0.2, 0.195, 0.19, 0.185], 'admin': [0.055, 0.054, 0.053, 0.052, 0.052], 'rd': 0.008, 'excise': 0.148, 'tax': 0.25, 'common_share': 0.974, 'capex': [2.4, 2.4, 2.3, 2.2, 2.0], 'da': [1.1, 1.15, 1.2, 1.25, 1.3], 'nwc': [4.7, 4.9, 5.1, 5.3, 5.5], 'opening_nwc': 4.5, 'required_cash': [15.0, 15.3, 15.6, 15.9, 16.2], 'opening_required_cash': 15.0, 'reg_unwind': [0.12, 0.2, 0.25, 0.23, 0.2], 'reg_asset_haircut': 0.0, 'payout': [0.75, 0.75, 0.75, 0.75, 0.75], 'minimum_dividend': [20.0, 0.0, 0.0, 0.0, 0.0], 'buyback_cash': [6.79928095847, 0.0, 0.0, 0.0, 0.0], 'buyback_retired': [0.04502536890583405, 0.0, 0.0, 0.0, 0.0], 'sales_profit_fraction': 0.56, 'upstream_fraction': 0.65, 'upstream_lag': 1, 'parent_open_cash': 45.0, 'parent_open_retained': 40.5, 'parent_floor': 5.0, 'sales_reserve_budget_start': 0.0, 'parent_internal_funding': [0.6, 0.6, 0.6, 0.6, 0.6], 'parent_extra_loss': [0.0, 0.0, 0.0, 0.0, 0.0], 'parent_admin': 0.3, 'lease_cash': [0.32, 0.32, 0.32, 0.32, 0.32], 'opening_net_dta': 7.27383302850504, 'dta_release_budget': [1.2, 1.2, 1.2, 1.2, 1.2], 'cash_loss': [0.0, 0.0, 0.0, 0.0, 0.0], 'extra_group_capex': [0.0, 0.0, 0.0, 0.0, 0.0], 'parent_dividend_receivable_open': 0.53424809295, 'minority_cash_budget': 2.5, 'associate_open': 2.25, 'cash_yield': 0.012, 'associate_yield': 0.04, 'term_asset_maturity_year': 3, 'r': 0.09, 'g': 0.015, 'g6': 0.03, 'roic': 0.18, 'release': 0.125, 'other_access_start_year': 6, 'other_upstream_fraction': 0.65, 'transfer_friction': 0.02, 'equity_issuance': 0.0, 'new_debt': 0.0, 'financial_loss_parent_share': 0.5}
+INDEPENDENT_FACTS={'shares_issued': 3881608005, 'treasury_shares': 21753438, 'post_q3_buyback_cash': 0.40001113095, 'cash_equivalents': 108.63124653495, 'monetary': 111.72980995956, 'old_dividends_payable': 2.12458530952, 'nci_book': 2.5198060925, 'other_current_liability': 23.76726500238, 'reg_goods_latest_H1': 4.5069221677, 'parent_cash_H1': 56.97642199697, 'parent_retained_H1': 40.95815603573, 'parent_reserve': 20.271654476, 'parent_registered_capital': 3.881608005, 'parent_receivable_dividend_H1': 0.53424809295, 'sales_registered_capital': 0.2, 'sales_ownership': 0.95, 'sales_profit_H1': 5.00338154234}
+INDEPENDENT_PARAMETERS={'volume': [23000, 24300, 25600, 26700, 27500], 'realization': [1.4, 1.4, 1.41, 1.42, 1.42], 'other_wine': [7.0, 7.2, 7.4, 7.7, 7.9], 'non_wine': [3.0, 3.0, 3.05, 3.1, 3.1], 'gm_core': [0.865, 0.865, 0.87, 0.87, 0.87], 'gm_other': [0.59, 0.6, 0.6, 0.61, 0.61], 'gm_non': 0.1, 'selling': [0.205, 0.2, 0.195, 0.19, 0.185], 'admin': [0.055, 0.054, 0.053, 0.052, 0.052], 'rd': 0.008, 'excise': 0.148, 'tax': 0.25, 'common_share': 0.974, 'capex': [2.4, 2.4, 2.3, 2.2, 2.0], 'da': [1.1, 1.15, 1.2, 1.25, 1.3], 'nwc': [4.7, 4.9, 5.1, 5.3, 5.5], 'opening_nwc': 4.5, 'required_cash': [15.0, 15.3, 15.6, 15.9, 16.2], 'opening_required_cash': 15.0, 'reg_unwind': [0.12, 0.2, 0.25, 0.23, 0.2], 'reg_asset_haircut': 0.0, 'payout': [0.75, 0.75, 0.75, 0.75, 0.75], 'minimum_dividend': [20.0, 0.0, 0.0, 0.0, 0.0], 'buyback_cash': [6.39926982752, 0.0, 0.0, 0.0, 0.0], 'buyback_retired': [0.042376463992583276, 0.0, 0.0, 0.0, 0.0], 'sales_profit_fraction': 0.56, 'upstream_fraction': 0.65, 'upstream_lag': 1, 'parent_open_cash': 45.0, 'parent_open_retained': 40.5, 'parent_floor': 5.0, 'sales_reserve_budget_start': 0.0, 'parent_internal_funding': [0.6, 0.6, 0.6, 0.6, 0.6], 'parent_extra_loss': [0.0, 0.0, 0.0, 0.0, 0.0], 'parent_admin': 0.3, 'lease_cash': [0.32, 0.32, 0.32, 0.32, 0.32], 'opening_net_dta': 7.27383302850504, 'dta_release_budget': [1.2, 1.2, 1.2, 1.2, 1.2], 'cash_loss': [0.0, 0.0, 0.0, 0.0, 0.0], 'extra_group_capex': [0.0, 0.0, 0.0, 0.0, 0.0], 'parent_dividend_receivable_open': 0.53424809295, 'minority_cash_budget': 2.5, 'associate_open': 2.25, 'cash_yield': 0.012, 'associate_yield': 0.04, 'term_asset_maturity_year': 3, 'r': 0.09, 'g': 0.015, 'g6': 0.03, 'roic': 0.18, 'release': 0.125, 'other_access_start_year': 6, 'other_upstream_fraction': 0.65, 'transfer_friction': 0.02, 'equity_issuance': 0.0, 'new_debt': 0.0, 'financial_loss_parent_share': 0.5}
 
 def close(a,b):assert math.isclose(a,b,rel_tol=1e-10,abs_tol=1e-9),(a,b)
 def independently_recalculate(p):
     # Separate implementation from parameters, not from official output rows.
-    f=INDEPENDENT_FACTS;c=p['common_share'];n=(3881608005-16127753)/1e9; C=f['cash_equivalents']-f['old_dividends_payable']-p['minority_cash_budget']
+    f=INDEPENDENT_FACTS;c=p['common_share'];n=(3881608005-21753438)/1e9; C=f['cash_equivalents']-f['old_dividends_payable']-p['minority_cash_budget']-f['post_q3_buyback_cash']
     T=(f['monetary']-f['cash_equivalents'])*c;A=p['associate_open'];N=p['opening_nwc']
     L=(f['other_current_liability']-f['reg_goods_latest_H1']*(1-p['reg_asset_haircut']))*c;L0=L
-    taxasset=p['opening_net_dta'];PC=p['parent_open_cash'];R=p['parent_open_retained'];SR=0.;SF=p['sales_reserve_budget_start'];Q=[]; ds=[];last=None; O=0.
+    taxasset=p['opening_net_dta'];PC=p['parent_open_cash']-f['post_q3_buyback_cash'];R=p['parent_open_retained'];SR=0.;SF=p['sales_reserve_budget_start'];Q=[]; ds=[];last=None; O=0.
     for i in range(5):
         cr=p['volume'][i]/1000*p['realization'][i];rev=cr+p['other_wine'][i]+p['non_wine'][i]
         eb=cr*p['gm_core'][i]+p['other_wine'][i]*p['gm_other'][i]+p['non_wine'][i]*p['gm_non']-rev*(p['selling'][i]+p['admin'][i]+p['rd']+p['excise'])
@@ -68,7 +68,7 @@ def independently_recalculate(p):
 def hand_cases():
     oldfacts=copy.deepcopy(m.FACTS);oldshares=m.SHARES
     try:
-        m.SHARES=1.;m.FACTS.update(cash_equivalents=0.,monetary=0.,old_dividends_payable=0.,other_current_liability=0.,reg_goods_latest_H1=0.,parent_registered_capital=0.,parent_reserve=0.,sales_registered_capital=0.,sales_ownership=1.)
+        m.SHARES=1.;m.FACTS.update(post_q3_buyback_cash=0.,cash_equivalents=0.,monetary=0.,old_dividends_payable=0.,other_current_liability=0.,reg_goods_latest_H1=0.,parent_registered_capital=0.,parent_reserve=0.,sales_registered_capital=0.,sales_ownership=1.)
         p=copy.deepcopy(m.BASE)
         p.update(volume=[10000]*5,realization=[1.]*5,other_wine=[0.]*5,non_wine=[0.]*5,
           gm_core=[1.]*5,gm_other=[0.]*5,gm_non=0.,selling=[0.]*5,admin=[0.]*5,rd=0.,excise=0.,tax=0.,
@@ -100,9 +100,17 @@ def main():
     ret,res,add=m.reserve_step(ret,res,10,5);close(ret,3.6);close(add,.4)
     ret,res,add=m.reserve_step(0,4.9,10,100);close(add,.1);close(res,5.)
     output=m.make_outputs()
+    independent_all={}
+    for label,v in {**output['scenarios'],**output['sensitivities']}.items():
+        independent_value,independent_dps,independent_terminal=independently_recalculate(v['parameters'])
+        close(v['current_value_per_share'],independent_value);close(v['terminal_value_per_share'],independent_terminal)
+        for actual,expected in zip(v['dividends_per_share'],independent_dps):close(actual,expected)
+        independent_all[label]={'value':independent_value,'terminal':independent_terminal,'dps':independent_dps}
     for v in list(output['scenarios'].values())+list(output['sensitivities'].values()):
         assert len(v['rows'])==5
+        previous_shares=v['opening_shares_bn']
         for row in v['rows']:
+            close(row['shares_end'],previous_shares-row['buyback_retired']);previous_shares=row['shares_end']
             assert row['dividend']<=row['actual_constraints']['parent_profit']+1e-8
             assert row['dividend']<=row['actual_constraints']['parent_cash']+1e-8
             close(row['cash_end'],row['cash_start']+row['economic_fcf']+row['term_matured']-row['dividend']-row['buyback_cash'])
@@ -128,12 +136,14 @@ def main():
         packed=json.loads((td/'2026-Q3-output.json').read_text());raw=gzip.decompress(base64.b64decode(packed['data']))
         assert hashlib.sha256(raw).hexdigest()==packed['uncompressed_sha256'];assert len(raw)==packed['uncompressed_bytes']
         standalone=json.loads(raw);assert standalone==output
+        expected=(json.dumps(m.pack_output(output),ensure_ascii=False,indent=2)+'\n').encode()
+        assert (td/'2026-Q3-output.json').read_bytes()==expected
         assert not (other/'2026-Q3-output.json').exists()
         subprocess.run([sys.executable,str(td/'2026-Q3.py'),'--expand'],cwd=other,check=True,stdout=subprocess.DEVNULL)
         assert json.loads((td/'2026-Q3-output.expanded.json').read_text())==output
-    result={'status':'PASS','manual_production_chain_cases':manual,'independent_conditional_lower':b[0],
+    result={'status':'fresh_local_checks_passed_not_independent_acceptance','manual_production_chain_cases':manual,'independent_conditional_lower':b[0],
       'independent_r_plus_1pp':d[0],'independent_realization_minus_10pct':independently_recalculate(q2)[0],
-      'scenario_count':len(output['scenarios']),'sensitivity_count':len(output['sensitivities']),
+      'independent_all':independent_all,'scenario_count':len(output['scenarios']),'sensitivity_count':len(output['sensitivities']),
       'checks':['source arithmetic','50% statutory threshold','loss consumes legal profit','receivable cash vs income separation','cash conservation','buyback cash and share count','payer constraint lowers dividends and terminal','400-year cash/upstream/retained-profit continuation','terminal residual per-share bound below 0.000001 CNY','standalone copied-script different-cwd reproduction']}
     (P/'test-results.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(json.dumps(result,ensure_ascii=False,indent=2))
 if __name__=='__main__':main()

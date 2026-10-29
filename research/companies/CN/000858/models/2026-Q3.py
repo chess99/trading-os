@@ -6,8 +6,10 @@ Forecast/legal budgets are research estimates, NOT legal distributability certif
 from pathlib import Path
 from copy import deepcopy
 import argparse,json,gzip,base64,hashlib
-SHARES=(3881608005-16127753)/1e9
-FACTS={'shares_issued':3881608005,'treasury_shares':16127753,
+SHARES=(3881608005-21753438)/1e9
+FACTS={'shares_issued':3881608005,'treasury_shares':21753438,
+ 'post_q3_buyback_cash':0.40001113095,'buyback_paid_q3':1.20071904153,
+ 'buyback_paid_snapshot':1.60073017248,'post_q3_other_cash_budget':0.,
  'cash_equivalents':108.63124653495,'monetary':111.72980995956,
  'old_dividends_payable':2.12458530952,'nci_book':2.51980609250,
  'other_current_liability':23.76726500238,'reg_goods_latest_H1':4.50692216770,
@@ -108,8 +110,8 @@ BASE={
  'required_cash':[15.,15.3,15.6,15.9,16.2], 'opening_required_cash':15.,
  'reg_unwind':[.12,.20,.25,.23,.20], 'reg_asset_haircut':0.,
  'payout':[.75]*5,'minimum_dividend':[20.,0.,0.,0.,0.],
- 'buyback_cash':[8.-1.20071904153,0.,0.,0.,0.],
- 'buyback_retired':[(8.-1.20071904153)/151.01,0.,0.,0.,0.], # official ceiling, not quote/value anchor
+ 'buyback_cash':[8.-1.60073017248,0.,0.,0.,0.],
+ 'buyback_retired':[(8.-1.60073017248)/151.01,0.,0.,0.,0.], # official ceiling, not quote/value anchor
  'sales_profit_fraction':.56,'upstream_fraction':.65,'upstream_lag':1,
  'parent_open_cash':45.,'parent_open_retained':40.5,'parent_floor':5.,
  'sales_reserve_budget_start':0., # undisclosed: conservative *budget*, not fact
@@ -126,12 +128,14 @@ def run_model(p):
     p=deepcopy(p)
     assert p['equity_issuance']==0 and p['new_debt']==0
     common=p['common_share']
-    cash=FACTS['cash_equivalents']-FACTS['old_dividends_payable']-p['minority_cash_budget']
+    # Q3 cash already includes Q3 repurchases; bridge only subsequent paid increment.
+    cash=FACTS['cash_equivalents']-FACTS['old_dividends_payable']-p['minority_cash_budget']-FACTS['post_q3_buyback_cash']
     term=(FACTS['monetary']-FACTS['cash_equivalents'])*common
     assoc=p['associate_open']; required=p['opening_required_cash']; nwc=p['opening_nwc']
     legacy=(FACTS['other_current_liability']-FACTS['reg_goods_latest_H1']*(1-p['reg_asset_haircut']))*common
     opening_legacy=legacy; dta=p['opening_net_dta']
-    pc=p['parent_open_cash']; pret=p['parent_open_retained']; pres=FACTS['parent_reserve']
+    # Parent cash inputs remain the original Q3-proxy budgets (including stresses).
+    pc=p['parent_open_cash']-FACTS['post_q3_buyback_cash']; pret=p['parent_open_retained']; pres=FACTS['parent_reserve']
     sret=0.; sres=p['sales_reserve_budget_start']; declarations=[]; rows=[]; shares=SHARES; oret=0.
     for i in range(5):
         core=p['volume'][i]*p['realization'][i]/1000
@@ -254,7 +258,7 @@ def make_outputs():
         'parent_cash_down_10bn':{'parent_open_cash':35.},
         'working_capital_plus_5bn':{'nwc':[x+5 for x in BASE['nwc']]}}.items():
         p=deepcopy(BASE);p.update(changes);sens[label]=run_model(p)
-    return {'facts':FACTS,'scenarios':results,'sensitivities':sens,'units':'CNY bn except per-share, tonnes, realization million/tonne','source_cutoff':'2026-10-27T11:26:04Z'}
+    return {'facts':FACTS,'scenarios':results,'sensitivities':sens,'units':'CNY bn except per-share, tonnes, realization million/tonne','source_cutoff':'2026-10-29T00:00:00Z','historical_research_cutoff':'2026-10-27T11:26:04Z'}
 
 def pack_output(output):
     raw=json.dumps(output,ensure_ascii=False,separators=(',',':')).encode('utf-8')
