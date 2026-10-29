@@ -1,6 +1,6 @@
 # 2026Q3研究入口
 
-更新于2026-10-28。本提交含重点池191家公司中的**86家完整研究**，本批增加豪迈科技、南京银行、三花智控。已核官方Q3全文113家，其中27家尚待完整研究与交付，78家等待实际披露。完成但暂不估值的结果继续保留空值；预约日期不替代实际披露。
+更新于2026-10-28。本提交含重点池191家公司中的**89家完整研究**，本批增加成都银行、中国平安、天孚通信。已核官方Q3全文113家，其中24家尚待完整研究与交付，78家等待实际披露。暂不估值的既有结果继续保留空值；实际远端交付数量以PR核验为准。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -8,6 +8,9 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 成都银行 601838 | [2026Q3](../../companies/CN/601838/reports/2026-Q3.md) | [Python](../../companies/CN/601838/models/2026-Q3.py) | [JSON](../../companies/CN/601838/models/2026-Q3-output.json) |
+| 中国平安 601318 | [2026Q3](../../companies/CN/601318/reports/2026-Q3.md) | [Python](../../companies/CN/601318/models/2026-Q3.py) | [JSON](../../companies/CN/601318/models/2026-Q3-output.json) |
+| 天孚通信 300394 | [2026Q3](../../companies/CN/300394/reports/2026-Q3.md) | [Python](../../companies/CN/300394/models/2026-Q3.py) | [JSON](../../companies/CN/300394/models/2026-Q3-output.json) |
 | 豪迈科技 002595 | [2026Q3](../../companies/CN/002595/reports/2026-Q3.md) | [Python](../../companies/CN/002595/models/2026-Q3.py) | [JSON](../../companies/CN/002595/models/2026-Q3-output.json) |
 | 南京银行 601009 | [2026Q3](../../companies/CN/601009/reports/2026-Q3.md) | [Python](../../companies/CN/601009/models/2026-Q3.py) | [JSON](../../companies/CN/601009/models/2026-Q3-output.json) |
 | 三花智控 002050 | [2026Q3](../../companies/CN/002050/reports/2026-Q3.md) | [Python](../../companies/CN/002050/models/2026-Q3.py) | [JSON](../../companies/CN/002050/models/2026-Q3-output.json) |
