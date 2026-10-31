@@ -195,7 +195,9 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
         check_copy = tmp_path / verification.name
         shutil.copyfile(verification, check_copy)
         # Complete author/audit/600-1200-year consumer measured 242.270s.
-        checker_timeout = 600 if model.parent.parent.name == "000538" else 240
+        # Yili complete author + independent consumer measured 295.038s.
+        # Runtime budget only; all original economic assertions remain.
+        checker_timeout = 600 if model.parent.parent.name in {"000538", "600887"} else 240
         checked = subprocess.run(
             [sys.executable, str(check_copy)],
             cwd=tmp_path.parent,

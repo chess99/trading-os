@@ -4,7 +4,11 @@ No price/IRR input. Report evidence and budgets are separate; legal stocks below
 aggregate budgeting proxies, never representations of undisclosed subsidiary ledgers.
 """
 import copy,json,math
-ASOF='2026-10-29T00:00:00+00:00'
+ASOF='2026-10-29T15:16:02+00:00'
+# Daily ACT/365 budget: 120 days Jul1-Oct28 already accrued, 64 days Oct29-Dec31 future.
+LOAN_RATE=.028
+OPENING_INTEREST=.38899315+.84*120/365
+FUTURE_DAYS=64
 NAMES=['parent','apt','shanghai','yiweidi','haoying']
 DIRECT=[1.,1.,1.,.533859,.119048]
 FUND=[0.,0.,0.,.192207,.515774]
@@ -26,8 +30,9 @@ def initial(parent_re=90.,apt_re=2000.,loan=800.):
        'sub_investment_cost':{'apt':54.301306,'shanghai':1369.429922,'yiweidi':79.97148,'haoying':15.,'fund':35.,'other':2.75882454},'support_claims':{n:0. for n in NAMES[1:]},'support_allowances':{n:0. for n in NAMES[1:]},'support_net_recoverable':{n:0. for n in NAMES[1:]},'sub_investment_allowances':{n:0. for n in NAMES[1:]},'fund':{'cash':0.,'retained':0.,'other_lp_principal':49.,'preferred_due':0.,'parent_capital':35.,'closed':False,'investment_cost':{'yiweidi':20.,'haoying':64.},'investment_allowances':{'yiweidi':0.,'haoying':0.}},'shares':SHARES,'treasury':TREASURY,'inventory_book':549.97637012,'parent_share_premium':1419.84990158,
        'direct_fractions':DIRECT[:],'fund_fractions':FUND[:],'cumulative_dividend_ps':0.,'product_revenues':[1610.,730.,550.,50.,134.50211962],
        'aux_profit':980.,'aux_capital':1797.,'calendar_revenues':{'2025':2583.92732109,'2026':3200.},
-       'construction_remaining':550.,'operating_accruals_stock':275.76719316,'cumulative_external_finance':0.,'sbc_accumulated':0.,'cumulative_vested':0.}
-    for i,n in enumerate(NAMES):s['entities'][n]={'cash':cash[i],'fixed':fixed[i],'wc':wc[i],'retained':re[i],'reserve':reserve[i],'registered_capital':cap[i],'returnable_paid_in_budget':[0.,45.,1350.,80.,15.][i],'support_debt':0.,'external_debt':31. if n=='haoying' else 0.,'closed':False,'settlement_status':'operating','liquidation_net_assets':None}
+       'unallocated_financing_pool':{'principal':8.,'opening_interest':.06,'budget_obligor':'parent_as_funding_proxy_not_disclosed','legal_assignment_known':False},'construction_remaining':550.,'operating_accruals_stock':275.76719316,'cumulative_external_finance':0.,'sbc_accumulated':0.,'cumulative_vested':0.}
+    for i,n in enumerate(NAMES):s['entities'][n]={'cash':cash[i],'fixed':fixed[i],'wc':wc[i],'retained':re[i],'reserve':reserve[i],'registered_capital':cap[i],'returnable_paid_in_budget':[0.,45.,1350.,80.,15.][i],'support_debt':0.,'external_debt':30. if n=='haoying' else 0.,'external_interest_payable':OPENING_INTEREST if n=='haoying' else 0.,'closed':False,'settlement_status':'operating','liquidation_net_assets':None}
+    s['tax']={'direct_basis':dict(s['sub_investment_cost']),'fund_basis':{'yiweidi':20.,'haoying':64.},'parent_payable':0.,'parent_paid':0.,'parent_expense':0.,'allocated_parent_income':0.,'allocated_outside_income':0.,'outside_self_paid_budget':0.,'unrelieved_fund_loss':0.,'fund_cash_profit_received':0.}
     return s
 
 def reserve_profit(e,profit):
@@ -95,14 +100,41 @@ def operating(s,c):
 
 def step(s,c):
     s=copy.deepcopy(s);y=s['year']+1
+    sub_open={n:(s['entities'][n]['retained'],s['entities'][n]['reserve']) for n in NAMES[1:]}
+    parent_open_re=s['entities']['parent']['retained'];parent_open_reserve=s['entities']['parent']['reserve']
+    tax=s['tax'];taxincome=directtaxgain=funddividends=directcapdiv=0.
+    taxrate=c.get('parent_partner_tax_rate',.25)
+    taxshare=c.get('parent_tax_allocation',35/84)
+    taxexpense=taxpaid=0.
     direct=s['direct_fractions'];via=s['fund_fractions'];ownership=[a+b for a,b in zip(direct,via)]
     opening_cash=sum(e['cash'] for e in s['entities'].values())+s['fund']['cash']
+    pool=s['unallocated_financing_pool'];poolpaid=poolnew=0.
+    if y==1 and 'manual_operating' not in c:
+        poolnew=pool['principal']*c.get('unallocated_rate',.03)*64/365
+        poolpaid=pool['principal']+pool['opening_interest']+poolnew
+        payer=s['entities'][c.get('unallocated_payer','parent')]
+        if poolpaid>payer['cash']:raise ValueError('Unallocated financing maturity capacity unavailable')
+        payer['cash']-=poolpaid;payer['retained']-=poolnew
+        pool['principal']=pool['opening_interest']=0.
+    bridge={'principal_paid':0.,'opening_interest_paid':0.,'new_interest_expense':0.,'parent_support':0.,'date':'2026-12-31','status':'conditional_budget_not_paid_fact'}
+    if y==1 and not c.get('legacy_annual_loan_fixture'):
+        h=s['entities']['haoying'];pa=s['entities']['parent']
+        principal=h['external_debt'];oldinterest=h['external_interest_payable']
+        newinterest=principal*c.get('loan_rate',LOAN_RATE)*c.get('loan_future_days',FUTURE_DAYS)/365
+        payment=principal+oldinterest+newinterest
+        need=max(0.,payment-h['cash'])
+        if need>pa['cash']+1e-9:raise ValueError('No parent capacity at Haoying 2026-12-31 maturity; no guarantee or future operating cash assumed')
+        pa['cash']-=need;h['cash']+=need
+        if c.get('support_gift'):pa['retained']-=need;reserve_profit(h,need)
+        else:s['support_claims']['haoying']+=need;h['support_debt']+=need
+        h['cash']-=payment;h['retained']-=newinterest;h['external_debt']=0.;h['external_interest_payable']=0.
+        bridge.update(principal_paid=principal,opening_interest_paid=oldinterest,new_interest_expense=newinterest,parent_support=need)
     r,profits,ft,wt,detail=operating(s,c)
     construction=min(s['construction_remaining'],[200.,200.][y-1] if y<=2 else s['construction_remaining'])
     s['construction_remaining']-=construction
     weights=[.12,.60,.24,.03,.01]
-    ledger={'year':y,'revenue':r,'operating':detail,'entities':{},'construction':construction}
-    external_in=external_out=0.;group_profit=sum(profits);group_capex=0.;group_dep=0.;group_dwc=0.
+    ledger={'unallocated_financing_payment':{'cash':poolpaid,'new_interest_expense':poolnew,'budget_not_obligor_fact':True,'payer_proxy':c.get('unallocated_payer','parent')},'loan_maturity_bridge':bridge,'year':y,'revenue':r,'operating':detail,'entities':{},'construction':construction}
+    external_in=0.;external_out=poolpaid+sum(bridge[k] for k in ['principal_paid','opening_interest_paid','new_interest_expense']);group_profit=sum(profits);group_capex=0.;group_dep=0.;group_dwc=0.
     sbc=[11.4069,7.0285,4.4162,1.008][y-1] if y<=4 else 0.
     # Budget gross grant expense; reverse when forecast original award expires unmet.
     if y==5:sbc=-s['sbc_accumulated']*max(0.,1-s['cumulative_vested']/1.780501)
@@ -138,7 +170,7 @@ def step(s,c):
     ledger['internal_interest']=int_interest
     # External debt belongs to Haoying, not the listed parent; no disclosed guarantee.
     hao=s['entities']['haoying'];debtpay=hao['external_debt'] if y==1 else 0.
-    debtinterest=hao['external_debt']*.027
+    debtinterest=hao['external_debt']*c.get('loan_rate',LOAN_RATE)
     hao['cash']-=debtpay+debtinterest;hao['retained']-=debtinterest;hao['external_debt']-=debtpay
     external_out+=debtpay+debtinterest
     leasepay=min(s['lease_debt'],4.);parent['cash']-=leasepay;s['lease_debt']-=leasepay;external_out+=leasepay
@@ -149,8 +181,10 @@ def step(s,c):
         e=s['entities'][n];fee=s['support_claims'][n]*c.get('support_interest',0.)
         e['cash']-=fee;e['retained']-=fee;parent['cash']+=fee;reserve_profit(parent,fee);support_interest+=fee
     # Fund other-LP fixed preferred return accrues ONLY in the fund, not as parent cash expense.
-    fund=s['fund'];pref=fund['other_lp_principal']*c.get('fund_preferred_rate',.05) if not fund['closed'] else 0.
+    fund=s['fund'];pref=fund['other_lp_principal']*c.get('fund_preferred_rate',.10) if not fund['closed'] else 0.
     fund['preferred_due']+=pref;fund['retained']-=pref
+    management=0. if fund['closed'] or y>c.get('fund_management_stop',3) or 'manual_operating' in c else sum(tax['fund_basis'].values())*c.get('fund_management_rate',.015)
+    fund['management_payable']=fund.get('management_payable',0.)+management;fund['retained']-=management;taxincome-=management
     ledger['fund_preferred_accrual']=pref
     ledger['support_interest']=support_interest
     # Equity holdings realized gradually years6-8, historical disposals demonstrate realizability.
@@ -164,7 +198,7 @@ def step(s,c):
         book=s['portfolio_book']/(9-y);port=book*c.get('portfolio_recovery',1.);port_gain=port-book
         s['portfolio_book']-=book;apt['cash']+=port;reserve_profit(apt,port_gain)
         external_in+=port
-    ledger.update({'debt_paid':debtpay,'debt_interest':debtinterest,'lease_paid':leasepay,'portfolio_proceeds':port,'portfolio_gain':port_gain})
+    ledger.update({'debt_paid':debtpay+bridge['principal_paid'],'debt_interest':debtinterest+bridge['new_interest_expense'],'debt_opening_interest_paid':bridge['opening_interest_paid'],'lease_paid':leasepay,'portfolio_proceeds':port,'portfolio_gain':port_gain})
     # Settle last year's dividend receivable: NO investment income again.
     receipt=s['dividend_receivable'];apt['cash']-=receipt;parent['cash']+=receipt;s['dividend_receivable']=0.
     ledger['prior_dividend_receipt']=receipt
@@ -176,7 +210,7 @@ def step(s,c):
     buffer=[r*.012,r*.045,r*.008,r*.003,r*.001]
     if y<=c.get('upstream_delay',0):up_ratio=0.
     else:up_ratio=.65 if y<=5 else min(1.,.65+.07*(y-5))
-    upstream=[];minor_paid=0.;investment_income=0.;injections=0.;impairment=0.
+    upstream=[];minor_paid=0.;investment_income=0.;injections=bridge['parent_support'];impairment=0.
     support_ledger=[];cost_ledger=[];capital_returns=[]
     # Finance cash shortfalls at their actual legal obligor; a claim mirrors every support debt.
     for i,n in enumerate(NAMES[1:],1):
@@ -186,7 +220,8 @@ def step(s,c):
             # Explicit adverse governance counterfactual: gratuitous cash support, no claim or extra ownership.
             parent['retained']-=need;reserve_profit(e,need)
         else:s['support_claims'][n]+=need;e['support_debt']+=need
-        support_ledger.append({'entity':n,'advanced':need,'claim_created':0. if c.get('support_gift') else need})
+        totalneed=need+(bridge['parent_support'] if n=='haoying' else 0.)
+        support_ledger.append({'entity':n,'advanced':totalneed,'claim_created':0. if c.get('support_gift') else totalneed})
     # Real liquidation: cash obligations, outside senior debt, support claim, then equity.
     if c.get('structural') and y==3:
         e=s['entities']['haoying'];proceeds=.25*e['fixed']+.5*e['wc'];obligation=20.
@@ -199,12 +234,24 @@ def step(s,c):
         s['support_claims']['haoying']=written;e['support_debt']=written;s['support_allowances']['haoying']=written
         equity_cash=e['cash'];parent_receipt=equity_cash*direct[4];fund_receipt=equity_cash*via[4]
         parent['cash']+=parent_receipt;fund['cash']+=fund_receipt;minor_paid+=equity_cash*(1-ownership[4])
-        pcost=s['sub_investment_cost']['haoying'];fcost=fund['investment_cost']['haoying']
+        pcost=s['sub_investment_cost']['haoying']-s['sub_investment_allowances']['haoying'];fcost=fund['investment_cost']['haoying']-fund['investment_allowances']['haoying']
         reserve_profit(parent,parent_receipt-pcost);fund['retained']+=fund_receipt-fcost
-        s['sub_investment_allowances']['haoying']=pcost;fund['investment_allowances']['haoying']=fcost
-        ledger['haoying_exit']={'proceeds':proceeds,'obligation':obligation,'impairment':impairment_exit,'support_recovered':recovered,'support_written_off':written,'parent_equity_cash':parent_receipt,'parent_equity_cost_written_off':pcost,'fund_equity_cash':fund_receipt,'fund_equity_cost_written_off':fcost,'outside_equity_cash':equity_cash*(1-ownership[4]),'uncollected_support_gross_face':written,'support_allowance':written,'net_support_recoverable':0.,'legal_debt_extinguished':False,'entity_legally_dissolved':False}
+        s['sub_investment_allowances']['haoying']=s['sub_investment_cost']['haoying'];fund['investment_allowances']['haoying']=fund['investment_cost']['haoying']
+        ledger['haoying_exit']={'proceeds':proceeds,'obligation':obligation,'impairment':impairment_exit,'support_recovered':recovered,'support_written_off':written,'parent_equity_cash':parent_receipt,'parent_equity_cost_written_off':pcost,'parent_equity_gross_cost':s['sub_investment_cost']['haoying'],'fund_equity_cash':fund_receipt,'fund_equity_cost_written_off':fcost,'fund_equity_gross_cost':fund['investment_cost']['haoying'],'outside_equity_cash':equity_cash*(1-ownership[4]),'uncollected_support_gross_face':written,'support_allowance':written,'net_support_recoverable':0.,'legal_debt_extinguished':False,'entity_legally_dissolved':False}
         for k in ['cash','fixed','wc']:e[k]=0.
         e['closed']=True;e['settlement_status']='operations_ceased_unsettled';e['liquidation_net_assets']=-e['support_debt']-e['external_debt']
+    # Subsidiary annual reserve: all income/expense and old loss, before any dividend.
+    # Internal interest is a net-of-tax economic transfer budget, NOT a pre-tax
+    # contractual rate. No incremental tax deduction/refund/cash shield is assumed.
+    # Operating profits and cash yield already use after-tax budgets.
+    for n in NAMES[1:]:
+        e=s['entities'][n];opening_re,opening_reserve=sub_open[n]
+        annual=e['retained']+e['reserve']-opening_re-opening_reserve
+        required=opening_reserve+min(max(0.,.5*e['registered_capital']-opening_reserve),.1*max(0.,annual+min(0.,opening_re)))
+        e['retained']+=e['reserve']-required;e['reserve']=required
+        ledger['entities'][n]['annual_legal_profit_after_tax_budget']=annual
+        ledger['entities'][n]['annual_reserve_appropriation']=required-opening_reserve
+        assert required>=opening_reserve and e['reserve']>=0.
     # Support loans repay before dividends/capital. Principal never creates mother investment income.
     for i,n in enumerate(NAMES[1:],1):
         e=s['entities'][n]
@@ -224,33 +271,38 @@ def step(s,c):
         else:
             paid=legal_payment(e,declared,buffer[i]+(s['restricted_cash'] if n=='apt' else 0.))
             parent['cash']+=paid*direct[i];investment_income+=paid*direct[i]
-            fund['cash']+=paid*via[i];fund['retained']+=paid*via[i];minor_paid+=paid*(1-ownership[i])
+            fund['cash']+=paid*via[i];fund['retained']+=paid*via[i];taxincome+=paid*via[i];funddividends+=paid*via[i];minor_paid+=paid*(1-ownership[i])
         upstream.append({'entity':n,'declared':declared,'paid':paid,'offset':offset,'direct_fraction':direct[i],'fund_fraction':via[i]})
     reserve_profit(parent,investment_income)
     # Cost testing is entity-specific. A Shanghai loss cannot consume Apt/Haoying acquisition basis.
     for i,n in enumerate(NAMES[1:],1):
         if s['entities'][n]['closed']:continue
-        loss=max(0.,-profits[i]);direct_loss=min(s['sub_investment_cost'][n],loss*direct[i]);s['sub_investment_cost'][n]-=direct_loss;parent['retained']-=direct_loss;impairment+=direct_loss
-        fund_loss=min(fund['investment_cost'].get(n,0.),loss*via[i])
-        if n in fund['investment_cost']:fund['investment_cost'][n]-=fund_loss;fund['retained']-=fund_loss
+        loss=max(0.,-profits[i]);direct_loss=min(s['sub_investment_cost'][n]-s['sub_investment_allowances'][n],loss*direct[i]);s['sub_investment_allowances'][n]+=direct_loss;parent['retained']-=direct_loss;impairment+=direct_loss
+        fund_loss=min(fund['investment_cost'].get(n,0.)-fund['investment_allowances'].get(n,0.),loss*via[i])
+        if n in fund['investment_cost']:fund['investment_allowances'][n]+=fund_loss;fund['retained']-=fund_loss
         cost_ledger.append({'entity':n,'parent_impairment':direct_loss,'fund_impairment':fund_loss})
     if y>c.get('capital_return_start',10):
         for i,n in enumerate(NAMES[1:],1):
             e=s['entities'][n]
             returned=min(max(0.,e['cash']-buffer[i])*.25,e['returnable_paid_in_budget']*.25) if e['retained']>=-1e-8 and e['support_debt']<1e-8 and not e['closed'] else 0.
-            pcost=fcost=gain=0.
+            pcost=fcost=gain=pb=fb=pdiv=fdiv=pgain=fgain=0.
             if returned:
                 ratio=returned/e['returnable_paid_in_budget'];e['registered_capital']=max(1.,e['registered_capital']*(1-ratio));e['returnable_paid_in_budget']-=returned;e['cash']-=returned
                 direct_cash=returned*direct[i];indirect=returned*via[i];parent['cash']+=direct_cash;fund['cash']+=indirect;minor_paid+=returned*(1-ownership[i])
-                pcost=min(s['sub_investment_cost'][n],direct_cash);s['sub_investment_cost'][n]-=pcost;gain=direct_cash-pcost;reserve_profit(parent,gain)
-                fcost=min(fund['investment_cost'].get(n,0.),indirect)
+                pcost=min(s['sub_investment_cost'][n]-s['sub_investment_allowances'][n],direct_cash);s['sub_investment_cost'][n]-=pcost;gain=direct_cash-pcost;reserve_profit(parent,gain)
+                fcost=min(fund['investment_cost'].get(n,0.)-fund['investment_allowances'].get(n,0.),indirect)
                 if n in fund['investment_cost']:fund['investment_cost'][n]-=fcost
                 fund['retained']+=indirect-fcost
-            capital_returns.append({'entity':n,'cash':returned,'parent_cost_recovery':pcost,'fund_cost_recovery':fcost,'parent_gain':gain})
+                pb=min(tax['direct_basis'][n],direct_cash);tax['direct_basis'][n]-=pb
+                pdiv=min(direct_cash-pb,max(0.,e['retained']+e['reserve'])*ratio*direct[i]);pgain=direct_cash-pb-pdiv;directtaxgain+=pgain;directcapdiv+=pdiv
+                fb=min(tax['fund_basis'].get(n,0.),indirect)
+                if n in tax['fund_basis']:tax['fund_basis'][n]-=fb
+                fdiv=min(indirect-fb,max(0.,e['retained']+e['reserve'])*ratio*via[i]);fgain=indirect-fb-fdiv;taxincome+=fdiv+fgain
+            capital_returns.append({'entity':n,'cash':returned,'parent_cost_recovery':pcost,'fund_cost_recovery':fcost,'parent_gain':gain,'parent_tax_principal':pb,'parent_tax_exempt_resident_dividend':pdiv,'parent_tax_transfer_gain':pgain,'fund_tax_principal':fb,'fund_tax_indirect_dividend':fdiv,'fund_tax_transfer_gain':fgain})
     # Fund has a finite legal/economic exit budget, independent of valuation horizon.
     # Parent may acquire the remaining investee stakes at discounted net tangible assets; no claim face-value guarantee.
     fund_exit=None
-    if y==c.get('fund_exit_year',20) and not fund['closed']:
+    if y==c.get('fund_exit_year',8) and not fund['closed']:
         acquisitions=[]
         for i,n in [(3,'yiweidi'),(4,'haoying')]:
             e=s['entities'][n]
@@ -259,32 +311,50 @@ def step(s,c):
             buyer_capacity=max(0.,parent['cash']-buffer[0]);buyer_fee=price*.01 if not c.get('fund_external_buyer') else 0.
             if not c.get('fund_external_buyer'):
                 if price+buyer_fee>buyer_capacity:raise ValueError('No independent parent acquisition capacity')
-                parent['cash']-=price+buyer_fee;s['sub_investment_cost'][n]+=price+buyer_fee;external_out+=buyer_fee
+                parent['cash']-=price+buyer_fee;s['sub_investment_cost'][n]+=price+buyer_fee;tax['direct_basis'][n]+=price+buyer_fee;external_out+=buyer_fee
             else:external_in+=price
             fund['cash']+=price
-            gross_basis=fund['investment_cost'][n];prior_allowance=fund['investment_allowances'][n];basis=gross_basis-prior_allowance;sell_fee=price*.02;gain_tax=max(0.,price-basis)*.15
+            gross_basis=fund['investment_cost'][n];prior_allowance=fund['investment_allowances'][n];basis=gross_basis-prior_allowance;sell_fee=price*.02;gain_tax=0.;taxbasis=tax['fund_basis'][n];taxgain=price-sell_fee-taxbasis;taxincome+=(max(0.,taxgain) if c.get('no_disposal_loss_relief') else taxgain);tax['fund_basis'][n]=0.
             fund['cash']-=sell_fee+gain_tax;fund['retained']+=price-basis-sell_fee-gain_tax;external_out+=sell_fee+gain_tax;fund['investment_cost'][n]=0.;fund['investment_allowances'][n]=0.
-            acquisitions.append({'entity':n,'acquired_fraction':via[i],'asset_value_before_recovery':nav,'price':price,'fund_basis':basis,'fund_gross_basis':gross_basis,'fund_prior_allowance':prior_allowance,'buyer_cash_capacity':buyer_capacity,'buyer_fee':buyer_fee,'seller_fee':sell_fee,'gain_tax':gain_tax,'external_buyer':bool(c.get('fund_external_buyer'))})
+            acquisitions.append({'entity':n,'acquired_fraction':via[i],'asset_value_before_recovery':nav,'price':price,'fund_basis':basis,'fund_gross_basis':gross_basis,'fund_prior_allowance':prior_allowance,'buyer_cash_capacity':buyer_capacity,'buyer_fee':buyer_fee,'seller_fee':sell_fee,'gain_tax':gain_tax,'tax_basis':taxbasis,'taxable_disposal_gain':taxgain,'fund_is_not_eit_taxpayer':True,'external_buyer':bool(c.get('fund_external_buyer'))})
             if not c.get('fund_external_buyer'):direct[i]+=via[i]
             via[i]=0.
         fund_exit={'acquisitions':acquisitions,'limited_recourse_budget_not_contract_fact':True}
     # One actual two-layer waterfall: outside LP fixed coupon -> principal at maturity -> mother basis -> residual.
-    preferred_paid=min(fund['cash'],fund['preferred_due']);fund['cash']-=preferred_paid;fund['preferred_due']-=preferred_paid
-    lp_principal=min(fund['cash'],fund['other_lp_principal']) if y>=c.get('fund_maturity',10) else 0.
-    fund['cash']-=lp_principal;fund['other_lp_principal']-=lp_principal;minor_paid+=preferred_paid+lp_principal
-    mother_capital=min(fund['cash'],fund['parent_capital']) if y>=c.get('fund_maturity',10) and fund['other_lp_principal']<1e-9 and fund['preferred_due']<1e-9 else 0.
+    management_paid=min(fund['cash'],fund.get('management_payable',0.));fund['cash']-=management_paid;fund['management_payable']-=management_paid;external_out+=management_paid
+    preferred_paid=0.
+    if c.get('fund_priority_coupon_first'):
+        preferred_paid=min(fund['cash'],fund['preferred_due']);fund['cash']-=preferred_paid;fund['preferred_due']-=preferred_paid
+    lp_principal=min(fund['cash'],fund['other_lp_principal']) if y>=c.get('fund_maturity',3) else 0.
+    fund['cash']-=lp_principal;fund['other_lp_principal']-=lp_principal
+    if not c.get('fund_priority_coupon_first'):
+        preferred_paid=min(fund['cash'],fund['preferred_due']) if fund['other_lp_principal']<1e-9 else 0.;fund['cash']-=preferred_paid;fund['preferred_due']-=preferred_paid
+    minor_paid+=preferred_paid+lp_principal
+    mother_capital=min(fund['cash'],fund['parent_capital']) if y>=c.get('fund_maturity',3) and fund['other_lp_principal']<1e-9 and fund['preferred_due']<1e-9 else 0.
     fund['cash']-=mother_capital;fund['parent_capital']-=mother_capital;parent['cash']+=mother_capital
+    tax['direct_basis']['fund']-=min(tax['direct_basis']['fund'],mother_capital)
     mother_basis=min(s['sub_investment_cost']['fund'],mother_capital);s['sub_investment_cost']['fund']-=mother_basis;reserve_profit(parent,mother_capital-mother_basis)
-    fund_profit=max(0.,min(fund['cash'],fund['retained'])) if fund['preferred_due']<1e-9 and (y<c.get('fund_maturity',10) or fund['other_lp_principal']<1e-9) else 0.
-    fund['cash']-=fund_profit;fund['retained']-=fund_profit;parent['cash']+=fund_profit;reserve_profit(parent,fund_profit);investment_income+=fund_profit
+    fund_profit=max(0.,min(fund['cash'],fund['retained'])) if fund['preferred_due']<1e-9 and (y<c.get('fund_maturity',3) or fund['other_lp_principal']<1e-9) else 0.
+    fund_residual_gross=fund_profit;fund['cash']-=fund_residual_gross;fund['retained']-=fund_residual_gross
+    fund_profit=fund_residual_gross*c.get('fund_parent_residual_share',1.);minor_paid+=fund_residual_gross-fund_profit;parent['cash']+=fund_profit;reserve_profit(parent,fund_profit);investment_income+=fund_profit
     if fund_exit is not None:
         # Final liquidation cash follows the same priority, then remaining capital/claims absorb real losses.
-        residual_cash=fund['cash'];parent['cash']+=residual_cash;fund['cash']=0.
+        gross_residual_cash=fund['cash'];residual_cash=gross_residual_cash*c.get('fund_parent_residual_share',1.);minor_paid+=gross_residual_cash-residual_cash;parent['cash']+=residual_cash;fund['cash']=0.
         unrecovered_parent_basis=s['sub_investment_cost']['fund'];reserve_profit(parent,residual_cash-unrecovered_parent_basis);s['sub_investment_cost']['fund']=0.
-        fund_exit.update({'unpaid_other_principal_loss':fund['other_lp_principal'],'unpaid_preferred_loss':fund['preferred_due'],'parent_capital_loss':fund['parent_capital'],'parent_basis_loss':unrecovered_parent_basis,'residual_parent_cash':residual_cash,'closing_retained_before_liquidation':fund['retained']})
-        fund.update({'other_lp_principal':0.,'preferred_due':0.,'parent_capital':0.,'retained':0.,'closed':True})
+        fund_exit.update({'unpaid_other_principal_loss':fund['other_lp_principal'],'unpaid_preferred_loss':fund['preferred_due'],'parent_capital_loss':fund['parent_capital'],'parent_basis_loss':unrecovered_parent_basis,'residual_parent_cash':residual_cash,'closing_retained_before_liquidation':fund['retained'],'unpaid_management_payable':fund['management_payable']})
+        fund.update({'other_lp_principal':0.,'preferred_due':0.,'parent_capital':0.,'retained':-fund['management_payable'],'closed':True})
         ledger['fund_exit']=fund_exit
-    ledger['fund_waterfall']={'preferred_paid':preferred_paid,'other_principal_paid':lp_principal,'parent_capital_return':mother_capital,'parent_cost_recovery':mother_basis,'parent_residual_profit':fund_profit,'direct_ownership_not_reapplied':True}
+    tax['fund_cash_profit_received']+=fund_profit
+    taxable=max(0.,taxincome);unrelieved=max(0.,-taxincome)
+    parentallocated=taxable*taxshare;outsideallocated=taxable-parentallocated
+    taxexpense=parentallocated*taxrate+directtaxgain*taxrate
+    tax['allocated_parent_income']+=parentallocated;tax['allocated_outside_income']+=outsideallocated;tax['unrelieved_fund_loss']+=unrelieved
+    tax['outside_self_paid_budget']+=outsideallocated*c.get('outside_partner_tax_budget',.25)
+    oldpayable=tax['parent_payable'];tax['parent_payable']+=taxexpense;tax['parent_expense']+=taxexpense
+    taxpaid=oldpayable if c.get('tax_payment_lag') else tax['parent_payable']
+    tax['parent_payable']-=taxpaid;tax['parent_paid']+=taxpaid;parent['cash']-=taxpaid;parent['retained']-=taxexpense;external_out+=taxpaid
+    ledger['partner_tax']={'fund_dividend_income':funddividends,'fund_net_taxable_before_floor':taxincome,'unrelieved_loss_no_parent_offset':unrelieved,'parent_allocation':parentallocated,'outside_allocation':outsideallocated,'parent_rate_budget':taxrate,'parent_tax_expense':taxexpense,'parent_tax_paid':taxpaid,'direct_capital_gain':directtaxgain,'outside_tax_paid_by_partner_not_fund':outsideallocated*c.get('outside_partner_tax_budget',.25),'fund_entity_eit':0.,'allocation_is_conditional_budget':True,'direct_resident_dividend_exempt_budget':investment_income-fund_profit+directcapdiv}
+    ledger['fund_waterfall']={'management_expense':management,'management_paid':management_paid,'preferred_paid':preferred_paid,'other_principal_paid':lp_principal,'parent_capital_return':mother_capital,'parent_cost_recovery':mother_basis,'parent_residual_profit':fund_profit,'gross_residual_distribution':fund_residual_gross,'outside_residual_distribution':fund_residual_gross-fund_profit,'direct_ownership_not_reapplied':True}
     new_internal_loan=max(0.,buffer[0]-parent['cash'])
     if new_internal_loan:
         if apt['cash']-s['dividend_receivable']-new_internal_loan < buffer[1]:raise ValueError('No subsidiary bridge capacity year '+str(y))
@@ -322,9 +392,15 @@ def step(s,c):
         parent['registered_capital']-=cancelled;s['parent_share_premium']-=s['inventory_book']-cancelled;s['inventory_book']=0.
     s['cumulative_vested']+=vest
     participating=s['shares']-s['treasury']
+    # Final annual parent legal profit includes partner tax and all impairment; intra-year reserve accrual is provisional.
+    parent_annual_profit=parent['retained']+parent['reserve']-parent_open_re-parent_open_reserve
+    final_reserve=parent_open_reserve+min(max(0.,.5*parent['registered_capital']-parent_open_reserve),.1*max(0.,parent_annual_profit+min(0.,parent_open_re)))
+    parent['retained']+=parent['reserve']-final_reserve;parent['reserve']=final_reserve
+    ledger['parent_annual_legal_profit_after_tax']=parent_annual_profit
+    ledger['parent_annual_reserve_appropriation']=final_reserve-parent_open_reserve
     # Ordinary dividend policy gradual maturation: current ~17%; discretionary surpluses distributed as capacity matures.
     desired_ratio=min(1.,.20+.07*(y-1))
-    ordinary_profit=sum(p*o for p,o in zip(profits,ownership))-pref
+    ordinary_profit=sum(p*o for p,o in zip(profits,ownership))-pref-management-taxexpense-poolnew-(debtinterest+bridge['new_interest_expense'])*ownership[4]
     wanted=max(0.,ordinary_profit)*desired_ratio
     if y>10:wanted=max(wanted,parent['cash']-buffer[0])
     dist=legal_payment(parent,wanted,buffer[0])
@@ -346,14 +422,22 @@ def step(s,c):
         assert 0.<=s['sub_investment_allowances'][n]<=s['sub_investment_cost'][n]+1e-8
     for e in s['entities'].values():
         assert e['cash']>=-1e-7 and e['reserve']>=-1e-7 and e['fixed']>=-1e-7
-    ledger.update({'ordinary_operating_profit':ordinary_profit,'group_profit_plus_interest':group_profit,'noncash_sbc':group_sbc,'capex':group_capex,'depreciation':group_dep,'delta_wc':group_dwc,'upstream':upstream,'new_parent_investment_income':investment_income,'capital_injections':injections,'parent_sub_cost_impairment':impairment,'interloan_cash_repayment':repay,'minority_dividends':minor_paid,'vested_million':vest,'exercise_cash':exercise,'unawarded_reserve_not_assumed':.419499,'cancelled_inventory':cancelled,'participating_shares':participating,'dividend':dist,'dividend_per_share':dividendps,'cash_conservation_error':closing_cash-expected,'state':copy.deepcopy(s)})
+    ledger.update({'ordinary_operating_profit':ordinary_profit,'group_profit_plus_interest':group_profit,'group_profit_after_external_interest':group_profit-poolnew-debtinterest-bridge['new_interest_expense']-management-taxexpense,'haoying_legal_profit_after_external_interest':ledger['entities']['haoying']['legal_profit_pre_upstream']-debtinterest-bridge['new_interest_expense'],'noncash_sbc':group_sbc,'capex':group_capex,'depreciation':group_dep,'delta_wc':group_dwc,'upstream':upstream,'new_parent_investment_income':investment_income,'capital_injections':injections,'parent_sub_cost_impairment':impairment,'interloan_cash_repayment':repay,'minority_dividends':minor_paid,'vested_million':vest,'exercise_cash':exercise,'unawarded_reserve_not_assumed':.419499,'cancelled_inventory':cancelled,'participating_shares':participating,'dividend':dist,'dividend_per_share':dividendps,'cash_conservation_error':closing_cash-expected,'state':copy.deepcopy(s)})
     return s,ledger
 
 def run(c,n=180,start=None):
     s=copy.deepcopy(start) if start is not None else initial(c.get('parent_re',90.),c.get('apt_re',2000.),c.get('interloan',800.))
     if start is None:
         s['fund']['other_lp_principal']=c.get('fund_other_principal',49.)
+        s['fund']['preferred_due']=c.get('fund_opening_preferred',s['fund']['other_lp_principal']*c.get('fund_preferred_rate',.10)*5)
+        s['fund']['retained']-=s['fund']['preferred_due']
+        s['fund']['management_payable']=0.
+        s['tax']['fund_basis']['yiweidi']=c.get('fund_tax_basis_yiweidi',20.)
+        s['tax']['fund_basis']['haoying']=c.get('fund_tax_basis_haoying',64.)
         s['construction_remaining']=c.get('construction_budget',550.)
+        s['entities']['haoying']['external_interest_payable']=c.get('loan_opening_interest',OPENING_INTEREST)
+        s['unallocated_financing_pool']['principal']=c.get('unallocated_principal',8.)
+        s['unallocated_financing_pool']['opening_interest']=c.get('unallocated_opening_interest',.06)
     if start is None and c.get('engine')=='historical_return':s['aux_profit']=c.get('normal_profit',980.)
     rows=[];pv=0.;r=c.get('discount',.10)
     for t in range(1,n+1):
@@ -365,6 +449,7 @@ def flattened_numbers(x,p=''):
     if isinstance(x,dict):
         for k,v in x.items():
             if k in ('calendar_revenues','cumulative_dividend_ps','year'):continue
+            if p.endswith('/tax') and k in ('parent_paid','parent_expense','allocated_parent_income','allocated_outside_income','outside_self_paid_budget','unrelieved_fund_loss','fund_cash_profit_received'):continue
             out.update(flattened_numbers(v,p+'/'+k))
     elif isinstance(x,list):
         for i,v in enumerate(x):out.update(flattened_numbers(v,p+'/'+str(i)))
@@ -374,7 +459,7 @@ def flattened_numbers(x,p=''):
 def handtests():
     h=initial();h.update({'restricted_cash':0.,'lease_debt':0.,'internal_debt':0.,'portfolio_book':0.,'construction_remaining':0.,'shares':1.,'treasury':0.,'inventory_book':0.})
     h['fund'].update({'other_lp_principal':0.,'parent_capital':0.})
-    for n in NAMES:h['entities'][n].update({'cash':0.,'fixed':0.,'wc':0.,'retained':0.,'reserve':0.,'registered_capital':0.,'external_debt':0.})
+    for n in NAMES:h['entities'][n].update({'cash':0.,'fixed':0.,'wc':0.,'retained':0.,'reserve':0.,'registered_capital':0.,'external_debt':0.,'external_interest_payable':0.})
     h['entities']['parent'].update({'cash':100.,'registered_capital':100.})
     hc={'manual_operating':[0.,[10.,0.,0.,0.,0.],0.,0.],'cash_yield':0.,'vest_budget':False}
     hz,hr=step(h,hc)
@@ -392,22 +477,37 @@ def handtests():
     assert rejected
     debtcase=copy.deepcopy(h);debtcase['entities']['haoying']['external_debt']=31.
     dc={'manual_operating':[0.,[0.,0.,0.,0.,0.],0.,0.],'cash_yield':0.,'vest_budget':False}
-    dz,dr=step(debtcase,dc)
+    dz,dr=step(debtcase,dict(dc,legacy_annual_loan_fixture=True,loan_rate=.027))
     assert abs(dz['support_claims']['haoying']-31.837)<1e-9 and abs(dz['entities']['parent']['retained'])<1e-9
     assert abs(dz['entities']['haoying']['retained']+.837)<1e-9
+    actual=copy.deepcopy(h);actual['entities']['haoying'].update(external_debt=30.,external_interest_payable=OPENING_INTEREST)
+    az,ar=step(actual,dc)
+    expected=30.+.38899315+.84*184/365
+    assert abs(az['support_claims']['haoying']-expected)<1e-9
+    assert abs(az['entities']['haoying']['retained']+.84*64/365)<1e-9
+    assert az['entities']['parent']['retained']==0. and az['entities']['haoying']['external_interest_payable']==0.
+    nofund=copy.deepcopy(actual);nofund['entities']['parent']['cash']=1.
+    failure=False
+    try:step(nofund,dc)
+    except ValueError:failure=True
+    assert failure
     fundcase=copy.deepcopy(h);fundcase['fund'].update({'cash':100.,'retained':100.,'other_lp_principal':49.,'parent_capital':35.})
-    fz,fr=step(fundcase,dict(dc,fund_maturity=1))
+    fz,fr=step(fundcase,dict(dc,fund_maturity=1,fund_preferred_rate=.05))
     assert abs(fr['fund_waterfall']['parent_residual_profit']-13.55)<1e-9
     assert abs(fz['entities']['parent']['cash']-148.55)<1e-9
     assert fr['fund_waterfall']['other_principal_paid']==49. and fr['fund_waterfall']['parent_capital_return']==35.
     zero={'cash':1e6,'retained':0.,'reserve':1e6,'registered_capital':1e6};assert legal_payment(zero,100.,0.)==0.
-    return {'pure_parent':{'dividend':hr['dividend'],'cash':108.,'retained':7.,'reserve':1.},'loss_counterexample':{'dividend':hr2['dividend'],'cash':110.,'retained':-40.},'support_claim_created':5.,'claim_erasure_rejected':rejected,'wrong_debtor_counterexample':{'haoying_external_debt_paid':31.,'haoying_interest':.837,'parent_claim':31.837,'parent_interest_expense':0.},'fund_hand_example':{'outside_coupon':2.45,'outside_principal':49.,'parent_capital':35.,'parent_residual_profit':13.55,'parent_receipt':48.55},'illegal_retained_payment_rejected':True}
+    return {'pure_parent':{'dividend':hr['dividend'],'cash':108.,'retained':7.,'reserve':1.},'loss_counterexample':{'dividend':hr2['dividend'],'cash':110.,'retained':-40.},'support_claim_created':5.,'claim_erasure_rejected':rejected,'actual_30m_2p8_stub':{'bridge':ar['loan_maturity_bridge'],'claim':az['support_claims']['haoying'],'new_profit_expense':.84*64/365,'funding_failure_rejected':failure},'wrong_debtor_counterexample':{'hypothetical_not_disclosed_actual':True,'haoying_external_debt_paid':31.,'haoying_interest':.837,'parent_claim':31.837,'parent_interest_expense':0.},'fund_hand_example':{'outside_coupon':2.45,'outside_principal':49.,'parent_capital':35.,'parent_residual_profit':13.55,'parent_receipt':48.55},'illegal_retained_payment_rejected':True}
 
+TAX_FUND_SENSITIVITIES={'tax_15_renewal': {'discount': 0.1, 'parent_partner_tax_rate': 0.15}, 'tax_allocation_90pct': {'discount': 0.1, 'parent_tax_allocation': 0.9}, 'tax_payment_one_year_lag': {'discount': 0.1, 'tax_payment_lag': True}, 'outside_tax_35pct_no_group_double_charge': {'discount': 0.1, 'outside_partner_tax_budget': 0.35}, 'fund_low_return_prior_paid': {'discount': 0.1, 'fund_preferred_rate': 0.05, 'fund_opening_preferred': 0.0}, 'fund_high_return_cap_proxy': {'discount': 0.1, 'fund_preferred_rate': 0.212, 'fund_opening_preferred': 51.94}, 'fund_unextended_2029': {'discount': 0.1, 'fund_exit_year': 3}, 'fund_long_exit_2046': {'discount': 0.1, 'fund_exit_year': 20}, 'fund_zero_management_fee': {'discount': 0.1, 'fund_management_rate': 0.0}, 'fund_two_percent_management_fee': {'discount': 0.1, 'fund_management_rate': 0.02}, 'fund_prior_budget_only_tax_repaired': {'fund_priority_coupon_first':True,'discount': 0.1, 'fund_preferred_rate': 0.05, 'fund_opening_preferred': 0.0, 'fund_maturity': 10, 'fund_exit_year': 20, 'fund_management_rate': 0.0}}
+
+TAX_FUND_SENSITIVITIES.update({'fund_no_disposal_loss_relief':{'discount':.1,'no_disposal_loss_relief':True},'fund_tax_basis_low':{'discount':.1,'fund_tax_basis_yiweidi':15.,'fund_tax_basis_haoying':23.},'fund_fees_continue_extended':{'discount':.1,'fund_management_stop':9999}})
+TAX_FUND_SENSITIVITIES['fund_residual_gp_and_tax_boundary']={'discount':.1,'fund_parent_residual_share':.9,'parent_tax_allocation':.9}
 def main():
     paths={
       'base':{'discount':.10},
-      'core_low':{'discount':.105,'margin_delta':-.01,'growth_scale':.95},
-      'core_high':{'discount':.095,'margin_delta':.005,'growth_scale':1.05},
+      'core_low':{'fund_preferred_rate':.125,'discount':.105,'margin_delta':-.01,'growth_scale':.95},
+      'core_high':{'fund_preferred_rate':.08,'discount':.095,'margin_delta':.005,'growth_scale':1.05},
       'cycle':{'discount':.10,'cycle':True},
       'structural':{'discount':.105,'structural':True,'capital_scale':1.15,'portfolio_recovery':.6},
       'optimistic':{'discount':.095,'optimistic':True},
@@ -446,6 +546,6 @@ def main():
     for name,c in {'low':paths['core_low'],'high':paths['core_high']}.items():
         terminals[name]=run(c,240,start=y5)
     summary={k:({a:v[a] for a in ['value_per_share','pv_after_year5']} if 'rows' in v else v) for k,v in full.items()}
-    result={'as_of':ASOF,'units':'CNY million except per share; shares million','summary':summary,'tests':handtests(),'convergence':convergence,'extension_runs':extensions,'paths':full,'year5_common_state':y5,'year5_terminal_continuations':terminals,'holder':{'schema_version':1,'method':'annual_common_equity_irr_v1','currency':'CNY','model_as_of':ASOF,'base_case_distributions_per_share':[round(x['dividend_per_share'],6) for x in base['rows'][:5]],'base_case_terminal_equity_value_range_per_share':{'year_5':{k:round(v['value_per_share'],2) for k,v in terminals.items()}}}}
+    result={'tax_fund_uncertainty_paths':{n:run(c,240) for n,c in TAX_FUND_SENSITIVITIES.items()},'as_of':ASOF,'units':'CNY million except per share; shares million','summary':summary,'loan_uncertainty_paths':{n:run(c,240) for n,c in {'prior_interest_paid':dict(paths['base'],loan_opening_interest=0.,unallocated_opening_interest=0.),'unallocated_non_debt_diagnostic':dict(paths['base'],unallocated_principal=0.,unallocated_opening_interest=0.),'unallocated_high_carry':dict(paths['base'],unallocated_rate=.06,unallocated_opening_interest=.12),'unallocated_apt_payer':dict(paths['base'],unallocated_payer='apt'),'residual_other_payable_all_finance_stress':dict(paths['base'],unallocated_principal=73.06)}.items()},'tests':handtests(),'convergence':convergence,'extension_runs':extensions,'paths':full,'year5_common_state':y5,'year5_terminal_continuations':terminals,'holder':{'schema_version':1,'method':'annual_common_equity_irr_v1','currency':'CNY','model_as_of':ASOF,'base_case_distributions_per_share':[round(x['dividend_per_share'],6) for x in base['rows'][:5]],'base_case_terminal_equity_value_range_per_share':{'year_5':{k:round(v['value_per_share'],2) for k,v in terminals.items()}}}}
     print(json.dumps(result,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False))
 if __name__=='__main__':main()

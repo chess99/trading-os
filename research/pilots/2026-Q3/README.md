@@ -1,6 +1,6 @@
 # 2026Q3研究入口
 
-2026-10-29披露批次：重点池191家公司，164家正式全文、27家等待披露。父120完整本地研究后，本批新增迈瑞医疗、北方华创，修订紫金矿业、海螺水泥；后两项不增加覆盖数。全部工程验收真实通过后覆盖122家，另42家已披露待交付。本地不等于PR交付；未合并、不操作main。全部年度完整输出及四个双null状态保留。
+2026-10-30 00UTC轮实扫（实际00:12开始）：重点池191家公司，170家正式全文、21家等待披露。父122完整本地研究后，本批新增比亚迪、海尔智家、伊利股份，修订惠泰医疗；修订不增加覆盖数。全部工程验收真实通过后覆盖125家，另45家已披露待交付。本地不等于PR交付；未合并、不操作main。全部年度完整输出及四个双null状态保留。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -8,6 +8,9 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 比亚迪 002594 | [2026Q3](../../companies/CN/002594/reports/2026-Q3.md) | [Python](../../companies/CN/002594/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/002594/models/2026-Q3-output.json.xz) |
+| 海尔智家 600690 | [2026Q3](../../companies/CN/600690/reports/2026-Q3.md) | [Python](../../companies/CN/600690/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/600690/models/2026-Q3-output.json.xz) |
+| 伊利股份 600887 | [2026Q3](../../companies/CN/600887/reports/2026-Q3.md) | [Python](../../companies/CN/600887/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/600887/models/2026-Q3-output.json.xz) |
 | 迈瑞医疗 300760 | [2026Q3](../../companies/CN/300760/reports/2026-Q3.md) | [Python](../../companies/CN/300760/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/300760/models/2026-Q3-output.json.xz) |
 | 北方华创 002371 | [2026Q3](../../companies/CN/002371/reports/2026-Q3.md) | [Python](../../companies/CN/002371/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/002371/models/2026-Q3-output.json.xz) |
 | 益丰药房 603939 | [2026Q3](../../companies/CN/603939/reports/2026-Q3.md) | [Python](../../companies/CN/603939/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/603939/models/2026-Q3-output.json.xz) |
