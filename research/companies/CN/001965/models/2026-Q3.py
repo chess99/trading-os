@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """001965 finite-rights ordinary-equity budget. Standard library; no file inputs.
-Run from any directory: python /path/2026-Q3.py [--output /path/output.json]
-Readable complete years: python /path/2026-Q3.py --expand --output 2026-Q3-expanded.json
-Default JSON includes a readable scenario summary and gzip/base64 complete payload.
+Run from any directory: python /path/model.py > complete-output.json
+Stdout is the complete JSON; archive as single-layer XZ if desired.
 The expanded file uses explicit ENTITY_COLUMNS/PARENT_COLUMNS; no economic fields are dropped.
 All amounts CNY billion except per-share. Full rows use lossless columnar encoding.
 """
@@ -14,7 +13,11 @@ ROAD_DATA=[
  ['甬台温',1.06696,2030,.51],['北仑港',.38956,2027,1],['九瑞',.25011,2040,1],['桂兴',.32554,2042,1],['桂阳',.30667,2037,1],['阳平',.20975,2037,1],['灵三',.07092,2038,1],['京津塘旧权',.58896,2029,1],['鄂东',.23270,2040,.5461],['渝黔',.39909,2037,.6],['沪渝',.49581,2043,.6],['机场',.04146,2027,.6],['京台',.89823,2046,.95*.55],['岑兴',.74297,2038,.51*.66],['岑梧',.18631,2036,.51*.8319],['全兴',.28809,2038,.51*.66],['富砚',.46728,2038,.51*.90],['垫忠',.29280,2035,.51*.80],['绵遂',.29487,2040,.51],['平正',.13291,2038,.51],['德商',.49246,2033,.51],['榆神',.52515,2041,.51],['神佳米',.06656,2046,.51]]
 REGISTERED={'甬台温':1,'北仑港':.64436378191,'九瑞':.832,'桂兴':1.03,'桂阳':1.13,'阳平':.82,'灵三':.5439,'鄂东':.1,'渝黔':.8,'沪渝':.9175,'京台':.5,'岑兴':1.80705,'岑梧':.1202,'全兴':.677,'富砚':.4,'垫忠':1.49341273747,'绵遂':1.64,'平正':.528,'德商':.1,'榆神':.40476,'神佳米':.2}
 ENTITY_COLUMNS=['year','id','opening_cash','revenue','operating_cash_before_tax_interest','depreciation','interest','cash_tax','profit','capital_spend','debt_repayment','equity_paid_in','minority_paid_in','reserve_add','ordinary_dividend','liquidation_cash','ending_cash','cash_floor','debt','paid_capital','reserve','legal_retained','parent_exit_accounting_basis_budget','loss_carry','registered_capital','cumulative_support','object_kind','economic_remittance_capacity','unremitted_cash','exit_gross','exit_fee','exit_tax']
+LOAN_FACE={'桂兴':1.29001627776,'沪渝':.6495,'灵三':.5414975,'桂阳':.42277805556}
 PARENT_COLUMNS=['year','opening_cash','declared_income','equity_method_adjustment','actual_receipts','old_AR_collection','new_AR','capital_calls','new_project_capex','new_borrowing','old_debt_repayment','new_debt_repayment','perpetual_redemption','interest','perpetual_coupon','financial_interest','direct_operating_cash','head_office_cost','direct_cash_tax','legal_profit','reserve_add','ordinary_distribution','liquidation_distribution','ending_cash','cash_floor','legal_retained','reserve','old_debt','new_debt','perpetual','AR','tech_cash_support_and_exit_cost','financial_dividend','financial_asset_and_tech_cash_release','old_JJT_operating_cash','old_JJT_depreciation','old_JJT_maintenance','old_JJT_cash_floor','JV_direct_equity_profit','JV_intermediate_cash_income','final_debt_settlement','capital_return','capital_return_fee','ending_shares','ending_registered_capital','cancelled_shares','liquidation_fee','capital_reserve','statutory_loss_offset','capital_reserve_loss_offset','voluntary_reserve_add']
+
+ENTITY_COLUMNS += ['opening_parent_loan_face','parent_loan_face','parent_loan_principal_paid','internal_interest_accrued','internal_interest_paid','internal_interest_unpaid','parent_credit_loss','legal_debt_settlement','parent_equity_exit_gain','realization_friction','parent_loan_allowance']
+PARENT_COLUMNS += ['intercompany_principal_received','intercompany_interest_received','intercompany_interest_income','intercompany_credit_loss','intercompany_receivable_face','equity_exit_cash_tax','closing_retained_transfer','closing_reserve_transfer','closing_capital_reserve_transfer','closing_registered_transfer','assigned_contingent_loan_face']
 
 # H1 mother-only cost-method carrying amounts, note p164; not registered capital.
 DIRECT_PARENT_BOOK={'甬台温':1.84335172986,'九瑞':.3966329,'桂兴':1.2732992,'桂阳':1.092258,'阳平':.5964915,'灵三':0.,'鄂东':1.22177612233,'渝黔':1.19498463402,'沪渝':.55091385443}
@@ -46,26 +49,38 @@ def legal_add(ret,res,registered,profit):
 def entity_step(s,year,operating,capmult=1,legal_scale=1):
     """Single legal pool, no cross-entity cash or loss offsets. Sponsor cash calls explicit."""
     s.setdefault('registered',s['paid']);s.setdefault('support_used',0.)
-    start=s['cash']; row=dict.fromkeys(ENTITY_COLUMNS,0);row.update(year=year,id=s['id'],opening_cash=start,registered_capital=s['registered'],object_kind='domestic_legal_entity_budget',cumulative_support=s['support_used'])
+    s.setdefault('parent_loan_face',s.get('parent_receivable_face',0.));s.setdefault('loan_interest_due',0.);s.setdefault('loan_allowance',0.)
+    start=s['cash']; row=dict.fromkeys(ENTITY_COLUMNS,0);row.update(year=year,id=s['id'],opening_cash=start,registered_capital=s['registered'],object_kind='domestic_legal_entity_budget',cumulative_support=s['support_used'],opening_parent_loan_face=s['parent_loan_face'],parent_loan_face=s['parent_loan_face'],parent_loan_allowance=s['loan_allowance'])
     if year>s['end']+1:
-        row.update(ending_cash=0,paid_capital=s['paid'],reserve=s['res'],legal_retained=s['ret'],parent_exit_accounting_basis_budget=s['basis']);return row,0,0,0,0,None
+        row.update(ending_cash=0,paid_capital=s['paid'],reserve=s['res'],legal_retained=s['ret'],parent_exit_accounting_basis_budget=s['basis'],parent_loan_face=s['parent_loan_face'],internal_interest_unpaid=s['loan_interest_due'],parent_loan_allowance=s['loan_allowance']);return row,0,0,0,0,None
     if year==s['end']+1:
         gross=s.get('exit_gross',0)*s['r']; fee=s.get('exit_fee',0)*s['r']; exit_tax=gross*.25
         recovery=s['cash']-s['debt']+gross-exit_tax-fee
         row.update(exit_gross=gross,exit_fee=fee,exit_tax=exit_tax)
         if recovery< -1e-9:return row,0,0,0,0,'liquidation insolvent'
-        gain=recovery-s['basis'];s['cash']=0;s['debt']=0;s['basis']=0
-        s['paid']=s['registered']=s['res']=s['ret']=0
-        row.update(liquidation_cash=recovery,ending_cash=0,exit_gross=gross,exit_fee=fee,exit_tax=exit_tax,registered_capital=0,paid_capital=s['paid'],reserve=s['res'],legal_retained=s['ret'])
-        return row,recovery*s['share'],gain*s['share'],0,0,None
+        friction=recovery*(1-s.get('loan_realization',1.)) if s['parent_loan_face'] else 0.
+        recovery-=friction;row['realization_friction']=friction
+        interest_pay=min(recovery,s['loan_interest_due']);recovery-=interest_pay
+        principal_pay=min(recovery,s['parent_loan_face']);recovery-=principal_pay
+        credit_loss=s['parent_loan_face']-principal_pay+s['loan_interest_due']-interest_pay
+        # Cessation/asset realization does NOT legally forgive an unpaid shareholder claim.
+        # Face and matching debtor payable survive; allowance recognises economic shortfall.
+        s['parent_loan_face']-=principal_pay;s['loan_interest_due']-=interest_pay;s['loan_allowance']=credit_loss
+        row.update(parent_loan_principal_paid=principal_pay,internal_interest_paid=interest_pay,parent_credit_loss=credit_loss,legal_debt_settlement=0,parent_loan_face=s['parent_loan_face'],internal_interest_unpaid=s['loan_interest_due'],parent_loan_allowance=credit_loss)
+        gain=recovery-s['basis'];row['parent_equity_exit_gain']=gain*s['share']
+        s['cash']=0;s['debt']=0;s['basis']=0
+        if s['parent_loan_face']+s['loan_interest_due']<1e-10:s['paid']=s['registered']=s['res']=s['ret']=0
+        row.update(liquidation_cash=recovery+principal_pay+interest_pay,ending_cash=0,exit_gross=gross,exit_fee=fee,exit_tax=exit_tax,registered_capital=s['registered'],paid_capital=s['paid'],reserve=s['res'],legal_retained=s['ret'])
+        return row,recovery*s['share']+principal_pay+interest_pay,gain*s['share']-credit_loss,0,0,None
     trend=1.01**(year-2027)*(.96**max(0,year-2035) if s['jv'] else 1)
     fraction=s.get('final_fraction',1) if year==s['end'] else 1
     trend*=fraction
     revenue=s['r']*trend*operating
     op=.92*revenue-.20*s['r']*trend
     da=s['a']*trend*operating; interest=s['debt']*.03
-    tax,s['losses']=tax_charge(op-da-interest,s['losses'],year)
-    profit=op-da-interest-tax
+    internal_accrued=s['parent_loan_face']*s.get('internal_rate',0);s['loan_interest_due']+=internal_accrued
+    tax,s['losses']=tax_charge(op-da-interest-internal_accrued,s['losses'],year)
+    profit=op-da-interest-internal_accrued-tax
     cap=(s['cap'] if s['jv'] else revenue*.03)*capmult
     repayment=min(s['amort'],s['debt']);s['debt']-=repayment
     before_injection=start+op-tax-interest-cap-repayment
@@ -73,15 +88,18 @@ def entity_step(s,year,operating,capmult=1,legal_scale=1):
     equity=max(0,floor-before_injection)
     s['support_used']+=equity
     s['cash']=before_injection+equity;s['paid']+=equity;s['registered']+=equity;s['basis']+=equity # funded, approved capital increase budget; not cashless registration
+    internal_paid=min(s['loan_interest_due'],max(0,s['cash']-floor));s['loan_interest_due']-=internal_paid;s['cash']-=internal_paid
+    principal_paid=min(s['parent_loan_face'],s.get('loan_annual_due',s['parent_loan_face']),max(0,s['cash']-floor)) if year>=s.get('loan_repay_start',2027) else 0.
+    s['parent_loan_face']-=principal_paid;s['cash']-=principal_paid
     s['ret'],s['res'],reserve_add=legal_add(s['ret'],s['res'],s['registered'],profit)
     distribution=min(max(0,s['ret']),max(0,s['cash']-floor))
     s['ret']-=distribution;s['cash']-=distribution
     equity_adjustment=(profit-distribution)*s['share'] if s['jv'] else 0
     if s['jv']:s['basis']+=profit-distribution
-    assert abs(s['cash']-(start+op-interest-tax-cap-repayment+equity-distribution))<1e-8
+    assert abs(s['cash']-(start+op-interest-tax-cap-repayment+equity-distribution-internal_paid-principal_paid))<1e-8
     assert s['cash']>=floor-1e-9 and s['debt']>=-1e-9
-    row.update(revenue=revenue,operating_cash_before_tax_interest=op,depreciation=da,interest=interest,cash_tax=tax,profit=profit,capital_spend=cap,debt_repayment=repayment,equity_paid_in=equity,minority_paid_in=equity*(1-s['share']),reserve_add=reserve_add,ordinary_dividend=distribution,ending_cash=s['cash'],cash_floor=floor,debt=s['debt'],paid_capital=s['paid'],reserve=s['res'],legal_retained=s['ret'],parent_exit_accounting_basis_budget=s['basis'],loss_carry=sum(v for _,v in s['losses']),registered_capital=s['registered'],cumulative_support=s['support_used'])
-    return row,distribution*s['share'],distribution*s['share'],equity_adjustment,equity*s['share'],('cumulative equity support exceeds finite budget' if s['support_used']>s.get('support_limit',2)+1e-9 else None)
+    row.update(parent_loan_face=s['parent_loan_face'],parent_loan_principal_paid=principal_paid,internal_interest_accrued=internal_accrued,internal_interest_paid=internal_paid,internal_interest_unpaid=s['loan_interest_due'],revenue=revenue,operating_cash_before_tax_interest=op,depreciation=da,interest=interest,cash_tax=tax,profit=profit,capital_spend=cap,debt_repayment=repayment,equity_paid_in=equity,minority_paid_in=equity*(1-s['share']),reserve_add=reserve_add,ordinary_dividend=distribution,ending_cash=s['cash'],cash_floor=floor,debt=s['debt'],paid_capital=s['paid'],reserve=s['res'],legal_retained=s['ret'],parent_exit_accounting_basis_budget=s['basis'],loss_carry=sum(v for _,v in s['losses']),registered_capital=s['registered'],cumulative_support=s['support_used'])
+    return row,distribution*s['share']+principal_paid+internal_paid,distribution*s['share'],equity_adjustment,equity*s['share'],('cumulative equity support exceeds finite budget' if s['support_used']>s.get('support_limit',2)+1e-9 else None)
 
 def jv_step(s,year,factor,capital=1,remit_cap=.8,realization=.8):
     """Economic attributable upflow budget, NOT a legal entity or statutory reserve pool.
@@ -98,7 +116,7 @@ def jv_step(s,year,factor,capital=1,remit_cap=.8,realization=.8):
         recovery=net*realization
         # Sale/realisation of finite economic claim; not a declaration of corporate liquidation.
         gain=recovery-s['basis'];s['cash']=0;s['basis']=0;s['debt']=0
-        row.update(liquidation_cash=recovery,ending_cash=0,parent_exit_accounting_basis_budget=0)
+        row.update(liquidation_cash=recovery,ending_cash=0,parent_exit_accounting_basis_budget=0,realization_friction=net-recovery,parent_equity_exit_gain=gain)
         return row,recovery,gain,0,0,None,0,0
     scale=1.01**(year-2027)*.96**max(0,year-2035)
     revenue=s['r']*scale*factor;idle_interest=max(0,start-s['floor'])*s.get('idle_yield',0)
@@ -150,7 +168,57 @@ def reduce_capital(available,shares,registered,limit=.5,fee_rate=.01):
     cancelled=shares*amount/registered if registered else 0
     return amount,amount*fee_rate,cancelled,shares-cancelled,registered-amount
 
-def run(rate=.075,toll=1.,capital=1.,cycle=False,structural=False,optimistic=False,credit_limit=12.5,opening_cash=4.,arrival_fraction=1.,legal_scale=1.,extra_payment=0.,project_right=True,jv_end=2044,initial_ar=.05,jv_remit_cap=.8,jv_realization=.8,support_limit=2,jv_embedded_debt=25,jv_parent_basis_factor=1,exit_gross=.05,exit_fee=.02,idle_yield=.015,capital_recovery=False,parent_exit_fee=.05,parent_loss_cover=0,project_exit_net=.03,basis_mode="source",voluntary_reserve_rate=0,precise_expiry=True,timing_stub=True,debt_shift_to_zhongtie=0):
+
+def fund_schedule(enabled=True,start=2027,exit_year=2041,multiple=1.,commitment=1.25,fee_external=False,end_year=2056):
+    """Attributable LP economic budget, not a signed legal obligation or promised return.
+    Commitment funds fees and investments; no fees charged twice to mother cash.
+    Five annual calls; reserve ten or more exit-year fees within the commitment.
+    Profit recognition is cost/realisation budget; no fair-value invention.
+    """
+    assert exit_year>=start+5 and commitment>=0
+    if not enabled:commitment=0.
+    exit_period=exit_year-(start+4)
+    investment_fees=commitment*.02*3
+    deployed=commitment if fee_external else (commitment-investment_fees)/(1+.015*exit_period)
+    paid=cash=basis=invested=0.;rows=[]
+    hurdle=sum(commitment/5*.06*(exit_year-(start+i)+1) for i in range(5))
+    for y in range(2027,end_year+1):
+        opening=cash;opening_basis=basis;opening_invested=invested
+        call=commitment/5 if start<=y<=start+4 else 0.
+        paid+=call;cash+=call;basis+=call
+        invest=deployed/5 if call else 0.;invested+=invest;cash-=invest
+        fee=(paid*.02 if start<=y<=start+4 else invested*.015 if start+5<=y<=exit_year else 0.)
+        extra_fee=fee if fee_external else 0.
+        call+=extra_fee;cash+=extra_fee;basis+=extra_fee
+        cash-=fee;basis-=fee;profit=-fee
+        proceeds=carry=tax=distribution=0.
+        if y==exit_year:
+            proceeds=invested*multiple
+            pre_carry=cash+proceeds
+            carry=.2*max(0,pre_carry-paid-hurdle)
+            # Positive realised fund net income taxed at LP; no immediate loss refund.
+            tax=.25*max(0,proceeds-invested-carry)
+            profit+=proceeds-invested-carry-tax
+            cash+=proceeds-carry-tax;invested=0.
+            distribution=max(0,cash);cash-=distribution
+            basis+=proceeds-opening_invested-carry-tax-distribution
+        assert cash>=-1e-10 and basis>=-1e-9
+        assert abs(cash-(opening+call-invest-fee+proceeds-carry-tax-distribution))<1e-9
+        assert abs(basis-(opening_basis+call+profit-distribution))<1e-9
+        rows.append(dict(year=y,opening_cash=opening,call=call,cumulative_paid=paid,investment=invest,invested_cost=invested,management_fee=fee,additional_fee_call=extra_fee,exit_gross=proceeds,carry=carry,tax=tax,distribution=distribution,equity_profit=profit,ending_cash=cash,ending_basis=basis,hurdle_not_guaranteed=hurdle))
+    assert abs(basis)<1e-9 and abs(cash)<1e-9 and abs(sum(r['call']-r['additional_fee_call'] for r in rows)-commitment)<1e-9
+    return rows
+
+def run(rate=.075,toll=1.,capital=1.,cycle=False,structural=False,optimistic=False,credit_limit=12.5,opening_cash=4.,arrival_fraction=1.,legal_scale=1.,extra_payment=0.,project_right=True,jv_end=2044,initial_ar=.05,jv_remit_cap=.8,jv_realization=.8,support_limit=2,jv_embedded_debt=25,jv_parent_basis_factor=1,exit_gross=.05,exit_fee=.02,idle_yield=.015,capital_recovery=False,parent_exit_fee=.05,parent_loss_cover=0,project_exit_net=.03,basis_mode="source",voluntary_reserve_rate=0,precise_expiry=True,timing_stub=True,debt_shift_to_zhongtie=0,fund_enabled=True,fund_start=2027,fund_exit=2041,fund_multiple=1.,fund_fee_external=False,intercompany=True,internal_rate=0.,loan_repay_start=2027,loan_realization=1.,tail_extra=0,cleanup_years=0,cleanup_cost=.02):
+    assert 0 <= arrival_fraction <= 1 and cleanup_years >= 0 and tail_extra >= 0
+    # Last operating disposal is not necessarily last CASH receipt. Unreceived
+    # distributions are contractual-budget one-year AR, not worthless legal face.
+    last_entity_disposal=max(max(x[2] for x in ROAD_DATA),max(x[0] for x in FINAL_DATES.values()),jv_end)+1
+    last_entity_arrival=last_entity_disposal+(1 if arrival_fraction<1 else 0)
+    operating_exit=max(2056,last_entity_disposal,(fund_exit+1 if fund_enabled else 2027))
+    exit_year=max(operating_exit,last_entity_arrival)+cleanup_years
+    end_year=exit_year+tail_extra
+    fund_rows=fund_schedule(fund_enabled,fund_start,fund_exit,fund_multiple,fee_external=fund_fee_external,end_year=end_year)
     states=initialize(legal_scale,jv_end,support_limit)
     if basis_mode=='source':correct_basis(states)
     parent=[]; entity_rows=[]; errors=[]; funding_failures=[]; status=[]; shares=SHARES; registered=SHARES; capital_reserve=36.05897948415; eligible_loss_cover=parent_loss_cover
@@ -171,6 +239,12 @@ def run(rate=.075,toll=1.,capital=1.,cycle=False,structural=False,optimistic=Fal
     for st in source:st['debt']-=move*st['debt']/den_source;st['amort']=st['debt']/(st['end']-2026)
     for st in target:st['debt']+=move*st['debt']/den_target;st['amort']=st['debt']/(st['end']-2026)
     opening_road_debt={st['id']:st['debt'] for st in states if not st['jv']}
+    for st in states:
+        face=LOAN_FACE.get(st['id'],0.) if intercompany else 0.
+        st.update(parent_loan_face=face,loan_interest_due=0.,internal_rate=internal_rate,loan_repay_start=loan_repay_start,loan_realization=loan_realization,loan_annual_due=face/max(1,st['end']-loan_repay_start+1))
+    easton_face=2.329195 if intercompany else 0.;easton_due=0.;easton_allowance=0.;easton_rows=[]
+    easton_amort=easton_face/max(1,jv_end-loan_repay_start+1)
+    closing_accounts=[]
     for state in states:
         if state['jv']:
             state['basis']*=jv_parent_basis_factor
@@ -178,9 +252,10 @@ def run(rate=.075,toll=1.,capital=1.,cycle=False,structural=False,optimistic=Fal
             state['debt']+=delta;state['amort']=state['debt']/(jv_end-2026)
     old_jjt_cash=5*.58896/sum(x[1] for x in ROAD_DATA if x[0]!='机场')
     cash=opening_cash+old_jjt_cash;ret=12*legal_scale;res=3.45480841708;debt=18.4;newloan=0;perp=7.3;ar=initial_ar;used_credit=0
-    for year in range(2027,2057):
-        snapshot=copy.deepcopy(states); mother_snapshot=(cash,ret,res,debt,newloan,perp,ar,used_credit,shares,registered,capital_reserve,eligible_loss_cover); nrows=len(entity_rows)
+    for year in range(2027,end_year+1):
+        snapshot=copy.deepcopy(states);easton_snapshot=(easton_face,easton_due,easton_allowance); mother_snapshot=(cash,ret,res,debt,newloan,perp,ar,used_credit,shares,registered,capital_reserve,eligible_loss_cover); nrows=len(entity_rows)
         receipt=decl=eqprofit=calls=direct_jv=mediated_jv=0
+        loan_principal=loan_interest_received=loan_interest_income=credit_loss=equity_exit_gain=0.
         factor=toll
         if cycle:factor*={2027:.8,2028:.85,2029:.95}.get(year,1.)
         if structural:factor*=.85*.98**(year-2027)
@@ -189,8 +264,32 @@ def run(rate=.075,toll=1.,capital=1.,cycle=False,structural=False,optimistic=Fal
             if state['jv']:
                 row,received,income,eq,call,err,dp,mi=jv_step(state,year,factor,capital,jv_remit_cap,jv_realization);direct_jv+=dp;mediated_jv+=mi
             else:row,received,income,eq,call,err=entity_step(state,year,factor,capital)
+            loan_principal+=row['parent_loan_principal_paid'];loan_interest_received+=row['internal_interest_paid'];loan_interest_income+=row['internal_interest_accrued'];credit_loss+=row['parent_credit_loss'];equity_exit_gain+=row['parent_equity_exit_gain']
             entity_rows.append([row[k] for k in ENTITY_COLUMNS]);receipt+=received;decl+=income;eqprofit+=eq;calls+=call
             if err:errors.append([year,state['id'],err])
+        # Easton is 100% indirectly held. Its existing mediated upflow is reclassified,
+        # never newly created group cash. Counterparty source allocation is a budget.
+        eopening=easton_face;edue0=easton_due;einterest=easton_face*internal_rate if year<=jv_end else 0.;easton_due+=einterest
+        source=max(0,mediated_jv)
+        epaid_interest=min(source,easton_due);source-=epaid_interest;easton_due-=epaid_interest
+        eprincipal=min(source,easton_face,easton_amort) if loan_repay_start<=year<=jv_end else 0.
+        ecredit=efriction=0.
+        if year==jv_end+1:
+            # From the remaining JV disposal already present in receipt and equity gain.
+            source=max(0,sum(r[15] for r in entity_rows[-len(states):] if r[1]=='其余参联营归属预算'))
+            epai=min(source,easton_due);epaid_interest+=epai;source-=epai;easton_due-=epai
+            efriction=source*(1-loan_realization);source-=efriction;receipt-=efriction;decl-=efriction;equity_exit_gain-=efriction
+            eprincipal=min(source,easton_face)
+            ecredit=easton_face-eprincipal+easton_due;easton_allowance=ecredit
+            # Old equity gain included whole gross upflow; remove creditor recovery.
+            equity_exit_gain-=eprincipal
+        easton_face-=eprincipal
+        
+        decl-=eprincipal+epaid_interest+ecredit
+        loan_principal+=eprincipal;loan_interest_received+=epaid_interest;loan_interest_income+=einterest;credit_loss+=ecredit
+        easton_rows.append(dict(year=year,opening_face=eopening,interest_accrued=einterest,interest_paid=epaid_interest,principal_paid=eprincipal,credit_loss=ecredit,ending_face=easton_face,interest_unpaid=easton_due,source_existing_mediated_upflow=mediated_jv,allowance=easton_allowance,realization_friction=efriction))
+        fund=fund_rows[year-2027]
+        eqprofit+=fund['equity_profit'];calls+=fund['call']
         begin=cash;oldar=ar;current_receipt=receipt*arrival_fraction;ar=receipt-current_receipt
         idx=year-2027; construction=([3.5,4,3.5,1.5][idx] if idx<4 else 0)*capital
         draw=min(construction*.8,max(0,credit_limit-used_credit));used_credit+=draw
@@ -202,17 +301,18 @@ def run(rate=.075,toll=1.,capital=1.,cycle=False,structural=False,optimistic=Fal
         # Core/single-factor toll diagnostic affects existing roads/JV only, not new-road pricing.
         if not (cycle or structural or optimistic):project=(.75*1.01**(year-2031) if 2031<=year<=2055 and project_right else 0)
         depreciation=.62 if 2031<=year<=2055 else 0
-        overhead=.18 if year<=2055 else 0
+        overhead=(.18 if year<operating_exit else cleanup_cost) if year<exit_year else 0
         fi=max(0,begin)*.015
         old_r=.58896/1.03*1.01**(year-2027) if year<=2029 else 0
         old_op=old_r*(.92*factor-.20);old_da=old_r*.25*factor;old_cap=old_r*factor*.03*capital
         old_floor=.58896/1.03*.15 if year<=2029 else 0
-        operating_profit=project+old_op-depreciation-old_da-overhead-oi-ni+fi
+        operating_profit=project+old_op-depreciation-old_da-overhead-oi-ni+fi+loan_interest_income
         # No cross-company or immediate negative-tax refund. Conservative no parent tax loss benefit.
-        ct=max(0,operating_profit)*.25
+        equity_exit_tax=max(0,equity_exit_gain)*.25
+        ct=max(0,operating_profit)*.25+equity_exit_tax
         techcost=.08 if year<=2031 else .2 if year==2032 else 0
         financial=.03 if year<=2032 else 0
-        assetcash=(.84979999762+1.03215890687 if year==2032 else 0)+(project_exit_net if year==2056 else 0)
+        assetcash=fund['distribution']+(.84979999762+1.03215890687 if year==2032 else 0)+(project_exit_net if year==2056 else 0)
         legal_profit=decl+eqprofit+operating_profit-ct-pc-techcost+financial
         prior_ret=ret
         ret,res,added=legal_add(ret,res,registered,legal_profit)
@@ -223,55 +323,85 @@ def run(rate=.075,toll=1.,capital=1.,cycle=False,structural=False,optimistic=Fal
             offset_statutory=min(-ret,res);res-=offset_statutory;ret+=offset_statutory
             offset_capital=min(-ret,capital_reserve,eligible_loss_cover);capital_reserve-=offset_capital;eligible_loss_cover-=offset_capital;ret+=offset_capital
         cash+=current_receipt+oldar+project+old_op-old_cap-overhead-oi-ni-pc+fi-ct-construction+draw-repay_old-repay_new-redeem-calls-techcost+financial+assetcash-(extra_payment if year==2027 else 0)
-        floor=(1.+old_floor) if year<=2055 else 0.
+        floor=(1.+old_floor) if year<exit_year else 0.
         bridge=min(max(0,floor-cash),max(0,credit_limit-used_credit)) if year<=2035 else 0
         draw+=bridge;used_credit+=bridge;newloan+=bridge;cash+=bridge
         if cash<floor-1e-9:errors.append([year,'母体','necessary cash floor shortfall',floor-cash])
         target=[.38,.39,.40,.41,.42][idx]*SHARES if idx<5 else max(0,cash-floor)
-        ordinary=min(target,max(0,ret),max(0,cash-floor)) if year<=2055 and not errors else 0
+        ordinary=min(target,max(0,ret),max(0,cash-floor)) if year<exit_year and not errors else 0
         return_capital=0.; cancelled=0.; return_fee=0.
         if capital_recovery and ret>=0 and year>=2046 and year<=2055 and not errors:
             # Conditional pro-rata creditor-protected nominal capital reduction.
             # Reserve every remaining debt/perpetual face amount plus necessary cash.
             available=max(0,cash-ordinary-floor-debt-newloan-perp)
             return_capital,return_fee,cancelled,shares,registered=reduce_capital(available,shares,registered)
-        liquidation=max(0,cash-debt-newloan-perp-parent_exit_fee) if year==2056 and not errors else 0
-        liquidation_fee=parent_exit_fee if year==2056 and not errors else 0
-        if year==2056 and cash-debt-newloan-perp-parent_exit_fee< -1e-9:errors.append([year,'母体','insolvent liquidation'])
-        settled=debt+newloan+perp if year==2056 and not errors else 0
-        if year==2056 and not errors:debt=newloan=perp=0.
+        if year==exit_year:
+            # Closing must settle all live economic assets/payables; impaired legal
+            # claims survive by explicit conditional in-kind transfer, not erasure.
+            remaining_economic_assets=abs(ar)+abs(fund['ending_cash'])+abs(fund['ending_basis'])+abs(fund['invested_cost'])
+            remaining_economic_assets+=sum(abs(st['cash'])+abs(st['debt'])+abs(st['basis']) for st in states)
+            remaining_economic_assets+=sum(max(0,st.get('parent_loan_face',0)+st.get('loan_interest_due',0)-st.get('loan_allowance',0)) for st in states)
+            remaining_economic_assets+=max(0,easton_face+easton_due-easton_allowance)
+            if remaining_economic_assets>1e-8:
+                errors.append([year,'母体','economic assets/payables unresolved before holder exit',remaining_economic_assets])
+        liquidation=max(0,cash-debt-newloan-perp-parent_exit_fee) if year==exit_year and not errors else 0
+        liquidation_fee=parent_exit_fee if year==exit_year and not errors else 0
+        if year==exit_year and cash-debt-newloan-perp-parent_exit_fee< -1e-9:errors.append([year,'母体','insolvent liquidation'])
+        settled=debt+newloan+perp if year==exit_year and not errors else 0
+        if year==exit_year and not errors:debt=newloan=perp=0.
         cash-=ordinary+liquidation+settled+return_capital+return_fee+liquidation_fee;ret-=ordinary
-        if year==2056 and not errors:shares=registered=0.
-        row=[year,begin,decl,eqprofit,current_receipt,oldar,ar,calls,construction,draw,repay_old,repay_new,redeem,oi+ni,pc,fi,project,overhead,ct,legal_profit,added,ordinary,liquidation,cash,floor,ret,res,debt,newloan,perp,ar,techcost,financial,assetcash,old_op,old_da,old_cap,old_floor,direct_jv,mediated_jv,settled,return_capital,return_fee,shares,registered,cancelled,liquidation_fee,capital_reserve,offset_statutory,offset_capital,voluntary_add]
+        ret_transfer=res_transfer=cap_transfer=registered_transfer=assigned_claims=0.
+        if year==exit_year and not errors:
+            ret_transfer=ret;res_transfer=res;cap_transfer=capital_reserve;registered_transfer=registered
+            closing_accounts.append(dict(year=year,legal_retained=ret,reserve=res,capital_reserve=capital_reserve,registered=registered,kind='conditional liquidation closing transfer; not distributable profit'))
+            assigned_claims=sum(st.get('parent_loan_face',0)+st.get('loan_interest_due',0) for st in states)+easton_face+easton_due
+            shares=registered=ret=res=capital_reserve=0.
+        row=[year,begin,decl,eqprofit,current_receipt,oldar,ar,calls,construction,draw,repay_old,repay_new,redeem,oi+ni,pc,fi,project,overhead,ct,legal_profit,added,ordinary,liquidation,cash,floor,ret,res,debt,newloan,perp,ar,techcost,financial,assetcash,old_op,old_da,old_cap,old_floor,direct_jv,mediated_jv,settled,return_capital,return_fee,shares,registered,cancelled,liquidation_fee,capital_reserve,offset_statutory,offset_capital,voluntary_add,loan_principal,loan_interest_received,loan_interest_income,credit_loss,(sum(st.get('parent_loan_face',0)+st.get('loan_interest_due',0) for st in states)+easton_face+easton_due if year<exit_year else 0.),equity_exit_tax,ret_transfer,res_transfer,cap_transfer,registered_transfer,assigned_claims]
         parent.append(row)
         check=begin+current_receipt+oldar+project+old_op-old_cap-overhead-oi-ni-pc+fi-ct-construction+draw-repay_old-repay_new-redeem-calls-techcost+financial+assetcash-(extra_payment if year==2027 else 0)-ordinary-liquidation-settled-return_capital-return_fee-liquidation_fee
         assert abs(cash-check)<1e-8
-        assert ordinary<=max(0,ret+ordinary)+1e-8
+        assert ordinary<=max(0,ret+ordinary)+1e-8 or year==exit_year
         if errors:
             # Atomic annual funding gate: an unfunded plan is NOT an executed capital injection.
             # Preserve last funded assets, debts and shares; record proposed obligations separately.
             funding_failures.append({'year':year,'unexecuted_parent_plan':dict(zip(PARENT_COLUMNS,row)),
                 'unexecuted_entity_plans':[dict(zip(ENTITY_COLUMNS,r)) for r in entity_rows[nrows:]],
                 'opening_funded_parent_state':list(mother_snapshot),'unpaid_due_interest_and_coupon':row[13]+row[14],
-                'unpaid_project_contract_budget':construction,'unpaid_capital_calls':calls,'unpaid_exit_cost':sum(r[30] for r in entity_rows[nrows:])+(parent_exit_fee if year==2056 else 0),
+                'unpaid_project_contract_budget':construction,'unpaid_capital_calls':calls,'unpaid_exit_cost':sum(r[30] for r in entity_rows[nrows:])+(parent_exit_fee if year==exit_year else 0),
                 'legal_status':'unresolved funding/default; no presumption of forgiveness or rescue'})
             cash,ret,res,debt,newloan,perp,ar,used_credit,shares,registered,capital_reserve,eligible_loss_cover=mother_snapshot
-            states=snapshot;parent.pop();del entity_rows[nrows:]
-            for remaining_year in range(year,2057):
+            states=snapshot;easton_face,easton_due,easton_allowance=easton_snapshot;parent.pop();del entity_rows[nrows:]
+            for remaining_year in range(year,end_year+1):
                 pr=[0]*len(PARENT_COLUMNS);pr[0]=remaining_year;pr[1]=pr[23]=cash;pr[25]=ret;pr[26]=res
-                pr[27:30]=[debt,newloan,perp];pr[30]=ar;pr[43]=shares;pr[44]=registered;pr[47]=capital_reserve;parent.append(pr)
+                pr[27:30]=[debt,newloan,perp];pr[30]=ar;pr[43]=shares;pr[44]=registered;pr[47]=capital_reserve;pr[55]=sum(st.get('parent_loan_face',0)+st.get('loan_interest_due',0) for st in states)+easton_face+easton_due;parent.append(pr)
                 for st in states:
-                    er=dict.fromkeys(ENTITY_COLUMNS,0);er.update(year=remaining_year,id=st['id'],opening_cash=st['cash'],ending_cash=st['cash'],debt=st['debt'],parent_exit_accounting_basis_budget=st['basis'],cumulative_support=st['support_used'],object_kind='unresolved_funding_snapshot')
+                    er=dict.fromkeys(ENTITY_COLUMNS,0);er.update(year=remaining_year,id=st['id'],opening_cash=st['cash'],ending_cash=st['cash'],debt=st['debt'],parent_exit_accounting_basis_budget=st['basis'],cumulative_support=st['support_used'],object_kind='unresolved_funding_snapshot',opening_parent_loan_face=st.get('parent_loan_face',0),parent_loan_face=st.get('parent_loan_face',0),internal_interest_unpaid=st.get('loan_interest_due',0),parent_loan_allowance=st.get('loan_allowance',0))
                     for key,statekey in [('paid_capital','paid'),('registered_capital','registered'),('reserve','res'),('legal_retained','ret')]:er[key]=st.get(statekey)
                     entity_rows.append([er[k] for k in ENTITY_COLUMNS])
                 status.append({'year':remaining_year,'state':'unresolved; balances preserved; no further cash payments assumed'})
             break
         status.append({'year':year,'state':'funded conditional budget'})
+    if errors:
+        failure=errors[0][0]
+        easton_rows=[r for r in easton_rows if r['year']<failure]
+        for yy in range(failure,end_year+1):easton_rows.append(dict(year=yy,opening_face=easton_face,interest_accrued=0.,interest_paid=0.,principal_paid=0.,credit_loss=0.,ending_face=easton_face,interest_unpaid=easton_due,source_existing_mediated_upflow=0.,allowance=easton_allowance,realization_friction=0.,executed=False))
+    fund_actual=[]
+    first_failure=errors[0][0] if errors else 9999
+    frozen_basis=frozen_cash=frozen_invested=frozen_paid=0.
+    for fr in fund_rows:
+        actual=fr.copy()
+        if fr['year']>=first_failure:
+            for key in ('call','investment','additional_fee_call','management_fee','exit_gross','carry','tax','distribution','equity_profit'):actual[key]=0.
+            actual.update(opening_cash=frozen_cash,ending_cash=frozen_cash,ending_basis=frozen_basis,invested_cost=frozen_invested,cumulative_paid=frozen_paid,executed=False)
+        else:
+            actual['executed']=True
+            frozen_basis=fr['ending_basis'];frozen_cash=fr['ending_cash'];frozen_invested=fr['invested_cost'];frozen_paid=fr['cumulative_paid']
+        fund_actual.append(actual)
     distribution=[(r[21]+r[22]+r[41])/SHARES for r in parent]
-    stub=((date(2027,12,31)-date(2026,10,26)).days/365.25-1) if timing_stub else 0
+    stub=((date(2027,12,31)-date(2026,10,29)).days/365.25-1) if timing_stub else 0
     pv=sum(d/(1+rate)**(i+1+stub) for i,d in enumerate(distribution)) if not errors else None
     tv=sum(d/(1+rate)**(i-4) for i,d in enumerate(distribution) if i>=5) if not errors else None
-    return dict(feasible=not errors,errors=errors,opening_road_debt=opening_road_debt,funding_failures=funding_failures,annual_status=status,pv=pv,tv5=tv,D=distribution[:5],annual_distributions=distribution,parent=parent,entities=entity_rows,discount_rate=rate,discount_time_first_year=1+stub,terminal_pv_share=(tv/(1+rate)**(5+stub)/pv if pv else None))
+    return dict(nominal_claims_after_economic_exit=[{'debtor':st['id'],'face':st.get('parent_loan_face',0)+st.get('loan_interest_due',0),'allowance':st.get('loan_allowance',0),'economic_value':0,'legal_status':'pending creditor resolution; face not extinguished; in-kind assignment at conditional parent windup'} for st in states if st.get('parent_loan_face',0)+st.get('loan_interest_due',0)>1e-9] if not errors else [],end_year=end_year,economic_exit_year=exit_year,closing_accounts=closing_accounts,easton=easton_rows,unresolved_external_claim={'debtor':'山东省交通运输厅','face':.088635052,'allowance':.088635052,'economic_value':0.,'legal_status':'retained contingent legal right; at conditional parent windup assigned in kind to holders, not forgiven'},fund=fund_actual,fund_unexecuted_plan=fund_rows if errors else [],feasible=not errors,errors=errors,opening_road_debt=opening_road_debt,funding_failures=funding_failures,annual_status=status,pv=pv,tv5=tv,D=distribution[:5],annual_distributions=distribution,parent=parent,entities=entity_rows,discount_rate=rate,discount_time_first_year=1+stub,terminal_pv_share=(tv/(1+rate)**(5+stub)/pv if pv else None))
 
 def tests():
     # Same production legal/entity chain: 10 cash, 100 revenue, 72 operating,25 DA, no debt,
@@ -321,7 +451,7 @@ def tests():
     assert ss['registered']==0 and ss['paid']==0
     fee_fail=run(exit_fee=100)
     assert not fee_fail['feasible'] and fee_fail['funding_failures'][0]['unpaid_exit_cost']>0
-    cap_run=run(capital_recovery=True,parent_loss_cover=36.05897948415,jv_parent_basis_factor=.85)
+    cap_run=run(capital_recovery=True,parent_loss_cover=36.05897948415,jv_parent_basis_factor=.85,intercompany=False)
     assert cap_run['feasible'] and sum(r[41] for r in cap_run['parent'])>0
     for r in cap_run['parent']:
         if r[41]>0:
@@ -362,7 +492,33 @@ def expand(compacted):
 
 def build():
     checks=tests()
-    cases={'base':{},'debt_to_ZT_1bn':{'debt_shift_to_zhongtie':1},'debt_from_ZT_1bn':{'debt_shift_to_zhongtie':-1},'debt_to_ZT_3bn':{'debt_shift_to_zhongtie':3},'debt_from_ZT_3bn':{'debt_shift_to_zhongtie':-3},'no_new_finance':{'credit_limit':0},'new_finance_10bn':{'credit_limit':10},'core_low':{'rate':.085},'core_high':{'rate':.07},'toll_down10':{'toll':.9},'capital_up20':{'capital':1.2},'cyclical':{'cycle':True},'structural':{'structural':True,'capital':1.2,'project_right':False},'optimistic':{'optimistic':True},'arrival_delay':{'arrival_fraction':.5},'legal_half':{'legal_scale':.5},'legal_zero':{'legal_scale':0},'net_payment_1bn':{'extra_payment':1},'cash_minus1bn':{'opening_cash':3},'cash_plus1bn':{'opening_cash':5},'AR_H1_upper':{'initial_ar':1.18137263668},'no_new_right':{'project_right':False},'JV_short_2038':{'jv_end':2038},'JV_long_2050':{'jv_end':2050},'funding_failure':{'opening_cash':0,'credit_limit':0,'extra_payment':20},'JV_remit_60':{'jv_remit_cap':.6},'JV_remit_100':{'jv_remit_cap':1.},'JV_realization_50':{'jv_realization':.5},'JV_realization_100':{'jv_realization':1.},'JV_debt_30':{'jv_embedded_debt':30},'support_limit_1':{'support_limit':1.},'support_limit_001_stress':{'support_limit':.01,'toll':.8},'JV_parent_basis_85':{'jv_parent_basis_factor':.85},'approved_capital_recovery':{'capital_recovery':True,'parent_loss_cover':36.05897948415},'limited_capital_recovery':{'capital_recovery':True,'parent_loss_cover':30},'no_capital_reduction':{'capital_recovery':False},'zero_residual_diagnostic':{'exit_gross':0,'exit_fee':0,'project_exit_net':0},'residual_double':{'exit_gross':.10,'exit_fee':.02,'project_exit_net':.06},'exit_cost_double':{'exit_fee':.04,'parent_exit_fee':.1},'exit_cost_unfunded':{'exit_fee':100},'no_idle_yield':{'idle_yield':0},'voluntary_reserve_10':{'voluntary_reserve_rate':.1},'rounded_expiry':{'precise_expiry':False},'no_date_stub':{'timing_stub':False},'approved_recovery_lower_basis':{'capital_recovery':True,'parent_loss_cover':36.05897948415,'jv_parent_basis_factor':.85},'old_cost_budget':{'basis_mode':'legacy'},'legacy_economics':{'basis_mode':'legacy','precise_expiry':False,'timing_stub':False,'exit_gross':0,'exit_fee':0,'idle_yield':0,'capital_recovery':False,'parent_exit_fee':0,'project_exit_net':0},'method_only_no_new_remit_cap':{'jv_remit_cap':100.,'jv_realization':1.}}
+    fixture=dict(id='loan_priority',r=1,end=2026,share=.6,debt=0,amort=0,cash=1,paid=1,registered=1,res=0,ret=0,basis=.5,a=.25,jv=False,losses=[],exit_gross=0,exit_fee=0,parent_receivable_face=.6495)
+    row,received,income,*_=entity_step(fixture,2027,1)
+    assert abs(received-.8598)<1e-12 and abs(row['parent_loan_principal_paid']-.6495)<1e-12
+    assert abs(income-(.3505-.5)*.6)<1e-12
+    t=run();padded=run(tail_extra=10);late=run(jv_end=2056)
+    assert t['pv']==padded['pv'] and t['parent']==padded['parent'][:30]
+    assert late['economic_exit_year']==2057 and late['parent'][-1][43]==0
+    assert all(r[16]==r[18]==r[22]==0 for r in late['entities'] if r[0]==2057)
+    assert all(abs(r[33]+r[37]-r[42])<1e-8 for r in late['entities'] if r[0]==2057) # nonzero legal claims fully reserved, NOT erased
+    assert all(t['parent'][-1][i]==0 for i in [23,25,26,27,28,29,43,44,47,55])
+    checks+=['real 0.6495bn mother loan before60% equity fixture','baseline full-state tail padding invariant','2056 JV extends actual liquidation to2057','parent closing equity transfer fully recorded']
+    f=fund_schedule();z=fund_schedule(False);high=fund_schedule(multiple=3)
+    assert abs(sum(r['call'] for r in f)-1.25)<1e-12
+    assert abs(sum(r['management_fee'] for r in f)-(.075+10*.015*(1.175/1.15)))<1e-12
+    assert sum(r['distribution'] for r in f)<1.25 and all(r['carry']==0 for r in f)
+    assert all(r['call']==r['distribution']==r['equity_profit']==0 for r in z)
+    assert sum(r['carry'] for r in high)>0
+    assert abs(sum(r['equity_profit'] for r in f)-(sum(r['distribution'] for r in f)-1.25))<1e-12
+    checks+=['fund true payment and ending basis closure','fund zero execution counterexample','fund 6% is hurdle not guaranteed return','fund management fees paid once within commitment','fund positive carry and tax production counterexample']
+    cases={'base':{},'cleanup_10years_cost20m':{'cleanup_years':10},'cleanup_10years_cost50m':{'cleanup_years':10,'cleanup_cost':.05},'legacy_no_intercompany':{'intercompany':False},'intercompany_roll_to_2037':{'loan_repay_start':2037},'intercompany_rate3pct':{'internal_rate':.03},'intercompany_half_settlement':{'loan_realization':.5,'loan_repay_start':2100},'tail_2066_padding':{'tail_extra':10},'JV_late_2056':{'jv_end':2056},'JV_late_2070':{'jv_end':2070},'fund_unsigned_no_execution':{'fund_enabled':False},'fund_delayed':{'fund_start':2030,'fund_exit':2044},'fund_exit_delayed':{'fund_exit':2046},'fund_half_recovery':{'fund_multiple':.5},'fund_high_return':{'fund_multiple':3},'fund_moderate_return':{'fund_multiple':1.6},'fund_fees_outside_commitment':{'fund_fee_external':True},'debt_to_ZT_1bn':{'debt_shift_to_zhongtie':1},'debt_from_ZT_1bn':{'debt_shift_to_zhongtie':-1},'debt_to_ZT_3bn':{'debt_shift_to_zhongtie':3},'debt_from_ZT_3bn':{'debt_shift_to_zhongtie':-3},'no_new_finance':{'credit_limit':0,'fund_enabled':False,'intercompany':False},'new_finance_10bn':{'credit_limit':10,'fund_enabled':False,'intercompany':False},'core_low':{'rate':.085},'core_high':{'rate':.07},'toll_down10':{'toll':.9},'capital_up20':{'capital':1.2},'cyclical':{'cycle':True},'structural':{'structural':True,'capital':1.2,'project_right':False},'optimistic':{'optimistic':True},'arrival_delay':{'arrival_fraction':.5},'legal_half':{'legal_scale':.5},'legal_zero':{'legal_scale':0},'net_payment_1bn':{'extra_payment':1},'cash_minus1bn':{'opening_cash':3},'cash_plus1bn':{'opening_cash':5},'AR_H1_upper':{'initial_ar':1.18137263668},'no_new_right':{'project_right':False},'JV_short_2038':{'jv_end':2038},'JV_long_2050':{'jv_end':2050},'funding_failure':{'opening_cash':0,'credit_limit':0,'extra_payment':20},'JV_remit_60':{'jv_remit_cap':.6},'JV_remit_100':{'jv_remit_cap':1.},'JV_realization_50':{'jv_realization':.5},'JV_realization_100':{'jv_realization':1.},'JV_debt_30':{'jv_embedded_debt':30},'support_limit_1':{'support_limit':1.},'support_limit_001_stress':{'support_limit':.01,'toll':.8},'JV_parent_basis_85':{'jv_parent_basis_factor':.85},'approved_capital_recovery':{'capital_recovery':True,'parent_loss_cover':36.05897948415},'limited_capital_recovery':{'capital_recovery':True,'parent_loss_cover':30},'no_capital_reduction':{'capital_recovery':False},'zero_residual_diagnostic':{'exit_gross':0,'exit_fee':0,'project_exit_net':0},'residual_double':{'exit_gross':.10,'exit_fee':.02,'project_exit_net':.06},'exit_cost_double':{'exit_fee':.04,'parent_exit_fee':.1},'exit_cost_unfunded':{'exit_fee':100},'no_idle_yield':{'idle_yield':0},'voluntary_reserve_10':{'voluntary_reserve_rate':.1},'rounded_expiry':{'precise_expiry':False},'no_date_stub':{'timing_stub':False},'approved_recovery_lower_basis':{'capital_recovery':True,'parent_loss_cover':36.05897948415,'jv_parent_basis_factor':.85},'old_cost_budget':{'basis_mode':'legacy'},'legacy_economics':{'basis_mode':'legacy','precise_expiry':False,'timing_stub':False,'exit_gross':0,'exit_fee':0,'idle_yield':0,'capital_recovery':False,'parent_exit_fee':0,'project_exit_net':0},'method_only_no_new_remit_cap':{'jv_remit_cap':100.,'jv_realization':1.}}
+    for je in (2044,2055,2056):
+        for af in (1.,.5,0.):
+            for pad in (0,3,20):
+                for fe in (2041,2060):
+                    for cy in (0,10):
+                        name=f'tail_J{je}_A{af:g}_P{pad}_F{fe}_C{cy}'
+                        cases[name]=dict(jv_end=je,arrival_fraction=af,tail_extra=pad,fund_exit=fe,cleanup_years=cy)
     runs={name:run(**args) for name,args in cases.items()}
     for result in runs.values():
         if result['feasible']:assert result['parent'][-1][23]==0 and sum(result['parent'][-1][27:30])==0
@@ -370,8 +526,8 @@ def build():
         assert abs(sum(runs[nm]['opening_road_debt'].values())-sum(runs['base']['opening_road_debt'].values()))<1e-10
         assert runs[nm]['pv']!=runs['base']['pv']
     assert not runs['no_new_finance']['feasible'] and runs['no_new_finance']['errors'][0][0]==2028
-    assert abs(runs['new_finance_10bn']['pv']-runs['base']['pv'])<1e-12 and max(abs(x-y) for a,b in zip(runs['new_finance_10bn']['parent'],runs['base']['parent']) for x,y in zip(a,b))<1e-10
-    checks.append('actual same-total debt allocation shifts change interest amortisation cash minority and distributions;0 finance fails2028;10bn matches base')
+    assert abs(runs['new_finance_10bn']['pv']-run(fund_enabled=False,intercompany=False)['pv'])<1e-12 and max(abs(x-y) for a,b in zip(runs['new_finance_10bn']['parent'],run(fund_enabled=False,intercompany=False)['parent']) for x,y in zip(a,b))<1e-10
+    checks.append('actual same-total debt allocation shifts change interest amortisation cash minority and distributions; historic no-fund 0 finance fails2028;10bn matches no-fund path')
     checks.append('all feasible terminal cash and debt fully settled, not residual stranded balances')
     # Independent economic method: adjusted carrying assets, no DCF output as input.
     # 2026Q3 common book NAV; rights and associates impairments applied before minority share.
@@ -382,19 +538,19 @@ def build():
     common_book=77.31192316565-7.31637100457
     asset=[]
     project_npv=sum((.75*1.01**(y-2031)-max(0,.75*1.01**(y-2031)-.62)*.25)/1.075**(y-2026) for y in range(2031,2056))-sum(c/1.075**(i+1) for i,c in enumerate([3.5,4,3.5,1.5]))+.03/1.075**30
-    project_npv/=1.075**((date(2027,12,31)-date(2026,10,26)).days/365.25-1)
+    project_npv/=1.075**((date(2027,12,31)-date(2026,10,29)).days/365.25-1)
     for right_factor,jv_factor in [(.65,.80),(.75,.90)]:
         # Group toll-right revaluation attributed 70% to parent, JV already common-owned claim.
-        value=(common_book-84.64801138663*(1-right_factor)*.70-58.72507353254*(1-jv_factor)+project_npv)/SHARES
+        fund_npv=sum((r['distribution']-r['call'])/1.075**(r['year']-2027+runs['base']['discount_time_first_year']) for r in fund_schedule())
+        value=(fund_npv+common_book-84.64801138663*(1-right_factor)*.70-58.72507353254*(1-jv_factor)+project_npv)/SHARES
         asset.append(value)
-    return {'schema':'finite_owner_cash_v3','name':'招商公路','ticker':'CN:001965','information_cutoff':'2026-10-26','units':'CNY bn; shares bn; PV/TV/D CNY per common share','row_encoding':'lossless arrays under explicit columns; all years retained even infeasible','parent_columns':PARENT_COLUMNS,'entity_columns':ENTITY_COLUMNS,'discount_timing':'2027 year-end is 1.1800136892539357 years after 2026-10-26; TV5 at 2031 year-end. Q4 net cash bridge budget zero, tested by opening cash +/-1bn and extra payment1bn. Known partial expiry days are prorated; other year-end dates remain disclosed overview/budget, not precise permits.','assumption_limits':'21 domestic road entity budgets; old JJT is mother operating unit. Three JV economic upflow budgets have NO statutory registered/reserve pools; parent equity earnings separately calibrated. 2bn support per object is cumulative, not annual. No renewals except separately funded conditional JJT 2031-2055. No book principal added to terminal.','entity_source_rows':ROAD_DATA,'disclosed_registered_capital_bn':REGISTERED,'direct_mother_cost_method_book_bn':DIRECT_PARENT_BOOK,'detailed_permit_expiry_dates':{k:list(v) for k,v in FINAL_DATES.items()},'scenario_arguments':cases,'subgroup_valuation_bridge':subgroup_bridges,'financing_boundary':'12.5bn new credit is conditional forecast ceiling, not committed facility; 10bn equals base, zero fails2028. Core range varies discount rate only, not all debt allocation/JV life/non-road exit uncertainty.','runs':runs,'auxiliary_asset_method':{'common_book_equity_bn':common_book,'rights_parent_fraction':.70,'project_incremental_NPV_bn':project_npv,'value_range':asset,'independent_assumptions':[['rights_factor',.65,.75],['JV_factor',.80,.90]]},'tests':checks}
+    return {'schema':'finite_owner_cash_v3','name':'招商公路','ticker':'CN:001965','information_cutoff':'2026-10-29T11:02:57+00:00','units':'CNY bn; shares bn; PV/TV/D CNY per common share','row_encoding':'lossless arrays under explicit columns; all years retained even infeasible','parent_columns':PARENT_COLUMNS,'entity_columns':ENTITY_COLUMNS,'discount_timing':'2027 year-end is 1.1718001368925393 years after 2026-10-29; TV5 at 2031 year-end. Q4 net cash bridge budget zero, tested by opening cash +/-1bn and extra payment1bn. Known partial expiry days are prorated; other year-end dates remain disclosed overview/budget, not precise permits.','assumption_limits':'21 domestic road entity budgets; old JJT is mother operating unit. Three JV economic upflow budgets have NO statutory registered/reserve pools; parent equity earnings separately calibrated. 2bn support per object is cumulative, not annual. No renewals except separately funded conditional JJT 2031-2055. No book principal added to terminal.','entity_source_rows':ROAD_DATA,'disclosed_registered_capital_bn':REGISTERED,'direct_mother_cost_method_book_bn':DIRECT_PARENT_BOOK,'detailed_permit_expiry_dates':{k:list(v) for k,v in FINAL_DATES.items()},'scenario_arguments':cases,'subgroup_valuation_bridge':subgroup_bridges,'financing_boundary':'12.5bn new credit is conditional forecast ceiling, not committed facility; 10bn equals base, zero fails2028. Core range varies discount rate only, not all debt allocation/JV life/non-road exit uncertainty.','runs':runs,'auxiliary_asset_method':{'common_book_equity_bn':common_book,'rights_parent_fraction':.70,'project_incremental_NPV_bn':project_npv,'fund_incremental_NPV_bn':fund_npv,'value_range':asset,'independent_assumptions':[['rights_factor',.65,.75],['JV_factor',.80,.90]]},'tests':checks}
 def pack_full(out):
     raw=json.dumps(out,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
     return {'encoding':'gzip+base64 stdlib; canonical expanded JSON SHA256','ticker':'CN:001965','name':'招商公路','full_sha256':hashlib.sha256(raw).hexdigest(),'full_bytes':len(raw),'subgroup_valuation_bridge':out['subgroup_valuation_bridge'],'financing_boundary':out['financing_boundary'],'summary':{k:{x:v[x] for x in ('feasible','pv','tv5','D')} for k,v in out['runs'].items()},'payload':base64.b64encode(gzip.compress(raw,mtime=0)).decode()}
 def unpack_full(p):
     raw=gzip.decompress(base64.b64decode(p['payload']));assert hashlib.sha256(raw).hexdigest()==p['full_sha256'];return json.loads(raw)
 if __name__=='__main__':
-    ap=argparse.ArgumentParser();ap.add_argument('--output',type=Path,default=Path(__file__).with_name('2026-Q3-output.json'));ap.add_argument('--expand',action='store_true');args=ap.parse_args()
-    out=build();packed=pack_full(out);assert unpack_full(packed)==out
-    args.output.write_text(json.dumps(out if args.expand else packed,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps(packed['summary'],ensure_ascii=False,indent=2))
+    import sys
+    json.dump(build(),sys.stdout,ensure_ascii=False,sort_keys=True,separators=(',',':'))
+    print()
