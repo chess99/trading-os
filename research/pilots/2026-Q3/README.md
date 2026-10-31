@@ -1,6 +1,6 @@
 # 2026Q3研究入口
 
-更新于2026-10-29。重点池191家公司中，已正式披露的**115家完整研究**及配套模型均已进入[PR #1](https://github.com/chess99/trading-os/pull/1)，最近一批为惠泰医疗V3、锦波生物V2。2026-10-29 00:00正式披露核查已确认115家全文；76家继续等待实际披露并核查延期或更正，不因10月30日经过而结束。提交审批已成功，累计交付提交 `fb62951f3d4c8f261f002df5dae060cd9d47eccc` 的117个变更文件已逐项核对远端完整字节、哈希和路径集合。惠泰、锦波全部年度输出均使用无损XZ，展开后的完整JSON不变；此前五粮液资本行动窄修与四个暂不估值双null保持。PR尚未合并，main并行改动未集成，当前API报告 `mergeable=false`，不表示可合并。
+更新于2026-10-29 11:00披露批次：重点池191家公司已核164家正式全文，27家继续等待实际披露并核查延期或更正。已进入PR的父批为115家；本增量新增泸州老窖、宁波银行两家公司完整独立研究，工程验收与远端提交完成后为117家，尚余47家已披露待研究。本地候选不计PR交付。审批此前已成功，不假称再次待审批；当前PR未合并、main并行改动未集成，不表示可合并。完整模型输出采用无损XZ，全部年度和主体保留，四个暂不估值双null及五粮液修订保持。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -8,6 +8,8 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 泸州老窖 000568 | [2026Q3](../../companies/CN/000568/reports/2026-Q3.md) | [Python](../../companies/CN/000568/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/000568/models/2026-Q3-output.json.xz) |
+| 宁波银行 002142 | [2026Q3](../../companies/CN/002142/reports/2026-Q3.md) | [Python](../../companies/CN/002142/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/002142/models/2026-Q3-output.json.xz) |
 | 惠泰医疗 688617 | [2026Q3](../../companies/CN/688617/reports/2026-Q3.md) | [Python](../../companies/CN/688617/models/2026-Q3.py) | [完整输出](../../companies/CN/688617/models/2026-Q3-output.json.xz) |
 | 锦波生物 920982 | [2026Q3](../../companies/CN/920982/reports/2026-Q3.md) | [Python](../../companies/CN/920982/models/2026-Q3.py) | [完整输出](../../companies/CN/920982/models/2026-Q3-output.json.xz) |
 | 联影医疗 688271 | [2026Q3](../../companies/CN/688271/reports/2026-Q3.md) | [Python](../../companies/CN/688271/models/2026-Q3.py) | [完整输出](../../companies/CN/688271/models/2026-Q3-output.json.xz) |
