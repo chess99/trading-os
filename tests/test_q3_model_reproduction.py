@@ -137,6 +137,9 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
         "603568",
     }
     newly_disclosed_codes = {
+        "603939",
+        "688188",
+        "001965",
         "000596",
         "000538",
         "002142",
