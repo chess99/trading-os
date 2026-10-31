@@ -5,7 +5,7 @@ No security quotation is an input. All assumptions are in this file.
 """
 import json, math, copy
 from pathlib import Path
-CUTOFF='2026-10-26T06:30:00Z'
+CUTOFF='2026-10-29T11:05:00Z'
 # name, metal, look-through equity, 2027..31 saleable output (100% project),
 # recoverable inventory at start 2027, maximum years, resource-charge-exclusive accounting unit cost (including DA),
 # depreciation/unit, sustaining/unit, five-year development capital (100% project, bn)
@@ -46,8 +46,58 @@ BASE={'gold':850.,'copper':80000.,'lithium':90000.,'inflation':.015,'tax':.24,
       'payout_first5':.35,'payout_later':.70,'scenario':'base', 'price_shift':1.,
       'cost_shift':1.,'volume_shift':1.,'growth_shift':1.,'reserve_shift':1.,
       'subcash_factor':.78,'subdebt_factor':.75,'assets_factor':1.,'acquisition_prepaid':0.,'convert_2029':False}
-SHARES=26.590798241+.0262 # Employee treasury shares re-enter circulation; options included.
-EMPLOYEE_CASH=.077474592*18.56+.0262*10.70
+# Share counts are billion shares, money CNY billion. No stock quotation input.
+ISSUED=26.590798241
+TRANSFERRED=.0729368
+TREASURY_ORIGINAL=.077474592
+TREASURY_REMAINING=.004537792
+ESOP_PRICE=18.56
+ESOP_RECEIVABLE=TRANSFERRED*ESOP_PRICE
+TREASURY_COST=2.499993348
+TRANSFER_COST=TREASURY_COST*TRANSFERRED/TREASURY_ORIGINAL
+REMAINING_COST=TREASURY_COST-TRANSFER_COST
+OTHER_TREASURY_OBLIGATION=3.434374064-TREASURY_COST # old 2025 plan, not physical 2026 treasury shares
+OPTIONS=.0262
+# 11.15 last formally announced; .38+.42 subsequently paid distributions.
+OPTION_BUDGET_PRICE=11.15-.38-.42
+SHARES=ISSUED-TREASURY_REMAINING+OPTIONS
+EMPLOYEE_CASH=ESOP_RECEIVABLE+OPTIONS*OPTION_BUDGET_PRICE
+
+# Includes an accounting allocation of existing aggregate overhead, NOT a grant-date FV.
+# H1 expense annualized is a disclosed historical scale proxy. Core operating profit/total
+# overhead unchanged; cash overhead is lower by the noncash allocation. 0/2x and incremental
+# expense sensitivities explicitly expose this unknown allocation. No tax shield assumed.
+SBC_ANNUAL_PROXY=.142533175*2
+
+def capital_opening():
+    return dict(issued=ISSUED, treasury_shares=TREASURY_REMAINING,
+        participating=ISSUED-TREASURY_REMAINING, registered=2.657753314,
+        paid_up=2.659079824, transfer_shares=TRANSFERRED, transfer_receivable=ESOP_RECEIVABLE,
+        issuer_cash_receipt_confirmed=False, transfer_cost=TRANSFER_COST,
+        transfer_capital_surplus=ESOP_RECEIVABLE-TRANSFER_COST,
+        capital_surplus=31.787211892+ESOP_RECEIVABLE-TRANSFER_COST,
+        treasury_cost=REMAINING_COST, old_plan_treasury_obligation=OTHER_TREASURY_OBLIGATION,
+        total_treasury_contra_equity=REMAINING_COST+OTHER_TREASURY_OBLIGATION,
+        net_equity_delta=ESOP_RECEIVABLE, repeated_repurchase_cash=0.,
+        sbc_fair_value_disclosed=False)
+
+def option_conditions(revenue_growth, revenue_peer_threshold, roe, roe_peer_threshold, debt_ratio, personal_grade, registration, tranche):
+    required=.15 if tranche==2 else .20
+    return revenue_growth>=max(required,revenue_peer_threshold) and roe>=max(.12,roe_peer_threshold) and debt_ratio<=.65 and personal_grade in ('A','B') and registration
+
+def option_quantity(p):
+    # Explicit company/individual/registration conditions; non-market failure cancels options,
+    # never already issued ordinary shares. Two remaining tranches each 13.1 million.
+    return .0131*sum(bool(p[k]) and option_conditions(.25,.20,.16,.15,.60,'B',p['option_registration'],n) for k,n in [('option_tranche2_eligible',2),('option_tranche3_eligible',3)])
+
+def economic_shares(p):
+    return ISSUED-TREASURY_REMAINING+option_quantity(p)+(TREASURY_REMAINING if p['future_talent_approved'] else 0.)
+
+def sbc_budget(p,t):
+    # Existing compensation is explicitly allocated inside original overhead, with parent expense.
+    # Not legal accounting certification; actual allocation/grant FV remains unknown.
+    return SBC_ANNUAL_PROXY*p['sbc_scale']*([1,1,10/12][t-1] if t<=3 else 0.)
+
 # Parent debt + fully owned offshore CB liability plus residual project debt share.
 PARENT_DEBT=10.326890067+22.075727251+20.929911054+43.254379669
 GROUP_BOOK_DEBT=35.207599259+27.941847860+41.904209712+64.633685387+.222222739-.012086635 # H1 current stream proxy removed; operating stream already budgeted
@@ -105,7 +155,7 @@ def operations(p):
     chifeng_stream_remaining=p['chifeng_stage1_remaining_oz']*.0000311034768
     remaining={m[0]:m[4]*p['reserve_shift']*(.85 if m[1]=='li' else 1) for m in MINES}
     result=[]
-    for t in range(1,41):
+    for t in range(1,p['horizon']+1):
         inflation=(1+p['inflation'])**(t-1)
         shift=p['price_shift']; volume=p['volume_shift']; costshift=p['cost_shift']; capshift=p['growth_shift']
         if p['scenario']=='cyclical':
@@ -142,7 +192,7 @@ def operations(p):
             wc=(.015*revenue if t<=5 else 0)
             working_capital[name]+=wc
             ending=q>0 and (remaining[name]<=1e-10 or t==life)
-            if ending: recovery_due[name]=min(40,t+p['nwc_recovery_delay'])
+            if ending: recovery_due[name]=min(p['horizon'],t+p['nwc_recovery_delay'])
             released=working_capital[name] if recovery_due.get(name)==t else 0.
             recovery=released*p['nwc_recovery_fraction']
             loss=released-recovery
@@ -169,7 +219,7 @@ def operations(p):
         other_scale=1 if t<=5 else max(0,(26-t)/21)
         otherprofit=(8.0+min(t-1,4)*.5)*inflation*other_scale
         othercap=(1.8 if t<=5 else .6)*inflation*other_scale
-        overhead=7.5*inflation*(1 if t<=5 else max(.15,(41-t)/36))
+        overhead=7.5*inflation*(1 if t<=5 else max(.15,(41-t)/36)) if t<=40 else 0.
         # Otherprofit is NET of Buritica silver-stream encumbrance. Memo gross bridge
         # uses silver CNY10/g, 95% foregone spot receipt; no debt deduction as well.
         buritica=next(x for x in detail if x['mine']=='武里蒂卡')['gross_output']
@@ -186,8 +236,8 @@ def operations(p):
         # each allocated unit's closure. It is not another opening cash balance or debt.
         for item in detail:
             if item['gross_output']>0 and (item['remaining_recoverable']<=1e-10 or t==next(m[5] for m in MINES if m[0]==item['mine'])):
-                opening_due[item['mine']]=min(40,t+p['opening_delay'])
-        opening_due['other_portfolio']=min(40,26+p['opening_delay'])
+                opening_due[item['mine']]=min(p['horizon'],t+p['opening_delay'])
+        opening_due['other_portfolio']=min(p['horizon'],26+p['opening_delay'])
         settlements=[];opening_cash=0.;opening_loss=0.
         for k,pool in enumerate(opening_pools):
             if k in opening_done:continue
@@ -209,6 +259,18 @@ def operations(p):
         sums['opening_nwc_liability_balance']=sum(x['amounts'][3] for k,x in enumerate(opening_pools) if k not in opening_done)
         sums['profit']-=opening_loss # no loss-tax refund; principal is not profit
         sums['fcf']+=opening_cash # gross haircut, liabilities FULL, never haircut net debt
+        sbc=sbc_budget(p,t)
+        sums['sbc_inside_original_overhead']=sbc
+        actual_sbc=sbc
+        if not p['esop_performance_pass'] and t==3:actual_sbc=-2*SBC_ANNUAL_PROXY*p['sbc_scale']
+        if not p['esop_performance_pass'] and t>3:actual_sbc=0.
+        actual_sbc*=1+p['sbc_incremental_fraction']
+        sums['sbc_incremental_expense']=actual_sbc-sbc
+        sums['profit']+=sbc-actual_sbc
+        sums['fcf']+=sbc # noncash inside original overhead; reversal itself creates no cash
+        sums['sbc_total_expense']=actual_sbc
+        sums['cash_overhead']=overhead-sbc
+        sums['sbc_cash_tax_deduction']=0.
         result.append(sums)
     return result
 
@@ -219,6 +281,8 @@ PARENT_SURPLUS_TOTAL=1.316465612 # p18; statutory/discretionary split not indepe
 BASE.update(upstream_friction=.03, upstream_delay=0, asset_realization_year=3,
             asset_haircut=.03, parent_statutory_budget=PARENT_SURPLUS_TOTAL,
             extra_cash_release=.65, extra_cash_cycle=3, final_delay=2,closure_year=40,closure_cost=8.,jv_interest_rate=.075,nwc_recovery_fraction=.98,nwc_recovery_delay=0,arena_extra_payment=False,stream_extra_deduction=False,opening_attribution=.78,opening_inventory_haircut=.05,opening_receivable_haircut=.02,opening_tax_haircut=.20,opening_delay=0,opening_capex_outside_budget=False,chifeng_wassa_fraction=.35,chifeng_stage1_remaining_oz=240000-213807.41)
+
+BASE.update(horizon=40,esop_collection_year=1, future_talent_approved=False, option_tranche2_eligible=True, option_tranche3_eligible=True, option_registration=True, option_budget_price=OPTION_BUDGET_PRICE, sbc_scale=1., sbc_incremental_fraction=0., esop_performance_pass=True, esop_failure_sale_proceeds=0., esop_failure_tax_rate=.24)
 
 def legal_profit(re,statutory,registered,new_profit,discretionary_rate=0):
     """PRC parent only. Cash receipts/capital proceeds are deliberately not arguments."""
@@ -259,9 +323,13 @@ def finance(ops,p,opening=None):
     sd=o.get('sub_debt',(GROUP_BOOK_DEBT-PARENT_DEBT-CB_BOOK)*p['subdebt_factor']+CB_REDEMPTION+JV_NET_DEBT)
     re=o.get('parent_re',14.622428427)
     sr=o.get('statutory',p['parent_statutory_budget']); reg=o.get('registered',PARENT_REGISTERED)
-    shares=o.get('shares',SHARES); cb=o.get('cb',CB_REDEMPTION)
+    shares=o.get('shares',ISSUED-TREASURY_REMAINING); cb=o.get('cb',CB_REDEMPTION)
     assets=o.get('assets',FINANCIAL_ASSETS*p['assets_factor'])
     pending=[]; rows=[]
+    capstate=capital_opening()
+    apic=capstate['capital_surplus']; paidup=capstate['paid_up']; treasury=TREASURY_REMAINING
+    receivable=ESOP_RECEIVABLE; treasury_cost=REMAINING_COST
+    esop_dividends=0.; esop_failure_processed=False
     for i,op in enumerate(ops):
         t=i+1; pc0,sc0,pd0,sd0=pc,sc,pd,sd
         reserve=o.get('min_cash',3.); submin=o.get('min_cash',15.)
@@ -274,7 +342,8 @@ def finance(ops,p,opening=None):
         deposit=(pc+sc)*p['deposit_rate']; totalprofit=op['profit']-pi-si+deposit
         fcf=op['fcf']-pi-si+deposit
         direct=o.get('direct',0) if custom else min(2.,max(0,op['profit']*.06))
-        subprofit=op['profit']-direct-si+sc0*p['deposit_rate']
+        sbc=0. if custom else op['sbc_total_expense']
+        subprofit=op['profit']+sbc-direct-si+sc0*p['deposit_rate']
         pc+=direct-pi+pc0*p['deposit_rate'];sc+=op['fcf']-direct-si+sc0*p['deposit_rate']
         closure_payment=0.
         if not custom and t==p['closure_year'] and t<len(ops):
@@ -295,16 +364,40 @@ def finance(ops,p,opening=None):
         pending=[x for x in pending if x[0]>t]
         pc+=receipt
         # New declaration is income; collecting prior years' dividends is cash only.
-        new_parent_profit=direct-pi+pc0*p['deposit_rate']+net
+        new_parent_profit=direct-pi+pc0*p['deposit_rate']+net-sbc
         conversion=0.; equity_cash=0.; realized=0.; asset_loss=0.
-        if t==1 and not custom:
-            equity_cash=EMPLOYEE_CASH; pc+=equity_cash
-            reg=SHARES*.1 # forecast registration upon completed option exercise, not cash proceeds
+        option_issued=0.; option_cash=0.; treasury_transfer=0.; talent_cash=0.; esop_collection=0.
+        if not custom:
+            apic+=sbc
+            if t==p['esop_collection_year']:
+                esop_collection=receivable; receivable=0.; equity_cash+=esop_collection
+            if t==1:
+                # End-2027 budget: both eligible tranches registered before first modeled dividend.
+                # Eligibility windows open Dec2026/Dec2027. This is not current issued capital.
+                option_issued=option_quantity(p); option_cash=option_issued*p['option_budget_price']
+                shares+=option_issued;paidup+=option_issued*.1
+                apic+=option_cash-option_issued*.1;equity_cash+=option_cash
+                if p['future_talent_approved']:
+                    treasury_transfer=treasury;talent_cash=treasury_transfer*ESOP_PRICE
+                    shares+=treasury_transfer;treasury=0.
+                    apic+=talent_cash-treasury_cost;treasury_cost=0.;equity_cash+=talent_cash
+                if option_issued:reg=ISSUED*.1+option_issued*.1
+            pc+=equity_cash
+        # Issuer receives only excess sale gain on a failed plan; shares stay issued/in circulation.
+        esop_excess=0.;esop_refund=0.;esop_sale=0.;esop_tax=0.
+        if not custom and t==4 and not p['esop_performance_pass']:
+            esop_sale=p['esop_failure_sale_proceeds']
+            esop_refund=min(ESOP_RECEIVABLE,esop_sale)
+            esop_excess=max(0,esop_sale-esop_refund)
+            esop_tax=esop_excess*p['esop_failure_tax_rate']
+            net_excess=esop_excess-esop_tax
+            pc+=net_excess;totalprofit+=net_excess;fcf+=net_excess;new_parent_profit+=net_excess
+            esop_failure_processed=True
         if t==3 and not custom:
             amount=1.9996*7
             sd-=amount;cb-=amount
             if p['convert_2029']:
-                conversion=amount; shares+=.836031904;reg+=.0836031904
+                conversion=amount; shares+=.836031904;reg+=.0836031904;paidup+=.0836031904;apic+=amount-.0836031904
             else:pd+=amount
         if t==5 and not custom:sd-=10.5;cb-=10.5;pd+=10.5
         if t==p['asset_realization_year'] and not custom:
@@ -337,7 +430,15 @@ def finance(ops,p,opening=None):
         pending_now=sum(v for due,v in pending)
         assert abs(pc+sc+pending_now-(pc0+sc0+prior_pending)-(fcf-friction+realized+external+equity_cash-dividend))<1e-7
         assert min(pc,sc,pd,sd)>=-1e-7 and dividend<=legal_cap+1e-8
-        rows.append(dict(year=op['year'],shares=shares,profit=totalprofit-friction,fcf=fcf-friction,
+        if not custom:esop_dividends+=dividend/shares*TRANSFERRED
+        rows.append(dict(capital=dict(issued=ISSUED+(option_quantity(p) if not custom and t>=1 else 0)+(.836031904 if not custom and p['convert_2029'] and t>=3 else 0),
+          treasury_shares=treasury,treasury_cost=treasury_cost,old_plan_treasury_obligation=OTHER_TREASURY_OBLIGATION,
+          transfer_receivable=receivable,esop_collection=esop_collection,option_issued=option_issued,
+          option_cash=option_cash,talent_transfer=treasury_transfer,talent_cash=talent_cash,
+          paid_up=paidup,capital_surplus=apic,sbc_expense=sbc,sbc_tax_deduction=0.,
+          esop_dividends_cumulative=esop_dividends,esop_failure_sale=esop_sale,esop_failure_refund=esop_refund,
+          esop_failure_excess=esop_excess,esop_failure_tax=esop_tax,esop_failure_processed=esop_failure_processed,
+          equity_financing_cash=equity_cash),year=op['year'],shares=shares,profit=totalprofit-friction,fcf=fcf-friction,
           upstream_declared=net,upstream=receipt,upstream_friction=friction,extra_cash_release=extra,
           dividend=dividend,dps=dividend/shares,desired_dividend=desired,legal_cap=legal_cap,
           parent_cash=pc,sub_cash=sc,parent_debt=pd,sub_debt=sd,parent_re=re,
@@ -359,10 +460,29 @@ def values(ops,rows,p):
     initial_cash=6.119465016+(76.776449446-6.119465016)*p['subcash_factor']-ACQUISITION_CASH+p['acquisition_prepaid']+CHIFENG_NET_CASH
     claim=PARENT_DEBT+(GROUP_BOOK_DEBT-PARENT_DEBT-CB_BOOK)*p['subdebt_factor']+CB_REDEMPTION+JV_NET_DEBT-initial_cash
     assets=FINANCIAL_ASSETS*p['assets_factor']*(1-p['asset_haircut'])
-    nav,project=nav_value([x['fcf'] for x in ops],wacc,closure,18,claim,assets,SHARES,EMPLOYEE_CASH,p['asset_realization_year'],delay,p['closure_year'])
-    # Primary economic NAV is gross of modeled remittance friction; subtract all-year actual friction PV.
-    friction_pv=discount([x['upstream_friction'] for x in rows],wacc)/SHARES
-    nav-=friction_pv
+    if not p['convert_2029']:
+        # All conditional options settle before first modeled distribution. The common
+        # fully-diluted capitalization and proceeds are used in both methods.
+        nav,project=nav_value([x['fcf'] for x in ops],wacc,closure,18,claim,assets,economic_shares(p),0,p['asset_realization_year'],delay,p['closure_year'])
+        nav+=sum(row['capital']['equity_financing_cash']/(1+wacc)**(i+1) for i,row in enumerate(rows))/economic_shares(p)
+        friction_pv=discount([x['upstream_friction'] for x in rows],wacc)/economic_shares(p)
+        nav-=friction_pv
+        nav+=sum((row['capital']['esop_failure_excess']-row['capital']['esop_failure_tax'])/(1+wacc)**(i+1) for i,row in enumerate(rows))/economic_shares(p)
+        anchor=0;node_shares=economic_shares(p);node_claim=claim;nav_node=nav
+    else:
+        # Conversion is later than first holder cash. Value remaining operating assets
+        # at the actual 2029 post-conversion cash/debt/share node; do not deduct converted
+        # principal again or pretend post-conversion shares existed in 2027/28.
+        anchor=3;node=rows[2];node_shares=node['shares']
+        project=discount([x['fcf'] for x in ops[3:]],wacc)-closure/(1+wacc)**(p['closure_year']-3)-18+18/(1+wacc)**(n+delay-3)
+        node_claim=node['parent_debt']+node['sub_debt']-node['parent_cash']-node['sub_cash']-node['outstanding_declared_dividends']
+        future_assets=node['assets']*(1-p['asset_haircut'])/(1+wacc)**max(0,p['asset_realization_year']-3)
+        future_capital=sum(row['capital']['equity_financing_cash']/(1+wacc)**(i-2) for i,row in enumerate(rows) if i>=3)
+        future_excess=sum((row['capital']['esop_failure_excess']-row['capital']['esop_failure_tax'])/(1+wacc)**(i-2) for i,row in enumerate(rows) if i>=3)
+        friction_at_node=discount([x['upstream_friction'] for x in rows[3:]],wacc)
+        nav_node=(project-node_claim+future_assets+future_capital+future_excess-friction_at_node)/node_shares
+        nav=discount([x['dps'] for x in rows[:3]],wacc)+nav_node/(1+wacc)**3
+        friction_pv=friction_at_node/node_shares/(1+wacc)**3
     last=rows[-1]
     exit=liquidation(last['parent_cash']+last['sub_cash']+last['outstanding_declared_dividends'],last['assets'],last['parent_debt']+last['sub_debt'],closure if p['closure_year']==n else 0,p['asset_haircut'],basis=last['assets'])
     if not exit['feasible']:raise AssertionError('Exit obligations unpaid: equity path not feasible '+json.dumps(exit))
@@ -373,13 +493,13 @@ def values(ops,rows,p):
     full=discount(d,r);tv=discount(d,r,start=5);first5=discount(d[:5],r)
     return dict(current=full,auxiliary_nav=nav,terminal_year5=tv,first5_dividend_pv=first5,
        terminal_pv_fraction=(full-first5)/full,auxiliary_ddm=full,project_pv=project,
-       remittance_friction_pv_per_share=friction_pv,initial_net_claim=claim,
+       remittance_friction_pv_per_share=friction_pv,initial_net_claim=claim,nav_anchor_year=2026+anchor,nav_anchor_shares=node_shares,nav_anchor_net_claim=node_claim,nav_anchor_value=nav_node,
        liquidation=exit,liquidation_year=2026+n+delay,post_liquidation_shares=0,
        g_terminal=0,all_holder_cash=d)
 
 def run(p):
     ops=operations(p);rows=finance(ops,p);v=values(ops,rows,p)
-    return dict(parameters=p,values=v,opening_working_capital=opening_working_capital(p),operations=ops,financing=rows,five_year_dps=[x['dps'] for x in rows[:5]])
+    return dict(parameters=p,capital_opening=capital_opening(),values=v,opening_working_capital=opening_working_capital(p),operations=ops,financing=rows,five_year_dps=[x['dps'] for x in rows[:5]])
 
 def tests():
     assert legal_profit(0,5,20,10)==(9,6,1,0) # paid-in 10 irrelevant
@@ -415,7 +535,52 @@ def tests():
         assert abs(x['nwc_balance']-sum(z['nwc_closing_balance'] for z in x['details']))<1e-9
     assert check[-1]['opening_nwc_gross_balance']==check[-1]['opening_nwc_liability_balance']==0
     assert abs(sum(x['details'][18]['chifeng_stream_stage1_delivery_tonnes'] for x in check)-(240000-213807.41)*.0000311034768)<1e-9
-    return dict(opening_nwc_principal_and_full_liabilities=True,chifeng_stream_phase_transition=True,nwc_principal_recovered=True,all_exit_shortfalls_retained=True,passed=True,registered_not_paid_up=True,loss_first=True,full_reserve=True,conversion_threshold=True,old_receipt_not_profit=True,creditors_first=True,gross_asset_haircut=True,shares_cancelled=True,no_fictitious_funding=True,no_loss_tax_refund=True,principal_once=True)
+    capital_tests()
+    return dict(capital_current_input_handcases=True,capital_cash_and_equity_conservation=True,option_gate_failures=True,esop_failure_no_cancellation=True,opening_nwc_principal_and_full_liabilities=True,chifeng_stream_phase_transition=True,nwc_principal_recovered=True,all_exit_shortfalls_retained=True,passed=True,registered_not_paid_up=True,loss_first=True,full_reserve=True,conversion_threshold=True,old_receipt_not_profit=True,creditors_first=True,gross_asset_haircut=True,shares_cancelled=True,no_fictitious_funding=True,no_loss_tax_refund=True,principal_once=True)
+
+def capital_tests():
+    opening=capital_opening()
+    assert abs(opening['transfer_receivable']-1.353707008)<1e-12
+    assert abs(opening['participating']-26.586260449)<1e-12
+    assert abs(opening['transfer_cost']+opening['treasury_cost']-2.499993348)<1e-12
+    assert abs(opening['transfer_capital_surplus']+opening['transfer_cost']-opening['net_equity_delta'])<1e-12
+    assert opening['registered']==2.657753314 and opening['issued']==26.590798241
+    assert option_conditions(.25,.20,.16,.15,.60,'B',True,3)
+    for args in [(.19,.18,.16,.15,.60,'B',True,3),(.25,.26,.16,.15,.60,'B',True,2),(.25,.20,.11,.10,.60,'B',True,2),(.25,.20,.16,.17,.60,'B',True,2),(.25,.20,.16,.15,.66,'B',True,2),(.25,.20,.16,.15,.60,'C',True,2),(.25,.20,.16,.15,.60,'B',False,2)]:
+        assert not option_conditions(*args)
+    assert option_quantity(dict(BASE,option_tranche2_eligible=False,option_tranche3_eligible=False))==0
+    assert abs(option_quantity(dict(BASE,option_tranche3_eligible=False))-.0131)<1e-12
+    assert option_quantity(dict(BASE,option_registration=False))==0
+    # Same real finance chain, actual current numbers, all operating flows remain untouched.
+    o=operations(BASE)
+    a=finance(o,BASE);b=finance(o,dict(BASE,esop_collection_year=3))
+    assert abs(a[0]['capital']['esop_collection']-1.353707008)<1e-12
+    assert b[0]['capital']['esop_collection']==0 and abs(b[0]['capital']['transfer_receivable']-1.353707008)<1e-12
+    assert b[2]['capital']['transfer_receivable']==0
+    assert abs(a[0]['capital']['issued']-26.616998241)<1e-12 and abs(a[0]['shares']-26.612460449)<1e-12
+    assert abs(a[0]['capital']['option_cash']-.27117)<1e-12
+    assert a[0]['capital']['talent_transfer']==0
+    z=dict(BASE,option_registration=False);zr=finance(operations(z),z)
+    assert zr[0]['capital']['option_issued']==zr[0]['capital']['option_cash']==0
+    assert zr[0]['registered_capital']==2.657753314
+    f=dict(BASE,esop_performance_pass=False,esop_failure_sale_proceeds=1.6)
+    fr=finance(operations(f),f)
+    assert abs(fr[3]['capital']['esop_failure_refund']-1.353707008)<1e-12
+    assert abs(fr[3]['capital']['esop_failure_excess']-.246292992)<1e-12
+    assert fr[3]['shares']==a[3]['shares'] # market resale, not cancellation
+    assert abs(sum(x['capital']['sbc_expense'] for x in fr))<1e-12
+    t=dict(BASE,future_talent_approved=True);tr=finance(operations(t),t)
+    assert tr[0]['capital']['treasury_shares']==0 and tr[0]['capital']['issued']==a[0]['capital']['issued']
+    assert abs(tr[0]['capital']['talent_cash']-.08422141952)<1e-12
+    for p,rows in [(BASE,a),(f,fr),(t,tr),(z,zr)]:
+        previous=opening['capital_surplus'];paidup=opening['paid_up'];tc=opening['treasury_cost']
+        previous_reg=opening['registered']; cumulative=0
+        for r in rows:
+            c=r['capital'];flow=c['option_cash']+c['talent_cash'];cost_released=tc-c['treasury_cost']
+            assert abs(c['capital_surplus']-previous-(c['sbc_expense']+flow-(c['paid_up']-paidup)-cost_released))<1e-8
+            assert abs(r['shares']-(c['issued']-c['treasury_shares']))<1e-10
+            assert c['transfer_receivable']>=0 and c['treasury_shares']>=0
+            previous=c['capital_surplus'];paidup=c['paid_up'];tc=c['treasury_cost']
 
 CASES={'chifeng_wassa45':dict(BASE,chifeng_wassa_fraction=.45),'chifeng_stream_phase2':dict(BASE,chifeng_stage1_remaining_oz=0),'opening_capex_outside_budget':dict(BASE,opening_capex_outside_budget=True),'opening_slow_stress':dict(BASE,opening_attribution=.70,opening_inventory_haircut=.15,opening_receivable_haircut=.05,opening_tax_haircut=.50,opening_delay=3),'opening_high_recovery':dict(BASE,opening_attribution=.82,opening_inventory_haircut=.02,opening_receivable_haircut=.01,opening_tax_haircut=.10),'opening_delay3':dict(BASE,opening_delay=3),'nwc_delay2':dict(BASE,nwc_recovery_delay=2),'nwc_recovery90':dict(BASE,nwc_recovery_fraction=.9),'nwc_recovery100':dict(BASE,nwc_recovery_fraction=1.),'arena_payment_outside_capex':dict(BASE,arena_extra_payment=True),'stream_outside_other_budget':dict(BASE,stream_extra_deduction=True),'reserve_minus20':dict(BASE,reserve_shift=.8),'growth_plus25':dict(BASE,growth_shift=1.25),'base':BASE,'base_terminal_low':dict(BASE,equity_rate=.10),'base_terminal_high':dict(BASE,equity_rate=.09),
  'core_low':dict(BASE,gold=810,copper=77000,lithium=85000,equity_rate=.10,subcash_factor=.74,subdebt_factor=.79,assets_factor=.95),
@@ -427,55 +592,21 @@ CASES={'chifeng_wassa45':dict(BASE,chifeng_wassa_fraction=.45),'chifeng_stream_p
  'remittance_friction_8pct':dict(BASE,upstream_friction=.08),'assets_year5_haircut10':dict(BASE,asset_realization_year=5,asset_haircut=.1),
  'unknown_statutory_zero':dict(BASE,parent_statutory_budget=0),'extra_release_5yr_40pct':dict(BASE,extra_cash_cycle=5,extra_cash_release=.4),
  'closure_early10':dict(BASE,closure_year=30),'zero_deposit_yield':dict(BASE,deposit_rate=0),'refinancing_5pct':dict(BASE,ordinary_debt_rate=.05,jv_interest_rate=.09),'final_delay5':dict(BASE,final_delay=5),'no_friction_immediate_asset':dict(BASE,upstream_friction=0,asset_haircut=0,asset_realization_year=1,final_delay=0)}
-# Delivery transport only: economic definitions above are unchanged.
-PACK_SCHEMA='zijin-full-output-gzip-base64-v1'
-def canonical_bytes(out):
-    return json.dumps(out,ensure_ascii=False,indent=2).encode('utf-8')
-
-def pack_output(out):
-    import gzip,base64,hashlib,io
-    raw=canonical_bytes(out);buffer=io.BytesIO()
-    # Fixed timestamp and empty filename: deterministic gzip header, no host-path leak.
-    with gzip.GzipFile(filename='',mode='wb',fileobj=buffer,mtime=0,compresslevel=9) as f:f.write(raw)
-    compressed=buffer.getvalue()
-    return dict(schema=PACK_SCHEMA,encoding='base64(gzip(canonical UTF-8 JSON))',
-      canonical_format='json.dumps(full_output, ensure_ascii=False, indent=2), UTF-8, no trailing newline',
-      expanded_sha256=hashlib.sha256(raw).hexdigest(),expanded_bytes=len(raw),
-      gzip_sha256=hashlib.sha256(compressed).hexdigest(),gzip_bytes=len(compressed),
-      completeness='All economic fields, parameters, operations, financing, source bridges, years and scenarios; no truncation.',
-      expand_command='python -B 2026-Q3.py --expand 2026-Q3-expanded.json',
-      cutoff=out['cutoff'],units=out['units'],tests=out['tests'],
-      case_count=len(out['cases']),summary={k:dict(values=v.get('values',{}),five_year_dps=v.get('five_year_dps',[]),
-          operations_years=len(v.get('operations',[])),financing_years=len(v.get('financing',[])),
-          opening_working_capital_pools=len(v.get('opening_working_capital',[]))) for k,v in out['cases'].items()},
-      payload_base64=base64.b64encode(compressed).decode('ascii'))
-
-def unpack_output(wrapper):
-    import gzip,base64,hashlib
-    if wrapper.get('schema')!=PACK_SCHEMA:raise ValueError('Unknown full-output packaging schema')
-    compressed=base64.b64decode(wrapper['payload_base64'],validate=True)
-    if hashlib.sha256(compressed).hexdigest()!=wrapper['gzip_sha256']:raise ValueError('Compressed SHA mismatch')
-    raw=gzip.decompress(compressed)
-    if len(raw)!=wrapper['expanded_bytes'] or hashlib.sha256(raw).hexdigest()!=wrapper['expanded_sha256']:raise ValueError('Expanded SHA/size mismatch')
-    out=json.loads(raw)
-    if canonical_bytes(out)!=raw:raise ValueError('Expanded bytes not canonical')
-    if len(out['cases'])!=wrapper['case_count']:raise ValueError('Scenario count mismatch')
-    return out,raw
+# Additional conditional capital paths; no changes to original operating assumptions.
+CASES.update(tail_settlement80=dict(BASE,horizon=80),tail_settlement160=dict(BASE,horizon=160),esop_collection_late=dict(BASE,esop_collection_year=3),
+    talent_future_approved=dict(BASE,future_talent_approved=True),
+    options_company_fail=dict(BASE,option_tranche2_eligible=False,option_tranche3_eligible=False),
+    options_individual_fail_half=dict(BASE,option_tranche3_eligible=False),
+    options_registration_fail=dict(BASE,option_registration=False),
+    options_formal_unadjusted_price=dict(BASE,option_budget_price=11.15),
+    sbc_zero_allocation=dict(BASE,sbc_scale=0.),sbc_double_allocation=dict(BASE,sbc_scale=2.),
+    sbc_additional_not_in_overhead=dict(BASE,sbc_incremental_fraction=1.),
+    esop_assessment_fail_no_excess=dict(BASE,esop_performance_pass=False,esop_failure_sale_proceeds=1.),
+    esop_assessment_fail_excess=dict(BASE,esop_performance_pass=False,esop_failure_sale_proceeds=1.6))
 
 if __name__=='__main__':
-    import argparse
-    parser=argparse.ArgumentParser(description='Run complete finite economic model, or losslessly expand its delivery output.')
-    parser.add_argument('--expand',nargs='?',const='2026-Q3-expanded.json',metavar='DESTINATION')
-    args=parser.parse_args()
-    if args.expand is not None:
-        wrapper=json.loads(Path(__file__).with_name('2026-Q3-output.json').read_text())
-        out,raw=unpack_output(wrapper);destination=Path(args.expand);destination.write_bytes(raw)
-        print(json.dumps(dict(expanded_file=str(destination),bytes=len(raw),sha256=wrapper['expanded_sha256'],cases=len(out['cases'])),indent=2))
-    else:
-        out=dict(cutoff=CUTOFF,units='CNY billion',tests=tests(),cases={})
-        for name,p in CASES.items():
-            try:out['cases'][name]=run(p)
-            except AssertionError as e:out['cases'][name]={'infeasible':str(e)}
-        wrapper=pack_output(out)
-        Path(__file__).with_name('2026-Q3-output.json').write_text(json.dumps(wrapper,ensure_ascii=False,indent=2))
-        print(json.dumps(dict(case_count=wrapper['case_count'],expanded_bytes=wrapper['expanded_bytes'],gzip_bytes=wrapper['gzip_bytes'],expanded_sha256=wrapper['expanded_sha256']),indent=2))
+    out=dict(cutoff=CUTOFF,units='CNY billion; shares billion',tests=tests(),capital_opening=capital_opening(),cases={})
+    for name,p in CASES.items():
+        try:out['cases'][name]=run(p)
+        except AssertionError as e:out['cases'][name]={'infeasible':str(e)}
+    print(json.dumps(out,ensure_ascii=False,indent=2))

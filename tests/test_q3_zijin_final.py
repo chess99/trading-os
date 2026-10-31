@@ -1,12 +1,38 @@
 from pathlib import Path
-import json,gzip,base64,hashlib,importlib.util,subprocess,sys,shutil
+import json,lzma,hashlib,importlib.util,subprocess,sys,shutil
 from q3_final_fixture import staged_company
 P = staged_company("601899")
 s=importlib.util.spec_from_file_location('zijin_final',P/'2026-Q3.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+
 def full():
- w=json.loads((P/'2026-Q3-output.json').read_text());b=gzip.decompress(base64.b64decode(w['payload_base64']));assert hashlib.sha256(b).hexdigest()==w['expanded_sha256'];return json.loads(b)
-def test_actual_36_paths_and_operating_capital():
- d=full();assert len(d['cases'])==36
+    """Closed single-XZ transport; validate every compressed/expanded byte."""
+    import hashlib, lzma, tempfile
+    descriptor=json.loads((P/'2026-Q3-output.json').read_text())
+    assert descriptor['schema']=='trading_os_lossless_json_xz_v1'
+    assert descriptor['artifact_kind']=='transport_manifest_not_model_result'
+    assert descriptor['compression']=='xz' and descriptor['file']=='2026-Q3-output.json.xz'
+    assert 0<descriptor['compressed_bytes']<=100*1024**2
+    assert 0<descriptor['expanded_bytes']<=512*1024**2
+    decoder=lzma.LZMADecompressor(format=lzma.FORMAT_XZ,memlimit=256*1024**2)
+    encoded_hash=hashlib.sha256();decoded_hash=hashlib.sha256();encoded_size=decoded_size=0
+    with (P/descriptor['file']).open('rb')as source,tempfile.TemporaryFile()as decoded:
+        while chunk:=source.read(65536):
+            assert not decoder.eof
+            encoded_size+=len(chunk);encoded_hash.update(chunk)
+            assert encoded_size<=descriptor['compressed_bytes']
+            data=chunk
+            while True:
+                part=decoder.decompress(data,max_length=1048576);data=b''
+                decoded_size+=len(part);assert decoded_size<=descriptor['expanded_bytes']
+                decoded_hash.update(part);decoded.write(part)
+                if decoder.needs_input or decoder.eof:break
+            assert not decoder.unused_data
+        assert decoder.eof and not decoder.unused_data
+        assert encoded_size==descriptor['compressed_bytes'] and encoded_hash.hexdigest()==descriptor['compressed_sha256']
+        assert decoded_size==descriptor['expanded_bytes'] and decoded_hash.hexdigest()==descriptor['expanded_sha256']
+        decoded.seek(0);return json.load(decoded)
+def test_actual_49_paths_and_operating_capital():
+ d=full();assert len(d['cases'])==49
  for n,a in d['cases'].items():
   assert a==m.run(m.CASES[n])
   ledgers={x[0]:0. for x in m.MINES}
@@ -34,14 +60,19 @@ def test_actual_stream_and_exit_shortfall():
  try:m.values(a['operations'],rows,m.BASE)
  except AssertionError as e:assert 'Exit obligations unpaid' in str(e)
  else:raise AssertionError('unpaid exit accepted')
-def test_independent_literal_four(tmp_path):
- for n in ['2026-Q3-output.json','independent-literal.py']:shutil.copy2(P/n,tmp_path/n)
- subprocess.run([sys.executable,'-B',str(tmp_path/'independent-literal.py')],cwd=tmp_path,check=True,capture_output=True)
- d=json.loads((tmp_path/'independent-literal-output.json').read_text());assert len(d)==4;assert max(x['max_absolute_error'] for x in d.values())<1e-8
+def test_independent_literal_eighteen(tmp_path):
+ for n in ['2026-Q3-output.json.xz','independent-literal.py']:shutil.copy2(P/n,tmp_path/n)
+ with (tmp_path/'independent-literal-output.json').open('wb')as out:
+  subprocess.run([sys.executable,'-B',str(tmp_path/'independent-literal.py'),'--compare',str(tmp_path/'2026-Q3-output.json.xz')],cwd=tmp_path,check=True,stdout=out)
+ d=json.loads((tmp_path/'independent-literal-output.json').read_text())['checks'];assert len(d)==18;assert max(x['max_absolute_error'] for x in d.values())<1e-8
 def test_single_file_and_reader(tmp_path):
- shutil.copy2(P/'2026-Q3.py',tmp_path/'2026-Q3.py');subprocess.run([sys.executable,'-B','2026-Q3.py'],cwd=tmp_path,check=True,capture_output=True)
- assert (tmp_path/'2026-Q3-output.json').read_bytes()==(P/'2026-Q3-output.json').read_bytes()
- subprocess.run([sys.executable,'-B','2026-Q3.py','--expand','expanded.json'],cwd=tmp_path,check=True,capture_output=True)
- assert hashlib.sha256((tmp_path/'expanded.json').read_bytes()).hexdigest()=='2253dff6d95457037d4f30145d834805b8fbaef85ebffe083d3a32b8eedcf62c'
+ shutil.copy2(P/'2026-Q3.py',tmp_path/'2026-Q3.py')
+ with (tmp_path/'expanded.json').open('wb')as out:
+  subprocess.run([sys.executable,'-B','2026-Q3.py'],cwd=tmp_path,check=True,stdout=out)
+ assert hashlib.sha256((tmp_path/'expanded.json').read_bytes()).hexdigest()=='b1390671ff362fc9675ad6d69ab932b592de06a17de2dc2d2d5f7b4c444905a6'
+ with lzma.open(P/'2026-Q3-output.json.xz','rb')as frozen,(tmp_path/'expanded.json').open('rb')as fresh:
+  while chunk:=fresh.read(1048576):assert frozen.read(len(chunk))==chunk
+  assert frozen.read(1)==b''
+ assert json.loads((tmp_path/'expanded.json').read_text())==full()
  r=json.loads((P/'result.json').read_text());assert r==json.loads((P/'candidate.json').read_text())['result'];assert r['report_markdown']==(P/'report.md').read_text()
  assert '../models/2026-Q3.py' in r['report_markdown'] and '../models/2026-Q3-output.json' in r['report_markdown']

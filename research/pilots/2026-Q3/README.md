@@ -1,6 +1,6 @@
 # 2026Q3研究入口
 
-更新于2026-10-29 11:00披露批次：重点池191家公司已核164家正式全文，27家等待实际披露。远端交付独立核实；119为已完成本地工程验收的父快照。本地本增量新增益丰药房完整独立研究，并完成柏楚电子、招商公路已审定资本与模型修订，后两项不增加覆盖数。完整工程验收通过后覆盖120家，尚余44家已披露待交付、27家未披露。本地候选不计PR交付；PR未合并、main并行改动未集成，不表示可合并。完整模型采用无损XZ，全部年度和主体保留，四个暂不估值双null及五粮液修订保持。
+2026-10-29披露批次：重点池191家公司，164家正式全文、27家等待披露。父120完整本地研究后，本批新增迈瑞医疗、北方华创，修订紫金矿业、海螺水泥；后两项不增加覆盖数。全部工程验收真实通过后覆盖122家，另42家已披露待交付。本地不等于PR交付；未合并、不操作main。全部年度完整输出及四个双null状态保留。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -8,6 +8,8 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 迈瑞医疗 300760 | [2026Q3](../../companies/CN/300760/reports/2026-Q3.md) | [Python](../../companies/CN/300760/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/300760/models/2026-Q3-output.json.xz) |
+| 北方华创 002371 | [2026Q3](../../companies/CN/002371/reports/2026-Q3.md) | [Python](../../companies/CN/002371/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/002371/models/2026-Q3-output.json.xz) |
 | 益丰药房 603939 | [2026Q3](../../companies/CN/603939/reports/2026-Q3.md) | [Python](../../companies/CN/603939/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/603939/models/2026-Q3-output.json.xz) |
 | 云南白药 000538 | [2026Q3](../../companies/CN/000538/reports/2026-Q3.md) | [Python](../../companies/CN/000538/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/000538/models/2026-Q3-output.json.xz) |
 | 古井贡酒 000596 | [2026Q3](../../companies/CN/000596/reports/2026-Q3.md) | [Python](../../companies/CN/000596/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/000596/models/2026-Q3-output.json.xz) |

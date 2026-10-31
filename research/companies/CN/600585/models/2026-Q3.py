@@ -1,11 +1,30 @@
 #!/usr/bin/env python3
 """600585 economic budget. Stdlib only, all money CNY bn, volume million tonnes.
-No network/files/input imports. Annual periods from 2026-10-28; no stock quotes.
+No network/files/input imports. Annual periods from 2026-10-29; no stock quotes.
 Cohorts are budget bounds, not fabricated legal-entity forecasts. Actual named
 ownership: Yingde .75, Conch Venture Environmental .2121 (lower tiers .69 budget).
 """
 import json, math, copy
-SHARES=(5277060044-36879800-17306500)/1e9
+REGISTERED_SHARES=5277060044
+OLD_SHARES=(REGISTERED_SHARES-36879800-17306500)/1e9
+SHARES=(REGISTERED_SHARES-36879800-17556500)/1e9
+REPURCHASE_HKD=4235600
+HISTORICAL_FX_PROXY=.8686  # 2026 H1 report p202; NOT 2026-10-29 spot/settlement rate.
+def repurchase_bridge(cash, enabled=True, fx=HISTORICAL_FX_PROXY, fee_rate=0., settled=False):
+    cost=REPURCHASE_HKD*fx/1e9 if enabled else 0.
+    fee=cost*fee_rate
+    gross_cash=cash-(cost+fee if settled else 0.)
+    payable=0. if settled else cost+fee
+    result=dict(cash_before=cash,gross_cash_at_cutoff=gross_cash,settlement_payable=payable,
+      available_cash_after_reservation=gross_cash-payable,treasury_stock_cost_add=cost,
+      apic_change=-fee,registered_share_change=0,registered_shares=REGISTERED_SHARES,
+      profit_change=0,tax_change=0,nci_change=0,retained_earnings_change=0,
+      total_equity_change=-cost-fee,consideration_hkd=REPURCHASE_HKD if enabled else 0,
+      fx_cny_per_hkd=fx,fx_is_historical_proxy=True,fee_rate_budget=fee_rate,
+      cancelled_shares=0,treasury_h_shares_add=250000 if enabled else 0,
+      shares_bn=SHARES if enabled else OLD_SHARES,holder_distribution=0)
+    assert abs((gross_cash-cash)-payable-result['total_equity_change'])<1e-12
+    return result
 CASES={
  'core_low':dict(r=.10,price=215,cost=154,volume=220,other=1.15,release=15,extra=0,finance=75,aux_yield=.100),
  'base':dict(r=.095,price=218,cost=153,volume=225,other=1.35,release=13,extra=0,finance=77,aux_yield=.106),
@@ -33,6 +52,12 @@ CASES['environment_all_99pct_bound']=dict(CASES['base'],env_lower=.99)
 CASES['new_medical_cash_upper_bound']=dict(CASES['base'],new_medical_upper=True,env_lower=.99)
 CASES['conditional_low_after_base5']=dict(CASES['core_low'],conditional=True,finance=77)
 CASES['conditional_high_after_base5']=dict(CASES['core_high'],conditional=True,finance=77)
+CASES['legacy_base']=dict(CASES['base'],repurchase=False,legacy_loss_payout=True)
+CASES['corrected_no_repurchase']=dict(CASES['base'],repurchase=False)
+CASES['fx_minus_10pct']=dict(CASES['base'],fx=.78174)
+CASES['fx_plus_10pct']=dict(CASES['base'],fx=.95546)
+CASES['fees_1pct_bound']=dict(CASES['base'],repurchase_fee=.01)
+CASES['settled_at_cutoff']=dict(CASES['base'],settled=True)
 def legal(up,res,cap,profit):
     # Negative UP must first be repaired; never cross-offset separate cohorts.
     after=up+profit
@@ -42,20 +67,20 @@ def legal(up,res,cap,profit):
 def unit(name,cash,debt,up,res,cap,owner,floor):
     return dict(name=name,cash=cash,debt=debt,up=up,res=res,cap=cap,owner=owner,floor=floor)
 
-def cash_step(u,ebit,da,capex,dwc,external_income=0,repay=0,required=False):
+def cash_step(u,ebit,da,capex,dwc,external_income=0,repay=0,required=False,noncash_loss=0):
     opening=u['cash']; finance=opening*.015
     interest=u['debt']*.026
     pretax=ebit+finance-interest+external_income
     # No group tax consolidation. No unsupported tax-loss asset cash benefit.
-    tax=.25*max(0,pretax); profit=pretax-tax
+    tax=.25*max(0,pretax); profit=pretax-tax-noncash_loss
     u['up'],u['res'],reserve=legal(u['up'],u['res'],u['cap'],profit)
-    before=opening+profit+da-capex-dwc
+    before=opening+profit+noncash_loss+da-capex-dwc
     maturity=u['debt']/3
     paid=min(repay,u['debt']) if required else min(repay,u['debt'],max(0,before-u['floor']))
     refinancing=max(0,maturity-paid)
     u['debt']-=paid; u['cash']=before-paid
-    assert abs(u['cash']-(opening+profit+da-capex-dwc-paid))<1e-8
-    return dict(open_cash=opening,ebit=ebit,da=da,capex=capex,dwc=dwc,financial_income=finance,other_cash_income=external_income,interest=interest,tax=tax,profit=profit,reserve_add=reserve,debt_repaid=paid,scheduled_maturity=maturity,refinancing=refinancing,cash_before_distribution=u['cash'])
+    assert abs(u['cash']-(opening+profit+noncash_loss+da-capex-dwc-paid))<1e-8
+    return dict(open_cash=opening,ebit=ebit,da=da,capex=capex,dwc=dwc,financial_income=finance,other_cash_income=external_income,interest=interest,tax=tax,profit=profit,noncash_disposal_loss=noncash_loss,reserve_add=reserve,debt_repaid=paid,scheduled_maturity=maturity,refinancing=refinancing,cash_before_distribution=u['cash'])
 
 def distribute(u,desired):
     d=min(max(0,desired),max(0,u['up']),max(0,u['cash']-u['floor']))
@@ -94,13 +119,16 @@ def run(name,method='unit_economics',horizon=400):
     l=unit('residual_loss_budget_pool',2,0,-1.0,.1,1,.94,.8)
     y=unit('Yingde_75pct',2.5,.2,c.get('yingde_up',3.0),.1,.4,.75,.4)
     e=unit('Environmental_budget_pool',1.3,4.1,-.5,.2,1.2,.2121*c.get('env_lower',.69),.5)
+    bridge=repurchase_bridge(p['cash'],c.get('repurchase',True),c.get('fx',HISTORICAL_FX_PROXY),c.get('repurchase_fee',0.),c.get('settled',False))
+    p['cash']=bridge['available_cash_after_reservation']; shares=bridge['shares_bn']
     us=[p,w,l,y,e]; loan=44.088345981;poolpay=17.164153814
     # Gross intercompany principal never creates group earnings or cash.
     portfolio=9.376410426-.03599034*(1-.2121*.69);initial_portfolio=portfolio;fund_calls=1.93;receivable=.041608258;pending=0;pending_by_sub=[0.0]*5
+    cumulative_common_equity_change=bridge['total_equity_change']; cumulative_nci_equity_change=0.; cumulative_physical_asset_change=0.; cumulative_working_capital_change=0.
     rows=[]; stopped=None; support_loans=[0.0]*5;acquisition_cost=0.;checkpoint=None
     for t in range(1,horizon+1):
         if t==6 and scenario.get('conditional'): c=scenario  # SAME live accounts; no reinitialization
-        op=economics(t,c,method);start_cash=sum(u['cash'] for u in us)
+        op=economics(t,c,method);start_cash=sum(u['cash'] for u in us); start_debt=sum(u['debt'] for u in us)
         receipts=pending; p['cash']+=receipts;pending=0
         for i in range(1,5): us[i]['cash']-=pending_by_sub[i]
         pending_by_sub=[0.0]*5
@@ -117,7 +145,7 @@ def run(name,method='unit_economics',horizon=400):
         portfolio-=sale;p['cash']+=sale*recovery
         # 15% haircut is recognized, coupon scales with outstanding principal.
         income=portfolio*c.get('portfolio_income',.025)
-        p['up']-=sale*(1-recovery)
+        disposal_loss=sale*(1-recovery)  # recognize once in earnings, add back in CFO; sale proceeds already booked
         payable=min(poolpay,17.164153814/5);poolpay-=payable
         p['cash']-=payable;w['cash']+=payable
         st=[];internal_interest=loan*.02
@@ -127,7 +155,7 @@ def run(name,method='unit_economics',horizon=400):
             if i==4 and t==1:
                 acquisition_cost=c.get('acquisition',.307);cap+=acquisition_cost
             dwc=(.3 if t==1 else -.1 if t<=5 else 0)*[.01,.87,.04,.03,.05][i]
-            st.append(cash_step(u,op['components'][i],dep,cap,dwc,income+internal_interest if i==0 else -internal_interest if i==1 else 0,u['debt']/3 if c.get('no_refinancing') else u['debt']/max(1,11-t) if t<=10 else u['debt'],c.get('no_refinancing',False)))
+            st.append(cash_step(u,op['components'][i],dep,cap,dwc,income+internal_interest if i==0 else -internal_interest if i==1 else 0,u['debt']/3 if c.get('no_refinancing') else u['debt']/max(1,11-t) if t<=10 else u['debt'],c.get('no_refinancing',False),disposal_loss if i==0 else 0))
         # Acquisition earnings are excluded from base pending approvals/integration.
         # Wide boundary: 40m pretax incremental project earnings, taxed separately,
         # all environmental ownership raised to .99 (not merely new project).
@@ -178,22 +206,41 @@ def run(name,method='unit_economics',horizon=400):
         ramp=min(1,max(0,(t-5)/(c['release']-5)))
         ownerprofit=st[0]['profit']+declared
         common_profit=st[0]['profit']+sum(st[i]['profit']*us[i]['owner'] for i in range(1,len(us)))
-        desired=max(0,common_profit)*(.45+.55*ramp)+ramp*.15*max(0,p['cash']-p['floor'])
-        if t<=2 and c.get('floor_plan',True) and common_profit>0: desired=max(desired,.90*SHARES)
+        payout_profit=common_profit+(disposal_loss if c.get('legacy_loss_payout') else 0.)
+        desired=max(0,payout_profit)*(.45+.55*ramp)+ramp*.15*max(0,p['cash']-p['floor'])
+        if t<=2 and c.get('floor_plan',True) and common_profit>0: desired=max(desired,.90*shares)
         d=distribute(p,desired)
         end_cash=sum(u['cash'] for u in us)
         # Consolidated cash conservation excludes internal payments, preserves
         # dividend transit receivable and actual minority distributions.
-        operating=sum(z['profit']+z['da']-z['capex']-z['dwc']-z['debt_repaid'] for z in st)
+        operating=sum(z['profit']+z['noncash_disposal_loss']+z['da']-z['capex']-z['dwc']-z['debt_repaid'] for z in st)
         expected=start_cash+rc_external+sale*recovery-call+operating-nci-d
         assert abs(end_cash-expected)<1e-7,(t,end_cash,expected)
-        row=dict(old_receivable=receivable,old_receivable_collection=rc,old_receivable_external_cash=rc_external,portfolio_cost_sold=sale,portfolio_cash_recovery=sale*recovery,portfolio_cash_income=income,portfolio_disposal_loss=sale*(1-recovery),acquisition_cost=acquisition_cost,new_medical_full_cash=medical_cash,new_medical_attributable_profit_before_payout=medical_common,year=t,method=method,case=name,operations=op,entities={u['name']:dict(**u,**st[i]) for i,u in enumerate(us)},loan=loan,internal_interest=internal_interest,pool_payable=poolpay,portfolio=portfolio,fund_call=call,common_attributable_profit=common_profit,parent_dividend_receivable=pending,declared_to_parent=declared,received_by_parent=paid_now+receipts,loan_recovery=lr,gross_pool_payment=payable,parent_support=support,support_loan_balances=list(support_loans),support_recovery=support_recovery,nci_cash_distribution=nci,common_distribution=d,distribution_per_share=d/SHARES,total_cash=end_cash,total_debt=sum(u['debt'] for u in us),total_reserve=sum(u['res'] for u in us),pv=d/SHARES/(1+scenario['r'])**t)
+        physical_change=sum(z['capex']-z['da'] for z in st)
+        wc_change=sum(z['dwc'] for z in st)
+        debt_change=sum(u['debt'] for u in us)-start_debt
+        balance_sheet_equity_change=end_cash-start_cash+physical_change+wc_change+call-sale-rc_external-debt_change
+        nci_profit=sum(st[i]['profit']*(1-us[i]['owner']) for i in range(1,5))
+        common_equity_change=common_profit-d
+        nci_equity_change=nci_profit-nci
+        assert abs(balance_sheet_equity_change-common_equity_change-nci_equity_change)<1e-7
+        cumulative_common_equity_change+=common_equity_change
+        cumulative_nci_equity_change+=nci_equity_change
+        cumulative_physical_asset_change+=physical_change
+        cumulative_working_capital_change+=wc_change
+        equity_ledger=dict(common_profit=common_profit,nci_profit=nci_profit,group_profit=sum(z['profit'] for z in st),
+          common_equity_change=common_equity_change,nci_equity_change=nci_equity_change,
+          balance_sheet_equity_change=balance_sheet_equity_change,cumulative_common_equity_change=cumulative_common_equity_change,
+          cumulative_nci_equity_change=cumulative_nci_equity_change,cumulative_physical_asset_change=cumulative_physical_asset_change,
+          cumulative_working_capital_change=cumulative_working_capital_change,registered_capital=REGISTERED_SHARES/1e9,
+          treasury_stock_increment=bridge['treasury_stock_cost_add'],apic_change=bridge['apic_change'])
+        row=dict(equity_ledger=equity_ledger,payout_profit=payout_profit,old_receivable=receivable,old_receivable_collection=rc,old_receivable_external_cash=rc_external,portfolio_cost_sold=sale,portfolio_cash_recovery=sale*recovery,portfolio_cash_income=income,portfolio_disposal_loss=sale*(1-recovery),acquisition_cost=acquisition_cost,new_medical_full_cash=medical_cash,new_medical_attributable_profit_before_payout=medical_common,year=t,method=method,case=name,operations=op,entities={u['name']:dict(**u,**st[i]) for i,u in enumerate(us)},loan=loan,internal_interest=internal_interest,pool_payable=poolpay,portfolio=portfolio,fund_call=call,common_attributable_profit=common_profit,parent_dividend_receivable=pending,declared_to_parent=declared,received_by_parent=paid_now+receipts,loan_recovery=lr,gross_pool_payment=payable,parent_support=support,support_loan_balances=list(support_loans),support_recovery=support_recovery,nci_cash_distribution=nci,common_distribution=d,distribution_per_share=d/shares,total_cash=end_cash,total_debt=sum(u['debt'] for u in us),total_reserve=sum(u['res'] for u in us),pv=d/shares/(1+scenario['r'])**t)
         rows.append(row)
         if t==5:
             checkpoint=copy.deepcopy(dict(entities=us,loan=loan,poolpay=poolpay,portfolio=portfolio,initial_portfolio=initial_portfolio,fund_calls=fund_calls,old_receivable=receivable,pending=pending,pending_by_sub=pending_by_sub,support_loans=support_loans,acquisition_cost=acquisition_cost))
     pv=sum(r['pv'] for r in rows)
     tv5=sum(r['distribution_per_share']/(1+scenario['r'])**(r['year']-5) for r in rows if r['year']>5)
-    return dict(case=name,method=method,year5_state=checkpoint,parameters=scenario,shared_base_first5=bool(scenario.get('conditional')),shares_bn=SHARES,status='infeasible' if stopped else 'feasible',stop=stopped,value=pv if not stopped else None,partial_distributions_pv=pv,terminal_year5=tv5 if not stopped else None,first5=[r['distribution_per_share'] for r in rows[:5]],terminal_pv_fraction=(tv5/(1+scenario['r'])**5/pv if pv and not stopped else None),rows=rows)
+    return dict(case=name,method=method,year5_state=checkpoint,parameters=scenario,shared_base_first5=bool(scenario.get('conditional')),repurchase_bridge=bridge,shares_bn=shares,status='infeasible' if stopped else 'feasible',stop=stopped,value=pv if not stopped else None,partial_distributions_pv=pv,terminal_year5=tv5 if not stopped else None,first5=[r['distribution_per_share'] for r in rows[:5]],terminal_pv_fraction=(tv5/(1+scenario['r'])**5/pv if pv and not stopped else None),rows=rows)
 
 def tests():
     assert legal(-5,0,10,3)==(-2,0,0)
@@ -212,7 +259,18 @@ def tests():
     a=unit('profit',10,0,0,0,10,1,1);b=unit('loss',10,0,-5,0,10,1,1)
     aa=cash_step(a,4,0,0,0);bb=cash_step(b,-4,0,0,0)
     assert abs(aa['tax']-1.0375)<1e-10 and bb['tax']==0
-    return 'loss-first, reserve cap, cash/debt, isolated-tax production tests passed'
+    # Actual production bridge, both possible settlement presentations and exact hand arithmetic.
+    rb=repurchase_bridge(60)
+    assert abs(rb['treasury_stock_cost_add']-.00367904216)<1e-12
+    assert abs(rb['available_cash_after_reservation']-59.99632095784)<1e-12
+    assert rb['shares_bn']==5.222623744 and rb['registered_shares']==5277060044
+    assert rb['holder_distribution']==rb['profit_change']==rb['nci_change']==rb['tax_change']==0
+    assert repurchase_bridge(60,settled=True)['available_cash_after_reservation']==rb['available_cash_after_reservation']
+    u=unit('disposal-hand',10,0,0,0,10,1,1)
+    z=cash_step(u,0,0,0,0,noncash_loss=2)
+    assert abs(z['profit']-(-1.8875))<1e-12 and abs(u['cash']-10.1125)<1e-12
+    assert z['tax']==.0375  # no unsupported tax relief on disposal loss
+    return 'repurchase cash/capital/treasury/APIC/settlement; disposal earnings and noncash addback; loss-first, reserve cap, cash/debt, isolated-tax production tests passed'
 
 def main():
     test=tests();out=[];convergence=[]
