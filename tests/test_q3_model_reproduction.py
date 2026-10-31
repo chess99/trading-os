@@ -137,6 +137,8 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
         "603568",
     }
     newly_disclosed_codes = {
+        "000596",
+        "000538",
         "002142",
         "000568",
         "920982",
@@ -189,12 +191,14 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
     for verification in sorted(verifications):
         check_copy = tmp_path / verification.name
         shutil.copyfile(verification, check_copy)
+        # Complete author/audit/600-1200-year consumer measured 242.270s.
+        checker_timeout = 600 if model.parent.parent.name == "000538" else 240
         checked = subprocess.run(
             [sys.executable, str(check_copy)],
             cwd=tmp_path.parent,
             capture_output=True,
             text=True,
-            timeout=240,
+            timeout=checker_timeout,
             check=False,
         )
         assert checked.returncode == 0, checked.stderr
