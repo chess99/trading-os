@@ -1,5 +1,11 @@
 # 2026Q3研究入口
 
+## 当前172家公司模型/数据候选
+
+本批在冻结171家公司公开源基础上仅新增常熟银行，后续研究不自动并入。报告、完整模型与结果、离线独立复算必要依赖一并提供，无私人服务或内部许可票据要求。实际远端覆盖以PR已完成的commit/ref与完整读回为准，候选数不是已发布数。真实浏览器必需项仍OPEN、0项UI断言完成；HTTP下载核验不等于浏览器通过，不能据此宣称全交付验收、可合并或部署。
+
+## 历史截面：171候选
+
 ## 当前171家公司模型/数据候选
 
 本批在168家公司独立公开交付源基础上新增威胜信息、中国电研、珀莱雅，范围为171家公司；后续研究不自动并入本批。报告和完整模型、结果、离线复算所需公开依赖一并提供，不要求私人文件服务或内部运行许可。经济范围与实际独立覆盖按各公司报告及下载说明阅读，不把未配对压力路径、历史金融证据或封装检查冒称新的独立经济审查。
@@ -24,6 +30,7 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 常熟银行 601128 | [2026Q3](../../companies/CN/601128/reports/2026-Q3.md) | [Python](../../companies/CN/601128/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/601128/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/601128/models/2026-Q3-output.json) |
 | 威胜信息 688100 | [2026Q3](../../companies/CN/688100/reports/2026-Q3.md) | [Python](../../companies/CN/688100/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/688100/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/688100/models/2026-Q3-output.json) |
 | 中国电研 688128 | [2026Q3](../../companies/CN/688128/reports/2026-Q3.md) | [Python](../../companies/CN/688128/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/688128/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/688128/models/2026-Q3-output.json) |
 | 珀莱雅 603605 | [2026Q3](../../companies/CN/603605/reports/2026-Q3.md) | [Python](../../companies/CN/603605/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/603605/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/603605/models/2026-Q3-output.json) |
