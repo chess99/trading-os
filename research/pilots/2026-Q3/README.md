@@ -1,5 +1,17 @@
 # 2026Q3研究入口
 
+## 当前174家公司模型/数据候选
+
+本批在已发布172家公司冻结公开源基础上合批新增上海机场与中国中免，其余后续研究不自动并入。报告、完整模型与结果、离线独立复算必要依赖均可下载，无私人服务或内部许可票据要求。实际远端覆盖以PR提交和完整读回为准，候选数不代表已发布。真实浏览器必需项仍OPEN，0项UI断言完成；HTTP核验不等于浏览器通过，不能据此宣称全交付验收、可合并或部署。
+
+## 历史截面：173候选
+
+## 当前173家公司模型/数据候选
+
+本批在已发布172家公司冻结公开源基础上新增上海机场，其余后续研究不自动并入。报告、完整模型与结果、离线独立复算必要依赖均可下载，无私人服务或内部许可票据要求。实际远端覆盖以PR提交和完整读回为准，候选数不代表已发布。真实浏览器必需项仍OPEN，0项UI断言完成；HTTP核验不等于浏览器通过，不能据此宣称全交付验收、可合并或部署。
+
+## 历史截面：172候选
+
 ## 当前172家公司模型/数据候选
 
 本批在冻结171家公司公开源基础上仅新增常熟银行，后续研究不自动并入。报告、完整模型与结果、离线独立复算必要依赖一并提供，无私人服务或内部许可票据要求。实际远端覆盖以PR已完成的commit/ref与完整读回为准，候选数不是已发布数。真实浏览器必需项仍OPEN、0项UI断言完成；HTTP下载核验不等于浏览器通过，不能据此宣称全交付验收、可合并或部署。
@@ -30,6 +42,8 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 中国中免 601888 | [2026Q3](../../companies/CN/601888/reports/2026-Q3.md) | [Python](../../companies/CN/601888/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/601888/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/601888/models/2026-Q3-output.json) |
+| 上海机场 600009 | [2026Q3](../../companies/CN/600009/reports/2026-Q3.md) | [Python](../../companies/CN/600009/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/600009/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/600009/models/2026-Q3-output.json) |
 | 常熟银行 601128 | [2026Q3](../../companies/CN/601128/reports/2026-Q3.md) | [Python](../../companies/CN/601128/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/601128/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/601128/models/2026-Q3-output.json) |
 | 威胜信息 688100 | [2026Q3](../../companies/CN/688100/reports/2026-Q3.md) | [Python](../../companies/CN/688100/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/688100/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/688100/models/2026-Q3-output.json) |
 | 中国电研 688128 | [2026Q3](../../companies/CN/688128/reports/2026-Q3.md) | [Python](../../companies/CN/688128/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/688128/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/688128/models/2026-Q3-output.json) |
