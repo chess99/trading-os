@@ -1,5 +1,17 @@
 # 2026Q3研究入口
 
+## 当前179家公司模型/数据候选
+
+本批在已发布177家公司冻结公开源基础上合入立讯精密与同仁堂；后续研究不自动并入。本轮累计核验以584个唯一pytest节点覆盖映射为准（451项既有合格证据、178组件1项真实默认、179新默认1项、131项全局新鲜测试），不称单一全套fresh过程；网页/50项JS/双HTTP完整字节检查独立记录，不替代浏览器。报告、完整模型与输出、离线独立复算必要依赖可下载，无私人服务或内部许可要求。实际远端覆盖以PR提交和完整读回为准，候选数不代表已发布。真实浏览器必需项仍OPEN，0项UI断言完成；不能据此宣称全交付验收、可合并或部署。
+
+## 历史截面：178组件与既有177候选
+
+## 当前178家公司模型/数据组件候选
+
+本批在已发布177家公司冻结公开源基础上新增立讯精密；当前仅准备组件，下一累计全局及web验收尚待合批边界，后续研究不自动并入。报告、完整模型与输出、离线独立复算必要依赖可下载，无私人服务或内部许可要求。实际远端覆盖以PR提交和完整读回为准，候选数不代表已发布。真实浏览器必需项仍OPEN，0项UI断言完成；不能据此宣称全交付验收、可合并或部署。
+
+## 历史截面：177候选
+
 ## 当前177家公司模型/数据候选
 
 本批在已发布174家公司冻结公开源基础上合批新增顺丰控股、兆易创新、德业股份，后续研究不自动并入。报告、完整模型与结果、离线独立复算必要依赖均可下载，无私人服务或内部许可票据要求。实际远端覆盖以PR提交和完整读回为准，候选数不代表已发布。真实浏览器必需项仍OPEN，0项UI断言完成；HTTP核验不等于浏览器通过，不能据此宣称全交付验收、可合并或部署。
@@ -54,6 +66,8 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 同仁堂 600085 | [2026Q3](../../companies/CN/600085/reports/2026-Q3.md) | [Python](../../companies/CN/600085/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/600085/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/600085/models/2026-Q3-output.json) |
+| 立讯精密 002475 | [2026Q3](../../companies/CN/002475/reports/2026-Q3.md) | [Python](../../companies/CN/002475/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/002475/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/002475/models/2026-Q3-output.json) |
 | 德业股份 605117 | [2026Q3](../../companies/CN/605117/reports/2026-Q3.md) | [Python](../../companies/CN/605117/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/605117/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/605117/models/2026-Q3-output.json) |
 | 兆易创新 603986 | [2026Q3](../../companies/CN/603986/reports/2026-Q3.md) | [Python](../../companies/CN/603986/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/603986/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/603986/models/2026-Q3-output.json) |
 | 顺丰控股 002352 | [2026Q3](../../companies/CN/002352/reports/2026-Q3.md) | [Python](../../companies/CN/002352/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/002352/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/002352/models/2026-Q3-output.json) |
