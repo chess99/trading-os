@@ -1,5 +1,17 @@
 # 2026Q3研究入口
 
+## 当前177家公司模型/数据候选
+
+本批在已发布174家公司冻结公开源基础上合批新增顺丰控股、兆易创新、德业股份，后续研究不自动并入。报告、完整模型与结果、离线独立复算必要依赖均可下载，无私人服务或内部许可票据要求。实际远端覆盖以PR提交和完整读回为准，候选数不代表已发布。真实浏览器必需项仍OPEN，0项UI断言完成；HTTP核验不等于浏览器通过，不能据此宣称全交付验收、可合并或部署。
+
+## 历史截面：175组件候选
+
+## 当前175家公司模型/数据候选（待累计集成）
+
+本批在已发布174家公司冻结公开源基础上新增顺丰控股，其余后续研究不自动并入。新增默认完整公开入口须实际验收，累计全局与web检查待本批边界执行。报告、完整模型与结果、离线独立复算必要依赖均可下载，无私人服务或内部许可票据要求。实际远端覆盖以PR提交和完整读回为准，候选数不代表已发布。真实浏览器必需项仍OPEN，0项UI断言完成；HTTP核验不等于浏览器通过，不能据此宣称全交付验收、可合并或部署。
+
+## 历史截面：174候选
+
 ## 当前174家公司模型/数据候选
 
 本批在已发布172家公司冻结公开源基础上合批新增上海机场与中国中免，其余后续研究不自动并入。报告、完整模型与结果、离线独立复算必要依赖均可下载，无私人服务或内部许可票据要求。实际远端覆盖以PR提交和完整读回为准，候选数不代表已发布。真实浏览器必需项仍OPEN，0项UI断言完成；HTTP核验不等于浏览器通过，不能据此宣称全交付验收、可合并或部署。
@@ -42,6 +54,9 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 德业股份 605117 | [2026Q3](../../companies/CN/605117/reports/2026-Q3.md) | [Python](../../companies/CN/605117/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/605117/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/605117/models/2026-Q3-output.json) |
+| 兆易创新 603986 | [2026Q3](../../companies/CN/603986/reports/2026-Q3.md) | [Python](../../companies/CN/603986/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/603986/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/603986/models/2026-Q3-output.json) |
+| 顺丰控股 002352 | [2026Q3](../../companies/CN/002352/reports/2026-Q3.md) | [Python](../../companies/CN/002352/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/002352/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/002352/models/2026-Q3-output.json) |
 | 中国中免 601888 | [2026Q3](../../companies/CN/601888/reports/2026-Q3.md) | [Python](../../companies/CN/601888/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/601888/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/601888/models/2026-Q3-output.json) |
 | 上海机场 600009 | [2026Q3](../../companies/CN/600009/reports/2026-Q3.md) | [Python](../../companies/CN/600009/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/600009/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/600009/models/2026-Q3-output.json) |
 | 常熟银行 601128 | [2026Q3](../../companies/CN/601128/reports/2026-Q3.md) | [Python](../../companies/CN/601128/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/601128/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/601128/models/2026-Q3-output.json) |
