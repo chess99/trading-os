@@ -1,6 +1,12 @@
 # 2026Q3研究入口
 
-## 当前累计候选与验证边界
+## 当前171家公司模型/数据候选
+
+本批在168家公司独立公开交付源基础上新增威胜信息、中国电研、珀莱雅，范围为171家公司；后续研究不自动并入本批。报告和完整模型、结果、离线复算所需公开依赖一并提供，不要求私人文件服务或内部运行许可。经济范围与实际独立覆盖按各公司报告及下载说明阅读，不把未配对压力路径、历史金融证据或封装检查冒称新的独立经济审查。
+
+本批是模型/数据候选，实际已发布覆盖以PR的commit/ref及完整文件核对为准。真实浏览器必需项仍为OPEN，0项UI断言完成；HTTP下载校验不是浏览器通过，不能据此宣称全交付验收、可合并或部署。原历史截面和失败限定保留如下。
+
+## 历史截面：168候选公开封装说明
 
 本批覆盖168家公司模型/数据候选，另有后续研究未纳入。本次仅更新36家公开下载闭包及相应说明；实际逐公司资格与新公开文件 SHA256 来自绑定的最终记录，经济判断和历史失败不因此改写。旧573个唯一Python测试ID由406项有明确依赖资格的历史复用、36项当时逐公司实际portable测试和131项当时全局/合同测试组成；它们属于旧固定源证据，不是本次新公开封装的一次全套新鲜运行。新封装实际执行与合格历史财务复用的区别，见各公司下载附录的具体范围。
 
@@ -18,6 +24,9 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 威胜信息 688100 | [2026Q3](../../companies/CN/688100/reports/2026-Q3.md) | [Python](../../companies/CN/688100/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/688100/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/688100/models/2026-Q3-output.json) |
+| 中国电研 688128 | [2026Q3](../../companies/CN/688128/reports/2026-Q3.md) | [Python](../../companies/CN/688128/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/688128/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/688128/models/2026-Q3-output.json) |
+| 珀莱雅 603605 | [2026Q3](../../companies/CN/603605/reports/2026-Q3.md) | [Python](../../companies/CN/603605/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/603605/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/603605/models/2026-Q3-output.json) |
 | 三一重工 600031 | [2026Q3](../../companies/CN/600031/reports/2026-Q3.md) | [Python](../../companies/CN/600031/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/600031/models/2026-Q3-output.json.xz) |
 | 中际旭创 300308 | [2026Q3](../../companies/CN/300308/reports/2026-Q3.md) | [Python](../../companies/CN/300308/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/300308/models/2026-Q3-output.json.xz) |
 | 美的集团 000333 | [2026Q3](../../companies/CN/000333/reports/2026-Q3.md) | [Python](../../companies/CN/000333/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/000333/models/2026-Q3-output.json.xz) |
