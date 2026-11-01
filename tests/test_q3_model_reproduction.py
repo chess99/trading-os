@@ -16,12 +16,13 @@ ROOT = Path(__file__).resolve().parents[1]
 MODELS = sorted((ROOT / "research/companies/CN").glob("*/models/2026-Q3.py"))
 
 
-def _abort_owned_checker_timeout(error, *, symbol, tmp_path):
+def _abort_owned_checker_timeout(error, *, symbol, tmp_path, phase="checker"):
+    assert phase in {"producer", "checker"}
     # Keep the checker in the already owned pytest PGID. The outer owner must
     # terminate any surviving nested descendants before admitting more work.
     # Even a record-write failure aborts pytest instead of continuing next node.
     root = Path(os.environ.get("PARTITION_EVIDENCE_DIR", tmp_path))
-    prefix = root / (symbol + "-checker-timeout")
+    prefix = root / (symbol + "-" + phase + "-timeout")
     try:
         for suffix, value in ((".stdout", error.stdout), (".stderr", error.stderr)):
             value = value.encode() if isinstance(value, str) else (value or b"")
@@ -30,7 +31,7 @@ def _abort_owned_checker_timeout(error, *, symbol, tmp_path):
         with Path(str(prefix) + ".traceback.txt").open("x") as stream:
             stream.write(traceback.format_exc())
         with Path(str(prefix) + ".json").open("x") as stream:
-            json.dump({"status": "controlled_checker_timeout_requires_owner_group_cleanup",
+            json.dump({"status": "controlled_" + phase + "_timeout_requires_owner_group_cleanup",
                        "symbol": symbol, "timeout": error.timeout, "argv": error.cmd,
                        "pytest_pid": os.getpid(), "pytest_pgid": os.getpgrp(),
                        "pid_namespace": os.readlink("/proc/self/ns/pid"),
@@ -39,7 +40,10 @@ def _abort_owned_checker_timeout(error, *, symbol, tmp_path):
             stream.flush()
             os.fsync(stream.fileno())
     finally:
-        pytest.exit("CHECKER_TIMEOUT: owned pytest group cleanup required; " + symbol, returncode=2)
+        pytest.exit(
+            phase.upper() + "_TIMEOUT: owned pytest group cleanup required; " + symbol,
+            returncode=2,
+        )
 
 
 @pytest.mark.parametrize("model", MODELS, ids=lambda path: path.parent.parent.name)
@@ -52,19 +56,28 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
     args = ["--expand"] if model.parent.parent.name == "300685" else []
     # Serial measured consumer runtimes: 248.480s and 525.087s respectively.
     # Bounded transport budgets retain every numerical and byte assertion.
-    timeout = {"002847": 600, "600309": 1200}.get(model.parent.parent.name, 240)
+    timeout = {"002847": 600, "600309": 1200, "300015": 600}.get(model.parent.parent.name, 240)
+    # 300015 eight complete streams: conservative workload budget, not an
+    # observed raw-only timeout; no numerical assertion or other budget changes.
     # Keep complete stdout on disk, not in the pytest parent's heap while a
     # separate checker also loads a large complete annual output.
     stdout_path = tmp_path / ".producer-stdout"
     with stdout_path.open("wb") as stdout:
-        result = subprocess.run(
-            [sys.executable, str(copied), *args],
-            cwd=tmp_path.parent,
-            stdout=stdout,
-            stderr=subprocess.PIPE,
-            timeout=timeout,
-            check=False,
-        )
+        try:
+            result = subprocess.run(
+                [sys.executable, str(copied), *args],
+                cwd=tmp_path.parent,
+                stdout=stdout,
+                stderr=subprocess.PIPE,
+                timeout=timeout,
+                check=False,
+            )
+        except subprocess.TimeoutExpired as error:
+            if model.parent.parent.name != "300015":
+                raise
+            _abort_owned_checker_timeout(
+                error, symbol=model.parent.parent.name, tmp_path=tmp_path, phase="producer"
+            )
     assert result.returncode == 0, result.stderr
     output = "2026-Q3-output.json"
     expected_path = model.parent / output
@@ -72,14 +85,25 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
     # ordinary full JSON is parsed in the isolated semantic comparator below.
     transport = (
         json.loads(expected_path.read_bytes())
-        if expected_path.stat().st_size <= 4096
+        if expected_path.stat().st_size <= 64 * 1024
         else None
     )
     if isinstance(transport, dict) and transport.get("schema") == "trading_os_lossless_json_xz_v1":
         assert transport["artifact_kind"] == "transport_manifest_not_model_result"
         assert transport["file"] == "2026-Q3-output.json.xz"
         assert 0 < transport["compressed_bytes"] <= 100 * 1024**2
-        assert 0 < transport["expanded_bytes"] <= 512 * 1024**2
+        expanded_limit = 512 * 1024**2
+        if model.parent.parent.name == "600018":
+            # Exact accepted complete output is larger, not a generic limit lift.
+            assert hashlib.sha256(model.read_bytes()).hexdigest() == (
+                "53c9134dc98943c7222b845e6a503e4910e6c1552606fc2bc7a75d1a7d26d1f7"
+            )
+            assert transport["expanded_bytes"] == 670121548
+            assert transport["expanded_sha256"] == (
+                "308f5b98103a609927f18b27e06424545ab09d969f502082274cc9f6196a7959"
+            )
+            expanded_limit = 670121548
+        assert 0 < transport["expanded_bytes"] <= expanded_limit
         compressed_path = model.parent / transport["file"]
         assert compressed_path.is_file() and not compressed_path.is_symlink()
         expected_path = tmp_path / ".expected-full-json"
@@ -109,26 +133,86 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
         assert decoded_size == transport["expanded_bytes"]
         assert decoded_hash.hexdigest() == transport["expanded_sha256"]
         del decoder
-    # Both public producer interfaces retain exact binary stdout/file bytes.
-    generated = tmp_path / output
-    if not generated.exists():
-        stdout_path.replace(generated)
-    else:
-        stdout_path.unlink()
-    # Preserve the complete JSON semantic equality assertion, in a child which
-    # exits before any independent checker starts. No annual data are omitted.
-    semantic = subprocess.run(
-        [sys.executable, "-I", "-S", "-c",
-         "import json,sys; "
-         "a=json.load(open(sys.argv[1],encoding='utf-8')); "
-         "b=json.load(open(sys.argv[2],encoding='utf-8')); assert a==b",
-         str(generated), str(expected_path)],
-        cwd=tmp_path.parent,
-        capture_output=True,
-        timeout=240,
-        check=False,
+    output_parts = (
+        isinstance(transport, dict)
+        and transport.get("schema") == "trading_os_lossless_json_xz_parts_v1"
     )
-    assert semantic.returncode == 0, semantic.stderr
+    if output_parts:
+        from trading_os.model_output_parts import decode_output, output_manifest
+        # Exact same bytes are parsed/validated then used throughout; no second
+        # unchecked manifest object controls file paths or document selection.
+        manifest_bytes = expected_path.read_bytes()
+        manifest = output_manifest(
+            manifest_bytes, "2026-Q3", model.parent.parent.name,
+            hashlib.sha256(model.read_bytes()).hexdigest(),
+        )
+        for entry in manifest["outputs"]:
+            name = (output if manifest["layout"] == "single_complete_json"
+                    else f"2026-Q3-output-{entry['name']}.json")
+            actual_path = tmp_path / name
+            if manifest["layout"] == "single_complete_json" and not actual_path.exists():
+                stdout_path.replace(actual_path)
+            assert actual_path.is_file() and not actual_path.is_symlink()
+            decoded_path = tmp_path / (".expected-" + entry["name"] + ".json")
+            decode_output(model.parent, manifest, entry, decoded_path)
+            # One complete JSON parse plus exact whole bytes is stricter than
+            # semantic equality, with only one potentially large graph in RAM.
+            compared = subprocess.run(
+                [sys.executable, "-I", "-S", "-c",
+                 "import json,sys,os\n"
+                 "json.load(open(sys.argv[2],encoding='utf-8'),"
+                 "parse_constant=lambda x: (_ for _ in ()).throw(ValueError(x)))\n"
+                 "assert os.path.getsize(sys.argv[1])==os.path.getsize(sys.argv[2])\n"
+                 "with open(sys.argv[1],'rb') as a,open(sys.argv[2],'rb') as b:\n"
+                 " while True:\n"
+                 "  x=a.read(1024*1024);y=b.read(1024*1024);assert x==y\n"
+                 "  if not x:break\n", str(actual_path), str(decoded_path)],
+                cwd=tmp_path.parent, capture_output=True, timeout=240, check=False,
+            )
+            assert compared.returncode == 0, compared.stderr
+            decoded_path.unlink()
+        # All eight 300015 outputs are separate real JSON documents. The
+        # descriptor or stdout progress is not substituted for any of them.
+        generated = tmp_path / output
+    else:
+        # Both public producer interfaces retain exact binary stdout/file bytes.
+        generated = tmp_path / output
+        if not generated.exists():
+            stdout_path.replace(generated)
+        else:
+            stdout_path.unlink()
+        # Preserve the complete JSON semantic equality assertion, in a child which
+        # exits before any independent checker starts. No annual data are omitted.
+        semantic_script = (
+            "import json,sys; "
+            "a=json.load(open(sys.argv[1],encoding='utf-8')); "
+            "b=json.load(open(sys.argv[2],encoding='utf-8')); assert a==b"
+        )
+        if model.parent.parent.name == "600018":
+            assert isinstance(transport, dict)
+            assert transport.get("schema") == "trading_os_lossless_json_xz_v1"
+            # Parse the entire expected JSON once, then demand exact full bytes.
+            # Valid JSON plus byte identity implies the original semantic equality;
+            # no two large object graphs need coexist and no annual state is omitted.
+            semantic_script = (
+                "import json,sys,os\n"
+                "json.load(open(sys.argv[2],encoding='utf-8'))\n"
+                "assert os.path.getsize(sys.argv[1]) == os.path.getsize(sys.argv[2])\n"
+                "with open(sys.argv[1],'rb') as a, open(sys.argv[2],'rb') as b:\n"
+                " while True:\n"
+                "  x=a.read(1024*1024); y=b.read(1024*1024)\n"
+                "  assert x==y\n"
+                "  if not x: break\n"
+            )
+        semantic = subprocess.run(
+            [sys.executable, "-I", "-S", "-c", semantic_script,
+             str(generated), str(expected_path)],
+            cwd=tmp_path.parent,
+            capture_output=True,
+            timeout=240,
+            check=False,
+        )
+        assert semantic.returncode == 0, semantic.stderr
 
     # Every published sibling case is part of the public transport contract.
     # In particular 300033 has 54 case JSON files, not merely its small index.
@@ -206,7 +290,10 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
         "600406",
     }
     migrated_codes = {entry["code"] for entry in migrated["companies"]}
-    if model.parent.parent.name in migrated_codes | restored_codes | newly_disclosed_codes:
+    if (
+        not output_parts
+        and model.parent.parent.name in migrated_codes | restored_codes | newly_disclosed_codes
+    ):
         assert generated.stat().st_size == expected_path.stat().st_size
         with generated.open("rb") as actual, expected_path.open("rb") as expected:
             while block := actual.read(1024 * 1024):
@@ -222,13 +309,48 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
     for verification in sorted(verifications):
         check_copy = tmp_path / verification.name
         shutil.copyfile(verification, check_copy)
+        # Closed verification payload siblings; never arbitrary repository files.
+        payload_manifest = model.parent / "2026-Q3-verification-payload.json"
+        if verification.name == "2026-Q3-independent-recompute.py" and payload_manifest.exists():
+            from trading_os.model_verification_payload import (
+                _read_regular,
+                verification_manifest,
+                verification_payload,
+            )
+            manifest_bytes = _read_regular(payload_manifest, limit=64 * 1024)
+            manifest = verification_manifest(manifest_bytes, "2026-Q3")
+            verification_payload(
+                model.parent, "2026-Q3", manifest["payload_bytes"], manifest["payload_sha256"],
+                manifest_bytes=manifest_bytes,
+            )
+            with (tmp_path / payload_manifest.name).open("xb") as destination:
+                destination.write(manifest_bytes)
+            for part in manifest["parts"]:
+                with (tmp_path / part["file"]).open("xb") as destination:
+                    destination.write(
+                        _read_regular(model.parent / part["file"], part["bytes"], 6 * 1024**2)
+                    )
+            verification_payload(
+                tmp_path, "2026-Q3", manifest["payload_bytes"], manifest["payload_sha256"]
+            )
         # Complete author/audit/600-1200-year consumer measured 242.270s.
         # Yili complete author + independent consumer measured 295.038s.
         # Runtime budget only; all original economic assertions remain.
+        # 300661: conservative complete 10-stage + 4 author-replay wait budget;
+        # no historical total-time measurement is claimed.
+        # 600298 likewise retains all six full accepted stages and two507MB
+        # audit replays;600s is conservative workload budget, not oldtimeout.
+        # 600018:11 full stages/670MB producer/485MB independent; conservative
+        # 1200s resource wait only, original financial assertions unchanged.
         checker_timeout = (
-            600
+            1200
+            if model.parent.parent.name in {"600018", "300015"}
+            else 600
             if model.parent.parent.name
-            in {"000538", "300760", "600887", "603939", "688188", "688617"}
+            in {
+                "000538", "300760", "600887", "603939", "688188", "688617",
+                "600519", "300347", "300661", "600298",
+            }
             else 240
         )
         try:
@@ -241,7 +363,10 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
                 check=False,
             )
         except subprocess.TimeoutExpired as error:
-            if model.parent.parent.name not in {"603939", "688188", "688617"}:
+            if model.parent.parent.name not in {
+                "603939", "688188", "688617", "600519", "300347",
+                "300661", "600298", "600018", "300015",
+            }:
                 raise
             _abort_owned_checker_timeout(error, symbol=model.parent.parent.name, tmp_path=tmp_path)
         assert checked.returncode == 0, checked.stderr

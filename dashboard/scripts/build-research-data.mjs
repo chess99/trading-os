@@ -5,7 +5,9 @@ import { fileURLToPath } from "node:url";
 import { loadStandards, reportMetadata, displayEligibility } from "./lib/research-standards.mjs";
 import { currentResults, progressCounts } from "../app/lib/display-policy.mjs";
 
+import { verifyOutputParts } from "./lib/model-output-parts.mjs";
 import { xzManifestEntry, verifyXzBytes } from "./lib/model-xz.mjs";
+import { parseVerificationManifest, verifyVerificationPayload } from "./lib/model-verification-payload.mjs";
 import { modelArtifactName, researchResourceLink } from "../app/lib/report-reference.mjs";
 
 const dashboardRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -40,7 +42,7 @@ async function collectReports(root, output, ticker, policy, state) {
     // Keep the legacy source/output pair, then close over reader-linked allowed
     // auxiliaries and the explicit split-output manifest. Never execute artifacts.
     const period = filename.replace(/\.md$/u, "");
-    const names = new Map([[`${period}.py`, false], [`${period}-output.json`, false]]);
+    const names = new Map([[`${period}.py`, false], [`${period}-output.json`, false], [`${period}-verification-payload.json`, false]]);
     const markdown = body.toString("utf8");
     const hrefs = [
       ...[...markdown.matchAll(/\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/gu)].map((m) => m[1]),
@@ -53,7 +55,8 @@ async function collectReports(root, output, ticker, policy, state) {
       const name = link.slice(prefix.length).split(/[?#]/u, 1)[0];
       if (modelArtifactName(name, period)) names.set(name, true);
     }
-    const artifactOrder = (a, b) => Number(b === `${period}-output.json`) - Number(a === `${period}-output.json`) || (a < b ? -1 : a > b ? 1 : 0);
+    const priority = (name) => name === `${period}-output.json` ? 0 : name === `${period}-verification-payload.json` ? 1 : 2;
+    const artifactOrder = (a, b) => priority(a) - priority(b) || (a < b ? -1 : a > b ? 1 : 0);
     const pending = [...names.keys()].sort(artifactOrder);
     const exported = new Set();
     const expectedFiles = new Map();
@@ -65,8 +68,10 @@ async function collectReports(root, output, ticker, policy, state) {
       const modelName = pending.shift();
       if (exported.has(modelName)) continue;
       if (!modelArtifactName(modelName, period)) throw new Error(`Unsafe model artifact: ${modelName}`);
+      if (/-verification-part-\d{3}\.bin$/u.test(modelName) && !expectedFiles.has(modelName)) throw new Error(`Verification part absent from its manifest: ${modelName}`);
       if (modelName.startsWith(`${period}-case-`) && !expectedFiles.has(modelName)) throw new Error(`Case artifact is absent from its split manifest: ${modelName}`);
       if (modelName.endsWith("-output.json.xz") && !xzManifests.has(modelName)) throw new Error(`XZ artifact is absent from its transport manifest: ${modelName}`);
+      if (modelName.endsWith(".xzpart") && !expectedFiles.has(modelName)) throw new Error(`Output part is absent from its complete manifest: ${modelName}`);
       const modelSource = join(root, "research/companies/CN", ticker, "models", modelName);
       let modelBody;
       try {
@@ -87,9 +92,34 @@ async function collectReports(root, output, ticker, policy, state) {
       await mkdir(modelDestination, { recursive: true });
       await writeFile(join(modelDestination, modelName), modelBody);
       exported.add(modelName);
+      if (modelName === `${period}-verification-payload.json`) {
+        const manifest = parseVerificationManifest(modelBody, period);
+        await verifyVerificationPayload(canonicalModelDirectory, manifest, period);
+        names.set(`${period}-independent-recompute.py`, true);
+        if (!exported.has(`${period}-independent-recompute.py`)) pending.push(`${period}-independent-recompute.py`);
+        for (const entry of manifest.parts) {
+          names.set(entry.file, true);
+          expectedFiles.set(entry.file, { bytes: entry.bytes, file_sha256: entry.sha256 });
+          pending.push(entry.file);
+        }
+        pending.sort(artifactOrder);
+      }
       if (modelName === `${period}-output.json`) {
         let manifest;
         try { manifest = JSON.parse(modelBody); } catch { /* Legacy bytes remain downloadable. */ }
+        if (manifest?.schema === "trading_os_lossless_json_xz_parts_v1") {
+          const producerPath = join(canonicalModelDirectory, `${period}.py`);
+          const producerStat = await lstat(producerPath);
+          if (!producerStat.isFile() || producerStat.isSymbolicLink() || producerStat.nlink !== 1 || await realpath(producerPath) !== producerPath) throw new Error('Unsafe output producer identity');
+          const producerHash = createHash('sha256').update(await readFile(producerPath)).digest('hex');
+          const entry = verifyOutputParts(canonicalModelDirectory, modelBody, period, ticker, producerHash);
+          for (const document of entry.outputs) for (const part of document.parts) {
+            names.set(part.file, true);
+            expectedFiles.set(part.file, { bytes: part.bytes, file_sha256: part.sha256 });
+            pending.push(part.file);
+          }
+          pending.sort(artifactOrder);
+        }
         if (manifest?.schema === "trading_os_lossless_json_xz_v1") {
           const entry = xzManifestEntry(manifest, period);
           names.set(entry.file, true);
