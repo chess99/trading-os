@@ -3,15 +3,43 @@
 import hashlib
 import json
 import lzma
+import os
 import shutil
 import subprocess
 import sys
+import traceback
 from pathlib import Path
 
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 MODELS = sorted((ROOT / "research/companies/CN").glob("*/models/2026-Q3.py"))
+
+
+def _abort_owned_checker_timeout(error, *, symbol, tmp_path):
+    # Keep the checker in the already owned pytest PGID. The outer owner must
+    # terminate any surviving nested descendants before admitting more work.
+    # Even a record-write failure aborts pytest instead of continuing next node.
+    root = Path(os.environ.get("PARTITION_EVIDENCE_DIR", tmp_path))
+    prefix = root / (symbol + "-checker-timeout")
+    try:
+        for suffix, value in ((".stdout", error.stdout), (".stderr", error.stderr)):
+            value = value.encode() if isinstance(value, str) else (value or b"")
+            with Path(str(prefix) + suffix).open("xb") as stream:
+                stream.write(value)
+        with Path(str(prefix) + ".traceback.txt").open("x") as stream:
+            stream.write(traceback.format_exc())
+        with Path(str(prefix) + ".json").open("x") as stream:
+            json.dump({"status": "controlled_checker_timeout_requires_owner_group_cleanup",
+                       "symbol": symbol, "timeout": error.timeout, "argv": error.cmd,
+                       "pytest_pid": os.getpid(), "pytest_pgid": os.getpgrp(),
+                       "pid_namespace": os.readlink("/proc/self/ns/pid"),
+                       "no_next_node_admission": True, "failure_not_success": True}, stream)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+    finally:
+        pytest.exit("CHECKER_TIMEOUT: owned pytest group cleanup required; " + symbol, returncode=2)
 
 
 @pytest.mark.parametrize("model", MODELS, ids=lambda path: path.parent.parent.name)
@@ -197,13 +225,23 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
         # Complete author/audit/600-1200-year consumer measured 242.270s.
         # Yili complete author + independent consumer measured 295.038s.
         # Runtime budget only; all original economic assertions remain.
-        checker_timeout = 600 if model.parent.parent.name in {"000538", "600887"} else 240
-        checked = subprocess.run(
-            [sys.executable, str(check_copy)],
-            cwd=tmp_path.parent,
-            capture_output=True,
-            text=True,
-            timeout=checker_timeout,
-            check=False,
+        checker_timeout = (
+            600
+            if model.parent.parent.name
+            in {"000538", "300760", "600887", "603939", "688188", "688617"}
+            else 240
         )
+        try:
+            checked = subprocess.run(
+                [sys.executable, str(check_copy)],
+                cwd=tmp_path.parent,
+                capture_output=True,
+                text=True,
+                timeout=checker_timeout,
+                check=False,
+            )
+        except subprocess.TimeoutExpired as error:
+            if model.parent.parent.name not in {"603939", "688188", "688617"}:
+                raise
+            _abort_owned_checker_timeout(error, symbol=model.parent.parent.name, tmp_path=tmp_path)
         assert checked.returncode == 0, checked.stderr

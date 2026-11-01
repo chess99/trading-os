@@ -1,6 +1,8 @@
 # 2026Q3研究入口
 
-2026-10-30 00:00计划轮（实际00:12–00:14核验）：重点池191家公司，170家正式全文、21家等待披露。父125完整本地研究后，本批新增江苏银行、牧原股份、海天味业、巨星科技；全部工程验收真实通过后覆盖129家，另41家已披露待交付。本地不等于PR交付；未合并、不操作main。全部年度完整输出及四个双null状态保留。
+2026-10-31 限定草稿说明：129家公司是既有LOCAL基线及已进入PR的研究覆盖数，不代表完整web验收通过；该基线的浏览器记录为“not run/not verified; no bypass”。本候选新增三一重工、中际旭创、美的集团，宁德时代同周期修订不增加公司数，候选研究覆盖132家。模型/数据相关验证已通过：487个唯一Python测试、42个dashboard测试及11项选定web/HTTP命令；历史失败与恢复记录保留。真实浏览器两次尝试均在环境阶段失败，0项UI断言完成，不能记作浏览器通过。浏览器隔离/布局仍是必需验收项，因此132尚未完成全套工程/web验收，不上调完整完成计数，不可据此合并或部署。研究接受、LOCAL基线、PR草稿覆盖与完整验收分别说明；main未集成、PR未合并。
+
+2026-10-30 00:00计划轮（实际00:12–00:14核验）的170/191正式全文、21家等待披露，仅保留为当时截面，不代表当前披露数量。
 
 [版本记录](https://github.com/chess99/trading-os/pull/1/commits)。以下公司链接指向本分支最新完整Q3正文；**当前价值、情景与分配预算以正文及配套模型为准**。页面下半部原试点数字仅为2026-10-21历史快照，不是当前结论。
 
@@ -8,6 +10,9 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 三一重工 600031 | [2026Q3](../../companies/CN/600031/reports/2026-Q3.md) | [Python](../../companies/CN/600031/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/600031/models/2026-Q3-output.json.xz) |
+| 中际旭创 300308 | [2026Q3](../../companies/CN/300308/reports/2026-Q3.md) | [Python](../../companies/CN/300308/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/300308/models/2026-Q3-output.json.xz) |
+| 美的集团 000333 | [2026Q3](../../companies/CN/000333/reports/2026-Q3.md) | [Python](../../companies/CN/000333/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/000333/models/2026-Q3-output.json.xz) |
 | 江苏银行 600919 | [2026Q3](../../companies/CN/600919/reports/2026-Q3.md) | [Python](../../companies/CN/600919/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/600919/models/2026-Q3-output.json.xz) |
 | 牧原股份 002714 | [2026Q3](../../companies/CN/002714/reports/2026-Q3.md) | [Python](../../companies/CN/002714/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/002714/models/2026-Q3-output.json.xz) |
 | 海天味业 603288 | [2026Q3](../../companies/CN/603288/reports/2026-Q3.md) | [Python](../../companies/CN/603288/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/603288/models/2026-Q3-output.json.xz) |
@@ -111,7 +116,7 @@
 | 亿联网络 300628 | [2026Q3](../../companies/CN/300628/reports/2026-Q3.md) | [Python](../../companies/CN/300628/models/2026-Q3.py) | [JSON](../../companies/CN/300628/models/2026-Q3-output.json) |
 | 艾德生物 300685 | [2026Q3](../../companies/CN/300685/reports/2026-Q3.md) | [Python](../../companies/CN/300685/models/2026-Q3.py) | [JSON](../../companies/CN/300685/models/2026-Q3-output.json) |
 | 盛弘股份 300693 | [2026Q3](../../companies/CN/300693/reports/2026-Q3.md) | [Python](../../companies/CN/300693/models/2026-Q3.py) | [JSON](../../companies/CN/300693/models/2026-Q3-output.json) |
-| 宁德时代 300750 | [2026Q3](../../companies/CN/300750/reports/2026-Q3.md) | [Python](../../companies/CN/300750/models/2026-Q3.py) | [JSON](../../companies/CN/300750/models/2026-Q3-output.json) |
+| 宁德时代（同周期修订） 300750 | [2026Q3](../../companies/CN/300750/reports/2026-Q3.md) | [Python](../../companies/CN/300750/models/2026-Q3.py) | [完整JSON（XZ）](../../companies/CN/300750/models/2026-Q3-output.json.xz) |
 | 新乡市瑞丰新材料股份有限公司 300910 | [2026Q3](../../companies/CN/300910/reports/2026-Q3.md) | [Python](../../companies/CN/300910/models/2026-Q3.py) | [JSON](../../companies/CN/300910/models/2026-Q3-output.json) |
 | 华能水电 600025 | [2026Q3](../../companies/CN/600025/reports/2026-Q3.md) | [Python](../../companies/CN/600025/models/2026-Q3.py) | [JSON](../../companies/CN/600025/models/2026-Q3-output.json) |
 | 宇通客车 600066 | [2026Q3](../../companies/CN/600066/reports/2026-Q3.md) | [Python](../../companies/CN/600066/models/2026-Q3.py) | [JSON](../../companies/CN/600066/models/2026-Q3-output.json) |
