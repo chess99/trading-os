@@ -1,5 +1,11 @@
 # 2026Q3研究入口
 
+## 当前180家公司模型/数据候选
+
+本批在已发布179家公司冻结公开源基础上合入拓普集团，并按用户要求完整修订公牛与金诚信资本事项正文；后两者不增加公司数。累计586个唯一pytest节点：453项原有合格证据复用、拓普完整默认及金诚信5现金链入口各1项实际新验、131项全局新鲜检查。网页53项JS与双HTTP全字节验证单列，不称单一fresh全套。金诚信原矿山经营路径不重跑；本次5条现金链与历史28情景及2条条件Y5链明确分开。实际远端覆盖以PR提交和读回为准。必需浏览器验收仍OPEN、0项UI断言完成，不代表全部交付完成、可合并或部署。
+
+## 历史截面：179及此前候选
+
 ## 当前179家公司模型/数据候选
 
 本批在已发布177家公司冻结公开源基础上合入立讯精密与同仁堂；后续研究不自动并入。本轮累计核验以584个唯一pytest节点覆盖映射为准（451项既有合格证据、178组件1项真实默认、179新默认1项、131项全局新鲜测试），不称单一全套fresh过程；网页/50项JS/双HTTP完整字节检查独立记录，不替代浏览器。报告、完整模型与输出、离线独立复算必要依赖可下载，无私人服务或内部许可要求。实际远端覆盖以PR提交和完整读回为准，候选数不代表已发布。真实浏览器必需项仍OPEN，0项UI断言完成；不能据此宣称全交付验收、可合并或部署。
@@ -66,6 +72,7 @@
 
 | 公司 | 完整报告 | 可执行模型 | 全部输出 |
 |---|---|---|---|
+| 拓普集团 601689 | [2026Q3](../../companies/CN/601689/reports/2026-Q3.md) | [Python](../../companies/CN/601689/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/601689/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/601689/models/2026-Q3-output.json) |
 | 同仁堂 600085 | [2026Q3](../../companies/CN/600085/reports/2026-Q3.md) | [Python](../../companies/CN/600085/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/600085/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/600085/models/2026-Q3-output.json) |
 | 立讯精密 002475 | [2026Q3](../../companies/CN/002475/reports/2026-Q3.md) | [Python](../../companies/CN/002475/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/002475/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/002475/models/2026-Q3-output.json) |
 | 德业股份 605117 | [2026Q3](../../companies/CN/605117/reports/2026-Q3.md) | [Python](../../companies/CN/605117/models/2026-Q3.py) · [独立复算与完整依赖](../../companies/CN/605117/models/2026-Q3-sources-assumptions.md) | [完整JSON](../../companies/CN/605117/models/2026-Q3-output.json) |

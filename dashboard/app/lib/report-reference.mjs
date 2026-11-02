@@ -8,7 +8,11 @@ export function referencedReport(reports, version) {
 }
 
 // A closed artifact vocabulary, not a general repository-file endpoint.
-export function modelArtifactName(filename, period) {
+const jchxCapitalFiles = new Set([
+  "2026-Q3-capital-20261102.py", "2026-Q3-capital-20261102-output.json", "2026-Q3-capital-20261102-check.py",
+]);
+export function modelArtifactName(filename, period, ticker) {
+  if (jchxCapitalFiles.has(filename)) return ticker === "603979" && (!period || period === "2026-Q3");
   const match = /^((?:20\d{2})-(?:FY|Q1|H1|Q3))(\.py|-output\.json|-output\.json\.xz|-case-[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*\.json|-sources-assumptions\.md|-independent-recompute\.py|-verification-payload\.json|-verification-part-\d{3}\.bin|-output-(?:main|production|literal|supplement-[abr]-(?:production|literal))-part-\d{3}\.xzpart)$/u.exec(filename);
   return Boolean(match && (!period || match[1] === period));
 }
@@ -21,7 +25,7 @@ export function researchResourceLink(href, sourcePath) {
     // claims one of the new model-auxiliary names is not a local model download.
     if (/^(?:https?:|\/\/)/iu.test(href)) {
       const name = href.split(/[?#]/u, 1)[0].split("/").at(-1);
-      if (modelArtifactName(name) && !/^(?:20\d{2})-(?:FY|Q1|H1|Q3)(?:\.py|-output\.json)$/u.test(name)) return undefined;
+      if (modelArtifactName(name, undefined, "603979") && !/^(?:20\d{2})-(?:FY|Q1|H1|Q3)(?:\.py|-output\.json)$/u.test(name)) return undefined;
     }
     return href;
   }
@@ -32,7 +36,7 @@ export function researchResourceLink(href, sourcePath) {
   const report = reportReferenceLink(resolved.pathname);
   if (report) return `${report}${resolved.hash}`;
   const model = /^\/research\/companies\/CN\/(\d{6})\/models\/([^/]+)$/u.exec(resolved.pathname);
-  if (!model || !modelArtifactName(model[2])) return undefined;
+  if (!model || !modelArtifactName(model[2], undefined, model[1])) return undefined;
   const primary = /^(?:20\d{2})-(?:FY|Q1|H1|Q3)(?:\.py|-output\.json)$/u.test(model[2]);
   if (!primary) {
     const source = /^research\/companies\/CN\/(\d{6})\/reports\/((?:20\d{2})-(?:FY|Q1|H1|Q3))\.md$/u.exec(sourcePath ?? "");
@@ -42,7 +46,7 @@ export function researchResourceLink(href, sourcePath) {
     const rawPath = href.split(/[?#]/u, 1)[0];
     const relative = `../models/${model[2]}`;
     const absolute = `/research/companies/CN/${model[1]}/models/${model[2]}`;
-    if (!source || source[1] !== model[1] || !modelArtifactName(model[2], source[2])
+    if (!source || source[1] !== model[1] || !modelArtifactName(model[2], source[2], source[1])
         || (rawPath !== relative && rawPath !== absolute)) return undefined;
   }
   return `/data/models/${model[1]}/${model[2]}${resolved.search}${resolved.hash}`;

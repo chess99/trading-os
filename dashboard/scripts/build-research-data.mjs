@@ -53,7 +53,7 @@ async function collectReports(root, output, ticker, policy, state) {
       const prefix = `/data/models/${ticker}/`;
       if (!link?.startsWith(prefix)) continue;
       const name = link.slice(prefix.length).split(/[?#]/u, 1)[0];
-      if (modelArtifactName(name, period)) names.set(name, true);
+      if (modelArtifactName(name, period, ticker)) names.set(name, true);
     }
     const priority = (name) => name === `${period}-output.json` ? 0 : name === `${period}-verification-payload.json` ? 1 : 2;
     const artifactOrder = (a, b) => priority(a) - priority(b) || (a < b ? -1 : a > b ? 1 : 0);
@@ -67,7 +67,7 @@ async function collectReports(root, output, ticker, policy, state) {
     while (pending.length) {
       const modelName = pending.shift();
       if (exported.has(modelName)) continue;
-      if (!modelArtifactName(modelName, period)) throw new Error(`Unsafe model artifact: ${modelName}`);
+      if (!modelArtifactName(modelName, period, ticker)) throw new Error(`Unsafe model artifact: ${modelName}`);
       if (/-verification-part-\d{3}\.bin$/u.test(modelName) && !expectedFiles.has(modelName)) throw new Error(`Verification part absent from its manifest: ${modelName}`);
       if (modelName.startsWith(`${period}-case-`) && !expectedFiles.has(modelName)) throw new Error(`Case artifact is absent from its split manifest: ${modelName}`);
       if (modelName.endsWith("-output.json.xz") && !xzManifests.has(modelName)) throw new Error(`XZ artifact is absent from its transport manifest: ${modelName}`);
@@ -136,7 +136,7 @@ async function collectReports(root, output, ticker, policy, state) {
           for (const [caseName, entry] of Object.entries(manifest.case_files).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0)) {
             const name = entry?.file;
             if (!/^[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*$/u.test(caseName)
-                || name !== `${period}-case-${caseName}.json` || !modelArtifactName(name, period)
+                || name !== `${period}-case-${caseName}.json` || !modelArtifactName(name, period, ticker)
                 || seen.has(name) || !Number.isSafeInteger(entry.bytes) || entry.bytes < 0
                 || !/^[a-f0-9]{64}$/u.test(entry.file_sha256 ?? "")) {
               throw new Error(`Unsafe split model manifest entry: ${caseName}`);
