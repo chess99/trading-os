@@ -15,6 +15,9 @@ const capitalFilesByTicker = new Map([
   ["300685", "20261102"],
   ["300124", "20261102"],
   ["300285", "20261102"],
+  ["000651", "20261103"],
+  ["000921", "20261103"],
+  ["003816", "20261103"],
 ].map(([ticker, date]) => [ticker, new Set([
   `2026-Q3-capital-${date}.py`, `2026-Q3-capital-${date}-output.json`, `2026-Q3-capital-${date}-check.py`,
 ])]));
