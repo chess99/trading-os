@@ -1,5 +1,46 @@
 # 2026Q3分批研究历史
 
+## 当前191家公司：后五项资本现金与股份权利修订（2026-11-03）
+
+本批继承已冻结的191家公司及前六项资本修订，更新晨光股份、益丰药房、生益科技、特宝生物、海天味业的完整当前报告、现金与股份权利链、主辅价值及同基准D/Y5。公司数仍为191；原经营预测和年度预算起点保持，资料版本与现金归属年度分开。远端覆盖以实际提交及全源读回为准。
+
+五个新公开默认分别实际执行原19个正式生产手例及25条选中现金链，再执行独立正式手例和同25条独立现金链，每方7593年度槽。全部五个默认退出0，1,457,106项原v2完整比较无超差或未配；28项明确文字分类不冒数值比较。94个完整对象exact表示每套算法对自身已采用原件的全对象相等，不是两套算法绝对差为零。海天cash_lower的8条完整条件敏感性保留，不计作本次fresh默认；旧25exact及经营预测均不重放。
+
+原海天第16手例遗漏新550000股未来70%A注销基数的错误期望、完整实际输出及修正仍保存。此次公共默认采用修正后的同一正式数学链，未改原失败记录或金融预算。费用、外汇、实体资金、法定与经济股份、条件上划和失败空值均保持完整。
+
+累计验收分别记录旧不变金融依赖复用、当前全局测试、五个实际新现金默认，以及当前导出、JS、构建、类型/lint、双HTTP全响应和全源冷恢复。真实浏览器UI验收仍OPEN，不把模型/数据与HTTP通过当作浏览器、合并或部署完成。
+
+| 当前公司 | 完整报告 | 当前复算附件 |
+|---|---|---|
+| 晨光股份 603899 | [当前完整报告](../../companies/CN/603899/reports/2026-Q3.md) | [现金模型](../../companies/CN/603899/models/2026-Q3-capital-20261103.py)、[完整输出](../../companies/CN/603899/models/2026-Q3-capital-20261103-output.json)、[独立校验](../../companies/CN/603899/models/2026-Q3-capital-20261103-check.py) |
+| 益丰药房 603939 | [当前完整报告](../../companies/CN/603939/reports/2026-Q3.md) | [现金模型](../../companies/CN/603939/models/2026-Q3-capital-20261103.py)、[完整输出](../../companies/CN/603939/models/2026-Q3-capital-20261103-output.json)、[独立校验](../../companies/CN/603939/models/2026-Q3-capital-20261103-check.py)、[完整输出XZ](../../companies/CN/603939/models/2026-Q3-capital-20261103-output.json.xz) |
+| 生益科技 600183 | [当前完整报告](../../companies/CN/600183/reports/2026-Q3.md) | [现金模型](../../companies/CN/600183/models/2026-Q3-capital-20261103.py)、[完整输出](../../companies/CN/600183/models/2026-Q3-capital-20261103-output.json)、[独立校验](../../companies/CN/600183/models/2026-Q3-capital-20261103-check.py)、[完整输出XZ](../../companies/CN/600183/models/2026-Q3-capital-20261103-output.json.xz) |
+| 特宝生物 688278 | [当前完整报告](../../companies/CN/688278/reports/2026-Q3.md) | [现金模型](../../companies/CN/688278/models/2026-Q3-capital-20261103.py)、[完整输出](../../companies/CN/688278/models/2026-Q3-capital-20261103-output.json)、[独立校验](../../companies/CN/688278/models/2026-Q3-capital-20261103-check.py) |
+| 海天味业 603288 | [当前完整报告](../../companies/CN/603288/reports/2026-Q3.md) | [现金模型](../../companies/CN/603288/models/2026-Q3-capital-20261103.py)、[完整输出](../../companies/CN/603288/models/2026-Q3-capital-20261103-output.json)、[独立校验](../../companies/CN/603288/models/2026-Q3-capital-20261103-check.py)、[完整输出XZ](../../companies/CN/603288/models/2026-Q3-capital-20261103-output.json.xz) |
+
+## 历史截面：此前六项及已完成公司研究
+
+## 当前191家公司：六项资本现金与享权修订（2026-11-03）
+
+本批在已完成191家公司及此前资本修订的冻结源上，更新宁德时代、威胜信息、伊利股份、海尔智家、澜起科技、牧原股份的完整当前报告、选中现金与权利链及同基准D/Y5。公司数仍为191，原经营预测及未选历史诊断不重新生成；资料信息版与原金融预算锚分开保留，实际远端覆盖以提交和全源读回为准。
+
+宁德、威胜首轮默认分别退出0。伊利首轮已生成完整base现金后在JSON元组/列表边界退出1，原失败与base字节完整保留；修复只改变JSON落盘比较边界，定向继续其余5条现金，并运行完整独立校验。海尔4条、澜起6条现金随后完成。原1,552,323项独立检查中的2,485项false保持原失败；宁德394,012项Fraction影子检查只证明既定条件下的保存Y27锚、480年有界显示桥，不把原固定D失败改成成功。
+
+牧原新公开默认真实生成主/辅选中现金，包含ZERO、三条件与完整同base尾值，共3,840现金年，经营重新生成0。主/辅独立方程分别消费同次fresh结果；主辅预算、原融资条件、原估值锚、六份同base尾summary与完整原始对象分别保全，不混合成同输入数值相等。
+
+累计Python597个唯一节点按466项此前合格金融依赖复用与131项当前全局新跑区分。六项现金默认按真实首轮、失败及定向续跑另列，此前八项资本默认继续按已完成证据复用，不拼成一次全fresh测试。网页全部JS、build、类型/lint、双HTTP全字节与完整源冷恢复各有独立记录；真实浏览器验收仍OPEN，不表示完整交付验收、合并或部署。
+
+| 当前公司 | 完整报告 | 当前可下载复算 |
+|---|---|---|
+| 宁德时代 300750 | [当前报告](../../companies/CN/300750/reports/2026-Q3.md) | [现金入口](../../companies/CN/300750/models/2026-Q3-capital-20261103.py)、[完整输出](../../companies/CN/300750/models/2026-Q3-capital-20261103-output.json)、[独立完整校验](../../companies/CN/300750/models/2026-Q3-capital-20261103-check.py) |
+| 威胜信息 688100 | [当前报告](../../companies/CN/688100/reports/2026-Q3.md) | [现金入口](../../companies/CN/688100/models/2026-Q3-capital-20261103.py)、[完整输出](../../companies/CN/688100/models/2026-Q3-capital-20261103-output.json)、[独立完整校验](../../companies/CN/688100/models/2026-Q3-capital-20261103-check.py) |
+| 伊利股份 600887 | [当前报告](../../companies/CN/600887/reports/2026-Q3.md) | [现金入口](../../companies/CN/600887/models/2026-Q3-capital-20261103.py)、[完整输出](../../companies/CN/600887/models/2026-Q3-capital-20261103-output.json)、[独立完整校验](../../companies/CN/600887/models/2026-Q3-capital-20261103-check.py)、[完整输出XZ](../../companies/CN/600887/models/2026-Q3-capital-20261103-output.json.xz) |
+| 海尔智家 600690 | [当前报告](../../companies/CN/600690/reports/2026-Q3.md) | [现金入口](../../companies/CN/600690/models/2026-Q3-capital-20261103.py)、[完整输出](../../companies/CN/600690/models/2026-Q3-capital-20261103-output.json)、[独立完整校验](../../companies/CN/600690/models/2026-Q3-capital-20261103-check.py) |
+| 澜起科技 688008 | [当前报告](../../companies/CN/688008/reports/2026-Q3.md) | [现金入口](../../companies/CN/688008/models/2026-Q3-capital-20261103.py)、[完整输出](../../companies/CN/688008/models/2026-Q3-capital-20261103-output.json)、[独立完整校验](../../companies/CN/688008/models/2026-Q3-capital-20261103-check.py) |
+| 牧原股份 002714 | [当前报告](../../companies/CN/002714/reports/2026-Q3.md) | [现金入口](../../companies/CN/002714/models/2026-Q3-capital-20261103.py)、[完整输出](../../companies/CN/002714/models/2026-Q3-capital-20261103-output.json)、[独立完整校验](../../companies/CN/002714/models/2026-Q3-capital-20261103-check.py)、[完整输出XZ](../../companies/CN/002714/models/2026-Q3-capital-20261103-output.json.xz) |
+
+## 历史截面：道通191与此前条件正文及资本修订
+
 ## 当前191家公司：道通科技及五项条件正文更新（2026-11-03）
 
 本批从已发布190家公司继承，仅新增道通科技，并纳入上海机场、山东高速、保隆科技、华荣股份及三峰环境五份已完成的条件正文更新。五公司财务时点、估值、D/Y5与原完整金融代码/输出均不变；未能识别的义务仍按新事实、原预算、未知条件与触发表述，不虚造现金调整。实际远端覆盖以PR提交和全源读回为准。

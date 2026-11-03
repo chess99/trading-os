@@ -18,9 +18,25 @@ const capitalFilesByTicker = new Map([
   ["000651", "20261103"],
   ["000921", "20261103"],
   ["003816", "20261103"],
+  ["300750", "20261103"],
+  ["688100", "20261103"],
+  ["600887", "20261103"],
+  ["600690", "20261103"],
+  ["688008", "20261103"],
+  ["002714", "20261103"],
+  ["603899", "20261103"],
+  ["603939", "20261103"],
+  ["600183", "20261103"],
+  ["688278", "20261103"],
+  ["603288", "20261103"],
 ].map(([ticker, date]) => [ticker, new Set([
   `2026-Q3-capital-${date}.py`, `2026-Q3-capital-${date}-output.json`, `2026-Q3-capital-${date}-check.py`,
 ])]));
+capitalFilesByTicker.get("600887").add("2026-Q3-capital-20261103-output.json.xz");
+capitalFilesByTicker.get("002714").add("2026-Q3-capital-20261103-output.json.xz");
+capitalFilesByTicker.get("603939").add("2026-Q3-capital-20261103-output.json.xz");
+capitalFilesByTicker.get("600183").add("2026-Q3-capital-20261103-output.json.xz");
+capitalFilesByTicker.get("603288").add("2026-Q3-capital-20261103-output.json.xz");
 const capitalFileNames = new Set([...capitalFilesByTicker.values()].flatMap((names) => [...names]));
 export function modelArtifactName(filename, period, ticker) {
   if (capitalFileNames.has(filename)) return Boolean(capitalFilesByTicker.get(ticker)?.has(filename) && (!period || period === "2026-Q3"));

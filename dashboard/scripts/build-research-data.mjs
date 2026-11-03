@@ -88,7 +88,7 @@ async function collectReports(root, output, ticker, policy, state) {
           || createHash("sha256").update(modelBody).digest("hex") !== expected.file_sha256)) {
         throw new Error(`Split model artifact does not match manifest: ${modelName}`);
       }
-      if (xzManifests.has(modelName)) verifyXzBytes(modelBody, xzManifests.get(modelName));
+      if (xzManifests.has(modelName)) verifyXzBytes(modelBody, xzManifests.get(modelName), ticker);
       await mkdir(modelDestination, { recursive: true });
       await writeFile(join(modelDestination, modelName), modelBody);
       exported.add(modelName);
@@ -104,7 +104,7 @@ async function collectReports(root, output, ticker, policy, state) {
         }
         pending.sort(artifactOrder);
       }
-      if (modelName === `${period}-output.json`) {
+      if (modelName === `${period}-output.json` || (["600887", "002714", "603939", "600183", "603288"].includes(ticker) && period === "2026-Q3" && modelName === "2026-Q3-capital-20261103-output.json")) {
         let manifest;
         try { manifest = JSON.parse(modelBody); } catch { /* Legacy bytes remain downloadable. */ }
         if (manifest?.schema === "trading_os_lossless_json_xz_parts_v1") {
@@ -121,7 +121,7 @@ async function collectReports(root, output, ticker, policy, state) {
           pending.sort(artifactOrder);
         }
         if (manifest?.schema === "trading_os_lossless_json_xz_v1") {
-          const entry = xzManifestEntry(manifest, period);
+          const entry = xzManifestEntry(manifest, period, ticker, modelName);
           names.set(entry.file, true);
           xzManifests.set(entry.file, manifest);
           expectedFiles.set(entry.file, { bytes: entry.compressed_bytes, file_sha256: entry.compressed_sha256 });
