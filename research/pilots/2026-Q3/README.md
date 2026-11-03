@@ -1,5 +1,23 @@
 # 2026Q3研究入口
 
+## 当前188家公司：五项资本事实修订（2026-11-03）
+
+本批在已发布188家公司完整公开源上，按明确的同周期人工重写仅更新三环、乖宝、艾德、汇川、国瓷的当前完整报告及持有人接口，不增加研究公司计数，不纳入未完成的新公司或其他资本事件。三环采用11月3日回购完成公告；其余四项采用11月2日披露、截至10月31日的事实，原经营估值时点与年度现金约定保留。注册股未实际注销不减少，母集团同笔现金只扣一次；费用未知和条件库存股交付明确区分。
+
+新交付是有限现金桥的重新实现及实际验证，不冒称恢复丢失的旧修订源码，也不重跑全部经营预测。五个公开默认入口各已独立冷消费实际执行，完整当前结果、14组Fraction手例、122088个原完整对象叶精确复现、独立现金/母利润/权益检查和三环同基准终值公式均保留。三环的机器Y5区间只改变同一基准经营现金的折现率，不混用不同利润率路径的D和终值；五公司未更新的其他诊断明确为历史。实测独算采用固定绝对加相对容差，不宣称全部绝对误差为零。
+
+| 公司 | 当前完整报告 | 当前现金入口 | 完整当前输出 | 独立现金核验 | 必需的原经营完整输入 |
+|---|---|---|---|---|---|
+| 三环 | [报告](../../companies/CN/300408/reports/2026-Q3.md) | [Python](../../companies/CN/300408/models/2026-Q3-capital-20261103.py) | [JSON](../../companies/CN/300408/models/2026-Q3-capital-20261103-output.json) | [checker](../../companies/CN/300408/models/2026-Q3-capital-20261103-check.py) | [旧完整输入](../../companies/CN/300408/models/2026-Q3-output.json) |
+| 乖宝 | [报告](../../companies/CN/301498/reports/2026-Q3.md) | [Python](../../companies/CN/301498/models/2026-Q3-capital-20261102.py) | [JSON](../../companies/CN/301498/models/2026-Q3-capital-20261102-output.json) | [checker](../../companies/CN/301498/models/2026-Q3-capital-20261102-check.py) | [旧完整输入](../../companies/CN/301498/models/2026-Q3-output.json) |
+| 艾德 | [报告](../../companies/CN/300685/reports/2026-Q3.md) | [Python](../../companies/CN/300685/models/2026-Q3-capital-20261102.py) | [JSON](../../companies/CN/300685/models/2026-Q3-capital-20261102-output.json) | [checker](../../companies/CN/300685/models/2026-Q3-capital-20261102-check.py) | [旧完整输入](../../companies/CN/300685/models/2026-Q3-output.json) |
+| 汇川 | [报告](../../companies/CN/300124/reports/2026-Q3.md) | [Python](../../companies/CN/300124/models/2026-Q3-capital-20261102.py) | [JSON](../../companies/CN/300124/models/2026-Q3-capital-20261102-output.json) | [checker](../../companies/CN/300124/models/2026-Q3-capital-20261102-check.py) | [旧完整输入](../../companies/CN/300124/models/2026-Q3-output.json) |
+| 国瓷 | [报告](../../companies/CN/300285/reports/2026-Q3.md) | [Python](../../companies/CN/300285/models/2026-Q3-capital-20261102.py) | [JSON](../../companies/CN/300285/models/2026-Q3-capital-20261102-output.json) | [checker](../../companies/CN/300285/models/2026-Q3-capital-20261102-check.py) | [旧完整输入](../../companies/CN/300285/models/2026-Q3-output.json) |
+
+每家公司下载表内四个模型文件到同一普通目录，按报告命令运行当前现金入口及checker。旧默认经营入口及其他旧诊断不代表本次现金修订。远端范围以实际PR提交为准；真实浏览器验收仍OPEN，不代表可合并或部署。
+
+## 历史截面：188初次发布及此前
+
 ## 当前188家公司模型/数据候选
 
 本批在已发布187家公司冻结公开源基础上仅加入时代电气，不混入尚未完成的后续研究。累计验收按594个唯一pytest节点区分：462项既有合格金融证据复用、1项新增公开默认入口实际执行、131项受影响全局检查新鲜执行，不声称单一fresh全套。网页53项JS、构建、类型、lint及双HTTP完整字节检查分别记录。时代默认入口实际执行作者全部手例/13路径、同状态经济Y5和IGCT储备检查；独立23路径/手例与税状态桥，再用本次完整结果核9468严格配对与19473预算诊断。作者8983和独算150053未配叶完整留存，不算通过；19有效/4经济未证不同于作者13可行，原经济exit3不转技术错误或强改预算。全部现金/税/权益/约束/null和完整summary保留。实际远端覆盖以PR提交及完整读回为准；真实浏览器必需项仍OPEN、0项UI断言完成，不代表全部交付完成、可合并或部署。

@@ -8,11 +8,19 @@ export function referencedReport(reports, version) {
 }
 
 // A closed artifact vocabulary, not a general repository-file endpoint.
-const jchxCapitalFiles = new Set([
-  "2026-Q3-capital-20261102.py", "2026-Q3-capital-20261102-output.json", "2026-Q3-capital-20261102-check.py",
-]);
+const capitalFilesByTicker = new Map([
+  ["603979", "20261102"],
+  ["300408", "20261103"],
+  ["301498", "20261102"],
+  ["300685", "20261102"],
+  ["300124", "20261102"],
+  ["300285", "20261102"],
+].map(([ticker, date]) => [ticker, new Set([
+  `2026-Q3-capital-${date}.py`, `2026-Q3-capital-${date}-output.json`, `2026-Q3-capital-${date}-check.py`,
+])]));
+const capitalFileNames = new Set([...capitalFilesByTicker.values()].flatMap((names) => [...names]));
 export function modelArtifactName(filename, period, ticker) {
-  if (jchxCapitalFiles.has(filename)) return ticker === "603979" && (!period || period === "2026-Q3");
+  if (capitalFileNames.has(filename)) return Boolean(capitalFilesByTicker.get(ticker)?.has(filename) && (!period || period === "2026-Q3"));
   const match = /^((?:20\d{2})-(?:FY|Q1|H1|Q3))(\.py|-output\.json|-output\.json\.xz|-case-[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*\.json|-sources-assumptions\.md|-independent-recompute\.py|-verification-payload\.json|-verification-part-\d{3}\.bin|-output-(?:main|production|literal|supplement-[abr]-(?:production|literal))-part-\d{3}\.xzpart)$/u.exec(filename);
   return Boolean(match && (!period || match[1] === period));
 }
@@ -25,7 +33,7 @@ export function researchResourceLink(href, sourcePath) {
     // claims one of the new model-auxiliary names is not a local model download.
     if (/^(?:https?:|\/\/)/iu.test(href)) {
       const name = href.split(/[?#]/u, 1)[0].split("/").at(-1);
-      if (modelArtifactName(name, undefined, "603979") && !/^(?:20\d{2})-(?:FY|Q1|H1|Q3)(?:\.py|-output\.json)$/u.test(name)) return undefined;
+      if ((capitalFileNames.has(name) || modelArtifactName(name, undefined, "603979")) && !/^(?:20\d{2})-(?:FY|Q1|H1|Q3)(?:\.py|-output\.json)$/u.test(name)) return undefined;
     }
     return href;
   }
