@@ -129,6 +129,38 @@ try {
     passed.push("多主题行业目录支持移动选择与搜索，首屏可见正文标题且无横向溢出");
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
+  const withIndicators = publications.find((d) => d.indicatorPath);
+  if (withIndicators) {
+    await page.goto(`${baseURL}/industries?topic=${withIndicators.topic}&view=report&panel=indicators`);
+    const indicatorPanel = page.getByRole("region", {name:"行业运行指标"});
+    await indicatorPanel.waitFor();
+    assert.ok(await page.locator(".indicator-release-links a").count() >= 2);
+    await page.getByLabel("趋势指标", {exact:true}).selectOption("retail-yoy");
+    await page.getByRole("img", {name:/新能源零售同比趋势/}).waitFor();
+    await page.screenshot({path:new URL("ev-indicators-desktop.png",output).pathname});
+    await page.setViewportSize({width:390,height:844});
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth > innerWidth + 2),false);
+    assert.ok((await page.locator(".indicator-headlines strong").first().boundingBox()).y < 650, "手机首屏应能看到核心行业数字");
+    await page.getByLabel("选择份额统计",{exact:true}).selectOption("global-ytd");
+    await page.getByRole("heading",{name:"全球重点电池企业份额",exact:true}).waitFor();
+    assert.equal(await page.locator(".indicator-rankings > section").count(),1);
+    assert.ok(await page.locator(".indicator-rankings > section").evaluate((e)=>e.getBoundingClientRect().right <= innerWidth));
+    await page.screenshot({path:new URL("ev-indicators-mobile.png",output).pathname,fullPage:true});
+    await page.reload();
+    await indicatorPanel.waitFor();
+    const older = publications.find((d)=>d.topic===withIndicators.topic && d.publishedOn < withIndicators.publishedOn);
+    if (older) {
+      await page.goto(`${baseURL}/industries?topic=${older.topic}&version=${older.version}&view=report&panel=indicators`);
+      await page.locator(".research-document-body h1").waitFor();
+      assert.equal(await page.getByRole("region",{name:"行业运行指标"}).count(),0);
+      await page.getByLabel("报告版本",{exact:true}).selectOption(withIndicators.version);
+      await page.getByRole("button",{name:"行业指标",exact:true}).waitFor();
+      await page.getByRole("button",{name:"行业指标",exact:true}).click();
+      await page.getByRole("region",{name:"行业运行指标"}).waitFor();
+    }
+    await page.setViewportSize({width:1440,height:1000});
+    passed.push("新能源指标月报入口、负增长图表、移动端、深链和历史报告隔离通过");
+  }
   await page.goto(`${baseURL}/macro`);
   await page.getByLabel("适用市场").selectOption("US");
   await page.locator(".research-document-body .markdown-document h1").waitFor();

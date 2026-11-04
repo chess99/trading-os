@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { MARKET_LABELS } from "../lib/research";
 import { reportReferenceLink } from "../lib/report-reference.mjs";
+import { IndustryIndicators } from "./industry-indicators";
 
 interface Document {
   id: string;
@@ -23,6 +24,7 @@ interface Document {
   regions: string[];
   status: "published" | "withdrawn";
   withdrawalReason: string | null;
+  indicatorPath: string | null;
 }
 
 export function ResearchDocuments({ kind }: { kind: Document["kind"] }) {
@@ -31,6 +33,7 @@ export function ResearchDocuments({ kind }: { kind: Document["kind"] }) {
   const [type, setType] = useState<Document["type"]>("report");
   const [topic, setTopic] = useState("");
   const [version, setVersion] = useState("");
+  const [panel, setPanel] = useState("report");
   const [query, setQuery] = useState("");
   const [body, setBody] = useState({ path: "", text: "", error: "" });
   const [error, setError] = useState("");
@@ -46,6 +49,7 @@ export function ResearchDocuments({ kind }: { kind: Document["kind"] }) {
         const params = new URLSearchParams(window.location.search);
         setTopic(params.get("topic") ?? ""); setVersion(params.get("version") ?? "");
         if ((params.get("market") ?? "") in MARKET_LABELS) setMarket(params.get("market")!);
+        setPanel(params.get("panel") === "indicators" ? "indicators" : "report");
         const wanted = params.get("view");
         if (wanted === "report" || wanted === "reference") setType(wanted);
         else if (!data.documents.some((d) => d.kind === kind && d.type === "report")
@@ -75,16 +79,24 @@ export function ResearchDocuments({ kind }: { kind: Document["kind"] }) {
   }, [path]);
 
   function update(nextTopic: string, nextVersion = "", nextType = type, nextMarket = market) {
-    setTopic(nextTopic); setVersion(nextVersion); setType(nextType); setMarket(nextMarket);
+    setTopic(nextTopic); setVersion(nextVersion); setType(nextType); setMarket(nextMarket); setPanel("report");
     const params = new URLSearchParams({ view: nextType });
     if (nextTopic) params.set("topic", nextTopic);
     if (nextVersion) params.set("version", nextVersion);
     if (nextMarket !== "all") params.set("market", nextMarket);
     window.history.replaceState(null, "", `${kind === "industry" ? "/industries" : "/macro"}?${params}`);
   }
+  function showPanel(next: string) {
+    setPanel(next);
+    const params = new URLSearchParams(window.location.search);
+    params.set("topic", current!.topic); params.set("view", type);
+    if (next === "indicators") params.set("panel", next); else params.delete("panel");
+    window.history.replaceState(null, "", `${kind === "industry" ? "/industries" : "/macro"}?${params}`);
+  }
   function documentLink(href: string | undefined) {
     if (!href || /^(https?:|mailto:|#)/u.test(href)) return href;
     const resolved = new URL(href, `https://research.local/${current?.sourcePath ?? ""}`);
+    if (["/industries", "/macro"].includes(resolved.pathname)) return `${resolved.pathname}${resolved.search}${resolved.hash}`;
     const companyReport = reportReferenceLink(resolved.pathname);
     if (companyReport) return companyReport;
     const target = documents?.find((d) => `/${d.sourcePath}` === resolved.pathname);
@@ -114,16 +126,19 @@ export function ResearchDocuments({ kind }: { kind: Document["kind"] }) {
     </section> : <div className="publication-layout">
       <aside className="publication-sidebar">
         {topics.length > 1 && <select className="publication-mobile-topics" aria-label="选择研究主题" value={current.topic} onChange={(e) => update(e.target.value)}>{topics.map((d) => <option key={d.topic} value={d.topic}>{d.title.split("：")[0]}</option>)}</select>}
-        {outline.length > 3 && <details key={current.id} className="publication-outline"><summary>本文目录</summary><nav aria-label="本文目录">{outline.map((item) => <a key={item.id} href={`#${item.id}`}>{item.title}</a>)}</nav></details>}
+        {!(panel === "indicators" && current.indicatorPath) && outline.length > 3 && <details key={current.id} className="publication-outline"><summary>本文目录</summary><nav aria-label="本文目录">{outline.map((item) => <a key={item.id} href={`#${item.id}`}>{item.title}</a>)}</nav></details>}
         <nav aria-label="研究主题" className="publication-list">{topics.map((d) => <button key={d.topic} title={d.title} aria-label={d.title} aria-current={d.topic === current.topic ? "true" : undefined} onClick={() => update(d.topic)}><strong>{d.title.split("：")[0]}</strong><span>{d.publishedOn}{d.status === "withdrawn" ? " · 已撤回" : ""}</span></button>)}</nav>
       </aside>
       <article className="research-document-body" aria-live="polite">
+        {current.indicatorPath && <div className="publication-panel-switch" role="group" aria-label="主题内容"><button aria-pressed={panel !== "indicators"} onClick={() => showPanel("report")}>完整研究</button><button aria-pressed={panel === "indicators"} onClick={() => showPanel("indicators")}>行业指标</button></div>}
+        {panel === "indicators" && current.indicatorPath ? <IndustryIndicators key={current.indicatorPath} path={current.indicatorPath}/> : <>
         <header className="publication-meta"><details><summary>{current.type === "report" ? `资料截止 ${current.informationCutoff}` : `指标与方法 · ${current.publishedOn}`} · 范围</summary>
           <p>版本：{current.version} · 适用市场：{current.markets.map((m) => MARKET_LABELS[m as keyof typeof MARKET_LABELS]).join("、")} · 覆盖地域：{current.regions.join("、")}</p></details>
           {versions.length > 1 && <label>报告版本<select aria-label="报告版本" value={current.version} onChange={(e) => update(current.topic, e.target.value)}>{versions.map((d) => <option key={d.id} value={d.version}>{d.version}{d.status === "withdrawn" ? " · 已撤回" : ""}</option>)}</select></label>}
         </header>
         {current.status === "withdrawn" && <p role="alert" className="publication-withdrawn">本报告已撤回：{current.withdrawalReason}</p>}
         {body.path !== path ? <p>正在读取正文…</p> : body.error ? <p role="alert">{body.error}</p> : <div className="markdown-document"><ReactMarkdown remarkPlugins={[remarkGfm]} components={{h2: ({node, children}) => <h2 id={`section-${node?.position?.start.line}`}>{children}</h2>, a: ({href, children}) => { const link = documentLink(href); return link ? <a href={link}>{children}</a> : <span>{children}</span>; }}}>{body.text}</ReactMarkdown></div>}
+        </>}
       </article>
     </div>}
   </main>;
