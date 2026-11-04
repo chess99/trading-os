@@ -80,7 +80,9 @@ export function projectCompany(row, reports, member, policy, task = null) {
 async function collectResearchDocuments(output, publications) {
   await mkdir(join(output, "documents"), { recursive: true });
   for (const doc of publications) await writeFile(join(output, "documents", `${doc.id}.md`), doc.markdown, "utf8");
-  const documents = publications.map((doc) => { const metadata = { ...doc }; delete metadata.markdown; return metadata; });
+  await mkdir(join(output, "indicators"), { recursive: true });
+  for (const doc of publications) if (doc.indicatorData) await writeFile(join(output, "indicators", `${doc.topic}.json`), JSON.stringify(doc.indicatorData, null, 2), "utf8");
+  const documents = publications.map((doc) => { const metadata = { ...doc }; delete metadata.markdown; delete metadata.indicatorData; return metadata; });
   await writeFile(join(output, "documents.json"), JSON.stringify({ schemaVersion: 1, documents }, null, 2), "utf8");
 }
 export function makeExports(catalog, scope) {

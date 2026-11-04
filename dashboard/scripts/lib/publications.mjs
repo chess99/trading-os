@@ -1,5 +1,6 @@
 import { readFile, realpath } from "node:fs/promises";
 import { resolve } from "node:path";
+import { loadIndustryIndicators } from "./industry-indicators.mjs";
 
 function validDate(value) {
   return typeof value === "string" && /^20\d{2}-\d{2}-\d{2}$/u.test(value)
@@ -41,7 +42,9 @@ export async function loadPublications(root) {
     const markdown = await readFile(local, "utf8");
     const title = /^#\s+(.+)$/mu.exec(markdown)?.[1];
     if (!title || !markdown.trim()) throw new Error("发布正文缺少标题");
-    documents.push({ id: entry.id, kind: entry.kind, type: entry.type, topic: entry.topic, publishedOn: entry.publishedOn, revision, version: versionKey,
+    if (entry.indicatorSourcePath && (entry.kind !== "industry" || entry.type !== "report" || entry.status !== "published")) throw new Error("只有正式行业报告可连接运行指标");
+    const indicatorData = entry.indicatorSourcePath ? await loadIndustryIndicators(root, entry.topic, entry.indicatorSourcePath) : null;
+    documents.push({ indicatorData, indicatorPath: indicatorData ? `/data/indicators/${entry.topic}.json` : null, id: entry.id, kind: entry.kind, type: entry.type, topic: entry.topic, publishedOn: entry.publishedOn, revision, version: versionKey,
       informationCutoff: entry.informationCutoff, markets: entry.markets, regions: entry.regions, summary: entry.summary,
       sourcePath: expected, status: entry.status, withdrawalReason: entry.withdrawalReason ?? null,
       title, path: `/data/documents/${entry.id}.md`, markdown });

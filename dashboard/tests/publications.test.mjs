@@ -54,3 +54,17 @@ test("same-day substantive corrections retain the first version with a separate 
   assert.deepEqual(docs.map((d)=>d.version),["2026-09-30-r2","2026-09-30"]);
   assert.notEqual(docs[0].sourcePath,docs[1].sourcePath);
 }));
+
+test("current industry indicators remain separate from a report's historical cutoff", async () => fixture(async ({root,save,publish}) => {
+  const newer = report("2026-10-28", {indicatorSourcePath:"research/industries/demand/indicators.json"});
+  await publish([report(), newer]);
+  const indicators={schemaVersion:1,topic:"demand",title:"需求",checkedOn:"2026-11-04",reviewAfter:"2026-11-15",scopeNote:"月度实际",sources:[{id:"source",title:"月报",publisher:"协会",url:"https://example.org/report",publishedOn:"2026-10-12"}],releaseLinks:["source"],headlines:["units"],series:[{id:"units",label:"销量",unit:"万辆",valueType:"level",frequency:"monthly",definition:"国内零售",interpretation:"与份额同看",points:[{period:"2026-09",value:10,sourceId:"source"}]}],rankings:[]};
+  await save(newer.indicatorSourcePath,JSON.stringify(indicators));
+  const docs=await loadPublications(root);
+  assert.equal(docs[0].informationCutoff,"2026-10-28");
+  assert.equal(docs[0].indicatorData.checkedOn,"2026-11-04");
+  assert.equal(docs[0].indicatorPath,"/data/indicators/demand.json");
+  assert.equal(docs[1].indicatorPath,null);
+  await publish([report(undefined,{indicatorSourcePath:"../../private.json"})]);
+  await assert.rejects(loadPublications(root),/路径/);
+}));
