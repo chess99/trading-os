@@ -46,8 +46,7 @@ def _abort_owned_checker_timeout(error, *, symbol, tmp_path, phase="checker"):
         )
 
 
-@pytest.mark.parametrize("model", MODELS, ids=lambda path: path.parent.parent.name)
-def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
+def _assert_historical_or_unmigrated_model_reproduction(model, tmp_path):
     # No original artifacts are modified, and no repository working directory is assumed.
     copied = tmp_path / model.name
     shutil.copyfile(model, copied)
@@ -370,3 +369,19 @@ def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
                 raise
             _abort_owned_checker_timeout(error, symbol=model.parent.parent.name, tmp_path=tmp_path)
         assert checked.returncode == 0, checked.stderr
+
+
+@pytest.mark.parametrize("model", [path for path in MODELS if path.parent.parent.name != "603605"], ids=lambda path: path.parent.parent.name)
+def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
+    _assert_historical_or_unmigrated_model_reproduction(model, tmp_path)
+
+
+def test_proya_current_transport_and_metadata(tmp_path):
+    from proya_current_contract_helpers import assert_current_transport
+    assert_current_transport(ROOT, tmp_path)
+
+
+def test_proya_current_full_financial_reproduction(tmp_path):
+    # Full financial execution is retained separately and was not run for publication.
+    from proya_current_contract_helpers import assert_full_financial
+    assert_full_financial(ROOT, tmp_path)
