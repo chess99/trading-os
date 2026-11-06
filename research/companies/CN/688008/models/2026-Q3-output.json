@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:688008",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-11-03T07:30:00+00:00",
+  "value_range": {
+    "low": 53.7260314745646,
+    "high": 81.4035451152179,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-03T07:30:00+00:00",
+    "base_case_distributions_per_share": [
+      0.44522890197412096,
+      0.6740737472474327,
+      1.2986406917067495,
+      2.262371762301065,
+      3.0401078699859685
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 87.91570342368877,
+        "high": 108.73003518191727
+      }
+    }
+  },
+  "valuation_note": "当前主法基准65.950246827969元，核心端点来自results/core_low, results/core_high；辅助当前值为32.231763091857元。产品/经营资本/逐主体现金为主，折现9.5%—10.5%；独立正常化盈利为辅，不平均。原Y3授股费用保持，主值仍以Y7合法盈余释放及Y10有限资本返还获批准为条件；仅六条更新。",
+  "return_model_note": "D1–5取results/base，Y5仅取continuations/core_low/core_high，前五完整状态exact；不得取results/core_low/high的不同起点。新实际付款仅借记母P，原HQ分池不改；Y3两个被否决请求原表达式及真实融资门保留。未来Y3授股/费用、H股归属、Y7盈余释放和Y10有条件资本返还仍是预测假设，不是已获批准事实。 信息版本为2026年11月3日，原金融预算锚为2026-10-30T12:00:00+00:00；原年度窗口与日期滚存保留，不宣称重新估算至新日期。"
+}

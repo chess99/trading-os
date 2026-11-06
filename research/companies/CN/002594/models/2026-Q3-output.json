@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:002594",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-29T17:00:00+00:00",
+  "value_range": {
+    "low": 35.67,
+    "high": 43.25,
+    "currency": "CNY"
+  },
+  "valuation_note": "主法为销量/实现单价/经营利润率进入完整普通股分配折现；辅助为独立生产资本收益率入口，共同处理资本、现金税、债务、永续、少数及母子可分配约束。核心以国内低增长、海外渐次降速及资本效率恢复为依据，成本9.5%—10.5%，不采用行情或市场倍数，不机械平均。结构信用收缩及不续作失败路径单列null。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-29T17:00:00+00:00",
+    "base_case_distributions_per_share": [
+      0.395355,
+      0.435028,
+      0.481234,
+      0.53214,
+      0.591875
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 57.07,
+        "high": 63.87
+      }
+    }
+  },
+  "return_model_note": "五年为同一基准税前实际现金预算；股数91.17197565亿股，无预测增发或回购。第五年终值57.07—63.87元由该基准Y6以后全年度普通股分配以9.5%—10.5%折现至Y5，非当前价值复制；已派现金和金融退出本金不再另加。母新利润上划20%逐步提高，旧股利和贷款回收不重复入利润；逐年保留现金、税基、法储、少数、融资及全部尾期状态。分配依赖合理但未承诺的经营与宣派预算。"
+}

@@ -1,8 +1,10 @@
 # Trading OS
 
-Trading OS 是一套按财报周期维护 A 股长期研究的轻量工作流。主要产品是动态重点跟踪池、完整公司报告及其结构化模型；网站只是只读展示。系统不做自动交易，也不因价格、政策、新闻或单项公告在周期中途启动研究。
+Trading OS 是覆盖A股、港股与美股的价值投资研究工作台。个股研究关注长期股东现金、资本配置与价格；行业研究解释供需、竞争和利润归属；宏观与市场研究提供周期、资金条件及估值参照。研究成果低频积累，网页用于检索、比较和阅读。
 
-## 核心机制
+整体结构与取舍见[工作台设计](docs/design/investment-workbench.md)，报告更新方式见[发布与阅读规则](research/README.md)。
+
+## 公司研究核心机制
 
 1. 价值质量筛选从全市场维护一个可增删、可调整 A/B 分层的重点跟踪池。
 2. 财报季使用 `research enqueue-period`，只为当时池内公司创建缺失的 `FY / Q1 / H1 / Q3` 周期槽位。
@@ -14,16 +16,17 @@ Trading OS 是一套按财报周期维护 A 股长期研究的轻量工作流。
 
 单公司研究使用[主提示词](prompts/company/standard-deep-research.md)和[核验附录](prompts/company/research-verification.md)。先形成长期商业判断，再检验财务、必要资本、普通股归属、估值和持有人现金。报告结论先行、自足可读，不把核心推理委托给旧周期。
 
-## 研究分层
+报告、公司模型、输入和结果按[研究文件与模型交付规范](docs/research-artifacts.md)归档。模型应在当前源码树中可复算；巨型过程输出、历史运行包、候选稿和缓存保存在工作目录，文件大小预算与提交前检查见该规范。
 
-| 层 | 回答的问题 | 入口与结果 |
+## 研究板块
+
+| 板块 | 留存成果 | 入口 |
 |---|---|---|
-| 动态重点跟踪池 | 哪些公司值得持续投入完整研究？ | [质量池规范](prompts/screening/cn-a-value-quality.md)，`pool.json` |
-| 财报周期排期 | 本季哪些池内公司尚缺完整报告？ | `research enqueue-period --period ...` |
-| 单公司研究 | 商业经济学、当前价值和条件现金回报如何？ | [完整深研](prompts/company/standard-deep-research.md)，周期报告 |
-| 协调验收 | 正文、证据、模型和结构化结果是否一致？ | [验收流程](playbooks/simple-research.md)，`research complete` |
-| 产业知识 | 利润由谁创造、谁取得，如何跨公司验证？ | [产业框架](research/industries/README.md) |
-| 长期精选 | 哪些更值得长期拥有和等待？ | [精选原则](selection/principles.md)、[当前精选](selection/current.md) |
+| 个股研究 | 商业质量初筛、完整财报周期研报与模型 | [初筛规范](prompts/screening/cn-a-value-quality.md)、[公司深研](prompts/company/standard-deep-research.md) |
+| 行业研究 | 细分行业的历史、现状、竞争、前景与重要历史版本 | [行业研究规范](prompts/industry-research.md) |
+| 宏观与市场 | 主题报告、必要的环境综述、指标与方法 | [宏观研究规范](prompts/macro-research.md) |
+
+个股研究保留初筛和完整深研两个层次。行业与宏观采用主题及重要时点报告，季度复核不强制产出。日常市场观察仅保留[执行规范](prompts/daily-market-observation.md)，每日结果在仓库外使用。
 
 ## 唯一事实源
 
@@ -33,7 +36,9 @@ coverage/cn-a/research_queue.jsonl                         当前 periodic / man
 research/companies/CN/{代码}/reports/YYYY-{FY|Q1|H1|Q3}.md 财报周期完整报告
 screening/cn-a/value-quality/pool.json                      动态重点跟踪池
 screening/cn-a/value-quality/current.md                     由当前池确定性生成的可读投影
-research/standards/registry.json                            现行研究标准
+research/standards/registry.json                            公司研究展示标准
+research/publications.json                                 行业、宏观报告与方法的发布目录
+research/{industries|macro}/{主题}/reports/YYYY-MM-DD.md     重要时点的完整报告
 ```
 
 `basis_report_path` 和 `report_period` 只绑定结构化状态所依据的最新周期报告，不宣称报告在今天仍然“有效”。每份报告按自身财报周期、信息截止和研究标准阅读。`covered / ignore` 是该周期的研究结论，不是事件驱动状态。
@@ -60,6 +65,19 @@ research/standards/registry.json                            现行研究标准
 财报更新必须重新形成完整报告，区分累计、单季、同比和环比口径，复盘前次关键假设，并重新核验股本、普通股归属、正常化经营、估值和模型。不能把新财报摘录拼接到旧正文。
 
 每份新结果都必须包含非空 `return_model_note`；能可靠建模时同时提交 `return_model`，否则为 `null` 并说明决定性缺口。五年模型包括未来五项每股实际现金分配和独立第五年终值；三年终值可选，但必须独立研究。
+
+## 跨市场公司池
+
+研究台的「公司池」视图提供A股、港股、美股的商业质量池，可按市场、行业、层级和关键问题检索。列表用于横向比较，详情提供经营指标、年度资本回报、竞争优势、股东现金与反证。A/H等同一发行人的不同证券在全部市场视图合并计数。
+
+港美股采用 [v3筛选合同](prompts/screening/international-value-quality.md)，保留完整的范围内取舍、每项指标的期间和公开来源。A股v2数据保持兼容。初筛结果用于确定研究对象，公司报告与估值由财报周期研究流程维护。
+
+```bash
+python -m trading_os quality-pool --market hk status
+python -m trading_os quality-pool --market us validate
+```
+
+默认市场为 `cn-a`。各市场JSON保存于 `screening/{cn-a|hk|us}/value-quality/`，`current.md`由维护命令生成。研究状态、排期、研报和行情按市场隔离。港美股排期以已披露财报为依据，见[跨市场研究补充](prompts/company/cross-market.md)。
 
 ## 动态重点跟踪池
 

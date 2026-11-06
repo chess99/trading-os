@@ -1,0 +1,1496 @@
+{
+  "information_cutoff": "2026-10-28",
+  "units": {
+    "yields": "percent",
+    "spreads": "percentage_points",
+    "percentiles": "percent"
+  },
+  "formula": {
+    "earnings_yield": "100 / PE",
+    "spread": "earnings_yield_percent - bond_yield_percent",
+    "percentile": "100 * (count(history < current) + 0.5 * count(history == current)) / N; current excluded"
+  },
+  "china": {
+    "observation_date": "2026-09-30",
+    "index": "CSI300",
+    "factsheet_rolling_pe": 13.15,
+    "pb": 1.36,
+    "dividend_yield_percent": 2.49,
+    "bond_yield_percent": 1.683,
+    "bond_source": "https://cn.investing.com/rates-bonds/china-10-year-bond-yield-historical-data",
+    "index_source": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/000300factsheet.pdf",
+    "earnings_yield_percent": 7.604562737642586,
+    "spread_pp": 5.921562737642586,
+    "separate_indicator_file": {
+      "pe1_total_shares": 14.34,
+      "pe2_calculation_shares": 16.35,
+      "source": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/indicator/000300indicator.xls",
+      "limitation": "盈利口径关系未核实，不拼接；文件仅20行日期，不能计算长期分位"
+    },
+    "percentiles": null
+  },
+  "hong_kong": {
+    "observation_date": "2026-09-30",
+    "index": "HSI",
+    "pe": 13.79,
+    "dividend_yield_percent": 2.97,
+    "constituents": 95,
+    "top3_weight_percent": 24.12,
+    "bond_closing_reference_yield_percent": 4.022,
+    "bond_indicative_yield_percent": 3.987,
+    "earnings_yield_percent": 7.251631617113851,
+    "spread_pp": 3.229631617113851,
+    "index_source": "https://www.hsi.com.hk/api/wsit-hsi-ddoc-ea-public-website-proxy/v1/content/gcs/download?resource=%2Fpublic-website%2Fwebapp%2Ffactsheets%2Fen-hk%2Fhsi.pdf",
+    "bond_source": "https://www.hkma.gov.hk/media/eng/doc/market-data-and-statistics/monthly-statistical-bulletin/T10040301.xls",
+    "bond_sheet": "T10.4.3.1 (Benchmark yields)",
+    "bond_excel_cell": "N519",
+    "percentiles": null
+  },
+  "us_shiller": {
+    "source": "https://shillerdata.com/",
+    "download_url": "https://img1.wsimg.com/blobby/go/e5e77e0b-59d1-44d9-ab25-4763ac982e53/downloads/1449043e-a1ed-4e2e-8e9c-7b9a2a064493/ie_data.xls?ver=1791297298731",
+    "accessed_on": "2026-10-28",
+    "sheet": "Data",
+    "header_row_one_based": 8,
+    "latest_complete_inputs_month": "2026-06",
+    "file_notes": [
+      "Oct price is Oct 2nd close",
+      "Sept/Oct CPI estimated",
+      "Oct GS10 is Oct 2nd value"
+    ],
+    "current": {
+      "month": "2026-06",
+      "price_monthly_average": 7450.032857142856,
+      "earnings_interpolated": 295.3881,
+      "cpi": 333.952,
+      "gs10_percent": 4.47,
+      "cape": 40.150169734732664,
+      "pe": 25.221167870820985,
+      "earnings_yield_spread_pp": -0.5050765471216514
+    },
+    "percentiles": [
+      {
+        "start": "2021-06",
+        "end": "2026-05",
+        "n": 60,
+        "metric": "cape",
+        "current": 40.150169734732664,
+        "percentile": 100.0
+      },
+      {
+        "start": "2016-06",
+        "end": "2026-05",
+        "n": 120,
+        "metric": "cape",
+        "current": 40.150169734732664,
+        "percentile": 100.0
+      },
+      {
+        "start": "2021-06",
+        "end": "2026-05",
+        "n": 60,
+        "metric": "pe",
+        "current": 25.221167870820985,
+        "percentile": 48.333333333333336
+      },
+      {
+        "start": "2016-06",
+        "end": "2026-05",
+        "n": 120,
+        "metric": "pe",
+        "current": 25.221167870820985,
+        "percentile": 62.5
+      },
+      {
+        "start": "2021-06",
+        "end": "2026-05",
+        "n": 60,
+        "metric": "earnings_yield_spread_pp",
+        "current": -0.5050765471216514,
+        "percentile": 33.333333333333336
+      },
+      {
+        "start": "2016-06",
+        "end": "2026-05",
+        "n": 120,
+        "metric": "earnings_yield_spread_pp",
+        "current": -0.5050765471216514,
+        "percentile": 16.666666666666668
+      }
+    ],
+    "history": [
+      {
+        "month": "2016-06",
+        "price_monthly_average": 2083.89,
+        "earnings_interpolated": 86.92,
+        "cpi": 241.018,
+        "gs10_percent": 1.64,
+        "cape": 25.840372927670508,
+        "pe": 23.9748044178555,
+        "earnings_yield_spread_pp": 2.531045496643298
+      },
+      {
+        "month": "2016-07",
+        "price_monthly_average": 2148.9,
+        "earnings_interpolated": 87.64333333333333,
+        "cpi": 240.628,
+        "gs10_percent": 1.5,
+        "cape": 26.6940032560963,
+        "pe": 24.51869318830107,
+        "earnings_yield_spread_pp": 2.578520793584314
+      },
+      {
+        "month": "2016-08",
+        "price_monthly_average": 2170.95,
+        "earnings_interpolated": 88.36666666666667,
+        "cpi": 240.849,
+        "gs10_percent": 1.56,
+        "cape": 26.948872433723867,
+        "pe": 24.567521689928324,
+        "earnings_yield_spread_pp": 2.510414641823473
+      },
+      {
+        "month": "2016-09",
+        "price_monthly_average": 2157.69,
+        "earnings_interpolated": 89.09,
+        "cpi": 241.428,
+        "gs10_percent": 1.63,
+        "cape": 26.727873346478532,
+        "pe": 24.21921652261758,
+        "earnings_yield_spread_pp": 2.498952722587582
+      },
+      {
+        "month": "2016-10",
+        "price_monthly_average": 2143.02,
+        "earnings_interpolated": 90.91,
+        "cpi": 241.729,
+        "gs10_percent": 1.76,
+        "cape": 26.525143085070596,
+        "pe": 23.5729842701573,
+        "earnings_yield_spread_pp": 2.482144263702625
+      },
+      {
+        "month": "2016-11",
+        "price_monthly_average": 2164.99,
+        "earnings_interpolated": 92.73,
+        "cpi": 241.353,
+        "gs10_percent": 2.14,
+        "cape": 26.850953531056266,
+        "pe": 23.347244688881695,
+        "earnings_yield_spread_pp": 2.143160661250168
+      },
+      {
+        "month": "2016-12",
+        "price_monthly_average": 2246.63,
+        "earnings_interpolated": 94.55,
+        "cpi": 241.432,
+        "gs10_percent": 2.49,
+        "cape": 27.86509822392353,
+        "pe": 23.761290322580646,
+        "earnings_yield_spread_pp": 1.718525658430627
+      },
+      {
+        "month": "2017-01",
+        "price_monthly_average": 2275.12,
+        "earnings_interpolated": 96.46333333333334,
+        "cpi": 242.839,
+        "gs10_percent": 2.43,
+        "cape": 28.06357374212447,
+        "pe": 23.585334669477174,
+        "earnings_yield_spread_pp": 1.8099228758629589
+      },
+      {
+        "month": "2017-02",
+        "price_monthly_average": 2329.91,
+        "earnings_interpolated": 98.37666666666667,
+        "cpi": 243.603,
+        "gs10_percent": 2.42,
+        "cape": 28.655106525184138,
+        "pe": 23.683563175549757,
+        "earnings_yield_spread_pp": 1.8023376296366242
+      },
+      {
+        "month": "2017-03",
+        "price_monthly_average": 2366.82,
+        "earnings_interpolated": 100.29,
+        "cpi": 243.801,
+        "gs10_percent": 2.48,
+        "cape": 29.086921742464654,
+        "pe": 23.599760693987438,
+        "earnings_yield_spread_pp": 1.7573311024919511
+      },
+      {
+        "month": "2017-04",
+        "price_monthly_average": 2359.31,
+        "earnings_interpolated": 101.53333333333333,
+        "cpi": 244.524,
+        "gs10_percent": 2.3,
+        "cape": 28.904245956275155,
+        "pe": 23.236802363755746,
+        "earnings_yield_spread_pp": 2.003518118998069
+      },
+      {
+        "month": "2017-05",
+        "price_monthly_average": 2395.35,
+        "earnings_interpolated": 102.77666666666667,
+        "cpi": 244.733,
+        "gs10_percent": 2.3,
+        "cape": 29.313344980271427,
+        "pe": 23.3063600687575,
+        "earnings_yield_spread_pp": 1.9906742925529324
+      },
+      {
+        "month": "2017-06",
+        "price_monthly_average": 2433.99,
+        "earnings_interpolated": 104.02,
+        "cpi": 244.955,
+        "gs10_percent": 2.19,
+        "cape": 29.74850324063276,
+        "pe": 23.399250144203037,
+        "earnings_yield_spread_pp": 2.083641222848081
+      },
+      {
+        "month": "2017-07",
+        "price_monthly_average": 2454.1,
+        "earnings_interpolated": 105.03999999999999,
+        "cpi": 244.786,
+        "gs10_percent": 2.32,
+        "cape": 30.002220744018565,
+        "pe": 23.363480578827115,
+        "earnings_yield_spread_pp": 1.9601841815736925
+      },
+      {
+        "month": "2017-08",
+        "price_monthly_average": 2456.22,
+        "earnings_interpolated": 106.06,
+        "cpi": 245.519,
+        "gs10_percent": 2.21,
+        "cape": 29.914959397497494,
+        "pe": 23.158778050160283,
+        "earnings_yield_spread_pp": 2.108017115730676
+      },
+      {
+        "month": "2017-09",
+        "price_monthly_average": 2492.84,
+        "earnings_interpolated": 107.08,
+        "cpi": 246.819,
+        "gs10_percent": 2.2,
+        "cape": 30.16811441067891,
+        "pe": 23.280164363093018,
+        "earnings_yield_spread_pp": 2.0955023186405857
+      },
+      {
+        "month": "2017-10",
+        "price_monthly_average": 2557.0,
+        "earnings_interpolated": 108.01333333333334,
+        "cpi": 246.663,
+        "gs10_percent": 2.36,
+        "cape": 30.92039329033384,
+        "pe": 23.673003332921862,
+        "earnings_yield_spread_pp": 1.8642210924260199
+      },
+      {
+        "month": "2017-11",
+        "price_monthly_average": 2593.61,
+        "earnings_interpolated": 108.94666666666666,
+        "cpi": 246.669,
+        "gs10_percent": 2.35,
+        "cape": 31.298913333880268,
+        "pe": 23.80623546689512,
+        "earnings_yield_spread_pp": 1.8505801437635827
+      },
+      {
+        "month": "2017-12",
+        "price_monthly_average": 2664.34,
+        "earnings_interpolated": 109.88,
+        "cpi": 246.524,
+        "gs10_percent": 2.4,
+        "cape": 32.086132007706006,
+        "pe": 24.247724790680746,
+        "earnings_yield_spread_pp": 1.7240982757455874
+      },
+      {
+        "month": "2018-01",
+        "price_monthly_average": 2789.8,
+        "earnings_interpolated": 111.73333333333332,
+        "cpi": 247.867,
+        "gs10_percent": 2.58,
+        "cape": 33.30734382803067,
+        "pe": 24.968377088305495,
+        "earnings_yield_spread_pp": 1.42506607403159
+      },
+      {
+        "month": "2018-02",
+        "price_monthly_average": 2705.16,
+        "earnings_interpolated": 113.58666666666666,
+        "cpi": 248.991,
+        "gs10_percent": 2.86,
+        "cape": 32.03538233925029,
+        "pe": 23.81582345345698,
+        "earnings_yield_spread_pp": 1.3388890367544497
+      },
+      {
+        "month": "2018-03",
+        "price_monthly_average": 2702.77,
+        "earnings_interpolated": 115.44,
+        "cpi": 249.554,
+        "gs10_percent": 2.84,
+        "cape": 31.808409057643125,
+        "pe": 23.41276853776854,
+        "earnings_yield_spread_pp": 1.4311736477761707
+      },
+      {
+        "month": "2018-04",
+        "price_monthly_average": 2653.63,
+        "earnings_interpolated": 117.78666666666666,
+        "cpi": 250.546,
+        "gs10_percent": 2.87,
+        "cape": 30.970179293325234,
+        "pe": 22.529120443740098,
+        "earnings_yield_spread_pp": 1.5686996931247634
+      },
+      {
+        "month": "2018-05",
+        "price_monthly_average": 2701.49,
+        "earnings_interpolated": 120.13333333333333,
+        "cpi": 251.588,
+        "gs10_percent": 2.976,
+        "cape": 31.24361507486461,
+        "pe": 22.48743063263041,
+        "earnings_yield_spread_pp": 1.4709286702276643
+      },
+      {
+        "month": "2018-06",
+        "price_monthly_average": 2754.35,
+        "earnings_interpolated": 122.48,
+        "cpi": 251.989,
+        "gs10_percent": 2.91,
+        "cape": 31.63055649645461,
+        "pe": 22.48816133246244,
+        "earnings_yield_spread_pp": 1.5367841777551874
+      },
+      {
+        "month": "2018-07",
+        "price_monthly_average": 2793.64,
+        "earnings_interpolated": 125.11666666666667,
+        "cpi": 252.006,
+        "gs10_percent": 2.89,
+        "cape": 31.886366962159,
+        "pe": 22.32828027174637,
+        "earnings_yield_spread_pp": 1.588625258324862
+      },
+      {
+        "month": "2018-08",
+        "price_monthly_average": 2857.82,
+        "earnings_interpolated": 127.75333333333333,
+        "cpi": 252.146,
+        "gs10_percent": 2.89,
+        "cape": 32.39027688030113,
+        "pe": 22.36982727130408,
+        "earnings_yield_spread_pp": 1.5803072038593515
+      },
+      {
+        "month": "2018-09",
+        "price_monthly_average": 2901.5,
+        "earnings_interpolated": 130.39,
+        "cpi": 252.439,
+        "gs10_percent": 3.0,
+        "cape": 32.622891120500206,
+        "pe": 22.252473349183223,
+        "earnings_yield_spread_pp": 1.4938824745821124
+      },
+      {
+        "month": "2018-10",
+        "price_monthly_average": 2785.46,
+        "earnings_interpolated": 131.05666666666667,
+        "cpi": 252.885,
+        "gs10_percent": 3.15,
+        "cape": 31.037961078006507,
+        "pe": 21.253859653584964,
+        "earnings_yield_spread_pp": 1.5550277751849486
+      },
+      {
+        "month": "2018-11",
+        "price_monthly_average": 2723.23,
+        "earnings_interpolated": 131.72333333333333,
+        "cpi": 252.038,
+        "gs10_percent": 3.12,
+        "cape": 30.19558340670525,
+        "pe": 20.673861882227904,
+        "earnings_yield_spread_pp": 1.7170256398957608
+      },
+      {
+        "month": "2018-12",
+        "price_monthly_average": 2567.31,
+        "earnings_interpolated": 132.39,
+        "cpi": 251.233,
+        "gs10_percent": 2.83,
+        "cape": 28.291857012072878,
+        "pe": 19.39202356673465,
+        "earnings_yield_spread_pp": 2.3267594096544624
+      },
+      {
+        "month": "2019-01",
+        "price_monthly_average": 2607.39,
+        "earnings_interpolated": 133.05666666666664,
+        "cpi": 251.712,
+        "gs10_percent": 2.71,
+        "cape": 28.380164463547587,
+        "pe": 19.596086880276577,
+        "earnings_yield_spread_pp": 2.393059636903825
+      },
+      {
+        "month": "2019-02",
+        "price_monthly_average": 2754.86,
+        "earnings_interpolated": 133.7233333333333,
+        "cpi": 252.776,
+        "gs10_percent": 2.68,
+        "cape": 29.54154896513122,
+        "pe": 20.60119151481916,
+        "earnings_yield_spread_pp": 2.1740881690297615
+      },
+      {
+        "month": "2019-03",
+        "price_monthly_average": 2803.98,
+        "earnings_interpolated": 134.39,
+        "cpi": 254.202,
+        "gs10_percent": 2.57,
+        "cape": 29.57619601478483,
+        "pe": 20.864498846640377,
+        "earnings_yield_spread_pp": 2.222830191370837
+      },
+      {
+        "month": "2019-04",
+        "price_monthly_average": 2903.8,
+        "earnings_interpolated": 134.68333333333334,
+        "cpi": 255.548,
+        "gs10_percent": 2.53,
+        "cape": 30.133517171387528,
+        "pe": 21.560202945180052,
+        "earnings_yield_spread_pp": 2.108175264595817
+      },
+      {
+        "month": "2019-05",
+        "price_monthly_average": 2854.71,
+        "earnings_interpolated": 134.97666666666666,
+        "cpi": 256.092,
+        "gs10_percent": 2.4,
+        "cape": 29.24203093693986,
+        "pe": 21.149655496011658,
+        "earnings_yield_spread_pp": 2.328209403640533
+      },
+      {
+        "month": "2019-06",
+        "price_monthly_average": 2890.17,
+        "earnings_interpolated": 135.27,
+        "cpi": 256.143,
+        "gs10_percent": 2.06,
+        "cape": 29.283796275306276,
+        "pe": 21.36593479707252,
+        "earnings_yield_spread_pp": 2.620347522810077
+      },
+      {
+        "month": "2019-07",
+        "price_monthly_average": 2996.1136363636365,
+        "earnings_interpolated": 134.48000000000002,
+        "cpi": 256.571,
+        "gs10_percent": 1.63,
+        "cape": 29.986685335042534,
+        "pe": 22.279250716564814,
+        "earnings_yield_spread_pp": 2.8584812901561873
+      },
+      {
+        "month": "2019-08",
+        "price_monthly_average": 2897.498181818182,
+        "earnings_interpolated": 133.69,
+        "cpi": 256.558,
+        "gs10_percent": 1.63,
+        "cape": 28.705397371833083,
+        "pe": 21.67326039208753,
+        "earnings_yield_spread_pp": 2.983980462141634
+      },
+      {
+        "month": "2019-09",
+        "price_monthly_average": 2982.156,
+        "earnings_interpolated": 132.9,
+        "cpi": 256.759,
+        "gs10_percent": 1.7,
+        "cape": 29.229520233035288,
+        "pe": 22.439097065462754,
+        "earnings_yield_spread_pp": 2.7565073054528337
+      },
+      {
+        "month": "2019-10",
+        "price_monthly_average": 2977.68,
+        "earnings_interpolated": 135.09,
+        "cpi": 257.346,
+        "gs10_percent": 1.71,
+        "cape": 28.841122881953414,
+        "pe": 22.042194092827003,
+        "earnings_yield_spread_pp": 2.8267534456355285
+      },
+      {
+        "month": "2019-11",
+        "price_monthly_average": 3104.9044999999996,
+        "earnings_interpolated": 137.28,
+        "cpi": 257.208,
+        "gs10_percent": 1.81,
+        "cape": 29.836867659083442,
+        "pe": 22.617311334498833,
+        "earnings_yield_spread_pp": 2.611392026711289
+      },
+      {
+        "month": "2019-12",
+        "price_monthly_average": 3176.7495238095235,
+        "earnings_interpolated": 139.47,
+        "cpi": 256.974,
+        "gs10_percent": 1.86,
+        "cape": 30.331822322243305,
+        "pe": 22.77729636344392,
+        "earnings_yield_spread_pp": 2.530336693361618
+      },
+      {
+        "month": "2020-01",
+        "price_monthly_average": 3278.2028571428577,
+        "earnings_interpolated": 131.75666666666666,
+        "cpi": 257.971,
+        "gs10_percent": 1.76,
+        "cape": 30.9852203002307,
+        "pe": 24.88073613334828,
+        "earnings_yield_spread_pp": 2.259173687790028
+      },
+      {
+        "month": "2020-02",
+        "price_monthly_average": 3277.3142105263164,
+        "earnings_interpolated": 124.04333333333332,
+        "cpi": 258.678,
+        "gs10_percent": 1.5,
+        "cape": 30.729689264735757,
+        "pe": 26.420720263292264,
+        "earnings_yield_spread_pp": 2.2849081706881176
+      },
+      {
+        "month": "2020-03",
+        "price_monthly_average": 2652.3936363636367,
+        "earnings_interpolated": 116.33,
+        "cpi": 258.115,
+        "gs10_percent": 0.87,
+        "cape": 24.81716862909943,
+        "pe": 22.80059861053586,
+        "earnings_yield_spread_pp": 3.5158497624615563
+      },
+      {
+        "month": "2020-04",
+        "price_monthly_average": 2761.975238095238,
+        "earnings_interpolated": 110.63,
+        "cpi": 256.389,
+        "gs10_percent": 0.66,
+        "cape": 25.92735882528017,
+        "pe": 24.96587940066201,
+        "earnings_yield_spread_pp": 3.3454667570551644
+      },
+      {
+        "month": "2020-05",
+        "price_monthly_average": 2919.615,
+        "earnings_interpolated": 104.93,
+        "cpi": 256.394,
+        "gs10_percent": 0.67,
+        "cape": 27.328480997698456,
+        "pe": 27.824406747355376,
+        "earnings_yield_spread_pp": 2.923967012773945
+      },
+      {
+        "month": "2020-06",
+        "price_monthly_average": 3104.6609090909087,
+        "earnings_interpolated": 99.23,
+        "cpi": 257.797,
+        "gs10_percent": 0.73,
+        "cape": 28.838315955122845,
+        "pe": 31.287523018148832,
+        "earnings_yield_spread_pp": 2.4661622510670913
+      },
+      {
+        "month": "2020-07",
+        "price_monthly_average": 3207.6190909090906,
+        "earnings_interpolated": 98.89333333333335,
+        "cpi": 259.101,
+        "gs10_percent": 0.62,
+        "cape": 29.599194927667007,
+        "pe": 32.43513978942723,
+        "earnings_yield_spread_pp": 2.463075967891979
+      },
+      {
+        "month": "2020-08",
+        "price_monthly_average": 3391.71,
+        "earnings_interpolated": 98.55666666666667,
+        "cpi": 259.918,
+        "gs10_percent": 0.65,
+        "cape": 31.15820896535523,
+        "pe": 34.41380593228938,
+        "earnings_yield_spread_pp": 2.2558105400127566
+      },
+      {
+        "month": "2020-09",
+        "price_monthly_average": 3365.5166666666664,
+        "earnings_interpolated": 98.22,
+        "cpi": 260.28,
+        "gs10_percent": 0.68,
+        "cape": 30.839426043811255,
+        "pe": 34.26508518292269,
+        "earnings_yield_spread_pp": 2.238422629512061
+      },
+      {
+        "month": "2020-10",
+        "price_monthly_average": 3418.701363636364,
+        "earnings_interpolated": 96.85666666666667,
+        "cpi": 260.388,
+        "gs10_percent": 0.79,
+        "cape": 31.28369403259285,
+        "pe": 35.296500295657125,
+        "earnings_yield_spread_pp": 2.043142072510344
+      },
+      {
+        "month": "2020-11",
+        "price_monthly_average": 3548.992500000001,
+        "earnings_interpolated": 95.49333333333334,
+        "cpi": 260.229,
+        "gs10_percent": 0.87,
+        "cape": 32.47320409661257,
+        "pe": 37.164819533649826,
+        "earnings_yield_spread_pp": 1.82071668461777
+      },
+      {
+        "month": "2020-12",
+        "price_monthly_average": 3695.3099999999995,
+        "earnings_interpolated": 94.13,
+        "cpi": 260.474,
+        "gs10_percent": 0.93,
+        "cape": 33.7655914181171,
+        "pe": 39.257516200998616,
+        "earnings_yield_spread_pp": 1.617282907252707
+      },
+      {
+        "month": "2021-01",
+        "price_monthly_average": 3793.748421052632,
+        "earnings_interpolated": 105.48666666666665,
+        "cpi": 261.582,
+        "gs10_percent": 1.08,
+        "cape": 34.5124322941069,
+        "pe": 35.964245917834475,
+        "earnings_yield_spread_pp": 1.7005393230950672
+      },
+      {
+        "month": "2021-02",
+        "price_monthly_average": 3883.4321052631576,
+        "earnings_interpolated": 116.84333333333332,
+        "cpi": 263.014,
+        "gs10_percent": 1.26,
+        "cape": 35.10390717196983,
+        "pe": 33.23623175131793,
+        "earnings_yield_spread_pp": 1.748764674293579
+      },
+      {
+        "month": "2021-03",
+        "price_monthly_average": 3910.5082608695648,
+        "earnings_interpolated": 128.2,
+        "cpi": 264.877,
+        "gs10_percent": 1.61,
+        "cape": 35.04254511219207,
+        "pe": 30.503184562165096,
+        "earnings_yield_spread_pp": 1.668346226316183
+      },
+      {
+        "month": "2021-04",
+        "price_monthly_average": 4141.176190476191,
+        "earnings_interpolated": 138.38666666666666,
+        "cpi": 267.054,
+        "gs10_percent": 1.64,
+        "cape": 36.719814109133004,
+        "pe": 29.924676200569834,
+        "earnings_yield_spread_pp": 1.701723710884991
+      },
+      {
+        "month": "2021-05",
+        "price_monthly_average": 4167.849500000001,
+        "earnings_interpolated": 148.57333333333332,
+        "cpi": 269.195,
+        "gs10_percent": 1.62,
+        "cape": 36.55213398979908,
+        "pe": 28.052473525980446,
+        "earnings_yield_spread_pp": 1.9447480393265946
+      },
+      {
+        "month": "2021-06",
+        "price_monthly_average": 4238.489545454546,
+        "earnings_interpolated": 158.76,
+        "cpi": 271.696,
+        "gs10_percent": 1.52,
+        "cape": 36.69625801308837,
+        "pe": 26.69746501294121,
+        "earnings_yield_spread_pp": 2.225673978841304
+      },
+      {
+        "month": "2021-07",
+        "price_monthly_average": 4363.7128571428575,
+        "earnings_interpolated": 164.31666666666666,
+        "cpi": 273.003,
+        "gs10_percent": 1.32,
+        "cape": 37.443383184615406,
+        "pe": 26.556726993465002,
+        "earnings_yield_spread_pp": 2.4455242690338945
+      },
+      {
+        "month": "2021-08",
+        "price_monthly_average": 4454.206363636363,
+        "earnings_interpolated": 169.87333333333333,
+        "cpi": 273.567,
+        "gs10_percent": 1.28,
+        "cape": 37.97350061407049,
+        "pe": 26.220750933850887,
+        "earnings_yield_spread_pp": 2.5337733069612582
+      },
+      {
+        "month": "2021-09",
+        "price_monthly_average": 4445.543333333333,
+        "earnings_interpolated": 175.43,
+        "cpi": 274.31,
+        "gs10_percent": 1.37,
+        "cape": 37.6203466866512,
+        "pe": 25.340838701096352,
+        "earnings_yield_spread_pp": 2.5761993022225256
+      },
+      {
+        "month": "2021-10",
+        "price_monthly_average": 4460.707142857143,
+        "earnings_interpolated": 182.91,
+        "cpi": 276.589,
+        "gs10_percent": 1.58,
+        "cape": 37.25302500032531,
+        "pe": 24.387442692346742,
+        "earnings_yield_spread_pp": 2.520470937503503
+      },
+      {
+        "month": "2021-11",
+        "price_monthly_average": 4667.386666666667,
+        "earnings_interpolated": 190.39,
+        "cpi": 277.948,
+        "gs10_percent": 1.56,
+        "cape": 38.582627497719216,
+        "pe": 24.514872980023465,
+        "earnings_yield_spread_pp": 2.519156358733223
+      },
+      {
+        "month": "2021-12",
+        "price_monthly_average": 4674.772727272726,
+        "earnings_interpolated": 197.87,
+        "cpi": 278.802,
+        "gs10_percent": 1.47,
+        "cape": 38.30484987346743,
+        "pe": 23.625474944522797,
+        "earnings_yield_spread_pp": 2.7627191404540827
+      },
+      {
+        "month": "2022-01",
+        "price_monthly_average": 4573.8155,
+        "earnings_interpolated": 197.88333333333333,
+        "cpi": 281.148,
+        "gs10_percent": 1.76,
+        "cape": 36.936758070297444,
+        "pe": 23.113697464836182,
+        "earnings_yield_spread_pp": 2.566438907151663
+      },
+      {
+        "month": "2022-02",
+        "price_monthly_average": 4435.980526315789,
+        "earnings_interpolated": 197.89666666666665,
+        "cpi": 283.716,
+        "gs10_percent": 1.93,
+        "cape": 35.28714922569486,
+        "pe": 22.415640450314754,
+        "earnings_yield_spread_pp": 2.5311707714376652
+      },
+      {
+        "month": "2022-03",
+        "price_monthly_average": 4391.265217391306,
+        "earnings_interpolated": 197.91,
+        "cpi": 287.504,
+        "gs10_percent": 2.13,
+        "cape": 34.27079869329173,
+        "pe": 22.18819270067862,
+        "earnings_yield_spread_pp": 2.376901546647444
+      },
+      {
+        "month": "2022-04",
+        "price_monthly_average": 4391.295999999999,
+        "earnings_interpolated": 196.02666666666664,
+        "cpi": 289.109,
+        "gs10_percent": 2.75,
+        "cape": 33.889164755913846,
+        "pe": 22.401523602230988,
+        "earnings_yield_spread_pp": 1.7139820833454786
+      },
+      {
+        "month": "2022-05",
+        "price_monthly_average": 4040.3599999999997,
+        "earnings_interpolated": 194.14333333333332,
+        "cpi": 292.296,
+        "gs10_percent": 2.9,
+        "cape": 30.673155079545133,
+        "pe": 20.811221949418815,
+        "earnings_yield_spread_pp": 1.9050998755886437
+      },
+      {
+        "month": "2022-06",
+        "price_monthly_average": 3898.9466666666676,
+        "earnings_interpolated": 192.26,
+        "cpi": 296.311,
+        "gs10_percent": 3.14,
+        "cape": 29.047721395103835,
+        "pe": 20.279551995561572,
+        "earnings_yield_spread_pp": 1.791075401561446
+      },
+      {
+        "month": "2022-07",
+        "price_monthly_average": 3911.729499999999,
+        "earnings_interpolated": 190.58333333333331,
+        "cpi": 296.276,
+        "gs10_percent": 2.9,
+        "cape": 29.00461831720893,
+        "pe": 20.52503454306952,
+        "earnings_yield_spread_pp": 1.9720989867354928
+      },
+      {
+        "month": "2022-08",
+        "price_monthly_average": 4158.5630434782615,
+        "earnings_interpolated": 188.90666666666664,
+        "cpi": 296.171,
+        "gs10_percent": 2.9,
+        "cape": 30.698763365175296,
+        "pe": 22.013850103110506,
+        "earnings_yield_spread_pp": 1.642594754284723
+      },
+      {
+        "month": "2022-09",
+        "price_monthly_average": 3850.520476190475,
+        "earnings_interpolated": 187.23,
+        "cpi": 296.808,
+        "gs10_percent": 3.52,
+        "cape": 28.229884655821973,
+        "pe": 20.565723848691317,
+        "earnings_yield_spread_pp": 1.3424595339182974
+      },
+      {
+        "month": "2022-10",
+        "price_monthly_average": 3726.050952380952,
+        "earnings_interpolated": 182.40333333333334,
+        "cpi": 298.012,
+        "gs10_percent": 3.98,
+        "cape": 27.080766925400702,
+        "pe": 20.42753761287779,
+        "earnings_yield_spread_pp": 0.9153526310953253
+      },
+      {
+        "month": "2022-11",
+        "price_monthly_average": 3917.488571428571,
+        "earnings_interpolated": 177.57666666666665,
+        "cpi": 297.711,
+        "gs10_percent": 3.89,
+        "cape": 28.378949016273317,
+        "pe": 22.060829527688913,
+        "earnings_yield_spread_pp": 0.6429211158849824
+      },
+      {
+        "month": "2022-12",
+        "price_monthly_average": 3912.380952380953,
+        "earnings_interpolated": 172.75,
+        "cpi": 296.797,
+        "gs10_percent": 3.62,
+        "cape": 28.316901284527297,
+        "pe": 22.647646612914347,
+        "earnings_yield_spread_pp": 0.7954698149951298
+      },
+      {
+        "month": "2023-01",
+        "price_monthly_average": 3960.6565,
+        "earnings_interpolated": 173.55666666666667,
+        "cpi": 299.17,
+        "gs10_percent": 3.53,
+        "cape": 28.334813423755705,
+        "pe": 22.820537960704478,
+        "earnings_yield_spread_pp": 0.8520176444654228
+      },
+      {
+        "month": "2023-02",
+        "price_monthly_average": 4079.684736842105,
+        "earnings_interpolated": 174.36333333333332,
+        "cpi": 300.84,
+        "gs10_percent": 3.75,
+        "cape": 28.91976294386665,
+        "pe": 23.397606932891694,
+        "earnings_yield_spread_pp": 0.5239413601919614
+      },
+      {
+        "month": "2023-03",
+        "price_monthly_average": 3968.5591304347827,
+        "earnings_interpolated": 175.17,
+        "cpi": 301.836,
+        "gs10_percent": 3.66,
+        "cape": 27.938131253997902,
+        "pe": 22.655472571985975,
+        "earnings_yield_spread_pp": 0.7539445638248283
+      },
+      {
+        "month": "2023-04",
+        "price_monthly_average": 4121.467368421053,
+        "earnings_interpolated": 177.11666666666665,
+        "cpi": 303.363,
+        "gs10_percent": 3.46,
+        "cape": 28.764841267615378,
+        "pe": 23.269788473253335,
+        "earnings_yield_spread_pp": 0.8374176630329746
+      },
+      {
+        "month": "2023-05",
+        "price_monthly_average": 4146.1731818181825,
+        "earnings_interpolated": 179.06333333333333,
+        "cpi": 304.127,
+        "gs10_percent": 3.57,
+        "cape": 28.76205134313124,
+        "pe": 23.154786100736327,
+        "earnings_yield_spread_pp": 0.7487615538724399
+      },
+      {
+        "month": "2023-06",
+        "price_monthly_average": 4345.372857142857,
+        "earnings_interpolated": 181.01,
+        "cpi": 305.109,
+        "gs10_percent": 3.75,
+        "cape": 29.9400316459875,
+        "pe": 24.006258533466976,
+        "earnings_yield_spread_pp": 0.4155803989859823
+      },
+      {
+        "month": "2023-07",
+        "price_monthly_average": 4508.075500000001,
+        "earnings_interpolated": 182.09,
+        "cpi": 305.691,
+        "gs10_percent": 3.9,
+        "cape": 30.89165981365994,
+        "pe": 24.757402932615744,
+        "earnings_yield_spread_pp": 0.13919588303257102
+      },
+      {
+        "month": "2023-08",
+        "price_monthly_average": 4457.358695652174,
+        "earnings_interpolated": 183.17,
+        "cpi": 307.026,
+        "gs10_percent": 4.17,
+        "cape": 30.304748245365207,
+        "pe": 24.33454548043989,
+        "earnings_yield_spread_pp": -0.06061566486294101
+      },
+      {
+        "month": "2023-09",
+        "price_monthly_average": 4409.094999999999,
+        "earnings_interpolated": 184.25,
+        "cpi": 307.789,
+        "gs10_percent": 4.38,
+        "cape": 29.799681861350244,
+        "pe": 23.9299592944369,
+        "earnings_yield_spread_pp": -0.20113789791328962
+      },
+      {
+        "month": "2023-10",
+        "price_monthly_average": 4269.4009090909085,
+        "earnings_interpolated": 186.97666666666666,
+        "cpi": 307.671,
+        "gs10_percent": 4.8,
+        "cape": 28.76905495498398,
+        "pe": 22.83387005022503,
+        "earnings_yield_spread_pp": -0.4205408991098949
+      },
+      {
+        "month": "2023-11",
+        "price_monthly_average": 4460.063333333332,
+        "earnings_interpolated": 189.70333333333332,
+        "cpi": 307.051,
+        "gs10_percent": 4.5,
+        "cape": 30.01322481738149,
+        "pe": 23.510727275922047,
+        "earnings_yield_spread_pp": -0.24662243211792845
+      },
+      {
+        "month": "2023-12",
+        "price_monthly_average": 4685.0515000000005,
+        "earnings_interpolated": 192.42999999999998,
+        "cpi": 306.746,
+        "gs10_percent": 4.02,
+        "cape": 31.45231092384457,
+        "pe": 24.34678324585564,
+        "earnings_yield_spread_pp": 0.0873187776057529
+      },
+      {
+        "month": "2024-01",
+        "price_monthly_average": 4815.6139130434785,
+        "earnings_interpolated": 192.08333333333331,
+        "cpi": 308.417,
+        "gs10_percent": 4.06,
+        "cape": 32.04512301259602,
+        "pe": 25.07044119588796,
+        "earnings_yield_spread_pp": -0.0712389240121567
+      },
+      {
+        "month": "2024-02",
+        "price_monthly_average": 5011.9615,
+        "earnings_interpolated": 191.73666666666665,
+        "cpi": 310.326,
+        "gs10_percent": 4.21,
+        "cape": 33.03719268559904,
+        "pe": 26.139817631821426,
+        "earnings_yield_spread_pp": -0.3844186050378351
+      },
+      {
+        "month": "2024-03",
+        "price_monthly_average": 5170.572499999999,
+        "earnings_interpolated": 191.39,
+        "cpi": 312.332,
+        "gs10_percent": 4.21,
+        "cape": 33.75492017640601,
+        "pe": 27.015896859815037,
+        "earnings_yield_spread_pp": -0.508475652357645
+      },
+      {
+        "month": "2024-04",
+        "price_monthly_average": 5112.492727272728,
+        "earnings_interpolated": 193.17999999999998,
+        "cpi": 313.548,
+        "gs10_percent": 4.54,
+        "cape": 33.141593030769805,
+        "pe": 26.464917316868874,
+        "earnings_yield_spread_pp": -0.7614127177242498
+      },
+      {
+        "month": "2024-05",
+        "price_monthly_average": 5235.225454545454,
+        "earnings_interpolated": 194.96999999999997,
+        "cpi": 314.069,
+        "gs10_percent": 4.48,
+        "cape": 33.77363454011197,
+        "pe": 26.851441014235295,
+        "earnings_yield_spread_pp": -0.7558050881893088
+      },
+      {
+        "month": "2024-06",
+        "price_monthly_average": 5415.140526315788,
+        "earnings_interpolated": 196.76,
+        "cpi": 314.175,
+        "gs10_percent": 4.31,
+        "cape": 34.81054878004298,
+        "pe": 27.521551770257105,
+        "earnings_yield_spread_pp": -0.6764839528390509
+      },
+      {
+        "month": "2024-07",
+        "price_monthly_average": 5538.004545454546,
+        "earnings_interpolated": 197.93,
+        "cpi": 314.54,
+        "gs10_percent": 4.25,
+        "cape": 35.443553078907236,
+        "pe": 27.97961170845524,
+        "earnings_yield_spread_pp": -0.6759689862035967
+      },
+      {
+        "month": "2024-08",
+        "price_monthly_average": 5478.214545454546,
+        "earnings_interpolated": 199.10000000000002,
+        "cpi": 314.796,
+        "gs10_percent": 3.87,
+        "cape": 34.91963134861477,
+        "pe": 27.51488973106251,
+        "earnings_yield_spread_pp": -0.23560418822589213
+      },
+      {
+        "month": "2024-09",
+        "price_monthly_average": 5621.2604999999985,
+        "earnings_interpolated": 200.27,
+        "cpi": 315.301,
+        "gs10_percent": 3.72,
+        "cape": 35.66018363515212,
+        "pe": 28.068410146302483,
+        "earnings_yield_spread_pp": -0.15727594549300727
+      },
+      {
+        "month": "2024-10",
+        "price_monthly_average": 5792.31956521739,
+        "earnings_interpolated": 203.57,
+        "cpi": 315.664,
+        "gs10_percent": 4.1,
+        "cape": 36.58721052793016,
+        "pe": 28.453699293694505,
+        "earnings_yield_spread_pp": -0.585518492066142
+      },
+      {
+        "month": "2024-11",
+        "price_monthly_average": 5929.916,
+        "earnings_interpolated": 206.87,
+        "cpi": 315.493,
+        "gs10_percent": 4.36,
+        "cape": 37.350195655078785,
+        "pe": 28.664939333881183,
+        "earnings_yield_spread_pp": -0.871417699677365
+      },
+      {
+        "month": "2024-12",
+        "price_monthly_average": 6010.908571428571,
+        "earnings_interpolated": 210.17,
+        "cpi": 315.605,
+        "gs10_percent": 4.39,
+        "cape": 37.71119169643464,
+        "pe": 28.60022158932565,
+        "earnings_yield_spread_pp": -0.893523593770944
+      },
+      {
+        "month": "2025-01",
+        "price_monthly_average": 5979.5155,
+        "earnings_interpolated": 212.3433333333333,
+        "cpi": 317.671,
+        "gs10_percent": 4.63,
+        "cape": 37.1292198521989,
+        "pe": 28.159657315981985,
+        "earnings_yield_spread_pp": -1.078820421431581
+      },
+      {
+        "month": "2025-02",
+        "price_monthly_average": 6038.69,
+        "earnings_interpolated": 214.51666666666665,
+        "cpi": 319.082,
+        "gs10_percent": 4.45,
+        "cape": 37.18717559369688,
+        "pe": 28.150213658612383,
+        "earnings_yield_spread_pp": -0.8976290939480802
+      },
+      {
+        "month": "2025-03",
+        "price_monthly_average": 5683.983333333333,
+        "earnings_interpolated": 216.69,
+        "cpi": 319.799,
+        "gs10_percent": 4.28,
+        "cape": 34.78475033985074,
+        "pe": 26.23094435983817,
+        "earnings_yield_spread_pp": -0.46770873712390637
+      },
+      {
+        "month": "2025-04",
+        "price_monthly_average": 5369.495714285715,
+        "earnings_interpolated": 218.63666666666666,
+        "cpi": 320.795,
+        "gs10_percent": 4.28,
+        "cape": 32.62127034111352,
+        "pe": 24.558990018229856,
+        "earnings_yield_spread_pp": -0.20817131625644425
+      },
+      {
+        "month": "2025-05",
+        "price_monthly_average": 5810.919523809524,
+        "earnings_interpolated": 220.58333333333331,
+        "cpi": 321.465,
+        "gs10_percent": 4.42,
+        "cape": 35.07669704372763,
+        "pe": 26.343420583949488,
+        "earnings_yield_spread_pp": -0.6239857473585655
+      },
+      {
+        "month": "2025-06",
+        "price_monthly_average": 6029.951499999999,
+        "earnings_interpolated": 222.53,
+        "cpi": 322.561,
+        "gs10_percent": 4.38,
+        "cape": 36.11109213369692,
+        "pe": 27.097252055902572,
+        "earnings_yield_spread_pp": -0.6895888913866051
+      },
+      {
+        "month": "2025-07",
+        "price_monthly_average": 6296.498181818183,
+        "earnings_interpolated": 226.76999999999998,
+        "cpi": 323.048,
+        "gs10_percent": 4.39,
+        "cape": 37.47424619164658,
+        "pe": 27.76601041503807,
+        "earnings_yield_spread_pp": -0.7884743034656498
+      },
+      {
+        "month": "2025-08",
+        "price_monthly_average": 6408.949523809522,
+        "earnings_interpolated": 231.01,
+        "cpi": 323.976,
+        "gs10_percent": 4.26,
+        "cape": 37.84614504488179,
+        "pe": 27.743169229944687,
+        "earnings_yield_spread_pp": -0.6555091369999411
+      },
+      {
+        "month": "2025-09",
+        "price_monthly_average": 6584.018095238095,
+        "earnings_interpolated": 235.25,
+        "cpi": 324.8,
+        "gs10_percent": 4.12,
+        "cape": 38.580387325388465,
+        "pe": 27.987324528110925,
+        "earnings_yield_spread_pp": -0.5469539269622445
+      },
+      {
+        "month": "2025-10",
+        "price_monthly_average": 6735.691739130435,
+        "earnings_interpolated": 237.04466666666667,
+        "cpi": 325.21200000000005,
+        "gs10_percent": 4.06,
+        "cape": 39.205692171126515,
+        "pe": 28.415284907473563,
+        "earnings_yield_spread_pp": -0.5407672938834831
+      },
+      {
+        "month": "2025-11",
+        "price_monthly_average": 6740.885789473684,
+        "earnings_interpolated": 238.83933333333334,
+        "cpi": 324.122,
+        "gs10_percent": 4.09,
+        "cape": 39.149566590415425,
+        "pe": 28.223516183014315,
+        "earnings_yield_spread_pp": -0.546855363040033
+      },
+      {
+        "month": "2025-12",
+        "price_monthly_average": 6853.025454545453,
+        "earnings_interpolated": 240.634,
+        "cpi": 324.054,
+        "gs10_percent": 4.14,
+        "cape": 39.58164099324258,
+        "pe": 28.479040595034174,
+        "earnings_yield_spread_pp": -0.6286457580513867
+      },
+      {
+        "month": "2026-01",
+        "price_monthly_average": 6929.122,
+        "earnings_interpolated": 247.66366666666664,
+        "cpi": 325.252,
+        "gs10_percent": 4.21,
+        "cape": 39.64081842859693,
+        "pe": 27.977951280701923,
+        "earnings_yield_spread_pp": -0.6357568755945322
+      },
+      {
+        "month": "2026-02",
+        "price_monthly_average": 6893.806315789475,
+        "earnings_interpolated": 254.69333333333333,
+        "cpi": 326.785,
+        "gs10_percent": 4.13,
+        "cape": 39.01399720511149,
+        "pe": 27.06708583835256,
+        "earnings_yield_spread_pp": -0.4354759349709698
+      },
+      {
+        "month": "2026-03",
+        "price_monthly_average": 6654.419090909089,
+        "earnings_interpolated": 261.723,
+        "cpi": 330.213,
+        "gs10_percent": 4.25,
+        "cape": 37.03161144602039,
+        "pe": 25.425427229968665,
+        "earnings_yield_spread_pp": -0.31692941300387956
+      },
+      {
+        "month": "2026-04",
+        "price_monthly_average": 6957.0076190476175,
+        "earnings_interpolated": 272.9447,
+        "cpi": 333.02,
+        "gs10_percent": 4.32,
+        "cape": 38.13827810357586,
+        "pe": 25.488707489273896,
+        "earnings_yield_spread_pp": -0.39669396174436145
+      },
+      {
+        "month": "2026-05",
+        "price_monthly_average": 7412.5515,
+        "earnings_interpolated": 284.1664,
+        "cpi": 335.123,
+        "gs10_percent": 4.48,
+        "cape": 40.1013593137296,
+        "pe": 26.085249698768042,
+        "earnings_yield_spread_pp": -0.6464158421024124
+      },
+      {
+        "month": "2026-06",
+        "price_monthly_average": 7450.032857142856,
+        "earnings_interpolated": 295.3881,
+        "cpi": 333.952,
+        "gs10_percent": 4.47,
+        "cape": 40.150169734732664,
+        "pe": 25.221167870820985,
+        "earnings_yield_spread_pp": -0.5050765471216514
+      }
+    ],
+    "later_incomplete_inputs": [
+      {
+        "month": "2026-07",
+        "price_monthly_average": 7481.33909090909,
+        "earnings_interpolated": null,
+        "cpi": 333.918,
+        "gs10_percent": 4.6,
+        "cape": 40.00863615205682,
+        "pe": null,
+        "earnings_yield_spread_pp": null
+      },
+      {
+        "month": "2026-08",
+        "price_monthly_average": 7711.323333333334,
+        "earnings_interpolated": null,
+        "cpi": 334.98,
+        "gs10_percent": 4.68,
+        "cape": 40.98739354965891,
+        "pe": null,
+        "earnings_yield_spread_pp": null
+      },
+      {
+        "month": "2026-09",
+        "price_monthly_average": 7669.414285714285,
+        "earnings_interpolated": null,
+        "cpi": 335.511,
+        "gs10_percent": 4.99,
+        "cape": 40.58087409538742,
+        "pe": null,
+        "earnings_yield_spread_pp": null,
+        "cpi_is_estimate": true
+      },
+      {
+        "month": "2026-10",
+        "price_monthly_average": null,
+        "earnings_interpolated": null,
+        "cpi": 335.77650000000006,
+        "gs10_percent": 5.24,
+        "cape": 40.710608577487044,
+        "pe": null,
+        "earnings_yield_spread_pp": null,
+        "cpi_is_estimate": true,
+        "price_single_observation": 7722.72,
+        "price_basis": "2026-10-02 close",
+        "gs10_basis": "2026-10-02 value"
+      }
+    ]
+  },
+  "market_cap_gdp": {
+    "source": "https://api.worldbank.org/v2/country/USA;CHN;HKG/indicator/CM.MKT.LCAP.GD.ZS?format=json&date=2020:2025&per_page=1000",
+    "definition": "WDI CM.MKT.LCAP.GD.ZS; listed domestic companies; year-end market cap / annual GDP; WFE source",
+    "license": "CC BY 4.0",
+    "annual_history": [
+      {
+        "country": "China",
+        "iso3": "CHN",
+        "year": "2025",
+        "percent": 79.540605039043
+      },
+      {
+        "country": "China",
+        "iso3": "CHN",
+        "year": "2024",
+        "percent": 62.7654354387815
+      },
+      {
+        "country": "China",
+        "iso3": "CHN",
+        "year": "2023",
+        "percent": 59.8556765846528
+      },
+      {
+        "country": "China",
+        "iso3": "CHN",
+        "year": "2022",
+        "percent": 62.6166578891979
+      },
+      {
+        "country": "China",
+        "iso3": "CHN",
+        "year": "2021",
+        "percent": 79.3192238397069
+      },
+      {
+        "country": "China",
+        "iso3": "CHN",
+        "year": "2020",
+        "percent": 81.8646786726428
+      },
+      {
+        "country": "Hong Kong SAR, China",
+        "iso3": "HKG",
+        "year": "2025",
+        "percent": 1425.01280055958
+      },
+      {
+        "country": "Hong Kong SAR, China",
+        "iso3": "HKG",
+        "year": "2024",
+        "percent": 1114.12088044785
+      },
+      {
+        "country": "Hong Kong SAR, China",
+        "iso3": "HKG",
+        "year": "2023",
+        "percent": 1043.90154474139
+      },
+      {
+        "country": "Hong Kong SAR, China",
+        "iso3": "HKG",
+        "year": "2022",
+        "percent": 1273.24952804806
+      },
+      {
+        "country": "Hong Kong SAR, China",
+        "iso3": "HKG",
+        "year": "2021",
+        "percent": 1472.85965725758
+      },
+      {
+        "country": "Hong Kong SAR, China",
+        "iso3": "HKG",
+        "year": "2020",
+        "percent": 1777.22631607139
+      },
+      {
+        "country": "United States",
+        "iso3": "USA",
+        "year": "2025",
+        "percent": 224.04464850161
+      },
+      {
+        "country": "United States",
+        "iso3": "USA",
+        "year": "2024",
+        "percent": 212.252227889994
+      },
+      {
+        "country": "United States",
+        "iso3": "USA",
+        "year": "2023",
+        "percent": 176.111924063689
+      },
+      {
+        "country": "United States",
+        "iso3": "USA",
+        "year": "2022",
+        "percent": 154.667347288277
+      },
+      {
+        "country": "United States",
+        "iso3": "USA",
+        "year": "2021",
+        "percent": 204.624734627868
+      },
+      {
+        "country": "United States",
+        "iso3": "USA",
+        "year": "2020",
+        "percent": 194.476328849197
+      }
+    ]
+  }
+}

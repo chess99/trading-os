@@ -1,0 +1,765 @@
+{
+  "schema_version": 1,
+  "symbol": "CN:601298",
+  "model_as_of": "2026-10-31T00:00:00+00:00",
+  "candidate_mapping": {
+    "current_value_low_case": "core_low",
+    "current_value_high_case": "core_high",
+    "distributions_case": "base",
+    "year5_terminal_low_case": "return_low",
+    "year5_terminal_high_case": "return_high"
+  },
+  "source_pins": [
+    {
+      "path": "fy2025.pdf"
+    },
+    {
+      "path": "h1_2026.pdf"
+    },
+    {
+      "path": "2026Q3-1225642468.PDF"
+    },
+    {
+      "path": "board_resolution_20261030.pdf"
+    }
+  ],
+  "base": {
+    "name": "base",
+    "description": "Eight annual cash windows; no automatically invented financing; new project pricing and payment allocation are explicit research assumptions, not issuer guidance.",
+    "provenance": "See model_design_parameters.md and source addenda. Financial-principal release is conditional on future lawful distributions/capital actions, not an existing commitment.",
+    "years": 8,
+    "intervals": [
+      "2026-11-01/2027-10-31",
+      "2027-11-01/2028-10-31",
+      "2028-11-01/2029-10-31",
+      "2029-11-01/2030-10-31",
+      "2030-11-01/2031-10-31",
+      "2031-11-01/2032-10-31",
+      "2032-11-01/2033-10-31",
+      "2033-11-01/2034-10-31"
+    ],
+    "shares": 6.4911,
+    "tax": 0.25,
+    "equity_cost": 0.095,
+    "terminal_g": 0.01,
+    "terminal_roic": 0.1,
+    "terminal_debt_weight": 0.06,
+    "terminal_release_rate": 0.2,
+    "financial_yield_aftertax": 0.0075,
+    "old_nopat0": 4.58,
+    "old_growth": [
+      0,
+      0,
+      0.005,
+      0.01,
+      0.01,
+      0.01,
+      0.01,
+      0.01
+    ],
+    "cycle_factor": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "owned_da0": 1.5,
+    "maintenance0": 1.55,
+    "maintenance_inflation": 0.01,
+    "new_maintenance_fraction": [
+      0,
+      0.25,
+      0.35,
+      0.5,
+      0.65,
+      0.8,
+      0.9,
+      1
+    ],
+    "old_nwc_capital": 2.0,
+    "new_nwc_fraction": 0.15,
+    "container_asset_cost": 9.0970671,
+    "bulk_asset_cost": 6.61458,
+    "network_asset_cost": 5.79355,
+    "container_capacity_m": 3.2,
+    "bulk_capacity_m": 14.33,
+    "container_contribution_cny": 300,
+    "bulk_contribution_cny": 45,
+    "container_fixed_cash": 0.06,
+    "bulk_fixed_cash": 0.06,
+    "container_da_rate": 0.032,
+    "bulk_da_rate": 0.029,
+    "network_da_rate": 0.025,
+    "container_diversion_fraction": 0.1,
+    "bulk_diversion_fraction": 0.25,
+    "old_container_nopat_per_unit": 80,
+    "old_bulk_nopat_per_unit": 3,
+    "commissioned": [
+      0,
+      0,
+      0.15,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "network_commissioned": [
+      0.1,
+      0.4,
+      0.8,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "container_util": [
+      0,
+      0,
+      0.05,
+      0.35,
+      0.55,
+      0.7,
+      0.8,
+      0.85
+    ],
+    "bulk_util": [
+      0,
+      0,
+      0.08,
+      0.3,
+      0.5,
+      0.6,
+      0.67,
+      0.7
+    ],
+    "project_booked0": 2.5,
+    "future_project_cost": 19.0051971,
+    "project_ap0": 1.2,
+    "project_prepay0": 0.2,
+    "legacy_project_ap0": 0.3,
+    "build_weights": [
+      0.2,
+      0.25,
+      0.25,
+      0.16,
+      0.09,
+      0.05,
+      0,
+      0
+    ],
+    "recognition_weights": [
+      0.25,
+      0.35,
+      0.4,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "project_ap_settlement": [
+      0.84,
+      0.36,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "project_prepay_use": [
+      0.2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "legacy_project_settlement": [
+      0.15,
+      0.15,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "parent_build_share": 0.8922,
+    "parent_old_maintenance_share": 0.42,
+    "parent_cash0": 6.1,
+    "parent_term0": 0.654968388,
+    "sub_cash0": 8.784633742,
+    "jv_cash0": 3.485058288,
+    "parent_term_redemption": [
+      0.654968388,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "parent_own_cash0": 0.75,
+    "parent_own_profit0": 0.6,
+    "parent_inflow_budget": 4.3,
+    "parent_required_cash": 0.75,
+    "sub_required_cash": 1.75,
+    "group_required_cash": 2.5,
+    "jv_required_cash": 1.0,
+    "common_book0": 47.681468281,
+    "nci_book0": 4.676690578,
+    "parent_retained0": 17.384441185,
+    "sub_distributable0": 0,
+    "subs_current_distributable_ratio": 0.92,
+    "subs_declared_ratio": 0.85,
+    "sub_dividend_receivable0": 0.035528132,
+    "jv_dividend_receivable0": 0.098111591,
+    "sub_payment_factor": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "sub_release": [
+      0,
+      0,
+      0,
+      0.03,
+      0.05,
+      0.1,
+      0.15,
+      0.2
+    ],
+    "jv_operating_profit0": 0.987,
+    "jv_incremental_return": 0.09,
+    "jv_growth": [
+      0,
+      0,
+      0,
+      0.005,
+      0.01,
+      0.01,
+      0.01,
+      0.01
+    ],
+    "jv_cycle_factor": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "jv_payout": [
+      0.7,
+      0.7,
+      0.75,
+      0.8,
+      0.9,
+      1,
+      1,
+      1
+    ],
+    "jv_release": [
+      0,
+      0,
+      0,
+      0.05,
+      0.05,
+      0.1,
+      0.15,
+      0.2
+    ],
+    "jv_payment_factor": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "new_jv_investment": [
+      0.06912,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "new_jv_return": 0.04,
+    "nci_profit0": 0.45837511,
+    "nci_payout": 0.45,
+    "nci_initial_financial_share": 0.15,
+    "debt0": 4.15,
+    "parent_debt0": 0,
+    "debt_interest_rate": 0.03,
+    "parent_new_borrowing": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "parent_debt_repayment": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "common_payout": [
+      0.38,
+      0.38,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.6,
+      0.7
+    ],
+    "parent_release": [
+      0,
+      0,
+      0,
+      0,
+      0.05,
+      0.1,
+      0.15,
+      0.2
+    ],
+    "policy_cash_floor": [
+      1.05,
+      1.05,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "benefit_liability0": 2.67,
+    "benefit_service0": 0.05,
+    "benefit_service_growth": 0.01,
+    "benefit_discount_rate": 0.0225,
+    "benefit_base_expense": 0.105,
+    "benefit_cash": [
+      0.145,
+      0.145,
+      0.145,
+      0.15,
+      0.155,
+      0.16,
+      0.165,
+      0.17
+    ],
+    "benefit_related_payable0": 0.176374346,
+    "benefit_related_settlement": [
+      0.088187173,
+      0.088187173,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "parent_benefit_share": 0.607,
+    "rou_da0": 0.262589838,
+    "lease_interest0": 0.026284224,
+    "long_lease_cash0": 0.378344528,
+    "prepaid_lease_balance0": 1.513753173,
+    "prepaid_lease_annual_runoff": 0.210240246,
+    "prepaid_lease_direct_weight": 0.9715,
+    "qqct_share": 0.51,
+    "other_lease_share": 0.35,
+    "prepaid_lease_tax0": 0.085,
+    "prepaid_lease_tax_runoff": 0.011484916
+  },
+  "scenarios": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "core_low",
+      "equity_cost": 0.1,
+      "project_ap0": 1.8,
+      "project_prepay0": 0.1,
+      "project_ap_settlement": [
+        1.26,
+        0.54,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "project_prepay_use": [
+        0.1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "core_high",
+      "equity_cost": 0.09,
+      "project_ap0": 0.6,
+      "project_prepay0": 0.25,
+      "project_ap_settlement": [
+        0.42,
+        0.18,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "project_prepay_use": [
+        0.25,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "return_low",
+      "description": "Same base distributions and operating/cash state; only equity discount rate differs for the Y5 value interval.",
+      "equity_cost": 0.1
+    },
+    {
+      "name": "return_high",
+      "description": "Same base distributions and operating/cash state; only equity discount rate differs for the Y5 value interval.",
+      "equity_cost": 0.09
+    },
+    {
+      "name": "frontloaded_payments",
+      "description": "Suppliers require construction cash to match recognition rather than allowing the base payment tail; no unsupported vendor extension or automatic financing.",
+      "build_weights": [
+        0.25,
+        0.35,
+        0.4,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "parent_cash_conversion_weak",
+      "description": "Mother own operating cash remains closer to H1 ex-refund level; near-cash principal redemption occurs one year later, without erasing the principal.",
+      "parent_own_cash0": 0.58,
+      "parent_term_redemption": [
+        0,
+        0.654968388,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "nci_cash_location_high",
+      "description": "NCI share of subsidiary excess financial assets is 25%, not the 15% base location estimate; both DCF and RI use the same ordinary-share bridge.",
+      "nci_initial_financial_share": 0.25
+    },
+    {
+      "name": "upstream_delay",
+      "description": "Y2 declarations/profits remain, but subsidiaries pay only 50% and JV 20%; unpaid balances persist and can be settled later subject to real cash.",
+      "sub_payment_factor": [
+        1,
+        0.5,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "jv_payment_factor": [
+        1,
+        0.2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "overrun_and_delay",
+      "description": "Future construction cost +20%, one-year commissioning delay; no automatic financing; depreciation and maintenance scale with actual invested capital.",
+      "future_project_cost": 22.80623652,
+      "build_weights": [
+        0.2,
+        0.25,
+        0.25,
+        0.15,
+        0.1,
+        0.05,
+        0,
+        0
+      ],
+      "recognition_weights": [
+        0.2,
+        0.25,
+        0.25,
+        0.3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "commissioned": [
+        0,
+        0,
+        0,
+        0.15,
+        1,
+        1,
+        1,
+        1
+      ],
+      "network_commissioned": [
+        0,
+        0.1,
+        0.4,
+        0.8,
+        1,
+        1,
+        1,
+        1
+      ],
+      "container_util": [
+        0,
+        0,
+        0,
+        0.05,
+        0.35,
+        0.55,
+        0.7,
+        0.8
+      ],
+      "bulk_util": [
+        0,
+        0,
+        0,
+        0.08,
+        0.3,
+        0.5,
+        0.6,
+        0.67
+      ],
+      "parent_build_share": 1.0
+    },
+    {
+      "name": "structural_low_return",
+      "description": "Persistent low unit contribution and cargo substitution; completed assets are retained, not wiped out; no automatic mean reversion.",
+      "container_contribution_cny": 210,
+      "bulk_contribution_cny": 30,
+      "container_diversion_fraction": 0.35,
+      "bulk_diversion_fraction": 0.55,
+      "container_util": [
+        0,
+        0,
+        0.03,
+        0.25,
+        0.4,
+        0.55,
+        0.65,
+        0.7
+      ],
+      "bulk_util": [
+        0,
+        0,
+        0.05,
+        0.2,
+        0.35,
+        0.45,
+        0.5,
+        0.55
+      ],
+      "old_growth": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "cyclical_weak",
+      "description": "Two-year volume/earnings weakness then recovery, with slower initial project utilization; existing competition remains viable.",
+      "cycle_factor": [
+        0.85,
+        0.85,
+        0.95,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "jv_cycle_factor": [
+        0.85,
+        0.85,
+        0.95,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "container_util": [
+        0,
+        0,
+        0.03,
+        0.25,
+        0.45,
+        0.65,
+        0.78,
+        0.85
+      ],
+      "bulk_util": [
+        0,
+        0,
+        0.05,
+        0.2,
+        0.4,
+        0.55,
+        0.65,
+        0.7
+      ]
+    },
+    {
+      "name": "stronger_execution",
+      "description": "Higher net cargo/unit contribution and less cannibalization; these are conditional improvements, not confirmed orders.",
+      "container_contribution_cny": 360,
+      "bulk_contribution_cny": 55,
+      "container_diversion_fraction": 0.05,
+      "bulk_diversion_fraction": 0.1,
+      "container_util": [
+        0,
+        0,
+        0.08,
+        0.45,
+        0.65,
+        0.8,
+        0.85,
+        0.9
+      ],
+      "bulk_util": [
+        0,
+        0,
+        0.1,
+        0.4,
+        0.6,
+        0.7,
+        0.75,
+        0.8
+      ]
+    },
+    {
+      "name": "slow_principal_recovery",
+      "description": "Same operating assets, but retained financial principal is released at 5% rather than 20% at the terminal; cash is not erased.",
+      "terminal_release_rate": 0.05,
+      "sub_release": [
+        0,
+        0,
+        0,
+        0,
+        0.02,
+        0.03,
+        0.04,
+        0.05
+      ],
+      "jv_release": [
+        0,
+        0,
+        0,
+        0,
+        0.02,
+        0.03,
+        0.04,
+        0.05
+      ],
+      "parent_release": [
+        0,
+        0,
+        0,
+        0,
+        0.02,
+        0.03,
+        0.04,
+        0.05
+      ]
+    },
+    {
+      "name": "conditional_project_loan",
+      "description": "Alternative only: uncommitted project financing of 1.5bn at 3.5%, amortized by Y7. It is not inserted automatically into the base or failures.",
+      "debt_interest_rate": 0.035,
+      "parent_new_borrowing": [
+        0,
+        0.75,
+        0.75,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "parent_debt_repayment": [
+        0,
+        0,
+        0,
+        0.3,
+        0.4,
+        0.4,
+        0.4,
+        0
+      ]
+    }
+  ]
+}

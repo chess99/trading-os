@@ -1,0 +1,14 @@
+"""重算当前采用的普通股模型；完整轨迹通过 --full-output 另存工作目录。"""
+import importlib.util
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[5]
+spec = importlib.util.spec_from_file_location("research_model_io", ROOT / "research/model_io.py")
+model_io = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(model_io)
+
+SELECTORS = {'low': {'path': ['scenarios', 'base', 0, 'current']}, 'high': {'path': ['scenarios', 'base', 1, 'current']}, 'distributions': {'path': ['return_model', 'base_case_distributions_per_share'], 'take': 5}, 'terminal_low': {'path': ['return_model', 'base_case_terminal_equity_value_range_per_share', 'year_5', 'low']}, 'terminal_high': {'path': ['return_model', 'base_case_terminal_equity_value_range_per_share', 'year_5', 'high']}}
+METADATA = {'symbol': 'CN:002315', 'report_period': '2026-Q3', 'information_cutoff': '2026-10-26T16:45:00+08:00', 'valuation_note': '核心实际股东现金现值22.935748167090143—28.66901641366268元。期初净经营资产27.64133653、一次过渡资金68.40327434；客户代收、合同预收、旧义务、债务及现金租赁不重复扣。子金融本金、母资本返还及必要履约资金分别处理，费用/税/成本/股份同步。辅助25.17003773—29.11481979元不平均。', 'return_model_note': '五年实际D及TV保留精确模型值，前五年期权稀释/认购款同步。远期子金融投资净款按可实现折扣及成本预算记母损益、下年到账；历史650并非法定亏损池。母第12年起有条件比例减资先保护全部净客户预付浮存，再返资本并扣费用；注销股本及代表持有人股数同比减少，所有远期每股现金按原持有份额调整，无分母收益。1000m母溢价/214.845052m子金融投资成本配置均条件预算，非已核实缴/税基；延期、费用、税基零、成本翻倍及不实施边界均真实重算。法定注册50%为可停，继续提取敏感保留。 小贷第10年起将220必要资本以上且有利润支持的余款宣派；第20/40年退出替代扣10%费用并移除后续全部收益，母投资成本205.158187另算损益及税，不将本金当利润。 期初合并经济营运资金匹配增加68.40327434资金使用：D1不变，D2至D5经现金利息反馈实际下调，所有精确D/TV均重算。不是母法定余额。'}
+
+if __name__ == "__main__":
+    raise SystemExit(model_io.main(__file__, SELECTORS, METADATA, source_file='2026-Q3-output.json'))

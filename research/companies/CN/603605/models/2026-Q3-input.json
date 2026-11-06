@@ -1,0 +1,1376 @@
+{
+  "symbol": "CN:603605",
+  "information_cutoff": "2026-11-03T00:00:00+00:00",
+  "valuation_note": "主法当前基准43.713724元，辅助39.001724元；核心经营区间37.482179—51.610846元，非同base holder区间。原经营缓存与Nov1 PV锚不变。",
+  "return_model_note": "Nov3为信息版本，原现金/PV锚2026-11-01，Y5为2031-11-01。base D5与真实同base holder Y5端点采用canonical原数值；条件注销、Y3无偿回授和Y2转股不是已发生事实。分配受母现金与法律RE约束，未知费用未确认为零。",
+  "financial_inputs": {
+    "cases": {
+      "company-base.raw.json": {
+        "parameters": {
+          "discount_rate": 0.1,
+          "steady_growth": 0.015,
+          "terminal_sales_drift": 0.005,
+          "admin": [
+            0.047,
+            0.046,
+            0.045,
+            0.045,
+            0.045
+          ],
+          "research": [
+            0.02,
+            0.02,
+            0.02,
+            0.02,
+            0.02
+          ],
+          "sales_taxes": [
+            0.008,
+            0.008,
+            0.008,
+            0.008,
+            0.008
+          ],
+          "brands": {
+            "main": {
+              "annual_reference_sales": 7200,
+              "ownership": 1.0,
+              "growth": [
+                -0.02,
+                0,
+                0.02,
+                0.02,
+                0.02
+              ],
+              "gross": [
+                0.735,
+                0.74,
+                0.74,
+                0.74,
+                0.74
+              ],
+              "selling": [
+                0.53,
+                0.52,
+                0.515,
+                0.515,
+                0.515
+              ],
+              "cash_tax": [
+                0.22,
+                0.22,
+                0.22,
+                0.22,
+                0.22
+              ],
+              "terminal_tax": 0.22
+            },
+            "timage": {
+              "annual_reference_sales": 1100,
+              "ownership": 0.7136,
+              "growth": [
+                0,
+                0.03,
+                0.05,
+                0.05,
+                0.03
+              ],
+              "gross": [
+                0.75,
+                0.75,
+                0.75,
+                0.75,
+                0.75
+              ],
+              "selling": [
+                0.49,
+                0.485,
+                0.48,
+                0.48,
+                0.48
+              ],
+              "cash_tax": [
+                0.25,
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ],
+              "terminal_tax": 0.25
+            },
+            "other_old": {
+              "annual_reference_sales": 2250,
+              "ownership": 0.98,
+              "growth": [
+                0.18,
+                0.16,
+                0.14,
+                0.12,
+                0.1
+              ],
+              "gross": [
+                0.71,
+                0.715,
+                0.72,
+                0.72,
+                0.72
+              ],
+              "selling": [
+                0.525,
+                0.52,
+                0.515,
+                0.51,
+                0.51
+              ],
+              "cash_tax": [
+                0.25,
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ],
+              "terminal_tax": 0.25
+            },
+            "flower": {
+              "annual_reference_sales": 1800,
+              "ownership": 0.51,
+              "growth": [
+                0.1,
+                0.1,
+                0.08,
+                0.06,
+                0.05
+              ],
+              "gross": [
+                0.71,
+                0.715,
+                0.72,
+                0.72,
+                0.72
+              ],
+              "selling": [
+                0.49,
+                0.48,
+                0.475,
+                0.475,
+                0.475
+              ],
+              "cash_tax": [
+                0.22,
+                0.22,
+                0.22,
+                0.23,
+                0.24
+              ],
+              "terminal_tax": 0.25,
+              "terminal_tax_switch_year": 6
+            }
+          },
+          "capital": {
+            "opening_common_nwc": 210,
+            "opening_operating_cash": 600,
+            "opening_old_fraction": 0.92,
+            "nwc_ratio": [
+              0.035,
+              0.032,
+              0.028,
+              0.025,
+              0.025
+            ],
+            "operating_cash_ratio": 0.055,
+            "depreciation_ratio": 0.015,
+            "maintenance_ratio": 0.018,
+            "incremental_fixed_capital_per_sales": 0.12,
+            "factory_cash": [
+              350,
+              350,
+              200,
+              0,
+              0
+            ],
+            "factory_in_service_year": 3,
+            "factory_total_cost": 1091.39,
+            "factory_depreciation_rate": 0.05,
+            "factory_maintenance_rate": 0.05,
+            "ppa_fair_uplift": 211.50882,
+            "ppa_life_years": 10,
+            "ppa_deferred_tax_rate": 0.25,
+            "ppa_opening_remaining_years": 9.67,
+            "other_incremental_fixed_capital_per_sales": 0.05,
+            "flower_incremental_fixed_capital_per_sales": 0.03
+          },
+          "finance": {
+            "reported_cash": 3009.13392593,
+            "reported_trading_assets": 1657.3737655,
+            "paid_october_dividend": 462.9399128,
+            "minority_liquid_assets_estimate": 300,
+            "noncash_investments_book": 380.9532427,
+            "noncash_recovery_fraction": 0.8,
+            "noncash_annual_return": 0,
+            "after_tax_cash_yield": 0.015,
+            "bond_mode": "repay",
+            "bond_face": 750.713,
+            "bond_opening_book": 831.8114099,
+            "bond_coupon_y1": 13.512834,
+            "bond_redemption_y2": 863.31995,
+            "bond_book_charge_y1": 36,
+            "bond_conversion_price": 93.1,
+            "parent_tax_rate": 0.2,
+            "conditional_new_loan_limit": 0,
+            "conditional_new_loan_rate": 0.06
+          },
+          "parent": {
+            "opening_excess_cash": 1500,
+            "opening_legal_retained": 3000,
+            "opening_statutory_reserve": 198.4115825,
+            "own_old_profit_and_cash_share": 0.75,
+            "opening_subsidiary_common_legal_retained": 0,
+            "upstream_fraction": [
+              0,
+              0.25,
+              0.35,
+              0.45,
+              0.5
+            ],
+            "cash_settlement_delay": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "payout_fraction": [
+              0.55,
+              0.55,
+              0.6,
+              0.6,
+              0.6
+            ],
+            "distribution_target_addition": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "shares": {
+            "issued": 395.976172,
+            "treasury_cancel_proposed": 1.629725,
+            "treasury_incentive": 2.251287,
+            "cancellation_year_budget": 1,
+            "incentive_release_year_budget": 3,
+            "incentive_cash_proceeds": 0
+          }
+        },
+        "meta": {
+          "symbol": "CN:603605",
+          "name": "珀莱雅",
+          "report_period": "2026-Q3",
+          "information_cutoff": "2026-11-03T00:00:00Z",
+          "model_as_of": "2026-11-03T00:00:00Z",
+          "valuation_date": "2026-11-01",
+          "year_5_date": "2031-11-01",
+          "unit": "CNY million; million shares",
+          "status": "CASH_BRIDGE_FIXED_OPERATING_CACHE"
+        },
+        "bridge_paid_cash": 11.187081
+      },
+      "company-core_high.raw.json": {
+        "parameters": {
+          "discount_rate": 0.095,
+          "steady_growth": 0.02,
+          "terminal_sales_drift": 0.005,
+          "admin": [
+            0.047,
+            0.046,
+            0.045,
+            0.045,
+            0.045
+          ],
+          "research": [
+            0.02,
+            0.02,
+            0.02,
+            0.02,
+            0.02
+          ],
+          "sales_taxes": [
+            0.008,
+            0.008,
+            0.008,
+            0.008,
+            0.008
+          ],
+          "brands": {
+            "main": {
+              "annual_reference_sales": 7200,
+              "ownership": 1.0,
+              "growth": [
+                -0.01,
+                0.01,
+                0.03,
+                0.03,
+                0.03
+              ],
+              "gross": [
+                0.735,
+                0.74,
+                0.74,
+                0.74,
+                0.74
+              ],
+              "selling": [
+                0.525,
+                0.515,
+                0.51,
+                0.51,
+                0.51
+              ],
+              "cash_tax": [
+                0.22,
+                0.22,
+                0.22,
+                0.22,
+                0.22
+              ],
+              "terminal_tax": 0.22
+            },
+            "timage": {
+              "annual_reference_sales": 1100,
+              "ownership": 0.7136,
+              "growth": [
+                0,
+                0.03,
+                0.05,
+                0.05,
+                0.03
+              ],
+              "gross": [
+                0.75,
+                0.75,
+                0.75,
+                0.75,
+                0.75
+              ],
+              "selling": [
+                0.49,
+                0.485,
+                0.48,
+                0.48,
+                0.48
+              ],
+              "cash_tax": [
+                0.25,
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ],
+              "terminal_tax": 0.25
+            },
+            "other_old": {
+              "annual_reference_sales": 2250,
+              "ownership": 0.98,
+              "growth": [
+                0.18,
+                0.16,
+                0.14,
+                0.12,
+                0.1
+              ],
+              "gross": [
+                0.71,
+                0.715,
+                0.72,
+                0.72,
+                0.72
+              ],
+              "selling": [
+                0.525,
+                0.52,
+                0.515,
+                0.51,
+                0.51
+              ],
+              "cash_tax": [
+                0.25,
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ],
+              "terminal_tax": 0.25
+            },
+            "flower": {
+              "annual_reference_sales": 2100,
+              "ownership": 0.51,
+              "growth": [
+                0.1,
+                0.1,
+                0.08,
+                0.06,
+                0.05
+              ],
+              "gross": [
+                0.71,
+                0.715,
+                0.72,
+                0.72,
+                0.72
+              ],
+              "selling": [
+                0.49,
+                0.48,
+                0.475,
+                0.475,
+                0.475
+              ],
+              "cash_tax": [
+                0.22,
+                0.22,
+                0.22,
+                0.23,
+                0.24
+              ],
+              "terminal_tax": 0.25,
+              "terminal_tax_switch_year": 6
+            }
+          },
+          "capital": {
+            "opening_common_nwc": 210,
+            "opening_operating_cash": 600,
+            "opening_old_fraction": 0.92,
+            "nwc_ratio": [
+              0.035,
+              0.032,
+              0.028,
+              0.025,
+              0.025
+            ],
+            "operating_cash_ratio": 0.055,
+            "depreciation_ratio": 0.015,
+            "maintenance_ratio": 0.018,
+            "incremental_fixed_capital_per_sales": 0.12,
+            "factory_cash": [
+              325,
+              325,
+              200,
+              0,
+              0
+            ],
+            "factory_in_service_year": 3,
+            "factory_total_cost": 1091.39,
+            "factory_depreciation_rate": 0.05,
+            "factory_maintenance_rate": 0.05,
+            "ppa_fair_uplift": 211.50882,
+            "ppa_life_years": 10,
+            "ppa_deferred_tax_rate": 0.25,
+            "ppa_opening_remaining_years": 9.67,
+            "other_incremental_fixed_capital_per_sales": 0.05,
+            "flower_incremental_fixed_capital_per_sales": 0.03
+          },
+          "finance": {
+            "reported_cash": 3009.13392593,
+            "reported_trading_assets": 1657.3737655,
+            "paid_october_dividend": 462.9399128,
+            "minority_liquid_assets_estimate": 250,
+            "noncash_investments_book": 380.9532427,
+            "noncash_recovery_fraction": 0.9,
+            "noncash_annual_return": 0,
+            "after_tax_cash_yield": 0.015,
+            "bond_mode": "repay",
+            "bond_face": 750.713,
+            "bond_opening_book": 831.8114099,
+            "bond_coupon_y1": 13.512834,
+            "bond_redemption_y2": 863.31995,
+            "bond_book_charge_y1": 36,
+            "bond_conversion_price": 93.1,
+            "parent_tax_rate": 0.2,
+            "conditional_new_loan_limit": 0,
+            "conditional_new_loan_rate": 0.06
+          },
+          "parent": {
+            "opening_excess_cash": 1500,
+            "opening_legal_retained": 3000,
+            "opening_statutory_reserve": 198.4115825,
+            "own_old_profit_and_cash_share": 0.75,
+            "opening_subsidiary_common_legal_retained": 0,
+            "upstream_fraction": [
+              0,
+              0.25,
+              0.35,
+              0.45,
+              0.5
+            ],
+            "cash_settlement_delay": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "payout_fraction": [
+              0.55,
+              0.55,
+              0.6,
+              0.6,
+              0.6
+            ],
+            "distribution_target_addition": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "shares": {
+            "issued": 395.976172,
+            "treasury_cancel_proposed": 1.629725,
+            "treasury_incentive": 2.251287,
+            "cancellation_year_budget": 1,
+            "incentive_release_year_budget": 3,
+            "incentive_cash_proceeds": 0
+          }
+        },
+        "meta": {
+          "symbol": "CN:603605",
+          "name": "珀莱雅",
+          "report_period": "2026-Q3",
+          "information_cutoff": "2026-11-03T00:00:00Z",
+          "model_as_of": "2026-11-03T00:00:00Z",
+          "valuation_date": "2026-11-01",
+          "year_5_date": "2031-11-01",
+          "unit": "CNY million; million shares",
+          "status": "CASH_BRIDGE_FIXED_OPERATING_CACHE"
+        },
+        "bridge_paid_cash": 11.187081
+      },
+      "company-core_low.raw.json": {
+        "parameters": {
+          "discount_rate": 0.105,
+          "steady_growth": 0.01,
+          "terminal_sales_drift": 0.005,
+          "admin": [
+            0.047,
+            0.046,
+            0.045,
+            0.045,
+            0.045
+          ],
+          "research": [
+            0.02,
+            0.02,
+            0.02,
+            0.02,
+            0.02
+          ],
+          "sales_taxes": [
+            0.008,
+            0.008,
+            0.008,
+            0.008,
+            0.008
+          ],
+          "brands": {
+            "main": {
+              "annual_reference_sales": 7200,
+              "ownership": 1.0,
+              "growth": [
+                -0.03,
+                -0.01,
+                0.01,
+                0.01,
+                0.01
+              ],
+              "gross": [
+                0.735,
+                0.74,
+                0.74,
+                0.74,
+                0.74
+              ],
+              "selling": [
+                0.535,
+                0.525,
+                0.52,
+                0.52,
+                0.52
+              ],
+              "cash_tax": [
+                0.22,
+                0.22,
+                0.22,
+                0.22,
+                0.22
+              ],
+              "terminal_tax": 0.22
+            },
+            "timage": {
+              "annual_reference_sales": 1100,
+              "ownership": 0.7136,
+              "growth": [
+                0,
+                0.03,
+                0.05,
+                0.05,
+                0.03
+              ],
+              "gross": [
+                0.75,
+                0.75,
+                0.75,
+                0.75,
+                0.75
+              ],
+              "selling": [
+                0.49,
+                0.485,
+                0.48,
+                0.48,
+                0.48
+              ],
+              "cash_tax": [
+                0.25,
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ],
+              "terminal_tax": 0.25
+            },
+            "other_old": {
+              "annual_reference_sales": 2250,
+              "ownership": 0.98,
+              "growth": [
+                0.18,
+                0.16,
+                0.14,
+                0.12,
+                0.1
+              ],
+              "gross": [
+                0.71,
+                0.715,
+                0.72,
+                0.72,
+                0.72
+              ],
+              "selling": [
+                0.525,
+                0.52,
+                0.515,
+                0.51,
+                0.51
+              ],
+              "cash_tax": [
+                0.25,
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ],
+              "terminal_tax": 0.25
+            },
+            "flower": {
+              "annual_reference_sales": 1500,
+              "ownership": 0.51,
+              "growth": [
+                0.1,
+                0.1,
+                0.08,
+                0.06,
+                0.05
+              ],
+              "gross": [
+                0.71,
+                0.715,
+                0.72,
+                0.72,
+                0.72
+              ],
+              "selling": [
+                0.49,
+                0.48,
+                0.475,
+                0.475,
+                0.475
+              ],
+              "cash_tax": [
+                0.22,
+                0.22,
+                0.22,
+                0.23,
+                0.24
+              ],
+              "terminal_tax": 0.25,
+              "terminal_tax_switch_year": 6
+            }
+          },
+          "capital": {
+            "opening_common_nwc": 210,
+            "opening_operating_cash": 600,
+            "opening_old_fraction": 0.92,
+            "nwc_ratio": [
+              0.035,
+              0.032,
+              0.028,
+              0.025,
+              0.025
+            ],
+            "operating_cash_ratio": 0.055,
+            "depreciation_ratio": 0.015,
+            "maintenance_ratio": 0.018,
+            "incremental_fixed_capital_per_sales": 0.12,
+            "factory_cash": [
+              375,
+              375,
+              200,
+              0,
+              0
+            ],
+            "factory_in_service_year": 3,
+            "factory_total_cost": 1091.39,
+            "factory_depreciation_rate": 0.05,
+            "factory_maintenance_rate": 0.05,
+            "ppa_fair_uplift": 211.50882,
+            "ppa_life_years": 10,
+            "ppa_deferred_tax_rate": 0.25,
+            "ppa_opening_remaining_years": 9.67,
+            "other_incremental_fixed_capital_per_sales": 0.05,
+            "flower_incremental_fixed_capital_per_sales": 0.03
+          },
+          "finance": {
+            "reported_cash": 3009.13392593,
+            "reported_trading_assets": 1657.3737655,
+            "paid_october_dividend": 462.9399128,
+            "minority_liquid_assets_estimate": 350,
+            "noncash_investments_book": 380.9532427,
+            "noncash_recovery_fraction": 0.7,
+            "noncash_annual_return": 0,
+            "after_tax_cash_yield": 0.015,
+            "bond_mode": "repay",
+            "bond_face": 750.713,
+            "bond_opening_book": 831.8114099,
+            "bond_coupon_y1": 13.512834,
+            "bond_redemption_y2": 863.31995,
+            "bond_book_charge_y1": 36,
+            "bond_conversion_price": 93.1,
+            "parent_tax_rate": 0.2,
+            "conditional_new_loan_limit": 0,
+            "conditional_new_loan_rate": 0.06
+          },
+          "parent": {
+            "opening_excess_cash": 1500,
+            "opening_legal_retained": 3000,
+            "opening_statutory_reserve": 198.4115825,
+            "own_old_profit_and_cash_share": 0.75,
+            "opening_subsidiary_common_legal_retained": 0,
+            "upstream_fraction": [
+              0,
+              0.25,
+              0.35,
+              0.45,
+              0.5
+            ],
+            "cash_settlement_delay": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "payout_fraction": [
+              0.55,
+              0.55,
+              0.6,
+              0.6,
+              0.6
+            ],
+            "distribution_target_addition": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "shares": {
+            "issued": 395.976172,
+            "treasury_cancel_proposed": 1.629725,
+            "treasury_incentive": 2.251287,
+            "cancellation_year_budget": 1,
+            "incentive_release_year_budget": 3,
+            "incentive_cash_proceeds": 0
+          }
+        },
+        "meta": {
+          "symbol": "CN:603605",
+          "name": "珀莱雅",
+          "report_period": "2026-Q3",
+          "information_cutoff": "2026-11-03T00:00:00Z",
+          "model_as_of": "2026-11-03T00:00:00Z",
+          "valuation_date": "2026-11-01",
+          "year_5_date": "2031-11-01",
+          "unit": "CNY million; million shares",
+          "status": "CASH_BRIDGE_FIXED_OPERATING_CACHE"
+        },
+        "bridge_paid_cash": 11.187081
+      },
+      "company-holder_terminal_high.raw.json": {
+        "parameters": {
+          "discount_rate": 0.095,
+          "steady_growth": 0.02,
+          "terminal_sales_drift": 0.0025,
+          "admin": [
+            0.047,
+            0.046,
+            0.045,
+            0.045,
+            0.045
+          ],
+          "research": [
+            0.02,
+            0.02,
+            0.02,
+            0.02,
+            0.02
+          ],
+          "sales_taxes": [
+            0.008,
+            0.008,
+            0.008,
+            0.008,
+            0.008
+          ],
+          "brands": {
+            "main": {
+              "annual_reference_sales": 7200,
+              "ownership": 1.0,
+              "growth": [
+                -0.02,
+                0,
+                0.02,
+                0.02,
+                0.02
+              ],
+              "gross": [
+                0.735,
+                0.74,
+                0.74,
+                0.74,
+                0.74
+              ],
+              "selling": [
+                0.53,
+                0.52,
+                0.515,
+                0.515,
+                0.515
+              ],
+              "cash_tax": [
+                0.22,
+                0.22,
+                0.22,
+                0.22,
+                0.22
+              ],
+              "terminal_tax": 0.22
+            },
+            "timage": {
+              "annual_reference_sales": 1100,
+              "ownership": 0.7136,
+              "growth": [
+                0,
+                0.03,
+                0.05,
+                0.05,
+                0.03
+              ],
+              "gross": [
+                0.75,
+                0.75,
+                0.75,
+                0.75,
+                0.75
+              ],
+              "selling": [
+                0.49,
+                0.485,
+                0.48,
+                0.48,
+                0.48
+              ],
+              "cash_tax": [
+                0.25,
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ],
+              "terminal_tax": 0.25
+            },
+            "other_old": {
+              "annual_reference_sales": 2250,
+              "ownership": 0.98,
+              "growth": [
+                0.18,
+                0.16,
+                0.14,
+                0.12,
+                0.1
+              ],
+              "gross": [
+                0.71,
+                0.715,
+                0.72,
+                0.72,
+                0.72
+              ],
+              "selling": [
+                0.525,
+                0.52,
+                0.515,
+                0.51,
+                0.51
+              ],
+              "cash_tax": [
+                0.25,
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ],
+              "terminal_tax": 0.25
+            },
+            "flower": {
+              "annual_reference_sales": 1800,
+              "ownership": 0.51,
+              "growth": [
+                0.1,
+                0.1,
+                0.08,
+                0.06,
+                0.05
+              ],
+              "gross": [
+                0.71,
+                0.715,
+                0.72,
+                0.72,
+                0.72
+              ],
+              "selling": [
+                0.49,
+                0.48,
+                0.475,
+                0.475,
+                0.475
+              ],
+              "cash_tax": [
+                0.22,
+                0.22,
+                0.22,
+                0.23,
+                0.24
+              ],
+              "terminal_tax": 0.25,
+              "terminal_tax_switch_year": 6
+            }
+          },
+          "capital": {
+            "opening_common_nwc": 210,
+            "opening_operating_cash": 600,
+            "opening_old_fraction": 0.92,
+            "nwc_ratio": [
+              0.035,
+              0.032,
+              0.028,
+              0.025,
+              0.025
+            ],
+            "operating_cash_ratio": 0.055,
+            "depreciation_ratio": 0.015,
+            "maintenance_ratio": 0.018,
+            "incremental_fixed_capital_per_sales": 0.12,
+            "factory_cash": [
+              350,
+              350,
+              200,
+              0,
+              0
+            ],
+            "factory_in_service_year": 3,
+            "factory_total_cost": 1091.39,
+            "factory_depreciation_rate": 0.05,
+            "factory_maintenance_rate": 0.05,
+            "ppa_fair_uplift": 211.50882,
+            "ppa_life_years": 10,
+            "ppa_deferred_tax_rate": 0.25,
+            "ppa_opening_remaining_years": 9.67,
+            "other_incremental_fixed_capital_per_sales": 0.05,
+            "flower_incremental_fixed_capital_per_sales": 0.03
+          },
+          "finance": {
+            "reported_cash": 3009.13392593,
+            "reported_trading_assets": 1657.3737655,
+            "paid_october_dividend": 462.9399128,
+            "minority_liquid_assets_estimate": 300,
+            "noncash_investments_book": 380.9532427,
+            "noncash_recovery_fraction": 0.8,
+            "noncash_annual_return": 0,
+            "after_tax_cash_yield": 0.015,
+            "bond_mode": "repay",
+            "bond_face": 750.713,
+            "bond_opening_book": 831.8114099,
+            "bond_coupon_y1": 13.512834,
+            "bond_redemption_y2": 863.31995,
+            "bond_book_charge_y1": 36,
+            "bond_conversion_price": 93.1,
+            "parent_tax_rate": 0.2,
+            "conditional_new_loan_limit": 0,
+            "conditional_new_loan_rate": 0.06
+          },
+          "parent": {
+            "opening_excess_cash": 1500,
+            "opening_legal_retained": 3000,
+            "opening_statutory_reserve": 198.4115825,
+            "own_old_profit_and_cash_share": 0.75,
+            "opening_subsidiary_common_legal_retained": 0,
+            "upstream_fraction": [
+              0,
+              0.25,
+              0.35,
+              0.45,
+              0.5
+            ],
+            "cash_settlement_delay": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "payout_fraction": [
+              0.55,
+              0.55,
+              0.6,
+              0.6,
+              0.6
+            ],
+            "distribution_target_addition": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "shares": {
+            "issued": 395.976172,
+            "treasury_cancel_proposed": 1.629725,
+            "treasury_incentive": 2.251287,
+            "cancellation_year_budget": 1,
+            "incentive_release_year_budget": 3,
+            "incentive_cash_proceeds": 0
+          }
+        },
+        "meta": {
+          "symbol": "CN:603605",
+          "name": "珀莱雅",
+          "report_period": "2026-Q3",
+          "information_cutoff": "2026-11-03T00:00:00Z",
+          "model_as_of": "2026-11-03T00:00:00Z",
+          "valuation_date": "2026-11-01",
+          "year_5_date": "2031-11-01",
+          "unit": "CNY million; million shares",
+          "status": "CASH_BRIDGE_FIXED_OPERATING_CACHE"
+        },
+        "bridge_paid_cash": 11.187081
+      },
+      "company-holder_terminal_low.raw.json": {
+        "parameters": {
+          "discount_rate": 0.105,
+          "steady_growth": 0.01,
+          "terminal_sales_drift": 0.0075,
+          "admin": [
+            0.047,
+            0.046,
+            0.045,
+            0.045,
+            0.045
+          ],
+          "research": [
+            0.02,
+            0.02,
+            0.02,
+            0.02,
+            0.02
+          ],
+          "sales_taxes": [
+            0.008,
+            0.008,
+            0.008,
+            0.008,
+            0.008
+          ],
+          "brands": {
+            "main": {
+              "annual_reference_sales": 7200,
+              "ownership": 1.0,
+              "growth": [
+                -0.02,
+                0,
+                0.02,
+                0.02,
+                0.02
+              ],
+              "gross": [
+                0.735,
+                0.74,
+                0.74,
+                0.74,
+                0.74
+              ],
+              "selling": [
+                0.53,
+                0.52,
+                0.515,
+                0.515,
+                0.515
+              ],
+              "cash_tax": [
+                0.22,
+                0.22,
+                0.22,
+                0.22,
+                0.22
+              ],
+              "terminal_tax": 0.22
+            },
+            "timage": {
+              "annual_reference_sales": 1100,
+              "ownership": 0.7136,
+              "growth": [
+                0,
+                0.03,
+                0.05,
+                0.05,
+                0.03
+              ],
+              "gross": [
+                0.75,
+                0.75,
+                0.75,
+                0.75,
+                0.75
+              ],
+              "selling": [
+                0.49,
+                0.485,
+                0.48,
+                0.48,
+                0.48
+              ],
+              "cash_tax": [
+                0.25,
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ],
+              "terminal_tax": 0.25
+            },
+            "other_old": {
+              "annual_reference_sales": 2250,
+              "ownership": 0.98,
+              "growth": [
+                0.18,
+                0.16,
+                0.14,
+                0.12,
+                0.1
+              ],
+              "gross": [
+                0.71,
+                0.715,
+                0.72,
+                0.72,
+                0.72
+              ],
+              "selling": [
+                0.525,
+                0.52,
+                0.515,
+                0.51,
+                0.51
+              ],
+              "cash_tax": [
+                0.25,
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ],
+              "terminal_tax": 0.25
+            },
+            "flower": {
+              "annual_reference_sales": 1800,
+              "ownership": 0.51,
+              "growth": [
+                0.1,
+                0.1,
+                0.08,
+                0.06,
+                0.05
+              ],
+              "gross": [
+                0.71,
+                0.715,
+                0.72,
+                0.72,
+                0.72
+              ],
+              "selling": [
+                0.49,
+                0.48,
+                0.475,
+                0.475,
+                0.475
+              ],
+              "cash_tax": [
+                0.22,
+                0.22,
+                0.22,
+                0.23,
+                0.24
+              ],
+              "terminal_tax": 0.25,
+              "terminal_tax_switch_year": 6
+            }
+          },
+          "capital": {
+            "opening_common_nwc": 210,
+            "opening_operating_cash": 600,
+            "opening_old_fraction": 0.92,
+            "nwc_ratio": [
+              0.035,
+              0.032,
+              0.028,
+              0.025,
+              0.025
+            ],
+            "operating_cash_ratio": 0.055,
+            "depreciation_ratio": 0.015,
+            "maintenance_ratio": 0.018,
+            "incremental_fixed_capital_per_sales": 0.12,
+            "factory_cash": [
+              350,
+              350,
+              200,
+              0,
+              0
+            ],
+            "factory_in_service_year": 3,
+            "factory_total_cost": 1091.39,
+            "factory_depreciation_rate": 0.05,
+            "factory_maintenance_rate": 0.05,
+            "ppa_fair_uplift": 211.50882,
+            "ppa_life_years": 10,
+            "ppa_deferred_tax_rate": 0.25,
+            "ppa_opening_remaining_years": 9.67,
+            "other_incremental_fixed_capital_per_sales": 0.05,
+            "flower_incremental_fixed_capital_per_sales": 0.03
+          },
+          "finance": {
+            "reported_cash": 3009.13392593,
+            "reported_trading_assets": 1657.3737655,
+            "paid_october_dividend": 462.9399128,
+            "minority_liquid_assets_estimate": 300,
+            "noncash_investments_book": 380.9532427,
+            "noncash_recovery_fraction": 0.8,
+            "noncash_annual_return": 0,
+            "after_tax_cash_yield": 0.015,
+            "bond_mode": "repay",
+            "bond_face": 750.713,
+            "bond_opening_book": 831.8114099,
+            "bond_coupon_y1": 13.512834,
+            "bond_redemption_y2": 863.31995,
+            "bond_book_charge_y1": 36,
+            "bond_conversion_price": 93.1,
+            "parent_tax_rate": 0.2,
+            "conditional_new_loan_limit": 0,
+            "conditional_new_loan_rate": 0.06
+          },
+          "parent": {
+            "opening_excess_cash": 1500,
+            "opening_legal_retained": 3000,
+            "opening_statutory_reserve": 198.4115825,
+            "own_old_profit_and_cash_share": 0.75,
+            "opening_subsidiary_common_legal_retained": 0,
+            "upstream_fraction": [
+              0,
+              0.25,
+              0.35,
+              0.45,
+              0.5
+            ],
+            "cash_settlement_delay": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "payout_fraction": [
+              0.55,
+              0.55,
+              0.6,
+              0.6,
+              0.6
+            ],
+            "distribution_target_addition": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "shares": {
+            "issued": 395.976172,
+            "treasury_cancel_proposed": 1.629725,
+            "treasury_incentive": 2.251287,
+            "cancellation_year_budget": 1,
+            "incentive_release_year_budget": 3,
+            "incentive_cash_proceeds": 0
+          }
+        },
+        "meta": {
+          "symbol": "CN:603605",
+          "name": "珀莱雅",
+          "report_period": "2026-Q3",
+          "information_cutoff": "2026-11-03T00:00:00Z",
+          "model_as_of": "2026-11-03T00:00:00Z",
+          "valuation_date": "2026-11-01",
+          "year_5_date": "2031-11-01",
+          "unit": "CNY million; million shares",
+          "status": "CASH_BRIDGE_FIXED_OPERATING_CACHE"
+        },
+        "bridge_paid_cash": 11.187081
+      }
+    },
+    "event": {
+      "old_paid_yuan": "128795293.90",
+      "new_paid_yuan": "139982374.90",
+      "old_incentive_shares": 2024487,
+      "new_incentive_shares": 2251287,
+      "pending_cancellation_shares": 1629725,
+      "issued_shares": 395976172,
+      "unused_max_cap_yuan": "10017625.10",
+      "unused_cap_is_mandatory": false,
+      "cutoff": "2026-11-03T00:00:00Z"
+    }
+  }
+}

@@ -1,0 +1,316 @@
+{
+  "base": {
+    "cutoff": "2026-10-30T23:11:24.100682+00:00",
+    "shares": 24.468217716,
+    "generation": 300.0,
+    "sale_ratio": 0.995,
+    "tariff": 0.247,
+    "hydro_cash_cost": 8.0,
+    "hydro_overhead": 5.8,
+    "other_ebitda": 4.5,
+    "legacy_da": 18.91404522336,
+    "hydro_da_share": 0.895,
+    "maintenance": 8.5,
+    "near_tax": 0.18,
+    "terminal_tax": 0.25,
+    "other_tax": 0.295,
+    "pump_total": 60.8513465,
+    "pump_remaining": 52.8,
+    "pump_owned": 0.7283162813825328,
+    "pump_roic": 0.045,
+    "pump_commission": [
+      0,
+      0.08,
+      0.2,
+      0.35,
+      0.55,
+      0.7,
+      0.85,
+      1,
+      1,
+      1
+    ],
+    "pump_schedule": [
+      0.15,
+      0.17,
+      0.18,
+      0.17,
+      0.13,
+      0.1,
+      0.07,
+      0.03
+    ],
+    "nav_remaining": 22.0,
+    "nav_schedule": [
+      0.15,
+      0.17,
+      0.18,
+      0.17,
+      0.15,
+      0.1,
+      0.08
+    ],
+    "old_payables": 14.84128003827,
+    "old_ap_schedule": [
+      0.3,
+      0.3,
+      0.2,
+      0.15,
+      0.05
+    ],
+    "wc_first": 0.5,
+    "wc_next": 0.2,
+    "nci_funding_fraction": 1,
+    "opening_debt": 288.76470977532,
+    "opening_cash": 9.4086750657,
+    "cash_floor": 8.0,
+    "interest": 0.0275,
+    "interest_shield": 0.22,
+    "existing_nci_profit": 0.55,
+    "existing_nci_cash": 0.35,
+    "associate_profit": 4.8,
+    "associate_cash": 2.9,
+    "associate_growth": 0.02,
+    "associate_multiple": 14.5,
+    "other_financial_cash": 0.3,
+    "other_financial_value": 9.0,
+    "mother_retained": 44.16582474576,
+    "mother_cash": 5.49364456671,
+    "mother_cash_floor": 3.0,
+    "mother_div_receivable": 24.9349986248,
+    "mother_debt": 145.01134217922,
+    "parent_hydro_fraction": 0.3,
+    "sub_declare": 0.75,
+    "sub_receive": 0.9,
+    "old_div_collection": [
+      8.0,
+      8.0,
+      6.0,
+      2.9349986248,
+      0.0
+    ],
+    "mother_borrow_capacity": 10.0,
+    "estimated_2026_common_profit": 32.5,
+    "payout": 0.7,
+    "discount": 0.0525,
+    "nci_discount": 0.08,
+    "life": 50,
+    "generation_shock": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "tariff_shock": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "old_asset_cohorts": [
+      [
+        "dam",
+        265.0136003977955,
+        7.91280857958
+      ],
+      [
+        "buildings",
+        61.76667224251307,
+        2.6872315118
+      ],
+      [
+        "machines",
+        73.31309740068927,
+        7.50430767818
+      ],
+      [
+        "other_fixed",
+        1.461372854972102,
+        0.35778053358
+      ],
+      [
+        "leases",
+        0.64469798963,
+        0.11730125594
+      ],
+      [
+        "land_use",
+        0.27322968321,
+        0.00755097374
+      ],
+      [
+        "software",
+        0.80537407567,
+        0.24850623604
+      ],
+      [
+        "parking",
+        0.11811285877,
+        0.008516358
+      ],
+      [
+        "finite_concession_assumed",
+        2.0,
+        0.05000564902
+      ],
+      [
+        "deferred_assumed",
+        0.04,
+        0.02003644748
+      ]
+    ],
+    "maintenance_life": 20,
+    "navigation_total": 26.6,
+    "nav_da_start": 8,
+    "navigation_life": 50,
+    "navigation_extra_generation": 0,
+    "depreciation_mode": "cohort",
+    "nav_incurred": 4.6,
+    "legacy_dividend_payable": 0.05766506282
+  },
+  "cases": {
+    "base": {},
+    "core_low": {
+      "generation": 295,
+      "tariff": 0.245,
+      "maintenance": 9.0,
+      "discount": 0.055,
+      "associate_multiple": 13.0
+    },
+    "core_high": {
+      "generation": 305,
+      "tariff": 0.249,
+      "maintenance": 8.0,
+      "discount": 0.05,
+      "associate_multiple": 16.0
+    },
+    "cyclical_weak": {
+      "generation_shock": [
+        0.85,
+        0.9,
+        1,
+        1,
+        1
+      ],
+      "tariff_shock": [
+        0.003,
+        0.002,
+        0,
+        0,
+        0
+      ],
+      "wc_first": 1.5
+    },
+    "structural_adverse": {
+      "generation": 270,
+      "tariff": 0.225,
+      "hydro_cash_cost": 9.0,
+      "hydro_overhead": 6.6,
+      "other_ebitda": 3.7,
+      "maintenance": 11.0,
+      "pump_roic": 0.025,
+      "pump_remaining": 64.8,
+      "pump_total": 71.6513465,
+      "nav_remaining": 26.4,
+      "discount": 0.0625,
+      "life": 40,
+      "associate_profit": 3.8,
+      "associate_cash": 2.2,
+      "associate_multiple": 11,
+      "associate_growth": 0,
+      "other_financial_value": 7.5,
+      "interest": 0.035,
+      "interest_shield": 0.22,
+      "sub_receive": 0.65,
+      "old_div_collection": [
+        2,
+        3,
+        5,
+        6,
+        8.9349986248
+      ],
+      "estimated_2026_common_profit": 31.5,
+      "payout": 0.7,
+      "wc_first": 2.0,
+      "wc_next": 0.5
+    },
+    "optimistic": {
+      "generation": 320,
+      "tariff": 0.253,
+      "maintenance": 7.5,
+      "terminal_tax": 0.18,
+      "pump_roic": 0.055,
+      "other_ebitda": 5.2,
+      "discount": 0.0475,
+      "life": 60,
+      "interest": 0.025,
+      "associate_multiple": 16.5
+    },
+    "remittance_delay": {
+      "sub_receive": 0.1,
+      "old_div_collection": [
+        0,
+        0,
+        4,
+        8,
+        8
+      ],
+      "mother_borrow_capacity": 0
+    },
+    "no_nci_funding": {
+      "nci_funding_fraction": 0
+    },
+    "tax_extension": {
+      "terminal_tax": 0.18
+    },
+    "financing_stress": {
+      "interest": 0.0375,
+      "discount": 0.0555
+    },
+    "navigation_increment_diagnostic": {
+      "navigation_extra_generation": 2.2
+    }
+  },
+  "sensitivities": {
+    "generation": [
+      285,
+      315
+    ],
+    "tariff": [
+      0.237,
+      0.257
+    ],
+    "maintenance": [
+      7,
+      10
+    ],
+    "discount": [
+      0.045,
+      0.06
+    ],
+    "life": [
+      35,
+      65
+    ],
+    "interest": [
+      0.0375
+    ],
+    "pump_roic": [
+      0.025,
+      0.065
+    ],
+    "nav_remaining": [
+      26.4
+    ],
+    "opening_debt": [
+      285.76470977532,
+      291.76470977532
+    ],
+    "maintenance_life": [
+      15,
+      25
+    ]
+  }
+}

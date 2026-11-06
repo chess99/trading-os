@@ -2,7 +2,7 @@
 
 ## 系统边界
 
-Trading OS 只按财报周期维护完整公司研究。政策、新闻、订单、治理或资本事件不在周期中途生成报告、update 或 stale 状态；研究者在下一周期统一吸收信息截止前的重要事实。
+公司研究按财报周期维护完整报告。行业与宏观研究另见 `research/README.md`。政策、新闻、订单、治理或资本事件不在周期中途生成报告、update 或 stale 状态；研究者在下一周期统一吸收信息截止前的重要事实。
 
 唯一例外是用户明确认为某份报告有错误或质量不足，此时创建 `manual_rewrite`，完整覆盖同一周期并重新验收。
 
@@ -27,7 +27,7 @@ Trading OS 只按财报周期维护完整公司研究。政策、新闻、订单
 
 ## 周期排期
 
-财报季由协调器读取当时的 `screening/cn-a/value-quality/pool.json`：
+财报季由协调器读取当时的 `screening/{cn-a|hk|us}/value-quality/pool.json`：
 
 ```bash
 python -m trading_os research enqueue-period --period 2026-Q3
@@ -65,7 +65,7 @@ python -m trading_os research enqueue-rewrite \
 结果只有 `covered / ignore`。worker 返回结构化候选；协调器完成商业判断、事实、模型和表达验收后，才通过 `research complete` 写入：
 
 ```text
-research/companies/CN/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md
+research/companies/{CN|HK|US}/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md
 ```
 
 同周期覆盖，跨周期新增。候选未通过验收时直接丢弃，不写文件、不推进 `basis_report_path`。
@@ -107,8 +107,8 @@ research/companies/CN/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md
 
 - `coverage/cn-a/research_state.jsonl`：证券和最近完成周期的研究状态；
 - `coverage/cn-a/research_queue.jsonl`：当前周期及人工重写任务；
-- `research/companies/CN/{ticker}/reports/`：财报周期完整报告；
-- `screening/cn-a/value-quality/pool.json`：动态重点跟踪池。
+- `research/companies/{CN|HK|US}/{ticker}/reports/`：财报周期完整报告；
+- `screening/{cn-a|hk|us}/value-quality/pool.json`：动态重点跟踪池。
 
 共享 JSONL 只由协调器原子写入。每轮写入后执行：
 
@@ -116,3 +116,5 @@ research/companies/CN/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md
 python -m trading_os validate
 node dashboard/scripts/report-standards.mjs validate
 ```
+
+港美股使用 `research --market hk|us enqueue-latest --input disclosures.json` 按已披露财务期末预览排期。财年、证券单位与币种要求见[跨市场补充](../prompts/company/cross-market.md)。

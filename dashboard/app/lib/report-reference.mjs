@@ -1,80 +1,40 @@
+const periodPattern = "(?:20\\d{2})-(?:FY|Q1|H1|Q3)";
+const tickerPattern = "[A-Za-z0-9][A-Za-z0-9.-]{0,19}";
+const reportPattern = new RegExp(`^/research/companies/(CN|HK|US)/(${tickerPattern})/reports/(${periodPattern})\\.md$`, "u");
+const modelPattern = new RegExp(`^/research/companies/(CN|HK|US)/(${tickerPattern})/models/(.+)$`, "u");
+const artifactPattern = new RegExp(`^(${periodPattern})(\\.py|-engine\\.py|-input\\.json|-output\\.json|-assumptions\\.md|-sources-assumptions\\.md|-independent-recompute\\.py)$`, "u");
+const modulePattern = new RegExp(`^(${periodPattern})/[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*\\.(?:py|json|md|csv)$`, "u");
+const processMaterial = /(?:^|[-_/])(?:candidate|snapshot|payload|stdout|stderr|cache|history|historical|evidence|trace|checkpoint)(?:[-_./]|$)/iu;
+function route(market, ticker) { return market === "CN" ? ticker : `${market}-${ticker}`; }
 export function reportReferenceLink(pathname) {
-  const match = /^\/research\/companies\/CN\/(\d{6})\/reports\/((?:20\d{2})-(?:FY|Q1|H1|Q3))\.md$/u.exec(pathname);
-  return match ? `/reports/${match[1]}?version=${match[2]}` : null;
+  const match = reportPattern.exec(pathname);
+  return match ? `/reports/${route(match[1], match[2])}?version=${match[3]}` : null;
 }
-
 export function referencedReport(reports, version) {
   return version ? reports.find((report) => report.period === version) ?? null : reports[0] ?? null;
 }
-
-// A closed artifact vocabulary, not a general repository-file endpoint.
-const capitalFilesByTicker = new Map([
-  ["603979", "20261102"],
-  ["300408", "20261103"],
-  ["301498", "20261102"],
-  ["300685", "20261102"],
-  ["300124", "20261102"],
-  ["300285", "20261102"],
-  ["000651", "20261103"],
-  ["000921", "20261103"],
-  ["003816", "20261103"],
-  ["300750", "20261103"],
-  ["688100", "20261103"],
-  ["600887", "20261103"],
-  ["600690", "20261103"],
-  ["688008", "20261103"],
-  ["002714", "20261103"],
-  ["603899", "20261103"],
-  ["603939", "20261103"],
-  ["600183", "20261103"],
-  ["688278", "20261103"],
-  ["603288", "20261103"],
-].map(([ticker, date]) => [ticker, new Set([
-  `2026-Q3-capital-${date}.py`, `2026-Q3-capital-${date}-output.json`, `2026-Q3-capital-${date}-check.py`,
-])]));
-capitalFilesByTicker.get("600887").add("2026-Q3-capital-20261103-output.json.xz");
-capitalFilesByTicker.get("002714").add("2026-Q3-capital-20261103-output.json.xz");
-capitalFilesByTicker.get("603939").add("2026-Q3-capital-20261103-output.json.xz");
-capitalFilesByTicker.get("600183").add("2026-Q3-capital-20261103-output.json.xz");
-capitalFilesByTicker.get("603288").add("2026-Q3-capital-20261103-output.json.xz");
-const capitalFileNames = new Set([...capitalFilesByTicker.values()].flatMap((names) => [...names]));
-export function modelArtifactName(filename, period, ticker) {
-  if (capitalFileNames.has(filename)) return Boolean(capitalFilesByTicker.get(ticker)?.has(filename) && (!period || period === "2026-Q3"));
-  const match = /^((?:20\d{2})-(?:FY|Q1|H1|Q3))(\.py|-output\.json|-output\.json\.xz|-case-[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*\.json|-sources-assumptions\.md|-independent-recompute\.py|-verification-payload\.json|-verification-part-\d{3}\.bin|-output-(?:main|production|literal|supplement-[abr]-(?:production|literal))-part-\d{3}\.xzpart)$/u.exec(filename);
+export function modelArtifactName(filename, period) {
+  if (processMaterial.test(filename)) return false;
+  const match = artifactPattern.exec(filename) ?? modulePattern.exec(filename);
   return Boolean(match && (!period || match[1] === period));
 }
-
-// Resolve against the repository source, not /reports/{ticker} in the browser.
+// Repository-relative references retain their company and reporting period.
+// Downloads expose only small, readable research files.
 export function researchResourceLink(href, sourcePath) {
   if (!href) return undefined;
-  if (/^(?:https?:|mailto:|#|\/\/)/iu.test(href)) {
-    // Ordinary external citations/anchors retain their old behavior. A URL that
-    // claims one of the new model-auxiliary names is not a local model download.
-    if (/^(?:https?:|\/\/)/iu.test(href)) {
-      const name = href.split(/[?#]/u, 1)[0].split("/").at(-1);
-      if ((capitalFileNames.has(name) || modelArtifactName(name, undefined, "603979")) && !/^(?:20\d{2})-(?:FY|Q1|H1|Q3)(?:\.py|-output\.json)$/u.test(name)) return undefined;
-    }
-    return href;
-  }
+  if (/^(?:https?:|mailto:|#|\/\/)/iu.test(href)) return href;
+  const rawPath = href.split(/[?#]/u, 1)[0];
+  if (rawPath.includes("\\") || /(?:^|\/)\.(?:\/|$)/u.test(rawPath)) return undefined;
   let resolved;
   try { resolved = new URL(href, `https://research.local/${sourcePath ?? ""}`); }
   catch { return undefined; }
   if (resolved.origin !== "https://research.local") return undefined;
   const report = reportReferenceLink(resolved.pathname);
   if (report) return `${report}${resolved.hash}`;
-  const model = /^\/research\/companies\/CN\/(\d{6})\/models\/([^/]+)$/u.exec(resolved.pathname);
-  if (!model || !modelArtifactName(model[2], undefined, model[1])) return undefined;
-  const primary = /^(?:20\d{2})-(?:FY|Q1|H1|Q3)(?:\.py|-output\.json)$/u.test(model[2]);
-  if (!primary) {
-    const source = /^research\/companies\/CN\/(\d{6})\/reports\/((?:20\d{2})-(?:FY|Q1|H1|Q3))\.md$/u.exec(sourcePath ?? "");
-    // New auxiliary artifacts stay with the originating report company/period.
-    // Permit only the ordinary ../models/ or exact repository-absolute form;
-    // URL normalization must not silently turn traversal into an allowed file.
-    const rawPath = href.split(/[?#]/u, 1)[0];
-    const relative = `../models/${model[2]}`;
-    const absolute = `/research/companies/CN/${model[1]}/models/${model[2]}`;
-    if (!source || source[1] !== model[1] || !modelArtifactName(model[2], source[2], source[1])
-        || (rawPath !== relative && rawPath !== absolute)) return undefined;
-  }
-  return `/data/models/${model[1]}/${model[2]}${resolved.search}${resolved.hash}`;
+  const model = modelPattern.exec(resolved.pathname);
+  if (!model || !modelArtifactName(model[3])) return undefined;
+  const ordinary = `../models/${model[3]}`;
+  const absolute = `/research/companies/${model[1]}/${model[2]}/models/${model[3]}`;
+  if (rawPath !== ordinary && rawPath !== absolute) return undefined;
+  return `/data/models/${route(model[1], model[2])}/${model[3]}${resolved.search}${resolved.hash}`;
 }

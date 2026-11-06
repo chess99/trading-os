@@ -1,13 +1,10 @@
-import { createHash } from "node:crypto";
 import { copyFile, lstat, mkdir, readFile, readdir, realpath, rm, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadStandards, reportMetadata, displayEligibility } from "./lib/research-standards.mjs";
+import { loadPublications } from "./lib/publications.mjs";
+import { loadScreeningData } from "./lib/screening-data.mjs";
 import { currentResults, progressCounts } from "../app/lib/display-policy.mjs";
-
-import { verifyOutputParts } from "./lib/model-output-parts.mjs";
-import { xzManifestEntry, verifyXzBytes } from "./lib/model-xz.mjs";
-import { parseVerificationManifest, verifyVerificationPayload } from "./lib/model-verification-payload.mjs";
 import { modelArtifactName, researchResourceLink } from "../app/lib/report-reference.mjs";
 
 const dashboardRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -22,8 +19,67 @@ function parseJsonLines(text, label) {
     catch (error) { throw new Error(`${label}:${index + 1} is not valid JSON`, { cause: error }); }
   });
 }
-async function collectReports(root, output, ticker, policy, state) {
-  const directory = join(root, "research/companies/CN", ticker, "reports");
+// Downloads contain readable, bounded research inputs and results only.
+export async function exportModelArtifacts(root, output, market, ticker, period, markdown, sourcePath) {
+  const route = market === "CN" ? ticker : `${market}-${ticker}`;
+  const directory = join(root, "research/companies", market, ticker, "models");
+  let canonical;
+  try { canonical = await realpath(directory); }
+  catch (error) { if (error.code === "ENOENT") return; throw error; }
+  const directDirectory = join(await realpath(root), "research/companies", market, ticker, "models");
+  if (canonical !== directDirectory) throw new Error("Model directory must not traverse symbolic links");
+  const names = new Map([[`${period}.py`, false], [`${period}-engine.py`, false], [`${period}-input.json`, false], [`${period}-output.json`, false]]);
+  const hrefs = [...markdown.matchAll(/\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/gu)].map((match) => match[1]);
+  for (const href of hrefs) {
+    const link = researchResourceLink(href, sourcePath);
+    const prefix = `/data/models/${route}/`;
+    if (!link?.startsWith(prefix)) continue;
+    const name = link.slice(prefix.length).split(/[?#]/u, 1)[0];
+    if (modelArtifactName(name, period)) names.set(name, true);
+  }
+  async function modules(folder) {
+    let entries;
+    try { entries = await readdir(join(directory, folder), { withFileTypes: true }); }
+    catch (error) { if (error.code === "ENOENT") return; throw error; }
+    for (const entry of entries) {
+      if (entry.isSymbolicLink()) throw new Error("Model source modules cannot be symbolic links");
+      const name = `${folder}/${entry.name}`;
+      if (entry.isDirectory()) await modules(name);
+      else if (entry.isFile() && modelArtifactName(name, period)) names.set(name, true);
+    }
+  }
+  await modules(period);
+  const destination = join(output, "models", route);
+  assertInside(output, destination);
+  let total = 0;
+  for (const [name, required] of [...names].sort(([a], [b]) => a.localeCompare(b))) {
+    if (!modelArtifactName(name, period)) throw new Error(`Unsafe model artifact: ${name}`);
+    const path = join(directory, name);
+    let stat;
+    try { stat = await lstat(path); }
+    catch (error) { if (error.code === "ENOENT" && !required) continue; throw error; }
+    if (!stat.isFile() || stat.isSymbolicLink() || await realpath(path) !== resolve(canonical, name)) {
+      throw new Error(`Model artifact must be a direct regular file: ${name}`);
+    }
+    total += stat.size;
+    if (stat.size > 1024 ** 2 || total > 2 * 1024 ** 2) throw new Error(`Research artifact budget exceeded: ${market}:${ticker}/${period}`);
+    const bytes = await readFile(path);
+    if (name.endsWith(".json")) {
+      const data = JSON.parse(bytes);
+      if (/lossless|payload|complete_case_manifest/u.test(data?.schema ?? "") || /base64|gzip|xz/u.test(data?.encoding ?? "")) {
+        throw new Error(`Archived model output cannot be published: ${name}`);
+      }
+    }
+    await mkdir(destination, { recursive: true });
+    await mkdir(dirname(join(destination, name)), { recursive: true });
+    await writeFile(join(destination, name), bytes);
+  }
+}
+
+async function collectReports(root, output, symbol, policy, state) {
+  const [market, ticker] = symbol.split(":");
+  const route = market === "CN" ? ticker : `${market}-${ticker}`;
+  const directory = join(root, "research/companies", market, ticker, "reports");
   let files;
   const periodKey = (name) => {
     const match = /^(20\d{2})-(FY|Q1|H1|Q3)\.md$/u.exec(name);
@@ -32,131 +88,16 @@ async function collectReports(root, output, ticker, policy, state) {
   };
   try { files = (await readdir(directory)).filter((name) => /^(?:20\d{2})-(?:FY|Q1|H1|Q3)\.md$/u.test(name)).sort((a, b) => periodKey(b) - periodKey(a)); }
   catch (error) { if (error.code === "ENOENT") return []; throw error; }
-  const destination = join(output, "reports", ticker);
+  const destination = join(output, "reports", route);
   assertInside(output, destination);
   await mkdir(destination, { recursive: true });
   return Promise.all(files.map(async (filename) => {
-    const sourcePath = `research/companies/CN/${ticker}/reports/${filename}`;
+    const sourcePath = `research/companies/${market}/${ticker}/reports/${filename}`;
     const body = await readFile(join(root, sourcePath));
     await copyFile(join(root, sourcePath), join(destination, filename));
-    // Keep the legacy source/output pair, then close over reader-linked allowed
-    // auxiliaries and the explicit split-output manifest. Never execute artifacts.
-    const period = filename.replace(/\.md$/u, "");
-    const names = new Map([[`${period}.py`, false], [`${period}-output.json`, false], [`${period}-verification-payload.json`, false]]);
-    const markdown = body.toString("utf8");
-    const hrefs = [
-      ...[...markdown.matchAll(/\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/gu)].map((m) => m[1]),
-      ...[...markdown.matchAll(/^\s*\[[^\]]+\]:\s*(\S+)/gmu)].map((m) => m[1]),
-    ];
-    for (const href of hrefs) {
-      const link = researchResourceLink(href, sourcePath);
-      const prefix = `/data/models/${ticker}/`;
-      if (!link?.startsWith(prefix)) continue;
-      const name = link.slice(prefix.length).split(/[?#]/u, 1)[0];
-      if (modelArtifactName(name, period, ticker)) names.set(name, true);
-    }
-    const priority = (name) => name === `${period}-output.json` ? 0 : name === `${period}-verification-payload.json` ? 1 : 2;
-    const artifactOrder = (a, b) => priority(a) - priority(b) || (a < b ? -1 : a > b ? 1 : 0);
-    const pending = [...names.keys()].sort(artifactOrder);
-    const exported = new Set();
-    const expectedFiles = new Map();
-    const xzManifests = new Map();
-    const canonicalModelDirectory = join(await realpath(root), "research/companies/CN", ticker, "models");
-    const modelDestination = join(output, "models", ticker);
-    assertInside(output, modelDestination);
-    while (pending.length) {
-      const modelName = pending.shift();
-      if (exported.has(modelName)) continue;
-      if (!modelArtifactName(modelName, period, ticker)) throw new Error(`Unsafe model artifact: ${modelName}`);
-      if (/-verification-part-\d{3}\.bin$/u.test(modelName) && !expectedFiles.has(modelName)) throw new Error(`Verification part absent from its manifest: ${modelName}`);
-      if (modelName.startsWith(`${period}-case-`) && !expectedFiles.has(modelName)) throw new Error(`Case artifact is absent from its split manifest: ${modelName}`);
-      if (modelName.endsWith("-output.json.xz") && !xzManifests.has(modelName)) throw new Error(`XZ artifact is absent from its transport manifest: ${modelName}`);
-      if (modelName.endsWith(".xzpart") && !expectedFiles.has(modelName)) throw new Error(`Output part is absent from its complete manifest: ${modelName}`);
-      const modelSource = join(root, "research/companies/CN", ticker, "models", modelName);
-      let modelBody;
-      try {
-        const stat = await lstat(modelSource);
-        if (!stat.isFile() || stat.isSymbolicLink()) throw new Error(`Model artifact must be a regular file: ${modelName}`);
-        if (await realpath(modelSource) !== join(canonicalModelDirectory, modelName)) throw new Error(`Model artifact escapes its company directory: ${modelName}`);
-        modelBody = await readFile(modelSource);
-      } catch (error) {
-        if (error.code === "ENOENT" && !names.get(modelName)) continue;
-        throw error;
-      }
-      const expected = expectedFiles.get(modelName);
-      if (expected && (modelBody.length !== expected.bytes
-          || createHash("sha256").update(modelBody).digest("hex") !== expected.file_sha256)) {
-        throw new Error(`Split model artifact does not match manifest: ${modelName}`);
-      }
-      if (xzManifests.has(modelName)) verifyXzBytes(modelBody, xzManifests.get(modelName), ticker);
-      await mkdir(modelDestination, { recursive: true });
-      await writeFile(join(modelDestination, modelName), modelBody);
-      exported.add(modelName);
-      if (modelName === `${period}-verification-payload.json`) {
-        const manifest = parseVerificationManifest(modelBody, period);
-        await verifyVerificationPayload(canonicalModelDirectory, manifest, period);
-        names.set(`${period}-independent-recompute.py`, true);
-        if (!exported.has(`${period}-independent-recompute.py`)) pending.push(`${period}-independent-recompute.py`);
-        for (const entry of manifest.parts) {
-          names.set(entry.file, true);
-          expectedFiles.set(entry.file, { bytes: entry.bytes, file_sha256: entry.sha256 });
-          pending.push(entry.file);
-        }
-        pending.sort(artifactOrder);
-      }
-      if (modelName === `${period}-output.json` || (["600887", "002714", "603939", "600183", "603288"].includes(ticker) && period === "2026-Q3" && modelName === "2026-Q3-capital-20261103-output.json")) {
-        let manifest;
-        try { manifest = JSON.parse(modelBody); } catch { /* Legacy bytes remain downloadable. */ }
-        if (manifest?.schema === "trading_os_lossless_json_xz_parts_v1") {
-          const producerPath = join(canonicalModelDirectory, `${period}.py`);
-          const producerStat = await lstat(producerPath);
-          if (!producerStat.isFile() || producerStat.isSymbolicLink() || producerStat.nlink !== 1 || await realpath(producerPath) !== producerPath) throw new Error('Unsafe output producer identity');
-          const producerHash = createHash('sha256').update(await readFile(producerPath)).digest('hex');
-          const entry = verifyOutputParts(canonicalModelDirectory, modelBody, period, ticker, producerHash);
-          for (const document of entry.outputs) for (const part of document.parts) {
-            names.set(part.file, true);
-            expectedFiles.set(part.file, { bytes: part.bytes, file_sha256: part.sha256 });
-            pending.push(part.file);
-          }
-          pending.sort(artifactOrder);
-        }
-        if (manifest?.schema === "trading_os_lossless_json_xz_v1") {
-          const entry = xzManifestEntry(manifest, period, ticker, modelName);
-          names.set(entry.file, true);
-          xzManifests.set(entry.file, manifest);
-          expectedFiles.set(entry.file, { bytes: entry.compressed_bytes, file_sha256: entry.compressed_sha256 });
-          pending.push(entry.file);
-          pending.sort(artifactOrder);
-        }
-        if (manifest?.schema === "cn300033_complete_case_manifest_v1") {
-          if (!manifest.case_files || typeof manifest.case_files !== "object" || Array.isArray(manifest.case_files)) {
-            throw new Error("Invalid split model manifest");
-          }
-          const seen = new Set();
-          for (const [caseName, entry] of Object.entries(manifest.case_files).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0)) {
-            const name = entry?.file;
-            if (!/^[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*$/u.test(caseName)
-                || name !== `${period}-case-${caseName}.json` || !modelArtifactName(name, period, ticker)
-                || seen.has(name) || !Number.isSafeInteger(entry.bytes) || entry.bytes < 0
-                || !/^[a-f0-9]{64}$/u.test(entry.file_sha256 ?? "")) {
-              throw new Error(`Unsafe split model manifest entry: ${caseName}`);
-            }
-            seen.add(name); names.set(name, true); expectedFiles.set(name, entry);
-            // Manifest is processed before its dependencies; a reader-linked case
-            // already copied is also rechecked rather than bypassing its digest.
-            if (exported.has(name)) {
-              const bytes = await readFile(join(modelDestination, name));
-              if (bytes.length !== entry.bytes || createHash("sha256").update(bytes).digest("hex") !== entry.file_sha256) {
-                throw new Error(`Split model artifact does not match manifest: ${name}`);
-              }
-            } else pending.push(name);
-          }
-          pending.sort(artifactOrder);
-        }
-      }
-    }
+    await exportModelArtifacts(root, output, market, ticker, filename.replace(/\.md$/u, ""), body.toString("utf8"), sourcePath);
     const title = /^#\s+(.+)$/mu.exec(body.toString("utf8"))?.[1] ?? ticker;
-    return { period: filename.replace(/\.md$/u, ""), path: `/data/reports/${ticker}/${filename}`, title,
+    return { period: filename.replace(/\.md$/u, ""), path: `/data/reports/${route}/${filename}`, title,
       ...reportMetadata(sourcePath, body, policy, state) };
   }));
 }
@@ -165,7 +106,11 @@ export function projectCompany(row, reports, member, policy, task = null) {
   const display = displayEligibility(row, metadata);
   const issue = row.last_revision?.display_issue;
   return {
-    symbol: row.symbol, ticker: row.symbol.replace(/^CN:/u, ""), name: row.name || reports[0]?.title || row.symbol,
+    symbol: row.symbol, ticker: row.symbol.startsWith("CN:") ? row.symbol.slice(3) : row.symbol.replace(":", "-"),
+    code: row.symbol.slice(3), market: row.symbol.slice(0, 2),
+    quoteCurrency: ({ CN: "CNY", HK: "HKD", US: "USD" })[row.symbol.slice(0,2)],
+    issuer: member?.issuer ?? row.symbol, financialBasis: row.financial_basis ?? null,
+    securityBasis: row.security_basis ?? null, name: row.name || reports[0]?.title || row.symbol,
     exchange: row.exchange ?? "—", industry: row.industry || member?.industry || "未分类",
     status: row.status, universeStatus: row.universe_status ?? "unregistered",
     hasResearchState: row.hasResearchState !== false,
@@ -191,32 +136,13 @@ export function projectCompany(row, reports, member, policy, task = null) {
     reports,
   };
 }
-async function collectResearchDocuments(root, output) {
-  let sectors;
-  try { sectors = (await readdir(join(root, "research/industries/sectors"))).filter((file) => file.endsWith(".md")).sort(); }
-  catch (error) { if (error.code !== "ENOENT") throw error; sectors = []; }
-  const sources = [
-    ...sectors.map((file) => ({ id: file.slice(0, -3), kind: "industry", path: `research/industries/sectors/${file}` })),
-    { id: "automotive-lighting", kind: "industry", path: "research/industries/automotive-lighting.md" },
-    { id: "industry-guide", kind: "industry", path: "research/industries/README.md" },
-    { id: "selection-current", kind: "selection", path: "selection/current.md" },
-    { id: "selection-principles", kind: "selection", path: "selection/principles.md" },
-    { id: "selection-process", kind: "selection", path: "prompts/selection/long-term-selection.md" },
-  ];
-  const documents = [];
-  const destination = join(output, "documents");
-  await mkdir(destination, { recursive: true });
-  for (const source of sources) {
-    let markdown;
-    try { markdown = await readFile(join(root, source.path), "utf8"); }
-    catch (error) { if (error.code === "ENOENT") continue; throw error; }
-    const title = /^#\s+(.+)$/mu.exec(markdown)?.[1] ?? source.id;
-    const industries = /^适用二级行业：\s*(.+)$/mu.exec(markdown)?.[1].split("、").map((name) => name.trim().replace(/。$/u, "")) ?? [];
-    const path = `/data/documents/${source.id}.md`;
-    await writeFile(join(output, path.replace("/data/", "")), markdown, "utf8");
-    documents.push({ ...source, sourcePath: source.path, path, title, industries });
-  }
-  await writeFile(join(output, "documents.json"), JSON.stringify({ documents }, null, 2), "utf8");
+async function collectResearchDocuments(output, publications) {
+  await mkdir(join(output, "documents"), { recursive: true });
+  for (const doc of publications) await writeFile(join(output, "documents", `${doc.id}.md`), doc.markdown, "utf8");
+  await mkdir(join(output, "indicators"), { recursive: true });
+  for (const doc of publications) if (doc.indicatorData) await writeFile(join(output, "indicators", `${doc.topic}.json`), JSON.stringify(doc.indicatorData, null, 2), "utf8");
+  const documents = publications.map((doc) => { const metadata = { ...doc }; delete metadata.markdown; delete metadata.indicatorData; return metadata; });
+  await writeFile(join(output, "documents.json"), JSON.stringify({ schemaVersion: 1, documents }, null, 2), "utf8");
 }
 export function makeExports(catalog, scope) {
   const companies = currentResults(catalog.companies, scope);
@@ -244,34 +170,49 @@ export async function buildResearchData(root = repositoryRoot) {
   // malformed policy is an error, never a reason to show the old full catalog.
   const policy = await loadStandards(root);
   const pool = JSON.parse(await readFile(join(root, policy.registry.scope_source), "utf8"));
-  if (pool.schema_version !== 2 || !Array.isArray(pool.companies)) throw new Error("质量池缺失或格式不正确");
-  const members = new Map(pool.companies.map((company) => [company.symbol, company]));
-  if (members.size !== pool.companies.length) throw new Error("质量池存在重复代码");
-  const states = parseJsonLines(await readFile(join(root, "coverage/cn-a/research_state.jsonl"), "utf8"), "research_state");
-  const queue = parseJsonLines(await readFile(join(root, "coverage/cn-a/research_queue.jsonl"), "utf8"), "research_queue");
+  if (![2, 3].includes(pool.schema_version) || !Array.isArray(pool.companies)) throw new Error("质量池缺失或格式不正确");
+  const screening = await loadScreeningData(root);
+  const poolCompanies = screening.pools.flatMap((item) => item.companies);
+  const members = new Map(poolCompanies.map((company) => [company.symbol, company]));
+  if (members.size !== poolCompanies.length) throw new Error("质量池存在重复代码");
+  async function rowsFor(market, filename) {
+    try { return parseJsonLines(await readFile(join(root, `coverage/${market}/${filename}.jsonl`), "utf8"), filename); }
+    catch (error) { if (error.code === "ENOENT" && market !== "cn-a") return []; throw error; }
+  }
+  const states = (await Promise.all(["cn-a", "hk", "us"].map((m) => rowsFor(m, "research_state")))).flat();
+  const queue = (await Promise.all(["cn-a", "hk", "us"].map((m) => rowsFor(m, "research_queue")))).flat();
   const stateSymbols = new Set(states.map((row) => row.symbol));
   if (stateSymbols.size !== states.length) throw new Error("研究状态代码重复");
   const sourceStateCount = states.length;
-  const companyDirectories = await readdir(join(root, "research/companies/CN"), { withFileTypes: true });
-  const archiveSymbols = companyDirectories.filter((entry) => entry.isDirectory() && /^\d{6}$/u.test(entry.name))
-    .map((entry) => `CN:${entry.name}`).filter((symbol) => !stateSymbols.has(symbol) && !members.has(symbol));
+  const archiveSymbols = [];
+  for (const market of ["CN", "HK", "US"]) {
+    let directories;
+    try { directories = await readdir(join(root, "research/companies", market), { withFileTypes: true }); }
+    catch (error) { if (error.code === "ENOENT") continue; throw error; }
+    for (const entry of directories) {
+      const symbol = `${market}:${entry.name}`;
+      if (entry.isDirectory() && /^(?:CN:[0-9]{6}|HK:[0-9]{5}|US:[A-Z]{1,5}(?:[.-][A-Z])?)$/u.test(symbol)
+        && !stateSymbols.has(symbol) && !members.has(symbol)) archiveSymbols.push(symbol);
+    }
+  }
   // Pool-only identities are progress placeholders; archive-only identities
   // make every retained report readable without creating research state.
-  const rows = [...states, ...pool.companies.filter((member) => !stateSymbols.has(member.symbol))
+  const rows = [...states, ...poolCompanies.filter((member) => !stateSymbols.has(member.symbol))
     .map((member) => ({ symbol: member.symbol, name: member.name, industry: member.industry,
       status: "unregistered", hasResearchState: false, report_period: null,
       basis_report_path: null })), ...archiveSymbols.map((symbol) => ({ symbol, name: null,
       industry: "历史档案", status: "unregistered", universe_status: "inactive",
       hasResearchState: false, report_period: null, basis_report_path: null }))];
+  const publications = await loadPublications(root);
   await rm(output, { recursive: true, force: true });
   await mkdir(output, { recursive: true });
-  await collectResearchDocuments(root, output);
+  await collectResearchDocuments(output, publications);
+  await writeFile(join(output, "screening-pools.json"), JSON.stringify(screening, null, 2) + "\n", "utf8");
   const tasksBySymbol = new Map(queue.map((item) => [item.symbol, item]));
   const companies = [];
   for (const row of rows) {
-    const ticker = row.symbol.replace(/^CN:/u, "");
-    if (!/^\d{6}$/u.test(ticker)) throw new Error(`无效证券代码: ${row.symbol}`);
-    const reports = await collectReports(root, output, ticker, policy, row);
+    if (!/^(?:CN:[0-9]{6}|HK:[0-9]{5}|US:[A-Z]{1,5}(?:[.-][A-Z])?)$/u.test(row.symbol)) throw new Error(`无效证券代码: ${row.symbol}`);
+    const reports = await collectReports(root, output, row.symbol, policy, row);
     companies.push(projectCompany(row, reports, members.get(row.symbol), policy,
       tasksBySymbol.get(row.symbol) ?? null));
   }
@@ -282,7 +223,7 @@ export async function buildResearchData(root = repositoryRoot) {
   const catalog = {
     schemaVersion: 2, generatedAt: new Date().toISOString(), standard: policy.active,
     standards: policy.registry.standards,
-    scope: { id: "quality_pool", label: "重点跟踪池", asOf: pool.as_of, count: members.size },
+    scope: { id: "quality_pool", label: "重点跟踪池", asOf: screening.pools.map((p) => p.asOf).sort().at(-1), count: members.size },
     stats: { total: companies.length, researchStateRows: sourceStateCount,
       active: states.filter((row) => row.universe_status === "active").length,
       reports: companies.filter((company) => company.reports.length).length,
@@ -293,6 +234,11 @@ export async function buildResearchData(root = repositoryRoot) {
   await writeFile(join(output, "research-catalog.json"), `${JSON.stringify(catalog)}\n`, "utf8");
   await exportCurrent(output, catalog, "quality_pool", "current-research");
   await exportCurrent(output, catalog, "all_standard", "all-current-research");
+  for (const market of ["CN", "HK", "US"]) {
+    const subset = { ...catalog, companies: companies.filter((c) => c.market === market) };
+    await exportCurrent(output, subset, "quality_pool", `current-research-${market}`);
+    await exportCurrent(output, subset, "all_standard", `all-current-research-${market}`);
+  }
   const progress = companies.filter((company) => company.inQualityPool).map((company) => ({
     symbol: company.symbol, name: company.name, qualityTier: company.qualityTier,
     hasResearchState: company.hasResearchState, display: company.display,

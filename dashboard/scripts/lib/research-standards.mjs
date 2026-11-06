@@ -50,6 +50,8 @@ export function reportMetadata(sourcePath, body, policy, state) {
   const cutoff = /信息截止(?:时间|时点|日)?\s*[：:=]?\s*(20\d{2}[-年/]\d{1,2}[-月/]\d{1,2}日?)/u.exec(body.toString("utf8"));
   return {
     sourcePath,
+    periodEnd: isBasis ? state?.financial_basis?.period_end ?? null
+      : /财务期末[:：]\s*(\d{4}-\d{2}-\d{2})/u.exec(body.toString("utf8"))?.[1] ?? null,
     informationCutoff: isBasis && state?.information_cutoff ? state.information_cutoff : cutoff?.[1] ?? null,
     standardId: revisionMatches ? state.standard_id : null,
     standardLabel: revisionMatches ? standard.label : "历史标准未确认",
@@ -68,6 +70,15 @@ export function displayEligibility(state, metadata) {
   const stamp = [state.standard_id, state.spec_revision, state.accepted_at];
   if (stamp.every((value) => value == null)) return fail("pending_standard", "历史标准未确认，待按现行标准研究");
   if (!stamp.every(nonblank)) return fail("needs_review", "研究标准信息不完整，需要修复状态");
+  if (state.symbol && !state.symbol.startsWith("CN:")) {
+    const currency = state.symbol.startsWith("HK:") ? "HKD" : "USD";
+    if (!state.financial_basis?.period_end || !state.security_basis?.unit
+      || state.security_basis.currency !== currency || !(state.security_basis.ordinary_shares_per_unit > 0)
+      || (state.value_range && state.value_range.currency !== currency)
+      || (state.return_model && state.return_model.currency !== currency)) {
+      return fail("needs_review", "财务期末或证券币种/单位未明确");
+    }
+  }
   if (!metadata.compatible) return fail("pending_standard", "原研究标准不兼容现行标准");
   if (state.universe_status !== "active") return fail("inactive", "证券不在当前在市范围");
   return { eligible: true, state: state.value_range ? "current" : "unpriced",

@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:600887",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-11-03T07:30:00+00:00",
+  "value_range": {
+    "low": 26.186440425663665,
+    "high": 30.156097809316794,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-03T07:30:00+00:00",
+    "base_case_distributions_per_share": [
+      1.5005407619637716,
+      1.5495182000823748,
+      1.6020378826294606,
+      1.656498649242626,
+      1.7139233909816391
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 30.56317629716141,
+        "high": 34.34772256039904
+      }
+    }
+  },
+  "valuation_note": "当前主法基准28.118642141543元，核心端点来自cases/low, cases/high；辅助当前值为26.834642796842元。主法品类正常利润与逐年可分配现金，辅法销量/吨贡献独立入口；核心贡献率±0.3个百分点、定存625/640亿元、成员存款16/11亿元、贸易WC−5%/−7%、折现8.5%/8.0%。仅六条更新，其他压力为历史。",
+  "return_model_note": "D1–5取cases/base；Y5取cases/holder_low与holder_high，前五期所有经营、现金、税、RE、资本和股数状态逐字段exact，Y6后变化，不取从Y1不同的cases/low/high。新增实付移动同计划付款并采用真实股数，剩余付款900005595元。Y10浮点残本金实际进入Y11利息和偿付，Y11消尽、Y12为零，未在Y10人为归零。 信息版本为2026年11月3日，原金融预算锚为2026-10-29T17:52:00+00:00；原年度窗口与日期滚存保留，不宣称重新估算至新日期。"
+}

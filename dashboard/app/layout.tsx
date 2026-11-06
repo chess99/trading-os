@@ -18,16 +18,16 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
-  const description = "A股全市场五年基准情景年化回报、合理价值位置与正式研报阅读工作台。";
+  const description = "覆盖A股、港股与美股的价值投资研究工作台，连接公司、行业、宏观与市场估值。";
   return {
     metadataBase: new URL(origin),
     title: {
-      default: "Trading OS · 全市场研究系统",
+      default: "Trading OS · 价值投资研究",
       template: "%s · Trading OS",
     },
     description,
     openGraph: {
-      title: "Trading OS · 全市场研究决策台",
+      title: "Trading OS · 价值投资研究",
       description,
       type: "website",
       images: [
@@ -35,13 +35,13 @@ export async function generateMetadata(): Promise<Metadata> {
           url: `${origin}/og.png`,
           width: 1729,
           height: 910,
-          alt: "Trading OS 赔率地图",
+          alt: "Trading OS 价值投资研究",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Trading OS · 全市场研究决策台",
+      title: "Trading OS · 价值投资研究",
       description,
       images: [`${origin}/og.png`],
     },

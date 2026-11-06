@@ -1,0 +1,681 @@
+{
+  "symbol": "CN:600036",
+  "information_cutoff": "2026-10-31T06:02:26.933886+00:00",
+  "valuation_note": "核心为普通股实际可分配现金折现，采纳35%分配延续、2027息差1.80%后约1.79%、贷款信用成本0.75%逐步至0.72%、留存超出研究业务资本基准部分税后收益1.2%。10%—11.5%股权成本决定两端，显式路径至2036年、此后资本与业务增长约3.5%；2036年以后现金贡献当前价值约50%—57%。辅助P/B—ROE假定全部账面获10%—11%回报及较高派息，差异源于资本用途，不机械平均。50%渐进分配当前35.50—44.72元仅条件治理改善；永久息差/财富/信用/资本联合侵蚀21.11—25.34元不强纳核心。43.55元报价仅用于价格对照，未倒推经营参数。",
+  "return_model_note": "估值日2026-10-31；五桶为此后五个Nov—Oct实际普通股现金预算，第五年末2031-10-31剩余权利35.37—43.58元，已排除前五桶现金，不另加账面或超额资本。集团/母行普通股权益分别扣除其他权益工具、母行持续提取法定与一般准备，按AT1逐券现金和普通股宣派/付款日期滚动；已宣派金额从权益扣一次，支付同步清应付与预留资金。未来普通股股数252.19845601亿股，无新增普通股融资稀释预算。35%分配和65%母行利润形成资金均为条件预算，未宣派未来股利不称已承诺。经营模型输入截止仍2026-10-31T02:57:45+00:00，模型估值日和所有金额不变；model_as_of与报告截止仅覆盖06:02:26.933886取得的价格对照，报价不进入现金模型。",
+  "financial_inputs": {
+    "symbol": "CN:600036",
+    "report_period": "2026-Q3",
+    "information_cutoff": "2026-10-31T02:57:45+00:00",
+    "valuation_date": "2026-10-31",
+    "status": "STATIC_INPUTS_NOT_EXECUTED_NOT_ACCEPTED",
+    "money_unit": "CNY million",
+    "shares_million": 25219.845601,
+    "auxiliary_pb_normalized_roe_grid": [
+      0.1,
+      0.11,
+      0.12
+    ],
+    "explicit_last_year": 2036,
+    "opening_20260930": {
+      "group_common_equity": 1181997,
+      "parent_common_equity": 1077362,
+      "parent_retained_profit": 668253,
+      "parent_surplus_total": 136270,
+      "statutory_known_lower_bound": 13618,
+      "parent_general_reserve": 150236,
+      "ytd_group_common_profit": 115174,
+      "ytd_other_equity_distribution": 1302,
+      "ytd_parent_net_profit": 103072,
+      "h1_group_common_profit": 75143
+    },
+    "capital_opening": {
+      "group": {
+        "cet1_net": 1149867,
+        "reported_cet1_ratio": 0.1439,
+        "deduction": 32130,
+        "net_at1": 199989,
+        "tier2": 140234,
+        "reported_weight_cet1_ratio": 0.1208,
+        "reported_weight_total_ratio": 0.1528,
+        "parallel_reg_floors": {
+          "cet1": 0.0825,
+          "tier1": 0.0925,
+          "total": 0.1125
+        },
+        "exposure": 16408227,
+        "exposure_status": "reported_group"
+      },
+      "parent": {
+        "cet1_net": 1014355,
+        "reported_cet1_ratio": 0.1413,
+        "deduction": 63007,
+        "net_at1": 172617,
+        "tier2": 131555,
+        "reported_weight_cet1_ratio": 0.1164,
+        "reported_weight_total_ratio": 0.1473,
+        "parallel_reg_floors": {
+          "cet1": 0.0825,
+          "tier1": 0.0925,
+          "total": 0.1125
+        },
+        "exposure": 17998280.3,
+        "exposure_status": "research_proxy_110pct_parent_assets_plus_h1_full_commitments_not_regulatory_disclosure"
+      }
+    },
+    "capital_floors": {
+      "cet1": 0.12,
+      "tier1": 0.13,
+      "total": 0.15,
+      "leverage": 0.04375
+    },
+    "statutory_rate": 0.1,
+    "initial_dividend_funding_budget": 30000,
+    "liquidity_budget_fraction": 0.65,
+    "subsidiary_cash_available_fraction": 0.45,
+    "q4_2026_rwa_growth": 0.04,
+    "surtax_revenue_fraction": 0.009,
+    "at1_refinancing_fee_rate": 0.0002,
+    "at1_notes": [
+      {
+        "principal": 43000,
+        "coupon": 0.0369,
+        "payment_month": 12,
+        "first_payment_year": 2022,
+        "first_reset_year": 2026,
+        "redemption_book_discount": 11
+      },
+      {
+        "principal": 30000,
+        "coupon": 0.0341,
+        "payment_month": 12,
+        "first_payment_year": 2024,
+        "first_reset_year": 2028
+      },
+      {
+        "principal": 30000,
+        "coupon": 0.0242,
+        "payment_month": 11,
+        "first_payment_year": 2025,
+        "first_reset_year": 2029
+      },
+      {
+        "principal": 20000,
+        "coupon": 0.0213,
+        "payment_month": 4,
+        "first_payment_year": 2026,
+        "first_reset_year": 2030
+      },
+      {
+        "principal": 27000,
+        "coupon": 0.0205,
+        "payment_month": 5,
+        "first_payment_year": 2026,
+        "first_reset_year": 2030
+      },
+      {
+        "principal": 30000,
+        "coupon": 0.0205,
+        "payment_month": 4,
+        "first_payment_year": 2027,
+        "first_reset_year": 2031
+      },
+      {
+        "principal": 20000,
+        "coupon": 0.0199,
+        "payment_month": 6,
+        "first_payment_year": 2027,
+        "first_reset_year": 2031
+      }
+    ],
+    "q4_2026_budget": {
+      "average_earning_assets": 12600000,
+      "average_loans": 7450000,
+      "nim": 0.0182,
+      "net_fees": 19000,
+      "other_net_income": 11000,
+      "opex_absolute": 34200,
+      "loan_credit_cost": 0.0068,
+      "nonloan_impairment": 500,
+      "surtax": 800,
+      "other_business_cost": 2100,
+      "effective_tax": 0.15,
+      "minority_profit": 200,
+      "parent_core_share": 0.885,
+      "general_reserve_growth": 0.05
+    },
+    "forecast_2027": {
+      "average_earning_assets": 13050000,
+      "average_loans": 7620000,
+      "nim": 0.018,
+      "net_fees": 81500,
+      "other_net_income": 47000,
+      "cost_income_ratio": 0.318,
+      "loan_credit_cost": 0.0075,
+      "nonloan_impairment": 2000,
+      "surtax": 3300,
+      "other_business_cost": 8000,
+      "effective_tax": 0.15,
+      "minority_profit": 800,
+      "parent_core_share": 0.885
+    },
+    "annual_assumptions": {
+      "2027": {
+        "earning_asset_growth": 0.05,
+        "loan_growth": 0.04,
+        "fee_growth": 0.045,
+        "other_income_growth": 0.03,
+        "nim": 0.018,
+        "loan_credit_cost": 0.0075,
+        "cost_income_ratio": 0.318,
+        "parent_core_share": 0.885,
+        "effective_tax": 0.15,
+        "rwa_growth": 0.055,
+        "general_reserve_growth": 0.05,
+        "deduction_growth": 0.05,
+        "exposure_growth": 0.05
+      },
+      "2028": {
+        "earning_asset_growth": 0.05,
+        "loan_growth": 0.04,
+        "fee_growth": 0.045,
+        "other_income_growth": 0.03,
+        "nim": 0.0179,
+        "loan_credit_cost": 0.0075,
+        "cost_income_ratio": 0.318,
+        "parent_core_share": 0.89,
+        "effective_tax": 0.15,
+        "rwa_growth": 0.055,
+        "general_reserve_growth": 0.05,
+        "deduction_growth": 0.05,
+        "exposure_growth": 0.05
+      },
+      "2029": {
+        "earning_asset_growth": 0.05,
+        "loan_growth": 0.04,
+        "fee_growth": 0.045,
+        "other_income_growth": 0.03,
+        "nim": 0.0179,
+        "loan_credit_cost": 0.0074,
+        "cost_income_ratio": 0.317,
+        "parent_core_share": 0.89,
+        "effective_tax": 0.15,
+        "rwa_growth": 0.05,
+        "general_reserve_growth": 0.05,
+        "deduction_growth": 0.05,
+        "exposure_growth": 0.05
+      },
+      "2030": {
+        "earning_asset_growth": 0.05,
+        "loan_growth": 0.04,
+        "fee_growth": 0.045,
+        "other_income_growth": 0.03,
+        "nim": 0.0179,
+        "loan_credit_cost": 0.0073,
+        "cost_income_ratio": 0.316,
+        "parent_core_share": 0.89,
+        "effective_tax": 0.15,
+        "rwa_growth": 0.05,
+        "general_reserve_growth": 0.05,
+        "deduction_growth": 0.05,
+        "exposure_growth": 0.05
+      },
+      "2031": {
+        "earning_asset_growth": 0.05,
+        "loan_growth": 0.04,
+        "fee_growth": 0.045,
+        "other_income_growth": 0.03,
+        "nim": 0.0179,
+        "loan_credit_cost": 0.0072,
+        "cost_income_ratio": 0.315,
+        "parent_core_share": 0.89,
+        "effective_tax": 0.15,
+        "rwa_growth": 0.05,
+        "general_reserve_growth": 0.05,
+        "deduction_growth": 0.05,
+        "exposure_growth": 0.05
+      },
+      "2032": {
+        "earning_asset_growth": 0.045,
+        "loan_growth": 0.04,
+        "fee_growth": 0.04,
+        "other_income_growth": 0.035,
+        "nim": 0.0179,
+        "loan_credit_cost": 0.0072,
+        "cost_income_ratio": 0.315,
+        "parent_core_share": 0.89,
+        "effective_tax": 0.15,
+        "rwa_growth": 0.045,
+        "general_reserve_growth": 0.045,
+        "deduction_growth": 0.045,
+        "exposure_growth": 0.045
+      },
+      "2033": {
+        "earning_asset_growth": 0.0425,
+        "loan_growth": 0.04,
+        "fee_growth": 0.04,
+        "other_income_growth": 0.035,
+        "nim": 0.0179,
+        "loan_credit_cost": 0.0072,
+        "cost_income_ratio": 0.315,
+        "parent_core_share": 0.89,
+        "effective_tax": 0.15,
+        "rwa_growth": 0.0425,
+        "general_reserve_growth": 0.0425,
+        "deduction_growth": 0.0425,
+        "exposure_growth": 0.0425
+      },
+      "2034": {
+        "earning_asset_growth": 0.04,
+        "loan_growth": 0.04,
+        "fee_growth": 0.04,
+        "other_income_growth": 0.035,
+        "nim": 0.0179,
+        "loan_credit_cost": 0.0072,
+        "cost_income_ratio": 0.315,
+        "parent_core_share": 0.89,
+        "effective_tax": 0.15,
+        "rwa_growth": 0.04,
+        "general_reserve_growth": 0.04,
+        "deduction_growth": 0.04,
+        "exposure_growth": 0.04
+      },
+      "2035": {
+        "earning_asset_growth": 0.0375,
+        "loan_growth": 0.0375,
+        "fee_growth": 0.0375,
+        "other_income_growth": 0.035,
+        "nim": 0.0179,
+        "loan_credit_cost": 0.0072,
+        "cost_income_ratio": 0.315,
+        "parent_core_share": 0.89,
+        "effective_tax": 0.15,
+        "rwa_growth": 0.0375,
+        "general_reserve_growth": 0.0375,
+        "deduction_growth": 0.0375,
+        "exposure_growth": 0.0375
+      },
+      "2036": {
+        "earning_asset_growth": 0.035,
+        "loan_growth": 0.035,
+        "fee_growth": 0.035,
+        "other_income_growth": 0.035,
+        "nim": 0.0179,
+        "loan_credit_cost": 0.0072,
+        "cost_income_ratio": 0.315,
+        "parent_core_share": 0.89,
+        "effective_tax": 0.15,
+        "rwa_growth": 0.035,
+        "general_reserve_growth": 0.035,
+        "deduction_growth": 0.035,
+        "exposure_growth": 0.035
+      }
+    },
+    "scenario_defaults": {
+      "name": "policy_continuity",
+      "terminal_payout": 0.35,
+      "terminal_upstream_share": 0.0,
+      "payout_by_year": {
+        "2026": 0.35,
+        "2027": 0.35,
+        "2028": 0.35,
+        "2029": 0.35,
+        "2030": 0.35,
+        "2031": 0.35,
+        "2032": 0.35,
+        "2033": 0.35,
+        "2034": 0.35,
+        "2035": 0.35,
+        "2036": 0.35
+      },
+      "upstream_by_year": {
+        "2026": 0.0,
+        "2027": 0.0,
+        "2028": 0.0,
+        "2029": 0.0,
+        "2030": 0.0,
+        "2031": 0.0,
+        "2032": 0.0,
+        "2033": 0.0,
+        "2034": 0.0,
+        "2035": 0.0,
+        "2036": 0.0
+      },
+      "at1_reset_yield": 0.025,
+      "excess_aftertax_yield": 0.012,
+      "terminal_growth": 0.035,
+      "equity_costs": [
+        0.1,
+        0.115
+      ],
+      "annual_overrides": {}
+    },
+    "scenarios": [
+      {
+        "name": "policy_continuity"
+      },
+      {
+        "name": "gradual_capital_return",
+        "terminal_payout": 0.5,
+        "terminal_upstream_share": 0.4,
+        "payout_by_year": {
+          "2032": 0.38,
+          "2033": 0.41,
+          "2034": 0.44,
+          "2035": 0.47,
+          "2036": 0.5
+        },
+        "upstream_by_year": {
+          "2032": 0.1,
+          "2033": 0.2,
+          "2034": 0.3,
+          "2035": 0.4,
+          "2036": 0.4
+        }
+      },
+      {
+        "name": "nim_minus_10bp_diagnostic",
+        "parallel_nim_delta": -0.001
+      },
+      {
+        "name": "loan_credit_plus_10bp_diagnostic",
+        "parallel_credit_cost_delta": 0.001
+      },
+      {
+        "name": "legal_statutory_stop_2027_diagnostic",
+        "statutory_stop_from_year": 2027
+      },
+      {
+        "name": "funding_capacity_pressure",
+        "liquidity_budget_fraction": 0.35,
+        "funding_shocks": {
+          "2027-01-31": 10000
+        }
+      },
+      {
+        "name": "retail_cycle_stress",
+        "liquidity_budget_fraction": 0.5,
+        "initial_2027_level_factors": {
+          "average_earning_assets": 0.99,
+          "average_loans": 0.99,
+          "net_fees": 0.97
+        },
+        "annual_overrides": {
+          "2027": {
+            "nim": 0.0165,
+            "loan_credit_cost": 0.0105,
+            "cost_income_ratio": 0.325,
+            "parent_core_share": 0.85,
+            "rwa_growth": 0.06,
+            "general_reserve_growth": 0.055
+          },
+          "2028": {
+            "earning_asset_growth": 0.035,
+            "loan_growth": 0.025,
+            "fee_growth": 0.02,
+            "nim": 0.0165,
+            "loan_credit_cost": 0.01,
+            "cost_income_ratio": 0.325,
+            "parent_core_share": 0.85,
+            "rwa_growth": 0.055,
+            "general_reserve_growth": 0.05
+          },
+          "2029": {
+            "earning_asset_growth": 0.045,
+            "loan_growth": 0.035,
+            "fee_growth": 0.035,
+            "nim": 0.017,
+            "loan_credit_cost": 0.009,
+            "cost_income_ratio": 0.322,
+            "parent_core_share": 0.87,
+            "rwa_growth": 0.05
+          },
+          "2030": {
+            "nim": 0.0175,
+            "loan_credit_cost": 0.008,
+            "cost_income_ratio": 0.32,
+            "parent_core_share": 0.88
+          }
+        }
+      },
+      {
+        "name": "recovery_not_core_upper",
+        "terminal_payout": 0.5,
+        "terminal_upstream_share": 0.4,
+        "payout_by_year": {
+          "2032": 0.38,
+          "2033": 0.41,
+          "2034": 0.44,
+          "2035": 0.47,
+          "2036": 0.5
+        },
+        "upstream_by_year": {
+          "2032": 0.1,
+          "2033": 0.2,
+          "2034": 0.3,
+          "2035": 0.4,
+          "2036": 0.4
+        },
+        "annual_overrides": {
+          "2027": {
+            "nim": 0.0186,
+            "loan_credit_cost": 0.0065,
+            "cost_income_ratio": 0.315,
+            "parent_core_share": 0.9
+          },
+          "2028": {
+            "earning_asset_growth": 0.055,
+            "loan_growth": 0.045,
+            "fee_growth": 0.06,
+            "nim": 0.0186,
+            "loan_credit_cost": 0.0065,
+            "cost_income_ratio": 0.315,
+            "parent_core_share": 0.9
+          },
+          "2029": {
+            "earning_asset_growth": 0.055,
+            "loan_growth": 0.045,
+            "fee_growth": 0.06,
+            "nim": 0.0186,
+            "loan_credit_cost": 0.0065,
+            "cost_income_ratio": 0.315,
+            "parent_core_share": 0.9
+          },
+          "2030": {
+            "nim": 0.0184,
+            "loan_credit_cost": 0.0068,
+            "cost_income_ratio": 0.315,
+            "parent_core_share": 0.9
+          },
+          "2031": {
+            "nim": 0.0182,
+            "loan_credit_cost": 0.007,
+            "cost_income_ratio": 0.315,
+            "parent_core_share": 0.9
+          }
+        }
+      },
+      {
+        "name": "excess_capital_2pct_return_diagnostic",
+        "excess_aftertax_yield": 0.02
+      },
+      {
+        "name": "oci_capital_loss_diagnostic",
+        "oci_shocks": {
+          "2027-03-31": {
+            "group": -15000,
+            "parent": -15000
+          }
+        }
+      },
+      {
+        "name": "rwa_rounding_upper_bound_diagnostic",
+        "rwa_rounding_stress": 0.0005
+      },
+      {
+        "name": "gradual_capital_return_no_extra_upstream",
+        "terminal_payout": 0.5,
+        "terminal_upstream_share": 0.0,
+        "payout_by_year": {
+          "2032": 0.38,
+          "2033": 0.41,
+          "2034": 0.44,
+          "2035": 0.47,
+          "2036": 0.5
+        }
+      },
+      {
+        "name": "persistent_joint_structural_erosion",
+        "terminal_growth": 0.025,
+        "initial_2027_levels": {
+          "average_earning_assets": 13000000,
+          "average_loans": 7550000,
+          "net_fees": 77600,
+          "other_net_income": 45000
+        },
+        "annual_overrides": {
+          "2027": {
+            "earning_asset_growth": 0.04,
+            "loan_growth": 0.025,
+            "fee_growth": 0,
+            "other_income_growth": 0.04,
+            "nim": 0.0172,
+            "loan_credit_cost": 0.009,
+            "cost_income_ratio": 0.33,
+            "parent_core_share": 0.87,
+            "rwa_growth": 0.055,
+            "general_reserve_growth": 0.055,
+            "deduction_growth": 0.055,
+            "exposure_growth": 0.04
+          },
+          "2028": {
+            "earning_asset_growth": 0.04,
+            "loan_growth": 0.025,
+            "fee_growth": 0,
+            "other_income_growth": 0.04,
+            "nim": 0.017,
+            "loan_credit_cost": 0.009,
+            "cost_income_ratio": 0.33,
+            "parent_core_share": 0.87,
+            "rwa_growth": 0.055,
+            "general_reserve_growth": 0.055,
+            "deduction_growth": 0.055,
+            "exposure_growth": 0.04
+          },
+          "2029": {
+            "earning_asset_growth": 0.04,
+            "loan_growth": 0.025,
+            "fee_growth": 0,
+            "other_income_growth": 0.04,
+            "nim": 0.017,
+            "loan_credit_cost": 0.009,
+            "cost_income_ratio": 0.33,
+            "parent_core_share": 0.87,
+            "rwa_growth": 0.055,
+            "general_reserve_growth": 0.055,
+            "deduction_growth": 0.055,
+            "exposure_growth": 0.04
+          },
+          "2030": {
+            "earning_asset_growth": 0.04,
+            "loan_growth": 0.025,
+            "fee_growth": 0.01,
+            "other_income_growth": 0.04,
+            "nim": 0.017,
+            "loan_credit_cost": 0.009,
+            "cost_income_ratio": 0.33,
+            "parent_core_share": 0.87,
+            "rwa_growth": 0.055,
+            "general_reserve_growth": 0.055,
+            "deduction_growth": 0.055,
+            "exposure_growth": 0.04
+          },
+          "2031": {
+            "earning_asset_growth": 0.04,
+            "loan_growth": 0.025,
+            "fee_growth": 0.015,
+            "other_income_growth": 0.04,
+            "nim": 0.017,
+            "loan_credit_cost": 0.009,
+            "cost_income_ratio": 0.33,
+            "parent_core_share": 0.87,
+            "rwa_growth": 0.055,
+            "general_reserve_growth": 0.055,
+            "deduction_growth": 0.055,
+            "exposure_growth": 0.04
+          },
+          "2032": {
+            "earning_asset_growth": 0.035,
+            "loan_growth": 0.025,
+            "fee_growth": 0.015,
+            "other_income_growth": 0.035,
+            "nim": 0.017,
+            "loan_credit_cost": 0.009,
+            "cost_income_ratio": 0.33,
+            "parent_core_share": 0.87,
+            "rwa_growth": 0.04,
+            "general_reserve_growth": 0.04,
+            "deduction_growth": 0.04,
+            "exposure_growth": 0.035
+          },
+          "2033": {
+            "earning_asset_growth": 0.03,
+            "loan_growth": 0.025,
+            "fee_growth": 0.02,
+            "other_income_growth": 0.03,
+            "nim": 0.017,
+            "loan_credit_cost": 0.009,
+            "cost_income_ratio": 0.33,
+            "parent_core_share": 0.87,
+            "rwa_growth": 0.035,
+            "general_reserve_growth": 0.035,
+            "deduction_growth": 0.035,
+            "exposure_growth": 0.03
+          },
+          "2034": {
+            "earning_asset_growth": 0.025,
+            "loan_growth": 0.025,
+            "fee_growth": 0.025,
+            "other_income_growth": 0.025,
+            "nim": 0.017,
+            "loan_credit_cost": 0.009,
+            "cost_income_ratio": 0.33,
+            "parent_core_share": 0.87,
+            "rwa_growth": 0.03,
+            "general_reserve_growth": 0.03,
+            "deduction_growth": 0.03,
+            "exposure_growth": 0.025
+          },
+          "2035": {
+            "earning_asset_growth": 0.025,
+            "loan_growth": 0.025,
+            "fee_growth": 0.025,
+            "other_income_growth": 0.025,
+            "nim": 0.017,
+            "loan_credit_cost": 0.009,
+            "cost_income_ratio": 0.33,
+            "parent_core_share": 0.87,
+            "rwa_growth": 0.025,
+            "general_reserve_growth": 0.025,
+            "deduction_growth": 0.025,
+            "exposure_growth": 0.025
+          },
+          "2036": {
+            "earning_asset_growth": 0.025,
+            "loan_growth": 0.025,
+            "fee_growth": 0.025,
+            "other_income_growth": 0.025,
+            "nim": 0.017,
+            "loan_credit_cost": 0.009,
+            "cost_income_ratio": 0.33,
+            "parent_core_share": 0.87,
+            "rwa_growth": 0.025,
+            "general_reserve_growth": 0.025,
+            "deduction_growth": 0.025,
+            "exposure_growth": 0.025
+          }
+        }
+      }
+    ]
+  }
+}

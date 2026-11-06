@@ -1,0 +1,67 @@
+{
+  "information_cutoff": "2026-10-31T23:59:59+08:00",
+  "units": "RMB 100 million; shares 100 million",
+  "source_facts": {
+    "shares_issued": 24.88313040, "treasury_shares": 0.00144351,
+    "planned_cancel_shares": 0.00221936, "planned_cancel_cash": 0.0386658038, "planned_cancel_price":17.17966,
+    "cash_equivalents": 156.1665961368, "trading_assets": 6.5340982699,
+    "lease_bills_gross":9.215499, "parent_lease_bills_gross":7.200933,
+    "other_current_assets": 7.9847272458, "funds_equity_method_h1": 7.1195315909,
+    "other_noncurrent_financial": 4.1549195788, "nonlease_debt": 0.0704225641,
+    "minority_dividend_due": 1.0632966262, "parent_cash": 141.5190703159,
+    "parent_retained_profit": 202.7559572556, "parent_gross_other_payables": 64.9385503293,
+    "h1_engineering_payable": 7.8347543708, "q3_cash_capex": 3.2511755056,
+    "vehicle_remaining_h1": 7.932715, "operations_base_budget": 14.69,
+    "h1_dividend_already_paid_per_share": 0.27,
+    "duty_fixed_fee_inputs": [[8465.7,3141],[9630.98,3090],[2470.55,2827]],
+    "t3_terminal_sqm": 852600, "t3_total_sqm": 1315700,
+    "aux_building_sqm": 187041.38, "aux_building_annual_rent_exvat": 0.9660770642
+  },
+  "base": {
+    "starting_revenue": [62.0,20.0,20.5,35.5],
+    "segment_growth": [0.035,0.06,0.055,0.03],
+    "cash_opex_start": 82.0, "variable_cost_share": 0.35, "fixed_cost_growth": 0.03,
+    "existing_cash_rent_start": 19.8, "existing_rent_growth": 0.02,
+    "t3_rent_full": 5.5, "t3_other_cash_cost_full": 2.5,
+    "t3_stage": [0,0,0.6,1,1], "hotel_rent_full": 0.29266,
+    "own_da_start": 17.0, "own_da_growth": 0.02, "new_owned_da": [0,0,0.8,1.1,1.1],
+    "maintenance_to_da": 1.0, "nwc_incremental_revenue": 0.06, "tax_rate": 0.25,
+    "fuel_equity_profit_start": 5.0, "fuel_profit_growth": 0.03,
+    "other_assoc_equity_profit_start": 2.5, "other_assoc_profit_growth": 0.04,
+    "retail_equity_profit": [-0.3,0.0,0.2,0.4,0.5], "assoc_cash_payout": 0.8,
+    "minority_operating_profit_start": 2.8, "minority_profit_growth": 0.04,
+    "growth_capex": [11.5,14.122715,1.0,1.0,1.0], "retail_jv_unpaid_budget": [0.98,0,0,0,0],
+    "repo_estimate": 7.0, "operating_cash_buffer": 35.0,
+    "minority_financial_assets_estimate": 8.0, "engineering_payable_estimate": 6.2,
+    "fund_realization_ratio": 0.8, "fund_unpaid_call_budget": 3.0,
+    "cash_aftertax_yield": 0.015, "dividend_payout": 0.55, "reported_2026_common_profit_estimate": 25.0,
+    "parent_operating_cash_share": 0.60, "parent_assoc_cash_share": 0.85,
+    "parent_capex_share": 0.85, "parent_profit_share": 0.72,
+    "parent_operating_cash_floor": 20.0, "parent_reserve_accrual": 0.0,
+    "parent_extra_pool_settlement": [0,0,0,0,0],
+    "cost_of_equity": 0.09, "terminal_growth": 0.02, "terminal_incremental_roic": 0.09,
+    "normalized_earnings_multiple": 13.0,
+    "revenue_shock_factors": [1,1,1,1,1], "fuel_continuity_factors": [1,1,1,1,1]
+  },
+  "core_endpoints": {
+    "low": {"cost_of_equity":0.095,"terminal_growth":0.015,"terminal_incremental_roic":0.08,"t3_rent_full":6.5},
+    "high": {"cost_of_equity":0.085,"terminal_growth":0.02,"terminal_incremental_roic":0.10,"t3_rent_full":4.5}
+  },
+  "scenarios": {
+    "cyclical_weak": {"revenue_shock_factors":[0.94,0.97,1,1,1],"retail_equity_profit":[-0.8,-0.4,0.2,0.4,0.5]},
+    "structural_weak": {"segment_growth":[0.025,0.0,0.035,0.02],"t3_rent_full":10.0,"t3_other_cash_cost_full":4.0,"retail_equity_profit":[-0.5,-0.5,-0.5,-0.5,-0.5],"terminal_growth":0.01,"terminal_incremental_roic":0.065},
+    "upside": {"segment_growth":[0.045,0.09,0.07,0.04],"t3_rent_full":5.5,"t3_other_cash_cost_full":2.5,"retail_equity_profit":[0,0.5,0.8,1,1.2],"growth_capex":[12.5,15.122715,2,2,2],"terminal_incremental_roic":0.11}
+  },
+  "sensitivities": {
+    "t3_rent_plus_1": {"t3_rent_full":6.5},
+    "existing_rent_full_9pct_vat_boundary": {"existing_cash_rent_start":18.1651376147},
+    "terminal_roic_6pct": {"terminal_incremental_roic":0.06},
+    "parent_reserve_full_10pct": {"parent_reserve_accrual":0.10},
+    "parent_pool_extra_20": {"parent_extra_pool_settlement":[20,0,0,0,0]},
+    "fuel_rights_lost_from_year3_no_recovery": {"fuel_continuity_factors":[1,1,0,0,0]},
+    "financial_nci_upper_bound": {"minority_financial_assets_estimate":15.8},
+    "repo_zero": {"repo_estimate":0},
+    "engineering_upper_bound": {"engineering_payable_estimate":7.8347543708},
+    "cash_retention_yield_zero": {"cash_aftertax_yield":0}
+  }
+}

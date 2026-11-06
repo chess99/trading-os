@@ -1,0 +1,45 @@
+name: research-artifact-checks
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/**'
+      - 'coverage/**'
+      - 'screening/**'
+      - 'scripts/check-research-artifacts.py'
+      - 'src/**'
+      - 'tests/**'
+      - '.github/workflows/research-artifact-checks.yml'
+  pull_request:
+    paths:
+      - 'research/**'
+      - 'coverage/**'
+      - 'screening/**'
+      - 'scripts/check-research-artifacts.py'
+      - 'src/**'
+      - 'tests/**'
+      - '.github/workflows/research-artifact-checks.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check-current-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[dev]'
+      - name: Research file budgets
+        run: python scripts/check-research-artifacts.py
+      - name: Current code and state contracts
+        run: |
+          python -m pytest -q
+          python -m trading_os validate
+          python -m trading_os --market hk validate
+          python -m trading_os --market us validate

@@ -1,0 +1,725 @@
+{
+  "symbol": "CN:603899",
+  "information_cutoff": "2026-11-03T10:15:00+00:00",
+  "valuation_note": "原经营与折现率/价格预算锚为2026-10-31T13:54:27+00:00，无新行情或经营预测。当前完整接口：{\"main_low\":17.14199985206154,\"main_high\":20.147722981934653,\"main_base\":18.4844593188685,\"aux_low\":15.927424387214481,\"aux_high\":17.96693262562145,\"D\":[0.9357286550098474,0.9597877041785678,0.9894462185406925,1.0186595266550054,1.0486208060959779],\"Y5_low\":20.02025597565797,\"Y5_high\":22.3985371024667,\"holder_PV_low\":15.838260343992264,\"holder_PV_high\":18.011472467789524,\"method_midpoint_difference_fraction\":-0.09105366205792187}。不平均主辅或跨海天条件拼值；未选旧诊断保留历史。",
+  "return_model_note": "当前现金/权利事件截止2026-11-03T10:15:00+00:00；原经营与周年预算起点2026-10-31T13:54:27+00:00不变。五笔D及Y5直接绑定同组完整base前五年状态，既有已付D不重复计入。累计成交披露万元两位，新增显示差9,998,000元约±100元；费用0条件，未来500m余款148,606,300；库存不自动注销，员工交付沿旧预算。 全精度取完整作者结果，独立账式用于逐项核对；原经营预算与未选历史诊断保持其原时点。",
+  "financial_inputs": {
+    "event": {
+      "paid_increment_CNY": 9998000.0,
+      "incremental_fee_CNY": 0.0,
+      "bought_increment_shares": null,
+      "condition": "Display-centre only: old and new cumulative costs each ±50 CNY, delta ±100 CNY. Incremental fees unobserved, zero only conditional. Existing full-issued-share employee-delivery budget unchanged; no current new grant evidence."
+    },
+    "original_inputs": {
+      "task_id": "3717ccffa11bfe482cd191b1",
+      "symbol": "CN:603899",
+      "name": "晨光股份",
+      "report_period": "2026-Q3",
+      "information_cutoff": "2026-10-31T13:54:27+00:00",
+      "units": "RMB 100 million; shares 100 million; per-share results RMB",
+      "time_basis": "Y1-Y5 are next five annual payment periods after cutoff; 2027-2031 operating budgets proxy those rolling periods, not forecasts of exact payment dates. 2026 opening operating state is an estimate, not Q3 annualisation.",
+      "shares": 9.15795377,
+      "history": {
+        "revenue_2025": {
+          "core_gross": 88.453227,
+          "colipu": 150.482063,
+          "retail": 15.850988,
+          "elimination": -4.14718,
+          "total": 250.6390983647
+        },
+        "profit_2025": {
+          "common_reported": 13.1044899196,
+          "common_ex_nonrec": 11.2391963087,
+          "colipu_total": 3.3464826013,
+          "retail_total": -0.789492,
+          "jiumu_total": -0.845104,
+          "colipu_common_fraction": 0.7778,
+          "jiumu_minor_fraction": 0.15,
+          "tech_common_fraction": 0.55
+        },
+        "normalisation": {
+          "financial_gain_pre_tax": 0.5995864902,
+          "deposit_interest_pre_tax": 0.3515261654,
+          "government_grants_nonrec_pre_tax": 1.8696341061,
+          "vat_credit_pre_tax": 0.1077624133,
+          "group_share_comp_2025": 0.2736292248,
+          "lease_cash_2025": 3.4306422876,
+          "non_rou_da_2025": 3.1058339283,
+          "rd_group_2025": 1.8963935487,
+          "rd_parent_2025": 1.4239469873
+        },
+        "parent_h1": {
+          "financial_assets": 33.028067,
+          "retained_earnings": 49.523845,
+          "other_payables": 11.782169,
+          "other_receivables": 5.195253,
+          "reserve_total": 4.63872795,
+          "actual_reserve_charge": 0
+        },
+        "colipu_h1": {
+          "assets": 74.198629,
+          "liabilities": 45.611329,
+          "net_assets": 28.5873,
+          "minor_equity": 6.352098,
+          "cfo": -7.886529
+        },
+        "q3": {
+          "cash": 23.3479906018,
+          "trading_financial_assets": 42.2708594305,
+          "short_debt": 2.581590278,
+          "long_debt": 0.35897,
+          "current_noncurrent_liabilities": 2.1602251253,
+          "noncurrent_lease": 2.171942028,
+          "buyback_spend_sep": 3.369442,
+          "buyback_spend_oct15": 3.413957,
+          "other_investments_book": 1.2314976322
+        },
+        "h1_current_long_borrow_proxy": 0.0002692275
+      },
+      "opening": {
+        "parent_liquid_proxy": 28.0,
+        "parent_required_liquid": 5.0,
+        "parent_retained_earnings_floor": 49.523845,
+        "statutory_reserve_charge_rate": 0.0,
+        "parent_core_pretax_fraction": 0.8,
+        "parent_capital_fraction": 0.8,
+        "financial_yield_after_tax": 0.015,
+        "ordinary_payout_budget": 0.7,
+        "employee_grant_proceeds": 0.0,
+        "shares_assumption": "All existing issued shares, including treasury, economically outstanding before the Y1 ordinary payment. Budget assumes treasury delivery to employees, not cancellation, no cash consideration, no additional issuance. Share-comp expense only reduces accounting/legal profit and D; cash cost is treasury purchase, never counted twice in FCFF.",
+        "segments": {
+          "core": {
+            "revenue": 85.0,
+            "ownership": 1.0,
+            "profit_basis": "Common-equity residual: non-Colipu/non-retail minority effects, including 45% tech minority, already excluded in calibrated earnings; this is not 100% consolidated core EBIT.",
+            "fixed_capital": 18.0,
+            "nwc_ratio": 0.1,
+            "cash_ratio": 0.03,
+            "da_ratio": 0.026,
+            "rd_ratio": 0.019,
+            "rent_ratio": 0.004,
+            "growth_fixed_turnover": 4.0
+          },
+          "colipu": {
+            "revenue": 156.0,
+            "ownership": 0.7778,
+            "profit_basis": "100% operating earnings, then multiply disclosed interest 77.78%.",
+            "fixed_capital": 1.0,
+            "nwc_ratio": 0.04,
+            "cash_ratio": 0.04,
+            "da_ratio": 0.001,
+            "rd_ratio": 0.0018,
+            "rent_ratio": 0.0013,
+            "growth_fixed_turnover": 50.0
+          },
+          "retail": {
+            "revenue": 17.8,
+            "ownership": 0.85,
+            "profit_basis": "Whole-life-store operating estimate; 85% common proxy reflects dominant Jiumu, rather than claiming life-store legal ownership is 85%. Historical bridge separately uses exact 15% Jiumu minority loss.",
+            "fixed_capital": 2.0,
+            "nwc_ratio": 0.16,
+            "cash_ratio": 0.05,
+            "da_ratio": 0.035,
+            "rd_ratio": 0.0,
+            "rent_ratio": 0.16,
+            "growth_fixed_turnover": 2.5
+          }
+        }
+      },
+      "base": {
+        "growth": {
+          "core": [
+            0.01,
+            0.01,
+            0.01,
+            0.01,
+            0.01
+          ],
+          "colipu": [
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05
+          ],
+          "retail": [
+            0.08,
+            0.08,
+            0.08,
+            0.08,
+            0.08
+          ]
+        },
+        "ebitdar_margin": {
+          "core": [
+            0.1817,
+            0.1822,
+            0.1827,
+            0.1832,
+            0.1832
+          ],
+          "colipu": [
+            0.0321,
+            0.0321,
+            0.0324,
+            0.0327,
+            0.033
+          ],
+          "retail": [
+            0.2,
+            0.205,
+            0.21,
+            0.213,
+            0.215
+          ]
+        },
+        "core_grant": [
+          0.45,
+          0.4,
+          0.35,
+          0.3,
+          0.3
+        ],
+        "parent_tax": [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "subsidiary_tax": 0.25,
+        "nwc_ratio": {
+          "core": [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ],
+          "colipu": [
+            0.04,
+            0.04,
+            0.04,
+            0.04,
+            0.04
+          ],
+          "retail": [
+            0.16,
+            0.16,
+            0.16,
+            0.16,
+            0.16
+          ]
+        },
+        "retail_upgrade_capex": [
+          0.15,
+          0.15,
+          0.1,
+          0.05,
+          0.0
+        ],
+        "parent_extra_internal_payment": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "parent_sub_dividend_receipt": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "buyback_total_plan": 5.0,
+        "employee_grant_years": 5,
+        "common_debt": 2.9408295055,
+        "seasonal_cash_common": 4.0,
+        "restricted_operating_cash": 0.3,
+        "discount": {
+          "core": 0.1,
+          "colipu": 0.11,
+          "retail": 0.12
+        },
+        "terminal_growth": {
+          "core": 0.005,
+          "colipu": 0.015,
+          "retail": 0.005
+        },
+        "terminal_ebitdar_margin": {
+          "core": 0.1782,
+          "colipu": 0.03077,
+          "retail": 0.215
+        },
+        "working_capital_release_fraction": 0.8,
+        "terminal_note": "Years 6-10 fade each business growth/margin to stated steady levels; year 11 capital investment uses same working cash/NWC/fixed turnover, no zero reinvestment terminal. No release of fixed capital, no terminal reserve payout.",
+        "other_investments_recovery": 0.75,
+        "post_plan_replacement_payroll_base": 0.2736292248,
+        "colipu_excess_cash": 10.0,
+        "other_nci_financial_assets": 0.25,
+        "cash_classification_note": "Colipu gross financial assets = excess cash + 100% operating cash + common seasonal reserve / 77.78%; NCI rights = 22.22% of that total plus other NCI financial rights of 0.25亿元 (RMB25m). All seasonal buffer assigned to Colipu consistently in main and auxiliary; no negative net equity offsets financial-asset minority rights."
+      },
+      "cases": {
+        "base": {
+          "classification": "adopted central operating path",
+          "changes": {},
+          "timing": "Y1 onward; all three businesses, ordinary parent D subject to funds/legal profit"
+        },
+        "core_low": {
+          "classification": "core reasonable endpoint, not structural bear",
+          "changes": {
+            "growth": {
+              "core": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "colipu": [
+                0.04,
+                0.04,
+                0.04,
+                0.04,
+                0.04
+              ],
+              "retail": [
+                0.06,
+                0.06,
+                0.06,
+                0.06,
+                0.06
+              ]
+            },
+            "discount": {
+              "core": 0.105,
+              "colipu": 0.115,
+              "retail": 0.125
+            },
+            "seasonal_cash_common": 5.0,
+            "terminal_growth": {
+              "core": 0,
+              "colipu": 0.01,
+              "retail": 0
+            },
+            "other_investments_recovery": 0.5,
+            "colipu_excess_cash": 8.0
+          },
+          "timing": "Y1; shared central margins/tax/capital discipline frozen; slower volumes and larger operating liquidity"
+        },
+        "core_high": {
+          "classification": "core reasonable endpoint, not optimistic envelope",
+          "changes": {
+            "growth": {
+              "core": [
+                0.02,
+                0.02,
+                0.02,
+                0.02,
+                0.02
+              ],
+              "colipu": [
+                0.06,
+                0.06,
+                0.06,
+                0.06,
+                0.06
+              ],
+              "retail": [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+              ]
+            },
+            "discount": {
+              "core": 0.095,
+              "colipu": 0.105,
+              "retail": 0.115
+            },
+            "seasonal_cash_common": 3.0,
+            "terminal_growth": {
+              "core": 0.01,
+              "colipu": 0.02,
+              "retail": 0.01
+            },
+            "other_investments_recovery": 1.0,
+            "colipu_excess_cash": 12.0
+          },
+          "timing": "Y1; same central margin/tax model, modestly stronger nominal mix and capital efficiency unchanged"
+        },
+        "cyclical_weak": {
+          "classification": "full operating/funding scenario",
+          "changes": {
+            "growth": {
+              "core": [
+                -0.05,
+                -0.02,
+                0.03,
+                0.03,
+                0.02
+              ],
+              "colipu": [
+                0,
+                0.02,
+                0.06,
+                0.06,
+                0.05
+              ],
+              "retail": [
+                -0.03,
+                0,
+                0.05,
+                0.06,
+                0.06
+              ]
+            },
+            "ebitdar_margin": {
+              "core": [
+                0.1717,
+                0.1767,
+                0.1802,
+                0.1822,
+                0.1832
+              ],
+              "colipu": [
+                0.027,
+                0.029,
+                0.031,
+                0.0321,
+                0.033
+              ],
+              "retail": [
+                0.175,
+                0.185,
+                0.2,
+                0.208,
+                0.215
+              ]
+            },
+            "nwc_ratio": {
+              "core": [
+                0.12,
+                0.12,
+                0.11,
+                0.1,
+                0.1
+              ],
+              "colipu": [
+                0.07,
+                0.07,
+                0.06,
+                0.05,
+                0.04
+              ],
+              "retail": [
+                0.18,
+                0.18,
+                0.17,
+                0.16,
+                0.16
+              ]
+            },
+            "parent_extra_internal_payment": [
+              3,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "timing": "Y1-Y2 demand/payment delay; Y3-Y5 recovery needs receivable repayment. Tax, treasury plan, share count, rental/maintenance spending remain; weak retail losses remain real."
+        },
+        "structural_adverse": {
+          "classification": "full persistent competitive damage scenario",
+          "changes": {
+            "growth": {
+              "core": [
+                -0.03,
+                -0.03,
+                -0.03,
+                -0.03,
+                -0.03
+              ],
+              "colipu": [
+                0.03,
+                0.03,
+                0.03,
+                0.03,
+                0.03
+              ],
+              "retail": [
+                0,
+                -0.02,
+                -0.02,
+                -0.02,
+                -0.02
+              ]
+            },
+            "ebitdar_margin": {
+              "core": [
+                0.17,
+                0.165,
+                0.16,
+                0.155,
+                0.15
+              ],
+              "colipu": [
+                0.026,
+                0.024,
+                0.023,
+                0.023,
+                0.023
+              ],
+              "retail": [
+                0.175,
+                0.175,
+                0.18,
+                0.18,
+                0.18
+              ]
+            },
+            "parent_tax": [
+              0.15,
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ],
+            "core_grant": [
+              0.3,
+              0.1,
+              0,
+              0,
+              0
+            ],
+            "nwc_ratio": {
+              "core": [
+                0.12,
+                0.13,
+                0.14,
+                0.14,
+                0.14
+              ],
+              "colipu": [
+                0.07,
+                0.09,
+                0.1,
+                0.1,
+                0.1
+              ],
+              "retail": [
+                0.18,
+                0.18,
+                0.18,
+                0.18,
+                0.18
+              ]
+            },
+            "parent_extra_internal_payment": [
+              4,
+              2,
+              0,
+              0,
+              0
+            ],
+            "terminal_growth": {
+              "core": -0.01,
+              "colipu": 0,
+              "retail": -0.01
+            },
+            "terminal_ebitdar_margin": {
+              "core": 0.15,
+              "colipu": 0.023,
+              "retail": 0.18
+            },
+            "discount": {
+              "core": 0.11,
+              "colipu": 0.12,
+              "retail": 0.13
+            }
+          },
+          "timing": "Y1 channel loss and procurement repricing persist; parent loses high-tech renewal from Y2/2028; retail remains loss-making, rents/maintenance retained, no automatic zero-loss or liquidation proceeds."
+        },
+        "optimistic": {
+          "classification": "conditional upside, outside core range",
+          "changes": {
+            "growth": {
+              "core": [
+                0.04,
+                0.04,
+                0.04,
+                0.04,
+                0.04
+              ],
+              "colipu": [
+                0.08,
+                0.08,
+                0.08,
+                0.08,
+                0.08
+              ],
+              "retail": [
+                0.12,
+                0.12,
+                0.12,
+                0.12,
+                0.12
+              ]
+            },
+            "ebitdar_margin": {
+              "core": [
+                0.185,
+                0.19,
+                0.193,
+                0.195,
+                0.195
+              ],
+              "colipu": [
+                0.033,
+                0.034,
+                0.035,
+                0.036,
+                0.036
+              ],
+              "retail": [
+                0.205,
+                0.215,
+                0.225,
+                0.23,
+                0.235
+              ]
+            },
+            "terminal_ebitdar_margin": {
+              "core": 0.188,
+              "colipu": 0.0334,
+              "retail": 0.225
+            },
+            "retail_upgrade_capex": [
+              0.25,
+              0.25,
+              0.2,
+              0.15,
+              0.1
+            ]
+          },
+          "timing": "Y1 onward only if core unit share/premium mix and overseas cash, retail comparable-store returns improve; all growth working/fixed capital and rental ratios retained."
+        },
+        "funding_stress": {
+          "classification": "full short settlement/treasury plan pressure, not base",
+          "changes": {
+            "buyback_total_plan": 10,
+            "parent_extra_internal_payment": [
+              8,
+              2,
+              0,
+              0,
+              0
+            ],
+            "nwc_ratio": {
+              "core": [
+                0.12,
+                0.12,
+                0.11,
+                0.1,
+                0.1
+              ],
+              "colipu": [
+                0.1,
+                0.1,
+                0.08,
+                0.06,
+                0.04
+              ],
+              "retail": [
+                0.18,
+                0.18,
+                0.17,
+                0.16,
+                0.16
+              ]
+            }
+          },
+          "timing": "Y1-Y2 extra parent net settlement and procurement collection delay; later normal settlement return. Internal transfer moves parent cash to subsidiary pool, not a second group expense; external WC use separately in FCFF. No assumed subsidiary upstream."
+        },
+        "tax_renewal_failure": {
+          "classification": "diagnostic tax-only, not full adverse path",
+          "changes": {
+            "parent_tax": [
+              0.15,
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ]
+          },
+          "timing": "Y2/2028 mother 15% to 25%; operations/capital unchanged, tax propagates common and mother cash, D and Y5."
+        },
+        "colipu_margin_minus_50bp": {
+          "classification": "diagnostic isolated operating profitability sensitivity",
+          "changes": {
+            "ebitdar_margin": {
+              "colipu": [
+                0.0271,
+                0.0271,
+                0.0274,
+                0.0277,
+                0.028
+              ]
+            },
+            "terminal_ebitdar_margin": {
+              "colipu": 0.02577
+            }
+          },
+          "timing": "Y1 onward 50 bp pre-tax margin loss; turnover fixed deliberately, full margin+capital interaction instead in structural adverse."
+        },
+        "discount_plus_1pp": {
+          "classification": "diagnostic capital-cost-only sensitivity, not a full business scenario",
+          "changes": {
+            "discount": {
+              "core": 0.11,
+              "colipu": 0.12,
+              "retail": 0.13
+            }
+          },
+          "timing": "All dates; same operations, cash, D and capital; only valuation risk cost changes."
+        }
+      },
+      "auxiliary": {
+        "method": "No-growth maintainable core earnings power + five-year excess-ROE runoff on Colipu operating book + retail verified breakeven/runoff, then same ownership/financial asset bridge. Does not consume primary forecast arrays.",
+        "low": {
+          "core_maintainable_common_cash_earnings": 9.0,
+          "core_cost": 0.105,
+          "colipu_normal_total_profit": 3.0,
+          "colipu_debt_allocated": 0.2,
+          "colipu_cost": 0.115,
+          "retail_operating_value": -0.5,
+          "financial_bridge_case": "core_low"
+        },
+        "high": {
+          "core_maintainable_common_cash_earnings": 9.8,
+          "core_cost": 0.095,
+          "colipu_normal_total_profit": 3.3,
+          "colipu_debt_allocated": 0.2,
+          "colipu_cost": 0.105,
+          "retail_operating_value": 0.0,
+          "financial_bridge_case": "core_high"
+        },
+        "bank_debt_after_tax_cost": 0.025,
+        "franchise_years": 5
+      },
+      "source_urls": [
+        "https://static.cninfo.com.cn/finalpage/2026-10-30/1225640240.PDF",
+        "https://static.cninfo.com.cn/finalpage/2026-08-29/1225530466.PDF",
+        "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2026/2026-4/2026-04-01/12053736.PDF",
+        "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESH_STOCK/2023/2023-3/2023-03-31/8932547.PDF",
+        "https://static.cninfo.com.cn/finalpage/2026-10-16/1225606156.PDF",
+        "https://static.cninfo.com.cn/finalpage/2026-04-30/1225256928.PDF",
+        "https://static.cninfo.com.cn/finalpage/2026-04-26/1225197233.PDF",
+        "https://static.cninfo.com.cn/finalpage/2026-05-26/1225332295.PDF"
+      ]
+    }
+  }
+}

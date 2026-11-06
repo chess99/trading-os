@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:603855",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-29T00:19:00+00:00",
+  "value_range": {
+    "low": 9.64,
+    "high": 14.36,
+    "currency": "CNY"
+  },
+  "valuation_note": "主法为可支付普通股现金折现，核心端点采用4%/6%前五年成长、不同利润/资本与奖励预算、11.5%/9.5%资本成本；15年内增长归零。辅法独立历史标准化扣非盈利金额沿同一权益现金桥，不用市场倍数。结构受损付款预算失效，不提供虚假清算底。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-29T00:19:00+00:00",
+    "base_case_distributions_per_share": [
+      0.5879263652442233,
+      0.6567572528879947,
+      0.9194663557786892,
+      0.8399884846369894,
+      0.8868453377560873
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 12.8411288237476,
+        "high": 16.91339684823787
+      }
+    }
+  },
+  "return_model_note": "滚动五年实际现金分配预算，母公司法定留存及现金分别约束；内部股利宣派与到账不重复计收益，银行债三年偿还，少数扣除。库存股第二年恢复全部337444760股，SBC费用、资本和非现金加回匹配。Y5低高后续从同一基准完整状态出发，保留已分配现金与全部债权义务；海外法律容量为明示预算并作上划延迟敏感。"
+}

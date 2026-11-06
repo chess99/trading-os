@@ -30,20 +30,53 @@ def industry_catalog(root: Path, *, require_complete: bool = False) -> dict[str,
             if name in routes:
                 raise ValidationError(f"duplicate industry route: {name}")
             routes[name] = path.stem
-        topics.append({"id": path.stem, "title": title[1], "industries": names,
-                       "path": path.relative_to(root).as_posix()})
-    states = [json.loads(line) for line in
-              (root / "coverage/cn-a/research_state.jsonl").read_text(encoding="utf-8").splitlines()
-              if line.strip()]
+        topics.append(
+            {
+                "id": path.stem,
+                "title": title[1],
+                "industries": names,
+                "path": path.relative_to(root).as_posix(),
+            }
+        )
+    alias_path = root / "research/industries/market-routes.json"
+    if alias_path.exists():
+        aliases = json.loads(alias_path.read_text(encoding="utf-8"))
+        topic_ids = {topic["id"] for topic in topics}
+        for name, topic in aliases.items():
+            if topic not in topic_ids or (name in routes and routes[name] != topic):
+                raise ValidationError(f"invalid cross-market industry route: {name}")
+            routes[name] = topic
+    states = []
+    for market in ("cn-a", "hk", "us"):
+        path = root / f"coverage/{market}/research_state.jsonl"
+        if path.exists():
+            states.extend(
+                json.loads(line)
+                for line in path.read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            )
+        pool_path = root / f"screening/{market}/value-quality/pool.json"
+        if market != "cn-a" and pool_path.exists():
+            states.extend(json.loads(pool_path.read_text(encoding="utf-8"))["companies"])
+    combined = {}
+    for row in states:
+        combined[row["symbol"]] = {**combined.get(row["symbol"], {}), **row}
+    states = list(combined.values())
     named = {row["industry"] for row in states if row.get("industry")}
     missing = sorted(named - routes.keys())
     if require_complete and missing:
         raise ValidationError("industries without a research framework: " + ", ".join(missing))
     if require_complete and not topics:
         raise ValidationError("industry catalog is empty")
-    return {"topics": topics, "routes": routes, "unmapped_industries": missing,
-            "named_industry_count": len(named),
-            "unclassified_companies": [
-                {"symbol": row["symbol"], "name": row.get("name")}
-                for row in states if not row.get("industry")],
-            "scope": "经营框架覆盖与原证抽样深度不同；逐篇参阅资料和局限。"}
+    return {
+        "topics": topics,
+        "routes": routes,
+        "unmapped_industries": missing,
+        "named_industry_count": len(named),
+        "unclassified_companies": [
+            {"symbol": row["symbol"], "name": row.get("name")}
+            for row in states
+            if not row.get("industry")
+        ],
+        "scope": "经营框架覆盖与原证抽样深度不同；逐篇参阅资料和局限。",
+    }

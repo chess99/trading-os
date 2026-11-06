@@ -1,0 +1,14 @@
+"""重算当前采用的普通股模型；完整轨迹通过 --full-output 另存工作目录。"""
+import importlib.util
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[5]
+spec = importlib.util.spec_from_file_location("research_model_io", ROOT / "research/model_io.py")
+model_io = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(model_io)
+
+SELECTORS = {'low': {'path': ['scenarios', 'base', '0.11', 'current_value']}, 'high': {'path': ['scenarios', 'base', '0.1', 'current_value']}, 'distributions': {'path': ['scenarios', 'base', '0.1', 'rows'], 'column': 'dps', 'take': 5}, 'terminal_low': {'path': ['scenarios', 'base', '0.11', 'year5_terminal']}, 'terminal_high': {'path': ['scenarios', 'base', '0.1', 'year5_terminal']}}
+METADATA = {'symbol': 'CN:003006', 'report_period': '2026-Q3', 'information_cutoff': '2026-10-26T07:34:00+00:00', 'valuation_note': '核心采用前十年实际分红、十年后经营现金及母子公司法定约束下额外现金分期释放，10%—11%资本成本、长期2%增长、税惠到期后25%；合理价值5.64—6.43元。辅助正常化利润资本化8.05—11.19元，高约59%因提前资本化成熟利润且少扣资本及现金滞留，不平均两法。', 'return_model_note': '五个截止日起年度窗口；股息为经营利润扣股份报酬后60%且受法定留存和实际资金约束，已付今年5月股息不重复。股数429647790，库存股全部重授无注销益处，剩余最低回购2601.25万元已扣。第五年终值由第6—10年继续实际派息加十年末经济价值折现：无杠杆稳态经营现金资本化，十年末先现金清偿债务，额外现金及3000万元金融投资回收按未来三年、母子法定留存逐年上划和派付，不五年末强行释放全部现金。基准母公司90%税前经营份额/非税现金预算，分主体计税、前十年不用子公司股利；正利润先补亏再计法定储备，亏损累计。 母与唯一全资子百亚（浙江）健康科技有限公司分别预算；子注册4000万元有原证，实缴/旧盈余/法定余额未知，不用投资账面反推。法定公积注册50%为可停门槛，停止和持续提取两种政策均重算；母70%份额贯穿全部预测/尾期，主体税差贯通后70%归属价值为5.60—6.39元；核心第五年税率23.3479%相应更新第五年D与TV，年度容量变化保留。 内部5%为税前利率，逐主体计现金所得税且亏损无即时税退款；Gordon同时验证母子支付能力并以真实函数追加100年。 第五年为2030-10-26至2031-10-26，按均匀税前利润预算67天15%与298天25%，非实际逐月所得税。 长期3000万元权益在第10年末回收，随第11—13年现金释放折入TV5，不是第五年到账。 结构性低利润路径以真实浙江子公司第13年起每五年有条件比例减资回收多余本金，2%费用、名义资本/母账面成本同比下降，母损益与收现分开、无亏损即时退税，持股和上市股数不变；第28年清空额外现金。实缴/税基未知，延迟、10%费用及零税基现金税上界均重算。核心无需减资，五年D/TV不变。'}
+
+if __name__ == "__main__":
+    raise SystemExit(model_io.main(__file__, SELECTORS, METADATA, source_file='2026-Q3-output.json'))

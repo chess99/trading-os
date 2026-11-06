@@ -324,3 +324,89 @@ def test_unreadable_encoding_projection_is_recoverable(tmp_path):
     store.pool_path.write_bytes(b"\xff")
     with pytest.raises(QualityPoolError, match="无法读取"):
         store.read()
+
+
+@pytest.mark.parametrize("market,symbol", [("hk", "HK:00700"), ("us", "US:BRK.B")])
+def test_market_pool_isolated_from_cn_and_research(tmp_path, capsys, market, symbol):
+    _prepare_methodology(tmp_path)
+    original = _pool_payload()
+    QualityPoolStore(tmp_path).replace(original)
+    cn_before = (tmp_path / "screening/cn-a/value-quality/pool.json").read_bytes()
+    payload = _pool_payload()
+    company = payload["companies"][0]
+    company["symbol"] = symbol
+    payload["companies"] = [company]
+    payload["universe"]["securities"] = {symbol: company["name"]}
+    payload["review"]["reviewed_symbols"] = [symbol]
+    payload["review"]["baseline_count"] = 1
+    source = _write(tmp_path / "foreign.json", payload)
+    _call(tmp_path, capsys, "quality-pool", "--market", market, "replace", "--input", str(source))
+    result = _call(tmp_path, capsys, "quality-pool", "--market", market, "validate")
+    assert result["status"]["pool_count"] == 1
+    assert QualityPoolStore(tmp_path, market).read().companies[0].symbol == symbol
+    assert (tmp_path / "screening/cn-a/value-quality/pool.json").read_bytes() == cn_before
+    assert not (tmp_path / "coverage").exists()
+    assert not (tmp_path / "research").exists()
+    with pytest.raises(QualityPoolError, match="目标市场"):
+        QualityPoolStore(tmp_path).replace(payload)
+
+
+@pytest.mark.parametrize("symbol", ["HK:700", "HK:007000", "US:msft", "US:../V", "JP:7203"])
+def test_market_symbols_reject_ambiguous_or_path_values(symbol):
+    payload = _pool_payload()
+    payload["universe"]["securities"] = {symbol: "示例"}
+    with pytest.raises(QualityPoolError):
+        parse_quality_pool(payload)
+
+
+def _v3_payload():
+    payload = _pool_payload()
+    payload["schema_version"] = 3
+    payload["review"]["exclusions"] = []
+    for company in payload["companies"]:
+        company.update(issuer=company["symbol"], research_question="客户留存能否支持现金？",
+                       metrics={"as_of": payload["as_of"], "basis": "公司披露",
+                                "items": [{"label": "ROE", "value": "15%",
+                                           "period": "FY2025", "source": 0}],
+                                "history": [{"period": "FY2024", "value": "14%"}],
+                                "history_metric": "ROE", "history_source": 0,
+                                "note": "普通股口径，需核信用与资本。"})
+    return payload
+
+
+def test_v3_roundtrip_and_v2_payload_compatibility(tmp_path):
+    _prepare_methodology(tmp_path)
+    old = parse_quality_pool(_pool_payload()).payload()
+    assert all("metrics" not in company for company in old["companies"])
+    payload = _v3_payload()
+    store = QualityPoolStore(tmp_path)
+    store.replace(payload)
+    reread = store.validate().payload()
+    assert reread["schema_version"] == 3
+    assert reread["companies"][0]["metrics"]["items"][0]["source"] == 0
+    assert "关键研究问题" in store.current_path.read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize("mutation", [
+    lambda p: p["companies"][0]["metrics"]["items"][0].update(source=3),
+    lambda p: p["companies"][0]["metrics"].update(history_source=3),
+    lambda p: p["companies"][0]["metrics"].update(as_of="2027-01-01"),
+    lambda p: p["companies"][0]["metrics"]["items"][0].update(label="PE"),
+    lambda p: p["companies"][0]["metrics"]["history"].append({"period": "FY2024", "value": "13%"}),
+    lambda p: p["review"]["exclusions"].append({"symbol": "CN:600519", "reason": "现金未验证"}),
+    lambda p: p["companies"].pop(),
+])
+def test_v3_rejects_untraceable_metrics_and_incomplete_decisions(mutation):
+    payload = _v3_payload()
+    mutation(payload)
+    with pytest.raises(QualityPoolError):
+        parse_quality_pool(payload)
+
+
+def test_v3_exclusion_is_part_of_current_review():
+    payload = _v3_payload()
+    company = payload["companies"].pop()
+    payload["review"]["exclusions"] = [{"symbol": company["symbol"], "reason": "现金归属仍不清晰"}]
+    pool = parse_quality_pool(payload)
+    assert len(pool.companies) == 1
+    assert pool.review["exclusions"][0]["symbol"] == company["symbol"]

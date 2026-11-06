@@ -1,0 +1,14 @@
+"""重算当前采用的普通股模型；完整轨迹通过 --full-output 另存工作目录。"""
+import importlib.util
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[5]
+spec = importlib.util.spec_from_file_location("research_model_io", ROOT / "research/model_io.py")
+model_io = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(model_io)
+
+SELECTORS = {'low': {'path': ['result', 'value_range', 'low']}, 'high': {'path': ['result', 'value_range', 'high']}, 'distributions': {'path': ['result', 'return_model', 'base_case_distributions_per_share'], 'take': 5}, 'terminal_low': {'path': ['result', 'return_model', 'base_case_terminal_equity_value_range_per_share', 'year_5', 'low']}, 'terminal_high': {'path': ['result', 'return_model', 'base_case_terminal_equity_value_range_per_share', 'year_5', 'high']}}
+METADATA = {'symbol': 'CN:603259', 'report_period': '2026-Q3', 'information_cutoff': '2026-10-26T22:21:00+00:00', 'valuation_note': '主法为五年实际分配加第五年独立经营现金终值与净资产回收；20年经营显式衰减、资本成本9.5%—10.5%、稳态增长2.5%、非现金经营资本增量ROIC18%，另扣新增必要现金；剩余经营现金扣预算上划费用，额外净资产98%两年实现，统一费用及延迟另作压力；辅助为独立正常化盈利及十年有限增长特许价值。无报价与市场错价判断。', 'return_model_note': '五年周年预算非承诺；普通股现金排除公开市场回购。完全稀释30.34904066亿股含现有库存可能转予员工，现有债全转不重复扣债。第五年余下经营FCFE加未分配净金融资产按两年98%回收预算计价；母公司法定利润与实收现金分别约束，海外逐法人法定储备未知，前五年采用可兑现上划比例及延迟压力；Y6后为经济权益实现预算，并非永久逐法人分红账，扣新增必要现金及预算上划摩擦；全部经营现金统一2.5%及一年延迟为单独敏感。'}
+
+if __name__ == "__main__":
+    raise SystemExit(model_io.main(__file__, SELECTORS, METADATA, source_file='2026-Q3-output.json'))
