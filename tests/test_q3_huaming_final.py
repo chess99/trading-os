@@ -48,7 +48,7 @@ def independent(rate=.0975,n=600,margin_delta=0,upstream=1):
         rows.append(dict(dps=(div+refund)/.896225431,parent_cash=p,budget_cash=b,retained=u,statutory=s,registered=reg,shares=reg,old_ar=arrears,debt=debt,parent_debt=pd,operating_capital=cap))
     return {'pv':sum(x['dps']/(1+rate)**(j+1) for j,x in enumerate(rows)),'tv5':sum(x['dps']/(1+rate)**(j-4) for j,x in enumerate(rows) if j>=5),'first5':[x['dps'] for x in rows[:5]],'rows':rows}
 
-def test_huaming_independent_full_paths_and_actual():
+def test_huaming_historical_independent_full_paths_and_actual():
  
  configs=[(.105,0,1),(.09,0,1),(.0975,-.03,1),(.0975,0,.8)]
  results=[independent(r,margin_delta=m,upstream=u) for r,m,u in configs]
@@ -76,7 +76,7 @@ def test_huaming_independent_full_paths_and_actual():
  out['convergence']={str(n):p['run'](years=n,discount=.09)['pv'] for n in [100,300,600,900]}
  # Reconstruct cash liability mismatch if applicable (does not change production).
 
-def test_huaming_all_future_policy():
+def test_huaming_historical_all_future_policy():
  p=R;m=runpy.run_path(str(R/"2026-Q3.py"));run=m["run"];full=m["expand_output"](json.loads((R/"2026-Q3-output.json").read_text()))
  result={'all_paths':{},'cohorts':[],'production_counterexamples':{},'policy_bridge':{}}
  # Historical and explicit refusal paths remain visible counterfactuals, never claimed fully realised.
@@ -135,10 +135,25 @@ def test_huaming_all_future_policy():
   assert old['first5']==new['first5']
   result['policy_bridge'][mode]={'single_return':{k:old[k] for k in ['pv','tv5','first5']},'annual_residual_policy':{k:new[k] for k in ['pv','tv5','first5']},'delta_pv':new['pv']-old['pv']}
 
-def test_huaming_singlefile_regeneration(tmp_path):
+def test_huaming_historical_singlefile_regeneration(tmp_path):
  import subprocess,sys
  (tmp_path/'2026-Q3.py').write_bytes((R/'2026-Q3.py').read_bytes())
  subprocess.run([sys.executable,'-I',str(tmp_path/'2026-Q3.py')],cwd=tmp_path,check=True,stdout=subprocess.DEVNULL)
  assert (tmp_path/'2026-Q3-output.json').read_bytes()==(R/'2026-Q3-output.json').read_bytes()
  subprocess.run([sys.executable,'-I',str(tmp_path/'2026-Q3.py'),'--expand',str(tmp_path/'expanded.json')],cwd=tmp_path,check=True)
  m=runpy.run_path(str(R/'2026-Q3.py'));assert json.loads((tmp_path/'expanded.json').read_text())==m['expand_output'](json.loads((R/'2026-Q3-output.json').read_text()))
+
+
+# Preserve every original mathematical function body. Only the three historical
+# test nodes bind R/SRC to the complete extracted historical model and output.
+import pytest
+from huaming_null_contract_helpers import historical_root
+_HUAMING_REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
+_HUAMING_HISTORICAL_NODES = ('test_huaming_historical_independent_full_paths_and_actual', 'test_huaming_historical_all_future_policy', 'test_huaming_historical_singlefile_regeneration')
+
+@pytest.fixture(autouse=True)
+def _bind_huaming_historical_sources(request, tmp_path, monkeypatch):
+    if request.node.originalname in _HUAMING_HISTORICAL_NODES:
+        historical = historical_root(_HUAMING_REPO_ROOT, tmp_path)
+        monkeypatch.setitem(globals(), 'R', historical)
+        monkeypatch.setitem(globals(), 'SRC', historical)

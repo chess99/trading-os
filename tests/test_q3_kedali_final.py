@@ -100,7 +100,7 @@ def tail(state,k,g,roi,source,horizon,extra_lag=0,extra_fee=0,recovery=.35):
  tv=(pv+records[-1]['cash_to_common_budget']*(1+g)/(k-g)/(1+k)**horizon)/shares
  return {'feasible':True,'tv5':tv,'rows':records}
 
-def test_kedali_independent_allpaths():
+def test_kedali_historical_independent_allpaths():
  rebuilt={n:build(n) for n in ['base','cyclical','structural','optimistic','delay3','delay5','structural_supported','nonrenewal','margin_minus_1pp','settlement','HJ_open_loss_500m_each','parent_statutory_zero']}
  calculated={}
  for n,s in rebuilt.items():
@@ -152,7 +152,7 @@ def model():return runpy.run_path(str(D/'2026-Q3.py'))
 @lru_cache(None)
 def output():
  w=json.loads((D/'2026-Q3-output.json').read_text());raw=gzip.decompress(base64.b64decode(w['payload_gzip_base64']));assert hashlib.sha256(raw).hexdigest()==w['expanded_sha256'];return json.loads(raw)
-def test_kedali_actual_profit_capital_and_creditor():
+def test_kedali_historical_actual_profit_capital_and_creditor():
  m=model();m['tests']()
  e=dict(retained=-5,reserve=0,capital=20);assert m['profit_legal'](e,3)==0 and e['retained']==-2
  q=m['realization'](3,8,.02,.25,.4);assert q['tax']==0 and abs(q['common']-1.176)<1e-12
@@ -164,7 +164,7 @@ def test_kedali_actual_profit_capital_and_creditor():
  base=output()['scenarios']['structural_supported']
  z=m['terminal'](base['rows'][4],.1,.01,.1,exit_recovery=.15)
  assert not z['feasible']
-def test_kedali_future_cohorts_and_no_excess_cash():
+def test_kedali_historical_future_cohorts_and_no_excess_cash():
  out=output()
  for name,v in out['values'].items():
   if not v['feasible']:continue
@@ -172,7 +172,29 @@ def test_kedali_future_cohorts_and_no_excess_cash():
    assert abs(row['residual'])<1e-5
    for e in row['entities'].values():assert abs(e['cash']-e['floor'])<1e-7
    for q in row['pending']:assert q['due']-q['born']<=6 and q['due']>row['year_after_5']
-def test_kedali_singlefile_complete_roundtrip(tmp_path):
+def test_kedali_historical_singlefile_complete_roundtrip(tmp_path):
  (tmp_path/'2026-Q3.py').write_bytes((D/'2026-Q3.py').read_bytes());subprocess.run([sys.executable,'-I',str(tmp_path/'2026-Q3.py')],cwd=tmp_path,check=True,stdout=subprocess.DEVNULL)
  assert (tmp_path/'2026-Q3-output.json').read_bytes()==(D/'2026-Q3-output.json').read_bytes()
  subprocess.run([sys.executable,'-I',str(tmp_path/'2026-Q3.py'),'--expand'],cwd=tmp_path,check=True);assert json.loads((tmp_path/'2026-Q3-expanded.json').read_text())==output()
+
+
+# Original mathematical and assertion bodies stay exact; only history binds D.
+import pytest
+from kedali_null_contract_helpers import historical_root
+_KEDALI_REPO_ROOT = Path(__file__).resolve().parents[1]
+_KEDALI_HISTORICAL_NODES = ('test_kedali_historical_independent_allpaths', 'test_kedali_historical_actual_profit_capital_and_creditor', 'test_kedali_historical_future_cohorts_and_no_excess_cash', 'test_kedali_historical_singlefile_complete_roundtrip')
+
+@pytest.fixture(autouse=True)
+def _bind_kedali_historical_sources(request, tmp_path, monkeypatch):
+    if request.node.originalname not in _KEDALI_HISTORICAL_NODES:
+        yield
+        return
+    model.cache_clear()
+    output.cache_clear()
+    try:
+        historical = historical_root(_KEDALI_REPO_ROOT, tmp_path)
+        monkeypatch.setitem(globals(), 'D', historical)
+        yield
+    finally:
+        model.cache_clear()
+        output.cache_clear()

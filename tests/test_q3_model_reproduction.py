@@ -373,7 +373,18 @@ def _assert_historical_or_unmigrated_model_reproduction(model, tmp_path):
 
 @pytest.mark.parametrize("model", [path for path in MODELS if path.parent.parent.name != "603605"], ids=lambda path: path.parent.parent.name)
 def test_published_q3_model_reproduces_in_isolated_directory(model, tmp_path):
-    _assert_historical_or_unmigrated_model_reproduction(model, tmp_path)
+    code = model.parent.parent.name
+    if code == "601799":
+        from xingyu_null_contract_helpers import assert_null_current
+        assert_null_current(ROOT, tmp_path)
+    elif code == "002270":
+        from huaming_null_contract_helpers import assert_null_current
+        assert_null_current(ROOT, tmp_path)
+    elif code == "002850":
+        from kedali_null_contract_helpers import assert_null_current
+        assert_null_current(ROOT, tmp_path)
+    else:
+        _assert_historical_or_unmigrated_model_reproduction(model, tmp_path)
 
 
 def test_proya_current_transport_and_metadata(tmp_path):
@@ -385,3 +396,32 @@ def test_proya_current_full_financial_reproduction(tmp_path):
     # Full financial execution is retained separately and was not run for publication.
     from proya_current_contract_helpers import assert_full_financial
     assert_full_financial(ROOT, tmp_path)
+
+
+def test_xingyu_historical_full_producer_and_checker(tmp_path):
+    # Retain the exact original full financial comparison as a distinct history node.
+    # This node requires separate full/global execution admission, never sparse metadata qualification.
+    from xingyu_null_contract_helpers import historical_root
+    historical = historical_root(ROOT, tmp_path)
+    run = tmp_path / "historical-financial-run"
+    run.mkdir()
+    _assert_historical_or_unmigrated_model_reproduction(historical / "2026-Q3.py", run)
+
+
+def test_huaming_historical_full_producer_and_checker(tmp_path):
+    # Separate full historical financial contract; never admitted by current-null qualification.
+    from huaming_null_contract_helpers import historical_root
+    historical = historical_root(ROOT, tmp_path)
+    run = tmp_path / "historical-financial-run"
+    run.mkdir()
+    _assert_historical_or_unmigrated_model_reproduction(historical / "2026-Q3.py", run)
+
+
+def test_kedali_historical_full_producer(tmp_path):
+    # Full historical production comparison, outside current-null qualification.
+    # There was no original independent checker or method file for this company.
+    from kedali_null_contract_helpers import historical_root
+    historical = historical_root(ROOT, tmp_path)
+    run = tmp_path / "historical-financial-run"
+    run.mkdir()
+    _assert_historical_or_unmigrated_model_reproduction(historical / "2026-Q3.py", run)
