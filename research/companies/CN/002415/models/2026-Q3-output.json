@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:002415",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-26T06:21:46+00:00",
+  "value_range": {
+    "low": 23.3,
+    "high": 27.0,
+    "currency": "CNY"
+  },
+  "valuation_note": "十年实际分红与经营/金融尾部折现；r10%—9%、g2%、ROIC15%，额外净替换为收入0.7%，持续现金80%当年及20%延3年95%实现。金融存量按位置、内部本金及法律容量有限回收。重大场景和12项敏感性完整重算，不混入核心。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-26T06:21:46+00:00",
+    "base_case_distributions_per_share": [
+      1.2831377047247858,
+      1.3671435825986336,
+      1.4585860655725975,
+      1.5559029126165886,
+      1.6600657686337488
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 28.747382541479382,
+        "high": 32.910204470011365
+      }
+    }
+  },
+  "return_model_note": "五个年度窗口采用2027—2031经营能力近似，排除已付2026中期0.55元，无回购与融资稀释承诺。第五年终值独立来自第6—10年现金及第十年剩余权益，非当前PV复制。未来经营、资金归集和股利均为条件预算。"
+}

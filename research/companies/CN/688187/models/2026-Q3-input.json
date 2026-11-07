@@ -1,0 +1,758 @@
+{
+  "symbol": "CN:688187",
+  "information_cutoff": "2026-10-31T23:59:59+08:00",
+  "valuation_note": "主采用作者冻结base经营及五年实际普通D加同状态经济Y5，中心45.536497895251834元。核心端点为同经营/同D/同股数下ke10%和8%，原值40.05193971515188及52.7690014914094；PPE维护1.2/0.8倍DA分别41.7067027180252/49.366293072478484仅隔离诊断。终端g2%并扣必要再投资，主法经营尾部占核心现值46.91%。辅助零增长OE与有限资本/周转桥给38.07672901338339元持有口径，差16.38%，不平均；辅助的有限周转释放并非保守保证。保守及改善经营另列，特别本金释放仅条件诊断。当前即刻resource48.64534888298759与实际持有中心的差来自五年低收益留存，不再加任意本金折扣。 IGCT1.9207亿元认缴为受控子公司内部资金迁移，原base/core状态可额外圈定上市归属1.49545702亿元而不变原D；初始出资完全损失0.1123809413元/股仅极端诊断，不再乘67%或重复扣集团现金，未计专属增量利润/技术溢价。",
+  "return_model_note": "五个滚动年截至2027—2031年10月31日，年末付款归集近似，人民币税前；D按归普通股经营利润及税后金融收益40%普通派息并经母子现金/RE约束，非董事会承诺。0.68元末期及0.46元中期均于起点前实施，不重复纳入未来D。Y5为分配后普通股F5加剩余经营C及正常尾值，非第五年清算或特别派息；ke10%/8%端点共用相同base经营及D。普通股数固定1,330,703,412，已注销H股纳入起点，无未来回购/发行/未证稀释预算；NCI与债务已在归属现金桥内不再全额扣一次。母体及税池为聚合预算而非逐法人法律证明。 IGCT资金圈定在既存聚合子现金/RE下支持原D，实际成立/实缴/外付与单户现金位置仍未知；内部注资不记集团外流。",
+  "financial_inputs": {
+    "budget": {
+      "schema_version": 2,
+      "symbol": "CN:688187",
+      "cutoff": "2026-10-31T23:59:59+08:00",
+      "status": "STATIC_BUDGET_NOT_EXECUTED",
+      "units": "source_facts in CNY yuan; budget amounts explicitly suffix _bn in CNY billion; ratios decimal",
+      "source_facts": {
+        "shares": 1330703412,
+        "q3_cash": 3132649383,
+        "q3_trading": 100506849,
+        "q3_near_noncurrent": 3341584595,
+        "q3_other_noncurrent": 9249546328,
+        "q3_ar": 16512804284,
+        "q3_notes": 3416476053,
+        "q3_ar_financing": 1654253664,
+        "q3_inventory": 10467255285,
+        "q3_contract_assets": 1116918681,
+        "q3_prepayment": 687897690,
+        "q3_ap": 9592285346,
+        "q3_bill_payable": 4258372127,
+        "q3_contract_liabilities": 1628780834,
+        "q3_ppe": 12950079779,
+        "q3_cip": 1981534261,
+        "q3_development": 325210173,
+        "h1_rou_book": 397374641,
+        "h1_ppe_da": 743101887,
+        "h1_rou_da": 80421614,
+        "h1_land_amort": 6871983,
+        "h1_software_amort": 25177814,
+        "h1_technology_amort": 79385382,
+        "h1_long_deferred_amort": 2652781,
+        "h1_current_tax": 413777123,
+        "h1_deferred_tax": -126713118,
+        "h1_book_tax": 287064005,
+        "h1_parent_re": 24778703919,
+        "h1_parent_legal_reserve": 3852572724,
+        "h1_parent_cash": 2919606803,
+        "h1_parent_intercompany_receivables": 3369561710,
+        "h1_parent_other_payables": 6929433290,
+        "h1_capital_commitment": 2142806318,
+        "h1_equity_commitment": 67365542,
+        "h1_equipment_payable": 1002514250,
+        "october_dividend": 612123569.52,
+        "semi_ownership": 0.7786,
+        "revenue_9m_bn": {
+          "rail": 114.7,
+          "semi": 44.69,
+          "auto": 26.05,
+          "energy": 7.95,
+          "marine": 8.4,
+          "industrial": 5.35,
+          "other": 1.04
+        },
+        "revenue_9m_bn_note": "Original business-table unit is RMB100m; code must divide by 10 to convert these values to RMBbn. Field name retained as source-table token, not already bn."
+      },
+      "source_mapping": {
+        "q3_*": "Original S_Q3 pp5-9, balance sheet as of September 30, not October cash statement",
+        "h1_*": "Original S_H126 pp91-96,128,151-158,168,180-183,193-195,212,217,224-228",
+        "october_dividend": "S_H1DIV implementation, payment October 16 before cutoff",
+        "source_revenue_table": "S_Q3 p5 RMB100m cumulative; never Q3 single quarter"
+      },
+      "common_budget": {
+        "horizon_years": 10,
+        "first_forecast_label": "Rolling holder year 1 ends 2027-10-31; full-year 2027 operating run-rate proxy; no claim it is an audited FY2027 forecast",
+        "q4_2026_revenue_bn": {
+          "rail": 5.9,
+          "semi": 1.85,
+          "auto": 1.4,
+          "energy": 0.4,
+          "marine": 0.4,
+          "industrial": 0.2,
+          "other": 0.05
+        },
+        "q4_basis": "Explicit analyst delivery budget after 9M actual; rail seasonality supported FY25/FY22; not 4/3 annualization. Sensitivity on first full-year run rate kept separate.",
+        "parent_jul_oct_profit_bn": 0.8,
+        "initial_financial_classification_bn": {
+          "other_current_deposit": 0.05,
+          "nonfinancial_near": 0.1,
+          "nonfinancial_long": 2.0,
+          "restricted_cash": 0.62,
+          "operating_min_cash": 0.7
+        },
+        "classification_basis": "H1 exact classification constrains Q3 totals, not exact Q3 disclosure. Nonfinancial-long includes contract assets, prepaid construction and tax assets. Restricted cash retained as recoverable operating asset, not destroyed. October dividend removes cash and declared liability together.",
+        "nci_financial_share": 0.03,
+        "nci_financial_share_range": [
+          0.01,
+          0.05
+        ],
+        "nci_financial_basis": "Unknown subsidiary cash location; 3% is ownership-allocation budget, not governance haircut. Most large deposits sit at parent; semiconductor ownership22.14% minority applied to its separate operating flow. Show range.",
+        "ownership": {
+          "rail": 0.97,
+          "semi": 0.7786,
+          "auto": 0.7,
+          "energy": 0.97,
+          "marine": 1.0,
+          "industrial": 0.97,
+          "other": 0.97
+        },
+        "ownership_basis": "Semi exact legal share; other aggregates are explicit budgets for non-wholly-owned rail/city and nested auto JVs, not invented legal shares. Auto70% bounded60%-80%; rail97% bounded95%-99%. No minor legal-entity precision claimed.",
+        "parent_direct_fraction": {
+          "rail": 0.65,
+          "semi": 0.0,
+          "auto": 0.1,
+          "energy": 0.7,
+          "marine": 0.0,
+          "industrial": 0.6,
+          "other": 0.8
+        },
+        "parent_fraction_basis": "Economic allocation of common attributable profit/cash to direct parent vs subsidiaries, not disclosed segment. Parent is major rail/equipment operating company; semi and marine mainly subsidiaries. Test cash-payability rather than pretending all group cash immediate parent cash.",
+        "parent_financial_share": 0.9,
+        "parent_financial_share_range": [
+          0.85,
+          0.95
+        ],
+        "parent_cash_floor_bn": 0.5,
+        "parent_reserve_rate": 0.1,
+        "subs_regular_upstream_rate": 0.5,
+        "subs_reserve_rate": 0.1,
+        "subs_opening_re_bn": 6.0,
+        "subs_re_basis": "Bounded planning reserve, not statutory actual consolidated RE; legal limits modeled at aggregate common-share subsidiaries only, exclude NCI. Subject to actual-major-subsidiary profitable pool; low4/high8 bn sensitivity if binding.",
+        "parent_intercompany_net_settlement_bn": [
+          -0.3,
+          -0.2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "settlement_basis": "Normal additional net parent payments to subsidiaries, reducing parent and increasing subsidiary cash; not group cost or legal setoff. Not wholesale immediate settlement of all old balances.",
+        "initial_nonlease_debt_bn": 1.4,
+        "debt_rate": 0.02,
+        "net_debt_repayment_bn": [
+          0.15,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "debt_basis": "Rounded Q3/H1 bridge covering identified related financing and bank debt excluding lease; refinance ordinary remainder, not all liabilities payable immediately. Debt already in equity cash, no separate terminal full debt subtraction.",
+        "initial_long_contract_asset_bn": 1.2,
+        "initial_other_operating_nwc_bn": 0.0,
+        "ppe_da_annual_bn": 1.6,
+        "rou_da_annual_bn": 0.16,
+        "cash_rent_annual_bn": 0.17,
+        "land_amort_annual_bn": 0.014,
+        "other_intangible_amort_annual_bn": 0.21,
+        "lease_improvement_amort_annual_bn": 0.005,
+        "da_basis": "Annual budgeting anchored H1 detailed DA, with Q3 new-line transfers; not automatic exact twice H1. ROU operating-route adjustment and separate land/software/technology buckets.",
+        "ppe_da_allocation": {
+          "rail": 0.3,
+          "semi": 0.55,
+          "auto": 0.07,
+          "energy": 0.02,
+          "marine": 0.03,
+          "industrial": 0.02,
+          "other": 0.01
+        },
+        "new_ppe_life_years": 8,
+        "land_reinvestment_annual_bn": 0.014,
+        "purchased_software_maintenance_bn": 0.06,
+        "technology_maintenance_bn": 0.08,
+        "lease_improvement_maintenance_bn": 0.005,
+        "rd_capitalization_rate": 0.03,
+        "growth_capital_per_incremental_sales": {
+          "rail": 0.12,
+          "semi": 0.55,
+          "auto": 0.25,
+          "energy": 0.12,
+          "marine": 0.15,
+          "industrial": 0.15,
+          "other": 0.1
+        },
+        "growth_capital_basis": "Analyst capital intensity. Semiconductor existing built capacity reduces near-term incremental cash; future growth/maintenance still required. Not measured realized project ROIC.",
+        "remaining_unrecognized_capital_commitment_bn": 1.6,
+        "commitment_payment_fraction": [
+          0.65,
+          0.35,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "capital_equipment_payable_bn": 0.75,
+        "capital_payable_fraction": [
+          0.7,
+          0.3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "commitment_basis": "H1 commitment2.143bn and equipment payable1.003bn rolled to cutoff using known9M capex direction; 1.60/0.75 are estimates not Q3 actual. First creates new capacity as paid; second settles already booked asset, no second asset creation. Unrecognized existing-project cash replaces first portion of capacity-linked growth capex, not added twice.",
+        "equity_commitment_bn": 0.067365542,
+        "rd_eligible_fraction": 0.5,
+        "normal_tax_rate": 0.15,
+        "rd_extra_general": 1.0,
+        "rd_extra_semi_through_2027": 1.2,
+        "tax_permanent_addback_fraction": 0.01,
+        "net_dta_open_bn": 1.0,
+        "net_dta_changes_bn": [
+          0.06,
+          0.02,
+          -0.02,
+          -0.04,
+          -0.04,
+          -0.04,
+          -0.04,
+          -0.04,
+          -0.04,
+          -0.04
+        ],
+        "tax_payable_fraction": 0.05,
+        "software_vat_refund_bn": 0.05,
+        "temporary_vat_credit_2027_bn": 0.12,
+        "capital_grant_amort_bn": [
+          0.05,
+          0.04,
+          0.03,
+          0.02,
+          0.01,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "new_capital_grant_cash_bn": 0.0,
+        "tax_basis": "Cash tax bridge separate current/deferred and tax-payable timing. Extra deduction only eligible expenses. 2028 semi extra120% ceases; ordinary expense deduction stays. Software refund cash assumed same year; capital grant amort noncash removed from C.",
+        "credit_loss_fraction": 0.008,
+        "financial_pretax_yield": 0.02,
+        "financial_income_tax_rate": 0.15,
+        "buybacks_bn": 0.0,
+        "equity_issuance_bn": 0.0,
+        "aux_revenue_scale_from_2026": {
+          "rail": 1.0,
+          "semi": 1.0,
+          "auto": 1.0,
+          "energy": 1.0,
+          "marine": 1.0,
+          "industrial": 1.0,
+          "other": 1.0
+        },
+        "aux_basis": "Current built run-rate normalized independently from FY25/9M26, no growth and no main Y6 copying. Same tax expiry and steady maintenance; no existing-project growth profit free of capital. Separate normalized profitability parameters below.",
+        "max_output_bytes": 20971520,
+        "expected_runtime_seconds": 30,
+        "expected_peak_memory_mib": 256
+      },
+      "cases": {
+        "conservative": {
+          "mechanism": "Rail procurement/collection pressure persists; semiconductor price and ramp disappoint, no automatic full recovery; ordinary refinancing remains available.",
+          "growth_first5": {
+            "rail": [
+              0.01,
+              0.01,
+              0.02,
+              0.02,
+              0.02
+            ],
+            "semi": [
+              0.04,
+              0.05,
+              0.06,
+              0.05,
+              0.04
+            ],
+            "auto": [
+              0.08,
+              0.08,
+              0.07,
+              0.06,
+              0.05
+            ],
+            "energy": [
+              0,
+              0.03,
+              0.03,
+              0.02,
+              0.02
+            ],
+            "marine": [
+              0.03,
+              0.03,
+              0.03,
+              0.02,
+              0.02
+            ],
+            "industrial": [
+              0.03,
+              0.03,
+              0.03,
+              0.02,
+              0.02
+            ],
+            "other": [
+              0.01,
+              0.01,
+              0.01,
+              0.01,
+              0.01
+            ]
+          },
+          "gm_first5": {
+            "rail": [
+              0.38,
+              0.38,
+              0.38,
+              0.38,
+              0.38
+            ],
+            "semi": [
+              0.22,
+              0.22,
+              0.23,
+              0.23,
+              0.23
+            ],
+            "auto": [
+              0.2,
+              0.2,
+              0.2,
+              0.21,
+              0.21
+            ],
+            "energy": [
+              0.18,
+              0.19,
+              0.2,
+              0.2,
+              0.2
+            ],
+            "marine": [
+              0.23,
+              0.23,
+              0.23,
+              0.23,
+              0.23
+            ],
+            "industrial": [
+              0.23,
+              0.23,
+              0.23,
+              0.23,
+              0.23
+            ],
+            "other": [
+              0.18,
+              0.18,
+              0.18,
+              0.18,
+              0.18
+            ]
+          },
+          "rd_fraction": 0.11,
+          "sga_fraction": 0.065,
+          "nwc_ratio_first5": [
+            0.6,
+            0.6,
+            0.59,
+            0.58,
+            0.57
+          ],
+          "nwc_terminal_ratio": 0.55,
+          "maintenance_ppe_factor": 1.15,
+          "ke": 0.1,
+          "terminal_growth": 0.01,
+          "ordinary_payout": 0.35,
+          "release_fraction": 0.15,
+          "financial_target_revenue_ratio": 0.12,
+          "rd_extra_after_2027": 0.0,
+          "growth_existing_capacity_factor_first2": 0.75,
+          "aux_gm": {
+            "rail": 0.38,
+            "semi": 0.23,
+            "auto": 0.2,
+            "energy": 0.2,
+            "marine": 0.23,
+            "industrial": 0.23,
+            "other": 0.18
+          }
+        },
+        "base": {
+          "mechanism": "Rail keeps reliability/system position with modest growth; IGBT commercial, SiC gradual; auto growth but competition; partial working-capital recovery and gradual excess-cash return.",
+          "growth_first5": {
+            "rail": [
+              0.05,
+              0.04,
+              0.035,
+              0.03,
+              0.025
+            ],
+            "semi": [
+              0.12,
+              0.1,
+              0.08,
+              0.07,
+              0.06
+            ],
+            "auto": [
+              0.16,
+              0.13,
+              0.1,
+              0.08,
+              0.06
+            ],
+            "energy": [
+              0.1,
+              0.08,
+              0.06,
+              0.04,
+              0.03
+            ],
+            "marine": [
+              0.06,
+              0.05,
+              0.04,
+              0.03,
+              0.025
+            ],
+            "industrial": [
+              0.06,
+              0.05,
+              0.04,
+              0.03,
+              0.025
+            ],
+            "other": [
+              0.02,
+              0.02,
+              0.02,
+              0.02,
+              0.02
+            ]
+          },
+          "gm_first5": {
+            "rail": [
+              0.4,
+              0.4,
+              0.395,
+              0.39,
+              0.39
+            ],
+            "semi": [
+              0.24,
+              0.25,
+              0.26,
+              0.26,
+              0.25
+            ],
+            "auto": [
+              0.22,
+              0.22,
+              0.22,
+              0.22,
+              0.22
+            ],
+            "energy": [
+              0.2,
+              0.21,
+              0.22,
+              0.22,
+              0.22
+            ],
+            "marine": [
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ],
+            "industrial": [
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ],
+            "other": [
+              0.18,
+              0.18,
+              0.18,
+              0.18,
+              0.18
+            ]
+          },
+          "rd_fraction": 0.107,
+          "sga_fraction": 0.062,
+          "nwc_ratio_first5": [
+            0.55,
+            0.54,
+            0.53,
+            0.52,
+            0.51
+          ],
+          "nwc_terminal_ratio": 0.5,
+          "maintenance_ppe_factor": 1.0,
+          "ke": 0.09,
+          "terminal_growth": 0.02,
+          "ordinary_payout": 0.4,
+          "release_fraction": 0.25,
+          "financial_target_revenue_ratio": 0.1,
+          "rd_extra_after_2027": 1.0,
+          "growth_existing_capacity_factor_first2": 0.5,
+          "aux_gm": {
+            "rail": 0.39,
+            "semi": 0.245,
+            "auto": 0.22,
+            "energy": 0.21,
+            "marine": 0.25,
+            "industrial": 0.25,
+            "other": 0.18
+          }
+        },
+        "improvement": {
+          "mechanism": "Observed price letters convert to realized price, yield and validation support built capacity; no free capital, tax or NCI exclusion; faster but gradual cash return.",
+          "growth_first5": {
+            "rail": [
+              0.06,
+              0.06,
+              0.04,
+              0.04,
+              0.03
+            ],
+            "semi": [
+              0.15,
+              0.15,
+              0.1,
+              0.1,
+              0.08
+            ],
+            "auto": [
+              0.2,
+              0.18,
+              0.12,
+              0.1,
+              0.08
+            ],
+            "energy": [
+              0.15,
+              0.12,
+              0.08,
+              0.05,
+              0.04
+            ],
+            "marine": [
+              0.08,
+              0.07,
+              0.05,
+              0.04,
+              0.03
+            ],
+            "industrial": [
+              0.08,
+              0.07,
+              0.05,
+              0.04,
+              0.03
+            ],
+            "other": [
+              0.03,
+              0.03,
+              0.02,
+              0.02,
+              0.02
+            ]
+          },
+          "gm_first5": {
+            "rail": [
+              0.41,
+              0.41,
+              0.41,
+              0.4,
+              0.4
+            ],
+            "semi": [
+              0.25,
+              0.27,
+              0.28,
+              0.28,
+              0.27
+            ],
+            "auto": [
+              0.23,
+              0.24,
+              0.24,
+              0.24,
+              0.24
+            ],
+            "energy": [
+              0.21,
+              0.22,
+              0.23,
+              0.23,
+              0.23
+            ],
+            "marine": [
+              0.26,
+              0.26,
+              0.26,
+              0.26,
+              0.26
+            ],
+            "industrial": [
+              0.26,
+              0.26,
+              0.26,
+              0.26,
+              0.26
+            ],
+            "other": [
+              0.19,
+              0.19,
+              0.19,
+              0.19,
+              0.19
+            ]
+          },
+          "rd_fraction": 0.105,
+          "sga_fraction": 0.06,
+          "nwc_ratio_first5": [
+            0.53,
+            0.51,
+            0.5,
+            0.49,
+            0.49
+          ],
+          "nwc_terminal_ratio": 0.49,
+          "maintenance_ppe_factor": 0.95,
+          "ke": 0.085,
+          "terminal_growth": 0.02,
+          "ordinary_payout": 0.45,
+          "release_fraction": 0.35,
+          "financial_target_revenue_ratio": 0.09,
+          "rd_extra_after_2027": 1.0,
+          "growth_existing_capacity_factor_first2": 0.5,
+          "aux_gm": {
+            "rail": 0.4,
+            "semi": 0.26,
+            "auto": 0.235,
+            "energy": 0.22,
+            "marine": 0.26,
+            "industrial": 0.26,
+            "other": 0.19
+          }
+        }
+      },
+      "sensitivities": [
+        {
+          "name": "ke_lower",
+          "path": "case.ke",
+          "delta": -0.01
+        },
+        {
+          "name": "ke_higher",
+          "path": "case.ke",
+          "delta": 0.01
+        },
+        {
+          "name": "maintenance_lower",
+          "path": "case.maintenance_ppe_factor",
+          "value": 0.8
+        },
+        {
+          "name": "maintenance_higher",
+          "path": "case.maintenance_ppe_factor",
+          "value": 1.2
+        },
+        {
+          "name": "release_slower",
+          "path": "case.release_fraction",
+          "value": 0.15
+        },
+        {
+          "name": "release_faster",
+          "path": "case.release_fraction",
+          "value": 0.35
+        }
+      ]
+    },
+    "details": {
+      "schema_version": 1,
+      "type": "additional_transcribed_source_facts_only",
+      "source": "unchanged S_H126 pp156-159,183; ordinary source read after review",
+      "h1_land_book_yuan": 608522784,
+      "h1_software_book_yuan": 158848696,
+      "h1_technology_book_yuan": 625546148,
+      "h1_lease_improvement_book_yuan": 23920333,
+      "notes": [
+        "No fresh download. Land/other intangibles separated from ROU.",
+        "The input source field revenue_9m_bn retains 亿元 source-table values; engine explicit /10 converts to bn. No other implicit unit conversion."
+      ],
+      "development_transfer_fraction_first_year": 0.5,
+      "development_transfer_fraction_later": 1.0,
+      "development_transfer_basis": "Explicit timing budget: near-complete projects at H1, half current development balance transfers in first rolling year then prior balance next year; not source-disclosed exact transfer. Development itself is not amortized before transfer."
+    },
+    "policy": {
+      "schema_version": 3,
+      "supersedes_only": "v2 special-release adoption and explicit/tail financial-income payout mismatch",
+      "ordinary_payout_all_operating_paths": 0.4,
+      "release_fraction_all_operating_paths": 0.0,
+      "same_operating_base_release_diagnostics": [
+        0.15,
+        0.25,
+        0.35
+      ],
+      "core_value_adoption": "No automatic selection before authorized numerical materiality review; show resource and policy values separately; D/Y5 always same ordinary-policy state",
+      "financial_policy_materiality_threshold": 0.25,
+      "boundary_jump_review_threshold": 0.2,
+      "tail_capital_rule": "normal equity earnings plus eligible DA less maintenance cash less g times common attributable operating capital; no perpetual DTA reversal or unpaid-construction release",
+      "no_policy_authority_or_company_commitment_implied": true
+    },
+    "igct_bridge_spec": {
+      "scope": "Existing saved-state cash reservation and rights diagnostic; no operating producer or new project profit",
+      "trigger_condition": "JV subscription not yet implemented at cutoff; retain the full committed contribution as unavailable for upstream, without assuming payment date",
+      "subscription_cash_yuan": 192070000,
+      "listed_share_of_semiconductor": 0.7786,
+      "JV_controlled_share": 0.67,
+      "external_cash_yuan": 8600000,
+      "external_intangible_contract_value_yuan": 86000000,
+      "reserve_common_formula": "192070000 * 0.7786",
+      "reserve_NCI_formula": "192070000 * (1-0.7786)",
+      "cash_test": "After every original paid dividend and original upstream, common subsidiary financial cash must exceed original subsidiary floor plus common reserve; NCI financial cash must exceed NCI reserve. Parent existing cash floor and RE stay checked. Include original opening state and all10years for base, ke_lower, ke_higher, maintenance_lower, maintenance_higher and base auxiliary.",
+      "parent_and_group_mapping": "Reservation occurs inside common-attributable subsidiaries, not a second parent cash cost. Actual semi-to-JV payment is internal consolidated transfer. No subtraction from group closing cash, no new borrowing, no extra financial income or JV value.",
+      "rights_diagnostic": "Maximum initial subscribed-cash loss exposure to listed shareholders is192070000*0.7786; do not multiply67%again. Per share divide1330703412. This is an extreme total-loss diagnosis of this initial contribution only, not a forecast or bound on all future enterprise risks. Capital exchanged for technical/equity rights is not automatically a permanent loss. No added technical asset value or extra project earnings.",
+      "technical_rights_boundary": "Separate contract86m assets from economic realizability; project consideration paid may be recoverable0..paid capital in a finite diagnostic, never added on top of already preserved cash or existing operating profits.",
+      "unknowns": [
+        "actual establishment",
+        "actual contribution",
+        "actual external spending",
+        "entity-specific cash location",
+        "incremental spending outside aggregate research/capital budgets"
+      ],
+      "no_claim": "Cash sufficiency under aggregate budgets is not legal permission or a statement that the project is explicitly contained in original forecast. If already paid/spent at9/30, disclosed cash/assets already include it; do not deduct subscription again."
+    }
+  }
+}

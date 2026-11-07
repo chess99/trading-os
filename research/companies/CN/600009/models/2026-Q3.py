@@ -1,0 +1,26 @@
+"""Recompute the adopted company model from readable current inputs."""
+from pathlib import Path
+import json
+import sys
+
+sys.dont_write_bytecode = True
+sys.stdout.reconfigure(encoding="utf-8")
+HERE = Path(__file__).resolve().parent
+SOURCE = HERE / "2026-Q3"
+sys.path.insert(0, str(SOURCE))
+import model
+
+data = json.loads((SOURCE / "inputs.json").read_text(encoding="utf-8"))
+model.self_tests(data)
+base = model.solve(data)
+core = {name: model.solve(data, changes) for name, changes in data["core_endpoints"].items()}
+value_range = {**{k: round(v["valuation"]["per_share"], 1) for k, v in core.items()}, "currency": "CNY"}
+terminal = {}
+for name, p in data["core_endpoints"].items():
+    continuation = model.continuation(base["rows"][-1]["common_operating_profit"], p["cost_of_equity"], p["terminal_growth"], p["terminal_incremental_roic"])
+    terminal[name] = round((continuation["value"] + base["terminal"]["liquid"] + base["terminal"]["illiquid"]) / base["future_shares"], 2)
+return_model = {"schema_version": 1, "method": "annual_common_equity_irr_v1", "currency": "CNY", "model_as_of": data["information_cutoff"], "base_case_distributions_per_share": [round(r["distribution_per_share"], 4) for r in base["rows"]], "base_case_terminal_equity_value_range_per_share": {"year_5": terminal}}
+
+PUBLICATION = {'symbol': 'CN:600009', 'report_period': '2026-Q3', 'valuation_note': '主法为净VAT现金租金后的普通股经营现金DCF加可辨认金融资产回收值，未重复扣整租债。核心低/高分别采用T3新增年租6.5/4.5亿元、Ke9.5%/8.5%、g1.5%/2%、新增权益资本回报8%/10%，实际端点12.2442/14.4616元，按0.1元展示。基准金融桥118.5324亿元，主值13.2510元；辅助Y5经营盈利13倍资本化得14.2121元，共享经营输入不构成独立预测证明。周期弱12.95、结构弱7.79、较好16.41不并入核心。T3租费是弱面积/租价类比的条件预算，非已签价。主法采用金融资产可正常实现并最终服务普通股的判断，未承诺特别分红；55%派息、现金税后1.5%且五年全部经济利益统一按Ke9%贴现的政策现值11.8745元，约1.3765元差额含低风险金融本金贴现口径与实现时点，不认作确定损失或任意治理折价。', 'return_model_note': '未来五个近似十二月窗口实际每股普通现金分配0.5269/0.5107/0.5075/0.4775/0.4987元；以约55%利润预算并受集团现金、母体净可用资金和可分利润最低值约束，不是利润或FCF冒充股息。首年2026归母估计25亿元×55%扣已付H1每股0.27元，再加下一年半年度目标；截止前0.26及0.27元不重收。Y5同一基准经营状态及已扣分红后价值14.33—16.33元，仅更换终值Ke/g/新增回报，不使用核心另一条租金路径的现金。中心经营价值250.1791亿元+分配后流动金融117.6420亿元+非流动11.4196亿元=379.2406亿元。未来完全稀释/分配股数24.87946753亿股，拟注销22.1936万股同时付386.66万元；解锁不增股。原始资产基准2026-09-30，按2027—2031会计年水平近似后五周年、期末折现，Y5为2031年10月底附近；两月计时及未报10月现金±2亿元诊断约±0.20元/股。模型期初预算清偿母体票据，并释放已预算支付的同项工程/回购义务缓冲，余留79.63亿元资金池和运营底线；完整10%盈余提取未限制预算D，但母体法定储备余额未冒充已核。'}
+PUBLICATION.update(value_range=value_range, return_model=return_model)
+print(json.dumps(PUBLICATION, ensure_ascii=False, allow_nan=False, indent=2))

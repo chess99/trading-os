@@ -1,0 +1,1131 @@
+{
+  "task_id": "CN:688036",
+  "common": {
+    "information_cutoff": "2026-10-31T23:59:59+08:00",
+    "asset_date": "2026-09-30",
+    "unit": "CNY billion except ratios, days and shares",
+    "years": [
+      2027,
+      2028,
+      2029,
+      2030,
+      2031,
+      2032,
+      2033,
+      2034
+    ],
+    "cash_payment_dates": [
+      "2027-10-31",
+      "2028-10-31",
+      "2029-10-31",
+      "2030-10-31",
+      "2031-10-31",
+      "2032-10-31",
+      "2033-10-31",
+      "2034-10-31"
+    ],
+    "depreciation_rate": 0.2,
+    "nci_payout": 0.5,
+    "statutory_reserve_rate": 0.1,
+    "statutory_cap_sharecapital_fraction": 0.5,
+    "normal_accrual_charge_ratio": 0.025,
+    "year5_endpoints": {
+      "low": {
+        "operating_discount_rate": 0.115,
+        "terminal_growth": 0.015
+      },
+      "high": {
+        "operating_discount_rate": 0.1,
+        "terminal_growth": 0.025
+      }
+    },
+    "q3_income_tax_share_budget": 0.7,
+    "income_tax_lag_fraction": 0.5
+  },
+  "scenarios": [
+    {
+      "id": "base",
+      "series": {
+        "revenue": [
+          60,
+          62,
+          65,
+          68,
+          71,
+          74,
+          76.5,
+          78
+        ],
+        "gross_margin": [
+          0.205,
+          0.208,
+          0.211,
+          0.213,
+          0.215,
+          0.215,
+          0.215,
+          0.215
+        ],
+        "selling": [
+          0.083,
+          0.082,
+          0.081,
+          0.08,
+          0.079,
+          0.079,
+          0.079,
+          0.079
+        ],
+        "rd": [
+          0.05,
+          0.05,
+          0.05,
+          0.049,
+          0.049,
+          0.049,
+          0.049,
+          0.049
+        ],
+        "admin": [
+          0.025,
+          0.025,
+          0.0245,
+          0.024,
+          0.024,
+          0.024,
+          0.024,
+          0.024
+        ],
+        "other_cost": [
+          0.006,
+          0.006,
+          0.0055,
+          0.005,
+          0.005,
+          0.005,
+          0.005,
+          0.005
+        ],
+        "inventory_ratio": [
+          0.24,
+          0.2,
+          0.18,
+          0.17,
+          0.16,
+          0.16,
+          0.16,
+          0.16
+        ],
+        "ar_ratio": [
+          0.075,
+          0.075,
+          0.073,
+          0.072,
+          0.07,
+          0.07,
+          0.07,
+          0.07
+        ],
+        "prepay_ratio": [
+          0.025,
+          0.022,
+          0.02,
+          0.017,
+          0.015,
+          0.015,
+          0.015,
+          0.015
+        ],
+        "ap_days": [
+          85,
+          83,
+          80,
+          78,
+          75,
+          75,
+          75,
+          75
+        ],
+        "other_assets_ratio": [
+          0.027,
+          0.027,
+          0.027,
+          0.027,
+          0.027,
+          0.027,
+          0.027,
+          0.027
+        ],
+        "contract_ratio": [
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028
+        ],
+        "other_liabilities_ratio": [
+          0.032,
+          0.032,
+          0.032,
+          0.032,
+          0.032,
+          0.032,
+          0.032,
+          0.032
+        ],
+        "accrual_pool_ratio": [
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025
+        ],
+        "fixed_ratio": [
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.075
+        ],
+        "engineering_ap_ratio": [
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002
+        ],
+        "inventory_loss": [
+          0.35,
+          0.1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "incremental_accrual_cost": [
+          0.1,
+          0.05,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "payout": [
+          0.4,
+          0.5,
+          0.55,
+          0.6,
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ],
+        "debt_target": [
+          4.8,
+          4.4,
+          4.0,
+          3.8,
+          3.6,
+          3.6,
+          3.6,
+          3.6
+        ],
+        "loan_collection": [
+          0.6,
+          0.6,
+          0.5,
+          0.4,
+          0.3,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "mother_pay_settlement": [
+          0.7,
+          0.6,
+          0.5,
+          0.4,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "fee_pay_ratio": [
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025
+        ],
+        "mother_own_net_profit": [
+          -0.25,
+          -0.25,
+          -0.25,
+          -0.25,
+          -0.25,
+          -0.25,
+          -0.25,
+          -0.25
+        ],
+        "mother_local_cash_flow": [
+          -0.4,
+          -0.4,
+          -0.4,
+          -0.4,
+          -0.4,
+          -0.4,
+          -0.4,
+          -0.4
+        ],
+        "operating_deposit_ratio": [
+          0.018,
+          0.018,
+          0.018,
+          0.018,
+          0.018,
+          0.018,
+          0.018,
+          0.018
+        ]
+      },
+      "parameters": {
+        "tax": 0.2,
+        "ke": 0.115,
+        "operating_discount_rate": 0.105,
+        "terminal_growth": 0.02,
+        "debt_rate": 0.045,
+        "treasury_aftertax_yield": 0.012,
+        "cash_buffer_ratio": 0.05,
+        "mother_cash_buffer": 1.0,
+        "debt_cap": 7.0,
+        "nci_profit_fraction": 0.03,
+        "nci_book_multiple": 1.5,
+        "other_fin_recovery": 0.7,
+        "equity_invest_recovery": 0.85,
+        "h_net_factor": 1.0,
+        "cny_per_hkd_budget": 0.91,
+        "h_received_fraction": 0.5,
+        "mother_h2_cash_delta": -0.8,
+        "mother_h2_profit": 0.6,
+        "declaration_fraction": 0.85,
+        "dividend_receipt_fraction": 0.85,
+        "subsidiary_cash_mobility": 0.75,
+        "q3_engineering_ap_budget": 0.12,
+        "method2_multiple_low": 10,
+        "method2_multiple_center": 11.5,
+        "method2_multiple_high": 13,
+        "q3_fee_ap_budget": 1.5,
+        "non_ce_necessary_fraction": 0.8
+      },
+      "october_bridge": {
+        "revenue": 4.5,
+        "inventory": -0.4,
+        "ar": 0.1,
+        "prepay": 0.1,
+        "trade_pay": -0.5,
+        "other_assets": 0,
+        "contract": 0.05,
+        "other_liabilities": 0,
+        "accrual_pool": -0.05,
+        "fixed": 0.02,
+        "engineering_pay": 0,
+        "debt_change": 0,
+        "inventory_loss": 0.03,
+        "incremental_accrual_cost": 0.01,
+        "expense_pay": -0.1,
+        "operating_deposit": 0.0
+      }
+    },
+    {
+      "id": "structural_weak",
+      "series": {
+        "revenue": [
+          53,
+          51,
+          52,
+          53,
+          54,
+          54.8,
+          55.6,
+          56.4
+        ],
+        "gross_margin": [
+          0.185,
+          0.19,
+          0.195,
+          0.198,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "selling": [
+          0.09,
+          0.089,
+          0.087,
+          0.086,
+          0.085,
+          0.085,
+          0.085,
+          0.085
+        ],
+        "rd": [
+          0.055,
+          0.055,
+          0.054,
+          0.053,
+          0.052,
+          0.052,
+          0.052,
+          0.052
+        ],
+        "admin": [
+          0.026,
+          0.026,
+          0.026,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025
+        ],
+        "other_cost": [
+          0.009,
+          0.009,
+          0.008,
+          0.007,
+          0.007,
+          0.007,
+          0.007,
+          0.007
+        ],
+        "inventory_ratio": [
+          0.27,
+          0.25,
+          0.23,
+          0.22,
+          0.21,
+          0.21,
+          0.21,
+          0.21
+        ],
+        "ar_ratio": [
+          0.085,
+          0.085,
+          0.083,
+          0.082,
+          0.08,
+          0.08,
+          0.08,
+          0.08
+        ],
+        "prepay_ratio": [
+          0.03,
+          0.028,
+          0.025,
+          0.023,
+          0.02,
+          0.02,
+          0.02,
+          0.02
+        ],
+        "ap_days": [
+          75,
+          73,
+          71,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "other_assets_ratio": [
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03
+        ],
+        "contract_ratio": [
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025
+        ],
+        "other_liabilities_ratio": [
+          0.034,
+          0.034,
+          0.034,
+          0.034,
+          0.034,
+          0.034,
+          0.034,
+          0.034
+        ],
+        "accrual_pool_ratio": [
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028
+        ],
+        "fixed_ratio": [
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08,
+          0.08
+        ],
+        "engineering_ap_ratio": [
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002
+        ],
+        "inventory_loss": [
+          0.8,
+          0.3,
+          0.15,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "incremental_accrual_cost": [
+          0.3,
+          0.15,
+          0.05,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "payout": [
+          0.2,
+          0.25,
+          0.35,
+          0.4,
+          0.45,
+          0.45,
+          0.45,
+          0.45
+        ],
+        "debt_target": [
+          6.0,
+          6.3,
+          6.3,
+          6.0,
+          5.8,
+          5.8,
+          5.8,
+          5.8
+        ],
+        "loan_collection": [
+          0.2,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "mother_pay_settlement": [
+          1.0,
+          0.8,
+          0.6,
+          0.4,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "fee_pay_ratio": [
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028,
+          0.028
+        ],
+        "mother_own_net_profit": [
+          -0.5,
+          -0.5,
+          -0.5,
+          -0.5,
+          -0.5,
+          -0.5,
+          -0.5,
+          -0.5
+        ],
+        "mother_local_cash_flow": [
+          -0.65,
+          -0.65,
+          -0.65,
+          -0.65,
+          -0.65,
+          -0.65,
+          -0.65,
+          -0.65
+        ],
+        "operating_deposit_ratio": [
+          0.022,
+          0.022,
+          0.022,
+          0.022,
+          0.022,
+          0.022,
+          0.022,
+          0.022
+        ]
+      },
+      "parameters": {
+        "tax": 0.22,
+        "ke": 0.14,
+        "operating_discount_rate": 0.125,
+        "terminal_growth": 0.01,
+        "debt_rate": 0.055,
+        "treasury_aftertax_yield": 0.01,
+        "cash_buffer_ratio": 0.06,
+        "mother_cash_buffer": 1.3,
+        "debt_cap": 8.0,
+        "nci_profit_fraction": 0.05,
+        "nci_book_multiple": 1.2,
+        "other_fin_recovery": 0.5,
+        "equity_invest_recovery": 0.65,
+        "h_net_factor": 0.97,
+        "cny_per_hkd_budget": 0.88,
+        "h_received_fraction": 0.0,
+        "mother_h2_cash_delta": -1.5,
+        "mother_h2_profit": 0.0,
+        "declaration_fraction": 0.65,
+        "dividend_receipt_fraction": 0.6,
+        "subsidiary_cash_mobility": 0.5,
+        "q3_engineering_ap_budget": 0.15,
+        "method2_multiple_low": 8,
+        "method2_multiple_center": 9,
+        "method2_multiple_high": 10,
+        "q3_fee_ap_budget": 1.7,
+        "non_ce_necessary_fraction": 0.9
+      },
+      "october_bridge": {
+        "revenue": 4.0,
+        "inventory": 0.2,
+        "ar": 0.2,
+        "prepay": 0.15,
+        "trade_pay": -0.8,
+        "other_assets": 0,
+        "contract": 0,
+        "other_liabilities": 0,
+        "accrual_pool": -0.1,
+        "fixed": 0.01,
+        "engineering_pay": 0,
+        "debt_change": 0.3,
+        "inventory_loss": 0.08,
+        "incremental_accrual_cost": 0.03,
+        "expense_pay": -0.15,
+        "operating_deposit": 0.0
+      }
+    },
+    {
+      "id": "execution_better",
+      "series": {
+        "revenue": [
+          64,
+          70,
+          76,
+          82,
+          87,
+          91,
+          94,
+          96
+        ],
+        "gross_margin": [
+          0.215,
+          0.22,
+          0.225,
+          0.228,
+          0.23,
+          0.23,
+          0.23,
+          0.23
+        ],
+        "selling": [
+          0.082,
+          0.081,
+          0.08,
+          0.079,
+          0.078,
+          0.078,
+          0.078,
+          0.078
+        ],
+        "rd": [
+          0.052,
+          0.051,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ],
+        "admin": [
+          0.025,
+          0.0245,
+          0.024,
+          0.024,
+          0.024,
+          0.024,
+          0.024,
+          0.024
+        ],
+        "other_cost": [
+          0.005,
+          0.005,
+          0.005,
+          0.005,
+          0.005,
+          0.005,
+          0.005,
+          0.005
+        ],
+        "inventory_ratio": [
+          0.22,
+          0.18,
+          0.16,
+          0.155,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "ar_ratio": [
+          0.07,
+          0.069,
+          0.068,
+          0.066,
+          0.065,
+          0.065,
+          0.065,
+          0.065
+        ],
+        "prepay_ratio": [
+          0.02,
+          0.018,
+          0.015,
+          0.015,
+          0.015,
+          0.015,
+          0.015,
+          0.015
+        ],
+        "ap_days": [
+          90,
+          87,
+          84,
+          82,
+          80,
+          80,
+          80,
+          80
+        ],
+        "other_assets_ratio": [
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025
+        ],
+        "contract_ratio": [
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03
+        ],
+        "other_liabilities_ratio": [
+          0.032,
+          0.032,
+          0.032,
+          0.032,
+          0.032,
+          0.032,
+          0.032,
+          0.032
+        ],
+        "accrual_pool_ratio": [
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025,
+          0.025
+        ],
+        "fixed_ratio": [
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.075,
+          0.075
+        ],
+        "engineering_ap_ratio": [
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002,
+          0.002
+        ],
+        "inventory_loss": [
+          0.1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "incremental_accrual_cost": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "payout": [
+          0.45,
+          0.55,
+          0.6,
+          0.65,
+          0.65,
+          0.65,
+          0.65,
+          0.65
+        ],
+        "debt_target": [
+          4.5,
+          4.0,
+          3.5,
+          3.0,
+          2.8,
+          2.8,
+          2.8,
+          2.8
+        ],
+        "loan_collection": [
+          0.8,
+          0.8,
+          0.6,
+          0.5,
+          0.4,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "mother_pay_settlement": [
+          0.6,
+          0.5,
+          0.4,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "fee_pay_ratio": [
+          0.024,
+          0.024,
+          0.024,
+          0.024,
+          0.024,
+          0.024,
+          0.024,
+          0.024
+        ],
+        "mother_own_net_profit": [
+          -0.15,
+          -0.15,
+          -0.15,
+          -0.15,
+          -0.15,
+          -0.15,
+          -0.15,
+          -0.15
+        ],
+        "mother_local_cash_flow": [
+          -0.25,
+          -0.25,
+          -0.25,
+          -0.25,
+          -0.25,
+          -0.25,
+          -0.25,
+          -0.25
+        ],
+        "operating_deposit_ratio": [
+          0.015,
+          0.015,
+          0.015,
+          0.015,
+          0.015,
+          0.015,
+          0.015,
+          0.015
+        ]
+      },
+      "parameters": {
+        "tax": 0.18,
+        "ke": 0.105,
+        "operating_discount_rate": 0.095,
+        "terminal_growth": 0.025,
+        "debt_rate": 0.04,
+        "treasury_aftertax_yield": 0.014,
+        "cash_buffer_ratio": 0.045,
+        "mother_cash_buffer": 0.9,
+        "debt_cap": 7.0,
+        "nci_profit_fraction": 0.02,
+        "nci_book_multiple": 2.0,
+        "other_fin_recovery": 0.85,
+        "equity_invest_recovery": 1.0,
+        "h_net_factor": 1.03,
+        "cny_per_hkd_budget": 0.94,
+        "h_received_fraction": 1.0,
+        "mother_h2_cash_delta": -0.3,
+        "mother_h2_profit": 1.0,
+        "declaration_fraction": 0.9,
+        "dividend_receipt_fraction": 0.95,
+        "subsidiary_cash_mobility": 0.85,
+        "q3_engineering_ap_budget": 0.1,
+        "method2_multiple_low": 12,
+        "method2_multiple_center": 13.5,
+        "method2_multiple_high": 15,
+        "q3_fee_ap_budget": 1.3,
+        "non_ce_necessary_fraction": 0.7
+      },
+      "october_bridge": {
+        "revenue": 5.0,
+        "inventory": -0.6,
+        "ar": 0,
+        "prepay": -0.1,
+        "trade_pay": -0.3,
+        "other_assets": 0,
+        "contract": 0.1,
+        "other_liabilities": 0,
+        "accrual_pool": 0,
+        "fixed": 0.03,
+        "engineering_pay": 0,
+        "debt_change": 0,
+        "inventory_loss": 0,
+        "incremental_accrual_cost": 0,
+        "expense_pay": -0.05,
+        "operating_deposit": 0.0
+      }
+    }
+  ],
+  "provenance": [
+    {
+      "covers_json_pointer_prefix": "/common",
+      "kind": "explicit_budget_not_reported_fact",
+      "source_anchors": [
+        "Q326 p5-11",
+        "HLIST p1",
+        "H126 p141",
+        "H126 p104,131-132,150 collateral uses",
+        "H126 p134-135 tax-payable split"
+      ],
+      "adoption_rationale": "Annual dates/units are modeling convention. Depreciation 20% is net capital replacement budget; statutory 10%/50% from disclosed policy, finite new-capital threshold. Discount/g endpoints are judgment, not spot market observations. Revision3: liquid cash/short wealth have no unsupported principal haircut. Non-CE funds split necessary collateral (70-90% budget) vs finite Y1 release; forward collateral 1.5-2.2% revenue. Income tax is accrual, with payable lag; total other wage/tax/payable target is unchanged and decomposed, not additional liability.",
+      "reasonable_range": "See three full paths and ECONOMIC-DESIGN-v2.md; no probability weighting."
+    },
+    {
+      "covers_json_pointer_prefix": "/scenarios/0/series",
+      "kind": "explicit_budget_not_reported_fact",
+      "source_anchors": [
+        "FY25 p7-8,33-36,105-110",
+        "H126 p8,32,115,133,136,142-149",
+        "Q326 p1,3,5-11",
+        "XIAOMI26Q2 p4,10,13",
+        "H126 p69-72 mother own profit/cash",
+        "H126 p104,131-132,150 collateral uses",
+        "H126 p134-135 tax-payable split"
+      ],
+      "adoption_rationale": "Revenue/normal margin/required R&D-selling spending and simultaneous inventory/supplier settlement express complete commercial path. Other operating ratio, fixed-capital, debt and payout trajectories are finite forecasts, not company guidance. Raw facts provide scale and direction, not exact forecast endorsement. Revision3: liquid cash/short wealth have no unsupported principal haircut. Non-CE funds split necessary collateral (70-90% budget) vs finite Y1 release; forward collateral 1.5-2.2% revenue. Income tax is accrual, with payable lag; total other wage/tax/payable target is unchanged and decomposed, not additional liability.",
+      "reasonable_range": "See three full paths and ECONOMIC-DESIGN-v2.md; no probability weighting."
+    },
+    {
+      "covers_json_pointer_prefix": "/scenarios/0/parameters",
+      "kind": "explicit_budget_not_reported_fact",
+      "source_anchors": [
+        "Q326 p5-11",
+        "H126 p65-67,133,136,141,173,178-180",
+        "HLIST p1",
+        "FY25 p33-36,81-82,198",
+        "H126 p69-72 mother own profit/cash",
+        "H126 p104,131-132,150 collateral uses",
+        "H126 p134-135 tax-payable split"
+      ],
+      "adoption_rationale": "Discount rates/multiples are required-return and growth judgments without current-price calibration. Asset haircuts cover recoverability/tax/access. NCI uses disclosed book/profit scale as bounded proxy. H FX is an unobserved stress-budget interval; net proceeds ±3% and timing split do not negate issued shares. Mother upstreaming/payout constraints are budget conditions. Revision3: liquid cash/short wealth have no unsupported principal haircut. Non-CE funds split necessary collateral (70-90% budget) vs finite Y1 release; forward collateral 1.5-2.2% revenue. Income tax is accrual, with payable lag; total other wage/tax/payable target is unchanged and decomposed, not additional liability.",
+      "reasonable_range": "See three full paths and ECONOMIC-DESIGN-v2.md; no probability weighting."
+    },
+    {
+      "covers_json_pointer_prefix": "/scenarios/0/october_bridge",
+      "kind": "explicit_budget_not_reported_fact",
+      "source_anchors": [
+        "Q326 p1,3,5-11",
+        "H126 p32,115,149",
+        "HLIST p1",
+        "H126 p69-72 mother own profit/cash",
+        "H126 p104,131-132,150 collateral uses",
+        "H126 p134-135 tax-payable split"
+      ],
+      "adoption_rationale": "Only one unreported pre-valuation stub: raw Q3 balance to October cutoff. No October results claimed. Partial persistence of Q3 cost/settlement pressure; alternative paths bound direction and scale. Same operating and cash identities as annual periods. Revision3: liquid cash/short wealth have no unsupported principal haircut. Non-CE funds split necessary collateral (70-90% budget) vs finite Y1 release; forward collateral 1.5-2.2% revenue. Income tax is accrual, with payable lag; total other wage/tax/payable target is unchanged and decomposed, not additional liability.",
+      "reasonable_range": "See three full paths and ECONOMIC-DESIGN-v2.md; no probability weighting."
+    },
+    {
+      "covers_json_pointer_prefix": "/scenarios/1/series",
+      "kind": "explicit_budget_not_reported_fact",
+      "source_anchors": [
+        "FY25 p7-8,33-36,105-110",
+        "H126 p8,32,115,133,136,142-149",
+        "Q326 p1,3,5-11",
+        "XIAOMI26Q2 p4,10,13",
+        "H126 p69-72 mother own profit/cash",
+        "H126 p104,131-132,150 collateral uses",
+        "H126 p134-135 tax-payable split"
+      ],
+      "adoption_rationale": "Revenue/normal margin/required R&D-selling spending and simultaneous inventory/supplier settlement express complete commercial path. Other operating ratio, fixed-capital, debt and payout trajectories are finite forecasts, not company guidance. Raw facts provide scale and direction, not exact forecast endorsement. Revision3: liquid cash/short wealth have no unsupported principal haircut. Non-CE funds split necessary collateral (70-90% budget) vs finite Y1 release; forward collateral 1.5-2.2% revenue. Income tax is accrual, with payable lag; total other wage/tax/payable target is unchanged and decomposed, not additional liability.",
+      "reasonable_range": "See three full paths and ECONOMIC-DESIGN-v2.md; no probability weighting."
+    },
+    {
+      "covers_json_pointer_prefix": "/scenarios/1/parameters",
+      "kind": "explicit_budget_not_reported_fact",
+      "source_anchors": [
+        "Q326 p5-11",
+        "H126 p65-67,133,136,141,173,178-180",
+        "HLIST p1",
+        "FY25 p33-36,81-82,198",
+        "H126 p69-72 mother own profit/cash",
+        "H126 p104,131-132,150 collateral uses",
+        "H126 p134-135 tax-payable split"
+      ],
+      "adoption_rationale": "Discount rates/multiples are required-return and growth judgments without current-price calibration. Asset haircuts cover recoverability/tax/access. NCI uses disclosed book/profit scale as bounded proxy. H FX is an unobserved stress-budget interval; net proceeds ±3% and timing split do not negate issued shares. Mother upstreaming/payout constraints are budget conditions. Revision3: liquid cash/short wealth have no unsupported principal haircut. Non-CE funds split necessary collateral (70-90% budget) vs finite Y1 release; forward collateral 1.5-2.2% revenue. Income tax is accrual, with payable lag; total other wage/tax/payable target is unchanged and decomposed, not additional liability.",
+      "reasonable_range": "See three full paths and ECONOMIC-DESIGN-v2.md; no probability weighting."
+    },
+    {
+      "covers_json_pointer_prefix": "/scenarios/1/october_bridge",
+      "kind": "explicit_budget_not_reported_fact",
+      "source_anchors": [
+        "Q326 p1,3,5-11",
+        "H126 p32,115,149",
+        "HLIST p1",
+        "H126 p69-72 mother own profit/cash",
+        "H126 p104,131-132,150 collateral uses",
+        "H126 p134-135 tax-payable split"
+      ],
+      "adoption_rationale": "Only one unreported pre-valuation stub: raw Q3 balance to October cutoff. No October results claimed. Partial persistence of Q3 cost/settlement pressure; alternative paths bound direction and scale. Same operating and cash identities as annual periods. Revision3: liquid cash/short wealth have no unsupported principal haircut. Non-CE funds split necessary collateral (70-90% budget) vs finite Y1 release; forward collateral 1.5-2.2% revenue. Income tax is accrual, with payable lag; total other wage/tax/payable target is unchanged and decomposed, not additional liability.",
+      "reasonable_range": "See three full paths and ECONOMIC-DESIGN-v2.md; no probability weighting."
+    },
+    {
+      "covers_json_pointer_prefix": "/scenarios/2/series",
+      "kind": "explicit_budget_not_reported_fact",
+      "source_anchors": [
+        "FY25 p7-8,33-36,105-110",
+        "H126 p8,32,115,133,136,142-149",
+        "Q326 p1,3,5-11",
+        "XIAOMI26Q2 p4,10,13",
+        "H126 p69-72 mother own profit/cash",
+        "H126 p104,131-132,150 collateral uses",
+        "H126 p134-135 tax-payable split"
+      ],
+      "adoption_rationale": "Revenue/normal margin/required R&D-selling spending and simultaneous inventory/supplier settlement express complete commercial path. Other operating ratio, fixed-capital, debt and payout trajectories are finite forecasts, not company guidance. Raw facts provide scale and direction, not exact forecast endorsement. Revision3: liquid cash/short wealth have no unsupported principal haircut. Non-CE funds split necessary collateral (70-90% budget) vs finite Y1 release; forward collateral 1.5-2.2% revenue. Income tax is accrual, with payable lag; total other wage/tax/payable target is unchanged and decomposed, not additional liability.",
+      "reasonable_range": "See three full paths and ECONOMIC-DESIGN-v2.md; no probability weighting."
+    },
+    {
+      "covers_json_pointer_prefix": "/scenarios/2/parameters",
+      "kind": "explicit_budget_not_reported_fact",
+      "source_anchors": [
+        "Q326 p5-11",
+        "H126 p65-67,133,136,141,173,178-180",
+        "HLIST p1",
+        "FY25 p33-36,81-82,198",
+        "H126 p69-72 mother own profit/cash",
+        "H126 p104,131-132,150 collateral uses",
+        "H126 p134-135 tax-payable split"
+      ],
+      "adoption_rationale": "Discount rates/multiples are required-return and growth judgments without current-price calibration. Asset haircuts cover recoverability/tax/access. NCI uses disclosed book/profit scale as bounded proxy. H FX is an unobserved stress-budget interval; net proceeds ±3% and timing split do not negate issued shares. Mother upstreaming/payout constraints are budget conditions. Revision3: liquid cash/short wealth have no unsupported principal haircut. Non-CE funds split necessary collateral (70-90% budget) vs finite Y1 release; forward collateral 1.5-2.2% revenue. Income tax is accrual, with payable lag; total other wage/tax/payable target is unchanged and decomposed, not additional liability.",
+      "reasonable_range": "See three full paths and ECONOMIC-DESIGN-v2.md; no probability weighting."
+    },
+    {
+      "covers_json_pointer_prefix": "/scenarios/2/october_bridge",
+      "kind": "explicit_budget_not_reported_fact",
+      "source_anchors": [
+        "Q326 p1,3,5-11",
+        "H126 p32,115,149",
+        "HLIST p1",
+        "H126 p69-72 mother own profit/cash",
+        "H126 p104,131-132,150 collateral uses",
+        "H126 p134-135 tax-payable split"
+      ],
+      "adoption_rationale": "Only one unreported pre-valuation stub: raw Q3 balance to October cutoff. No October results claimed. Partial persistence of Q3 cost/settlement pressure; alternative paths bound direction and scale. Same operating and cash identities as annual periods. Revision3: liquid cash/short wealth have no unsupported principal haircut. Non-CE funds split necessary collateral (70-90% budget) vs finite Y1 release; forward collateral 1.5-2.2% revenue. Income tax is accrual, with payable lag; total other wage/tax/payable target is unchanged and decomposed, not additional liability.",
+      "reasonable_range": "See three full paths and ECONOMIC-DESIGN-v2.md; no probability weighting."
+    }
+  ],
+  "provenance_rule": "Every numeric forecast leaf under common and scenarios is covered by the explicit prefix entry; original actual facts are individually sourced in FACTS.json. Identifiers/metadata are not economic assumptions."
+}

@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "symbol": "CN:601128",
+  "report_period": "2026-Q3",
+  "currency": "CNY",
+  "amount_unit": "CNY million",
+  "shares_unit": "million shares",
+  "financial_date": "2026-09-30",
+  "status": "static-unexecuted-research-assumptions",
+  "observed": {
+    "parent_attributable_equity": 34580.357,
+    "convertible_equity": 719.628,
+    "shares": 3648.180384,
+    "total_assets": 428623.827,
+    "gross_loans": 274648.351,
+    "loan_allowance_ratio": 0.0304,
+    "group_cet1": 35388.65,
+    "group_tier1": 35525.74,
+    "group_total_capital": 39207.485,
+    "group_cet1_ratio": 0.1192,
+    "group_total_capital_ratio": 0.132,
+    "mother_cet1": 30665.275,
+    "mother_total_capital": 33624.961,
+    "mother_cet1_ratio": 0.1199,
+    "mother_total_capital_ratio": 0.1315,
+    "h1_group_assets": 424787.819,
+    "h1_average_earning_assets": 401369.063,
+    "h1_average_loans": 269217.902,
+    "h1_mother_equity": 31531.875,
+    "h1_mother_cet1": 29826.081,
+    "h1_mother_retained": 14147.592,
+    "h1_mother_assets": 373162.546,
+    "statutory_reserve": 1799.53,
+    "discretionary_reserve": 3169.629,
+    "general_reserve": 4841.049,
+    "last_verified_registered_capital": 3316.485099,
+    "h1_convertible_liability_ex_accrual": 5795.533,
+    "h1_convertible_amortization": 57.907,
+    "h1_convertible_face": 5999.426,
+    "convertible_face": 5999.42,
+    "conversion_price": 5.25,
+    "declared_interim_dps": 0.13,
+    "h1_village_total_profit": 353.808,
+    "h1_village_parent_profit": 249.648,
+    "village_direct_ownership": 0.9,
+    "h1_village_assets": 64615.941,
+    "h1_village_loans": 45228.156,
+    "h1_village_cet1": 4652.614,
+    "h1_village_rwa": 42485.069,
+    "h1_village_total_capital": 5467.557,
+    "h1_village_cet1_ratio": 0.1095,
+    "h1_village_tier1_ratio": 0.1123
+  },
+  "base": {
+    "growth": [
+      0.06,
+      0.06,
+      0.055,
+      0.05,
+      0.045,
+      0.04,
+      0.0375,
+      0.035,
+      0.0325,
+      0.03
+    ],
+    "nim": [
+      0.0238,
+      0.0232,
+      0.0229,
+      0.0228,
+      0.0228,
+      0.0227,
+      0.0226,
+      0.0225,
+      0.0225,
+      0.0225
+    ],
+    "loan_credit_cost": [
+      0.011,
+      0.0105,
+      0.01,
+      0.01,
+      0.01,
+      0.01,
+      0.01,
+      0.01,
+      0.01,
+      0.01
+    ],
+    "net_chargeoff_rate": [
+      0.01,
+      0.0095,
+      0.009,
+      0.009,
+      0.009,
+      0.009,
+      0.009,
+      0.009,
+      0.009,
+      0.009
+    ],
+    "cost_income_ratio": [
+      0.345,
+      0.342,
+      0.34,
+      0.34,
+      0.34,
+      0.34,
+      0.34,
+      0.34,
+      0.34,
+      0.34
+    ],
+    "payout": [
+      0.22,
+      0.23,
+      0.25,
+      0.28,
+      0.3
+    ],
+    "fee_base": 450.0,
+    "fee_growth": 0.06,
+    "trading_base": 1600.0,
+    "trading_growth": 0.03,
+    "other_recurring_base": 20.0,
+    "other_credit_loss_base": 200.0,
+    "tax_surcharge_base": 85.0,
+    "effective_business_tax": 0.18,
+    "funding_tax_shield": 0.25,
+    "surplus_after_tax_return": 0.02,
+    "village_growth": 0.04,
+    "allowance_floor_ratio": 0.025,
+    "working_cet1_floor": 0.105,
+    "working_tier1_floor": 0.11,
+    "working_total_floor": 0.1225,
+    "village_working_floor": 0.105,
+    "terminal_g": 0.03,
+    "terminal_excess_release_fraction": 0.1,
+    "equity_cost_endpoints": [
+      0.105,
+      0.115
+    ],
+    "refinancing_rate": 0.02,
+    "registered_capital_budget": "issued-shares-full-ten-percent-if-below-threshold",
+    "general_reserve_stress_asset_fraction": 1.0,
+    "acquisition_increment": 0.0,
+    "oci_budget": 0.0
+  },
+  "cases": {
+    "base_conversion": {
+      "path": "convert",
+      "description": "Conditional base: conversion on contractual maturity date, no claim of actual trigger or certainty."
+    },
+    "redemption": {
+      "path": "redeem",
+      "description": "Same operating assumptions; contractual redemption refinanced at explicit normal funding cost; capital can restrict growth/dividend."
+    },
+    "cyclical_weak": {
+      "path": "convert",
+      "nim_shift_first_two": -0.0015,
+      "credit_cost_shift_first_two": 0.003,
+      "growth_shift_first_two": -0.02,
+      "description": "Temporary cash-flow/credit stress then original normalized path, not a core-range endpoint."
+    },
+    "structural_weak": {
+      "path": "redeem",
+      "nim_shift": -0.002,
+      "credit_cost_shift": 0.003,
+      "cir_shift": 0.02,
+      "growth_cap": 0.03,
+      "terminal_g": 0.02,
+      "description": "Persistent price competition and servicing/loss burden; no assumed restoration of historical ROE."
+    },
+    "conditional_upside": {
+      "path": "convert",
+      "nim_shift": 0.001,
+      "credit_cost_shift": -0.001,
+      "cir_shift": -0.01,
+      "growth_shift": 0.01,
+      "description": "Requires customer growth and loss/efficiency improvement together; not a core-range endpoint."
+    },
+    "nim_minus_10bp": {
+      "path": "convert",
+      "nim_shift": -0.001,
+      "description": "Diagnostic single-factor sensitivity; capital/dividends still recomputed."
+    },
+    "credit_cost_plus_20bp": {
+      "path": "convert",
+      "credit_cost_shift": 0.002,
+      "description": "Diagnostic provision sensitivity, with chargeoff assumption held fixed; not a permanent loss scenario."
+    }
+  },
+  "source_keys": {
+    "q3": {
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649554.PDF",
+      "pages": "4-5,8-10"
+    },
+    "h1": {
+      "url": "https://static.cninfo.com.cn/finalpage/2026-08-27/1225511920.PDF",
+      "printed_pages": "26-27,32-35,54-58,101-106"
+    },
+    "share_notice": {
+      "url": "https://www.csrcbank.com/tzzgx/lsgg/2026/202610/P020261009395215201307.pdf",
+      "pages": "1-2"
+    },
+    "charter": {
+      "url": "https://www.csrcbank.com/tzzgx/gszl/jbzd/202511/P020251107326489896843.pdf",
+      "printed_pages": "3,54-56"
+    },
+    "egm_proposals": {
+      "url": "https://static.cninfo.com.cn/finalpage/2026-10-31/1225649568.PDF",
+      "pages": "5-8",
+      "note": "Pending proposals, not completed purchase; source URL checked against complete supplied HTTP receipt."
+    }
+  }
+}

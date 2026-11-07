@@ -1,0 +1,21 @@
+"""Recompute the adopted company model from readable current inputs."""
+from pathlib import Path
+import json
+import sys
+
+sys.dont_write_bytecode = True
+sys.stdout.reconfigure(encoding="utf-8")
+HERE = Path(__file__).resolve().parent
+SOURCE = HERE / "2026-Q3"
+sys.path.insert(0, str(SOURCE))
+
+data = json.loads((SOURCE / "limitations.json").read_text(encoding="utf-8"))
+# No adopted numeric model: the research limitations remain binding.
+assert data["availability"] == {"current_value": False, "holder_cash_path": False}
+assert data["valuation_note"] and data["return_model_note"]
+value_range = None
+return_model = None
+
+PUBLICATION = {'symbol': 'CN:688012', 'report_period': '2026-Q3', 'valuation_note': '核心暂不估值的决定性原因，是现有源证不能合理分离维持相同客户收入与工艺覆盖的持续竞争/迭代投入，以及可取消的新门类投入及其现金回报。平台复用、开发周期缩短与新项目持续吸收节省同时有证据，历史窄组合成本不可直接移植。平台条件可作为经营参考，但5.13–9.71元端点仅改变资本成本、金融回收及存量权利，未约束主经营关系；同收入资源对照中央经营EV差108.23亿元只是其重要性的量级说明，并非单凭差异大就留空。主方法为完整研发及再投资后的经营现金现值加互斥当前NFA，辅助为当前能力正常化EPV；不把较高EPV作可实现底价，也不把负固定策略剩余当普通股零值。没有经核现价，不作价格吸引力或共识判断。', 'return_model_note': '尚未选定可依赖的第五年经营、持续资源和资本配置状态，无法赋予一股普通股稳妥的延续终值；这独立于当前value_range是否为空。母体H1现金、利润和法定公积足以支持有条件分红预算，未来分红未承诺或小额公积精度不是空值主因。集团年度付款条件不等于母体每股D，未来权益报酬改善支付却不免除旧股东服务成本，2031现金与经营资产不能全额加总为可分配权利，当前7.18元也不能复制为Y5。未将企业DCF当法律最大分红上限。'}
+PUBLICATION.update(value_range=value_range, return_model=return_model)
+print(json.dumps(PUBLICATION, ensure_ascii=False, allow_nan=False, indent=2))

@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:300012",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-21T19:21:00+08:00",
+  "value_range": {
+    "low": 9.82,
+    "high": 12.52,
+    "currency": "CNY"
+  },
+  "valuation_note": "主方法按实际普通股现金及跨层实现折现；资本成本8.5%—9.5%、长期增长2.5%—3%、新增资本回报14%—16%。辅助剩余收益8.87—12.53元。结构性不利与乐观情景不混入核心区间。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-21T19:21:00+08:00",
+    "base_case_distributions_per_share": [
+      0.23,
+      0.26,
+      0.29,
+      0.32,
+      0.35000000000000003
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 13.732701165667972,
+        "high": 17.132934069615082
+      }
+    }
+  },
+  "return_model_note": "五年普通股每股现金0.23/0.26/0.29/0.32/0.35元；第五年末价值由第6年后母公司实际支付折现。16.82828214亿股不变，盈利已归普通股；起点额外金融资产6.5862737714亿元及后续收益仅经未来分配实现，不再另加本金。母公司真实单体法定账与有历史依据的子公司经济上划预算分别滚动；境外转款采用条件性摩擦预算，不套用内地公积规则。"
+}

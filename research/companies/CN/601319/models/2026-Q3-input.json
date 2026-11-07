@@ -1,0 +1,323 @@
+{
+  "symbol": "CN:601319",
+  "information_cutoff": "2026-10-31T23:59:59+08:00",
+  "valuation_note": "方法一为五年普通股分配及经济SOTP终值折现，作为主方法；方法二为当前完整分部资本、财险剩余收益及寿健ANAV/VIF/有限新业务价值，中央辅助锚约10.75元。核心只采用central未完成增资经营base的八个定价角点：股东ke9.5%—11.5%，原精算风险率与整体+100bp的原件净VIF/NBV锚，以及对应7.5%—8.5%或8.5%—9.5%内部展开率；全ANAV2.5%为聚合利润分解代理，2%/3%仅诊断。核心正常COR96.8%，财险正常税后投资及其他贡献220亿元，寿险/健康普通利润70/50亿元，首五年业务增长3%/3%/4%、成熟2%。未来NBV已净获取/资本成本并于第15年失去超额优势；不把CSM或金融资产另加一遍。原永久低分配现金诊断3.11—3.18元不是核心下界或第二个独立主价值；两主辅方法共享假设，不取平均，差额兼含实际资金成本与时点/风险计量。当前及终值范围按复算原值四舍五入至分。",
+  "return_model_note": "基准为既有A股普通股持续持有人税前现金，首个滚动年度2026-11-01至2027-10-31，随后逐年滚动，Y5为2031-10-31末。442.23990583亿股不变，150亿元发行尚未完成；不混入完成分支。D1包含已批准、11月6日支付的旧0.11元，当前估值按截止后第6天单列折现；其余现金按年度末近似，年度归集不代表全部现金都在年底到账。旧股利已在Q3 B/RE中扣，支付只冲现金/应付；截止前已付0.145不计D1。前五年沿分部利润、资本、母RE与实际到账约束，子体宣派80%当期收现/20%次期，母新宣派60%当期支付/40%次期。Y5从同base B5及ANAV、剩余VIF、1—5年新cohort未实现部分、6—14年未来NBV和财险6—15年剩余优势形成，已分现金不留终值；期末已宣派未付请求权按下一期支付现值一次计入。母债本金已净入资本，前五年利息已扣，后续仅考虑经济负债相对账面差；少数与中间持股穿透一次。没有独立三年终值或现价IRR。",
+  "financial_inputs": {
+    "operating": {
+      "task_id": "CN:601319",
+      "symbol": "CN:601319",
+      "cutoff": "2026-10-31T23:59:59+08:00",
+      "units": "RMB million; shares million; per-share RMB",
+      "observed": {
+        "shares": 44223.990583,
+        "group_book": 335973,
+        "mother_re": 8652,
+        "mother_cash_equivalents": 1068,
+        "opening_dividend_per_old_share": 0.11,
+        "opening_payment_days": 6,
+        "mother_bond_face": 12000,
+        "mother_bond_coupon_first": 0.0329,
+        "mother_bond_coupon_step": 0.0429,
+        "mother_bond_step_date": "2028-06-05",
+        "pc_service_fy25": 511594,
+        "pc_book_h126": 305064,
+        "life_book_h126": 70762,
+        "health_book_h126": 28069,
+        "re_book_h126": 7541,
+        "pc_core_h126": 276110,
+        "pc_min_h126": 129131,
+        "life_core_h126": 110200,
+        "life_min_h126": 86366,
+        "health_core_h126": 26609,
+        "health_min_h126": 19502,
+        "group_core_h126": 482273,
+        "group_min_h126": 243943,
+        "life_perpetual_face": 10000,
+        "life_perpetual_coupon": 0.0188,
+        "life_anav_h126": 114728,
+        "life_vif_base": 33209,
+        "life_vif_minus50bp": 8402,
+        "life_vif_plus50bp": 57549,
+        "life_nbv_h126": 5177,
+        "life_nbv_minus50bp": 3847,
+        "life_nbv_plus50bp": 6543,
+        "health_anav_h126": 17697,
+        "health_vif_base": 23095,
+        "health_vif_minus50bp": 19527,
+        "health_vif_plus50bp": 26667,
+        "health_nbv_h126": 3857,
+        "health_nbv_minus50bp": 3239,
+        "health_nbv_plus50bp": 4382,
+        "pc_direct": 0.6898,
+        "life_direct": 0.7108,
+        "life_via_asset": 0.0031,
+        "life_via_pc": 0.0862,
+        "health_direct": 0.6932,
+        "health_via_holdco": 0.014,
+        "health_via_pc": 0.2473,
+        "re_via_pc": 0.49
+      },
+      "common_forecast": {
+        "horizon_years": 80,
+        "reported_years": 5,
+        "pc_tax": 0.25,
+        "mother_liquid_bond_pool": 8000,
+        "mother_cash_floor": 500,
+        "mother_own_income_ex_buffer": 300,
+        "mother_operating_cost": 1300,
+        "other_group_ordinary_profit": 1000,
+        "other_parent_payout": 0.5,
+        "parent_receipt_lag_fraction": 0.2,
+        "same_window_payment_fraction": 0.6,
+        "subsidiary_distributable_profit_fraction": 0.8,
+        "minimum_statutory_policy_years": 5,
+        "pc_core_target": 1.9,
+        "life_core_target": 1.15,
+        "health_core_target": 1.2,
+        "group_core_target": 1.8,
+        "capital_profit_recognition": 0.8,
+        "pc_dividend_ramp_after_year5": 0.1,
+        "life_dividend_ramp_after_year5": 0.1,
+        "health_dividend_ramp_after_year5": 0.1,
+        "group_dividend_ramp_after_year5": 0.02,
+        "nbv_h1_to_forward_year_factor": 1.5,
+        "nbv_full_advantage_years": 5,
+        "nbv_zero_advantage_year": 15,
+        "sotp_parent_cost_growth": 0.01,
+        "sotp_pc_competitive_fade_years": 15,
+        "source_period_bridge_months_without_report": 1,
+        "october_unreported_profit_bridge": 0,
+        "inforce_book_bridge_policy": "Q3 group book plus H126 segment value-minus-book adjustments; no mechanical 9M-H1 segment subtraction",
+        "issuance_deployment": "retained at mother in liquid eligible financial investments; earns surplus yield; not distributable capital premium",
+        "perpetual_policy": "exclude external face from ordinary shareholder value; coupon only when model starts from pre-coupon earnings; H126 EV predates issuance, no proceeds added",
+        "tail_policy": "lower=paid distributions through year80; upper adds all positive attributable book plus positive gross earning perpetuity at growth cap; no double additive tail in midpoint"
+      },
+      "scenarios": {
+        "downside": {
+          "k": 0.115,
+          "pc_cor": 0.985,
+          "pc_net_investment_budget": 18000,
+          "life_ordinary_net_profit": 4000,
+          "health_net_profit": 3500,
+          "pc_growth": 0.02,
+          "life_growth": 0.01,
+          "health_growth": 0.02,
+          "long_growth": 0.01,
+          "surplus_yield": 0.02,
+          "pc_payout": 0.3,
+          "life_payout": 0.08,
+          "health_payout": 0.15,
+          "group_payout": 0.24,
+          "mother_legal_reserve_proxy": 14000,
+          "liquid_bond_sale_cost": 0.01,
+          "new_litigation_loss": 1000,
+          "ev_rate_case": "minus50bp",
+          "nbv_execution_factor": 0.75,
+          "vif_execution_factor": 0.95
+        },
+        "central": {
+          "k": 0.105,
+          "pc_cor": 0.968,
+          "pc_net_investment_budget": 22000,
+          "life_ordinary_net_profit": 7000,
+          "health_net_profit": 5000,
+          "pc_growth": 0.03,
+          "life_growth": 0.03,
+          "health_growth": 0.04,
+          "long_growth": 0.02,
+          "surplus_yield": 0.025,
+          "pc_payout": 0.35,
+          "life_payout": 0.15,
+          "health_payout": 0.25,
+          "group_payout": 0.28,
+          "mother_legal_reserve_proxy": 16000,
+          "liquid_bond_sale_cost": 0.005,
+          "new_litigation_loss": 0,
+          "ev_rate_case": "base",
+          "nbv_execution_factor": 0.9,
+          "vif_execution_factor": 1.0
+        },
+        "upside": {
+          "k": 0.095,
+          "pc_cor": 0.958,
+          "pc_net_investment_budget": 26000,
+          "life_ordinary_net_profit": 10000,
+          "health_net_profit": 6500,
+          "pc_growth": 0.04,
+          "life_growth": 0.04,
+          "health_growth": 0.05,
+          "long_growth": 0.025,
+          "surplus_yield": 0.03,
+          "pc_payout": 0.4,
+          "life_payout": 0.22,
+          "health_payout": 0.3,
+          "group_payout": 0.32,
+          "mother_legal_reserve_proxy": 17742,
+          "liquid_bond_sale_cost": 0.0,
+          "new_litigation_loss": 0,
+          "ev_rate_case": "base",
+          "nbv_execution_factor": 1.0,
+          "vif_execution_factor": 1.0
+        }
+      },
+      "financing_branches": {
+        "not_completed": {
+          "cash": 0,
+          "new_shares_fraction": 0
+        },
+        "completed_5pct": {
+          "cash": 15000,
+          "new_shares_fraction": 0.05
+        },
+        "completed_7_5pct": {
+          "cash": 15000,
+          "new_shares_fraction": 0.075
+        },
+        "completed_10pct": {
+          "cash": 15000,
+          "new_shares_fraction": 0.1
+        }
+      }
+    },
+    "bridge": {
+      "task_id": "CN:601319",
+      "symbol": "CN:601319",
+      "cutoff": "2026-10-31T23:59:59+08:00",
+      "saved_case": "central__not_completed",
+      "operating_scenario": "central",
+      "years_reused": 5,
+      "pending_payment_lag_years": 1,
+      "debt_economic_value_minus_book_at_year5": 0,
+      "additional_unbooked_obligation_value_at_year5": 0,
+      "normal_refinancing_and_debt_near_book_is_assumption_not_new_source": true,
+      "ANAV_return_is_new_aggregate_profit_decomposition_proxy": true,
+      "cohort_allocation_is_not_observed_policy_cashflow_or_duration": true,
+      "capital_release_rate_is_not_used": true,
+      "separately_valued_strategic_profit_X": {
+        "life": 0,
+        "health": 0
+      },
+      "ev_anchors": {
+        "original": {
+          "source": "S03 physical pages 45,47,50,52",
+          "rate_shift": 0,
+          "unwind_low": 0.075,
+          "unwind_high": 0.085,
+          "life": {
+            "vif": 33209,
+            "h1_nbv": 5177
+          },
+          "health": {
+            "vif": 23095,
+            "h1_nbv": 3857
+          }
+        },
+        "plus100bp": {
+          "source": "S03 physical pages 47,52 risk-discount-rate +100bp, not investment -50bp",
+          "rate_shift": 0.01,
+          "unwind_low": 0.085,
+          "unwind_high": 0.095,
+          "life": {
+            "vif": 26365,
+            "h1_nbv": 4538
+          },
+          "health": {
+            "vif": 21415,
+            "h1_nbv": 3562
+          }
+        }
+      },
+      "combinations": [
+        {
+          "id": "core_k095_ev0_r075",
+          "role": "core_corner",
+          "ke": 0.095,
+          "ev_anchor": "original",
+          "unwind": 0.075,
+          "anav_yield": 0.025
+        },
+        {
+          "id": "core_k095_ev0_r085",
+          "role": "core_corner",
+          "ke": 0.095,
+          "ev_anchor": "original",
+          "unwind": 0.085,
+          "anav_yield": 0.025
+        },
+        {
+          "id": "core_k095_ev1_r085",
+          "role": "core_corner",
+          "ke": 0.095,
+          "ev_anchor": "plus100bp",
+          "unwind": 0.085,
+          "anav_yield": 0.025
+        },
+        {
+          "id": "core_k095_ev1_r095",
+          "role": "core_corner",
+          "ke": 0.095,
+          "ev_anchor": "plus100bp",
+          "unwind": 0.095,
+          "anav_yield": 0.025
+        },
+        {
+          "id": "core_k115_ev0_r075",
+          "role": "core_corner",
+          "ke": 0.115,
+          "ev_anchor": "original",
+          "unwind": 0.075,
+          "anav_yield": 0.025
+        },
+        {
+          "id": "core_k115_ev0_r085",
+          "role": "core_corner",
+          "ke": 0.115,
+          "ev_anchor": "original",
+          "unwind": 0.085,
+          "anav_yield": 0.025
+        },
+        {
+          "id": "core_k115_ev1_r085",
+          "role": "core_corner",
+          "ke": 0.115,
+          "ev_anchor": "plus100bp",
+          "unwind": 0.085,
+          "anav_yield": 0.025
+        },
+        {
+          "id": "core_k115_ev1_r095",
+          "role": "core_corner",
+          "ke": 0.115,
+          "ev_anchor": "plus100bp",
+          "unwind": 0.095,
+          "anav_yield": 0.025
+        },
+        {
+          "id": "center_k105_ev0_r080_y025",
+          "role": "center",
+          "ke": 0.105,
+          "ev_anchor": "original",
+          "unwind": 0.08,
+          "anav_yield": 0.025
+        },
+        {
+          "id": "diagnostic_center_y020",
+          "role": "anav_income_diagnostic",
+          "ke": 0.105,
+          "ev_anchor": "original",
+          "unwind": 0.08,
+          "anav_yield": 0.02
+        },
+        {
+          "id": "diagnostic_center_y030",
+          "role": "anav_income_diagnostic",
+          "ke": 0.105,
+          "ev_anchor": "original",
+          "unwind": 0.08,
+          "anav_yield": 0.03
+        }
+      ]
+    }
+  }
+}

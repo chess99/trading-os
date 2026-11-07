@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:300750",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-11-03T07:30:00+00:00",
+  "value_range": {
+    "low": 231.1314991232304,
+    "high": 278.55755997584873,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-03T07:30:00+00:00",
+    "base_case_distributions_per_share": [
+      8.5,
+      9.5,
+      10.5,
+      12.0,
+      13.0
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 308.24524065295407,
+        "high": 365.73906541233475
+      }
+    }
+  },
+  "valuation_note": "当前主法基准252.025810092516元，核心端点来自models/volume/core_low, models/volume/core_high；辅助当前值为220.691987976697, 240.334624589615, 265.258841833363元。主法销量/单位盈利与必要投入，辅助正常盈利入口；原资本成本9%—10%、长期增长2%—3%保持。六条机器值须用同事件完整Fraction证书证明的两位nearest-even包络读取，不称原远期固定D精确可行。",
+  "return_model_note": "本次实际新增回购事件下的数值近似；原机器远期现金并非精确全可行，另由绑定同一raw的六条Fraction主体影子链证明Y28–480下调分配后的现金/法律预算可行与两位nearest-even价值包络。Y27为已存精确锚，不是Y1–27新高精度重算。D1–5同volume/base，Y5采用其相同前五经营/现金状态下core_low/high的续期；资金来源池仍为原经济归属预算，未来续作及股份结算有条件。 信息版本为2026年11月3日，原金融预算锚为2026-10-29T19:40:29+08:00；原年度窗口与日期滚存保留，不宣称重新估算至新日期。"
+}

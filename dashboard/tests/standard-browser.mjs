@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { setTimeout as delay } from "node:timers/promises";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { currentResults } from "../app/lib/display-policy.mjs";
 
@@ -28,7 +29,8 @@ try {
     await delay(1000);
   }
   assert.ok(ready, `Dev server not ready: ${log}`);
-  browser = await chromium.launch({ headless: true });
+  browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+    ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH } : {}) });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   const quoteRequests = [];
   const errors = [];
@@ -44,7 +46,7 @@ try {
     assert.ok(qualified.some((company) => company.symbol === row));
   }
   for (const request of quoteRequests) for (const ticker of request) assert.ok(qualified.some((company) => company.ticker === ticker));
-  await page.screenshot({ path: new URL("current-desktop.png", output).pathname, fullPage: true });
+  await page.screenshot({ path: fileURLToPath(new URL("current-desktop.png", output)), fullPage: true });
   passed.push("默认核心池、当前列表、行情集合与资格一致");
   await page.getByRole("tab", { name: /^跟踪进度/ }).click();
   assert.equal(await page.getByRole("columnheader", { name: "合理价值", exact: true }).count(), 0);
@@ -57,7 +59,7 @@ try {
     assert.equal(await page.getByTestId("live-research-panel").count(), 0);
     assert.equal(quoteRequests.length, 0);
     await page.getByTestId("historical-notice").waitFor();
-    await page.screenshot({ path: new URL("history-desktop.png", output).pathname, fullPage: true });
+    await page.screenshot({ path: fileURLToPath(new URL("history-desktop.png", output)), fullPage: true });
     passed.push("全市场历史报告可直接阅读，且不加载现价或当前摘要");
   }
   const sample = catalog.companies.find((company) => company.reports.some((item) => item.sourcePath !== company.basisReportPath));
@@ -73,12 +75,34 @@ try {
     assert.equal(await page.locator(".markdown-document").count(), 0);
     passed.push("周期引用保持历史身份；不存在的周期不自动回退");
   }
+  // Former oversized deliveries must remain small, real file downloads.
+  for (const ticker of ["300015", "600018"]) {
+    const period = "2026-Q3";
+    await page.goto(`${baseURL}/reports/${ticker}?version=${period}`);
+    await page.locator(".markdown-document").waitFor();
+    for (const suffix of [".py", "-output.json"]) {
+      const filename = `${period}${suffix}`;
+      const original = await readFile(new URL(`../../research/companies/CN/${ticker}/models/${filename}`, import.meta.url));
+      assert.ok(original.length <= 1024 ** 2, `${ticker} ${filename} exceeds the file budget`);
+      const path = `/data/models/${ticker}/${filename}`;
+      const link = page.locator(`.markdown-document a[href="${path}"]`).first();
+      await link.waitFor();
+      assert.equal(await link.getAttribute("download"), "");
+      const pendingDownload = page.waitForEvent("download");
+      await link.click();
+      const download = await pendingDownload;
+      assert.equal(download.suggestedFilename(), filename);
+      assert.equal(download.url(), `${baseURL}${path}`);
+      assert.deepEqual(await readFile(await download.path()), original, `${ticker} ${filename} download bytes`);
+    }
+  }
+  passed.push("原大体积模型的源码和简明结果可下载，内容与仓库一致且符合文件预算");
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(`${baseURL}/`);
   await page.getByRole("tab", { name: /^最新周期模型/ }).waitFor();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 2);
   assert.equal(overflow, false, "移动端不应产生全页横向溢出；表格内部可以滚动");
-  await page.screenshot({ path: new URL("current-mobile.png", output).pathname, fullPage: true });
+  await page.screenshot({ path: fileURLToPath(new URL("current-mobile.png", output)), fullPage: true });
   passed.push("移动端布局无全页横向溢出");
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(`${baseURL}/`);
@@ -106,7 +130,7 @@ try {
     assert.equal(new URL(page.url()).hash,anchor);
     await page.evaluate(() => window.scrollTo({top:0,behavior:"instant"}));
   }
-  await page.screenshot({ path: new URL("industry-library.png", output).pathname });
+  await page.screenshot({ path: fileURLToPath(new URL("industry-library.png", output)) });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(`${baseURL}/industries`);
   const mobileTopics = page.getByLabel("选择研究主题", { exact: true });
@@ -125,7 +149,7 @@ try {
     assert.equal(await page.locator(".publication-list button").count(), 1);
     await page.getByLabel("搜索研究主题").fill("");
     await mobileTopics.waitFor();
-    await page.screenshot({ path: new URL("industry-mobile.png", output).pathname });
+    await page.screenshot({ path: fileURLToPath(new URL("industry-mobile.png", output)) });
     passed.push("多主题行业目录支持移动选择与搜索，首屏可见正文标题且无横向溢出");
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -137,7 +161,7 @@ try {
     assert.ok(await page.locator(".indicator-release-links a").count() >= 2);
     await page.getByLabel("趋势指标", {exact:true}).selectOption("retail-yoy");
     await page.getByRole("img", {name:/新能源零售同比趋势/}).waitFor();
-    await page.screenshot({path:new URL("ev-indicators-desktop.png",output).pathname});
+    await page.screenshot({path:fileURLToPath(new URL("ev-indicators-desktop.png",output))});
     await page.setViewportSize({width:390,height:844});
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth > innerWidth + 2),false);
     assert.ok((await page.locator(".indicator-headlines strong").first().boundingBox()).y < 650, "手机首屏应能看到核心行业数字");
@@ -145,7 +169,7 @@ try {
     await page.getByRole("heading",{name:"全球重点电池企业份额",exact:true}).waitFor();
     assert.equal(await page.locator(".indicator-rankings > section").count(),1);
     assert.ok(await page.locator(".indicator-rankings > section").evaluate((e)=>e.getBoundingClientRect().right <= innerWidth));
-    await page.screenshot({path:new URL("ev-indicators-mobile.png",output).pathname,fullPage:true});
+    await page.screenshot({path:fileURLToPath(new URL("ev-indicators-mobile.png",output)),fullPage:true});
     await page.reload();
     await indicatorPanel.waitFor();
     const older = publications.find((d)=>d.topic===withIndicators.topic && d.publishedOn < withIndicators.publishedOn);
@@ -175,10 +199,10 @@ try {
   await page.reload();
   await page.locator(".research-document-body .markdown-document h1").waitFor();
   assert.equal(await page.locator(".research-document-body h1").innerText(),documentTitle);
-  await page.screenshot({ path: new URL("macro-reference.png", output).pathname });
+  await page.screenshot({ path: fileURLToPath(new URL("macro-reference.png", output)) });
   await page.setViewportSize({ width: 390, height: 844 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2),false);
-  await page.screenshot({ path: new URL("macro-mobile.png", output).pathname });
+  await page.screenshot({ path: fileURLToPath(new URL("macro-mobile.png", output)) });
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(`${baseURL}/selection`);
   await page.getByRole("heading", { name: "商业质量池", exact: true }).waitFor();
@@ -206,7 +230,7 @@ try {
   assert.ok(await page.locator("aside.pool-detail a[target=_blank]").count() > 0);
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
   await page.locator("aside.pool-detail").evaluate((element) => { element.scrollTop = 0; });
-  await page.screenshot({ path: new URL("screening-desktop.png", output).pathname, fullPage: true });
+  await page.screenshot({ path: fileURLToPath(new URL("screening-desktop.png", output)), fullPage: true });
   await page.getByRole("button", { name: "全部市场", exact: true }).click();
   await page.getByLabel("搜索公司或关键问题").fill("美的");
   assert.equal(await page.locator("tbody tr[data-symbol]").count(), 1, "A/H同发行人合并");
@@ -236,12 +260,12 @@ try {
   await page.getByRole("button", { name: /^查看 腾讯/ }).click();
   await page.locator("dialog[open]").waitFor();
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 2), false);
-  await page.screenshot({ path: new URL("screening-mobile-detail.png", output).pathname });
+  await page.screenshot({ path: fileURLToPath(new URL("screening-mobile-detail.png", output)) });
   await page.keyboard.press("Escape");
   assert.equal(await page.locator("dialog[open]").count(), 0);
   await page.getByLabel("搜索公司或关键问题").fill("");
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
-  await page.screenshot({ path: new URL("screening-mobile.png", output).pathname, fullPage: true });
+  await page.screenshot({ path: fileURLToPath(new URL("screening-mobile.png", output)), fullPage: true });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 2), false);
   assert.equal(quoteRequests.length, 0, "公司池不得请求行情");
   assert.doesNotMatch(await page.locator("body").innerText(), /本轮完成筛选|暂不开展公司深研|首批采用精选样本/);
@@ -263,7 +287,7 @@ try {
       const row = await page.locator("tbody tr[data-symbol]").first().boundingBox();
       assert.ok(row.y < 510, `${width}px ${name}: 首屏应直接看到公司`);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false);
-      if (width === 390 || width === 1440) await page.screenshot({ path: new URL(`compact-${width}-${name}.png`, output).pathname });
+      if (width === 390 || width === 1440) await page.screenshot({ path: fileURLToPath(new URL(`compact-${width}-${name}.png`, output)) });
     }
   }
   await page.setViewportSize({ width: 390, height: 844 });

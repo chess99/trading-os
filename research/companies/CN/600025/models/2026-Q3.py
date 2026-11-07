@@ -1,0 +1,14 @@
+"""重算当前采用的普通股模型；完整轨迹通过 --full-output 另存工作目录。"""
+import importlib.util
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[5]
+spec = importlib.util.spec_from_file_location("research_model_io", ROOT / "research/model_io.py")
+model_io = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(model_io)
+
+SELECTORS = {'low': {'path': ['value_range', 'low']}, 'high': {'path': ['value_range', 'high']}, 'distributions': {'path': ['return_model', 'base_case_distributions_per_share'], 'take': 5}, 'terminal_low': {'path': ['return_model', 'base_case_terminal_equity_value_range_per_share', 'year_5', 'low']}, 'terminal_high': {'path': ['return_model', 'base_case_terminal_equity_value_range_per_share', 'year_5', 'high']}}
+METADATA = {'symbol': 'CN:600025', 'report_period': '2026-Q3', 'information_cutoff': '2026-10-26T14:00:00+08:00', 'valuation_note': 'Ku5%中心、4.5–5.5%核心，经营FCFF不扣融资利息，加真实有限税盾，真实法人当期税基合算，少数索取含留存本金与持续/有限期限。利润资本化辅助3.00元与主法7.47元差异主要来自更新和增长；维护接近折旧需更高融资额度。目标估值与交易价仍不一致，建设VAT、期后付款及项目税惠有预算边界。', 'return_model_note': '2027–2031分配预算0.1132、0.1942、0.1903、0.1936、0.1926元；付款母法律利润和实际资金分开，工程、目标、少数与资本返还贯通。第五年固定基准2031状态，以Ku5.5%/4.5%得7.63–12.55元；既有支付和信用不重复。股数186.31094257亿，未预设普通股增发；后期审批、境外回款与各法人税基仍是条件预算。'}
+
+if __name__ == "__main__":
+    raise SystemExit(model_io.main(__file__, SELECTORS, METADATA, source_file='2026-Q3-output.json'))

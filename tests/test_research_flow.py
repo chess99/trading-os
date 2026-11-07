@@ -122,6 +122,26 @@ def test_periodic_research_creates_one_period_slot(tmp_path: Path):
     flow.validate()
 
 
+@pytest.mark.parametrize("formatted", ["**58—82**", "**58**—**82**", "__58—82__"])
+def test_emphasis_preserves_core_value_validation(tmp_path: Path, formatted: str):
+    flow = ResearchFlow(tmp_path)
+    task_id = _enqueue(flow, "CN:000001", "2026-H1")
+    result = _result("CN:000001")
+    result = replace(result, report_markdown=result.report_markdown.replace("58—82", formatted))
+    state = flow.apply_result(result, task_id=task_id, at=AT)
+    assert state["value_range"] == {"low": 58, "high": 82, "currency": "CNY"}
+
+
+def test_emphasis_cannot_hide_a_conflicting_core_value(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    task_id = _enqueue(flow, "CN:000001", "2026-H1")
+    result = _result("CN:000001")
+    result = replace(result, report_markdown=result.report_markdown.replace("58—82", "**58—83**"))
+    with pytest.raises(ValidationError, match="core reasonable value range must match"):
+        flow.apply_result(result, task_id=task_id, at=AT)
+    assert len(flow.list_tasks()) == 1
+
+
 @pytest.mark.parametrize(
     "field,leak",
     [

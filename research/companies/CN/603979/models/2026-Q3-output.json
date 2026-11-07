@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:603979",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-26T23:00:00+00:00",
+  "value_range": {
+    "low": 23.77,
+    "high": 31.45,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-26T23:00:00+00:00",
+    "base_case_distributions_per_share": [
+      0.6,
+      0.13379304098966513,
+      0.8,
+      1.0,
+      1.2
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 39.27983842362821,
+        "high": 47.0213262029129
+      }
+    }
+  },
+  "valuation_note": "主方法为30年实际普通股分配折现、有限矿山零资源终值、矿服尾期2%增长。核心低/高铜价10500/11500美元、矿服EBIT率15%/17%、股权门槛12%/11%。资产现金清偿法仅为上限性交叉检查，不与主方法平均。未使用证券报价。",
+  "return_model_note": "基准五次实际分配为0.6、0.13379304、0.8、1、1.2元；第二年受建设融资及流动性约束大幅降低。Y5终值从相同基准Y5资产负债、储量与母公司状态续算，不能拼接核心端点的不同五D。老债转股增股减债，新债留债并支付赎回溢价。"
+}
