@@ -1,10 +1,11 @@
-import { copyFile, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { copyFile, lstat, mkdir, readFile, readdir, realpath, rm, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadStandards, reportMetadata, displayEligibility } from "./lib/research-standards.mjs";
 import { loadPublications } from "./lib/publications.mjs";
 import { loadScreeningData } from "./lib/screening-data.mjs";
 import { currentResults, progressCounts } from "../app/lib/display-policy.mjs";
+import { modelArtifactName, researchResourceLink } from "../app/lib/report-reference.mjs";
 
 const dashboardRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = resolve(dashboardRoot, "..");
@@ -18,6 +19,63 @@ function parseJsonLines(text, label) {
     catch (error) { throw new Error(`${label}:${index + 1} is not valid JSON`, { cause: error }); }
   });
 }
+// Downloads contain readable, bounded research inputs and results only.
+export async function exportModelArtifacts(root, output, market, ticker, period, markdown, sourcePath) {
+  const route = market === "CN" ? ticker : `${market}-${ticker}`;
+  const directory = join(root, "research/companies", market, ticker, "models");
+  let canonical;
+  try { canonical = await realpath(directory); }
+  catch (error) { if (error.code === "ENOENT") return; throw error; }
+  const directDirectory = join(await realpath(root), "research/companies", market, ticker, "models");
+  if (canonical !== directDirectory) throw new Error("Model directory must not traverse symbolic links");
+  const names = new Map([[`${period}.py`, false], [`${period}-engine.py`, false], [`${period}-input.json`, false], [`${period}-output.json`, false]]);
+  const hrefs = [...markdown.matchAll(/\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/gu)].map((match) => match[1]);
+  for (const href of hrefs) {
+    const link = researchResourceLink(href, sourcePath);
+    const prefix = `/data/models/${route}/`;
+    if (!link?.startsWith(prefix)) continue;
+    const name = link.slice(prefix.length).split(/[?#]/u, 1)[0];
+    if (modelArtifactName(name, period)) names.set(name, true);
+  }
+  async function modules(folder) {
+    let entries;
+    try { entries = await readdir(join(directory, folder), { withFileTypes: true }); }
+    catch (error) { if (error.code === "ENOENT") return; throw error; }
+    for (const entry of entries) {
+      if (entry.isSymbolicLink()) throw new Error("Model source modules cannot be symbolic links");
+      const name = `${folder}/${entry.name}`;
+      if (entry.isDirectory()) await modules(name);
+      else if (entry.isFile() && modelArtifactName(name, period)) names.set(name, true);
+    }
+  }
+  await modules(period);
+  const destination = join(output, "models", route);
+  assertInside(output, destination);
+  let total = 0;
+  for (const [name, required] of [...names].sort(([a], [b]) => a.localeCompare(b))) {
+    if (!modelArtifactName(name, period)) throw new Error(`Unsafe model artifact: ${name}`);
+    const path = join(directory, name);
+    let stat;
+    try { stat = await lstat(path); }
+    catch (error) { if (error.code === "ENOENT" && !required) continue; throw error; }
+    if (!stat.isFile() || stat.isSymbolicLink() || await realpath(path) !== resolve(canonical, name)) {
+      throw new Error(`Model artifact must be a direct regular file: ${name}`);
+    }
+    total += stat.size;
+    if (stat.size > 1024 ** 2 || total > 2 * 1024 ** 2) throw new Error(`Research artifact budget exceeded: ${market}:${ticker}/${period}`);
+    const bytes = await readFile(path);
+    if (name.endsWith(".json")) {
+      const data = JSON.parse(bytes);
+      if (/lossless|payload|complete_case_manifest/u.test(data?.schema ?? "") || /base64|gzip|xz/u.test(data?.encoding ?? "")) {
+        throw new Error(`Archived model output cannot be published: ${name}`);
+      }
+    }
+    await mkdir(destination, { recursive: true });
+    await mkdir(dirname(join(destination, name)), { recursive: true });
+    await writeFile(join(destination, name), bytes);
+  }
+}
+
 async function collectReports(root, output, symbol, policy, state) {
   const [market, ticker] = symbol.split(":");
   const route = market === "CN" ? ticker : `${market}-${ticker}`;
@@ -37,6 +95,7 @@ async function collectReports(root, output, symbol, policy, state) {
     const sourcePath = `research/companies/${market}/${ticker}/reports/${filename}`;
     const body = await readFile(join(root, sourcePath));
     await copyFile(join(root, sourcePath), join(destination, filename));
+    await exportModelArtifacts(root, output, market, ticker, filename.replace(/\.md$/u, ""), body.toString("utf8"), sourcePath);
     const title = /^#\s+(.+)$/mu.exec(body.toString("utf8"))?.[1] ?? ticker;
     return { period: filename.replace(/\.md$/u, ""), path: `/data/reports/${route}/${filename}`, title,
       ...reportMetadata(sourcePath, body, policy, state) };

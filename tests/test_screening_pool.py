@@ -384,7 +384,7 @@ def test_v3_roundtrip_and_v2_payload_compatibility(tmp_path):
     reread = store.validate().payload()
     assert reread["schema_version"] == 3
     assert reread["companies"][0]["metrics"]["items"][0]["source"] == 0
-    assert "关键研究问题" in store.current_path.read_text()
+    assert "关键研究问题" in store.current_path.read_text(encoding="utf-8")
 
 
 @pytest.mark.parametrize("mutation", [

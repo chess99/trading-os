@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:600660",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-26T00:00:00+08:00",
+  "value_range": {
+    "low": 35.73,
+    "high": 41.93,
+    "currency": "CNY"
+  },
+  "valuation_note": "核心为实际五年普通股分配加第五年持续经营和金融权益价值；资本成本9%—10%，长期增长2.5%、增量资本回报15%。必要维护与折旧一致，新增金融现金逐批实现。辅助EV/NOPAT为40.43—46.91元，不机械平均。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-26T00:00:00+08:00",
+    "base_case_distributions_per_share": [
+      1.8561040823930277,
+      2.009371154654288,
+      2.1341938560427005,
+      2.261654683912198,
+      2.38392377421104
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 44.69352302788655,
+        "high": 51.90321342541705
+      }
+    }
+  },
+  "return_model_note": "五年为截止日起连续12个月，历史股利排除；A/H共26.09743532亿股不稀释。新宣派、既存应收到账、母公司10%实际公积政策和现金容量分开。第五年终值由第6—10年经营现金及永续现金逐批归集预算，加分配后金融本金净实现值、减全部债务；经营价值不含金融利息。正常每年90%现金当期、10%延后三年按97%净实现，非法律承诺或即时特别分红；无三年终值。"
+}

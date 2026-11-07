@@ -1,0 +1,125 @@
+{
+  "symbol": "CN:600183",
+  "information_cutoff": "2026-11-03T10:15:00+00:00",
+  "valuation_note": "原经营与折现率/价格预算锚为2026-10-30T07:41:00+00:00，无新行情或经营预测。当前完整接口：{\"main_low\":29.80699287504298,\"main_high\":38.9121694140597,\"main_base\":34.06586674025054,\"aux_base\":31.705394918637996,\"D\":[1.136386436192804,1.0214618895160186,1.0615690084562455,1.2447864999612264,1.4132432721495964],\"Y5_low\":43.46574909454301,\"Y5_high\":54.14744248814456}。不平均主辅或跨海天条件拼值；未选旧诊断保留历史。",
+  "return_model_note": "当前现金/权利事件截止2026-11-03T10:15:00+00:00；原经营与周年预算起点2026-10-30T07:41:00+00:00不变。五笔D及Y5直接绑定同组完整base前五年状态，既有已付D不重复计入。母新增19,993,232元及227,300股；余款170,079,692元与未来190万股独立预算，电子回购另列；旧30天经营桥不重造，母子法律与经济容量分开。 全精度取完整作者结果，独立账式用于逐项核对；原经营预算与未选历史诊断保持其原时点。",
+  "financial_inputs": {
+    "event": {
+      "paid_increment_CNY": 19993232.0,
+      "incremental_fee_CNY": 0.0,
+      "bought_increment_shares": 227300,
+      "future_parent_shares": 1900000,
+      "condition": "Original total parent cash envelope250m preserved: remaining170079692. Original separately specified future1900000-share budget retained, NOT a price calculation or confirmed executable fill. Current actual shares833600 and future budget1900000 are distinct; full regrantY3 is original condition. Subsidiary cash/quantity remain unchanged. Unknown new fees separate."
+    },
+    "cases": [
+      {
+        "name": "A_base",
+        "method": "A",
+        "parameters": {
+          "cash_delay": false,
+          "credit_failure": false,
+          "cyclic": false,
+          "exchange": false,
+          "high_tax": false,
+          "k": 0.103,
+          "margin_shift": 0.0,
+          "shift_start": 1,
+          "structural": false,
+          "upside": false,
+          "years": 400
+        },
+        "years": 400
+      },
+      {
+        "name": "A_low",
+        "method": "A",
+        "parameters": {
+          "cash_delay": false,
+          "credit_failure": false,
+          "cyclic": false,
+          "exchange": false,
+          "high_tax": false,
+          "k": 0.108,
+          "margin_shift": -0.01,
+          "shift_start": 1,
+          "structural": false,
+          "upside": false,
+          "years": 400
+        },
+        "years": 400
+      },
+      {
+        "name": "A_high",
+        "method": "A",
+        "parameters": {
+          "cash_delay": false,
+          "credit_failure": false,
+          "cyclic": false,
+          "exchange": false,
+          "high_tax": false,
+          "k": 0.098,
+          "margin_shift": 0.01,
+          "shift_start": 1,
+          "structural": false,
+          "upside": false,
+          "years": 400
+        },
+        "years": 400
+      },
+      {
+        "name": "holder_low",
+        "method": "A",
+        "parameters": {
+          "cash_delay": false,
+          "credit_failure": false,
+          "cyclic": false,
+          "exchange": false,
+          "high_tax": false,
+          "k": 0.108,
+          "margin_shift": -0.01,
+          "shift_start": 6,
+          "structural": false,
+          "upside": false,
+          "years": 400
+        },
+        "years": 400
+      },
+      {
+        "name": "holder_high",
+        "method": "A",
+        "parameters": {
+          "cash_delay": false,
+          "credit_failure": false,
+          "cyclic": false,
+          "exchange": false,
+          "high_tax": false,
+          "k": 0.098,
+          "margin_shift": 0.01,
+          "shift_start": 6,
+          "structural": false,
+          "upside": false,
+          "years": 400
+        },
+        "years": 400
+      },
+      {
+        "name": "B_base",
+        "method": "B",
+        "parameters": {
+          "cash_delay": false,
+          "credit_failure": false,
+          "cyclic": false,
+          "exchange": false,
+          "high_tax": false,
+          "k": 0.103,
+          "margin_shift": 0.0,
+          "shift_start": 1,
+          "structural": false,
+          "upside": false,
+          "years": 400
+        },
+        "years": 400
+      }
+    ]
+  }
+}

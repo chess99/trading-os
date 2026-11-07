@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:002372",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-26T20:00:00+08:00",
+  "value_range": {
+    "low": 4.854414695141834,
+    "high": 5.7925073965927,
+    "currency": "CNY"
+  },
+  "valuation_note": "基准经营现金路径按10%与8.5%折现；不使用未经核实的现价；独立EPV交叉而非历史估值锚定。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-26T20:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.5041887163453068,
+      0.47413097600761306,
+      0.456818691791309,
+      0.44590897727417517,
+      0.4764251551110536
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 4.929156734825451,
+        "high": 5.907591061111074
+      }
+    }
+  },
+  "return_model_note": "每一初始普通股；五年分配与TV5来自同一法律现金路径，TV5为Y6之后实际股利和依法按比例返本的Y5现值；总股本扣库存股，非直接现金加回。 非核心退出为含税费执行摩擦的净实现预算，权益法账面不等税基；额外JV7500万元税负边界实际重算。全部可行情景金融余资最终经真实分配或条件同比例资本返还实现，必要经营资本持续支持经营；不直接终值加本金。"
+}

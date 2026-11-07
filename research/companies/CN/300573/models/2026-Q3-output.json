@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:300573",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-28T11:00:00+00:00",
+  "value_range": {
+    "low": 22.79,
+    "high": 30.09,
+    "currency": "CNY"
+  },
+  "valuation_note": "核心经营过渡15年后零增长，以同一母子法定利润及现金预算逐年支付到240年，160/200/240收敛；附条件第30年资本返还预算及20/40年、无返还、部分回收和成本敏感。辅助采用独立稳态经营参数通过同一真实普通股持有人付款桥，不使用控制者即时变现或市场倍数；核心首五年同一分配且实际法律和现金足额。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-28T11:00:00+00:00",
+    "base_case_distributions_per_share": [
+      1.470399,
+      1.565697,
+      1.63454,
+      1.688127,
+      1.727054
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 27.652708,
+        "high": 37.66282
+      }
+    }
+  },
+  "return_model_note": "分配为研究预算、税前普通股现金。完全稀释356553846股，含已批准但待登记1636072股及11.28元认购款；9月现金已包含注销回购和已付股利。母自主经营为主要来源，亏损先弥补、法定储备提至股本50%封顶，子公司上划须利润和现金同时满足。第五年终值含后续衰减经营及已扣分配后的现金渐进回收，不直接加回现金面值，不复制当前价值。"
+}

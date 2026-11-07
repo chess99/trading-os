@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:603605",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-11-03T00:00:00+00:00",
+  "value_range": {
+    "low": 37.482179151187786,
+    "high": 51.61084561873629,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-03T00:00:00+00:00",
+    "base_case_distributions_per_share": [
+      1.6352247894482999,
+      1.9157523004977361,
+      2.2337403335785546,
+      2.372140768252649,
+      2.4863838372497
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 52.481006683852506,
+        "high": 64.22863980369083
+      }
+    }
+  },
+  "valuation_note": "主法当前基准43.713724元，辅助39.001724元；核心经营区间37.482179—51.610846元，非同base holder区间。原经营缓存与Nov1 PV锚不变。",
+  "return_model_note": "Nov3为信息版本，原现金/PV锚2026-11-01，Y5为2031-11-01。base D5与真实同base holder Y5端点采用canonical原数值；条件注销、Y3无偿回授和Y2转股不是已发生事实。分配受母现金与法律RE约束，未知费用未确认为零。"
+}

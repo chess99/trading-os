@@ -1,0 +1,102 @@
+{
+  "scope": "Exactly nine company paths; no C rerun or old 45-sensitivity grid",
+  "paths": {
+    "A_low": {
+      "policy": "A",
+      "extra_release_rate": 0,
+      "discount": 0.1,
+      "tail_decline": 0.12,
+      "after5_find_unit_cost": 45,
+      "after5_develop_unit_cost": 165,
+      "asset_domestic_capital_delay": 5,
+      "asset_foreign_capital_delay": 8,
+      "asset_domestic_capital_cost": 0.15,
+      "asset_foreign_capital_cost": 0.3,
+      "asset_parent_capital_delay": 2,
+      "asset_common_fee_years": 10
+    },
+    "A_high": {
+      "policy": "A",
+      "extra_release_rate": 0,
+      "discount": 0.085,
+      "tail_decline": 0.09,
+      "after5_find_unit_cost": 35,
+      "after5_develop_unit_cost": 135,
+      "asset_common_fee_years": 6
+    },
+    "B_low": {
+      "policy": "B",
+      "extra_release_rate": 0.1,
+      "discount": 0.1,
+      "tail_decline": 0.12,
+      "after5_find_unit_cost": 45,
+      "after5_develop_unit_cost": 165,
+      "asset_domestic_capital_delay": 5,
+      "asset_foreign_capital_delay": 8,
+      "asset_domestic_capital_cost": 0.15,
+      "asset_foreign_capital_cost": 0.3,
+      "asset_parent_capital_delay": 2,
+      "asset_common_fee_years": 10
+    },
+    "B_high": {
+      "policy": "B",
+      "extra_release_rate": 0.1,
+      "discount": 0.085,
+      "tail_decline": 0.09,
+      "after5_find_unit_cost": 35,
+      "after5_develop_unit_cost": 135,
+      "asset_common_fee_years": 6
+    },
+    "A_permanent_weak": {
+      "oil": [
+        52,
+        52,
+        55,
+        55,
+        55
+      ],
+      "gas": [
+        6.8,
+        6.8,
+        6.8,
+        6.8,
+        6.8
+      ],
+      "investment_ceiling": [
+        110000,
+        110000,
+        110000,
+        110000,
+        110000
+      ],
+      "find_unit_cost": 60,
+      "develop_unit_cost": 200,
+      "incremental_cost": [
+        9000,
+        10000,
+        11000,
+        12000,
+        14000
+      ],
+      "tail_decline": 0.12
+    },
+    "A_resource_efficiency_weak": {
+      "find_unit_cost": 60,
+      "develop_unit_cost": 200,
+      "legacy_cost_multiplier": 1.2
+    },
+    "A_PUD_uncovered_0": {
+      "legacy_aro_uncovered_fraction": 0
+    },
+    "A_PUD_uncovered_100": {
+      "legacy_aro_uncovered_fraction": 1
+    },
+    "A_fifteen_year_finding": {
+      "find_years": 15
+    }
+  },
+  "comparison_rule": "B versus same-name A endpoint only isolates policy. The five diagnostic paths use unchanged BASE common parameters and A; PUD 0/100 compare directly, not versus differently parameterized core endpoints. No hidden common-BASE company run.",
+  "auxiliary": "Two source-normalized finite operating-cash endpoints, plus closed-form 0-573 and 0-651 classification effect bounds; not new company paths",
+  "no_prices_no_IRR_no_probability_weights": true,
+  "asset_quote_revision": "Source-date rights; fixed common fee budget, no unknown-size life trigger. No operating/A/B/nine-path changes."
+}

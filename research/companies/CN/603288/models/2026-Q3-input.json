@@ -1,0 +1,187 @@
+{
+  "symbol": "CN:603288",
+  "information_cutoff": "2026-11-03T10:15:00+00:00",
+  "valuation_note": "原经营与折现率/价格预算锚为2026-10-29T21:15:00+00:00，无新行情或经营预测。当前完整接口：{\"main_low\":15.755441665764303,\"main_high\":20.082916789744655,\"main_base\":17.689085819085776,\"aux_low\":15.514413980461354,\"aux_high\":19.758229242666484,\"aux_base\":17.410564800834603,\"D\":[1.1626303433202647,1.2511374898592666,1.2942660938976898,1.3237374734002445,1.3540234783843494],\"Y5_low\":17.013051033673058,\"Y5_high\":21.622969789326714}。不平均主辅或跨海天条件拼值；未选旧诊断保留历史。",
+  "return_model_note": "当前现金/权利事件截止2026-11-03T10:15:00+00:00；原经营与周年预算起点2026-10-29T21:15:00+00:00不变。五笔D及Y5直接绑定同组完整base前五年状态，既有已付D不重复计入。唯一默认cash_upper完整8对象，lower完整8对象仅敏感性；H现金1214800股与排除享权1514800股分开；母240亿元是Q3集团池划分。FX参考±1%/费用0—0.5%为研究压力非实际结算，70%A注销含新增550k且不混H，无新H强制预算。 全精度取完整作者结果，独立账式用于逐项核对；原经营预算与未选历史诊断保持其原时点。",
+  "financial_inputs": {
+    "event": {
+      "paid_increment_CNY": 19132168.01,
+      "incremental_fee_CNY": 0.0,
+      "bought_increment_shares": 550000,
+      "h_increment_cash_RMB_condition": null,
+      "h_issuer_held_excluded_shares": 1514800,
+      "condition": "A cash19132168.01 and550000 shares retain disclosed fee-scope conditions. Full H current bridge uses only the two post-Q3 purchases, not a lifetime total: Oct30 consideration914800*[25.49965,25.49975] HKD under ordinary nearest4dp; Nov2 disclosed total7736550 HKD. September300000 H cash is already inside Q3 group F0, but all1514800 H pending cancellation were omitted from old economic rights and are excluded once. Parent24bn is a group-pool allocation budget, not an observed Nov3 parent balance. Full H financial results use the expressly selected bounded dated FX, fees and settlement research treatment below, subject to independent review; this is a conditional financial reconstruction, not structural impossibility or missing lifetime cash. No H future mandatory spend is invented.",
+      "h_source_scope": {
+        "source": "1225653624 pp2-3,6;1225642742 pp5-8,12;old-source/603288.py F0/run",
+        "old_Q3_H_cash_included": true,
+        "old_Q3_cash_included_basis": "Q3 consolidated accounting scope, not separately observed parent settlement receipt",
+        "current_H_registered": 284152800,
+        "current_H_pending_cancel": 1514800,
+        "new_post_Q3_H_quantity": 1214800,
+        "previous_Q3_H_pending_not_in_old_economic_denominator": 300000,
+        "oct30_HKD_consideration_interval": {
+          "lower": "23327079.82",
+          "centre": "23327125.56",
+          "upper": "23327171.30",
+          "rounding_condition": "nearest4dp volume-weighted price, not exact settlement receipt"
+        },
+        "nov2_HKD_consideration": "7736550",
+        "post_Q3_HKD_total_interval": {
+          "lower": "31063629.82",
+          "centre": "31063675.56",
+          "upper": "31063721.30"
+        },
+        "new_H_registered_cancellation": 0,
+        "new_H_future_mandatory_budget": 0
+      },
+      "h_bounded_conditions": {
+        "status": "FROZEN_AUTHOR_RESEARCH_CONDITIONS_PENDING_INDEPENDENT_REVIEW",
+        "fx_RMB_per_HKD": {
+          "2026-10-30": {
+            "lower": "0.8473806",
+            "reference": "0.85594",
+            "upper": "0.8644994",
+            "basis": "Official CFETS dated HKD/CNY reference from saved web search response, multiplied by0.99/1.01 as explicit study stress only. Wider than displayed nearby-reference variation; not a trading band, actual settlement range, guarantee, probability or source fact."
+          },
+          "2026-11-02": {
+            "lower": "0.8473905",
+            "reference": "0.85595",
+            "upper": "0.8645095",
+            "basis": "Official CFETS dated HKD/CNY reference from saved web search response, multiplied by0.99/1.01 as explicit study stress only. Wider than displayed nearby-reference variation; not a trading band, actual settlement range, guarantee, probability or source fact."
+          }
+        },
+        "settlement_adjustment_CNY": {
+          "lower": "0",
+          "upper": "0",
+          "basis": "Explicit study condition: no further settlement/translation/carrying adjustment beyond the dated FX and separate fee range. Not an observed zero. No cross-currency financing or tax realization beyond those old-model budgets is newly assumed."
+        },
+        "settlement_treatment": "settled_or_fully_ring_fenced_before_first_forecast_yield",
+        "permitted_settlement_treatment": "settled_or_fully_ring_fenced_before_first_forecast_yield",
+        "minimum_identification": "Two independently dated FX reference anchors with expressly selected±1% stress; separate fee0–0.5%; settlement adjustment0 only under stated condition. These bounds and points are reviewable research assumptions, not company settlement facts or certified actual bounds. Two combined cash endpoints are sensitivity samples, not mathematical extrema of the full nonlinear valuation.",
+        "incremental_fee_rate_on_converted_trade": {
+          "lower": "0",
+          "upper": "0.005",
+          "basis": "Author-selected0–50bp all-in incremental fee stress on translated H trade consideration, separate from FX. It includes any unobserved H transaction costs for this research condition, not observed charges or a legal/contractual maximum. If actual charges exceed this budget, revise the condition instead of claiming coverage."
+        },
+        "settlement_scope": "Both post-Q3 H transactions are settled or fully and irrevocably ring-fenced before the original first forecast yield/distribution grid. Ring-fenced amounts are excluded from both usable funding and interest-earning forecast principal. This net-available-pool convention is not a claim about Nov3 bank cash/accrual balance. No September repayment, new legal cancellation, additional H programme, daily yield bridge, fee tax credit or free financing is added."
+      }
+    },
+    "cases": [
+      {
+        "method": "product",
+        "scenario": "base",
+        "parameters": {
+          "delay": 0.0,
+          "dg": 0.0,
+          "dm": 0.0,
+          "g": 0.015,
+          "r": 0.085,
+          "up": 0.9,
+          "wc": 0.0
+        },
+        "years": 360
+      },
+      {
+        "method": "product",
+        "scenario": "core_low",
+        "parameters": {
+          "delay": 0.0,
+          "dg": -0.003,
+          "dm": -0.005,
+          "g": 0.0125,
+          "r": 0.09,
+          "up": 0.9,
+          "wc": 0.0
+        },
+        "years": 360
+      },
+      {
+        "method": "product",
+        "scenario": "core_high",
+        "parameters": {
+          "delay": 0.0,
+          "dg": 0.003,
+          "dm": 0.005,
+          "g": 0.0175,
+          "r": 0.08,
+          "up": 0.9,
+          "wc": 0.0
+        },
+        "years": 360
+      },
+      {
+        "method": "product",
+        "scenario": "terminal_low",
+        "parameters": {
+          "delay": 0.0,
+          "dg": -0.003,
+          "dm": -0.005,
+          "g": 0.0125,
+          "r": 0.09,
+          "terminal_only": true,
+          "up": 0.9,
+          "wc": 0.0
+        },
+        "years": 360
+      },
+      {
+        "method": "product",
+        "scenario": "terminal_high",
+        "parameters": {
+          "delay": 0.0,
+          "dg": 0.003,
+          "dm": 0.005,
+          "g": 0.0175,
+          "r": 0.08,
+          "terminal_only": true,
+          "up": 0.9,
+          "wc": 0.0
+        },
+        "years": 360
+      },
+      {
+        "method": "channel",
+        "scenario": "base",
+        "parameters": {
+          "delay": 0.0,
+          "dg": 0.0,
+          "dm": 0.0,
+          "g": 0.015,
+          "r": 0.085,
+          "up": 0.9,
+          "wc": 0.0
+        },
+        "years": 360
+      },
+      {
+        "method": "channel",
+        "scenario": "core_low",
+        "parameters": {
+          "delay": 0.0,
+          "dg": -0.003,
+          "dm": -0.005,
+          "g": 0.0125,
+          "r": 0.09,
+          "up": 0.9,
+          "wc": 0.0
+        },
+        "years": 360
+      },
+      {
+        "method": "channel",
+        "scenario": "core_high",
+        "parameters": {
+          "delay": 0.0,
+          "dg": 0.003,
+          "dm": 0.005,
+          "g": 0.0175,
+          "r": 0.08,
+          "up": 0.9,
+          "wc": 0.0
+        },
+        "years": 360
+      }
+    ],
+    "adopted_condition_point": "cash_upper"
+  }
+}

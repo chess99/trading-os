@@ -1,0 +1,63 @@
+{
+  "symbol": "CN:600690",
+  "information_cutoff": "2026-11-03T07:30:00+00:00",
+  "valuation_note": "当前主法基准19.858832528997元，核心端点来自low, high；辅助当前值为21.069876779480元。区域法为主，折现8.5%—9.5%、长期增长1.5%；产品法独立经营入口共享税/资本/现金桥，不平均。原首年薪酬预算不因付款前移而消失；只四条更新，其他压力为历史。",
+  "return_model_note": "D1–5取base，Y5取同经营现金状态的low/high，仅折现率改变，完整金融前五字段exact。只更新新增A股付款25643674.64元/130万股；独立D股要约1187709735.52元不变。原Y1薪酬费用总额及时点不因提前付款消失，A库存三年恢复享权是原预测条件而非已授予事实。未来借贷续作、主体资金池及税务/法律归属仍为原条件预算。 信息版本为2026年11月3日，原金融预算锚为2026-10-29T16:54:00+00:00；原年度窗口与日期滚存保留，不宣称重新估算至新日期。",
+  "financial_inputs": {
+    "code": "600690",
+    "event": {
+      "unit": "1000000000",
+      "event_date": "2026-10-31",
+      "announcement": "1225652209",
+      "new_paid": "25643674.64",
+      "new_shares": "1300000",
+      "registered": "9298538164",
+      "old_employee_treasury": "69981989",
+      "old_pending_cancellation": "0",
+      "new_kind": "employee_treasury",
+      "old_future": "689747450.72",
+      "new_future": "664103776.08",
+      "same_plan_offset": true,
+      "event_fee_budget_rate": "0",
+      "future_fee_budget_rate": "0",
+      "fee_fact": "Disclosed consideration only; no invented incremental fee.",
+      "old_total_consideration": "2310252549.28",
+      "plan_minimum": "3000000000",
+      "independent_D_tender": "1187709735.52",
+      "D_pending_tender_shares": "79392362",
+      "D_existing_treasury": "865598",
+      "preserve_Y1_compensation_budget": "689747450.72",
+      "inventory_delivery": "Retain original three-year assumed restoration; new actual A shares join that assumption. Buying shares is not an actual accounting compensation expense."
+    },
+    "cases": [
+      {
+        "key": "base",
+        "rate": 0.09,
+        "shock": "base",
+        "entry": "region",
+        "years": 600
+      },
+      {
+        "key": "low",
+        "rate": 0.095,
+        "shock": "base",
+        "entry": "region",
+        "years": 600
+      },
+      {
+        "key": "high",
+        "rate": 0.085,
+        "shock": "base",
+        "entry": "region",
+        "years": 600
+      },
+      {
+        "key": "product",
+        "rate": 0.09,
+        "shock": "base",
+        "entry": "product",
+        "years": 600
+      }
+    ]
+  }
+}

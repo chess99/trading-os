@@ -1,0 +1,352 @@
+{
+  "symbol": "CN:002001",
+  "information_cutoff": "2026-11-03T00:00:00+00:00",
+  "valuation_note": "核心低/高端保留各自经营路径；基准约23.37，辅助基准约24.73元。新回购全额前移29,471,824.62元，余预算71,528,175.38元，原总300,490,835.70元及490,835.70元取整差保留；发行人外付不乘99.5%，分母3,073,421,680不缩。 信息版本2026-11-03 00UTC；model_as_of为本次信息版本；经营预测/PV计时锚仍为2026-10-27T21:05:30+00:00，不按信息版本日期重新生成现金或改变年度期数。当前接口采用未舍入own源值，不把两位展示送回现金或IRR。数值表示误差：保存配对≤1e-12元/股；若经正确舍入binary64再预留1e-12，每个D及TV5腿合计≤2e-12，IRR应按同向现金端点求根包络并计求解残差，非固定收益率误差。全尾部最低约−1e-5元为扣floor/locked/payable后的数值余量，不是实际负银行现金；不提升strict_feasible，不认证法人法定可分利润。",
+  "return_model_note": "同一基准五年D为完整源值，显示约1.00/1.00/1.05/1.10/1.15；TV5约28.68—32.42来自同一完整基准，不是core的27.39—34.02。F11/(r−g)、递延本金/税及其它r依赖全部重折，不另加Y5现金。 信息版本2026-11-03 00UTC；model_as_of为本次信息版本；经营预测/PV计时锚仍为2026-10-27T21:05:30+00:00，不按信息版本日期重新生成现金或改变年度期数。当前接口采用未舍入own源值，不把两位展示送回现金或IRR。数值表示误差：保存配对≤1e-12元/股；若经正确舍入binary64再预留1e-12，每个D及TV5腿合计≤2e-12，IRR应按同向现金端点求根包络并计求解残差，非固定收益率误差。全尾部最低约−1e-5元为扣floor/locked/payable后的数值余量，不是实际负银行现金；不提升strict_feasible，不认证法人法定可分利润。",
+  "financial_inputs": {
+    "code": "002001",
+    "event": {
+      "actual_new_treasury": 1156624,
+      "advance_CNY": "29471824.62",
+      "advance_model_units": "0.2947182462",
+      "allocation": "Apply full issuer advance AFTER common=.995 allocation; no NCI discount on buyback; frozen subsidiary resources unchanged.",
+      "current_cumulative_CNY": "228962660.32",
+      "fee_policy": "No disclosed fees; retain unknown fee budget condition, do not call price consideration all-in paid bank cash.",
+      "future_new_CNY": "71528175.38",
+      "future_old_CNY": "101000000",
+      "issued_denominator": 3073421680,
+      "name": "新和成",
+      "parent_new_budget_CNY": "1044700734.53",
+      "parent_old_budget_CNY": "1074172559.15",
+      "parent_position_policy": "Original issuer cash-location budget less full advance; not certified current bank or legal availability.",
+      "preserved_total_CNY": "300490835.70",
+      "prior_paid_CNY": "199490835.70",
+      "rounded_budget_surplus_retained_CNY": "490835.70",
+      "settlement_policy": "Disclosed cumulative成交/price consideration is committed; deduct or fully segregate at opening before yield. Bank settlement date not separately known.",
+      "unit_CNY": "100000000"
+    },
+    "cases": {
+      "base": {
+        "arguments": {
+          "spec": {
+            "assoc_dividend": 1.5,
+            "assoc_recovery": 1.0,
+            "cash_lag": 0.0,
+            "debt_rate": 0.026,
+            "early_profit_multipliers": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "expense": 0.105,
+            "fin_yield": 0.015,
+            "g": 0.02,
+            "growth": [
+              0.025,
+              0.03,
+              0.085,
+              0.025
+            ],
+            "margins": [
+              0.4170588235294118,
+              0.47,
+              0.32,
+              0.18
+            ],
+            "name": "base",
+            "net_invest": [
+              21,
+              21,
+              19,
+              17,
+              15,
+              14,
+              14,
+              14,
+              14,
+              14
+            ],
+            "parent_cash0": 10.7417255915,
+            "parent_extra_payment": 0.0,
+            "parent_registered": 30.7342168,
+            "parent_reserve0": 15.45453678,
+            "parent_retained0": 58.2620187972,
+            "payout_per_share": [
+              1,
+              1,
+              1.05,
+              1.1,
+              1.15
+            ],
+            "permanent_margin_cut": 0.0,
+            "r": 0.095,
+            "repurchase": [
+              1.01,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "revenues": [
+              170.0,
+              42.0,
+              26.0,
+              22.0
+            ],
+            "slow_capital_return": false,
+            "sub_registered": 11.0,
+            "sub_reserve0": 0.0,
+            "sub_retained0": 100.0,
+            "tax": 0.15,
+            "terminal_asset_release": true,
+            "terminal_roic": 0.12
+          },
+          "common": 0.995
+        },
+        "globals": {
+          "FACTS": {
+            "associate_assets": 12.1871039662,
+            "capex_9m": 19.8728406624,
+            "cash": 88.8501376416,
+            "cfo_9m": 52.2761469817,
+            "consolidated_equity": 367.103146168,
+            "debt": 80.3851060175,
+            "parent_H1_liquid": 10.7417255915,
+            "parent_H1_retained": 58.2620187972,
+            "profit_parent_9m": 58.6774427798,
+            "revenue_9m": 192.3133321352,
+            "shares": 30.7342168,
+            "trading_assets": 29.9034945546
+          },
+          "SHARES": 30.7342168
+        }
+      },
+      "core_high": {
+        "arguments": {
+          "spec": {
+            "assoc_dividend": 1.5,
+            "assoc_recovery": 1.0,
+            "cash_lag": 0.0,
+            "debt_rate": 0.026,
+            "early_profit_multipliers": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "expense": 0.105,
+            "fin_yield": 0.015,
+            "g": 0.02,
+            "growth": [
+              0.025,
+              0.03,
+              0.085,
+              0.025
+            ],
+            "margins": [
+              0.4270588235294117,
+              0.48,
+              0.33,
+              0.18
+            ],
+            "name": "core_high",
+            "net_invest": [
+              21,
+              21,
+              19,
+              17,
+              15,
+              14,
+              14,
+              14,
+              14,
+              14
+            ],
+            "parent_cash0": 10.7417255915,
+            "parent_extra_payment": 0.0,
+            "parent_registered": 30.7342168,
+            "parent_reserve0": 15.45453678,
+            "parent_retained0": 58.2620187972,
+            "payout_per_share": [
+              1,
+              1,
+              1.05,
+              1.1,
+              1.15
+            ],
+            "permanent_margin_cut": 0.0,
+            "r": 0.09,
+            "repurchase": [
+              1.01,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "revenues": [
+              170.0,
+              42.0,
+              26.0,
+              22.0
+            ],
+            "slow_capital_return": false,
+            "sub_registered": 11.0,
+            "sub_reserve0": 0.0,
+            "sub_retained0": 100.0,
+            "tax": 0.15,
+            "terminal_asset_release": true,
+            "terminal_roic": 0.13
+          },
+          "common": 0.995
+        },
+        "globals": {
+          "FACTS": {
+            "associate_assets": 12.1871039662,
+            "capex_9m": 19.8728406624,
+            "cash": 88.8501376416,
+            "cfo_9m": 52.2761469817,
+            "consolidated_equity": 367.103146168,
+            "debt": 80.3851060175,
+            "parent_H1_liquid": 10.7417255915,
+            "parent_H1_retained": 58.2620187972,
+            "profit_parent_9m": 58.6774427798,
+            "revenue_9m": 192.3133321352,
+            "shares": 30.7342168,
+            "trading_assets": 29.9034945546
+          },
+          "SHARES": 30.7342168
+        }
+      },
+      "core_low": {
+        "arguments": {
+          "spec": {
+            "assoc_dividend": 1.5,
+            "assoc_recovery": 1.0,
+            "cash_lag": 0.0,
+            "debt_rate": 0.026,
+            "early_profit_multipliers": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "expense": 0.105,
+            "fin_yield": 0.015,
+            "g": 0.02,
+            "growth": [
+              0.025,
+              0.03,
+              0.085,
+              0.025
+            ],
+            "margins": [
+              0.4070588235294118,
+              0.46,
+              0.31,
+              0.18
+            ],
+            "name": "core_low",
+            "net_invest": [
+              21,
+              21,
+              19,
+              17,
+              15,
+              14,
+              14,
+              14,
+              14,
+              14
+            ],
+            "parent_cash0": 10.7417255915,
+            "parent_extra_payment": 0.0,
+            "parent_registered": 30.7342168,
+            "parent_reserve0": 15.45453678,
+            "parent_retained0": 58.2620187972,
+            "payout_per_share": [
+              1,
+              1,
+              1.05,
+              1.1,
+              1.15
+            ],
+            "permanent_margin_cut": 0.0,
+            "r": 0.1,
+            "repurchase": [
+              1.01,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "revenues": [
+              170.0,
+              42.0,
+              26.0,
+              22.0
+            ],
+            "slow_capital_return": false,
+            "sub_registered": 11.0,
+            "sub_reserve0": 0.0,
+            "sub_retained0": 100.0,
+            "tax": 0.15,
+            "terminal_asset_release": true,
+            "terminal_roic": 0.115
+          },
+          "common": 0.995
+        },
+        "globals": {
+          "FACTS": {
+            "associate_assets": 12.1871039662,
+            "capex_9m": 19.8728406624,
+            "cash": 88.8501376416,
+            "cfo_9m": 52.2761469817,
+            "consolidated_equity": 367.103146168,
+            "debt": 80.3851060175,
+            "parent_H1_liquid": 10.7417255915,
+            "parent_H1_retained": 58.2620187972,
+            "profit_parent_9m": 58.6774427798,
+            "revenue_9m": 192.3133321352,
+            "shares": 30.7342168,
+            "trading_assets": 29.9034945546
+          },
+          "SHARES": 30.7342168
+        }
+      }
+    }
+  }
+}

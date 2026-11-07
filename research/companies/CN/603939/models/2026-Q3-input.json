@@ -1,0 +1,98 @@
+{
+  "symbol": "CN:603939",
+  "information_cutoff": "2026-11-03T10:15:00+00:00",
+  "valuation_note": "原经营与折现率/价格预算锚为2026-10-29T12:00:00+00:00，无新行情或经营预测。当前完整接口：{\"main_low\":15.520166165619013,\"main_high\":21.785674652317756,\"main_base\":18.33289229692047,\"aux_low\":16.48896125397468,\"aux_high\":22.415630766336037,\"aux_RI_low\":16.48896125399718,\"aux_RI_high\":22.415630766794706,\"D\":[0.8487509215237247,0.8855339764361417,0.9644780059911593,0.9923106705098211,1.0429494541353415],\"Y5_low\":20.402099999869723,\"Y5_high\":26.48596689142554}。不平均主辅或跨海天条件拼值；未选旧诊断保留历史。",
+  "return_model_note": "当前现金/权利事件截止2026-11-03T10:15:00+00:00；原经营与周年预算起点2026-10-29T12:00:00+00:00不变。五笔D及Y5直接绑定同组完整base前五年状态，既有已付D不重复计入。新增显示差13,228,300元约±100元、519,300股；费用/账面差独列；最低200m未来余款80,014,600；受限本金/收益、母普通子少数、Y3退款与Y4CB现金赎回仍为条件。 全精度取完整作者结果，独立账式用于逐项核对；原经营预算与未选历史诊断保持其原时点。",
+  "financial_inputs": {
+    "event": {
+      "paid_increment_CNY": 13228300.0,
+      "incremental_fee_CNY": 0.0,
+      "bought_increment_shares": 519300,
+      "condition": "Display-centre only: old and new cumulative costs each ±50 CNY, delta ±100 CNY. New fees unobserved. Preserve old book-vs-trade difference 10596.26 CNY separately. Existing 10.2011m grant, strike, performance/refund and convertible mechanics are budgets, not newly confirmed grants."
+    },
+    "cases": [
+      {
+        "name": "core_low",
+        "method": null,
+        "parameters": {
+          "discount": 0.1,
+          "name": "core_low",
+          "opens": 320,
+          "retail_margin": 0.405,
+          "same_store_extra": 0.002
+        },
+        "years": 320
+      },
+      {
+        "name": "base",
+        "method": null,
+        "parameters": {
+          "name": "base"
+        },
+        "years": 320
+      },
+      {
+        "name": "core_high",
+        "method": null,
+        "parameters": {
+          "discount": 0.09,
+          "name": "core_high",
+          "opens": 440,
+          "retail_margin": 0.413,
+          "same_store_extra": 0.008
+        },
+        "years": 320
+      },
+      {
+        "name": "earnings_low",
+        "method": null,
+        "parameters": {
+          "discount": 0.1,
+          "earnings_cash_margin": 0.12,
+          "kind": "earnings",
+          "name": "earnings_low",
+          "sales_growth": 0.03
+        },
+        "years": 320
+      },
+      {
+        "name": "earnings_high",
+        "method": null,
+        "parameters": {
+          "discount": 0.09,
+          "earnings_cash_margin": 0.13,
+          "kind": "earnings",
+          "name": "earnings_high",
+          "sales_growth": 0.05
+        },
+        "years": 320
+      },
+      {
+        "name": "holder_y5_low",
+        "method": null,
+        "parameters": {
+          "base_first_five": true,
+          "discount": 0.1,
+          "name": "holder_y5_low",
+          "opens": 320,
+          "retail_margin": 0.405,
+          "same_store_extra": 0.002
+        },
+        "years": 320
+      },
+      {
+        "name": "holder_y5_high",
+        "method": null,
+        "parameters": {
+          "base_first_five": true,
+          "discount": 0.09,
+          "name": "holder_y5_high",
+          "opens": 440,
+          "retail_margin": 0.413,
+          "same_store_extra": 0.008
+        },
+        "years": 320
+      }
+    ]
+  }
+}

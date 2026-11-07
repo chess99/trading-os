@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:300760",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-29T11:00:00+00:00",
+  "value_range": {
+    "low": 106.1965179385643,
+    "high": 129.52725267175808,
+    "currency": "CNY"
+  },
+  "valuation_note": "主方法为产品收入—利润—资本—实体可分现金；核心10%/9.5%/9%要求回报。辅方法独立以正常化核心利润与新增资本回报建立经营入口，118.47元，不平均。180/720年真实延长尾期，无末年清算；结构压力49.10元另列，不用行情或倍数。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-29T11:00:00+00:00",
+    "base_case_distributions_per_share": [
+      4.5,
+      4.9,
+      5.3,
+      5.7,
+      6.1
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 139.1372041052373,
+        "high": 167.98604442815184
+      }
+    }
+  },
+  "return_model_note": "五个周年截至2027—2031-10-29，实际每股现金4.5/4.9/5.3/5.7/6.1；Y5持续权益139.14—167.99来自同一路径后续分配，已付现金不再保留。1,211,799,431普通股；惠泰未来认款、参与分母和少数同步变化。接口method名称沿标准，无证券行情或IRR计算。"
+}

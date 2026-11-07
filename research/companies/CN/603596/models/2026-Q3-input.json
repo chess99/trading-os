@@ -1,0 +1,309 @@
+{
+  "symbol": "CN:603596",
+  "information_cutoff": "2026-10-31T23:59:59+08:00",
+  "valuation_note": "主法为归属FCFF十年加两月短桩DCF，JV股权现金与金融/债务桥另列；基准18.00元，核心两端保持base经营/资本/归属及到期偿债，只将名义经营资本成本设10.5%/8.5%，永续增长2.5%。电控2027—31增长18/15/12/9/6%，EBIT率约11%后逐步衰减至9%；维护1.10倍D&A、核心NWC23%，5年后继续投入。辅法当前资本经济利润支持15.73元，差12.62%，不平均；主法终端现值占经营价值56.89%。结构压力8.95元和转股/回售不纳核心端点。金融NCI、母子分池和豫北预算是估计而非精确披露。",
+  "return_model_note": "D为2027—2031日历年度实际现金分配预算，按897641828个截止时点经济股；先有2026年末两月短桩，因此2031-12-31终值实际距起点5年2个月，年度V1展示不是恰好五周年。终值沿同base经营和已分配/偿债后的现金状态，r10.5%/8.5%给22.47—28.72元，中枢25.15元；中枢未来经营194.85亿元、JV2.82亿元、净金融28.07亿元，未重复计已付D。2031到期付面值110%含末息，基准无转股增发；若转换须同时取消偿本并增股，独立变体约977328802经济股。已批未实施10转4.2财富中性；员工回购不计D或永久缩股。派息率18%递增至25%，受母体RE、现金、偿债缓冲及用途限制；母体75/25初始分池、上划和0.85十亿元专项余额均属预算，非董事会承诺。未提供三年终值或现价IRR。",
+  "financial_inputs": {
+    "budget": {
+      "schema": "bethel-minimal-static-v2",
+      "task_id": "bethel-2026-Q3",
+      "symbol": "CN:603596",
+      "cutoff": "2026-10-31T23:59:59+08:00",
+      "units": "CNY billion; shares count; per-share outputs CNY",
+      "valuation_date": "2026-10-31",
+      "balance_date": "2026-09-30",
+      "stub_year_fraction": 0.16666666666666666,
+      "first_forecast_year": 2027,
+      "explicit_years": 10,
+      "holder_years": 5,
+      "operating_discount_rate": 0.095,
+      "debt_discount_rate": 0.04,
+      "terminal_growth": 0.025,
+      "tax_rate": 0.16,
+      "shares": 897641828,
+      "pending_bonus_factor": 1.42,
+      "other_operating_profit_2026": 0.2,
+      "other_operating_growth": 0.025,
+      "other_operating_margin_taxed": true,
+      "da_rate": 0.032,
+      "maintenance_da_multiple": 1.1,
+      "incremental_ppe_ratio": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.22,
+        0.24,
+        0.26,
+        0.28,
+        0.3
+      ],
+      "pipeline_growth_capex_owned": [
+        0.65,
+        0.12,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "stub_pipeline_growth_capex_owned": 0.15,
+      "minimum_cash_ratio": 0.06,
+      "restricted_operating_cash_ratio": 0.022,
+      "opening_owned_nwc": 2.9,
+      "opening_owned_productive_assets": 4.06,
+      "opening_owned_productive_assets_bridge": {
+        "PPE_owned_estimate": 3.35,
+        "CIP_owned_estimate": 0.63,
+        "prepaid_long_assets_owned_estimate": 0.08,
+        "source": "Q326 p7 group PPE3.67266769276/CIP0.67970368727/other_noncurrent0.08547369943; H126 p174 long-asset prepayments, p209 Yubei PPA; ownership allocation estimates, no invented exact entity split"
+      },
+      "opening_purpose_restricted_funds": 0.85,
+      "purpose_funds_policy": "Issuer-controlled use restriction within the already valued cash/financial pool. Release only against same identified pipeline cash payments; no extra capex deduction. Parent payment capacity conservatively bears restriction; not assertion of physical bank-account location.",
+      "opening_owned_intangibles_and_goodwill": 0.52,
+      "opening_owned_intangibles_and_goodwill_bridge": {
+        "owned_identifiable_intangibles_rounded_estimate": 0.35,
+        "yubei_acquisition_goodwill_already_acquirer_share": 0.17094158574,
+        "other_consolidated_goodwill_provisionally_retained": 0.00182138663,
+        "combined_capital_rounding_unit": 0.01,
+        "source": "Q326 p7 intangible0.50201720013/goodwill0.17276297237; H126 p208 purchase1.1214 minus acquired identifiable net-asset FV share0.95045841426 equals goodwill0.17094158574, not multiplied again by0.509727; p209 PPA identifiable intangible0.30348149153 informs the rough0.35 owner intangible estimate. PPA-to-Q3 and other intangible NCI not separately disclosed here. Remaining goodwill ownership uncertainty is bounded by its0.00182138663 residual; retained in base, no invented deduction to preserve old0.44. Sum rounded to0.52, no extra cash/valuation asset addition."
+      },
+      "group_cash": 2.40837633769,
+      "group_trading_financial": 3.1324303189,
+      "other_current_cd_estimate": 0.25,
+      "nci_financial_principal_claim_estimate": 0.5,
+      "opening_owned_restricted_cash": 0.35,
+      "owned_term_cd": 0.3273129944,
+      "term_cd_maturities": {
+        "2028": 0.1,
+        "2029": 0.2273129944
+      },
+      "other_financial_assets": 0.33806319517,
+      "owned_ordinary_debt": 1.36,
+      "ordinary_debt_cash_rate": 0.04,
+      "cash_aftertax_yield": 0.015,
+      "october_owned_fcf_bridge": 0.08,
+      "parent_initial_cash_share": 0.75,
+      "parent_cashflow_share": 0.55,
+      "parent_operating_profit_share": 0.6,
+      "parent_minimum_cash_share": 0.4,
+      "parent_re_disclosed_H126": 3.82280582065,
+      "parent_re_JulOct_budget": 0.4,
+      "parent_legal_reserve": 0.30325541,
+      "legal_reserve_profit_rate": 0.1,
+      "legal_reserve_capital_threshold": 0.5,
+      "stub_legal_reserve_budget": 0.09,
+      "upstream_payout_rates": [
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.55,
+        0.55,
+        0.55,
+        0.55,
+        0.55
+      ],
+      "holder_payout_rates": [
+        0.18,
+        0.2,
+        0.22,
+        0.24,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "discretionary_employee_buyback": {
+        "2027": 0.05
+      },
+      "bond": {
+        "face": 2.801794,
+        "accounting_carry_Q326": 2.63576548918,
+        "conversion_price_current_unit": 35.16,
+        "maturity_year": 2031,
+        "maturity_redemption_factor_including_final_coupon": 1.1,
+        "coupon_cash_rates": {
+          "2027": 0.003,
+          "2028": 0.006,
+          "2029": 0.01,
+          "2030": 0.015
+        },
+        "parent_non_cash_amortization_budget": 0.06,
+        "base_event": "maturity",
+        "conversion_year": 2027,
+        "contingent_put_year": 2027,
+        "contingent_put_factor_including_accrued_interest": 1.003
+      },
+      "jv": {
+        "opening_group_equity_investment": 0.95129733268,
+        "ownership": 0.509727,
+        "normalised_roe": 0.065,
+        "payout_rate": 0.5,
+        "equity_discount_rate": 0.105,
+        "terminal_growth": 0.025
+      },
+      "blocks": [
+        {
+          "name": "electric",
+          "revenue_2026_normalized": 7.4,
+          "ownership": 1.0,
+          "nwc_ratio": 0.23,
+          "normalised_margin_method2": 0.1,
+          "stub_margin": 0.105,
+          "growth": [
+            0.18,
+            0.15,
+            0.12,
+            0.09,
+            0.06,
+            0.05,
+            0.04,
+            0.035,
+            0.03,
+            0.025
+          ],
+          "margin": [
+            0.11,
+            0.114,
+            0.115,
+            0.113,
+            0.11,
+            0.106,
+            0.102,
+            0.098,
+            0.094,
+            0.09
+          ]
+        },
+        {
+          "name": "mechanical_lightweight",
+          "revenue_2026_normalized": 5.8,
+          "ownership": 1.0,
+          "nwc_ratio": 0.23,
+          "normalised_margin_method2": 0.08,
+          "stub_margin": 0.075,
+          "growth": [
+            0.08,
+            0.07,
+            0.06,
+            0.05,
+            0.04,
+            0.035,
+            0.03,
+            0.025,
+            0.025,
+            0.025
+          ],
+          "margin": [
+            0.078,
+            0.082,
+            0.085,
+            0.085,
+            0.083,
+            0.079,
+            0.075,
+            0.071,
+            0.068,
+            0.065
+          ]
+        },
+        {
+          "name": "legacy_steering",
+          "revenue_2026_normalized": 0.62,
+          "ownership": 0.45,
+          "nwc_ratio": 0.15,
+          "normalised_margin_method2": 0.03,
+          "stub_margin": 0.03,
+          "growth": [
+            0.05,
+            0.05,
+            0.04,
+            0.03,
+            0.03,
+            0.025,
+            0.025,
+            0.025,
+            0.025,
+            0.025
+          ],
+          "margin": [
+            0.03,
+            0.032,
+            0.035,
+            0.035,
+            0.035,
+            0.034,
+            0.033,
+            0.032,
+            0.031,
+            0.03
+          ]
+        },
+        {
+          "name": "yubei_controlled_ex_jv",
+          "revenue_2026_normalized": 3.0,
+          "ownership": 0.509727,
+          "nwc_ratio": 0.0,
+          "normalised_margin_method2": 0.045,
+          "stub_margin": 0.04,
+          "growth": [
+            0.08,
+            0.07,
+            0.06,
+            0.05,
+            0.04,
+            0.03,
+            0.025,
+            0.025,
+            0.025,
+            0.025
+          ],
+          "margin": [
+            0.042,
+            0.045,
+            0.047,
+            0.048,
+            0.048,
+            0.046,
+            0.044,
+            0.042,
+            0.041,
+            0.04
+          ]
+        }
+      ],
+      "scenario_names": [
+        "base_maturity",
+        "operating_stress",
+        "full_conversion_2027",
+        "contingent_full_put_2027"
+      ],
+      "sensitivity_names": [
+        "operating_discount_minus_100bp",
+        "operating_discount_plus_100bp",
+        "core_nwc_plus_3pt",
+        "jv_roe_4_5pct",
+        "jv_roe_8_5pct",
+        "other_current_cd_zero"
+      ]
+    },
+    "policy": {
+      "status": "AUTHORING_ONLY_NOT_EXECUTED",
+      "normal_annual_sbc_cash_replacement_2027": 0.015,
+      "sbc_replacement_growth": 0.025,
+      "sbc_policy": "Operating margin retains normal share compensation cost. In cash, assume equal cash replacement cost for employee equity to keep fully issued economic shares stable. Only announced-plan cash above that normal replacement is an extra financing outflow; no expense plus full buyback double count.",
+      "bank_interest_tax_policy": "Budget after-tax cash ordinary interest; bond cash coupon/redemption receive no extra tax benefit in cash forecast (conservative). This is a budget not a tax opinion.",
+      "time_convention": "30E/360: two-month stub then integer annual steps; operating/dividend cash at year-end; bond event at mid-year except full conversion at start2027.",
+      "economic_failure_policy": "Classify parent/timing access, group purpose-restricted payment, or group total funding gaps. Preserve explicitly conditional operating/financial/current equity values; pause D/Y5 without inventing financing.",
+      "numerical_tolerance_billion": 1e-08
+    }
+  }
+}

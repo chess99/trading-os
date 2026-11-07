@@ -25,7 +25,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   verify-display:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -64,8 +64,9 @@ jobs:
       - name: Install browser test tooling (no lockfile changes)
         working-directory: dashboard
         run: |
-          npm install --no-save --package-lock=false playwright@1.56.1
-          npx playwright install --with-deps chromium
+          npm install --prefix "$RUNNER_TEMP/research-browser-tools" --no-save --package-lock=false --ignore-scripts --no-audit --no-fund playwright@1.56.1
+          ln -s "$RUNNER_TEMP/research-browser-tools/node_modules/playwright" node_modules/playwright
+          "$RUNNER_TEMP/research-browser-tools/node_modules/.bin/playwright" install --with-deps chromium
       - name: Browser isolation and layout checks
         working-directory: dashboard
         run: node tests/standard-browser.mjs

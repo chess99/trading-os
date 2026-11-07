@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:600176",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-26T09:00:00+00:00",
+  "value_range": {
+    "low": 8.49,
+    "high": 10.4,
+    "currency": "CNY"
+  },
+  "valuation_note": "主法原普通股实际现金折现，9%/10.25%同经营路径实算8.48614900—10.40125113元；第五年末11.47634865—13.70342145元。辅助更弱正常价差下成熟盈利资本化7.27402688—8.82840255元。无现价；子来源为经济能力预算而非逐户法定账。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-26T09:00:00+00:00",
+    "base_case_distributions_per_share": [
+      0.203512,
+      0.37255,
+      0.376377,
+      0.47923,
+      0.560922
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 11.48,
+        "high": 13.7
+      }
+    }
+  },
+  "return_model_note": "五年实际现金及第五年末此后现金价值，按当前原股份40.03136728亿股计；基准无增发回购或减资，实际少数股东和境外摩擦另扣。资本返还后备路径减投资成本与原持有人存续股份，不作股利利润；基准未触发。已付股利从起始现金去除，无净现金或本金重复加值。母公司单体有证据约束，其他来源为透明经济上划预算，非精确境外/子公司法定账。"
+}

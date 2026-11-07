@@ -42,6 +42,7 @@
 ## 检验与发布
 
 ```bash
+python scripts/check-research-artifacts.py
 python -m trading_os validate
 node dashboard/scripts/report-standards.mjs validate
 cd dashboard
@@ -53,3 +54,5 @@ npm run lint
 `report-standards.mjs` 现在只校验 registry 与状态中的标准字段，不再提供 `inspect / accept / revoke`。工程检查只证明配置、状态和展示关系正常，不重新认证公司的商业预测。网页仍是构建时快照；提交代码不是部署。
 
 跨市场状态沿用同一标准声明。港美股数值结果还必须明确实际财务期末、交易币种和证券单位；资格不足时停止数值展示，历史正文保持可读。
+
+研究附件按[文件交付规范](../../docs/research-artifacts.md)保留必要输入、可读计算代码和轻量结果。存储检查、状态合同与数学复算分别说明实际范围；清理旧输出不会为历史失败补记通过。普通测试和构建使用当前源码，不依赖历史 Git 对象或压缩档案。研究文件更新按投研规范验收，实际网页或基础设施改动再执行对应浏览器检查。

@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:300979",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-29T00:00:00+00:00",
+  "value_range": {
+    "low": 21.43,
+    "high": 24.1,
+    "currency": "CNY"
+  },
+  "valuation_note": "主法经营量价/利润/资本→普通股实收现金，资本成本9.5%—10.5%，20年增长和利润率衰减后零增长；辅法独立历史正常化盈利29.5亿元与15%增量资本回报，约25.12元，不平均。普通股归属、全部旧义务及母子付款桥一致。未评估市场价格。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-29T00:00:00+00:00",
+    "base_case_distributions_per_share": [
+      0.870099,
+      1.284866,
+      1.479224,
+      1.610891,
+      1.687853
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 27.0,
+        "high": 29.77
+      }
+    }
+  },
+  "return_model_note": "未来五个十二个月年度桶，现金分配不含2026年9月已除息旧股利；11.67亿完全稀释股不变。Y5同一基准状态继续滚动160年，稳定全stocks/flows后估续存价值；320年实际重跑一致。母公司宣派与收现分开、先弥亏再法储、境外容量均为经济预算不冒充单体法律余额，存款按60%/40%两年回收并做延迟/低上划/保证金压力；募集本金及净收益留专户，只有合资格项目实际吸收才能解除用途约束。已分配现金从续存现金移除，不另加本金重复值。"
+}

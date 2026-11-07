@@ -1368,7 +1368,9 @@ class ResearchFlow:
                     "formal report with value_range must identify method one, method two, "
                     "and the primary valuation method"
                 )
-            range_match = _REPORT_CORE_VALUE_RANGE_RE.search(report_markdown)
+            # Markdown emphasis is presentation and must not hide the actual range.
+            range_text = report_markdown.replace("**", "").replace("__", "")
+            range_match = _REPORT_CORE_VALUE_RANGE_RE.search(range_text)
             if range_match is None:
                 raise ValidationError(
                     "formal report must state the structured value_range as its "

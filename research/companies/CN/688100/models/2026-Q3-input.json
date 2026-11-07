@@ -1,0 +1,843 @@
+{
+  "symbol": "CN:688100",
+  "information_cutoff": "2026-11-03T07:30:00+00:00",
+  "valuation_note": "当前主法基准11.025566065495元，核心端点来自cases/0, cases/4；辅助当前值为9.479574052868, 9.814543331533, 14.161476158060元。主法五期经营加三期过渡，资本成本10%/8.5%、稳定增长2%/2.5%；辅助十年有限增长后零增长，不平均。仅三条selected更新，未选分类/压力范围为历史诊断。",
+  "return_model_note": "D1–5及两个Y5端点均来自cases/0的同一五期现金、资产桥和股数；只改变后续资本成本0.10/0.085，成熟增长0.02。不是cases/4恢复端拼接。M0至少309.1189364999276百万元、U0至少192百万元是条件门槛，最新母现金/法定利润未核实，不表示已经融资或已经可支付。新增成交金额披露精度100元且不含费用。 信息版本为2026年11月3日，原金融预算锚为2026-11-01T00:00:00+00:00；原年度窗口与日期滚存保留，不宣称重新估算至新日期。",
+  "financial_inputs": {
+    "code": "688100",
+    "event": {
+      "unit": "1000000",
+      "event_date": "2026-10-31",
+      "announcement": "1225652215",
+      "new_paid": "12887600",
+      "new_shares": "532000",
+      "registered": "491685175",
+      "old_employee_treasury": "12103054",
+      "old_pending_cancellation": "0",
+      "new_kind": "employee_treasury",
+      "old_future": "0",
+      "new_future": "0",
+      "same_plan_offset": false,
+      "event_fee_budget_rate": "0",
+      "future_fee_budget_rate": "0",
+      "fee_fact": "Disclosed consideration excludes fees, rounded to CNY100; zero additional modeled fees is not confirmation of zero actual fees. 42.8705m minimum remainder is historical diagnostic only.",
+      "old_total_consideration": null,
+      "cash_precision_CNY": "100",
+      "cash_point_status": "published rounded consideration, not exact-cent actual"
+    },
+    "cases": [
+      {
+        "key": "cases/0",
+        "path": "base_cautious",
+        "financial_share_condition": 0.0,
+        "overrides": {}
+      },
+      {
+        "key": "cases/1",
+        "path": "base_cautious",
+        "financial_share_condition": 0.5,
+        "overrides": {}
+      },
+      {
+        "key": "cases/4",
+        "path": "base_recovery",
+        "financial_share_condition": 0.5,
+        "overrides": {}
+      }
+    ],
+    "original_inputs": {
+      "units": "CNY_million_except_ratios_and_shares_million",
+      "model_as_of": "2026-11-01T00:00:00Z",
+      "balance_date": "2026-09-30",
+      "period_end_dates": [
+        "2027-11-01",
+        "2028-11-01",
+        "2029-11-01",
+        "2030-11-01",
+        "2031-11-01"
+      ],
+      "snapshot_convention": "September balances proxy November opening; explicit gap_cash and gap_nwc conditions, not verified October activity",
+      "facts": {
+        "shares_million": 491.685175,
+        "treasury_shares_million": 12.103054,
+        "cash_equivalents": 750.42550104,
+        "cash_difference": 50.77544386,
+        "trading_financial": 60.0,
+        "unknown_current": 40.0,
+        "unknown_noncurrent": 289.3988568,
+        "noncurrent_financial": 112.712,
+        "investment_property": 74.96657216,
+        "bank_debt": 0.0,
+        "receivables": 2754.69607516,
+        "receivable_notes": 11.62023335,
+        "receivable_financing": 3.44145983,
+        "contract_assets": 209.59986277,
+        "inventory": 568.20093906,
+        "prepayments": 17.51236954,
+        "payables": 1576.34011661,
+        "payable_notes": 450.0793383,
+        "contract_liabilities": 41.18014787,
+        "other_current_assets": 109.37244632,
+        "other_receivables": 30.50937552,
+        "interest_receivable": 12.91844107,
+        "wages_payable": 49.15730031,
+        "taxes_payable": 26.16782315,
+        "other_payables": 66.84424462,
+        "other_current_liabilities": 4.67119346,
+        "ppe": 476.53918581,
+        "cip": 44.80380487,
+        "intangibles": 122.77886748,
+        "long_deferred": 13.23893177,
+        "mother_fy25_distributable": 1401.37015491,
+        "fy25_final_declared": 146.2361253,
+        "statutory_gap_conditional_max": 38.20396951
+      },
+      "common": {
+        "opening_operating_cash_buffer": 250.0,
+        "reference_revenue": 2700.0,
+        "cash_buffer_revenue_ratio": 0.09,
+        "cash_yield_after_tax": 0.01275,
+        "deposit_yield_after_tax": 0.01275,
+        "property_net_cash_yield": 0.07,
+        "other_financial_cash_yield": 0.0,
+        "tax_rate": 0.15,
+        "tax_surcharge_ratio": 0.0065,
+        "prepayment_revenue_ratio": 0.007,
+        "notes_revenue_ratio": 0.005,
+        "contract_asset_revenue_ratio": 0.08,
+        "contract_liability_revenue_ratio": 0.015,
+        "dividend_payout": 0.4,
+        "seed_profit_for_first_dividend": 480.0,
+        "cash_before_dividend_fraction": 0.4,
+        "mother_cash_buffer": 100.0,
+        "mother_cash_before_dividend_fraction": 0.35,
+        "mother_initial_cash": null,
+        "mother_initial_distributable": null,
+        "mother_upstream_cash": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mother_upstream_new_profit": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "reserve_policy": "cap_conditional",
+        "reserve_gap": 38.20396951,
+        "unknown_financial_share_conditions": [
+          0.0,
+          0.5,
+          1.0
+        ],
+        "cash_difference_financial_share": 0.0,
+        "unknown_noncurrent_maturity_year": 3,
+        "gap_cash": 0.0,
+        "gap_nwc": 0.0,
+        "extra_commitment_payments": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "extra_growth_capex": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "future_buybacks": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "transition_growth": [
+          0.05,
+          0.035,
+          0.025
+        ],
+        "terminal_fixed_capital_revenue_ratio": 0.26,
+        "terminal_maintenance_revenue_ratio": 0.018,
+        "terminal_other_operating_income_ratio": 0.005,
+        "terminal_net_working_other_ratio": 0.0,
+        "receivable_ratio_shift": 0.0
+      },
+      "paths": {
+        "base_cautious": {
+          "role": "core_operating_lower",
+          "domestic_revenue": [
+            2180,
+            2300,
+            2410,
+            2510,
+            2610
+          ],
+          "international_revenue": [
+            540,
+            600,
+            670,
+            750,
+            840
+          ],
+          "domestic_gross_margin": [
+            0.395,
+            0.398,
+            0.4,
+            0.4,
+            0.4
+          ],
+          "international_gross_margin": [
+            0.31,
+            0.315,
+            0.32,
+            0.325,
+            0.33
+          ],
+          "rd_ratio": [
+            0.098,
+            0.096,
+            0.094,
+            0.093,
+            0.092
+          ],
+          "sales_ratio": [
+            0.056,
+            0.056,
+            0.056,
+            0.056,
+            0.056
+          ],
+          "admin_ratio": [
+            0.021,
+            0.021,
+            0.021,
+            0.021,
+            0.021
+          ],
+          "credit_inventory_loss_ratio": [
+            0.012,
+            0.012,
+            0.012,
+            0.012,
+            0.012
+          ],
+          "other_operating_income": [
+            35,
+            36,
+            37,
+            38,
+            39
+          ],
+          "receivable_revenue_ratio": [
+            1.02,
+            1.0,
+            0.98,
+            0.96,
+            0.94
+          ],
+          "inventory_cost_ratio": [
+            0.34,
+            0.33,
+            0.32,
+            0.31,
+            0.3
+          ],
+          "payables_cost_ratio": [
+            1.12,
+            1.09,
+            1.06,
+            1.03,
+            1.0
+          ],
+          "maintenance_capex": [
+            55,
+            55,
+            60,
+            60,
+            65
+          ],
+          "growth_capex": [
+            40,
+            45,
+            45,
+            50,
+            50
+          ],
+          "depreciation": [
+            45,
+            49,
+            53,
+            57,
+            61
+          ],
+          "mother_operating_cash": [
+            200,
+            250,
+            285,
+            315,
+            340
+          ],
+          "mother_capex": [
+            45,
+            50,
+            50,
+            55,
+            55
+          ],
+          "mother_subsidiary_funding": [
+            20,
+            20,
+            20,
+            20,
+            20
+          ],
+          "mother_profit": [
+            280,
+            310,
+            340,
+            360,
+            380
+          ],
+          "discount_rate": 0.1,
+          "terminal_growth": 0.02,
+          "terminal_domestic_gross_margin": 0.38,
+          "terminal_international_gross_margin": 0.31,
+          "terminal_rd_ratio": 0.095,
+          "terminal_sales_ratio": 0.06,
+          "terminal_admin_ratio": 0.022,
+          "terminal_loss_ratio": 0.014,
+          "terminal_receivable_ratio": 1.0,
+          "terminal_inventory_ratio": 0.32,
+          "terminal_payables_ratio": 0.9,
+          "aux_normal_owner_cash": 330,
+          "aux_growth": 0.025
+        },
+        "base_recovery": {
+          "role": "core_operating_upper",
+          "domestic_revenue": [
+            2250,
+            2390,
+            2530,
+            2670,
+            2820
+          ],
+          "international_revenue": [
+            600,
+            680,
+            770,
+            870,
+            980
+          ],
+          "domestic_gross_margin": [
+            0.405,
+            0.408,
+            0.41,
+            0.41,
+            0.408
+          ],
+          "international_gross_margin": [
+            0.32,
+            0.325,
+            0.33,
+            0.335,
+            0.335
+          ],
+          "rd_ratio": [
+            0.095,
+            0.093,
+            0.092,
+            0.091,
+            0.09
+          ],
+          "sales_ratio": [
+            0.054,
+            0.054,
+            0.054,
+            0.054,
+            0.054
+          ],
+          "admin_ratio": [
+            0.019,
+            0.019,
+            0.019,
+            0.019,
+            0.019
+          ],
+          "credit_inventory_loss_ratio": [
+            0.01,
+            0.01,
+            0.01,
+            0.01,
+            0.01
+          ],
+          "other_operating_income": [
+            35,
+            37,
+            39,
+            41,
+            43
+          ],
+          "receivable_revenue_ratio": [
+            0.98,
+            0.96,
+            0.94,
+            0.92,
+            0.9
+          ],
+          "inventory_cost_ratio": [
+            0.33,
+            0.32,
+            0.31,
+            0.3,
+            0.29
+          ],
+          "payables_cost_ratio": [
+            1.1,
+            1.08,
+            1.06,
+            1.04,
+            1.02
+          ],
+          "maintenance_capex": [
+            55,
+            55,
+            60,
+            60,
+            65
+          ],
+          "growth_capex": [
+            40,
+            45,
+            45,
+            50,
+            50
+          ],
+          "depreciation": [
+            45,
+            49,
+            53,
+            57,
+            61
+          ],
+          "mother_operating_cash": [
+            240,
+            290,
+            330,
+            360,
+            390
+          ],
+          "mother_capex": [
+            45,
+            50,
+            50,
+            55,
+            55
+          ],
+          "mother_subsidiary_funding": [
+            20,
+            20,
+            20,
+            20,
+            20
+          ],
+          "mother_profit": [
+            320,
+            350,
+            380,
+            410,
+            440
+          ],
+          "discount_rate": 0.085,
+          "terminal_growth": 0.025,
+          "terminal_domestic_gross_margin": 0.39,
+          "terminal_international_gross_margin": 0.32,
+          "terminal_rd_ratio": 0.092,
+          "terminal_sales_ratio": 0.058,
+          "terminal_admin_ratio": 0.021,
+          "terminal_loss_ratio": 0.012,
+          "terminal_receivable_ratio": 0.98,
+          "terminal_inventory_ratio": 0.3,
+          "terminal_payables_ratio": 0.92,
+          "aux_normal_owner_cash": 400,
+          "aux_growth": 0.035
+        },
+        "cycle_delay": {
+          "inherits": "base_cautious",
+          "role": "cyclical_alternative_not_core_endpoint",
+          "domestic_revenue": [
+            2000,
+            2150,
+            2350,
+            2510,
+            2610
+          ],
+          "international_revenue": [
+            500,
+            550,
+            630,
+            720,
+            810
+          ],
+          "domestic_gross_margin": [
+            0.37,
+            0.38,
+            0.39,
+            0.4,
+            0.4
+          ],
+          "receivable_revenue_ratio": [
+            1.1,
+            1.08,
+            1.04,
+            1.0,
+            0.98
+          ],
+          "inventory_cost_ratio": [
+            0.38,
+            0.37,
+            0.35,
+            0.33,
+            0.32
+          ],
+          "growth_capex": [
+            20,
+            25,
+            35,
+            45,
+            50
+          ],
+          "mother_operating_cash": [
+            100,
+            150,
+            230,
+            290,
+            320
+          ],
+          "mother_profit": [
+            200,
+            240,
+            300,
+            340,
+            360
+          ],
+          "aux_normal_owner_cash": 280
+        },
+        "structural_price_credit": {
+          "inherits": "base_cautious",
+          "role": "structural_adverse_not_core_endpoint",
+          "domestic_revenue": [
+            2100,
+            2150,
+            2200,
+            2250,
+            2300
+          ],
+          "international_revenue": [
+            500,
+            530,
+            560,
+            590,
+            620
+          ],
+          "domestic_gross_margin": [
+            0.36,
+            0.355,
+            0.35,
+            0.35,
+            0.35
+          ],
+          "international_gross_margin": [
+            0.29,
+            0.29,
+            0.285,
+            0.285,
+            0.285
+          ],
+          "rd_ratio": [
+            0.105,
+            0.105,
+            0.105,
+            0.103,
+            0.102
+          ],
+          "sales_ratio": [
+            0.065,
+            0.065,
+            0.065,
+            0.065,
+            0.065
+          ],
+          "admin_ratio": [
+            0.024,
+            0.024,
+            0.024,
+            0.024,
+            0.024
+          ],
+          "credit_inventory_loss_ratio": [
+            0.02,
+            0.02,
+            0.02,
+            0.02,
+            0.02
+          ],
+          "other_operating_income": [
+            15,
+            15,
+            15,
+            15,
+            15
+          ],
+          "receivable_revenue_ratio": [
+            1.1,
+            1.1,
+            1.1,
+            1.1,
+            1.1
+          ],
+          "inventory_cost_ratio": [
+            0.4,
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ],
+          "payables_cost_ratio": [
+            1.0,
+            0.95,
+            0.9,
+            0.88,
+            0.85
+          ],
+          "growth_capex": [
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "mother_operating_cash": [
+            110,
+            120,
+            130,
+            140,
+            150
+          ],
+          "mother_profit": [
+            120,
+            130,
+            140,
+            150,
+            160
+          ],
+          "discount_rate": 0.1,
+          "terminal_growth": 0.01,
+          "terminal_domestic_gross_margin": 0.345,
+          "terminal_international_gross_margin": 0.285,
+          "terminal_rd_ratio": 0.102,
+          "terminal_sales_ratio": 0.065,
+          "terminal_admin_ratio": 0.024,
+          "terminal_loss_ratio": 0.02,
+          "terminal_receivable_ratio": 1.1,
+          "terminal_inventory_ratio": 0.4,
+          "terminal_payables_ratio": 0.85,
+          "transition_growth_override": [
+            0.02,
+            0.015,
+            0.01
+          ],
+          "aux_normal_owner_cash": 200,
+          "aux_growth": 0.01
+        },
+        "validated_expansion": {
+          "inherits": "base_recovery",
+          "role": "conditional_upside_not_core_endpoint",
+          "domestic_revenue": [
+            2300,
+            2470,
+            2640,
+            2800,
+            2960
+          ],
+          "international_revenue": [
+            630,
+            740,
+            860,
+            990,
+            1120
+          ],
+          "domestic_gross_margin": [
+            0.41,
+            0.415,
+            0.415,
+            0.415,
+            0.41
+          ],
+          "international_gross_margin": [
+            0.33,
+            0.34,
+            0.345,
+            0.35,
+            0.35
+          ],
+          "growth_capex": [
+            50,
+            55,
+            60,
+            65,
+            70
+          ],
+          "mother_operating_cash": [
+            270,
+            330,
+            380,
+            420,
+            460
+          ],
+          "mother_profit": [
+            350,
+            390,
+            430,
+            470,
+            510
+          ],
+          "aux_normal_owner_cash": 450
+        }
+      },
+      "diagnostics": [
+        {
+          "name": "unknown_assets_financial_late_recovery",
+          "path": "base_cautious",
+          "financial_share": 1.0,
+          "common_overrides": {
+            "unknown_noncurrent_maturity_year": 7
+          }
+        },
+        {
+          "name": "all_financial_requires_additional_capacity",
+          "path": "base_cautious",
+          "financial_share": 1.0,
+          "common_overrides": {
+            "extra_growth_capex": [
+              60,
+              60,
+              40,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "name": "separate_unverified_commitment_150",
+          "path": "base_cautious",
+          "financial_share": 0.0,
+          "common_overrides": {
+            "extra_commitment_payments": [
+              75,
+              75,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "name": "october_gap_cash_down75",
+          "path": "base_cautious",
+          "financial_share": 0.5,
+          "common_overrides": {
+            "gap_cash": -75
+          }
+        },
+        {
+          "name": "october_collection_timing",
+          "path": "base_cautious",
+          "financial_share": 0.5,
+          "common_overrides": {
+            "gap_cash": -75,
+            "gap_nwc": 75
+          }
+        },
+        {
+          "name": "reserve_continue10pct",
+          "path": "base_cautious",
+          "financial_share": 0.5,
+          "common_overrides": {
+            "reserve_policy": "continue10pct"
+          }
+        },
+        {
+          "name": "reserve_already_cap_condition",
+          "path": "base_cautious",
+          "financial_share": 0.5,
+          "common_overrides": {
+            "reserve_gap": 0
+          }
+        },
+        {
+          "name": "cash_difference_financial",
+          "path": "base_cautious",
+          "financial_share": 0.5,
+          "common_overrides": {
+            "cash_difference_financial_share": 1.0
+          }
+        },
+        {
+          "name": "remaining_optional_buyback",
+          "path": "base_cautious",
+          "financial_share": 0.5,
+          "common_overrides": {
+            "future_buybacks": [
+              42.8705,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "name": "mother_cash_zero_no_upstream",
+          "path": "base_cautious",
+          "financial_share": 0.5,
+          "common_overrides": {
+            "mother_initial_cash": 0
+          }
+        },
+        {
+          "name": "mother_cash200_conditional",
+          "path": "base_cautious",
+          "financial_share": 0.5,
+          "common_overrides": {
+            "mother_initial_cash": 200
+          }
+        },
+        {
+          "name": "group_operating_buffer350",
+          "path": "base_cautious",
+          "financial_share": 0.5,
+          "common_overrides": {
+            "opening_operating_cash_buffer": 350,
+            "cash_buffer_revenue_ratio": 0.12
+          }
+        },
+        {
+          "name": "receivable_collection_plus10pct_revenue",
+          "path": "base_cautious",
+          "financial_share": 0.5,
+          "common_overrides": {
+            "receivable_ratio_shift": 0.1
+          }
+        }
+      ]
+    }
+  }
+}

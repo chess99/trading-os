@@ -1,0 +1,14 @@
+"""重算当前采用的普通股模型；完整轨迹通过 --full-output 另存工作目录。"""
+import importlib.util
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[5]
+spec = importlib.util.spec_from_file_location("research_model_io", ROOT / "research/model_io.py")
+model_io = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(model_io)
+
+SELECTORS = {'low': {'path': ['models', 1, 'value'], 'round': 2}, 'high': {'path': ['models', 2, 'value'], 'round': 2}, 'distributions': {'path': ['models', 0, 'first5'], 'take': 5, 'round_items': [6, 6, 6, 6, 6]}, 'terminal_low': {'path': ['models', 1, 'terminal_year5'], 'round': 2}, 'terminal_high': {'path': ['models', 2, 'terminal_year5'], 'round': 2}}
+METADATA = {'symbol': 'CN:300661', 'report_period': '2026-Q3', 'information_cutoff': '2026-10-30T03:54:00+00:00', 'valuation_note': '核心产品入口Y1原有收入6300百万元，信号链与电源毛利逐步略降，研发长期22%、损耗2.5%、净营运资本25%、净固定资本18%，成熟增长2%；采用9%—10%研究资本成本折现实际普通股分配，核心30.51—35.83元。独立数量/单位成本/人力入口同桥得37.25元（9.5%），不平均。周期31.51、供应冲击24.17、额外兑现46.83为独立情景，非核心包络。结构性固定预算Y13融资缺口使该条件路径value及terminal为null，并非公司必然破产或清算值为零。', 'return_model_note': '以9月最后精确登记687.150701百万A+H普通股、零库存为基准近似；Q3提示期后变动但未给可核精确全体数，查CNinfo及HKEX截止前公告未找到新登记明细，另从起点增加0.8百万股且不增加现金的生产诊断，不将EPS除法当登记事实；持续劳动报酬现金等价不加回，存量24.993541百万期权另作行权现金与股数同时变化的反例。五年实际每股现金0.334542/0.393538/0.478192/0.581613/0.700462，公司分配、投资者税前；Y5剩余权益46.21—52.25为Y6以后年度分配在Y5时点的折现，不含已收现金。母子逐年现金、RE先弥亏再储备、内部本金、成本basis、外部税与债务、IPO用途、少数及股份保持联动；未知法人额度为经济预算，非法律认证。长期480年全状态并以240/960年实际延展检验，无末年现金释放。'}
+
+if __name__ == "__main__":
+    raise SystemExit(model_io.main(__file__, SELECTORS, METADATA, source_file='stdout.json'))

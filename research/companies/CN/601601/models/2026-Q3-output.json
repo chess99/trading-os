@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:601601",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-28T15:04:40+00:00",
+  "value_range": {
+    "low": 30.05,
+    "high": 43.0,
+    "currency": "CNY"
+  },
+  "valuation_note": "主法为分主体实际持有人现金折现，寿险/产险正常盈利及资本强度驱动，9%—10%资本成本；辅助为独立分部ROE衰减后通过相同真实支付约束。核心不混入结构性不利或乐观包络。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-28T15:04:40+00:00",
+    "base_case_distributions_per_share": [
+      1.6066,
+      1.6646,
+      1.7284,
+      1.7906,
+      1.849
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 43.17,
+        "high": 49.69
+      }
+    }
+  },
+  "return_model_note": "五年现金为基准实际受限分配，不含已付0.42/1.15。基准2028回售全额偿债、无转股，未来普通股9,620,341,455股；起点全转股另列互斥分支。第五年终值从同一base完整Y5状态延续同政策，仅按9%/10%折现分叉；不拼异状态或重复现金。各年度普通股、母净资源、法定准备、子认可资本、少数补资与真实到账全量留存。"
+}

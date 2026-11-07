@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "symbol": "CN:600436",
+  "information_cutoff": "2026-10-31T23:59:59+08:00",
+  "parent_unit": "manufacturing",
+  "problem_unit": "distribution_hongren",
+  "support_loss_budget": 200.0,
+  "operating_input": {
+    "path": "operating-inputs.json"
+  },
+  "profiles": [
+    {
+      "name": "base",
+      "cache_key": "base",
+      "recourse_fraction": 0,
+      "settlements": [
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        }
+      ]
+    },
+    {
+      "name": "capital_execution_pressure",
+      "cache_key": "capital_execution_pressure",
+      "recourse_fraction": 0,
+      "settlements": [
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        },
+        {
+          "support_operating": 0.0,
+          "support_bank_principal": 0.0,
+          "creditor_bank_recovery": 0.0,
+          "extra_parent_bank_payment": 0.0
+        }
+      ]
+    }
+  ],
+  "rate_cache_keys": [
+    "base_discount_0.08",
+    "base_discount_0.1"
+  ],
+  "settlement_interpretation": "No new disbursement dates are invented. Zero scheduled events represent the still-earmarked budget, NOT a claim of zero expected economic loss or future refund. Full200 irrecoverability is recognized in valuation and disposable cash from inception. Event-capable algebra proves that actual support debits C and R together; default retained R is never released atY5.",
+  "interest_adoption": "Remove cached parent surplus-cash interest and recompute only on max(C-R-Q,0); retained R earns no adopted income. Healthy subsidiaries, parent term-deposit maturity/yield and treasury/portfolio cash flows keep prior locked budgets. Base R200 is fully covered by opening unreserved parent surplus cash; no support reserve is also carved out of locked deposits.",
+  "RE_adoption": "Cash earmarking is not a booked statutory expense. Use normal independent-profit payout target and reference RE with a conservative lower bound for all200 potential loss. Reference statutory reserves continue and may overreserve versus actual loss-year requirement. Do not claim exact GAAP recognition timing.",
+  "bank_recourse": "Base no identified additional parent liability or extra voluntary rescue. Display zero-to-full outstanding same opening proxy bank-principal incidence bound separately; not a total legal liability/interest cap, not mixed into base D/terminal return range. Actual repayment/recovery of same bank principal alone reduces this bound; operating support does not.",
+  "original_r1_policy_is_retained_not_overwritten": true
+}

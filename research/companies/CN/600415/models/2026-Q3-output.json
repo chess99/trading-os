@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:600415",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-26T12:05:00+00:00",
+  "value_range": {
+    "low": 3.54,
+    "high": 4.24,
+    "currency": "CNY"
+  },
+  "valuation_note": "核心前10年及Y11—240实际分配，含土地有限权利续费、维护、融资和母法定利润；成员上划是经济预算，不是共享法定储备。已知金融控股冻结权益分三年部分减资，真实费用、母持有成本、税和少数原资本归属均扣入；未定位成本/时滞有界。第二法独立租赁资本化、服务盈利与分项净实现3.18—4.77元，不平均。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-26T12:05:00+00:00",
+    "base_case_distributions_per_share": [
+      0.0,
+      0.07721041850312865,
+      0.1973273608516862,
+      0.1795051043302197,
+      0.1812923892208771
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 4.855280157802545,
+        "high": 5.664835310081738
+      }
+    }
+  },
+  "return_model_note": "前五年同一实际状态；D完整float，第5年TV来自之后实际分配，不加同一金融余额。第11—13年已映射资本返还与未定位净实现分别处理；旧应收只收现，新宣派才计母利润，普通/特别不重复消耗法定容量。"
+}

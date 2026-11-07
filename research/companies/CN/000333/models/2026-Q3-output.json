@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:000333",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-30T02:30:00+00:00",
+  "value_range": {
+    "low": 69.03,
+    "high": 89.72,
+    "currency": "CNY"
+  },
+  "valuation_note": "分业务经营与资本需求主法，核心69.03—89.72元；独立NOPAT/增量ROIC辅法72.57元，同一普通股现金实现桥，不取均值。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-30T02:30:00+00:00",
+    "base_case_distributions_per_share": [
+      4.02618021041231,
+      4.184618442339581,
+      4.32987622308449,
+      4.525875232374816,
+      4.698915157799818
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 87.12457527477338,
+        "high": 99.97507042546297
+      }
+    }
+  },
+  "return_model_note": "五年现金来自同一基准状态，第五年后权益从完整现金/债/权益/股数状态继续经营，长期无尾期本金强制回收。"
+}

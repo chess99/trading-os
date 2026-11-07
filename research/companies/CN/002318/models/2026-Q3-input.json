@@ -1,0 +1,1212 @@
+{
+  "symbol": "CN:002318",
+  "information_cutoff": "2026-11-03T00:00:00+00:00",
+  "valuation_note": "主法core低/高端含各自完整经营风险，约6.32—8.33元；辅助约9.66—11.54元不平均。新增33,056,516元前移，余款80,070,611元；税221,500,000、薪酬70,100,000、工程100,000,000元全部保留，分母977,170,720不缩。 信息版本2026-11-03 00UTC；model_as_of为本次信息版本；经营预测/PV计时锚仍为2026-10-26T11:36:00+00:00，不按信息版本日期重新生成现金或改变年度期数。当前接口采用未舍入own源值，不把两位展示送回现金或IRR。数值表示误差：保存配对≤1e-12元/股；若经正确舍入binary64再预留1e-12，每个D及TV5腿合计≤2e-12，IRR应按同向现金端点求根包络并计求解残差，非固定收益率误差。全尾部最低约−1e-5元为扣floor/locked/payable后的数值余量，不是实际负银行现金；不提升strict_feasible，不认证法人法定可分利润。",
+  "return_model_note": "五年D显示约0.25/0.35/0.45/0.55/0.60；TV5约7.99—10.38取与基准前五年全部主体状态相同的holder，再从Y6改变margin+r，不是全240年纯r。core前五年经营亦不同，不能拿core TV5约7.80—10.56替代。 信息版本2026-11-03 00UTC；model_as_of为本次信息版本；经营预测/PV计时锚仍为2026-10-26T11:36:00+00:00，不按信息版本日期重新生成现金或改变年度期数。当前接口采用未舍入own源值，不把两位展示送回现金或IRR。数值表示误差：保存配对≤1e-12元/股；若经正确舍入binary64再预留1e-12，每个D及TV5腿合计≤2e-12，IRR应按同向现金端点求根包络并计求解残差，非固定收益率误差。全尾部最低约−1e-5元为扣floor/locked/payable后的数值余量，不是实际负银行现金；不提升strict_feasible，不认证法人法定可分利润。",
+  "financial_inputs": {
+    "code": "002318",
+    "event": {
+      "actual_new_treasury": 2010000,
+      "advance_CNY": "33056516",
+      "advance_model_units": "0.033056516",
+      "current_cumulative_CNY": "119929389",
+      "fee_policy": "No disclosed fees; retain unknown fee budget condition, do not call price consideration all-in paid bank cash.",
+      "future_new_CNY": "80070611",
+      "future_old_CNY": "113127127",
+      "group_new_budget_CNY": "3399943484",
+      "group_old_budget_CNY": "3433000000",
+      "issued_denominator": 977170720,
+      "name": "久立特材",
+      "parent_new_budget_CNY": "2816943484",
+      "parent_old_budget_CNY": "2850000000",
+      "parent_position_policy": "Original issuer cash-location budget less full advance; not certified current bank or legal availability.",
+      "preserved_total_CNY": "200000000",
+      "prior_paid_CNY": "86872873",
+      "retained_obligations_CNY": {
+        "engineering": "100000000",
+        "remuneration": "70100000",
+        "tax": "221500000"
+      },
+      "settlement_policy": "Disclosed cumulative成交/price consideration is committed; deduct or fully segregate at opening before yield. Bank settlement date not separately known.",
+      "total_treasury_condition": "15955400 only if older 9292100 unchanged; no cancellation assumed.",
+      "unit_CNY": "1000000000"
+    },
+    "cases": {
+      "auxiliary": {
+        "arguments": {}
+      },
+      "base": {
+        "arguments": {
+          "c": {
+            "r": 0.1,
+            "margin": 0,
+            "g": 0.02,
+            "growth": 0.03,
+            "kind": "base"
+          },
+          "n": 240
+        },
+        "globals": {
+          "OPEN": {
+            "P": {
+              "cash": 2.85,
+              "locked": 0.428,
+              "debt": 1.85,
+              "capital": 0.97717072,
+              "reserve": 0.48858536,
+              "retained": 4.06127034,
+              "fixed": 2.7,
+              "wc": 2.25,
+              "own": 1,
+              "tax": 0.15,
+              "limit": 2.15
+            },
+            "A": {
+              "cash": 0.25,
+              "locked": 0,
+              "debt": 0.4,
+              "capital": 0.389198642,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.82,
+              "wc": 0.45,
+              "own": 0.685,
+              "tax": 0.15,
+              "limit": 0.65
+            },
+            "E": {
+              "cash": 0.28,
+              "locked": 0,
+              "debt": 0.4,
+              "capital": null,
+              "reserve": 0,
+              "retained": -0.1,
+              "fixed": 0.5,
+              "wc": 0.5,
+              "own": 1,
+              "tax": 0.3,
+              "limit": 0.7
+            },
+            "D": {
+              "cash": 0.033,
+              "locked": 0,
+              "debt": 0,
+              "capital": 0.030950195,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.04,
+              "wc": 0.04,
+              "own": 1,
+              "tax": 0.25,
+              "limit": 0.03
+            },
+            "C": {
+              "cash": 0.02,
+              "locked": 0,
+              "debt": 0.016,
+              "capital": 0.0115,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.035,
+              "wc": 0.015,
+              "own": 1,
+              "tax": 0.25,
+              "limit": 0.05
+            },
+            "H": {
+              "cash": 0,
+              "locked": 0,
+              "debt": 0,
+              "capital": null,
+              "reserve": 0,
+              "retained": 0,
+              "fixed": 0,
+              "wc": 0,
+              "own": 1,
+              "tax": 0,
+              "limit": 0
+            },
+            "U": {
+              "cash": 0,
+              "locked": 0,
+              "debt": 0,
+              "capital": null,
+              "reserve": 0,
+              "retained": 0,
+              "fixed": 0,
+              "wc": 0,
+              "own": 1,
+              "tax": 0,
+              "limit": 0
+            }
+          },
+          "BASE": {
+            "P": {
+              "rev": [
+                6.6,
+                7.2,
+                7.8,
+                8.3,
+                8.7
+              ],
+              "m": [
+                0.08,
+                0.09,
+                0.1,
+                0.105,
+                0.11
+              ],
+              "k": [
+                5.05,
+                5.15,
+                5.35,
+                5.55,
+                5.75
+              ],
+              "mature": 0.095,
+              "fixedshare": 0.56
+            },
+            "A": {
+              "rev": [
+                1.4,
+                1.48,
+                1.56,
+                1.63,
+                1.7
+              ],
+              "m": [
+                0.03,
+                0.035,
+                0.04,
+                0.045,
+                0.05
+              ],
+              "k": [
+                1.31,
+                1.35,
+                1.39,
+                1.43,
+                1.47
+              ],
+              "mature": 0.045,
+              "fixedshare": 0.65
+            },
+            "E": {
+              "rev": [
+                1.3,
+                1.5,
+                1.65,
+                1.8,
+                1.9
+              ],
+              "m": [
+                0,
+                0.03,
+                0.05,
+                0.06,
+                0.07
+              ],
+              "k": [
+                1.08,
+                1.12,
+                1.16,
+                1.2,
+                1.24
+              ],
+              "mature": 0.055,
+              "fixedshare": 0.5
+            },
+            "D": {
+              "rev": [
+                0.2,
+                0.21,
+                0.22,
+                0.23,
+                0.24
+              ],
+              "m": [
+                0.01,
+                0.015,
+                0.02,
+                0.025,
+                0.03
+              ],
+              "k": [
+                0.082,
+                0.084,
+                0.086,
+                0.088,
+                0.09
+              ],
+              "mature": 0.025,
+              "fixedshare": 0.5
+            },
+            "C": {
+              "rev": [
+                1.3,
+                1.36,
+                1.42,
+                1.48,
+                1.54
+              ],
+              "m": [
+                0.003,
+                0.004,
+                0.005,
+                0.006,
+                0.007
+              ],
+              "k": [
+                0.052,
+                0.054,
+                0.056,
+                0.058,
+                0.06
+              ],
+              "mature": 0.006,
+              "fixedshare": 0.7
+            }
+          }
+        }
+      },
+      "core_high": {
+        "arguments": {
+          "c": {
+            "r": 0.095,
+            "margin": 0.005,
+            "g": 0.02,
+            "growth": 0.03,
+            "kind": "base"
+          },
+          "n": 240
+        },
+        "globals": {
+          "OPEN": {
+            "P": {
+              "cash": 2.85,
+              "locked": 0.428,
+              "debt": 1.85,
+              "capital": 0.97717072,
+              "reserve": 0.48858536,
+              "retained": 4.06127034,
+              "fixed": 2.7,
+              "wc": 2.25,
+              "own": 1,
+              "tax": 0.15,
+              "limit": 2.15
+            },
+            "A": {
+              "cash": 0.25,
+              "locked": 0,
+              "debt": 0.4,
+              "capital": 0.389198642,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.82,
+              "wc": 0.45,
+              "own": 0.685,
+              "tax": 0.15,
+              "limit": 0.65
+            },
+            "E": {
+              "cash": 0.28,
+              "locked": 0,
+              "debt": 0.4,
+              "capital": null,
+              "reserve": 0,
+              "retained": -0.1,
+              "fixed": 0.5,
+              "wc": 0.5,
+              "own": 1,
+              "tax": 0.3,
+              "limit": 0.7
+            },
+            "D": {
+              "cash": 0.033,
+              "locked": 0,
+              "debt": 0,
+              "capital": 0.030950195,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.04,
+              "wc": 0.04,
+              "own": 1,
+              "tax": 0.25,
+              "limit": 0.03
+            },
+            "C": {
+              "cash": 0.02,
+              "locked": 0,
+              "debt": 0.016,
+              "capital": 0.0115,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.035,
+              "wc": 0.015,
+              "own": 1,
+              "tax": 0.25,
+              "limit": 0.05
+            },
+            "H": {
+              "cash": 0,
+              "locked": 0,
+              "debt": 0,
+              "capital": null,
+              "reserve": 0,
+              "retained": 0,
+              "fixed": 0,
+              "wc": 0,
+              "own": 1,
+              "tax": 0,
+              "limit": 0
+            },
+            "U": {
+              "cash": 0,
+              "locked": 0,
+              "debt": 0,
+              "capital": null,
+              "reserve": 0,
+              "retained": 0,
+              "fixed": 0,
+              "wc": 0,
+              "own": 1,
+              "tax": 0,
+              "limit": 0
+            }
+          },
+          "BASE": {
+            "P": {
+              "rev": [
+                6.6,
+                7.2,
+                7.8,
+                8.3,
+                8.7
+              ],
+              "m": [
+                0.08,
+                0.09,
+                0.1,
+                0.105,
+                0.11
+              ],
+              "k": [
+                5.05,
+                5.15,
+                5.35,
+                5.55,
+                5.75
+              ],
+              "mature": 0.095,
+              "fixedshare": 0.56
+            },
+            "A": {
+              "rev": [
+                1.4,
+                1.48,
+                1.56,
+                1.63,
+                1.7
+              ],
+              "m": [
+                0.03,
+                0.035,
+                0.04,
+                0.045,
+                0.05
+              ],
+              "k": [
+                1.31,
+                1.35,
+                1.39,
+                1.43,
+                1.47
+              ],
+              "mature": 0.045,
+              "fixedshare": 0.65
+            },
+            "E": {
+              "rev": [
+                1.3,
+                1.5,
+                1.65,
+                1.8,
+                1.9
+              ],
+              "m": [
+                0,
+                0.03,
+                0.05,
+                0.06,
+                0.07
+              ],
+              "k": [
+                1.08,
+                1.12,
+                1.16,
+                1.2,
+                1.24
+              ],
+              "mature": 0.055,
+              "fixedshare": 0.5
+            },
+            "D": {
+              "rev": [
+                0.2,
+                0.21,
+                0.22,
+                0.23,
+                0.24
+              ],
+              "m": [
+                0.01,
+                0.015,
+                0.02,
+                0.025,
+                0.03
+              ],
+              "k": [
+                0.082,
+                0.084,
+                0.086,
+                0.088,
+                0.09
+              ],
+              "mature": 0.025,
+              "fixedshare": 0.5
+            },
+            "C": {
+              "rev": [
+                1.3,
+                1.36,
+                1.42,
+                1.48,
+                1.54
+              ],
+              "m": [
+                0.003,
+                0.004,
+                0.005,
+                0.006,
+                0.007
+              ],
+              "k": [
+                0.052,
+                0.054,
+                0.056,
+                0.058,
+                0.06
+              ],
+              "mature": 0.006,
+              "fixedshare": 0.7
+            }
+          }
+        }
+      },
+      "core_low": {
+        "arguments": {
+          "c": {
+            "r": 0.105,
+            "margin": -0.005,
+            "g": 0.02,
+            "growth": 0.03,
+            "kind": "base"
+          },
+          "n": 240
+        },
+        "globals": {
+          "OPEN": {
+            "P": {
+              "cash": 2.85,
+              "locked": 0.428,
+              "debt": 1.85,
+              "capital": 0.97717072,
+              "reserve": 0.48858536,
+              "retained": 4.06127034,
+              "fixed": 2.7,
+              "wc": 2.25,
+              "own": 1,
+              "tax": 0.15,
+              "limit": 2.15
+            },
+            "A": {
+              "cash": 0.25,
+              "locked": 0,
+              "debt": 0.4,
+              "capital": 0.389198642,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.82,
+              "wc": 0.45,
+              "own": 0.685,
+              "tax": 0.15,
+              "limit": 0.65
+            },
+            "E": {
+              "cash": 0.28,
+              "locked": 0,
+              "debt": 0.4,
+              "capital": null,
+              "reserve": 0,
+              "retained": -0.1,
+              "fixed": 0.5,
+              "wc": 0.5,
+              "own": 1,
+              "tax": 0.3,
+              "limit": 0.7
+            },
+            "D": {
+              "cash": 0.033,
+              "locked": 0,
+              "debt": 0,
+              "capital": 0.030950195,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.04,
+              "wc": 0.04,
+              "own": 1,
+              "tax": 0.25,
+              "limit": 0.03
+            },
+            "C": {
+              "cash": 0.02,
+              "locked": 0,
+              "debt": 0.016,
+              "capital": 0.0115,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.035,
+              "wc": 0.015,
+              "own": 1,
+              "tax": 0.25,
+              "limit": 0.05
+            },
+            "H": {
+              "cash": 0,
+              "locked": 0,
+              "debt": 0,
+              "capital": null,
+              "reserve": 0,
+              "retained": 0,
+              "fixed": 0,
+              "wc": 0,
+              "own": 1,
+              "tax": 0,
+              "limit": 0
+            },
+            "U": {
+              "cash": 0,
+              "locked": 0,
+              "debt": 0,
+              "capital": null,
+              "reserve": 0,
+              "retained": 0,
+              "fixed": 0,
+              "wc": 0,
+              "own": 1,
+              "tax": 0,
+              "limit": 0
+            }
+          },
+          "BASE": {
+            "P": {
+              "rev": [
+                6.6,
+                7.2,
+                7.8,
+                8.3,
+                8.7
+              ],
+              "m": [
+                0.08,
+                0.09,
+                0.1,
+                0.105,
+                0.11
+              ],
+              "k": [
+                5.05,
+                5.15,
+                5.35,
+                5.55,
+                5.75
+              ],
+              "mature": 0.095,
+              "fixedshare": 0.56
+            },
+            "A": {
+              "rev": [
+                1.4,
+                1.48,
+                1.56,
+                1.63,
+                1.7
+              ],
+              "m": [
+                0.03,
+                0.035,
+                0.04,
+                0.045,
+                0.05
+              ],
+              "k": [
+                1.31,
+                1.35,
+                1.39,
+                1.43,
+                1.47
+              ],
+              "mature": 0.045,
+              "fixedshare": 0.65
+            },
+            "E": {
+              "rev": [
+                1.3,
+                1.5,
+                1.65,
+                1.8,
+                1.9
+              ],
+              "m": [
+                0,
+                0.03,
+                0.05,
+                0.06,
+                0.07
+              ],
+              "k": [
+                1.08,
+                1.12,
+                1.16,
+                1.2,
+                1.24
+              ],
+              "mature": 0.055,
+              "fixedshare": 0.5
+            },
+            "D": {
+              "rev": [
+                0.2,
+                0.21,
+                0.22,
+                0.23,
+                0.24
+              ],
+              "m": [
+                0.01,
+                0.015,
+                0.02,
+                0.025,
+                0.03
+              ],
+              "k": [
+                0.082,
+                0.084,
+                0.086,
+                0.088,
+                0.09
+              ],
+              "mature": 0.025,
+              "fixedshare": 0.5
+            },
+            "C": {
+              "rev": [
+                1.3,
+                1.36,
+                1.42,
+                1.48,
+                1.54
+              ],
+              "m": [
+                0.003,
+                0.004,
+                0.005,
+                0.006,
+                0.007
+              ],
+              "k": [
+                0.052,
+                0.054,
+                0.056,
+                0.058,
+                0.06
+              ],
+              "mature": 0.006,
+              "fixedshare": 0.7
+            }
+          }
+        }
+      },
+      "holder_high": {
+        "arguments": {
+          "c": {
+            "r": 0.095,
+            "margin": 0.005,
+            "g": 0.02,
+            "growth": 0.03,
+            "kind": "base",
+            "freeze_first5": true
+          },
+          "n": 240
+        },
+        "globals": {
+          "OPEN": {
+            "P": {
+              "cash": 2.85,
+              "locked": 0.428,
+              "debt": 1.85,
+              "capital": 0.97717072,
+              "reserve": 0.48858536,
+              "retained": 4.06127034,
+              "fixed": 2.7,
+              "wc": 2.25,
+              "own": 1,
+              "tax": 0.15,
+              "limit": 2.15
+            },
+            "A": {
+              "cash": 0.25,
+              "locked": 0,
+              "debt": 0.4,
+              "capital": 0.389198642,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.82,
+              "wc": 0.45,
+              "own": 0.685,
+              "tax": 0.15,
+              "limit": 0.65
+            },
+            "E": {
+              "cash": 0.28,
+              "locked": 0,
+              "debt": 0.4,
+              "capital": null,
+              "reserve": 0,
+              "retained": -0.1,
+              "fixed": 0.5,
+              "wc": 0.5,
+              "own": 1,
+              "tax": 0.3,
+              "limit": 0.7
+            },
+            "D": {
+              "cash": 0.033,
+              "locked": 0,
+              "debt": 0,
+              "capital": 0.030950195,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.04,
+              "wc": 0.04,
+              "own": 1,
+              "tax": 0.25,
+              "limit": 0.03
+            },
+            "C": {
+              "cash": 0.02,
+              "locked": 0,
+              "debt": 0.016,
+              "capital": 0.0115,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.035,
+              "wc": 0.015,
+              "own": 1,
+              "tax": 0.25,
+              "limit": 0.05
+            },
+            "H": {
+              "cash": 0,
+              "locked": 0,
+              "debt": 0,
+              "capital": null,
+              "reserve": 0,
+              "retained": 0,
+              "fixed": 0,
+              "wc": 0,
+              "own": 1,
+              "tax": 0,
+              "limit": 0
+            },
+            "U": {
+              "cash": 0,
+              "locked": 0,
+              "debt": 0,
+              "capital": null,
+              "reserve": 0,
+              "retained": 0,
+              "fixed": 0,
+              "wc": 0,
+              "own": 1,
+              "tax": 0,
+              "limit": 0
+            }
+          },
+          "BASE": {
+            "P": {
+              "rev": [
+                6.6,
+                7.2,
+                7.8,
+                8.3,
+                8.7
+              ],
+              "m": [
+                0.08,
+                0.09,
+                0.1,
+                0.105,
+                0.11
+              ],
+              "k": [
+                5.05,
+                5.15,
+                5.35,
+                5.55,
+                5.75
+              ],
+              "mature": 0.095,
+              "fixedshare": 0.56
+            },
+            "A": {
+              "rev": [
+                1.4,
+                1.48,
+                1.56,
+                1.63,
+                1.7
+              ],
+              "m": [
+                0.03,
+                0.035,
+                0.04,
+                0.045,
+                0.05
+              ],
+              "k": [
+                1.31,
+                1.35,
+                1.39,
+                1.43,
+                1.47
+              ],
+              "mature": 0.045,
+              "fixedshare": 0.65
+            },
+            "E": {
+              "rev": [
+                1.3,
+                1.5,
+                1.65,
+                1.8,
+                1.9
+              ],
+              "m": [
+                0,
+                0.03,
+                0.05,
+                0.06,
+                0.07
+              ],
+              "k": [
+                1.08,
+                1.12,
+                1.16,
+                1.2,
+                1.24
+              ],
+              "mature": 0.055,
+              "fixedshare": 0.5
+            },
+            "D": {
+              "rev": [
+                0.2,
+                0.21,
+                0.22,
+                0.23,
+                0.24
+              ],
+              "m": [
+                0.01,
+                0.015,
+                0.02,
+                0.025,
+                0.03
+              ],
+              "k": [
+                0.082,
+                0.084,
+                0.086,
+                0.088,
+                0.09
+              ],
+              "mature": 0.025,
+              "fixedshare": 0.5
+            },
+            "C": {
+              "rev": [
+                1.3,
+                1.36,
+                1.42,
+                1.48,
+                1.54
+              ],
+              "m": [
+                0.003,
+                0.004,
+                0.005,
+                0.006,
+                0.007
+              ],
+              "k": [
+                0.052,
+                0.054,
+                0.056,
+                0.058,
+                0.06
+              ],
+              "mature": 0.006,
+              "fixedshare": 0.7
+            }
+          }
+        }
+      },
+      "holder_low": {
+        "arguments": {
+          "c": {
+            "r": 0.105,
+            "margin": -0.005,
+            "g": 0.02,
+            "growth": 0.03,
+            "kind": "base",
+            "freeze_first5": true
+          },
+          "n": 240
+        },
+        "globals": {
+          "OPEN": {
+            "P": {
+              "cash": 2.85,
+              "locked": 0.428,
+              "debt": 1.85,
+              "capital": 0.97717072,
+              "reserve": 0.48858536,
+              "retained": 4.06127034,
+              "fixed": 2.7,
+              "wc": 2.25,
+              "own": 1,
+              "tax": 0.15,
+              "limit": 2.15
+            },
+            "A": {
+              "cash": 0.25,
+              "locked": 0,
+              "debt": 0.4,
+              "capital": 0.389198642,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.82,
+              "wc": 0.45,
+              "own": 0.685,
+              "tax": 0.15,
+              "limit": 0.65
+            },
+            "E": {
+              "cash": 0.28,
+              "locked": 0,
+              "debt": 0.4,
+              "capital": null,
+              "reserve": 0,
+              "retained": -0.1,
+              "fixed": 0.5,
+              "wc": 0.5,
+              "own": 1,
+              "tax": 0.3,
+              "limit": 0.7
+            },
+            "D": {
+              "cash": 0.033,
+              "locked": 0,
+              "debt": 0,
+              "capital": 0.030950195,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.04,
+              "wc": 0.04,
+              "own": 1,
+              "tax": 0.25,
+              "limit": 0.03
+            },
+            "C": {
+              "cash": 0.02,
+              "locked": 0,
+              "debt": 0.016,
+              "capital": 0.0115,
+              "reserve": 0.0,
+              "retained": 0.0,
+              "fixed": 0.035,
+              "wc": 0.015,
+              "own": 1,
+              "tax": 0.25,
+              "limit": 0.05
+            },
+            "H": {
+              "cash": 0,
+              "locked": 0,
+              "debt": 0,
+              "capital": null,
+              "reserve": 0,
+              "retained": 0,
+              "fixed": 0,
+              "wc": 0,
+              "own": 1,
+              "tax": 0,
+              "limit": 0
+            },
+            "U": {
+              "cash": 0,
+              "locked": 0,
+              "debt": 0,
+              "capital": null,
+              "reserve": 0,
+              "retained": 0,
+              "fixed": 0,
+              "wc": 0,
+              "own": 1,
+              "tax": 0,
+              "limit": 0
+            }
+          },
+          "BASE": {
+            "P": {
+              "rev": [
+                6.6,
+                7.2,
+                7.8,
+                8.3,
+                8.7
+              ],
+              "m": [
+                0.08,
+                0.09,
+                0.1,
+                0.105,
+                0.11
+              ],
+              "k": [
+                5.05,
+                5.15,
+                5.35,
+                5.55,
+                5.75
+              ],
+              "mature": 0.095,
+              "fixedshare": 0.56
+            },
+            "A": {
+              "rev": [
+                1.4,
+                1.48,
+                1.56,
+                1.63,
+                1.7
+              ],
+              "m": [
+                0.03,
+                0.035,
+                0.04,
+                0.045,
+                0.05
+              ],
+              "k": [
+                1.31,
+                1.35,
+                1.39,
+                1.43,
+                1.47
+              ],
+              "mature": 0.045,
+              "fixedshare": 0.65
+            },
+            "E": {
+              "rev": [
+                1.3,
+                1.5,
+                1.65,
+                1.8,
+                1.9
+              ],
+              "m": [
+                0,
+                0.03,
+                0.05,
+                0.06,
+                0.07
+              ],
+              "k": [
+                1.08,
+                1.12,
+                1.16,
+                1.2,
+                1.24
+              ],
+              "mature": 0.055,
+              "fixedshare": 0.5
+            },
+            "D": {
+              "rev": [
+                0.2,
+                0.21,
+                0.22,
+                0.23,
+                0.24
+              ],
+              "m": [
+                0.01,
+                0.015,
+                0.02,
+                0.025,
+                0.03
+              ],
+              "k": [
+                0.082,
+                0.084,
+                0.086,
+                0.088,
+                0.09
+              ],
+              "mature": 0.025,
+              "fixedshare": 0.5
+            },
+            "C": {
+              "rev": [
+                1.3,
+                1.36,
+                1.42,
+                1.48,
+                1.54
+              ],
+              "m": [
+                0.003,
+                0.004,
+                0.005,
+                0.006,
+                0.007
+              ],
+              "k": [
+                0.052,
+                0.054,
+                0.056,
+                0.058,
+                0.06
+              ],
+              "mature": 0.006,
+              "fixedshare": 0.7
+            }
+          }
+        }
+      }
+    }
+  }
+}

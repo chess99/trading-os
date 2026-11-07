@@ -1,0 +1,32 @@
+{
+  "schema": "trading_os_research_result_v1",
+  "symbol": "CN:920982",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-10-29T02:25:00+00:00",
+  "value_range": {
+    "low": 15.982984124963668,
+    "high": 26.05385889686648,
+    "currency": "CNY"
+  },
+  "valuation_note": "主法独立分产品正常化经营及实际付款主体现金递推；辅法独立可持续投入资本回报，不采用证券报价或市场倍数。核心低/高经营路径不与辅助区间平均。结构性降价+超支路径真实融资缺口后fail-closed，不输出虚构清算底。",
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-10-29T02:25:00+00:00",
+    "base_case_distributions_per_share": [
+      1.1013349564028474,
+      1.1262191981795684,
+      0.9484081063649152,
+      4.2168988128985205,
+      2.5888800763982105
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 21.818277261756247,
+        "high": 24.235693405515786
+      }
+    }
+  },
+  "return_model_note": "同一基准逐年状态继续计算Y5后普通股现金，10.5%—11.5%折现区间；已派现金实际扣除。新增3.607243百万股Y1登记、50万库存股无分红且Y2条件转售，绩效期权未达标不稀释。65%余现释放和逐主体资金路径是预算而非既定授权，并有完整敏感性。"
+}

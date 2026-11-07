@@ -1,0 +1,14 @@
+"""重算当前采用的普通股模型；完整轨迹通过 --full-output 另存工作目录。"""
+import importlib.util
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[5]
+spec = importlib.util.spec_from_file_location("research_model_io", ROOT / "research/model_io.py")
+model_io = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(model_io)
+
+SELECTORS = {'low': {'path': ['paths', 'base', 'terminal_operating_value'], 'round': 0}, 'high': {'path': ['paths', 'core_high', 'terminal_equity_value'], 'round': 0}, 'distributions': {'path': ['paths', 'base', 'years'], 'column': 'dps', 'take': 5}, 'terminal_low': {'path': ['paths', 'core_low', 'terminal_per_share'], 'round': 2}, 'terminal_high': {'path': ['paths', 'core_high', 'terminal_per_share'], 'round': 2}}
+METADATA = {'symbol': 'CN:603198', 'report_period': '2026-Q3', 'information_cutoff': '2026-10-30T23:20:18+00:00', 'valuation_note': '主法为五年实际普通股分配与持续经营终值折现。核心低/高端利润率相对中枢低/高0.5个百分点，股权成本9.5%/8.5%、长期增长2%/2.5%、成熟增量回报18%/22%；资本开支同为34.5亿元，终值必要留存g/回报率。普通金融本金扣经营资金、债务、少数缓冲及税，考虑额外兑现等待；精算当前33.93—43.62元，按证据精度表达34—44元。正常化经营收益资本化辅助法35.49—45.14元，共享关键假设，不机械平均。结构性不利、周期弱、乐观及资本压力不拼入核心区间。', 'return_model_note': '未来五个十二个月的税前实际现金分配预算为1.50/1.60/1.70/1.80/1.90元，不是公司承诺；已付2026年6月红利不计未来现金。8亿普通股、无新增融资及预测稀释。每期经营现金、资本开支、基金调用、金融收益、债息及本金、内部结算与子公司法定宣派和真实到账共同限制分红。第五年权益价值43.25—55.62元：经营价值300.83—388.69亿元加分配后净金融资产，流动资产与基金分别采用低端3/5年、高端1/3年额外兑现等待，扣债务与6亿元经营资金；不是把当前价值复制成终值。未独立估计第三年终值，公开回购不作为现金分配。'}
+
+if __name__ == "__main__":
+    raise SystemExit(model_io.main(__file__, SELECTORS, METADATA, source_file='stdout.json'))
