@@ -20,12 +20,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
@@ -72,7 +72,9 @@ jobs:
           set -euo pipefail
           git config user.name 'research-coordinator[bot]'
           git config user.email 'research-coordinator[bot]@users.noreply.github.com'
-          git add -A coverage/cn-a research/companies research/inbox
+          # Enumerate files so an absent inbox is harmless and tracked deletions are staged.
+          git ls-files -z --cached --others --exclude-standard -- coverage/cn-a research/companies research/inbox |
+            git --literal-pathspecs add -A --pathspec-from-file=- --pathspec-file-nul
           if git diff --cached --quiet; then
             echo 'No coordinator changes to commit.'
             exit 0

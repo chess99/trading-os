@@ -28,10 +28,10 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Research state and Python regression
@@ -43,7 +43,7 @@ jobs:
           python -m trading_os --market us validate
           python -m trading_os quality-pool --market hk validate
           python -m trading_os quality-pool --market us validate
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: npm
@@ -74,7 +74,7 @@ jobs:
         run: git diff --exit-code -- coverage research screening dashboard/package-lock.json
       - name: Test artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: research-display-checks
           path: dashboard/outputs/standard-checks/
