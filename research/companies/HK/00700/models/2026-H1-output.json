@@ -1,0 +1,1563 @@
+{
+  "symbol": "HK:00700",
+  "report_period": "2026-H1",
+  "return_model_note": "五年总普通股股息470、520、580、650、720亿元，按91.8亿完全稀释股和1人民币=1.176港元换算。股份薪酬保留在费用并预算等额回购抵消新增稀释，不把回购列为持有人现金。第五年经营价值32562—39482亿元，加已扣五年分红后的普通股净现金6284.54亿元、减350亿元经营缓冲，加投资资产6168.59—7043.69亿元，形成572.1825—672.035港元终值。投资分红与本金分开、少数权益扣除，母公司储备、到账与回购现金同步约束。",
+  "value_range": {
+    "low": 375,
+    "high": 455,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-12T20:30:00+08:00",
+    "base_case_distributions_per_share": [
+      6.0209,
+      6.6614,
+      7.4301,
+      8.3268,
+      9.2235
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 572.1825,
+        "high": 672.035
+      }
+    }
+  },
+  "scenarios": {
+    "core_low": {
+      "equity_value": 2926.591660323788,
+      "terminal_equity_value": 4466.527023149853,
+      "terminal_operating_value": 3256.2137700175617,
+      "terminal_common_net_cash": 628.4542531322912,
+      "terminal_portfolio_value": 616.859,
+      "dividend_pv": 215.41026406201036,
+      "terminal_pv_fraction": 0.9263955176998699,
+      "cash_bridge": [
+        {
+          "year": 1,
+          "opening_common_net_cash": 33.191,
+          "owner_cashflow": 86.11199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 0.6638200000000001,
+          "common_dividend": 47,
+          "investment_paid": 13.754,
+          "closing_common_net_cash": 69.21281999999997
+        },
+        {
+          "year": 2,
+          "opening_common_net_cash": 69.21281999999997,
+          "owner_cashflow": 137.26000000000005,
+          "portfolio_income": 10,
+          "cash_interest": 1.3842563999999993,
+          "common_dividend": 52,
+          "investment_paid": 0,
+          "closing_common_net_cash": 165.8570764
+        },
+        {
+          "year": 3,
+          "opening_common_net_cash": 165.8570764,
+          "owner_cashflow": 175.692,
+          "portfolio_income": 10,
+          "cash_interest": 3.3171415280000005,
+          "common_dividend": 58,
+          "investment_paid": 0,
+          "closing_common_net_cash": 296.866217928
+        },
+        {
+          "year": 4,
+          "opening_common_net_cash": 296.866217928,
+          "owner_cashflow": 205.73199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 5.937324358560001,
+          "common_dividend": 65,
+          "investment_paid": 0,
+          "closing_common_net_cash": 453.53554228656003
+        },
+        {
+          "year": 5,
+          "opening_common_net_cash": 453.53554228656003,
+          "owner_cashflow": 227.84799999999996,
+          "portfolio_income": 10,
+          "cash_interest": 9.0707108457312,
+          "common_dividend": 72,
+          "investment_paid": 0,
+          "closing_common_net_cash": 628.4542531322912
+        }
+      ],
+      "value_per_share": 374.90978132252445,
+      "terminal_per_share": 572.1825467564518,
+      "operating_projection": [
+        {
+          "year": 1,
+          "revenue": 902,
+          "operating_profit": 292.64,
+          "common_operating_profit_after_tax": 227.112,
+          "owner_cashflow": 86.11199999999997
+        },
+        {
+          "year": 2,
+          "revenue": 986,
+          "operating_profit": 325.95000000000005,
+          "common_operating_profit_after_tax": 253.26000000000005,
+          "owner_cashflow": 137.26000000000005
+        },
+        {
+          "year": 3,
+          "revenue": 1070,
+          "operating_profit": 357.115,
+          "common_operating_profit_after_tax": 277.692,
+          "owner_cashflow": 175.692
+        },
+        {
+          "year": 4,
+          "revenue": 1150,
+          "operating_profit": 386.53999999999996,
+          "common_operating_profit_after_tax": 300.73199999999997,
+          "owner_cashflow": 205.73199999999997
+        },
+        {
+          "year": 5,
+          "revenue": 1223,
+          "operating_profit": 408.55999999999995,
+          "common_operating_profit_after_tax": 317.84799999999996,
+          "owner_cashflow": 227.84799999999996
+        }
+      ],
+      "parent_capacity": [
+        {
+          "year": 1,
+          "cash_receipt_budget": 90,
+          "statutory_profit_budget": 100,
+          "dividend": 47,
+          "interest": 6,
+          "sbc_offset_repurchases": 30,
+          "ending_liquidity": 7,
+          "ending_distributable_reserve": 123
+        },
+        {
+          "year": 2,
+          "cash_receipt_budget": 100,
+          "statutory_profit_budget": 110,
+          "dividend": 52,
+          "interest": 6,
+          "sbc_offset_repurchases": 32,
+          "ending_liquidity": 17,
+          "ending_distributable_reserve": 149
+        },
+        {
+          "year": 3,
+          "cash_receipt_budget": 110,
+          "statutory_profit_budget": 120,
+          "dividend": 58,
+          "interest": 6,
+          "sbc_offset_repurchases": 34,
+          "ending_liquidity": 29,
+          "ending_distributable_reserve": 177
+        },
+        {
+          "year": 4,
+          "cash_receipt_budget": 120,
+          "statutory_profit_budget": 130,
+          "dividend": 65,
+          "interest": 6,
+          "sbc_offset_repurchases": 36,
+          "ending_liquidity": 42,
+          "ending_distributable_reserve": 206
+        },
+        {
+          "year": 5,
+          "cash_receipt_budget": 130,
+          "statutory_profit_budget": 140,
+          "dividend": 72,
+          "interest": 6,
+          "sbc_offset_repurchases": 38,
+          "ending_liquidity": 56,
+          "ending_distributable_reserve": 236
+        }
+      ]
+    },
+    "core_high": {
+      "equity_value": 3553.811894130105,
+      "terminal_equity_value": 5245.987363553607,
+      "terminal_operating_value": 3948.164110421316,
+      "terminal_common_net_cash": 628.4542531322912,
+      "terminal_portfolio_value": 704.369,
+      "dividend_pv": 221.41558908179954,
+      "terminal_pv_fraction": 0.9376963115443685,
+      "cash_bridge": [
+        {
+          "year": 1,
+          "opening_common_net_cash": 33.191,
+          "owner_cashflow": 86.11199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 0.6638200000000001,
+          "common_dividend": 47,
+          "investment_paid": 13.754,
+          "closing_common_net_cash": 69.21281999999997
+        },
+        {
+          "year": 2,
+          "opening_common_net_cash": 69.21281999999997,
+          "owner_cashflow": 137.26000000000005,
+          "portfolio_income": 10,
+          "cash_interest": 1.3842563999999993,
+          "common_dividend": 52,
+          "investment_paid": 0,
+          "closing_common_net_cash": 165.8570764
+        },
+        {
+          "year": 3,
+          "opening_common_net_cash": 165.8570764,
+          "owner_cashflow": 175.692,
+          "portfolio_income": 10,
+          "cash_interest": 3.3171415280000005,
+          "common_dividend": 58,
+          "investment_paid": 0,
+          "closing_common_net_cash": 296.866217928
+        },
+        {
+          "year": 4,
+          "opening_common_net_cash": 296.866217928,
+          "owner_cashflow": 205.73199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 5.937324358560001,
+          "common_dividend": 65,
+          "investment_paid": 0,
+          "closing_common_net_cash": 453.53554228656003
+        },
+        {
+          "year": 5,
+          "opening_common_net_cash": 453.53554228656003,
+          "owner_cashflow": 227.84799999999996,
+          "portfolio_income": 10,
+          "cash_interest": 9.0707108457312,
+          "common_dividend": 72,
+          "investment_paid": 0,
+          "closing_common_net_cash": 628.4542531322912
+        }
+      ],
+      "value_per_share": 455.25956290817027,
+      "terminal_per_share": 672.0349825205927,
+      "operating_projection": [
+        {
+          "year": 1,
+          "revenue": 902,
+          "operating_profit": 292.64,
+          "common_operating_profit_after_tax": 227.112,
+          "owner_cashflow": 86.11199999999997
+        },
+        {
+          "year": 2,
+          "revenue": 986,
+          "operating_profit": 325.95000000000005,
+          "common_operating_profit_after_tax": 253.26000000000005,
+          "owner_cashflow": 137.26000000000005
+        },
+        {
+          "year": 3,
+          "revenue": 1070,
+          "operating_profit": 357.115,
+          "common_operating_profit_after_tax": 277.692,
+          "owner_cashflow": 175.692
+        },
+        {
+          "year": 4,
+          "revenue": 1150,
+          "operating_profit": 386.53999999999996,
+          "common_operating_profit_after_tax": 300.73199999999997,
+          "owner_cashflow": 205.73199999999997
+        },
+        {
+          "year": 5,
+          "revenue": 1223,
+          "operating_profit": 408.55999999999995,
+          "common_operating_profit_after_tax": 317.84799999999996,
+          "owner_cashflow": 227.84799999999996
+        }
+      ],
+      "parent_capacity": [
+        {
+          "year": 1,
+          "cash_receipt_budget": 90,
+          "statutory_profit_budget": 100,
+          "dividend": 47,
+          "interest": 6,
+          "sbc_offset_repurchases": 30,
+          "ending_liquidity": 7,
+          "ending_distributable_reserve": 123
+        },
+        {
+          "year": 2,
+          "cash_receipt_budget": 100,
+          "statutory_profit_budget": 110,
+          "dividend": 52,
+          "interest": 6,
+          "sbc_offset_repurchases": 32,
+          "ending_liquidity": 17,
+          "ending_distributable_reserve": 149
+        },
+        {
+          "year": 3,
+          "cash_receipt_budget": 110,
+          "statutory_profit_budget": 120,
+          "dividend": 58,
+          "interest": 6,
+          "sbc_offset_repurchases": 34,
+          "ending_liquidity": 29,
+          "ending_distributable_reserve": 177
+        },
+        {
+          "year": 4,
+          "cash_receipt_budget": 120,
+          "statutory_profit_budget": 130,
+          "dividend": 65,
+          "interest": 6,
+          "sbc_offset_repurchases": 36,
+          "ending_liquidity": 42,
+          "ending_distributable_reserve": 206
+        },
+        {
+          "year": 5,
+          "cash_receipt_budget": 130,
+          "statutory_profit_budget": 140,
+          "dividend": 72,
+          "interest": 6,
+          "sbc_offset_repurchases": 38,
+          "ending_liquidity": 56,
+          "ending_distributable_reserve": 236
+        }
+      ]
+    },
+    "reference": {
+      "equity_value": 3211.6992251550414,
+      "terminal_equity_value": 4820.769019104448,
+      "terminal_operating_value": 3566.7007659721558,
+      "terminal_common_net_cash": 628.4542531322912,
+      "terminal_portfolio_value": 660.614,
+      "dividend_pv": 218.3809476501232,
+      "terminal_pv_fraction": 0.9320045457744938,
+      "cash_bridge": [
+        {
+          "year": 1,
+          "opening_common_net_cash": 33.191,
+          "owner_cashflow": 86.11199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 0.6638200000000001,
+          "common_dividend": 47,
+          "investment_paid": 13.754,
+          "closing_common_net_cash": 69.21281999999997
+        },
+        {
+          "year": 2,
+          "opening_common_net_cash": 69.21281999999997,
+          "owner_cashflow": 137.26000000000005,
+          "portfolio_income": 10,
+          "cash_interest": 1.3842563999999993,
+          "common_dividend": 52,
+          "investment_paid": 0,
+          "closing_common_net_cash": 165.8570764
+        },
+        {
+          "year": 3,
+          "opening_common_net_cash": 165.8570764,
+          "owner_cashflow": 175.692,
+          "portfolio_income": 10,
+          "cash_interest": 3.3171415280000005,
+          "common_dividend": 58,
+          "investment_paid": 0,
+          "closing_common_net_cash": 296.866217928
+        },
+        {
+          "year": 4,
+          "opening_common_net_cash": 296.866217928,
+          "owner_cashflow": 205.73199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 5.937324358560001,
+          "common_dividend": 65,
+          "investment_paid": 0,
+          "closing_common_net_cash": 453.53554228656003
+        },
+        {
+          "year": 5,
+          "opening_common_net_cash": 453.53554228656003,
+          "owner_cashflow": 227.84799999999996,
+          "portfolio_income": 10,
+          "cash_interest": 9.0707108457312,
+          "common_dividend": 72,
+          "investment_paid": 0,
+          "closing_common_net_cash": 628.4542531322912
+        }
+      ],
+      "value_per_share": 411.4333647911033,
+      "terminal_per_share": 617.5625671532495,
+      "operating_projection": [
+        {
+          "year": 1,
+          "revenue": 902,
+          "operating_profit": 292.64,
+          "common_operating_profit_after_tax": 227.112,
+          "owner_cashflow": 86.11199999999997
+        },
+        {
+          "year": 2,
+          "revenue": 986,
+          "operating_profit": 325.95000000000005,
+          "common_operating_profit_after_tax": 253.26000000000005,
+          "owner_cashflow": 137.26000000000005
+        },
+        {
+          "year": 3,
+          "revenue": 1070,
+          "operating_profit": 357.115,
+          "common_operating_profit_after_tax": 277.692,
+          "owner_cashflow": 175.692
+        },
+        {
+          "year": 4,
+          "revenue": 1150,
+          "operating_profit": 386.53999999999996,
+          "common_operating_profit_after_tax": 300.73199999999997,
+          "owner_cashflow": 205.73199999999997
+        },
+        {
+          "year": 5,
+          "revenue": 1223,
+          "operating_profit": 408.55999999999995,
+          "common_operating_profit_after_tax": 317.84799999999996,
+          "owner_cashflow": 227.84799999999996
+        }
+      ],
+      "parent_capacity": [
+        {
+          "year": 1,
+          "cash_receipt_budget": 90,
+          "statutory_profit_budget": 100,
+          "dividend": 47,
+          "interest": 6,
+          "sbc_offset_repurchases": 30,
+          "ending_liquidity": 7,
+          "ending_distributable_reserve": 123
+        },
+        {
+          "year": 2,
+          "cash_receipt_budget": 100,
+          "statutory_profit_budget": 110,
+          "dividend": 52,
+          "interest": 6,
+          "sbc_offset_repurchases": 32,
+          "ending_liquidity": 17,
+          "ending_distributable_reserve": 149
+        },
+        {
+          "year": 3,
+          "cash_receipt_budget": 110,
+          "statutory_profit_budget": 120,
+          "dividend": 58,
+          "interest": 6,
+          "sbc_offset_repurchases": 34,
+          "ending_liquidity": 29,
+          "ending_distributable_reserve": 177
+        },
+        {
+          "year": 4,
+          "cash_receipt_budget": 120,
+          "statutory_profit_budget": 130,
+          "dividend": 65,
+          "interest": 6,
+          "sbc_offset_repurchases": 36,
+          "ending_liquidity": 42,
+          "ending_distributable_reserve": 206
+        },
+        {
+          "year": 5,
+          "cash_receipt_budget": 130,
+          "statutory_profit_budget": 140,
+          "dividend": 72,
+          "interest": 6,
+          "sbc_offset_repurchases": 38,
+          "ending_liquidity": 56,
+          "ending_distributable_reserve": 236
+        }
+      ]
+    },
+    "cyclical_weak": {
+      "equity_value": 3175.32783995468,
+      "terminal_equity_value": 4776.168039525413,
+      "terminal_operating_value": 3566.7007659721558,
+      "terminal_common_net_cash": 583.8532735532576,
+      "terminal_portfolio_value": 660.614,
+      "dividend_pv": 209.70326169970997,
+      "terminal_pv_fraction": 0.9339585478195213,
+      "cash_bridge": [
+        {
+          "year": 1,
+          "opening_common_net_cash": 33.191,
+          "owner_cashflow": 52.85504000000003,
+          "portfolio_income": 10,
+          "cash_interest": 0.6638200000000001,
+          "common_dividend": 42,
+          "investment_paid": 13.754,
+          "closing_common_net_cash": 40.95586000000004
+        },
+        {
+          "year": 2,
+          "opening_common_net_cash": 40.95586000000004,
+          "owner_cashflow": 119.05360000000002,
+          "portfolio_income": 10,
+          "cash_interest": 0.8191172000000008,
+          "common_dividend": 47,
+          "investment_paid": 0,
+          "closing_common_net_cash": 123.82857720000004
+        },
+        {
+          "year": 3,
+          "opening_common_net_cash": 123.82857720000004,
+          "owner_cashflow": 175.692,
+          "portfolio_income": 10,
+          "cash_interest": 2.476571544000001,
+          "common_dividend": 58,
+          "investment_paid": 0,
+          "closing_common_net_cash": 253.99714874400004
+        },
+        {
+          "year": 4,
+          "opening_common_net_cash": 253.99714874400004,
+          "owner_cashflow": 205.73199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 5.079942974880001,
+          "common_dividend": 65,
+          "investment_paid": 0,
+          "closing_common_net_cash": 409.80909171888004
+        },
+        {
+          "year": 5,
+          "opening_common_net_cash": 409.80909171888004,
+          "owner_cashflow": 227.84799999999996,
+          "portfolio_income": 10,
+          "cash_interest": 8.196181834377601,
+          "common_dividend": 72,
+          "investment_paid": 0,
+          "closing_common_net_cash": 583.8532735532576
+        }
+      ],
+      "value_per_share": 406.77402394190665,
+      "terminal_per_share": 611.8489776124059,
+      "operating_projection": [
+        {
+          "year": 1,
+          "revenue": 830.64,
+          "operating_profit": 251.0688,
+          "common_operating_profit_after_tax": 193.85504000000003,
+          "owner_cashflow": 52.85504000000003
+        },
+        {
+          "year": 2,
+          "revenue": 946.96,
+          "operating_profit": 303.192,
+          "common_operating_profit_after_tax": 235.05360000000002,
+          "owner_cashflow": 119.05360000000002
+        },
+        {
+          "year": 3,
+          "revenue": 1070,
+          "operating_profit": 357.115,
+          "common_operating_profit_after_tax": 277.692,
+          "owner_cashflow": 175.692
+        },
+        {
+          "year": 4,
+          "revenue": 1150,
+          "operating_profit": 386.53999999999996,
+          "common_operating_profit_after_tax": 300.73199999999997,
+          "owner_cashflow": 205.73199999999997
+        },
+        {
+          "year": 5,
+          "revenue": 1223,
+          "operating_profit": 408.55999999999995,
+          "common_operating_profit_after_tax": 317.84799999999996,
+          "owner_cashflow": 227.84799999999996
+        }
+      ],
+      "parent_capacity": [
+        {
+          "year": 1,
+          "cash_receipt_budget": 85,
+          "statutory_profit_budget": 65,
+          "dividend": 42,
+          "interest": 6,
+          "sbc_offset_repurchases": 30,
+          "ending_liquidity": 7,
+          "ending_distributable_reserve": 93
+        },
+        {
+          "year": 2,
+          "cash_receipt_budget": 95,
+          "statutory_profit_budget": 80,
+          "dividend": 47,
+          "interest": 6,
+          "sbc_offset_repurchases": 32,
+          "ending_liquidity": 17,
+          "ending_distributable_reserve": 94
+        },
+        {
+          "year": 3,
+          "cash_receipt_budget": 110,
+          "statutory_profit_budget": 110,
+          "dividend": 58,
+          "interest": 6,
+          "sbc_offset_repurchases": 34,
+          "ending_liquidity": 29,
+          "ending_distributable_reserve": 112
+        },
+        {
+          "year": 4,
+          "cash_receipt_budget": 120,
+          "statutory_profit_budget": 120,
+          "dividend": 65,
+          "interest": 6,
+          "sbc_offset_repurchases": 36,
+          "ending_liquidity": 42,
+          "ending_distributable_reserve": 131
+        },
+        {
+          "year": 5,
+          "cash_receipt_budget": 130,
+          "statutory_profit_budget": 130,
+          "dividend": 72,
+          "interest": 6,
+          "sbc_offset_repurchases": 38,
+          "ending_liquidity": 56,
+          "ending_distributable_reserve": 151
+        }
+      ]
+    },
+    "structural_adverse": {
+      "equity_value": 1455.3884931140196,
+      "terminal_equity_value": 2287.0816561911874,
+      "terminal_operating_value": 1367.385546292816,
+      "terminal_common_net_cash": 337.8371098983714,
+      "terminal_portfolio_value": 616.859,
+      "dividend_pv": 128.2772341069352,
+      "terminal_pv_fraction": 0.91186048624552,
+      "cash_bridge": [
+        {
+          "year": 1,
+          "opening_common_net_cash": 18.191000000000003,
+          "owner_cashflow": 15.200000000000045,
+          "portfolio_income": 10,
+          "cash_interest": 0.36382000000000003,
+          "common_dividend": 30,
+          "investment_paid": 13.754,
+          "closing_common_net_cash": 0.0008200000000471164
+        },
+        {
+          "year": 2,
+          "opening_common_net_cash": 0.0008200000000471164,
+          "owner_cashflow": 67.98800000000006,
+          "portfolio_income": 10,
+          "cash_interest": 1.6400000000942326e-05,
+          "common_dividend": 30,
+          "investment_paid": 0,
+          "closing_common_net_cash": 47.98883640000011
+        },
+        {
+          "year": 3,
+          "opening_common_net_cash": 47.98883640000011,
+          "owner_cashflow": 109.832,
+          "portfolio_income": 10,
+          "cash_interest": 0.9597767280000022,
+          "common_dividend": 35,
+          "investment_paid": 0,
+          "closing_common_net_cash": 133.7806131280001
+        },
+        {
+          "year": 4,
+          "opening_common_net_cash": 133.7806131280001,
+          "owner_cashflow": 127.98800000000006,
+          "portfolio_income": 10,
+          "cash_interest": 2.6756122625600023,
+          "common_dividend": 40,
+          "investment_paid": 0,
+          "closing_common_net_cash": 234.44422539056018
+        },
+        {
+          "year": 5,
+          "opening_common_net_cash": 234.44422539056018,
+          "owner_cashflow": 133.704,
+          "portfolio_income": 10,
+          "cash_interest": 4.688884507811204,
+          "common_dividend": 45,
+          "investment_paid": 0,
+          "closing_common_net_cash": 337.8371098983714
+        }
+      ],
+      "value_per_share": 186.44192460807048,
+      "terminal_per_share": 292.9856239303743,
+      "operating_projection": [
+        {
+          "year": 1,
+          "revenue": 850,
+          "operating_profit": 247.75,
+          "common_operating_profit_after_tax": 191.20000000000002,
+          "owner_cashflow": 15.200000000000045
+        },
+        {
+          "year": 2,
+          "revenue": 879,
+          "operating_profit": 253.11,
+          "common_operating_profit_after_tax": 194.98800000000003,
+          "owner_cashflow": 67.98800000000006
+        },
+        {
+          "year": 3,
+          "revenue": 910,
+          "operating_profit": 258.53999999999996,
+          "common_operating_profit_after_tax": 198.832,
+          "owner_cashflow": 109.832
+        },
+        {
+          "year": 4,
+          "revenue": 942,
+          "operating_profit": 264.36,
+          "common_operating_profit_after_tax": 202.98800000000003,
+          "owner_cashflow": 127.98800000000006
+        },
+        {
+          "year": 5,
+          "revenue": 975,
+          "operating_profit": 269.63,
+          "common_operating_profit_after_tax": 206.704,
+          "owner_cashflow": 133.704
+        }
+      ],
+      "parent_capacity": [
+        {
+          "year": 1,
+          "cash_receipt_budget": 80,
+          "statutory_profit_budget": 45,
+          "dividend": 30,
+          "interest": 6,
+          "sbc_offset_repurchases": 30,
+          "ending_liquidity": 14,
+          "ending_distributable_reserve": 85
+        },
+        {
+          "year": 2,
+          "cash_receipt_budget": 85,
+          "statutory_profit_budget": 55,
+          "dividend": 30,
+          "interest": 6,
+          "sbc_offset_repurchases": 32,
+          "ending_liquidity": 31,
+          "ending_distributable_reserve": 78
+        },
+        {
+          "year": 3,
+          "cash_receipt_budget": 90,
+          "statutory_profit_budget": 65,
+          "dividend": 35,
+          "interest": 6,
+          "sbc_offset_repurchases": 34,
+          "ending_liquidity": 46,
+          "ending_distributable_reserve": 74
+        },
+        {
+          "year": 4,
+          "cash_receipt_budget": 100,
+          "statutory_profit_budget": 75,
+          "dividend": 40,
+          "interest": 6,
+          "sbc_offset_repurchases": 36,
+          "ending_liquidity": 64,
+          "ending_distributable_reserve": 73
+        },
+        {
+          "year": 5,
+          "cash_receipt_budget": 110,
+          "statutory_profit_budget": 85,
+          "dividend": 45,
+          "interest": 6,
+          "sbc_offset_repurchases": 38,
+          "ending_liquidity": 85,
+          "ending_distributable_reserve": 75
+        }
+      ]
+    },
+    "optimistic": {
+      "equity_value": 3735.6163894148785,
+      "terminal_equity_value": 5532.191043306918,
+      "terminal_operating_value": 4223.416898513468,
+      "terminal_common_net_cash": 639.4051447934498,
+      "terminal_portfolio_value": 704.369,
+      "dividend_pv": 221.41558908179954,
+      "terminal_pv_fraction": 0.9407284993959242,
+      "cash_bridge": [
+        {
+          "year": 1,
+          "opening_common_net_cash": 33.191,
+          "owner_cashflow": 80.42624,
+          "portfolio_income": 10,
+          "cash_interest": 0.6638200000000001,
+          "common_dividend": 47,
+          "investment_paid": 13.754,
+          "closing_common_net_cash": 63.52706000000001
+        },
+        {
+          "year": 2,
+          "opening_common_net_cash": 63.52706000000001,
+          "owner_cashflow": 133.26639999999998,
+          "portfolio_income": 10,
+          "cash_interest": 1.2705412000000003,
+          "common_dividend": 52,
+          "investment_paid": 0,
+          "closing_common_net_cash": 156.06400119999998
+        },
+        {
+          "year": 3,
+          "opening_common_net_cash": 156.06400119999998,
+          "owner_cashflow": 174.06552000000005,
+          "portfolio_income": 10,
+          "cash_interest": 3.121280024,
+          "common_dividend": 58,
+          "investment_paid": 0,
+          "closing_common_net_cash": 285.25080122400004
+        },
+        {
+          "year": 4,
+          "opening_common_net_cash": 285.25080122400004,
+          "owner_cashflow": 212.74256000000008,
+          "portfolio_income": 10,
+          "cash_interest": 5.705016024480001,
+          "common_dividend": 65,
+          "investment_paid": 0,
+          "closing_common_net_cash": 448.69837724848014
+        },
+        {
+          "year": 5,
+          "opening_common_net_cash": 448.69837724848014,
+          "owner_cashflow": 243.73280000000005,
+          "portfolio_income": 10,
+          "cash_interest": 8.973967544969604,
+          "common_dividend": 72,
+          "investment_paid": 0,
+          "closing_common_net_cash": 639.4051447934498
+        }
+      ],
+      "value_per_share": 478.5495505394223,
+      "terminal_per_share": 708.698983325592,
+      "operating_projection": [
+        {
+          "year": 1,
+          "revenue": 919.84,
+          "operating_profit": 298.03279999999995,
+          "common_operating_profit_after_tax": 231.42623999999998,
+          "owner_cashflow": 80.42624
+        },
+        {
+          "year": 2,
+          "revenue": 1025.04,
+          "operating_profit": 339.70799999999997,
+          "common_operating_profit_after_tax": 264.2664,
+          "owner_cashflow": 133.26639999999998
+        },
+        {
+          "year": 3,
+          "revenue": 1133.6000000000001,
+          "operating_profit": 380.0819,
+          "common_operating_profit_after_tax": 296.06552000000005,
+          "owner_cashflow": 174.06552000000005
+        },
+        {
+          "year": 4,
+          "revenue": 1241.2,
+          "operating_profit": 420.30320000000006,
+          "common_operating_profit_after_tax": 327.7425600000001,
+          "owner_cashflow": 212.74256000000008
+        },
+        {
+          "year": 5,
+          "revenue": 1344.3000000000002,
+          "operating_profit": 453.41600000000005,
+          "common_operating_profit_after_tax": 353.73280000000005,
+          "owner_cashflow": 243.73280000000005
+        }
+      ],
+      "parent_capacity": [
+        {
+          "year": 1,
+          "cash_receipt_budget": 90,
+          "statutory_profit_budget": 100,
+          "dividend": 47,
+          "interest": 6,
+          "sbc_offset_repurchases": 30,
+          "ending_liquidity": 7,
+          "ending_distributable_reserve": 123
+        },
+        {
+          "year": 2,
+          "cash_receipt_budget": 100,
+          "statutory_profit_budget": 110,
+          "dividend": 52,
+          "interest": 6,
+          "sbc_offset_repurchases": 32,
+          "ending_liquidity": 17,
+          "ending_distributable_reserve": 149
+        },
+        {
+          "year": 3,
+          "cash_receipt_budget": 110,
+          "statutory_profit_budget": 120,
+          "dividend": 58,
+          "interest": 6,
+          "sbc_offset_repurchases": 34,
+          "ending_liquidity": 29,
+          "ending_distributable_reserve": 177
+        },
+        {
+          "year": 4,
+          "cash_receipt_budget": 120,
+          "statutory_profit_budget": 130,
+          "dividend": 65,
+          "interest": 6,
+          "sbc_offset_repurchases": 36,
+          "ending_liquidity": 42,
+          "ending_distributable_reserve": 206
+        },
+        {
+          "year": 5,
+          "cash_receipt_budget": 130,
+          "statutory_profit_budget": 140,
+          "dividend": 72,
+          "interest": 6,
+          "sbc_offset_repurchases": 38,
+          "ending_liquidity": 56,
+          "ending_distributable_reserve": 236
+        }
+      ]
+    },
+    "persistent_extra_30bn_capex": {
+      "equity_value": 2823.165770304628,
+      "terminal_equity_value": 4195.032004733308,
+      "terminal_operating_value": 3097.084956401017,
+      "terminal_common_net_cash": 472.3330483322911,
+      "terminal_portfolio_value": 660.614,
+      "dividend_pv": 218.3809476501232,
+      "terminal_pv_fraction": 0.9226467854112019,
+      "cash_bridge": [
+        {
+          "year": 1,
+          "opening_common_net_cash": 33.191,
+          "owner_cashflow": 56.111999999999966,
+          "portfolio_income": 10,
+          "cash_interest": 0.6638200000000001,
+          "common_dividend": 47,
+          "investment_paid": 13.754,
+          "closing_common_net_cash": 39.21281999999997
+        },
+        {
+          "year": 2,
+          "opening_common_net_cash": 39.21281999999997,
+          "owner_cashflow": 107.26000000000005,
+          "portfolio_income": 10,
+          "cash_interest": 0.7842563999999994,
+          "common_dividend": 52,
+          "investment_paid": 0,
+          "closing_common_net_cash": 105.25707640000002
+        },
+        {
+          "year": 3,
+          "opening_common_net_cash": 105.25707640000002,
+          "owner_cashflow": 145.692,
+          "portfolio_income": 10,
+          "cash_interest": 2.1051415280000003,
+          "common_dividend": 58,
+          "investment_paid": 0,
+          "closing_common_net_cash": 205.054217928
+        },
+        {
+          "year": 4,
+          "opening_common_net_cash": 205.054217928,
+          "owner_cashflow": 175.73199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 4.1010843585600005,
+          "common_dividend": 65,
+          "investment_paid": 0,
+          "closing_common_net_cash": 329.88730228656
+        },
+        {
+          "year": 5,
+          "opening_common_net_cash": 329.88730228656,
+          "owner_cashflow": 197.84799999999996,
+          "portfolio_income": 10,
+          "cash_interest": 6.5977460457312,
+          "common_dividend": 72,
+          "investment_paid": 0,
+          "closing_common_net_cash": 472.3330483322911
+        }
+      ],
+      "value_per_share": 361.66045162072356,
+      "terminal_per_share": 537.4027927632211,
+      "operating_projection": [
+        {
+          "year": 1,
+          "revenue": 902,
+          "operating_profit": 292.64,
+          "common_operating_profit_after_tax": 227.112,
+          "owner_cashflow": 56.111999999999966
+        },
+        {
+          "year": 2,
+          "revenue": 986,
+          "operating_profit": 325.95000000000005,
+          "common_operating_profit_after_tax": 253.26000000000005,
+          "owner_cashflow": 107.26000000000005
+        },
+        {
+          "year": 3,
+          "revenue": 1070,
+          "operating_profit": 357.115,
+          "common_operating_profit_after_tax": 277.692,
+          "owner_cashflow": 145.692
+        },
+        {
+          "year": 4,
+          "revenue": 1150,
+          "operating_profit": 386.53999999999996,
+          "common_operating_profit_after_tax": 300.73199999999997,
+          "owner_cashflow": 175.73199999999997
+        },
+        {
+          "year": 5,
+          "revenue": 1223,
+          "operating_profit": 408.55999999999995,
+          "common_operating_profit_after_tax": 317.84799999999996,
+          "owner_cashflow": 197.84799999999996
+        }
+      ],
+      "parent_capacity": [
+        {
+          "year": 1,
+          "cash_receipt_budget": 90,
+          "statutory_profit_budget": 100,
+          "dividend": 47,
+          "interest": 6,
+          "sbc_offset_repurchases": 30,
+          "ending_liquidity": 7,
+          "ending_distributable_reserve": 123
+        },
+        {
+          "year": 2,
+          "cash_receipt_budget": 100,
+          "statutory_profit_budget": 110,
+          "dividend": 52,
+          "interest": 6,
+          "sbc_offset_repurchases": 32,
+          "ending_liquidity": 17,
+          "ending_distributable_reserve": 149
+        },
+        {
+          "year": 3,
+          "cash_receipt_budget": 110,
+          "statutory_profit_budget": 120,
+          "dividend": 58,
+          "interest": 6,
+          "sbc_offset_repurchases": 34,
+          "ending_liquidity": 29,
+          "ending_distributable_reserve": 177
+        },
+        {
+          "year": 4,
+          "cash_receipt_budget": 120,
+          "statutory_profit_budget": 130,
+          "dividend": 65,
+          "interest": 6,
+          "sbc_offset_repurchases": 36,
+          "ending_liquidity": 42,
+          "ending_distributable_reserve": 206
+        },
+        {
+          "year": 5,
+          "cash_receipt_budget": 130,
+          "statutory_profit_budget": 140,
+          "dividend": 72,
+          "interest": 6,
+          "sbc_offset_repurchases": 38,
+          "ending_liquidity": 56,
+          "ending_distributable_reserve": 236
+        }
+      ]
+    },
+    "cost_equity_plus_1pp": {
+      "equity_value": 2814.8899453612235,
+      "terminal_equity_value": 4385.175336869925,
+      "terminal_operating_value": 3131.107083737633,
+      "terminal_common_net_cash": 628.4542531322912,
+      "terminal_portfolio_value": 660.614,
+      "dividend_pv": 212.50181792612955,
+      "terminal_pv_fraction": 0.9245079480722433,
+      "cash_bridge": [
+        {
+          "year": 1,
+          "opening_common_net_cash": 33.191,
+          "owner_cashflow": 86.11199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 0.6638200000000001,
+          "common_dividend": 47,
+          "investment_paid": 13.754,
+          "closing_common_net_cash": 69.21281999999997
+        },
+        {
+          "year": 2,
+          "opening_common_net_cash": 69.21281999999997,
+          "owner_cashflow": 137.26000000000005,
+          "portfolio_income": 10,
+          "cash_interest": 1.3842563999999993,
+          "common_dividend": 52,
+          "investment_paid": 0,
+          "closing_common_net_cash": 165.8570764
+        },
+        {
+          "year": 3,
+          "opening_common_net_cash": 165.8570764,
+          "owner_cashflow": 175.692,
+          "portfolio_income": 10,
+          "cash_interest": 3.3171415280000005,
+          "common_dividend": 58,
+          "investment_paid": 0,
+          "closing_common_net_cash": 296.866217928
+        },
+        {
+          "year": 4,
+          "opening_common_net_cash": 296.866217928,
+          "owner_cashflow": 205.73199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 5.937324358560001,
+          "common_dividend": 65,
+          "investment_paid": 0,
+          "closing_common_net_cash": 453.53554228656003
+        },
+        {
+          "year": 5,
+          "opening_common_net_cash": 453.53554228656003,
+          "owner_cashflow": 227.84799999999996,
+          "portfolio_income": 10,
+          "cash_interest": 9.0707108457312,
+          "common_dividend": 72,
+          "investment_paid": 0,
+          "closing_common_net_cash": 628.4542531322912
+        }
+      ],
+      "value_per_share": 360.60028058222207,
+      "terminal_per_share": 561.7610235467354,
+      "operating_projection": [
+        {
+          "year": 1,
+          "revenue": 902,
+          "operating_profit": 292.64,
+          "common_operating_profit_after_tax": 227.112,
+          "owner_cashflow": 86.11199999999997
+        },
+        {
+          "year": 2,
+          "revenue": 986,
+          "operating_profit": 325.95000000000005,
+          "common_operating_profit_after_tax": 253.26000000000005,
+          "owner_cashflow": 137.26000000000005
+        },
+        {
+          "year": 3,
+          "revenue": 1070,
+          "operating_profit": 357.115,
+          "common_operating_profit_after_tax": 277.692,
+          "owner_cashflow": 175.692
+        },
+        {
+          "year": 4,
+          "revenue": 1150,
+          "operating_profit": 386.53999999999996,
+          "common_operating_profit_after_tax": 300.73199999999997,
+          "owner_cashflow": 205.73199999999997
+        },
+        {
+          "year": 5,
+          "revenue": 1223,
+          "operating_profit": 408.55999999999995,
+          "common_operating_profit_after_tax": 317.84799999999996,
+          "owner_cashflow": 227.84799999999996
+        }
+      ],
+      "parent_capacity": [
+        {
+          "year": 1,
+          "cash_receipt_budget": 90,
+          "statutory_profit_budget": 100,
+          "dividend": 47,
+          "interest": 6,
+          "sbc_offset_repurchases": 30,
+          "ending_liquidity": 7,
+          "ending_distributable_reserve": 123
+        },
+        {
+          "year": 2,
+          "cash_receipt_budget": 100,
+          "statutory_profit_budget": 110,
+          "dividend": 52,
+          "interest": 6,
+          "sbc_offset_repurchases": 32,
+          "ending_liquidity": 17,
+          "ending_distributable_reserve": 149
+        },
+        {
+          "year": 3,
+          "cash_receipt_budget": 110,
+          "statutory_profit_budget": 120,
+          "dividend": 58,
+          "interest": 6,
+          "sbc_offset_repurchases": 34,
+          "ending_liquidity": 29,
+          "ending_distributable_reserve": 177
+        },
+        {
+          "year": 4,
+          "cash_receipt_budget": 120,
+          "statutory_profit_budget": 130,
+          "dividend": 65,
+          "interest": 6,
+          "sbc_offset_repurchases": 36,
+          "ending_liquidity": 42,
+          "ending_distributable_reserve": 206
+        },
+        {
+          "year": 5,
+          "cash_receipt_budget": 130,
+          "statutory_profit_budget": 140,
+          "dividend": 72,
+          "interest": 6,
+          "sbc_offset_repurchases": 38,
+          "ending_liquidity": 56,
+          "ending_distributable_reserve": 236
+        }
+      ]
+    },
+    "parent_receipt_delay_40bn": {
+      "equity_value": 3209.1289796551687,
+      "terminal_equity_value": 4821.554313024448,
+      "terminal_operating_value": 3566.7007659721558,
+      "terminal_common_net_cash": 629.2395470522912,
+      "terminal_portfolio_value": 660.614,
+      "dividend_pv": 215.3230964104538,
+      "terminal_pv_fraction": 0.9329029472559277,
+      "cash_bridge": [
+        {
+          "year": 1,
+          "opening_common_net_cash": 33.191,
+          "owner_cashflow": 86.11199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 0.6638200000000001,
+          "common_dividend": 10,
+          "investment_paid": 13.754,
+          "closing_common_net_cash": 106.21281999999997
+        },
+        {
+          "year": 2,
+          "opening_common_net_cash": 106.21281999999997,
+          "owner_cashflow": 137.26000000000005,
+          "portfolio_income": 10,
+          "cash_interest": 2.1242563999999993,
+          "common_dividend": 89,
+          "investment_paid": 0,
+          "closing_common_net_cash": 166.59707640000002
+        },
+        {
+          "year": 3,
+          "opening_common_net_cash": 166.59707640000002,
+          "owner_cashflow": 175.692,
+          "portfolio_income": 10,
+          "cash_interest": 3.3319415280000007,
+          "common_dividend": 58,
+          "investment_paid": 0,
+          "closing_common_net_cash": 297.621017928
+        },
+        {
+          "year": 4,
+          "opening_common_net_cash": 297.621017928,
+          "owner_cashflow": 205.73199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 5.95242035856,
+          "common_dividend": 65,
+          "investment_paid": 0,
+          "closing_common_net_cash": 454.30543828656
+        },
+        {
+          "year": 5,
+          "opening_common_net_cash": 454.30543828656,
+          "owner_cashflow": 227.84799999999996,
+          "portfolio_income": 10,
+          "cash_interest": 9.0861087657312,
+          "common_dividend": 72,
+          "investment_paid": 0,
+          "closing_common_net_cash": 629.2395470522912
+        }
+      ],
+      "value_per_share": 411.10410458327647,
+      "terminal_per_share": 617.6631668972494,
+      "operating_projection": [
+        {
+          "year": 1,
+          "revenue": 902,
+          "operating_profit": 292.64,
+          "common_operating_profit_after_tax": 227.112,
+          "owner_cashflow": 86.11199999999997
+        },
+        {
+          "year": 2,
+          "revenue": 986,
+          "operating_profit": 325.95000000000005,
+          "common_operating_profit_after_tax": 253.26000000000005,
+          "owner_cashflow": 137.26000000000005
+        },
+        {
+          "year": 3,
+          "revenue": 1070,
+          "operating_profit": 357.115,
+          "common_operating_profit_after_tax": 277.692,
+          "owner_cashflow": 175.692
+        },
+        {
+          "year": 4,
+          "revenue": 1150,
+          "operating_profit": 386.53999999999996,
+          "common_operating_profit_after_tax": 300.73199999999997,
+          "owner_cashflow": 205.73199999999997
+        },
+        {
+          "year": 5,
+          "revenue": 1223,
+          "operating_profit": 408.55999999999995,
+          "common_operating_profit_after_tax": 317.84799999999996,
+          "owner_cashflow": 227.84799999999996
+        }
+      ],
+      "parent_capacity": [
+        {
+          "year": 1,
+          "cash_receipt_budget": 50,
+          "statutory_profit_budget": 100,
+          "dividend": 10,
+          "interest": 6,
+          "sbc_offset_repurchases": 30,
+          "ending_liquidity": 4,
+          "ending_distributable_reserve": 160
+        },
+        {
+          "year": 2,
+          "cash_receipt_budget": 140,
+          "statutory_profit_budget": 110,
+          "dividend": 89,
+          "interest": 6,
+          "sbc_offset_repurchases": 32,
+          "ending_liquidity": 17,
+          "ending_distributable_reserve": 149
+        },
+        {
+          "year": 3,
+          "cash_receipt_budget": 110,
+          "statutory_profit_budget": 120,
+          "dividend": 58,
+          "interest": 6,
+          "sbc_offset_repurchases": 34,
+          "ending_liquidity": 29,
+          "ending_distributable_reserve": 177
+        },
+        {
+          "year": 4,
+          "cash_receipt_budget": 120,
+          "statutory_profit_budget": 130,
+          "dividend": 65,
+          "interest": 6,
+          "sbc_offset_repurchases": 36,
+          "ending_liquidity": 42,
+          "ending_distributable_reserve": 206
+        },
+        {
+          "year": 5,
+          "cash_receipt_budget": 130,
+          "statutory_profit_budget": 140,
+          "dividend": 72,
+          "interest": 6,
+          "sbc_offset_repurchases": 38,
+          "ending_liquidity": 56,
+          "ending_distributable_reserve": 236
+        }
+      ]
+    },
+    "higher_cash_distribution_same_business": {
+      "equity_value": 3235.0235599905905,
+      "terminal_equity_value": 4461.678229600448,
+      "terminal_operating_value": 3566.7007659721558,
+      "terminal_common_net_cash": 269.36346362829113,
+      "terminal_portfolio_value": 660.614,
+      "dividend_pv": 464.67241060285244,
+      "terminal_pv_fraction": 0.85636197017242,
+      "cash_bridge": [
+        {
+          "year": 1,
+          "opening_common_net_cash": 33.191,
+          "owner_cashflow": 86.11199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 0.6638200000000001,
+          "common_dividend": 47,
+          "investment_paid": 13.754,
+          "closing_common_net_cash": 69.21281999999997
+        },
+        {
+          "year": 2,
+          "opening_common_net_cash": 69.21281999999997,
+          "owner_cashflow": 137.26000000000005,
+          "portfolio_income": 10,
+          "cash_interest": 1.3842563999999993,
+          "common_dividend": 109.80800000000005,
+          "investment_paid": 0,
+          "closing_common_net_cash": 108.04907639999996
+        },
+        {
+          "year": 3,
+          "opening_common_net_cash": 108.04907639999996,
+          "owner_cashflow": 175.692,
+          "portfolio_income": 10,
+          "cash_interest": 2.1609815279999993,
+          "common_dividend": 140.55360000000002,
+          "investment_paid": 0,
+          "closing_common_net_cash": 155.34845792799996
+        },
+        {
+          "year": 4,
+          "opening_common_net_cash": 155.34845792799996,
+          "owner_cashflow": 205.73199999999997,
+          "portfolio_income": 10,
+          "cash_interest": 3.1069691585599992,
+          "common_dividend": 164.5856,
+          "investment_paid": 0,
+          "closing_common_net_cash": 209.60182708655992
+        },
+        {
+          "year": 5,
+          "opening_common_net_cash": 209.60182708655992,
+          "owner_cashflow": 227.84799999999996,
+          "portfolio_income": 10,
+          "cash_interest": 4.192036541731198,
+          "common_dividend": 182.27839999999998,
+          "investment_paid": 0,
+          "closing_common_net_cash": 269.36346362829113
+        }
+      ],
+      "value_per_share": 414.4213187961802,
+      "terminal_per_share": 571.5613941187501,
+      "operating_projection": [
+        {
+          "year": 1,
+          "revenue": 902,
+          "operating_profit": 292.64,
+          "common_operating_profit_after_tax": 227.112,
+          "owner_cashflow": 86.11199999999997
+        },
+        {
+          "year": 2,
+          "revenue": 986,
+          "operating_profit": 325.95000000000005,
+          "common_operating_profit_after_tax": 253.26000000000005,
+          "owner_cashflow": 137.26000000000005
+        },
+        {
+          "year": 3,
+          "revenue": 1070,
+          "operating_profit": 357.115,
+          "common_operating_profit_after_tax": 277.692,
+          "owner_cashflow": 175.692
+        },
+        {
+          "year": 4,
+          "revenue": 1150,
+          "operating_profit": 386.53999999999996,
+          "common_operating_profit_after_tax": 300.73199999999997,
+          "owner_cashflow": 205.73199999999997
+        },
+        {
+          "year": 5,
+          "revenue": 1223,
+          "operating_profit": 408.55999999999995,
+          "common_operating_profit_after_tax": 317.84799999999996,
+          "owner_cashflow": 227.84799999999996
+        }
+      ],
+      "parent_capacity": [
+        {
+          "year": 1,
+          "cash_receipt_budget": 90,
+          "statutory_profit_budget": 100,
+          "dividend": 47,
+          "interest": 6,
+          "sbc_offset_repurchases": 30,
+          "ending_liquidity": 7,
+          "ending_distributable_reserve": 123
+        },
+        {
+          "year": 2,
+          "cash_receipt_budget": 157.80800000000005,
+          "statutory_profit_budget": 167.80800000000005,
+          "dividend": 109.80800000000005,
+          "interest": 6,
+          "sbc_offset_repurchases": 32,
+          "ending_liquidity": 17.0,
+          "ending_distributable_reserve": 149.0
+        },
+        {
+          "year": 3,
+          "cash_receipt_budget": 190.55360000000002,
+          "statutory_profit_budget": 200.55360000000002,
+          "dividend": 140.55360000000002,
+          "interest": 6,
+          "sbc_offset_repurchases": 34,
+          "ending_liquidity": 27.0,
+          "ending_distributable_reserve": 175.0
+        },
+        {
+          "year": 4,
+          "cash_receipt_budget": 216.5856,
+          "statutory_profit_budget": 226.5856,
+          "dividend": 164.5856,
+          "interest": 6,
+          "sbc_offset_repurchases": 36,
+          "ending_liquidity": 37.0,
+          "ending_distributable_reserve": 201.0
+        },
+        {
+          "year": 5,
+          "cash_receipt_budget": 236.27839999999998,
+          "statutory_profit_budget": 246.27839999999998,
+          "dividend": 182.27839999999998,
+          "interest": 6,
+          "sbc_offset_repurchases": 38,
+          "ending_liquidity": 47.0,
+          "ending_distributable_reserve": 227.0
+        }
+      ]
+    }
+  },
+  "auxiliary_earnings_capitalization": {
+    "normalized_common_operating_earnings": 180.0,
+    "multiples": [
+      16,
+      18
+    ],
+    "value_per_share": [
+      451.57516078431377,
+      497.69280784313725
+    ]
+  },
+  "verification": "正式计算链常数现金流手算特例、延迟分配等价特例、年度现金守恒、付款能力检查通过"
+}

@@ -1,32 +1,1713 @@
 {
-  "schema": "trading_os_research_result_v1",
   "symbol": "CN:600941",
   "report_period": "2026-Q3",
-  "information_cutoff": "2026-10-21T19:21:00+08:00",
   "value_range": {
-    "low": 70.7,
-    "high": 81.2,
+    "low": 60.43,
+    "high": 75.28,
     "currency": "CNY"
   },
-  "valuation_note": "主法为实际持有人现金折现；r8%—9%、g0.5%—1%、增量回报10%，金融本金有限实现含费用；辅法正常化经营盈利加同口径净金融桥68.84—80.27元。非情景包络，不含行情。",
   "return_model": {
     "schema_version": 1,
     "method": "annual_common_equity_irr_v1",
     "currency": "CNY",
-    "model_as_of": "2026-10-21T19:21:00+08:00",
+    "model_as_of": "2026-11-12T21:52:05+08:00",
     "base_case_distributions_per_share": [
-      4.66,
-      4.8,
-      4.97,
-      5.11,
-      5.29
+      4.6073,
+      4.667,
+      4.8665,
+      5.0963,
+      5.2879
     ],
     "base_case_terminal_equity_value_range_per_share": {
       "year_5": {
-        "low": 79.25707552350106,
-        "high": 90.38562569198291
+        "low": 63.81,
+        "high": 82.0
       }
     }
   },
-  "return_model_note": "22.116111770十亿完全稀释普通股，首期前期权登记并收人民币19.03507936376652十亿，现有股利不重复。五年D来自香港母新合法收益和实际到账，旧应收仅收现。TV延伸同一Base前五年状态；必要资本持续经营、额外金融本金约第15年实现，联营处置后不再计股息；已派付金额从金融池扣除。法定实体未知处为明确经济能力预算，不是合成法律储备。"
+  "return_model_note": "未来五个连续12个月税前普通股现金分配，2027—2031经营预算近似覆盖。全部已授期权执行后22115245648股，未来行权款184.44亿元与稀释同步。首年之前已付中期股利排除，五年派付从金融池扣减，末池4209.61亿元。终值经营继续五年过渡至增长/增量资本回报相容的现金，基准第6年起持续80%普通利润分配、金融本金滚存取得2%净收益，联营只将实收转入集团现金。资金不足时降低派付，不自动特别返还本金。母公司依法上划及到账限制分配。分配及终值均为CNY/一股A股，投资者税费另计。",
+  "outputs": {
+    "CN:600941": {
+      "symbol": "CN:600941",
+      "report_period": "2026-Q3",
+      "value_range": {
+        "low": 60.43,
+        "high": 75.28,
+        "currency": "CNY"
+      },
+      "return_model": {
+        "schema_version": 1,
+        "method": "annual_common_equity_irr_v1",
+        "currency": "CNY",
+        "model_as_of": "2026-11-12T21:52:05+08:00",
+        "base_case_distributions_per_share": [
+          4.6073,
+          4.667,
+          4.8665,
+          5.0963,
+          5.2879
+        ],
+        "base_case_terminal_equity_value_range_per_share": {
+          "year_5": {
+            "low": 63.81,
+            "high": 82.0
+          }
+        }
+      }
+    },
+    "HK:00941": {
+      "symbol": "HK:00941",
+      "report_period": "2026-Q3",
+      "value_range": {
+        "low": 70.57,
+        "high": 87.92,
+        "currency": "HKD"
+      },
+      "return_model": {
+        "schema_version": 1,
+        "method": "annual_common_equity_irr_v1",
+        "currency": "HKD",
+        "model_as_of": "2026-11-12T21:52:05+08:00",
+        "base_case_distributions_per_share": [
+          5.3803,
+          5.45,
+          5.6829,
+          5.9513,
+          6.175
+        ],
+        "base_case_terminal_equity_value_range_per_share": {
+          "year_5": {
+            "low": 74.51,
+            "high": 95.76
+          }
+        }
+      }
+    }
+  },
+  "core": {
+    "low": {
+      "current": 60.43093257161512,
+      "terminal": {
+        "total": 1411.1352177751455,
+        "per_share": 63.80825428013105,
+        "policy": "ordinary_80",
+        "transition_rows": [
+          {
+            "year": 6,
+            "operating_profit": 122.14327799999998,
+            "operating_free_cash": 103.88344963758652,
+            "associate_profit": 16.524,
+            "associate_cash": 7.035960000000001,
+            "finance_income": 8.41921327807335,
+            "dividend": 117.66919302245867,
+            "dividend_per_share": 5.320727379444692,
+            "pool_end": 422.6300937968688,
+            "implied_capex": 203.17982836241345
+          },
+          {
+            "year": 7,
+            "operating_profit": 122.75399438999996,
+            "operating_free_cash": 107.23129927517306,
+            "associate_profit": 16.85448,
+            "associate_cash": 7.2786384,
+            "finance_income": 8.452601875937376,
+            "dividend": 118.44886101274989,
+            "dividend_per_share": 5.355982153581091,
+            "pool_end": 427.14377233522936,
+            "implied_capex": 201.36729511482685
+          },
+          {
+            "year": 8,
+            "operating_profit": 123.36776436194994,
+            "operating_free_cash": 110.57914891275959,
+            "associate_profit": 17.1915696,
+            "associate_cash": 7.528209552000001,
+            "finance_income": 8.542875446704587,
+            "dividend": 119.28176752692362,
+            "dividend_per_share": 5.393644250011345,
+            "pool_end": 434.51223871977,
+            "implied_capex": 199.56243844919027
+          },
+          {
+            "year": 9,
+            "operating_profit": 123.98460318375969,
+            "operating_free_cash": 113.92699855034613,
+            "associate_profit": 17.535400992,
+            "associate_cash": 7.78485209472,
+            "finance_income": 8.6902447743954,
+            "dividend": 120.16819916012408,
+            "dividend_per_share": 5.4337266279016685,
+            "pool_end": 444.74613497910747,
+            "implied_capex": 197.7652967484135
+          },
+          {
+            "year": 10,
+            "operating_profit": 124.60452619967846,
+            "operating_free_cash": 117.27484818793266,
+            "associate_profit": 17.88610901184,
+            "associate_cash": 8.048749055327999,
+            "finance_income": 8.89492269958215,
+            "dividend": 121.10844632888048,
+            "dividend_per_share": 5.476242419212421,
+            "pool_end": 457.8562085930699,
+            "implied_capex": 195.9759085873207
+          }
+        ],
+        "mature_cash": 117.27484818793266,
+        "stable_policy": {
+          "value": 1457.9016192971908,
+          "depletion_year": null,
+          "cash_coefficient": 0.186046511627907
+        },
+        "year_6_distribution_per_share": 5.320727379444692,
+        "year_5_to_6_distribution_change": 0.006214271481593148
+      },
+      "terminal_present_value_fraction": 0.6862542972080847
+    },
+    "high": {
+      "current": 75.28454868851188,
+      "terminal": {
+        "total": 1813.5002499285533,
+        "per_share": 82.00226571268306,
+        "policy": "ordinary_80",
+        "transition_rows": [
+          {
+            "year": 6,
+            "operating_profit": 123.35863399999998,
+            "operating_free_cash": 102.68630082302326,
+            "associate_profit": 16.524,
+            "associate_cash": 7.035960000000001,
+            "finance_income": 8.41921327807335,
+            "dividend": 118.64147782245868,
+            "dividend_per_share": 5.3646918379669035,
+            "pool_end": 420.46066018230556,
+            "implied_capex": 207.43233317697673
+          },
+          {
+            "year": 7,
+            "operating_profit": 125.20901350999995,
+            "operating_free_cash": 104.8370016460465,
+            "associate_profit": 16.85448,
+            "associate_cash": 7.2786384,
+            "finance_income": 8.409213203646111,
+            "dividend": 120.37816537091686,
+            "dividend_per_share": 5.443220811874785,
+            "pool_end": 420.60734806108127,
+            "implied_capex": 209.9334118639534
+          },
+          {
+            "year": 8,
+            "operating_profit": 127.08714871264993,
+            "operating_free_cash": 106.98770246906977,
+            "associate_profit": 17.1915696,
+            "associate_cash": 7.528209552000001,
+            "finance_income": 8.412146961221625,
+            "dividend": 122.15269221909726,
+            "dividend_per_share": 5.523460790956405,
+            "pool_end": 421.38271482427547,
+            "implied_capex": 212.50426724358007
+          },
+          {
+            "year": 9,
+            "operating_profit": 128.99345594333968,
+            "operating_free_cash": 109.13840329209303,
+            "associate_profit": 17.535400992,
+            "associate_cash": 7.78485209472,
+            "finance_income": 8.42765429648551,
+            "dividend": 123.96520898546017,
+            "dividend_per_share": 5.605418585828415,
+            "pool_end": 422.7684155221138,
+            "implied_capex": 215.1459459662466
+          },
+          {
+            "year": 10,
+            "operating_profit": 130.92835778248977,
+            "operating_free_cash": 111.28910411511632,
+            "associate_profit": 17.88610901184,
+            "associate_cash": 8.048749055327999,
+            "finance_income": 8.455368310442276,
+            "dividend": 125.81586808381765,
+            "dividend_per_share": 5.689101088289103,
+            "pool_end": 424.7457689191828,
+            "implied_capex": 217.85951038209836
+          }
+        ],
+        "mature_cash": 111.2891041151163,
+        "stable_policy": {
+          "value": 1949.3974002801035,
+          "depletion_year": null,
+          "cash_coefficient": 0.2105263157894737
+        },
+        "year_6_distribution_per_share": 5.3646918379669035,
+        "year_5_to_6_distribution_change": 0.014528485394132762
+      },
+      "terminal_present_value_fraction": 0.7413123294882077
+    },
+    "central": {
+      "current": 66.878770321344,
+      "terminal": {
+        "total": 1585.0039600645714,
+        "per_share": 71.67019463823645,
+        "policy": "ordinary_80",
+        "transition_rows": [
+          {
+            "year": 6,
+            "operating_profit": 122.75095599999999,
+            "operating_free_cash": 103.13694880798818,
+            "associate_profit": 16.524,
+            "associate_cash": 7.035960000000001,
+            "finance_income": 8.41921327807335,
+            "dividend": 118.15533542245868,
+            "dividend_per_share": 5.342709608705798,
+            "pool_end": 421.3974505672705,
+            "implied_capex": 205.45400719201183
+          },
+          {
+            "year": 7,
+            "operating_profit": 123.97846555999999,
+            "operating_free_cash": 105.73829761597636,
+            "associate_profit": 16.85448,
+            "associate_cash": 7.2786384,
+            "finance_income": 8.42794901134541,
+            "dividend": 119.40871565707633,
+            "dividend_per_share": 5.39938454935838,
+            "pool_end": 423.4336199375159,
+            "implied_capex": 205.93856794402365
+          },
+          {
+            "year": 8,
+            "operating_profit": 125.21825021560001,
+            "operating_free_cash": 108.33964642396455,
+            "associate_profit": 17.1915696,
+            "associate_cash": 7.528209552000001,
+            "finance_income": 8.468672398750318,
+            "dividend": 120.70279377148027,
+            "dividend_per_share": 5.457899753530257,
+            "pool_end": 427.06735454075044,
+            "implied_capex": 206.45398779163548
+          },
+          {
+            "year": 9,
+            "operating_profit": 126.470432717756,
+            "operating_free_cash": 110.94099523195275,
+            "associate_profit": 17.535400992,
+            "associate_cash": 7.78485209472,
+            "finance_income": 8.541347090815009,
+            "dividend": 122.03774464045681,
+            "dividend_per_share": 5.51826312865276,
+            "pool_end": 432.2968043177814,
+            "implied_capex": 207.00057532580325
+          },
+          {
+            "year": 10,
+            "operating_profit": 127.73513704493357,
+            "operating_free_cash": 113.54234403994094,
+            "associate_profit": 17.88610901184,
+            "associate_cash": 8.048749055327999,
+            "finance_income": 8.645936086355627,
+            "dividend": 123.41374571450336,
+            "dividend_per_share": 5.580482698624889,
+            "pool_end": 439.12008778490264,
+            "implied_capex": 207.57864222339265
+          }
+        ],
+        "mature_cash": 113.54234403994094,
+        "stable_policy": {
+          "value": 1669.1167099034037,
+          "depletion_year": null,
+          "cash_coefficient": 0.19753086419753085
+        },
+        "year_6_distribution_per_share": 5.342709608705798,
+        "year_5_to_6_distribution_change": 0.010371378437862955
+      },
+      "terminal_present_value_fraction": 0.7126915566977595
+    }
+  },
+  "auxiliary": {
+    "low": 62.06096475813651,
+    "high": 74.47315770976381
+  },
+  "policy_comparison": {
+    "ordinary_80": {
+      "current": 66.878770321344,
+      "terminal": {
+        "total": 1585.0039600645714,
+        "per_share": 71.67019463823645,
+        "policy": "ordinary_80",
+        "transition_rows": [
+          {
+            "year": 6,
+            "operating_profit": 122.75095599999999,
+            "operating_free_cash": 103.13694880798818,
+            "associate_profit": 16.524,
+            "associate_cash": 7.035960000000001,
+            "finance_income": 8.41921327807335,
+            "dividend": 118.15533542245868,
+            "dividend_per_share": 5.342709608705798,
+            "pool_end": 421.3974505672705,
+            "implied_capex": 205.45400719201183
+          },
+          {
+            "year": 7,
+            "operating_profit": 123.97846555999999,
+            "operating_free_cash": 105.73829761597636,
+            "associate_profit": 16.85448,
+            "associate_cash": 7.2786384,
+            "finance_income": 8.42794901134541,
+            "dividend": 119.40871565707633,
+            "dividend_per_share": 5.39938454935838,
+            "pool_end": 423.4336199375159,
+            "implied_capex": 205.93856794402365
+          },
+          {
+            "year": 8,
+            "operating_profit": 125.21825021560001,
+            "operating_free_cash": 108.33964642396455,
+            "associate_profit": 17.1915696,
+            "associate_cash": 7.528209552000001,
+            "finance_income": 8.468672398750318,
+            "dividend": 120.70279377148027,
+            "dividend_per_share": 5.457899753530257,
+            "pool_end": 427.06735454075044,
+            "implied_capex": 206.45398779163548
+          },
+          {
+            "year": 9,
+            "operating_profit": 126.470432717756,
+            "operating_free_cash": 110.94099523195275,
+            "associate_profit": 17.535400992,
+            "associate_cash": 7.78485209472,
+            "finance_income": 8.541347090815009,
+            "dividend": 122.03774464045681,
+            "dividend_per_share": 5.51826312865276,
+            "pool_end": 432.2968043177814,
+            "implied_capex": 207.00057532580325
+          },
+          {
+            "year": 10,
+            "operating_profit": 127.73513704493357,
+            "operating_free_cash": 113.54234403994094,
+            "associate_profit": 17.88610901184,
+            "associate_cash": 8.048749055327999,
+            "finance_income": 8.645936086355627,
+            "dividend": 123.41374571450336,
+            "dividend_per_share": 5.580482698624889,
+            "pool_end": 439.12008778490264,
+            "implied_capex": 207.57864222339265
+          }
+        ],
+        "mature_cash": 113.54234403994094,
+        "stable_policy": {
+          "value": 1669.1167099034037,
+          "depletion_year": null,
+          "cash_coefficient": 0.19753086419753085
+        },
+        "year_6_distribution_per_share": 5.342709608705798,
+        "year_5_to_6_distribution_change": 0.010371378437862955
+      },
+      "terminal_present_value_fraction": 0.7126915566977595
+    },
+    "gradual_90": {
+      "current": 70.79220048092664,
+      "terminal": {
+        "total": 1715.140137647025,
+        "per_share": 77.55465007923773,
+        "policy": "gradual_90",
+        "transition_rows": [
+          {
+            "year": 6,
+            "operating_profit": 122.75095599999999,
+            "operating_free_cash": 103.13694880798818,
+            "associate_profit": 16.524,
+            "associate_cash": 7.035960000000001,
+            "finance_income": 8.41921327807335,
+            "dividend": 121.10921880802013,
+            "dividend_per_share": 5.476277348923443,
+            "pool_end": 418.443567181709,
+            "implied_capex": 205.45400719201183
+          },
+          {
+            "year": 7,
+            "operating_profit": 123.97846555999999,
+            "operating_free_cash": 105.73829761597636,
+            "associate_profit": 16.85448,
+            "associate_cash": 7.2786384,
+            "finance_income": 8.36887134363418,
+            "dividend": 125.32952619905268,
+            "dividend_per_share": 5.6671098387906405,
+            "pool_end": 414.4998483422669,
+            "implied_capex": 205.93856794402365
+          },
+          {
+            "year": 8,
+            "operating_profit": 125.21825021560001,
+            "operating_free_cash": 108.33964642396455,
+            "associate_profit": 17.1915696,
+            "associate_cash": 7.528209552000001,
+            "finance_income": 8.289996966845338,
+            "dividend": 129.601842432903,
+            "dividend_per_share": 5.860294047632412,
+            "pool_end": 409.05585885217374,
+            "implied_capex": 206.45398779163548
+          },
+          {
+            "year": 9,
+            "operating_profit": 126.470432717756,
+            "operating_free_cash": 110.94099523195275,
+            "associate_profit": 17.535400992,
+            "associate_cash": 7.78485209472,
+            "finance_income": 8.181117177043475,
+            "dividend": 133.92451678038356,
+            "dividend_per_share": 6.055755333312116,
+            "pool_end": 402.03830657550645,
+            "implied_capex": 207.00057532580325
+          },
+          {
+            "year": 10,
+            "operating_profit": 127.73513704493357,
+            "operating_free_cash": 113.54234403994094,
+            "associate_profit": 17.88610901184,
+            "associate_cash": 8.048749055327999,
+            "finance_income": 8.040766131510129,
+            "dividend": 138.29581096945535,
+            "dividend_per_share": 6.253415095208865,
+            "pool_end": 393.37435483283025,
+            "implied_capex": 207.57864222339265
+          }
+        ],
+        "mature_cash": 113.54234403994094,
+        "stable_policy": {
+          "value": 1814.8851964652893,
+          "depletion_year": 36,
+          "cash_coefficient": 0.21686746987951808
+        },
+        "year_6_distribution_per_share": 5.476277348923443,
+        "year_5_to_6_distribution_change": 0.03563066289880945
+      },
+      "terminal_present_value_fraction": 0.7285741188936423
+    },
+    "fast_release": {
+      "current": 74.54192899887238,
+      "terminal": {
+        "operation": 1442.139015862336,
+        "finance": 296.07756313803526,
+        "associate": 101.61581678460084,
+        "total": 1839.832395784972,
+        "per_share": 83.19294413767265,
+        "transition_cash": [
+          103.13694880798818,
+          105.73829761597636,
+          108.33964642396455,
+          110.94099523195275,
+          113.54234403994094
+        ],
+        "mature_cash": 113.54234403994094,
+        "transition_implied_capex": [
+          205.45400719201183,
+          205.93856794402365,
+          206.45398779163548,
+          207.00057532580325,
+          207.57864222339265
+        ],
+        "associate_implied_incremental_roe": 0.03636363636363636
+      },
+      "year_6_distribution_per_share": 6.948698642434684,
+      "year_5_to_6_distribution_change": 0.31408344078178874
+    }
+  },
+  "scenarios": {
+    "base": {
+      "current": 66.878770321344,
+      "terminal": {
+        "total": 1585.0039600645714,
+        "per_share": 71.67019463823645,
+        "policy": "ordinary_80",
+        "transition_rows": [
+          {
+            "year": 6,
+            "operating_profit": 122.75095599999999,
+            "operating_free_cash": 103.13694880798818,
+            "associate_profit": 16.524,
+            "associate_cash": 7.035960000000001,
+            "finance_income": 8.41921327807335,
+            "dividend": 118.15533542245868,
+            "dividend_per_share": 5.342709608705798,
+            "pool_end": 421.3974505672705,
+            "implied_capex": 205.45400719201183
+          },
+          {
+            "year": 7,
+            "operating_profit": 123.97846555999999,
+            "operating_free_cash": 105.73829761597636,
+            "associate_profit": 16.85448,
+            "associate_cash": 7.2786384,
+            "finance_income": 8.42794901134541,
+            "dividend": 119.40871565707633,
+            "dividend_per_share": 5.39938454935838,
+            "pool_end": 423.4336199375159,
+            "implied_capex": 205.93856794402365
+          },
+          {
+            "year": 8,
+            "operating_profit": 125.21825021560001,
+            "operating_free_cash": 108.33964642396455,
+            "associate_profit": 17.1915696,
+            "associate_cash": 7.528209552000001,
+            "finance_income": 8.468672398750318,
+            "dividend": 120.70279377148027,
+            "dividend_per_share": 5.457899753530257,
+            "pool_end": 427.06735454075044,
+            "implied_capex": 206.45398779163548
+          },
+          {
+            "year": 9,
+            "operating_profit": 126.470432717756,
+            "operating_free_cash": 110.94099523195275,
+            "associate_profit": 17.535400992,
+            "associate_cash": 7.78485209472,
+            "finance_income": 8.541347090815009,
+            "dividend": 122.03774464045681,
+            "dividend_per_share": 5.51826312865276,
+            "pool_end": 432.2968043177814,
+            "implied_capex": 207.00057532580325
+          },
+          {
+            "year": 10,
+            "operating_profit": 127.73513704493357,
+            "operating_free_cash": 113.54234403994094,
+            "associate_profit": 17.88610901184,
+            "associate_cash": 8.048749055327999,
+            "finance_income": 8.645936086355627,
+            "dividend": 123.41374571450336,
+            "dividend_per_share": 5.580482698624889,
+            "pool_end": 439.12008778490264,
+            "implied_capex": 207.57864222339265
+          }
+        ],
+        "mature_cash": 113.54234403994094,
+        "stable_policy": {
+          "value": 1669.1167099034037,
+          "depletion_year": null,
+          "cash_coefficient": 0.19753086419753085
+        },
+        "year_6_distribution_per_share": 5.342709608705798,
+        "year_5_to_6_distribution_change": 0.010371378437862955
+      },
+      "terminal_present_value_fraction": 0.7126915566977595
+    },
+    "cyclical": {
+      "current": 66.02642672586809,
+      "terminal": {
+        "total": 1580.9969722653505,
+        "per_share": 71.48900796443691,
+        "policy": "ordinary_80",
+        "transition_rows": [
+          {
+            "year": 6,
+            "operating_profit": 122.75095599999999,
+            "operating_free_cash": 103.13694880798818,
+            "associate_profit": 16.524,
+            "associate_cash": 7.035960000000001,
+            "finance_income": 8.013505763402234,
+            "dividend": 117.83076941072177,
+            "dividend_per_share": 5.3280334881280345,
+            "pool_end": 401.03093333078033,
+            "implied_capex": 205.45400719201183
+          },
+          {
+            "year": 7,
+            "operating_profit": 123.97846555999999,
+            "operating_free_cash": 105.73829761597636,
+            "associate_profit": 16.85448,
+            "associate_cash": 7.2786384,
+            "finance_income": 8.020618666615606,
+            "dividend": 119.08285138129247,
+            "dividend_per_share": 5.3846497242983045,
+            "pool_end": 402.98563663207983,
+            "implied_capex": 205.93856794402365
+          },
+          {
+            "year": 8,
+            "operating_profit": 125.21825021560001,
+            "operating_free_cash": 108.33964642396455,
+            "associate_profit": 17.1915696,
+            "associate_cash": 7.528209552000001,
+            "finance_income": 8.059712732641596,
+            "dividend": 120.37562603859328,
+            "dividend_per_share": 5.443105989169942,
+            "pool_end": 406.5375793020927,
+            "implied_capex": 206.45398779163548
+          },
+          {
+            "year": 9,
+            "operating_profit": 126.470432717756,
+            "operating_free_cash": 110.94099523195275,
+            "associate_profit": 17.535400992,
+            "associate_cash": 7.78485209472,
+            "finance_income": 8.130751586041853,
+            "dividend": 121.70926823663827,
+            "dividend_per_share": 5.503410189235004,
+            "pool_end": 411.68490997816906,
+            "implied_capex": 207.00057532580325
+          },
+          {
+            "year": 10,
+            "operating_profit": 127.73513704493357,
+            "operating_free_cash": 113.54234403994094,
+            "associate_profit": 17.88610901184,
+            "associate_cash": 8.048749055327999,
+            "finance_income": 8.233698199563381,
+            "dividend": 123.08395540506956,
+            "dividend_per_share": 5.565570347449462,
+            "pool_end": 418.4257458679318,
+            "implied_capex": 207.57864222339265
+          }
+        ],
+        "mature_cash": 113.54234403994094,
+        "stable_policy": {
+          "value": 1665.0289386605452,
+          "depletion_year": null,
+          "cash_coefficient": 0.19753086419753085
+        },
+        "year_6_distribution_per_share": 5.3280334881280345,
+        "year_5_to_6_distribution_change": 0.010389040143439443
+      },
+      "terminal_present_value_fraction": 0.7200667962779906
+    },
+    "structural": {
+      "current": 30.28546387677968,
+      "terminal": {
+        "total": 649.8925261005729,
+        "per_share": 29.386629316475453,
+        "policy": "ordinary_80",
+        "transition_rows": [
+          {
+            "year": 6,
+            "operating_profit": 83.6070664981784,
+            "operating_free_cash": 60.407066498178374,
+            "associate_profit": 13.838849999999999,
+            "associate_cash": 5.892616499999999,
+            "finance_income": 6.042337858078876,
+            "dividend": 62.09295261375436,
+            "dividend_per_share": 2.8076989784361617,
+            "pool_end": 413.071592114428,
+            "implied_capex": 224.2
+          },
+          {
+            "year": 7,
+            "operating_profit": 83.6070664981784,
+            "operating_free_cash": 66.20706649817838,
+            "associate_profit": 13.908044249999996,
+            "associate_cash": 6.006214664999998,
+            "finance_income": 6.196073881716419,
+            "dividend": 62.22671077793688,
+            "dividend_per_share": 2.8137472116916946,
+            "pool_end": 429.2542363813859,
+            "implied_capex": 218.39999999999998
+          },
+          {
+            "year": 8,
+            "operating_profit": 83.6070664981784,
+            "operating_free_cash": 72.00706649817839,
+            "associate_profit": 13.977584471249994,
+            "associate_cash": 6.1208014962374975,
+            "finance_income": 6.438813545720788,
+            "dividend": 62.41407870908951,
+            "dividend_per_share": 2.8222195539905273,
+            "pool_end": 451.40683921243306,
+            "implied_capex": 212.59999999999997
+          },
+          {
+            "year": 9,
+            "operating_profit": 83.6070664981784,
+            "operating_free_cash": 77.80706649817839,
+            "associate_profit": 14.047472393606244,
+            "associate_cash": 6.236384040420748,
+            "finance_income": 6.771102588186496,
+            "dividend": 62.65538488798268,
+            "dividend_per_share": 2.833130858469526,
+            "pool_end": 479.56600745123603,
+            "implied_capex": 206.79999999999998
+          },
+          {
+            "year": 10,
+            "operating_profit": 83.6070664981784,
+            "operating_free_cash": 83.6070664981784,
+            "associate_profit": 14.117709755574273,
+            "associate_cash": 6.352969390008423,
+            "finance_income": 7.19349011176854,
+            "dividend": 62.95095981931272,
+            "dividend_per_share": 2.8464960697827797,
+            "pool_end": 513.7685736318787,
+            "implied_capex": 200.99999999999997
+          }
+        ],
+        "mature_cash": 83.6070664981784,
+        "stable_policy": {
+          "value": 665.5314498089103,
+          "depletion_year": null,
+          "cash_coefficient": 0.09574468085106383
+        },
+        "year_6_distribution_per_share": 2.8076989784361617,
+        "year_5_to_6_distribution_change": 0.0012977205460422692
+      },
+      "terminal_present_value_fraction": 0.6024931574326974
+    },
+    "upside": {
+      "current": 87.55110938612529,
+      "terminal": {
+        "total": 2163.882264686024,
+        "per_share": 97.84572593620345,
+        "policy": "ordinary_80",
+        "transition_rows": [
+          {
+            "year": 6,
+            "operating_profit": 140.51030310958186,
+            "operating_free_cash": 106.75297111782605,
+            "associate_profit": 16.524,
+            "associate_cash": 7.035960000000001,
+            "finance_income": 7.485515431203374,
+            "dividend": 131.61585483262817,
+            "dividend_per_share": 5.951363006656492,
+            "pool_end": 363.9343632765699,
+            "implied_capex": 236.73733199175575
+          },
+          {
+            "year": 7,
+            "operating_profit": 143.3205091717735,
+            "operating_free_cash": 111.75074310861106,
+            "associate_profit": 16.85448,
+            "associate_cash": 7.2786384,
+            "finance_income": 7.278687265531398,
+            "dividend": 133.9629411498439,
+            "dividend_per_share": 6.0574927939793834,
+            "pool_end": 356.27949090086844,
+            "implied_capex": 238.60936606316238
+          },
+          {
+            "year": 8,
+            "operating_profit": 146.186919355209,
+            "operating_free_cash": 116.74851509939609,
+            "associate_profit": 17.1915696,
+            "associate_cash": 7.528209552000001,
+            "finance_income": 7.125589818017369,
+            "dividend": 136.4032630185811,
+            "dividend_per_share": 6.167838476210496,
+            "pool_end": 351.2785423517008,
+            "implied_capex": 240.6187962558129
+          },
+          {
+            "year": 9,
+            "operating_profit": 149.11065774231315,
+            "operating_free_cash": 121.74628709018111,
+            "associate_profit": 17.535400992,
+            "associate_cash": 7.78485209472,
+            "finance_income": 7.025570847034016,
+            "dividend": 138.93730366507774,
+            "dividend_per_share": 6.282421903717022,
+            "pool_end": 348.89794871855827,
+            "implied_capex": 242.76837049213202
+          },
+          {
+            "year": 10,
+            "operating_profit": 152.0928708971594,
+            "operating_free_cash": 126.74405908096614,
+            "associate_profit": 17.88610901184,
+            "associate_cash": 8.048749055327999,
+            "finance_income": 6.977958974371165,
+            "dividend": 141.56555110669646,
+            "dividend_per_share": 6.401265143509677,
+            "pool_end": 349.10316472252714,
+            "implied_capex": 245.06089165299326
+          }
+        ],
+        "mature_cash": 126.74405908096615,
+        "stable_policy": {
+          "value": 2380.9177193603864,
+          "depletion_year": 109,
+          "cash_coefficient": 0.2105263157894737
+        },
+        "year_6_distribution_per_share": 5.951363006656492,
+        "year_5_to_6_distribution_change": 0.017426582430309034
+      },
+      "terminal_present_value_fraction": 0.7606089453425358
+    }
+  },
+  "sensitivities": {
+    "annual_capex_plus_10": 66.42578592015732,
+    "annual_capex_minus_10": 67.33175472253066,
+    "annual_capex_plus_10_permanent": 65.74367799792779,
+    "upstream_delay_30pct_first_dividend": 3.5020662238282028
+  },
+  "projections": {
+    "base": {
+      "scenario": "base",
+      "shares": 22.115245648,
+      "option_proceeds": 18.44363392718808,
+      "rows": [
+        {
+          "revenue": [
+            685,
+            125,
+            102,
+            170
+          ],
+          "margin": [
+            0.18,
+            0.08,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 200,
+          "rou_depreciation": 35,
+          "capex": 200,
+          "lease_principal": 31,
+          "working_cash": 8,
+          "associate_profit": 15,
+          "associate_dividend": 6,
+          "payout": 0.78,
+          "year": 1,
+          "ebit": 137.48,
+          "operating_profit_common": 105.6092,
+          "free_cash": 66.60919999999999,
+          "financial_income": 10.02179830789207,
+          "common_profit": 130.63099830789207,
+          "dividend": 101.89217868015582,
+          "dividend_per_share": 4.60732746549304,
+          "pool_end": 481.8287350223397,
+          "parent_declared_income": 111.07007830789208,
+          "parent_received": 111.07007830789208,
+          "parent_receivable": 0.0,
+          "parent_cash": 8.877899627736255,
+          "parent_reserves": 8.877899627736255,
+          "common_equity": 1443.45673502234,
+          "operating_capital": 743
+        },
+        {
+          "revenue": [
+            685,
+            148,
+            107,
+            175
+          ],
+          "margin": [
+            0.18,
+            0.08,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 208,
+          "rou_depreciation": 36,
+          "capex": 212,
+          "lease_principal": 32,
+          "working_cash": 9,
+          "associate_profit": 15.3,
+          "associate_dividend": 6.2,
+          "payout": 0.78,
+          "year": 2,
+          "ebit": 139.73,
+          "operating_profit_common": 107.38669999999999,
+          "free_cash": 62.38670000000002,
+          "financial_income": 9.636574700446793,
+          "common_profit": 132.3232747004468,
+          "dividend": 103.2121542663485,
+          "dividend_per_share": 4.667013693138992,
+          "pool_end": 456.83985545643804,
+          "parent_declared_income": 112.48460470044678,
+          "parent_received": 112.48460470044678,
+          "parent_receivable": 0.0,
+          "parent_cash": 17.850350061834533,
+          "parent_reserves": 17.850350061834533,
+          "common_equity": 1472.567855456438,
+          "operating_capital": 792
+        },
+        {
+          "revenue": [
+            690,
+            174,
+            113,
+            180
+          ],
+          "margin": [
+            0.18,
+            0.09,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 216,
+          "rou_depreciation": 37,
+          "capex": 215,
+          "lease_principal": 33,
+          "working_cash": 10,
+          "associate_profit": 15.6,
+          "associate_dividend": 6.4,
+          "payout": 0.79,
+          "year": 3,
+          "ebit": 144.92999999999998,
+          "operating_profit_common": 111.4947,
+          "free_cash": 69.49469999999997,
+          "financial_income": 9.13679710912876,
+          "common_profit": 136.23149710912875,
+          "dividend": 107.62288271621172,
+          "dividend_per_share": 4.866456580641447,
+          "pool_end": 434.24846984935505,
+          "parent_declared_income": 115.88202710912877,
+          "parent_received": 115.88202710912877,
+          "parent_receivable": 0.0,
+          "parent_cash": 25.809494454751587,
+          "parent_reserves": 25.809494454751587,
+          "common_equity": 1501.176469849355,
+          "operating_capital": 838
+        },
+        {
+          "revenue": [
+            697,
+            200,
+            119,
+            185
+          ],
+          "margin": [
+            0.18,
+            0.1,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 222,
+          "rou_depreciation": 38,
+          "capex": 210,
+          "lease_principal": 34,
+          "working_cash": 9,
+          "associate_profit": 15.9,
+          "associate_dividend": 6.6,
+          "payout": 0.8,
+          "year": 4,
+          "ebit": 151.01,
+          "operating_profit_common": 116.2979,
+          "free_cash": 85.29790000000003,
+          "financial_income": 8.684969396987102,
+          "common_profit": 140.8828693969871,
+          "dividend": 112.7062955175897,
+          "dividend_per_share": 5.096316690824654,
+          "pool_end": 422.1250437287525,
+          "parent_declared_income": 119.95307939698709,
+          "parent_received": 119.95307939698709,
+          "parent_receivable": 0.0,
+          "parent_cash": 32.75627833414899,
+          "parent_reserves": 32.75627833414899,
+          "common_equity": 1529.3530437287525,
+          "operating_capital": 873
+        },
+        {
+          "revenue": [
+            705,
+            224,
+            126,
+            190
+          ],
+          "margin": [
+            0.18,
+            0.11,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 226,
+          "rou_depreciation": 39,
+          "capex": 205,
+          "lease_principal": 34,
+          "working_cash": 8,
+          "associate_profit": 16.2,
+          "associate_dividend": 6.8,
+          "payout": 0.8,
+          "year": 5,
+          "ebit": 157.64,
+          "operating_profit_common": 121.53559999999999,
+          "free_cash": 100.53559999999999,
+          "financial_income": 8.44250087457505,
+          "common_profit": 146.17810087457502,
+          "dividend": 116.94248069966002,
+          "dividend_per_share": 5.287867137493712,
+          "pool_end": 420.9606639036675,
+          "parent_declared_income": 124.62454087457503,
+          "parent_received": 124.62454087457503,
+          "parent_receivable": 0.0,
+          "parent_cash": 40.138338509064,
+          "parent_reserves": 40.138338509064,
+          "common_equity": 1558.5886639036676,
+          "operating_capital": 899
+        }
+      ]
+    },
+    "cyclical": {
+      "scenario": "cyclical",
+      "shares": 22.115245648,
+      "option_proceeds": 18.44363392718808,
+      "rows": [
+        {
+          "revenue": [
+            685,
+            100.0,
+            102,
+            170
+          ],
+          "margin": [
+            0.18,
+            0.055,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 200,
+          "rou_depreciation": 35,
+          "capex": 200,
+          "lease_principal": 31,
+          "working_cash": 28,
+          "associate_profit": 15,
+          "associate_dividend": 6,
+          "payout": 0.75,
+          "year": 1,
+          "ebit": 132.98,
+          "operating_profit_common": 102.0542,
+          "free_cash": 43.05419999999998,
+          "financial_income": 10.02179830789207,
+          "common_profit": 127.07599830789206,
+          "dividend": 91.38999156170826,
+          "dividend_per_share": 4.13244297695482,
+          "pool_end": 468.7759221407872,
+          "parent_declared_income": 107.87057830789206,
+          "parent_received": 91.68999156170825,
+          "parent_receivable": 16.18058674618381,
+          "parent_cash": 0.0,
+          "parent_reserves": 16.180586746183806,
+          "common_equity": 1450.4039221407875,
+          "operating_capital": 763
+        },
+        {
+          "revenue": [
+            685,
+            133.20000000000002,
+            107,
+            175
+          ],
+          "margin": [
+            0.18,
+            0.055,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 208,
+          "rou_depreciation": 36,
+          "capex": 212,
+          "lease_principal": 32,
+          "working_cash": 19,
+          "associate_profit": 15.3,
+          "associate_dividend": 6.2,
+          "payout": 0.75,
+          "year": 2,
+          "ebit": 135.216,
+          "operating_profit_common": 103.82064000000001,
+          "free_cash": 48.820640000000026,
+          "financial_income": 9.375518442815745,
+          "common_profit": 128.49615844281576,
+          "dividend": 96.37211883211182,
+          "dividend_per_share": 4.3577231908716,
+          "pool_end": 436.7999617514912,
+          "parent_declared_income": 109.01409444281576,
+          "parent_received": 125.19468118899957,
+          "parent_receivable": 0.0,
+          "parent_cash": 28.522562356887747,
+          "parent_reserves": 28.522562356887747,
+          "common_equity": 1482.5279617514914,
+          "operating_capital": 822
+        },
+        {
+          "revenue": [
+            690,
+            174,
+            113,
+            180
+          ],
+          "margin": [
+            0.18,
+            0.09,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 216,
+          "rou_depreciation": 37,
+          "capex": 215,
+          "lease_principal": 33,
+          "working_cash": 10,
+          "associate_profit": 15.6,
+          "associate_dividend": 6.4,
+          "payout": 0.79,
+          "year": 3,
+          "ebit": 144.92999999999998,
+          "operating_profit_common": 111.4947,
+          "free_cash": 69.49469999999997,
+          "financial_income": 8.735999235029825,
+          "common_profit": 135.8306992350298,
+          "dividend": 107.30625239567355,
+          "dividend_per_share": 4.852139293572705,
+          "pool_end": 414.1244085908474,
+          "parent_declared_income": 115.48122923502983,
+          "parent_received": 115.48122923502983,
+          "parent_receivable": 0.0,
+          "parent_cash": 36.397539196244026,
+          "parent_reserves": 36.397539196244026,
+          "common_equity": 1511.0524085908476,
+          "operating_capital": 868
+        },
+        {
+          "revenue": [
+            697,
+            200,
+            119,
+            185
+          ],
+          "margin": [
+            0.18,
+            0.1,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 222,
+          "rou_depreciation": 38,
+          "capex": 210,
+          "lease_principal": 34,
+          "working_cash": 9,
+          "associate_profit": 15.9,
+          "associate_dividend": 6.6,
+          "payout": 0.8,
+          "year": 4,
+          "ebit": 151.01,
+          "operating_profit_common": 116.2979,
+          "free_cash": 85.29790000000003,
+          "financial_income": 8.282488171816947,
+          "common_profit": 140.48038817181694,
+          "dividend": 112.38431053745356,
+          "dividend_per_share": 5.0817572784961165,
+          "pool_end": 401.9204862252109,
+          "parent_declared_income": 119.55059817181694,
+          "parent_received": 119.55059817181694,
+          "parent_receivable": 0.0,
+          "parent_cash": 43.263826830607414,
+          "parent_reserves": 43.263826830607414,
+          "common_equity": 1539.148486225211,
+          "operating_capital": 903
+        },
+        {
+          "revenue": [
+            705,
+            224,
+            126,
+            190
+          ],
+          "margin": [
+            0.18,
+            0.11,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 226,
+          "rou_depreciation": 39,
+          "capex": 205,
+          "lease_principal": 34,
+          "working_cash": 8,
+          "associate_profit": 16.2,
+          "associate_dividend": 6.8,
+          "payout": 0.8,
+          "year": 5,
+          "ebit": 157.64,
+          "operating_profit_common": 121.53559999999999,
+          "free_cash": 100.53559999999999,
+          "financial_income": 8.038409724504218,
+          "common_profit": 145.7740097245042,
+          "dividend": 116.61920777960336,
+          "dividend_per_share": 5.27324948751586,
+          "pool_end": 400.6752881701117,
+          "parent_declared_income": 124.2204497245042,
+          "parent_received": 124.2204497245042,
+          "parent_receivable": 0.0,
+          "parent_cash": 50.565068775508266,
+          "parent_reserves": 50.565068775508266,
+          "common_equity": 1568.3032881701117,
+          "operating_capital": 929
+        }
+      ]
+    },
+    "structural": {
+      "scenario": "structural",
+      "shares": 22.115245648,
+      "option_proceeds": 18.44363392718808,
+      "rows": [
+        {
+          "revenue": [
+            664.4499999999999,
+            106.25,
+            102,
+            170
+          ],
+          "margin": [
+            0.16,
+            0.035,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 205,
+          "rou_depreciation": 35,
+          "capex": 215,
+          "lease_principal": 33,
+          "working_cash": 18,
+          "associate_profit": 12.75,
+          "associate_dividend": 5.1,
+          "payout": 0.75,
+          "year": 1,
+          "ebit": 114.21075,
+          "operating_profit_common": 87.2264925,
+          "free_cash": 26.226492500000006,
+          "financial_income": 7.516348730919052,
+          "common_profit": 107.49284123091905,
+          "dividend": 80.61963092318929,
+          "dividend_per_share": 3.6454323052242543,
+          "pool_end": 459.31312570233337,
+          "parent_declared_income": 91.12019198091905,
+          "parent_received": 91.12019198091905,
+          "parent_receivable": 0.0,
+          "parent_cash": 10.200561057729757,
+          "parent_reserves": 10.200561057729757,
+          "common_equity": 1441.5911257023333,
+          "operating_capital": 763
+        },
+        {
+          "revenue": [
+            644.5165,
+            125.8,
+            107,
+            175
+          ],
+          "margin": [
+            0.16,
+            0.035,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 220,
+          "rou_depreciation": 36,
+          "capex": 225,
+          "lease_principal": 35,
+          "working_cash": 18,
+          "associate_profit": 13.005,
+          "associate_dividend": 5.27,
+          "payout": 0.7,
+          "year": 2,
+          "ebit": 112.11563999999998,
+          "operating_profit_common": 85.57135559999999,
+          "free_cash": 27.571355600000004,
+          "financial_income": 6.889696885535,
+          "common_profit": 105.46605248553499,
+          "dividend": 73.82623673987449,
+          "dividend_per_share": 3.3382508119031904,
+          "pool_end": 425.21794144799384,
+          "parent_declared_income": 89.173916925535,
+          "parent_received": 89.173916925535,
+          "parent_receivable": 0.0,
+          "parent_cash": 25.248241243390268,
+          "parent_reserves": 25.248241243390268,
+          "common_equity": 1473.230941447994,
+          "operating_capital": 822
+        },
+        {
+          "revenue": [
+            629.74437,
+            147.9,
+            113,
+            180
+          ],
+          "margin": [
+            0.16,
+            0.035,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 235,
+          "rou_depreciation": 37,
+          "capex": 230,
+          "lease_principal": 37,
+          "working_cash": 18,
+          "associate_profit": 13.26,
+          "associate_dividend": 5.44,
+          "payout": 0.65,
+          "year": 3,
+          "ebit": 111.0055992,
+          "operating_profit_common": 84.694423368,
+          "free_cash": 34.694423368,
+          "financial_income": 6.3782691217199075,
+          "common_profit": 104.33269248971992,
+          "dividend": 67.81625011831795,
+          "dividend_per_share": 3.066493187447409,
+          "pool_end": 403.91438381939577,
+          "parent_declared_income": 88.04325015291991,
+          "parent_received": 88.04325015291991,
+          "parent_receivable": 0.0,
+          "parent_cash": 45.17524127799223,
+          "parent_reserves": 45.17524127799223,
+          "common_equity": 1509.747383819396,
+          "operating_capital": 872
+        },
+        {
+          "revenue": [
+            617.04908857,
+            170.0,
+            119,
+            185
+          ],
+          "margin": [
+            0.16,
+            0.035,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 248,
+          "rou_depreciation": 38,
+          "capex": 230,
+          "lease_principal": 39,
+          "working_cash": 18,
+          "associate_profit": 13.515,
+          "associate_dividend": 5.609999999999999,
+          "payout": 0.6,
+          "year": 4,
+          "ebit": 110.2278541712,
+          "operating_profit_common": 84.080004795248,
+          "free_cash": 45.08000479524799,
+          "financial_income": 6.058715757290936,
+          "common_profit": 103.65372055253894,
+          "dividend": 62.192232331523364,
+          "dividend_per_share": 2.812188176492073,
+          "pool_end": 398.47087204041134,
+          "parent_declared_income": 87.34072007301414,
+          "parent_received": 87.34072007301414,
+          "parent_receivable": 0.0,
+          "parent_cash": 70.023729019483,
+          "parent_reserves": 70.023729019483,
+          "common_equity": 1551.2088720404115,
+          "operating_capital": 910
+        },
+        {
+          "revenue": [
+            605.4074881184999,
+            190.4,
+            126,
+            190
+          ],
+          "margin": [
+            0.16,
+            0.035,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 260,
+          "rou_depreciation": 39,
+          "capex": 230,
+          "lease_principal": 41,
+          "working_cash": 18,
+          "associate_profit": 13.77,
+          "associate_dividend": 5.779999999999999,
+          "payout": 0.6,
+          "year": 5,
+          "ebit": 109.62919809895999,
+          "operating_profit_common": 83.6070664981784,
+          "free_cash": 54.60706649817837,
+          "financial_income": 5.97706308060617,
+          "common_profit": 103.35412957878457,
+          "dividend": 62.01247774727074,
+          "dividend_per_share": 2.8040600920423806,
+          "pool_end": 402.8225238719251,
+          "parent_declared_income": 87.00342292896673,
+          "parent_received": 87.00342292896673,
+          "parent_receivable": 0.0,
+          "parent_cash": 94.714674201179,
+          "parent_reserves": 94.714674201179,
+          "common_equity": 1592.5505238719254,
+          "operating_capital": 937
+        }
+      ]
+    },
+    "upside": {
+      "scenario": "upside",
+      "shares": 22.115245648,
+      "option_proceeds": 18.44363392718808,
+      "rows": [
+        {
+          "revenue": [
+            688.425,
+            132.5,
+            102,
+            170
+          ],
+          "margin": [
+            0.18,
+            0.1,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 200,
+          "rou_depreciation": 35,
+          "capex": 205,
+          "lease_principal": 31,
+          "working_cash": 8,
+          "associate_profit": 15,
+          "associate_dividend": 6,
+          "payout": 0.8,
+          "year": 1,
+          "ebit": 141.3465,
+          "operating_profit_common": 108.663735,
+          "free_cash": 64.66373499999997,
+          "financial_income": 10.02179830789207,
+          "common_profit": 133.68553330789206,
+          "dividend": 106.94842664631365,
+          "dividend_per_share": 4.835959244973866,
+          "pool_end": 474.8270220561819,
+          "parent_declared_income": 113.81915980789208,
+          "parent_received": 113.81915980789208,
+          "parent_receivable": 0.0,
+          "parent_cash": 6.570733161578431,
+          "parent_reserves": 6.570733161578431,
+          "common_equity": 1441.4550220561819,
+          "operating_capital": 748
+        },
+        {
+          "revenue": [
+            691.8671249999998,
+            166.29280000000003,
+            107,
+            175
+          ],
+          "margin": [
+            0.18,
+            0.11,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 211,
+          "rou_depreciation": 36,
+          "capex": 220,
+          "lease_principal": 32,
+          "working_cash": 9,
+          "associate_profit": 15.3,
+          "associate_dividend": 6.2,
+          "payout": 0.8,
+          "year": 2,
+          "ebit": 147.41829049999996,
+          "operating_profit_common": 113.46044949499996,
+          "free_cash": 63.46044949499998,
+          "financial_income": 9.496540441123638,
+          "common_profit": 138.2569899361236,
+          "dividend": 110.60559194889889,
+          "dividend_per_share": 5.001327758658722,
+          "pool_end": 443.37842004340666,
+          "parent_declared_income": 117.81094498662361,
+          "parent_received": 117.81094498662361,
+          "parent_receivable": 0.0,
+          "parent_cash": 13.476086199303154,
+          "parent_reserves": 13.476086199303154,
+          "common_equity": 1469.1064200434066,
+          "operating_capital": 802
+        },
+        {
+          "revenue": [
+            700.4018362499997,
+            207.236784,
+            113,
+            180
+          ],
+          "margin": [
+            0.18,
+            0.12,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 223,
+          "rou_depreciation": 37,
+          "capex": 230,
+          "lease_principal": 33,
+          "working_cash": 11,
+          "associate_profit": 15.6,
+          "associate_dividend": 6.4,
+          "payout": 0.8,
+          "year": 3,
+          "ebit": 156.01074460499996,
+          "operating_profit_common": 120.24848823794997,
+          "free_cash": 69.24848823794997,
+          "financial_income": 8.867568400868134,
+          "common_profit": 144.7160566388181,
+          "dividend": 115.77284531105448,
+          "dividend_per_share": 5.234978944107928,
+          "pool_end": 412.1216313711703,
+          "parent_declared_income": 123.49120781502312,
+          "parent_received": 123.49120781502312,
+          "parent_receivable": 0.0,
+          "parent_cash": 20.89444870327179,
+          "parent_reserves": 20.89444870327179,
+          "common_equity": 1498.04963137117,
+          "operating_capital": 857
+        },
+        {
+          "revenue": [
+            711.0448989356247,
+            252.49539200000007,
+            119,
+            185
+          ],
+          "margin": [
+            0.18,
+            0.13,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 235,
+          "rou_depreciation": 38,
+          "capex": 235,
+          "lease_principal": 34,
+          "working_cash": 12,
+          "associate_profit": 15.9,
+          "associate_dividend": 6.6,
+          "payout": 0.8,
+          "year": 4,
+          "ebit": 166.36248276841246,
+          "operating_profit_common": 128.42636138704586,
+          "free_cash": 82.42636138704586,
+          "financial_income": 8.242432627423407,
+          "common_profit": 152.56879401446926,
+          "dividend": 122.05503521157542,
+          "dividend_per_share": 5.519044968085783,
+          "pool_end": 387.3353901740642,
+          "parent_declared_income": 130.4261578757647,
+          "parent_received": 130.4261578757647,
+          "parent_receivable": 0.0,
+          "parent_cash": 28.965571367461052,
+          "parent_reserves": 28.965571367461052,
+          "common_equity": 1528.563390174064,
+          "operating_capital": 907
+        },
+        {
+          "revenue": [
+            722.8021334553276,
+            299.7625293824001,
+            126,
+            190
+          ],
+          "margin": [
+            0.18,
+            0.14,
+            0.07,
+            0.012
+          ],
+          "central_cost": 5,
+          "tax": 0.21,
+          "lease_interest": 2.8,
+          "minority_profit": 0.2,
+          "depreciation": 246,
+          "rou_depreciation": 39,
+          "capex": 235,
+          "lease_principal": 34,
+          "working_cash": 13,
+          "associate_profit": 16.2,
+          "associate_dividend": 6.8,
+          "payout": 0.8,
+          "year": 5,
+          "ebit": 178.17113813549497,
+          "operating_profit_common": 137.75519912704104,
+          "free_cash": 101.75519912704101,
+          "financial_income": 7.746707803481284,
+          "common_profit": 161.7019069305223,
+          "dividend": 129.36152554441784,
+          "dividend_per_share": 5.849427476566,
+          "pool_end": 374.27577156016866,
+          "parent_declared_income": 138.52638701781822,
+          "parent_received": 138.52638701781822,
+          "parent_receivable": 0.0,
+          "parent_cash": 37.83043284086142,
+          "parent_reserves": 37.83043284086142,
+          "common_equity": 1560.9037715601685,
+          "operating_capital": 948
+        }
+      ]
+    }
+  },
+  "math_checks": "operating cash, timing and financial principal known-case tests passed"
 }
