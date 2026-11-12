@@ -110,6 +110,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--disclosures", help="已披露财报清单JSON；按目标周期选择有资料的公司"
     )
     enqueue_period.add_argument("--period", required=True, help="YYYY-FY/Q1/H1/Q3")
+    enqueue_period.add_argument("--tier", choices=TIERS, help="只安排指定质量层，省略时安排全池")
     _add_at(enqueue_period)
     enqueue_period.set_defaults(handler=_research_enqueue_period)
     enqueue_latest = research_commands.add_parser(
@@ -415,9 +416,10 @@ def _research_enqueue_period(args: argparse.Namespace, stdin: TextIO) -> dict[st
     if args.disclosures:
         return _schedule_disclosures(args, args.disclosures, apply=True, period=args.period)
     pool = _quality_pool(args).read()
+    companies = [c for c in pool.companies if args.tier is None or c.tier == args.tier]
     flow = _flow(args)
     flow.register_universe(
-        [CompanyRef(symbol=company.symbol, name=company.name) for company in pool.companies],
+        [CompanyRef(symbol=company.symbol, name=company.name) for company in companies],
         at=args.at,
     )
     update = flow.enqueue_research(
@@ -427,7 +429,7 @@ def _research_enqueue_period(args: argparse.Namespace, stdin: TextIO) -> dict[st
                 name=company.name,
                 reason=f"完成 {args.period} 财报周期完整研究",
             )
-            for company in pool.companies
+            for company in companies
         ],
         report_period=args.period,
         trigger_kind=PERIODIC_TRIGGER,
@@ -447,12 +449,18 @@ def _schedule_disclosures(args, source, *, apply=False, period=None, stdin=None)
     records = payload.get("disclosures", []) if isinstance(payload, dict) else payload
     pool = _quality_pool(args).read()
     members = {c.symbol: c for c in pool.companies}
+    tier = getattr(args, "tier", None)
+    selected = {
+        symbol for symbol, company in members.items() if tier is None or company.tier == tier
+    }
     now = _timestamp(args.at)
     latest = {}
     for record in records:
         symbol = record["symbol"]
         if symbol not in members:
             raise ResearchFlowError(f"披露不属于目标市场质量池: {symbol}")
+        if symbol not in selected:
+            continue
         basis = _financial_basis(record["financial_basis"], cutoff=now)
         if basis is None:
             raise ResearchFlowError("披露依据不能为空")
@@ -479,7 +487,7 @@ def _schedule_disclosures(args, source, *, apply=False, period=None, stdin=None)
     result = {
         "market": args.research_market,
         "plan": plan,
-        "missing_disclosures": sorted(members.keys() - latest.keys()),
+        "missing_disclosures": sorted(selected - latest.keys()),
         "applied": apply,
     }
     if apply:

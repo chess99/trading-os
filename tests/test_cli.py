@@ -207,3 +207,58 @@ def test_latest_disclosure_preview_respects_fiscal_end_without_writing_tasks(tmp
     assert applied["enqueued"][0]["financial_basis"]["period_end"] == "2026-06-30"
     repeated = _call(tmp_path, capsys, *args, "--apply")
     assert repeated["skipped"] == ["US:MSFT"]
+
+
+@pytest.mark.parametrize("with_disclosures", [False, True])
+@pytest.mark.parametrize(
+    ("tier", "expected"),
+    [
+        (None, {"CN:600519", "CN:600900"}),
+        ("core_moat", {"CN:600519"}),
+        ("quality_research", {"CN:600900"}),
+    ],
+)
+def test_period_schedule_filters_current_pool_tier(
+    tmp_path, capsys, with_disclosures, tier, expected
+):
+    from test_screening_pool import _pool_payload, _prepare_methodology
+
+    from trading_os.screening_pool import QualityPoolStore
+
+    _prepare_methodology(tmp_path)
+    store = QualityPoolStore(tmp_path)
+    store.replace(_pool_payload())
+    pool_before = (tmp_path / "screening/cn-a/value-quality/pool.json").read_bytes()
+    args = ["research", "enqueue-period", "--period", "2026-Q3"]
+    if tier:
+        args.extend(["--tier", tier])
+    if with_disclosures:
+        source = tmp_path / "disclosures.json"
+        source.write_text(json.dumps({
+            "disclosures": [
+                {
+                    "symbol": symbol,
+                    "report_period": "2026-Q3",
+                    "financial_basis": {
+                        "period_end": "2026-09-30",
+                        "published_on": "2026-10-30",
+                        "source_url": "https://example.com/quarterly",
+                    },
+                }
+                for symbol in ["CN:600519", "CN:600900"]
+            ],
+        }))
+        args.extend(["--disclosures", str(source)])
+    args.extend(["--at", "2026-11-12T20:00:00+08:00"])
+    result = _call(tmp_path, capsys, *args)
+    assert {task["symbol"] for task in result["enqueued"]} == expected
+    if with_disclosures:
+        assert result["missing_disclosures"] == []
+    assert (tmp_path / "screening/cn-a/value-quality/pool.json").read_bytes() == pool_before
+    if with_disclosures:
+        repeated = _call(tmp_path, capsys, *args)
+        assert repeated["enqueued"] == []
+    else:
+        assert main(["--root", str(tmp_path), *args]) == 1
+        assert "active task" in capsys.readouterr().err
+    assert ResearchFlow(tmp_path).status().queued == len(expected)
