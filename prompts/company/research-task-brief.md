@@ -1,6 +1,6 @@
 # 单公司研究任务简报
 
-本文件供协调器派发研究任务使用。公司研究与验收要求以[主规范](standard-deep-research.md)及[核验附录](research-verification.md)为准；文件范围与大小预算以[交付规范](../../docs/research-artifacts.md)为准。
+本文件供协调器派发研究任务使用。公司研究与验收要求以[主规范](standard-deep-research.md)及[核验附录](research-verification.md)为准，写作时直接遵守[写作规范](../research-writing.md)；文件范围与大小预算以[交付规范](../../docs/research-artifacts.md)为准。
 
 ## 上下文与职责
 
@@ -23,7 +23,8 @@
 
 先读 AGENTS.md、playbooks/simple-research.md、
 prompts/company/standard-deep-research.md、
-prompts/company/research-verification.md 和 research/standards/README.md。
+prompts/company/research-verification.md、prompts/research-writing.md
+和 research/standards/README.md。
 
 独立调查决定长期价值的少数问题，形成明确的经营判断；
 用财务、必要资本和普通股现金检验，再写成独立读者可直接阅读的报告。
@@ -40,13 +41,15 @@ prompts/company/research-verification.md 和 research/standards/README.md。
 重大情景注明生效期、主体和改变/冻结输入，
 按核验附录检查付款约束与终值联动，并用正式计算链运行可手算特例。
 按协调反馈修订时返回完整候选。
+正文及摘要、核心逻辑、风险和模型说明直接按写作规范成稿，
+判断清楚、限定集中，事实、预测条件与模型含义准确。
 正式正文只保留理解公司、价值和风险所需的内容；
 任务、对话、执行与验收说明留在工作底稿。
 ```
 
 ## 协调复核与完成
 
-协调器按核验附录完成长期判断、证据约束、模型传导、持有与改判、独立读者五项验收。先查决定结论的弱环节，再处理编辑问题；算术正确不补足经营证据，语言明确也不能掩盖缺口。
+协调器按核验附录完成长期判断、证据约束、模型传导、持有与改判、独立读者五项验收，在原有报告阅读中一并检查表达。先查决定结论的弱环节；表达有问题时指出原句和需保留的信息。算术正确不补足经营证据，语言明确也不能掩盖缺口。
 
 返工只针对可定位的问题及通过条件，不要求提高或降低估值。必要时回到原证或更换方法；决定性未知无法合理约束时，可接受有充分解释的空值结论。候选通过后才调用 `research complete`，由唯一入口写入周期报告和结构化状态。
 

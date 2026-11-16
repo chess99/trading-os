@@ -18,7 +18,7 @@
 
 ## 研究判断与表达
 
-单公司研究与验收须完整阅读 [统一深研提示词](prompts/company/standard-deep-research.md) 和其 [核验附录](prompts/company/research-verification.md)。价值概念的唯一解释源是主提示词的 [价值定义](prompts/company/standard-deep-research.md#价值定义)；其他文件只引用，不建立第二套估值含义。
+单公司研究与验收须完整阅读 [统一深研提示词](prompts/company/standard-deep-research.md)、[核验附录](prompts/company/research-verification.md)和[研究报告写作与编辑](prompts/research-writing.md)。价值概念的唯一解释源是主提示词的 [价值定义](prompts/company/standard-deep-research.md#价值定义)；其他文件只引用，不建立第二套估值含义。
 
 先形成长期商业判断，再用财务、资本和权益模型检验。允许有依据的未来预测进入核心路径，并说明关键判断如何改变模型；未来未兑现本身不是排除理由。正文结论先行、围绕决定性问题展开，不固定 16 章；保留程序所需标题与结构化合同。核验充分不等于正文堆满核验过程，语言明确也不等于事实或预测确定。
 
@@ -72,7 +72,7 @@
 1. `playbooks/simple-research.md`
 2. `prompts/goals/cn-all-a-continuous-research.md`
 
-单公司研究及其验收另须完整阅读主提示词与核验附录；价值质量池任务另读 `prompts/screening/cn-a-value-quality.md`。
+单公司研究及其验收另须完整阅读主提示词、核验附录与写作编辑规范；价值质量池任务另读 `prompts/screening/cn-a-value-quality.md`。
 
 常用命令见 `README.md`。
 
@@ -95,6 +95,8 @@
 界面围绕研究者的浏览、比较、检索和阅读任务设计。优先呈现判断、关键问题及必要证据；执行计划、对话约定、模型身份和交付汇报留在对话，不写入产品内容。资料时点和重要口径限制以靠近相关信息的简洁说明呈现。
 
 面向读者的文档直接解释用途、事实与判断。避免无必要的“不是……而是……”及预设读者错误观点的反驳句。工程文档保留真实需要的接口、维护与验证说明，不用任务复述填充正文。
+
+公司、行业和宏观报告写作时直接遵守[写作规范](prompts/research-writing.md)，明确陈述判断，集中说明必要限定，准确保留事实、预测条件与模型含义。协调器在原有审核中一并检查表达。
 
 ## 跨市场研究
 
