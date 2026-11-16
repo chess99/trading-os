@@ -1,6 +1,7 @@
 import { readFile, realpath } from "node:fs/promises";
 import { resolve } from "node:path";
 import { loadIndustryIndicators } from "./industry-indicators.mjs";
+import { loadIndustryCatalog } from "./industry-catalog.mjs";
 
 function validDate(value) {
   return typeof value === "string" && /^20\d{2}-\d{2}-\d{2}$/u.test(value)
@@ -14,12 +15,15 @@ export async function loadPublications(root) {
   try { manifest = JSON.parse(await readFile(resolve(root, "research/publications.json"), "utf8")); }
   catch (error) { if (error.code === "ENOENT") return []; throw error; }
   if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.documents)) throw new Error("研究发布目录格式错误");
+  const industryCatalog = await loadIndustryCatalog(root);
   const ids = new Set(), paths = new Set(), versions = new Set(), topics = new Map();
   const documents = [];
   for (const entry of manifest.documents) {
     if (!entry || !["industry", "macro"].includes(entry.kind) || !["report", "reference"].includes(entry.type)
       || ![entry.id, entry.topic].every((s) => typeof s === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(s))
       || !["published", "withdrawn"].includes(entry.status) || !validDate(entry.publishedOn) || !nonblank(entry.summary)) throw new Error("研究发布条目字段错误");
+    if (entry.regionId != null && (entry.regionId !== "cn" || entry.kind !== "industry" || entry.type !== "report"
+      || !industryCatalog?.topics.some((topic) => topic.id === entry.topic))) throw new Error("中国行业报告必须属于行业目录中的主题");
     if (!Array.isArray(entry.markets) || !entry.markets.length || new Set(entry.markets).size !== entry.markets.length
       || entry.markets.some((m) => !["CN", "HK", "US"].includes(m))
       || !Array.isArray(entry.regions) || !entry.regions.length || !entry.regions.every(nonblank)) throw new Error("研究市场或地域范围错误");
@@ -45,7 +49,7 @@ export async function loadPublications(root) {
     if (entry.indicatorSourcePath && (entry.kind !== "industry" || entry.type !== "report" || entry.status !== "published")) throw new Error("只有正式行业报告可连接运行指标");
     const indicatorData = entry.indicatorSourcePath ? await loadIndustryIndicators(root, entry.topic, entry.indicatorSourcePath) : null;
     documents.push({ indicatorData, indicatorPath: indicatorData ? `/data/indicators/${entry.topic}.json` : null, id: entry.id, kind: entry.kind, type: entry.type, topic: entry.topic, publishedOn: entry.publishedOn, revision, version: versionKey,
-      informationCutoff: entry.informationCutoff, markets: entry.markets, regions: entry.regions, summary: entry.summary,
+      informationCutoff: entry.informationCutoff, markets: entry.markets, regions: entry.regions, regionId: entry.regionId ?? null, summary: entry.summary,
       sourcePath: expected, status: entry.status, withdrawalReason: entry.withdrawalReason ?? null,
       title, path: `/data/documents/${entry.id}.md`, markdown });
   }

@@ -18,11 +18,12 @@ export function modelArtifactName(filename, period) {
   const match = artifactPattern.exec(filename) ?? modulePattern.exec(filename);
   return Boolean(match && (!period || match[1] === period));
 }
-/** @typedef {{kind: string, type: string, topic: string, version: string, sourcePath: string, indicatorPath?: string | null, status?: string}} PublishedDocument */
+/** @typedef {{kind: string, type: string, topic: string, version: string, sourcePath: string, indicatorPath?: string | null, status?: string, regionId?: string | null}} PublishedDocument */
 /** @typedef {{documents?: PublishedDocument[], companyReportPaths?: string[]}} ResearchLinkContext */
 
 function publicationLink(document, hash, indicators = false) {
   const params = new URLSearchParams({ topic: document.topic, version: document.version, view: document.type });
+  if (document.kind === "industry") params.set("region", document.regionId === "cn" ? "cn" : "archive");
   if (indicators) params.set("panel", "indicators");
   return `${document.kind === "industry" ? "/industries" : "/macro"}?${params}${hash}`;
 }
@@ -57,12 +58,14 @@ export function researchResourceLink(href, sourcePath, context = {}) {
     const type = resolved.searchParams.get("view") ?? "report";
     const topic = resolved.searchParams.get("topic");
     const version = resolved.searchParams.get("version");
+    const region = resolved.searchParams.get("region");
     const versions = documents.filter((document) => document.kind === kind && document.type === type && document.topic === topic)
+      .filter((document) => kind !== "industry" || !region || (document.regionId === "cn" ? "cn" : "archive") === region)
       .sort((a, b) => b.version.localeCompare(a.version, "en", { numeric: true }));
     const target = version ? versions.find((document) => document.version === version) : versions[0];
     if (!target) return undefined;
     return publicationLink(target, resolved.hash, resolved.searchParams.get("panel") === "indicators"
-      && target === versions[0] && target.status === "published" && Boolean(target.indicatorPath));
+      && target === versions[0] && target.status === "published" && target.regionId === "cn" && Boolean(target.indicatorPath));
   }
   if (/^\/reports\/[^/]+$/u.test(resolved.pathname)) {
     const version = resolved.searchParams.get("version");

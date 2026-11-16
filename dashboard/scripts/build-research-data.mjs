@@ -3,6 +3,7 @@ import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadStandards, reportMetadata, displayEligibility } from "./lib/research-standards.mjs";
 import { loadPublications } from "./lib/publications.mjs";
+import { loadIndustryCatalog } from "./lib/industry-catalog.mjs";
 import { loadScreeningData } from "./lib/screening-data.mjs";
 import { currentResults, progressCounts } from "../app/lib/display-policy.mjs";
 import { modelArtifactName, researchResourceLink } from "../app/lib/report-reference.mjs";
@@ -136,14 +137,14 @@ export function projectCompany(row, reports, member, policy, task = null) {
     reports,
   };
 }
-async function collectResearchDocuments(output, publications, companies) {
+async function collectResearchDocuments(output, publications, companies, industryCatalog) {
   await mkdir(join(output, "documents"), { recursive: true });
   for (const doc of publications) await writeFile(join(output, "documents", `${doc.id}.md`), doc.markdown, "utf8");
   await mkdir(join(output, "indicators"), { recursive: true });
   for (const doc of publications) if (doc.indicatorData) await writeFile(join(output, "indicators", `${doc.topic}.json`), JSON.stringify(doc.indicatorData, null, 2), "utf8");
   const documents = publications.map((doc) => { const metadata = { ...doc }; delete metadata.markdown; delete metadata.indicatorData; return metadata; });
   const companyReportPaths = companies.flatMap((company) => company.reports.map((report) => report.sourcePath)).sort();
-  await writeFile(join(output, "documents.json"), JSON.stringify({ schemaVersion: 1, documents, companyReportPaths }, null, 2), "utf8");
+  await writeFile(join(output, "documents.json"), JSON.stringify({ schemaVersion: 1, documents, companyReportPaths, industryCatalog }, null, 2), "utf8");
 }
 export function makeExports(catalog, scope) {
   const companies = currentResults(catalog.companies, scope);
@@ -204,7 +205,7 @@ export async function buildResearchData(root = repositoryRoot) {
       basis_report_path: null })), ...archiveSymbols.map((symbol) => ({ symbol, name: null,
       industry: "历史档案", status: "unregistered", universe_status: "inactive",
       hasResearchState: false, report_period: null, basis_report_path: null }))];
-  const publications = await loadPublications(root);
+  const [publications, industryCatalog] = await Promise.all([loadPublications(root), loadIndustryCatalog(root)]);
   await rm(output, { recursive: true, force: true });
   await mkdir(output, { recursive: true });
   await writeFile(join(output, "screening-pools.json"), JSON.stringify(screening, null, 2) + "\n", "utf8");
@@ -216,7 +217,7 @@ export async function buildResearchData(root = repositoryRoot) {
     companies.push(projectCompany(row, reports, members.get(row.symbol), policy,
       tasksBySymbol.get(row.symbol) ?? null));
   }
-  await collectResearchDocuments(output, publications, companies);
+  await collectResearchDocuments(output, publications, companies, industryCatalog);
   const status = Object.fromEntries(["unseen", "ignore", "covered", "unregistered"]
     .map((name) => [name, companies.filter((company) => company.status === name).length]));
   const queued = queue.filter((item) => item.status === "queued").length;

@@ -9,7 +9,8 @@ import { fragmentId, researchHeadings } from "../app/lib/research-headings.mjs";
 
 const catalog = JSON.parse(await readFile(new URL("../public/data/research-catalog.json", import.meta.url), "utf8"));
 const qualified = currentResults(catalog.companies);
-const publications = JSON.parse(await readFile(new URL("../public/data/documents.json", import.meta.url), "utf8")).documents;
+const publicationDirectory = JSON.parse(await readFile(new URL("../public/data/documents.json", import.meta.url), "utf8"));
+const publications = publicationDirectory.documents;
 const history = catalog.companies.find((company) => !company.display.eligible && company.reports.length);
 const output = new URL("../outputs/standard-checks/", import.meta.url);
 await mkdir(output, { recursive: true });
@@ -129,9 +130,9 @@ try {
     await page.locator(".standards-library-list button").first().click();
     await page.locator(".markdown-document").waitFor();
   }
-  await page.goto(`${baseURL}/industries`);
+  await page.goto(`${baseURL}/industries?region=archive`);
   await page.getByLabel("适用市场").selectOption("HK");
-  if (publications.some((d) => d.kind === "industry" && d.type === "report" && d.markets.includes("HK"))) await page.locator(".research-document-body h1").waitFor();
+  if (publications.some((d) => d.kind === "industry" && d.type === "report" && d.regionId !== "cn" && d.markets.includes("HK"))) await page.locator(".research-document-body h1").waitFor();
   else { await page.getByRole("heading", { name: "暂无行业研究报告", exact: true }).waitFor(); assert.equal(await page.locator(".markdown-document").count(),0); }
   if (await page.locator(".publication-outline").count()) {
     await page.locator(".publication-outline summary").click();
@@ -145,9 +146,9 @@ try {
   }
   await page.screenshot({ path: fileURLToPath(new URL("industry-library.png", output)) });
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(`${baseURL}/industries`);
+  await page.goto(`${baseURL}/industries?region=archive`);
   const mobileTopics = page.getByLabel("选择研究主题", { exact: true });
-  if (new Set(publications.filter((d) => d.kind === "industry" && d.type === "report").map((d) => d.topic)).size > 1) {
+  if (new Set(publications.filter((d) => d.kind === "industry" && d.type === "report" && d.regionId !== "cn").map((d) => d.topic)).size > 1) {
     await mobileTopics.waitFor();
     const lastTopic = mobileTopics.locator("option").last();
     const topicId = await lastTopic.getAttribute("value");
@@ -166,9 +167,9 @@ try {
     passed.push("多主题行业目录支持移动选择与搜索，首屏可见正文标题且无横向溢出");
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
-  const withIndicators = publications.find((d) => d.indicatorPath);
+  const withIndicators = publications.find((d) => d.indicatorPath && d.regionId === "cn");
   if (withIndicators) {
-    await page.goto(`${baseURL}/industries?topic=${withIndicators.topic}&view=report&panel=indicators`);
+    await page.goto(`${baseURL}/industries?topic=${withIndicators.topic}&region=cn&view=report&panel=indicators`);
     const indicatorPanel = page.getByRole("region", {name:"行业运行指标"});
     await indicatorPanel.waitFor();
     assert.ok(await page.locator(".indicator-release-links a").count() >= 2);
@@ -190,7 +191,7 @@ try {
       await page.goto(`${baseURL}/industries?topic=${older.topic}&version=${older.version}&view=report&panel=indicators`);
       await page.locator(".research-document-body h1").waitFor();
       assert.equal(await page.getByRole("region",{name:"行业运行指标"}).count(),0);
-      await page.getByLabel("报告版本",{exact:true}).selectOption(withIndicators.version);
+      await page.goto(`${baseURL}/industries?topic=${withIndicators.topic}&region=cn&version=${withIndicators.version}&view=report`);
       await page.getByRole("button",{name:"行业指标",exact:true}).waitFor();
       await page.getByRole("button",{name:"行业指标",exact:true}).click();
       await page.getByRole("region",{name:"行业运行指标"}).waitFor();
@@ -198,6 +199,40 @@ try {
     await page.setViewportSize({width:1440,height:1000});
     passed.push("新能源指标月报入口、负增长图表、移动端、深链和历史报告隔离通过");
   }
+  const archiveIndicators = publications.find((d) => d.indicatorPath && d.regionId !== "cn");
+  if (archiveIndicators) {
+    await page.goto(`${baseURL}/industries?topic=${archiveIndicators.topic}&version=${archiveIndicators.version}&region=archive&view=report&panel=indicators`);
+    await page.locator(".research-document-body h1").waitFor();
+    assert.equal(await page.getByRole("region", { name: "行业运行指标" }).count(), 0);
+    passed.push("历史与海外档案保留原报告，不加载独立更新的当前指标");
+  }
+  const industryCatalog = publicationDirectory.industryCatalog;
+  if (industryCatalog) {
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto(`${baseURL}/industries`);
+    const groups = page.getByRole("navigation", { name: "行业大类", exact: true });
+    await groups.waitFor();
+    assert.equal(await groups.locator("button").count(), industryCatalog.groups.length + 1);
+    assert.equal(await page.getByRole("navigation", { name: "研究主题", exact: true }).locator("button").count(), industryCatalog.topics.length);
+    for (const group of industryCatalog.groups) {
+      await groups.getByRole("button", { name: group.label, exact: true }).click();
+      assert.equal(await page.getByRole("navigation", { name: "研究主题", exact: true }).locator("button").count(), industryCatalog.topics.filter((topic) => topic.group === group.id).length);
+    }
+    await groups.getByRole("button", { name: "全部", exact: true }).click();
+    assert.equal(await page.getByLabel("适用市场").count(), 0, "中国行业范围不由上市市场筛选");
+    await page.screenshot({ path: fileURLToPath(new URL("china-industry-desktop.png", output)) });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.getByRole("combobox", { name: "行业大类", exact: true }).selectOption(industryCatalog.groups.at(-1).id);
+    const lastGroupTopics = industryCatalog.topics.filter((topic) => topic.group === industryCatalog.groups.at(-1).id);
+    await page.getByLabel("选择研究主题", { exact: true }).selectOption(lastGroupTopics.at(-1).id);
+    await page.reload();
+    await page.getByRole("combobox", { name: "行业大类", exact: true }).waitFor();
+    assert.equal(await page.getByLabel("选择研究主题", { exact: true }).inputValue(), lastGroupTopics.at(-1).id);
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false);
+    await page.screenshot({ path: fileURLToPath(new URL("china-industry-mobile.png", output)) });
+    passed.push("中国行业目录按来源大类与主题动态导航，移动选择与深链恢复；上市市场不改变经营地域");
+  }
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(`${baseURL}/macro`);
   await page.getByLabel("适用市场").selectOption("US");
   await page.locator(".research-document-body .markdown-document h1").waitFor();
@@ -343,6 +378,50 @@ try {
   assert.equal(await reportPage.locator(".markdown-document").count(),0);
   await reportPage.close();
   passed.push("独立夹具验证报告版本、历史链接恢复、撤回提示及不存在版本不回退");
+  const taxonomyPage = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  taxonomyPage.on("pageerror", (error) => errors.push(error.message));
+  const taxonomy = { schemaVersion: 1, groups: [{ id: "consumer", label: "消费" }, { id: "finance", label: "金融" }], topics: [
+    { id: "retail", label: "零售", group: "consumer", scope: "中国商品零售与线上渠道。" },
+    { id: "restaurants", label: "餐饮", group: "consumer", scope: "中国门店与加盟经营。" },
+    { id: "banking", label: "银行", group: "finance", scope: "中国存款、借贷与资本。" },
+  ] };
+  const taxonomyDocuments = [
+    { ...snapshots[0], id: "catalog-retail-cn", topic: "retail", regionId: "cn", version: "2026-11-16", publishedOn: "2026-11-16", title: "中国零售当前研究", sourcePath: "research/industries/retail/reports/2026-11-16.md", path: "/data/documents/catalog-retail-cn.md" },
+    { ...snapshots[0], id: "catalog-retail-old", topic: "retail", title: "海外零售旧文", sourcePath: "research/industries/retail/reports/2026-09-30.md", path: "/data/documents/catalog-retail-old.md" },
+    { ...snapshots[0], id: "catalog-restaurants-old", topic: "restaurants", title: "海外餐饮旧文", sourcePath: "research/industries/restaurants/reports/2026-09-30.md", path: "/data/documents/catalog-restaurants-old.md" },
+  ];
+  const taxonomyRequests = [];
+  await taxonomyPage.route("**/data/documents.json", (route) => route.fulfill({ json: { schemaVersion: 1, documents: taxonomyDocuments, industryCatalog: taxonomy } }));
+  await taxonomyPage.route("**/data/documents/catalog-*.md", (route) => {
+    taxonomyRequests.push(route.request().url());
+    const document = taxonomyDocuments.find((item) => route.request().url().endsWith(item.path));
+    return route.fulfill({ contentType: "text/plain", body: `# ${document.title}\n\n## 需求\n\n独立研究正文。\n\n[中国零售](../${document.topic === "retail" ? "reports" : "../retail/reports"}/2026-11-16.md#需求)\n` });
+  });
+  await taxonomyPage.goto(`${baseURL}/industries`);
+  await taxonomyPage.getByRole("heading", { name: "中国零售当前研究", exact: true }).waitFor();
+  assert.equal(await taxonomyPage.getByRole("navigation", { name: "研究主题", exact: true }).locator("button").count(), taxonomy.topics.length);
+  await taxonomyPage.getByRole("navigation", { name: "研究主题", exact: true }).getByRole("button", { name: "餐饮", exact: true }).click();
+  await taxonomyPage.getByText("暂无已发布研究。", { exact: true }).waitFor();
+  assert.equal(await taxonomyPage.locator(".markdown-document").count(), 0);
+  assert.ok(!taxonomyRequests.some((url) => url.endsWith("catalog-restaurants-old.md")), "中国空主题不能借用海外旧文");
+  await taxonomyPage.getByRole("navigation", { name: "行业大类", exact: true }).getByRole("button", { name: "金融", exact: true }).click();
+  await taxonomyPage.getByText("中国存款、借贷与资本。", { exact: true }).waitFor();
+  assert.equal(await taxonomyPage.getByRole("navigation", { name: "研究主题", exact: true }).locator("button").count(), 1);
+  await taxonomyPage.goto(`${baseURL}/industries?topic=retail&version=2026-09-30&view=report`);
+  await taxonomyPage.getByRole("heading", { name: "海外零售旧文", exact: true }).waitFor();
+  assert.equal(await taxonomyPage.getByRole("button", { name: /^历史与海外/ }).getAttribute("aria-pressed"), "true");
+  await taxonomyPage.getByRole("link", { name: "中国零售", exact: true }).click();
+  await taxonomyPage.getByRole("heading", { name: "中国零售当前研究", exact: true }).waitFor();
+  assert.equal(new URL(taxonomyPage.url()).searchParams.get("region"), "cn");
+  assert.equal(new URL(taxonomyPage.url()).searchParams.get("version"), "2026-11-16");
+  await taxonomyPage.setViewportSize({ width: 390, height: 844 });
+  await taxonomyPage.getByRole("combobox", { name: "行业大类", exact: true }).selectOption("finance");
+  await taxonomyPage.reload();
+  await taxonomyPage.getByText("暂无已发布研究。", { exact: true }).waitFor();
+  assert.equal(await taxonomyPage.getByRole("combobox", { name: "行业大类", exact: true }).inputValue(), "finance");
+  assert.equal(await taxonomyPage.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false);
+  await taxonomyPage.close();
+  passed.push("独立目录夹具验证中国/海外隔离、未发布主题、动态分类、跨区版本链接与移动深链恢复");
   const linkedCompany = catalog.companies.find((company) => company.ticker === "000002"
     && company.reports.some((report) => report.sourcePath !== company.basisReportPath)) ?? sample;
   if (linkedCompany) {

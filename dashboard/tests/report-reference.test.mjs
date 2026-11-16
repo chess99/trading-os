@@ -39,7 +39,7 @@ const companyPath = "research/companies/CN/000002/reports/2026-H1.md";
 const directory = {
   companyReportPaths: [companyPath, "research/companies/HK/00688/reports/2026-H1.md"],
   documents: [
-    { kind: "industry", type: "report", topic: "property-chain", sourcePath: industryPath, version: "2026-11-16", status: "published", indicatorPath: "/data/indicators/property-chain.json" },
+    { kind: "industry", type: "report", topic: "property-chain", sourcePath: industryPath, version: "2026-11-16", status: "published", regionId: "cn", indicatorPath: "/data/indicators/property-chain.json" },
     { kind: "industry", type: "report", topic: "property-chain", sourcePath: industryPath.replace("11-16", "10-28"), version: "2026-10-28", status: "published", indicatorPath: "/data/indicators/property-chain.json" },
     { kind: "macro", type: "report", topic: "property-credit", sourcePath: macroPath, version: "2026-11-16", status: "published" },
     { kind: "macro", type: "reference", topic: "valuation", sourcePath: "research/macro/reference/valuation.md", version: "2026-10-28", status: "published" },
@@ -49,7 +49,7 @@ const directory = {
 test("company, industry and macro links retain the registered version and chapter", async () => {
   const { researchResourceLink } = await import("../app/lib/report-reference.mjs");
   assert.equal(researchResourceLink("../../../../industries/property-chain/reports/2026-11-16.md#需求与回款", companyPath, directory),
-    "/industries?topic=property-chain&version=2026-11-16&view=report#%E9%9C%80%E6%B1%82%E4%B8%8E%E5%9B%9E%E6%AC%BE");
+    "/industries?topic=property-chain&version=2026-11-16&view=report&region=cn#%E9%9C%80%E6%B1%82%E4%B8%8E%E5%9B%9E%E6%AC%BE");
   assert.equal(researchResourceLink("../../../macro/property-credit/reports/2026-11-16.md#信用传导", industryPath, directory),
     "/macro?topic=property-credit&version=2026-11-16&view=report#%E4%BF%A1%E7%94%A8%E4%BC%A0%E5%AF%BC");
   assert.equal(researchResourceLink("../../../companies/CN/000002/reports/2026-H1.md#财务质量", macroPath, directory),
@@ -58,7 +58,7 @@ test("company, industry and macro links retain the registered version and chapte
     "/reports/HK-00688?version=2026-H1#%E7%8E%B0%E9%87%91");
   assert.equal(researchResourceLink("../../../macro/reference/valuation.md#定义", industryPath, directory),
     "/macro?topic=valuation&version=2026-10-28&view=reference#%E5%AE%9A%E4%B9%89");
-  assert.equal(researchResourceLink("./2026-10-28.md", industryPath, directory), "/industries?topic=property-chain&version=2026-10-28&view=report");
+  assert.equal(researchResourceLink("./2026-10-28.md", industryPath, directory), "/industries?topic=property-chain&version=2026-10-28&view=report&region=archive");
   assert.equal(researchResourceLink("/reports/000002?version=2026-H1#财务质量", industryPath, directory),
     "/reports/000002?version=2026-H1#%E8%B4%A2%E5%8A%A1%E8%B4%A8%E9%87%8F");
 });
@@ -77,10 +77,10 @@ test("unregistered research and unsafe URLs remain non-links", async () => {
 test("topic routes keep explicit historical versions and never attach current indicators", async () => {
   const { researchResourceLink } = await import("../app/lib/report-reference.mjs");
   assert.equal(researchResourceLink("/industries?topic=property-chain&view=report&panel=indicators", macroPath, directory),
-    "/industries?topic=property-chain&version=2026-11-16&view=report&panel=indicators");
+    "/industries?topic=property-chain&version=2026-11-16&view=report&region=cn&panel=indicators");
   assert.equal(researchResourceLink("/industries?topic=property-chain&version=2026-10-28&view=report&panel=indicators#需求", macroPath, directory),
-    "/industries?topic=property-chain&version=2026-10-28&view=report#%E9%9C%80%E6%B1%82");
+    "/industries?topic=property-chain&version=2026-10-28&view=report&region=archive#%E9%9C%80%E6%B1%82");
   assert.equal(researchResourceLink("/industries?topic=property-chain&version=2020-01-01&view=report", macroPath, directory), undefined);
   const revisions = { documents: [2, 10].map((revision) => ({ ...directory.documents[0], version: `2026-11-16-r${revision}` })) };
-  assert.equal(researchResourceLink("/industries?topic=property-chain", macroPath, revisions), "/industries?topic=property-chain&version=2026-11-16-r10&view=report");
+  assert.equal(researchResourceLink("/industries?topic=property-chain", macroPath, revisions), "/industries?topic=property-chain&version=2026-11-16-r10&view=report&region=cn");
 });

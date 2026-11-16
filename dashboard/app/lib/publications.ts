@@ -13,6 +13,7 @@ export interface PublishedDocument {
   informationCutoff: string | null;
   markets: string[];
   regions: string[];
+  regionId: "cn" | null;
   status: "published" | "withdrawn";
   withdrawalReason: string | null;
   indicatorPath: string | null;
@@ -21,6 +22,11 @@ export interface PublishedDocument {
 export interface PublicationDirectory {
   documents: PublishedDocument[];
   companyReportPaths: string[];
+  industryCatalog?: {
+    schemaVersion: 1;
+    groups: { id: string; label: string }[];
+    topics: { id: string; label: string; group: string; scope: string }[];
+  } | null;
 }
 
 export async function loadPublicationDirectory(signal?: AbortSignal): Promise<PublicationDirectory> {
@@ -28,5 +34,5 @@ export async function loadPublicationDirectory(signal?: AbortSignal): Promise<Pu
   if (!response.ok) throw new Error("研究目录暂时无法读取");
   const data = await response.json();
   if (data.schemaVersion !== 1 || !Array.isArray(data.documents)) throw new Error("研究目录格式不正确");
-  return { documents: data.documents, companyReportPaths: Array.isArray(data.companyReportPaths) ? data.companyReportPaths : [] };
+  return { documents: data.documents, companyReportPaths: Array.isArray(data.companyReportPaths) ? data.companyReportPaths : [], industryCatalog: data.industryCatalog ?? null };
 }

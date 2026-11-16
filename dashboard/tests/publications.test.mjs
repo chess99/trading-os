@@ -68,3 +68,17 @@ test("current industry indicators remain separate from a report's historical cut
   await publish([report(undefined,{indicatorSourcePath:"../../private.json"})]);
   await assert.rejects(loadPublications(root),/路径/);
 }));
+
+test("China industry publications require an explicit catalog topic and keep old reports in the archive", async () => fixture(async ({ root, save, publish }) => {
+  await save("research/industries/catalog.json", JSON.stringify({ schemaVersion: 1,
+    groups: [{ id: "consumer", label: "消费" }], topics: [{ id: "demand", label: "需求", group: "consumer", scope: "中国终端需求。" }] }));
+  await publish([report(), report("2026-11-16", { regionId: "cn" })]);
+  const documents = await loadPublications(root);
+  assert.equal(documents[0].regionId, "cn");
+  assert.equal(documents[1].regionId, null);
+  for (const extra of [{ regionId: "us" }, { regionId: "cn", topic: "missing", sourcePath: "research/industries/missing/reports/2026-09-30.md" },
+    { regionId: "cn", kind: "macro", sourcePath: "research/macro/demand/reports/2026-09-30.md" }]) {
+    await publish([report(undefined, extra)]);
+    await assert.rejects(loadPublications(root), /中国行业/u);
+  }
+}));
