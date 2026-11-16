@@ -136,13 +136,14 @@ export function projectCompany(row, reports, member, policy, task = null) {
     reports,
   };
 }
-async function collectResearchDocuments(output, publications) {
+async function collectResearchDocuments(output, publications, companies) {
   await mkdir(join(output, "documents"), { recursive: true });
   for (const doc of publications) await writeFile(join(output, "documents", `${doc.id}.md`), doc.markdown, "utf8");
   await mkdir(join(output, "indicators"), { recursive: true });
   for (const doc of publications) if (doc.indicatorData) await writeFile(join(output, "indicators", `${doc.topic}.json`), JSON.stringify(doc.indicatorData, null, 2), "utf8");
   const documents = publications.map((doc) => { const metadata = { ...doc }; delete metadata.markdown; delete metadata.indicatorData; return metadata; });
-  await writeFile(join(output, "documents.json"), JSON.stringify({ schemaVersion: 1, documents }, null, 2), "utf8");
+  const companyReportPaths = companies.flatMap((company) => company.reports.map((report) => report.sourcePath)).sort();
+  await writeFile(join(output, "documents.json"), JSON.stringify({ schemaVersion: 1, documents, companyReportPaths }, null, 2), "utf8");
 }
 export function makeExports(catalog, scope) {
   const companies = currentResults(catalog.companies, scope);
@@ -206,7 +207,6 @@ export async function buildResearchData(root = repositoryRoot) {
   const publications = await loadPublications(root);
   await rm(output, { recursive: true, force: true });
   await mkdir(output, { recursive: true });
-  await collectResearchDocuments(output, publications);
   await writeFile(join(output, "screening-pools.json"), JSON.stringify(screening, null, 2) + "\n", "utf8");
   const tasksBySymbol = new Map(queue.map((item) => [item.symbol, item]));
   const companies = [];
@@ -216,6 +216,7 @@ export async function buildResearchData(root = repositoryRoot) {
     companies.push(projectCompany(row, reports, members.get(row.symbol), policy,
       tasksBySymbol.get(row.symbol) ?? null));
   }
+  await collectResearchDocuments(output, publications, companies);
   const status = Object.fromEntries(["unseen", "ignore", "covered", "unregistered"]
     .map((name) => [name, companies.filter((company) => company.status === name).length]));
   const queued = queue.filter((item) => item.status === "queued").length;

@@ -5,6 +5,7 @@ import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { currentResults } from "../app/lib/display-policy.mjs";
+import { fragmentId, researchHeadings } from "../app/lib/research-headings.mjs";
 
 const catalog = JSON.parse(await readFile(new URL("../public/data/research-catalog.json", import.meta.url), "utf8"));
 const qualified = currentResults(catalog.companies);
@@ -108,14 +109,26 @@ try {
   await page.goto(`${baseURL}/`);
   await page.getByRole("tab", { name: "跟踪进度", exact: true }).click();
   await page.getByLabel("研究市场").selectOption("HK");
-  await page.getByRole("cell", { name: "尚无公司研究", exact: true }).first().waitFor();
-  assert.equal(await page.locator("tbody tr[data-symbol]").count(),catalog.companies.filter((c) => c.market === "HK" && c.inQualityPool).length);
+  const hkProgressCount = Math.min(80, catalog.companies.filter((c) => c.market === "HK" && c.inQualityPool).length);
+  await page.waitForFunction((expected) => document.querySelectorAll("tbody tr[data-symbol]").length === expected, hkProgressCount);
   await page.getByRole("tab", { name: "最新周期模型", exact: true }).click();
-  await page.getByText("暂无符合条件的现行研究", { exact:true }).waitFor();
-  assert.equal(await page.locator("tbody tr[data-symbol]").count(),0);
+  const hkCurrent = qualified.filter((company) => company.market === "HK");
+  if (!hkCurrent.length) await page.getByText("暂无符合条件的现行研究", { exact:true }).waitFor();
+  else await page.locator("tbody tr[data-symbol]").first().waitFor();
+  assert.equal(await page.locator("tbody tr[data-symbol]").count(), Math.min(80, hkCurrent.length));
+  for (const symbol of await page.locator("tbody tr[data-symbol]").evaluateAll((rows) => rows.map((row) => row.dataset.symbol))) {
+    assert.ok(hkCurrent.some((company) => company.symbol === symbol));
+  }
   await page.goto(`${baseURL}/reports`);
   await page.getByLabel("研报市场").selectOption("US");
-  await page.getByText("该范围尚无已完成研报。", { exact:true }).waitFor();
+  const usReports = catalog.companies.filter((company) => company.market === "US" && company.inQualityPool && company.reports.length);
+  if (!usReports.length) await page.getByText("该范围尚无已完成研报。", { exact:true }).waitFor();
+  else {
+    await page.locator(".standards-library-list button").first().waitFor();
+    assert.equal(await page.locator(".standards-library-list button").count(), usReports.length);
+    await page.locator(".standards-library-list button").first().click();
+    await page.locator(".markdown-document").waitFor();
+  }
   await page.goto(`${baseURL}/industries`);
   await page.getByLabel("适用市场").selectOption("HK");
   if (publications.some((d) => d.kind === "industry" && d.type === "report" && d.markets.includes("HK"))) await page.locator(".research-document-body h1").waitFor();
@@ -125,9 +138,9 @@ try {
     const outlineLinks = page.getByRole("navigation", { name: "本文目录", exact:true }).locator("a");
     assert.ok(await outlineLinks.count() > 3);
     const anchor = await outlineLinks.first().getAttribute("href");
-    assert.equal(await page.locator(anchor).count(),1);
+    assert.equal(await page.evaluate((hash) => Boolean(document.getElementById(decodeURIComponent(hash.slice(1)))), anchor), true);
     await outlineLinks.first().click();
-    assert.equal(new URL(page.url()).hash,anchor);
+    assert.equal(fragmentId(new URL(page.url()).hash), fragmentId(anchor));
     await page.evaluate(() => window.scrollTo({top:0,behavior:"instant"}));
   }
   await page.screenshot({ path: fileURLToPath(new URL("industry-library.png", output)) });
@@ -330,6 +343,76 @@ try {
   assert.equal(await reportPage.locator(".markdown-document").count(),0);
   await reportPage.close();
   passed.push("独立夹具验证报告版本、历史链接恢复、撤回提示及不存在版本不回退");
+  const linkedCompany = catalog.companies.find((company) => company.ticker === "000002"
+    && company.reports.some((report) => report.sourcePath !== company.basisReportPath)) ?? sample;
+  if (linkedCompany) {
+    const companyReport = linkedCompany.reports.find((report) => report.sourcePath !== linkedCompany.basisReportPath);
+    const companyBody = await readFile(new URL(`../../${companyReport.sourcePath}`, import.meta.url), "utf8");
+    const companyChapter = researchHeadings(companyBody).find((heading) => heading.depth === 2);
+    assert.ok(companyChapter, "跨层阅读测试需要可定位的历史公司章节");
+    const linkedPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    const linkedQuoteRequests = [];
+    const linkedIndicatorRequests = [];
+    linkedPage.on("pageerror", (error) => errors.push(error.message));
+    await linkedPage.route("**/api/quotes?*", (route) => {
+      linkedQuoteRequests.push(route.request().url());
+      return route.fulfill({ json: { quotes: [] } });
+    });
+    await linkedPage.route("**/data/indicators/**", (route) => {
+      linkedIndicatorRequests.push(route.request().url());
+      return route.fulfill({ json: {} });
+    });
+    const industryFixture = {
+      ...snapshots[0], indicatorPath: "/data/indicators/test-current.json",
+    };
+    const macroFixture = {
+      ...snapshots[0], id: "test-credit", kind: "macro", topic: "test-credit", title: "信用与地产链",
+      sourcePath: "research/macro/test-credit/reports/2026-09-30.md", path: "/data/documents/test-credit.md",
+    };
+    await linkedPage.route("**/data/documents.json", (route) => route.fulfill({ json: {
+      schemaVersion: 1, documents: [industryFixture, snapshots[1], macroFixture],
+      companyReportPaths: [companyReport.sourcePath],
+    } }));
+    const padding = "这一段只用于检验章节在正文加载后的位置。\n\n".repeat(30);
+    // Leave room below the target so native scrolling is not clamped at the
+    // document bottom before the heading can reach the requested top margin.
+    await linkedPage.route("**/data/documents/test-2026-09-30.md", (route) => route.fulfill({ contentType: "text/plain", body:
+      `# 前期地产判断\n\n${padding}## 需求与回款\n\n[信用传导](../../../macro/test-credit/reports/2026-09-30.md#信用传导)\n\n[内部说明](../../../industries/sectors/private.md)\n\n${padding}` }));
+    await linkedPage.route("**/data/documents/test-credit.md", (route) => route.fulfill({ contentType: "text/plain", body:
+      `# 信用与地产链\n\n${padding}## 信用传导\n\n[公司现金流](../../../${companyReport.sourcePath.slice("research/".length)}#${companyChapter.id})\n\n${padding}` }));
+    await linkedPage.route(`**${companyReport.path}`, (route) => route.fulfill({ contentType: "text/plain", body:
+      `${companyBody}\n\n[回到行业需求](../../../../industries/test/reports/2026-09-30.md#需求与回款)\n` }));
+    async function expectChapter(id) {
+      await linkedPage.waitForFunction((chapter) => {
+        const node = document.getElementById(chapter);
+        return Boolean(node && node.getBoundingClientRect().top >= 0 && node.getBoundingClientRect().top < 200);
+      }, id);
+      assert.equal(fragmentId(new URL(linkedPage.url()).hash), id);
+    }
+    await linkedPage.goto(`${baseURL}/industries?topic=test&version=2026-09-30&view=report&panel=indicators#${encodeURIComponent("需求与回款")}`);
+    await expectChapter("需求与回款");
+    assert.equal(await linkedPage.getByRole("link", { name: "内部说明", exact: true }).count(), 0);
+    assert.equal(await linkedPage.getByRole("region", { name: "行业运行指标" }).count(), 0);
+    await linkedPage.getByRole("link", { name: "信用传导", exact: true }).click();
+    await expectChapter("信用传导");
+    assert.equal(new URL(linkedPage.url()).searchParams.get("version"), "2026-09-30");
+    await linkedPage.getByRole("link", { name: "公司现金流", exact: true }).click();
+    await expectChapter(companyChapter.id);
+    assert.equal(new URL(linkedPage.url()).searchParams.get("version"), companyReport.period);
+    await linkedPage.getByTestId("historical-notice").waitFor();
+    assert.equal(await linkedPage.getByTestId("live-research-panel").count(), 0);
+    await linkedPage.reload();
+    await expectChapter(companyChapter.id);
+    await linkedPage.getByRole("link", { name: "回到行业需求", exact: true }).click();
+    await expectChapter("需求与回款");
+    assert.equal(new URL(linkedPage.url()).searchParams.get("version"), "2026-09-30");
+    assert.deepEqual(linkedQuoteRequests, []);
+    assert.deepEqual(linkedIndicatorRequests, []);
+    assert.equal(await linkedPage.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false);
+    await linkedPage.screenshot({ path: fileURLToPath(new URL("linked-research-mobile.png", output)) });
+    await linkedPage.close();
+    passed.push("行业、宏观、公司跨层相对链接保留版本与章节；异步定位和刷新恢复，历史隔离与未登记路径保护通过");
+  }
   assert.deepEqual(errors, [], "页面运行时错误");
   const summary = { ok: true, standard: catalog.standard.id, pool: catalog.scope.count,
     currentResults: qualified.length, checks: passed };

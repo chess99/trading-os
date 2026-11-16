@@ -1,23 +1,17 @@
 "use client";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { useEffect, useMemo, useState } from "react";
 import { loadCatalog, loadQuotes, formatDate, formatPrice, STATUS_META,
   MARKET_LABELS, currencyLabel, type Catalog, type Company, type Quote, type ReportVersion } from "../lib/research";
 import { readingContext } from "../lib/display-policy.mjs";
-import { researchResourceLink } from "../lib/report-reference.mjs";
+import { loadPublicationDirectory, type PublicationDirectory } from "../lib/publications";
+import { researchHeadings } from "../lib/research-headings.mjs";
+import { ResearchMarkdown } from "./research-markdown";
 import "../standards.css";
 
-function nodeText(node: ReactNode): string {
-  if (typeof node === "string" || typeof node === "number") return String(node);
-  if (Array.isArray(node)) return node.map(nodeText).join("");
-  if (node && typeof node === "object" && "props" in node) return nodeText((node as { props: { children?: ReactNode } }).props.children);
-  return "";
-}
-function slug(value: string) { return value.trim().replace(/[*_`]/gu, "").replace(/[^\p{Letter}\p{Number}]+/gu, "-"); }
 type Scope = "quality_pool" | "all_standard";
 export function ReportWorkspace({ initialTicker }: { initialTicker?: string }) {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
+  const [publications, setPublications] = useState<PublicationDirectory>({ documents: [], companyReportPaths: [] });
   const [error, setError] = useState<string | null>(null);
   const [scope, setScope] = useState<Scope>(initialTicker ? "all_standard" : "quality_pool");
   const [selectedTicker, setSelectedTicker] = useState(initialTicker ?? "");
@@ -27,6 +21,11 @@ export function ReportWorkspace({ initialTicker }: { initialTicker?: string }) {
   const [content, setContent] = useState<{ path: string; body: string } | null>(null);
   const [bodyError, setBodyError] = useState<{ path: string; message: string } | null>(null);
   const [quoteSnapshot, setQuoteSnapshot] = useState<{ ticker: string; quote: Quote } | null>(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    loadPublicationDirectory(controller.signal).then(setPublications).catch(() => { /* Unverified cross-report links stay disabled. */ });
+    return () => controller.abort();
+  }, []);
   useEffect(() => {
     const controller = new AbortController();
     loadCatalog(controller.signal).then((data) => {
@@ -62,10 +61,8 @@ export function ReportWorkspace({ initialTicker }: { initialTicker?: string }) {
   }, [selected, context.live]);
   const markdown = content?.path === path ? content.body : "";
   const quote = context.live && quoteSnapshot?.ticker === selectedTicker ? quoteSnapshot.quote : undefined;
-  const toc = markdown.split(/\r?\n/u).flatMap((line) => {
-    const match = /^(#{2,3})\s+(.+)$/u.exec(line);
-    return match ? [{ depth: match[1].length, label: match[2].replace(/[*_`]/gu, ""), id: slug(match[2]) }] : [];
-  });
+  const headings = useMemo(() => researchHeadings(markdown), [markdown]);
+  const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
   const rows = (catalog?.companies ?? []).filter((company) => company.reports.length
     && (market === "all" || company.market === market)
     && (scope === "all_standard" || company.inQualityPool))
@@ -97,17 +94,7 @@ export function ReportWorkspace({ initialTicker }: { initialTicker?: string }) {
       {!context.report ? <div className="standards-empty"><strong>{selected.reports.length ? "所选研究周期不存在" : "尚无已完成研报"}</strong></div>
         : bodyError?.path === path ? <p role="alert">{bodyError.message}</p>
           : !markdown ? <p aria-busy="true">正在读取所选报告…</p>
-            : <article className="markdown-document"><ReactMarkdown remarkPlugins={[remarkGfm]} components={{
-              h1: ({ children }) => <h1 id={slug(nodeText(children))}>{children}</h1>,
-              h2: ({ children }) => <h2 id={slug(nodeText(children))}>{children}</h2>,
-              h3: ({ children }) => <h3 id={slug(nodeText(children))}>{children}</h3>,
-              a: ({ href, children }) => {
-                const link = researchResourceLink(href, context.report?.sourcePath);
-                return link ? <a href={link} download={link.startsWith("/data/models/") || undefined}
-                  rel="noreferrer" target={/^(https?:|\/\/)/iu.test(link) ? "_blank" : undefined}>{children}</a> : <span>{children}</span>;
-              },
-              table: ({ children }) => <div className="standards-table-scroll"><table>{children}</table></div>,
-            }}>{markdown}</ReactMarkdown></article>}
+            : <article className="markdown-document"><ResearchMarkdown markdown={markdown} sourcePath={context.report.sourcePath} headings={headings} links={publications} /></article>}
       </> : <div className="standards-empty"><h2>{catalog ? "从左侧选择报告" : "正在读取研报库…"}</h2></div>}
     </section>
     <aside className="standards-toc"><h3>本期目录</h3><nav aria-label="本期目录">{toc.map((item, index) => <a key={`${item.id}-${index}`} href={`#${item.id}`} style={{ paddingLeft: item.depth === 3 ? 12 : 0 }}>{item.label}</a>)}</nav></aside>

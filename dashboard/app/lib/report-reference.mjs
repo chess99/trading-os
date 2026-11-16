@@ -18,19 +18,62 @@ export function modelArtifactName(filename, period) {
   const match = artifactPattern.exec(filename) ?? modulePattern.exec(filename);
   return Boolean(match && (!period || match[1] === period));
 }
-// Repository-relative references retain their company and reporting period.
-// Downloads expose only small, readable research files.
-export function researchResourceLink(href, sourcePath) {
-  if (!href) return undefined;
-  if (/^(?:https?:|mailto:|#|\/\/)/iu.test(href)) return href;
+/** @typedef {{kind: string, type: string, topic: string, version: string, sourcePath: string, indicatorPath?: string | null, status?: string}} PublishedDocument */
+/** @typedef {{documents?: PublishedDocument[], companyReportPaths?: string[]}} ResearchLinkContext */
+
+function publicationLink(document, hash, indicators = false) {
+  const params = new URLSearchParams({ topic: document.topic, version: document.version, view: document.type });
+  if (indicators) params.set("panel", "indicators");
+  return `${document.kind === "industry" ? "/industries" : "/macro"}?${params}${hash}`;
+}
+
+// Links use the published catalog, never arbitrary repository files. Company
+// periods and publication versions remain explicit when moving between readers.
+/** @param {string | undefined} href
+ * @param {string | undefined} sourcePath
+ * @param {ResearchLinkContext} context
+ */
+export function researchResourceLink(href, sourcePath, context = {}) {
+  if (!href || [...href].some((character) => character.charCodeAt(0) < 32 || character.charCodeAt(0) === 127 || character === "\\")) return undefined;
+  if (href.startsWith("#")) return href;
+  const { documents = [], companyReportPaths = [] } = context;
+  if (/^(?:https?:|mailto:|\/\/)/iu.test(href)) {
+    try {
+      const external = new URL(href, "https://research.local");
+      return ["http:", "https:", "mailto:"].includes(external.protocol) ? href : undefined;
+    } catch { return undefined; }
+  }
   const rawPath = href.split(/[?#]/u, 1)[0];
-  if (rawPath.includes("\\") || /(?:^|\/)\.(?:\/|$)/u.test(rawPath)) return undefined;
   let resolved;
   try { resolved = new URL(href, `https://research.local/${sourcePath ?? ""}`); }
   catch { return undefined; }
   if (resolved.origin !== "https://research.local") return undefined;
   const report = reportReferenceLink(resolved.pathname);
-  if (report) return `${report}${resolved.hash}`;
+  if (report) return companyReportPaths.includes(resolved.pathname.slice(1)) ? `${report}${resolved.hash}` : undefined;
+  const publication = documents.find((document) => `/${document.sourcePath}` === resolved.pathname);
+  if (publication) return publicationLink(publication, resolved.hash);
+  if (["/industries", "/macro"].includes(resolved.pathname)) {
+    const kind = resolved.pathname === "/industries" ? "industry" : "macro";
+    const type = resolved.searchParams.get("view") ?? "report";
+    const topic = resolved.searchParams.get("topic");
+    const version = resolved.searchParams.get("version");
+    const versions = documents.filter((document) => document.kind === kind && document.type === type && document.topic === topic)
+      .sort((a, b) => b.version.localeCompare(a.version, "en", { numeric: true }));
+    const target = version ? versions.find((document) => document.version === version) : versions[0];
+    if (!target) return undefined;
+    return publicationLink(target, resolved.hash, resolved.searchParams.get("panel") === "indicators"
+      && target === versions[0] && target.status === "published" && Boolean(target.indicatorPath));
+  }
+  if (/^\/reports\/[^/]+$/u.test(resolved.pathname)) {
+    const version = resolved.searchParams.get("version");
+    const exists = companyReportPaths.some((path) => {
+      const link = reportReferenceLink(`/${path}`);
+      if (!link) return false;
+      const target = new URL(link, "https://research.local");
+      return target.pathname === resolved.pathname && (!version || target.searchParams.get("version") === version);
+    });
+    return exists ? `${resolved.pathname}${version ? `?${new URLSearchParams({ version })}` : ""}${resolved.hash}` : undefined;
+  }
   const model = modelPattern.exec(resolved.pathname);
   if (!model || !modelArtifactName(model[3])) return undefined;
   const ordinary = `../models/${model[3]}`;

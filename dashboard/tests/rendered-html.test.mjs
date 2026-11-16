@@ -58,7 +58,9 @@ test("industry and macro publish reports separately from methods and internal in
   assert.equal(industry.status, 200); assert.equal(macro.status, 200);
   assert.match(await industry.text(), /行业研究/); assert.match(await macro.text(), /宏观与市场/);
   const homeHtml = await home.text(); assert.match(homeHtml, /价值投资研究/); assert.doesNotMatch(homeHtml, /长期精选|长期企业研究/);
-  const { documents } = JSON.parse(await readFile(new URL("../public/data/documents.json", import.meta.url), "utf8"));
+  const { documents, companyReportPaths } = JSON.parse(await readFile(new URL("../public/data/documents.json", import.meta.url), "utf8"));
+  const catalog = JSON.parse(await readFile(new URL("../public/data/research-catalog.json", import.meta.url), "utf8"));
+  assert.deepEqual(companyReportPaths, catalog.companies.flatMap((company) => company.reports.map((report) => report.sourcePath)).sort());
   assert.ok(documents.some((doc) => doc.id === "valuation-context" && doc.type === "reference"));
   assert.ok(documents.every((doc) => !doc.sourcePath.startsWith("prompts/") && !doc.sourcePath.includes("/sectors/") && !doc.sourcePath.endsWith("README.md")));
   for (const doc of documents) {
