@@ -6,7 +6,8 @@ on:
       - 'research/**'
       - 'coverage/**'
       - 'screening/**'
-      - 'scripts/check-research-artifacts.py'
+      - 'scripts/**'
+      - 'pyproject.toml'
       - 'src/**'
       - 'tests/**'
       - '.github/workflows/research-artifact-checks.yml'
@@ -15,7 +16,8 @@ on:
       - 'research/**'
       - 'coverage/**'
       - 'screening/**'
-      - 'scripts/check-research-artifacts.py'
+      - 'scripts/**'
+      - 'pyproject.toml'
       - 'src/**'
       - 'tests/**'
       - '.github/workflows/research-artifact-checks.yml'
@@ -43,3 +45,6 @@ jobs:
           python -m trading_os validate
           python -m trading_os --market hk validate
           python -m trading_os --market us validate
+          python -m trading_os quality-pool validate
+          python -m trading_os quality-pool --market hk validate
+          python -m trading_os quality-pool --market us validate

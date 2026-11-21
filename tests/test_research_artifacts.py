@@ -17,7 +17,7 @@ def load_script(relative, name):
 
 
 checker = load_script("scripts/check-research-artifacts.py", "artifact_budget")
-verifier = load_script("research/pilots/2026-Q3/verify-models.py", "publication_contract")
+verifier = load_script("scripts/verify-models.py", "publication_contract")
 
 
 def save(root, name, body):
@@ -142,7 +142,7 @@ def publication(tmp_path, value=6):
 
 def test_null_result_is_readable_without_claiming_numeric_verification(tmp_path):
     publication(tmp_path, None)
-    result = verifier.verify(tmp_path, recompute=True)
+    result = verifier.verify(tmp_path, "2026-Q3", recompute=True)
     assert result["contract_checked"] == 1
     assert result["numeric_recomputed"] == 0
     assert result["numeric_unavailable"] == 1
@@ -156,7 +156,7 @@ def test_a_diagnostic_script_does_not_certify_an_unavailable_equity_model(tmp_pa
         "raise AssertionError('diagnostic scripts are run separately "
         "from adopted equity models')\n",
     )
-    result = verifier.verify(tmp_path, recompute=True)
+    result = verifier.verify(tmp_path, "2026-Q3", recompute=True)
     assert result["numeric_recomputed"] == 0
     assert result["numeric_unavailable"] == 1
 
@@ -170,8 +170,8 @@ data = {"symbol": "CN:000001", "report_period": "2026-Q3",
 print(json.dumps(data))
 """
     save(tmp_path, "research/companies/CN/000001/models/2026-Q3.py", source)
-    assert verifier.verify(tmp_path)["numeric_recomputed"] == 0
-    assert verifier.verify(tmp_path, recompute=True)["numeric_recomputed"] == 1
+    assert verifier.verify(tmp_path, "2026-Q3")["numeric_recomputed"] == 0
+    assert verifier.verify(tmp_path, "2026-Q3", recompute=True)["numeric_recomputed"] == 1
     data["value_range"]["low"] = 7
     data["value_range"]["high"] = 7
     state = json.loads(
@@ -181,7 +181,7 @@ print(json.dumps(data))
     save(tmp_path, "coverage/cn-a/research_state.jsonl", json.dumps(state))
     save(tmp_path, "research/companies/CN/000001/models/2026-Q3-output.json", json.dumps(data))
     with pytest.raises(ValueError, match="实际复算"):
-        verifier.verify(tmp_path, recompute=True)
+        verifier.verify(tmp_path, "2026-Q3", recompute=True)
 
 
 def test_current_result_must_match_state_before_any_recomputation(tmp_path):
@@ -191,4 +191,4 @@ def test_current_result_must_match_state_before_any_recomputation(tmp_path):
     changed["value_range"]["low"] = 5
     saved.write_text(json.dumps(changed), encoding="utf-8")
     with pytest.raises(ValueError, match="value_range"):
-        verifier.verify(tmp_path)
+        verifier.verify(tmp_path, "2026-Q3")

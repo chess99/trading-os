@@ -30,7 +30,7 @@ def same(actual, expected):
     return type(actual) is type(expected) and actual == expected
 
 
-def verify(root, period="2026-Q3", *, recompute=False, symbols=None, timeout=120):
+def verify(root, period, *, recompute=False, symbols=None, timeout=120):
     root = Path(root).resolve()
     states = []
     for partition in ("cn-a", "hk", "us"):
@@ -79,7 +79,7 @@ def verify(root, period="2026-Q3", *, recompute=False, symbols=None, timeout=120
         elif recompute:
             if not producer.is_file():
                 raise ValueError(f"{symbol}: 非空估值缺少当前计算入口")
-            with tempfile.TemporaryDirectory(prefix=f"q3-{ticker}-") as temporary:
+            with tempfile.TemporaryDirectory(prefix=f"{period}-{ticker}-") as temporary:
                 # Ordinary source/input files only. No Git history or hidden archive restoration.
                 import shutil
 
@@ -152,8 +152,8 @@ def main():
     sys.stdout.reconfigure(encoding="utf-8")
     sys.stderr.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[3])
-    parser.add_argument("--period", default="2026-Q3")
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument("--period", required=True, help="需要核对的财报周期，例如 2026-Q3")
     parser.add_argument("--symbol", action="append")
     parser.add_argument("--recompute", action="store_true")
     parser.add_argument("--timeout", type=int, default=120)

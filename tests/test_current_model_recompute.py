@@ -44,10 +44,10 @@ def test_plain_model_recomputes_in_repository_shaped_isolated_source(symbol, tmp
     state.parent.mkdir(parents=True)
     state.write_text(json.dumps(contract) + "\n", encoding="utf-8")
     assert not (tmp_path / ".git").exists()
-    path = ROOT / "research/pilots/2026-Q3/verify-models.py"
+    path = ROOT / "scripts/verify-models.py"
     spec = importlib.util.spec_from_file_location("current_publication_verifier", path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    result = module.verify(tmp_path, symbols=[symbol], recompute=True)
+    result = module.verify(tmp_path, "2026-Q3", symbols=[symbol], recompute=True)
     assert result["contract_checked"] == result["numeric_recomputed"] == 1
     assert result["numeric_unavailable"] == 0
