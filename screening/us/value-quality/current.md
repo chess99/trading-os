@@ -1,20 +1,20 @@
 # 美股精选价值质量池
 
-筛选复核日期：2026-10-23。方法：prompts/screening/international-value-quality.md。
+筛选复核日期：2026-11-25。方法：prompts/screening/international-value-quality.md。
 
 从可理解的客户价值、长期竞争优势、必要资本与普通股现金出发，选择值得持续研究的企业。
 
-当前 **101 家**：核心 **53 家**，验证层 **48 家**。
+当前 **106 家**：核心 **53 家**，验证层 **53 家**。
 
 本池只表达商业质量与持续研究价值，不表达买入、仓位、当前估值或单公司研究状态。
 
-证券清单：2026-10-23，129 家。本轮重点复核 129 家；缺少旧财务基线 0 家。
+证券清单：2026-11-25，5564 家。本轮重点复核 147 家；缺少旧财务基线 844 家。
 
-以大型成熟企业为基础，补充专业软件、工业服务、医疗工具及美国上市的海外经营企业，逐项判断129个证券条目。 名单保留入选和未纳入理由；财务初筛采用公开标准化指标，核心候选补查年度资本回报，金融与权益法企业改用适配口径。指标期间逐项标注，资料访问日为2026-10-23。此范围为跨行业候选集合，不含全部上市证券。
+合并Nasdaq Trader两份11月25日交易所代码目录，按证券名称和类型保留美国交易所普通股、上市房地产信托及存托凭证。排除场外、基金、优先股、单位组合、认股权及独立权利。尚无实体业务的上市普通股保留身份，缺经营依据时留在池外。证券计数保留不同普通股类别。范围内5564个证券条目，其中4720个匹配到标准化年度正收入及期末。缺口包括缺数据和尚无正收入的公司。以行业与经营机制组织候选，横向比较资本回报、现金转换和收入变化；银行、保险、公用资产另看资本约束与权益归属。逐项取舍覆盖147个候选。新增成员补查发行人材料；存量成员主要用新一期标准化数据复核，历年资料保留原口径。
 
-遗漏检查：按消费、金融网络、科技、医疗、工业服务、运输和长寿命资产做行业交叉检查；同时比较品牌与渠道、设备与耗材、平台与履约、资产与资本配置。相关行业的未纳入公司列明具体原因；同一发行人通过issuer标识合并计数。
+遗漏检查：从行业横截面补看事故车辆拍卖、临床外包、楼宇维保、专业信息、旅行分销和计量仪器。将土地与买家网络、临床预付款、路线密度、数据权利、获客开支及校准复购分别与同业比较。
 
-误入检查：剔除将周期高点、融资规模、客户资金或一次性授权收入当作护城河的解释；对回购放大ROE、净现金放大ROIC、权益法收入分母和金融现金口径单独处理。A层看多年兑现，B层保留具体可验证问题。
+误入检查：核对负权益产生的高账面回报、并购杠杆、支付预收、客户款项和单一商品周期。金佰利完成收购后需重建合并资本及现金口径；Paychex保留研究，分层调整为B。
 
 ## A：核心护城河池（53 家）
 
@@ -27,9 +27,9 @@
 - 主要反证：终端创新不足、渠道监管和供应链集中可能侵蚀用户忠诚。
 - 分层理由：长期复购与高资本回报支持生态优势，需持续验证换机与服务留存。
 - 关键研究问题：用户黏性是否仍能转化为换机和服务现金，而非只靠提价？
-- 指标（标准化财务）：FCF率 29.28%（TTM / 最近财报）；债务/EBITDA 0.45（TTM / 最近财报）
-- 指标口径：大量回购缩小权益与净投入资本，ROE或ROIC可被放大；现金与单位客户经济性优先。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/aapl/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/aapl/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 76.10%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 28.41%（滚动12个月至 2026-09-30）；收入同比（滚动） 15.06%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/aapl/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/aapl/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-AAPL/financials-overview/>)
 
 #### ADP 安德普 ADP · 人力资源服务
 
@@ -38,9 +38,9 @@
 - 主要反证：就业下行、新软件替代及合规事故影响留存。
 - 分层理由：多年高资本回报与客户流程黏性支持核心资格。
 - 关键研究问题：剔除客户资金利息顺风后，服务费与留存能否持续增长？
-- 指标（标准化财务）：ROIC 60.49%（TTM / 最近财报）；FCF率 23.90%（TTM / 最近财报）；债务/EBITDA 0.84（TTM / 最近财报）
-- 指标口径：客户代管资金不属于可自由分配现金，利息收益与服务利润需分开。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/adp/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/adp/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 42.99%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 21.36%（滚动12个月至 2026-09-30）；收入同比（滚动） 6.50%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/adp/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/adp/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-ADP/financials-overview/>)
 
 #### CL 高露洁 Colgate-Palmolive · 家庭与个人护理
 
@@ -49,9 +49,9 @@
 - 主要反证：本地品牌竞争、监管与新兴市场货币波动。
 - 分层理由：核心品类优势集中且长期兑现，回购放大的ROE需谨慎解读。
 - 关键研究问题：渠道变化后，核心品牌的复购和价格差能否维持？
-- 指标（标准化财务）：ROIC 45.56%（TTM / 最近财报）；FCF率 18.33%（TTM / 最近财报）；债务/EBITDA 1.53（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cl/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cl/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 26.26%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 17.80%（滚动12个月至 2026-09-30）；收入同比（滚动） 5.91%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cl/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cl/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-CL/financials-overview/>)
 
 #### COST 开市客 Costco · 零售与渠道
 
@@ -60,9 +60,20 @@
 - 主要反证：会员价值下降、新店回收变慢与人工物流成本上升。
 - 分层理由：长期续费和资本回报支持会员模式，低利润率不妨碍良好经济性。
 - 关键研究问题：会员节省、续费与新店资本回收能否同步维持？
-- 指标（标准化财务）：ROIC 37.34%（TTM / 最近财报）；FCF率 3.09%（TTM / 最近财报）；债务/EBITDA 0.69（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cost/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cost/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 22.45%（滚动12个月至 2026-08-31）；经营现金减购建支出占收入 3.09%（滚动12个月至 2026-08-31）；收入同比（滚动） 10.14%（滚动12个月至 2026-08-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cost/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cost/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-COST/financials-overview/>)
+
+#### CPRT Copart, Inc. · 事故车辆拍卖
+
+- 竞争优势：保险公司希望加快残值处置，堆场覆盖降低拖运距离，更多拆解商和跨境买家竞拍可提高回收额；稳定车源也吸引买方。
+- 普通股现金：2026财年经营净流入约16.04亿美元，购置长期实体资产约3.37亿美元。堆场土地投入跨年波动，灾害年份还要承担额外拖运和暂存成本。
+- 主要反证：保险公司集中、全损车源变化、买家出口限制和堆场利用率。
+- 分层理由：近三个财年均有扣除实体资本开支后的现金；车源增速变化时，应检验每车收益和新增土地的回收。
+- 关键研究问题：扣足堆场土地和灾害处理成本，每车服务现金及新增场地回报怎样变化？
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 16.10%（滚动12个月至 2026-07-31）；经营现金减购建支出占收入 27.12%（滚动12个月至 2026-07-31）；收入同比（滚动） 0.41%（滚动12个月至 2026-07-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[发行人正式财报或经营更新](<https://www.sec.gov/Archives/edgar/data/900075/000119312526405731/cprt-20260731.htm>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-CPRT/financials-overview/>)；[SEC XBRL · 历年合并现金流](<https://data.sec.gov/api/xbrl/companyfacts/CIK0000900075.json>)
 
 #### CTAS 辛塔斯 Cintas · 商业服务
 
@@ -71,9 +82,9 @@
 - 主要反证：就业下行、员工成本与并购过快削弱服务效率。
 - 分层理由：路线密度和多年资本回报支持可复制的服务经济性。
 - 关键研究问题：新服务能否复用已有路线，提高每次上门的现金贡献？
-- 指标（标准化财务）：ROIC 28.65%（TTM / 最近财报）；FCF率 17.59%（TTM / 最近财报）；债务/EBITDA 0.84（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ctas/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/ctas/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 28.86%（滚动12个月至 2026-08-31）；经营现金减购建支出占收入 17.53%（滚动12个月至 2026-08-31）；收入同比（滚动） 9.51%（滚动12个月至 2026-08-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/ctas/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ctas/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-CTAS/financials-overview/>)
 
 #### HD 家得宝 Home Depot · 零售与渠道
 
@@ -82,9 +93,9 @@
 - 主要反证：住宅周期、专业渠道整合及新增资本回报下滑。
 - 分层理由：长期渠道优势与资本回报支持资格，近年来回报下降需解释。
 - 关键研究问题：专业客户扩张能否覆盖新增库存、配送和收购资本？
-- 指标（标准化财务）：ROIC 20.08%（TTM / 最近财报）；FCF率 8.93%（TTM / 最近财报）；债务/EBITDA 2.32（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/hd/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/hd/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 21.16%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 8.82%（滚动12个月至 2026-10-31）；收入同比（滚动） 3.03%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/hd/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/hd/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-HD/financials-overview/>)
 
 #### KO 可口可乐 Coca-Cola · 食品饮料
 
@@ -93,9 +104,9 @@
 - 主要反证：健康偏好、低价替代和渠道议价侵蚀品牌溢价。
 - 分层理由：多年稳定资本回报与全球分销支持品牌价值。
 - 关键研究问题：提价放缓时，销量与装瓶伙伴回报能否维持？
-- 指标（标准化财务）：ROIC 20.10%（TTM / 最近财报）；FCF率 28.52%（TTM / 最近财报）；债务/EBITDA 2.54（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ko/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/ko/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 19.71%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 27.76%（滚动12个月至 2026-09-30）；收入同比（滚动） 7.74%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/ko/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ko/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-KO/financials-overview/>)
 
 #### LOW 劳氏 Lowe's · 零售与渠道
 
@@ -104,9 +115,9 @@
 - 主要反证：住宅需求低迷、专业客户拓展与竞争压低单位经济性。
 - 分层理由：多年资本效率支持渠道价值，须关注回报下降的持续性。
 - 关键研究问题：专业客户业务能否提高现有门店产出而不显著增加资本？
-- 指标（标准化财务）：ROIC 22.42%（TTM / 最近财报）；FCF率 7.74%（TTM / 最近财报）；债务/EBITDA 2.86（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/low/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/low/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 21.23%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 8.65%（滚动12个月至 2026-10-31）；收入同比（滚动） 9.64%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/low/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/low/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-LOW/financials-overview/>)
 
 #### MCD 麦当劳 McDonald's · 连锁餐饮
 
@@ -115,9 +126,9 @@
 - 主要反证：性价比降低、加盟商负担过重和消费习惯变化。
 - 分层理由：成熟加盟网络与多年现金兑现支持资格，不能只看总部轻资产。
 - 关键研究问题：加盟商投入和回报是否足以支持长期开店与服务质量？
-- 指标（标准化财务）：ROIC 17.80%（TTM / 最近财报）；FCF率 28.02%（TTM / 最近财报）；债务/EBITDA 3.28（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/mcd/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/mcd/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 17.19%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 26.96%（滚动12个月至 2026-09-30）；收入同比（滚动） 5.78%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/mcd/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/mcd/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-MCD/financials-overview/>)
 
 #### MNST Monster Beverage · 食品饮料
 
@@ -126,20 +137,9 @@
 - 主要反证：新品牌抢占年轻消费者、健康监管及渠道依赖。
 - 分层理由：多期高资本回报与现金支持品牌优势，品类集中仍需监测。
 - 关键研究问题：新品与国际市场能否保持复购，而非靠不断增加营销补贴？
-- 指标（标准化财务）：ROIC 36.31%（TTM / 最近财报）；FCF率 22.76%（TTM / 最近财报）；债务/EBITDA 0.03（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/mnst/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/mnst/financials/ratios/>)
-
-#### PAYX Paychex · 人力资源服务
-
-- 竞争优势：中小企业工资、税务和人事服务组合降低客户合规负担。
-- 普通股现金：经常收费和较低维护投入支持现金，客户资金及并购负担需分离。
-- 主要反证：中小企业倒闭、数字平台降价和并购整合拖累。
-- 分层理由：长期现金与资本效率支持服务关系，收购后的回报需跟踪。
-- 关键研究问题：扩大产品组合后，客户留存收益能否覆盖并购和服务成本？
-- 指标（标准化财务）：ROIC 27.38%（TTM / 最近财报）；FCF率 30.54%（TTM / 最近财报）
-- 指标口径：客户代管资金与自有现金分开；并购后的资本回报不直接沿用历史比例。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/payx/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/payx/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 24.70%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 19.83%（滚动12个月至 2026-09-30）；收入同比（滚动） 20.18%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/mnst/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/mnst/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-MNST/financials-overview/>)
 
 #### PEP 百事 PepsiCo · 食品饮料
 
@@ -148,9 +148,9 @@
 - 主要反证：健康偏好、销量弹性与渠道自有品牌竞争。
 - 分层理由：品牌与分销体系跨周期兑现，制造资本使现金转换低于纯授权模式。
 - 关键研究问题：价格上涨后，销量和渠道份额能否保持真实增长？
-- 指标（标准化财务）：ROIC 19.68%（TTM / 最近财报）；FCF率 10.66%（TTM / 最近财报）；债务/EBITDA 2.49（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/pep/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/pep/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 16.97%（滚动12个月至 2026-08-31）；经营现金减购建支出占收入 10.66%（滚动12个月至 2026-08-31）；收入同比（滚动） 6.36%（滚动12个月至 2026-08-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/pep/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/pep/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-PEP/financials-overview/>)
 
 #### PG 宝洁 Procter & Gamble · 家庭与个人护理
 
@@ -159,9 +159,9 @@
 - 主要反证：消费者降级、自有品牌与原料波动挤压经济利益。
 - 分层理由：成熟品类品牌与多年资本回报相互印证。
 - 关键研究问题：低增长环境下，产品创新能否继续支撑份额和单位毛利？
-- 指标（标准化财务）：ROIC 21.61%（TTM / 最近财报）；FCF率 17.45%（TTM / 最近财报）；债务/EBITDA 1.55（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/pg/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/pg/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 20.74%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 17.45%（滚动12个月至 2026-09-30）；收入同比（滚动） 3.52%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/pg/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/pg/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-PG/financials-overview/>)
 
 #### ROL 罗林斯 Rollins · 商业服务
 
@@ -170,9 +170,9 @@
 - 主要反证：服务事故、技术人员流失与高价并购。
 - 分层理由：客户续约与长期资本回报支持密度优势。
 - 关键研究问题：并购后的路线整合能否改善续约和每客户服务成本？
-- 指标（标准化财务）：ROIC 23.04%（TTM / 最近财报）；FCF率 16.85%（TTM / 最近财报）；债务/EBITDA 1.08（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/rol/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/rol/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 23.65%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 16.85%（滚动12个月至 2026-09-30）；收入同比（滚动） 8.35%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/rol/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/rol/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-ROL/financials-overview/>)
 
 #### ROST Ross Stores · 零售与渠道
 
@@ -181,9 +181,9 @@
 - 主要反证：采购供给收紧、消费疲软与区域扩张失误。
 - 分层理由：长期资本回报与运营效率支持核心资格。
 - 关键研究问题：全国扩张后，采购优势和单店回收期能否保持？
-- 指标（标准化财务）：ROIC 33.59%（TTM / 最近财报）；FCF率 11.38%（TTM / 最近财报）；债务/EBITDA 0.98（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/rost/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/rost/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 26.62%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 10.08%（滚动12个月至 2026-10-31）；收入同比（滚动） 14.25%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/rost/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/rost/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-ROST/financials-overview/>)
 
 #### RSG Republic Services · 环境服务
 
@@ -192,9 +192,9 @@
 - 主要反证：环保成本、竞争性投标与并购资本回报下降。
 - 分层理由：多年现金和稳定资本回报支持地域网络。
 - 关键研究问题：路线密度与终端处置能力能否在成本上涨时维持净收益？
-- 指标（标准化财务）：ROIC 11.06%（TTM / 最近财报）；FCF率 15.71%（TTM / 最近财报）；债务/EBITDA 2.63（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/rsg/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/rsg/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 8.77%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 14.85%（滚动12个月至 2026-09-30）；收入同比（滚动） 4.46%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/rsg/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/rsg/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-RSG/financials-overview/>)
 
 #### TJX TJX · 零售与渠道
 
@@ -203,9 +203,9 @@
 - 主要反证：品牌直营去库存、库存误判和门店扩张饱和。
 - 分层理由：跨周期高回报与采购体系支持资格。
 - 关键研究问题：供应结构变化时，采购能力能否继续维持折扣和库存效率？
-- 指标（标准化财务）：ROIC 30.13%（TTM / 最近财报）；FCF率 9.42%（TTM / 最近财报）；债务/EBITDA 1.12（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/tjx/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/tjx/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 29.19%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 9.51%（滚动12个月至 2026-10-31）；收入同比（滚动） 7.15%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/tjx/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/tjx/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-TJX/financials-overview/>)
 
 #### WM 废物管理 Waste Management · 环境服务
 
@@ -214,9 +214,9 @@
 - 主要反证：环保责任、收购整合与自动化项目回报不足。
 - 分层理由：稀缺设施和本地密度长期兑现，资本需求是优势成本的一部分。
 - 关键研究问题：新增环保与自动化投入能否提高正常化每吨现金收益？
-- 指标（标准化财务）：ROIC 11.64%（TTM / 最近财报）；FCF率 13.92%（TTM / 最近财报）；债务/EBITDA 2.85（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/wm/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/wm/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 9.64%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 14.35%（滚动12个月至 2026-09-30）；收入同比（滚动） 5.19%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/wm/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/wm/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-WM/financials-overview/>)
 
 #### WMT 沃尔玛 Walmart · 零售与渠道
 
@@ -225,9 +225,9 @@
 - 主要反证：渠道竞争、工资与配送成本吞噬规模优势。
 - 分层理由：长期供应链效率已兑现，数字渠道必须创造增量现金。
 - 关键研究问题：线上履约和广告是否改善整体回报，而非转移线下利润？
-- 指标（标准化财务）：ROIC 13.31%（TTM / 最近财报）；FCF率 1.84%（TTM / 最近财报）；债务/EBITDA 1.57（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/wmt/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/wmt/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 13.32%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 1.73%（滚动12个月至 2026-10-31）；收入同比（滚动） 5.99%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/wmt/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/wmt/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-WMT/financials-overview/>)
 
 ### 医疗平台、产品与牌照（4 家）
 
@@ -238,9 +238,9 @@
 - 主要反证：宠物诊疗负担、检测频率与竞争平台替代。
 - 分层理由：多年高回报支持工作流与耗材生态优势。
 - 关键研究问题：医院诊疗量放缓时，检测渗透和客户留存能否支撑现金？
-- 指标（标准化财务）：ROIC 47.23%（TTM / 最近财报）；FCF率 27.55%（TTM / 最近财报）；债务/EBITDA 0.66（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/idxx/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/idxx/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 54.87%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 27.80%（滚动12个月至 2026-09-30）；收入同比（滚动） 11.87%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/idxx/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/idxx/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-IDXX/financials-overview/>)
 
 #### ISRG 直觉外科 Intuitive Surgical · 医疗器械
 
@@ -249,9 +249,9 @@
 - 主要反证：竞争系统、手术报销和安全事件影响使用率。
 - 分层理由：装机生态与多年资本回报支持可重复商业模式。
 - 关键研究问题：新系统是否提高医生与医院经济性，并转化为持续手术量？
-- 指标（标准化财务）：ROIC 23.97%（TTM / 最近财报）；FCF率 31.08%（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/isrg/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/isrg/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 17.97%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 31.08%（滚动12个月至 2026-09-30）；收入同比（滚动） 20.45%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/isrg/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/isrg/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-ISRG/financials-overview/>)
 
 #### SYK 史赛克 Stryker · 医疗器械
 
@@ -260,9 +260,9 @@
 - 主要反证：医院压价、产品召回和整合失败。
 - 分层理由：长期临床服务与资本回报支持产品组合，收购不可替代内生创新。
 - 关键研究问题：机器人和新器械能否提升临床结果并带来真实增量回报？
-- 指标（标准化财务）：ROIC 12.52%（TTM / 最近财报）；FCF率 18.20%（TTM / 最近财报）；债务/EBITDA 2.04（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/syk/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/syk/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 9.66%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 17.39%（滚动12个月至 2026-09-30）；收入同比（滚动） 7.87%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/syk/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/syk/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-SYK/financials-overview/>)
 
 #### ZTS 硕腾 Zoetis · 动物保健
 
@@ -271,9 +271,9 @@
 - 主要反证：药物安全性、仿制竞争和宠物支出减弱。
 - 分层理由：多年稳定资本回报与渠道积累支持长期资格。
 - 关键研究问题：新产品的长期安全与复购能否补偿成熟产品竞争压力？
-- 指标（标准化财务）：ROIC 27.28%（TTM / 最近财报）；FCF率 24.31%（TTM / 最近财报）；债务/EBITDA 2.21（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/zts/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/zts/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 20.33%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 23.96%（滚动12个月至 2026-09-30）；收入同比（滚动） 1.18%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/zts/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/zts/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-ZTS/financials-overview/>)
 
 ### 科技与工业制造（14 家）
 
@@ -284,9 +284,9 @@
 - 主要反证：出口许可、少数大客户投资节奏及高数值孔径技术兑现延迟。
 - 分层理由：技术系统壁垒与多年高回报互相印证，资本开支周期影响交付节奏。
 - 关键研究问题：下一代设备的客户经济性和服务收入能否延续技术租金？
-- 指标（标准化财务）：ROIC 92.13%（TTM / 最近财报）；FCF率 53.61%（TTM / 最近财报）；债务/EBITDA 0.12（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/asml/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/asml/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 59.22%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 52.57%（滚动12个月至 2026-09-30）；收入同比（滚动） 28.99%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/asml/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/asml/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-ASML/financials-overview/>)
 
 #### AZO AutoZone · 汽车后市场
 
@@ -295,9 +295,9 @@
 - 主要反证：商用客户竞争、电动车渗透与国际扩张效率下降。
 - 分层理由：长期资本回报与履约网络支持优势，需跟踪近期回报下滑。
 - 关键研究问题：商用业务增长能否抵消车主自修需求变化并维持周转？
-- 指标（标准化财务）：ROIC 26.31%（TTM / 最近财报）；FCF率 8.17%（TTM / 最近财报）；债务/EBITDA 2.66（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/azo/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/azo/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 27.06%（滚动12个月至 2026-08-31）；经营现金减购建支出占收入 8.93%（滚动12个月至 2026-08-31）；收入同比（滚动） 7.39%（滚动12个月至 2026-08-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/azo/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/azo/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-AZO/financials-overview/>)
 
 #### CDNS 楷登电子 Cadence · 电子设计软件
 
@@ -306,9 +306,9 @@
 - 主要反证：AI工具改变开发流程、客户集中与并购降低资本效率。
 - 分层理由：多年高资本回报支持流程壁垒，近期回报变化需跟踪。
 - 关键研究问题：AI辅助设计会强化现有流程黏性，还是降低工具替换难度？
-- 指标（标准化财务）：ROIC 17.23%（TTM / 最近财报）；FCF率 28.76%（TTM / 最近财报）；债务/EBITDA 1.17（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cdns/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cdns/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 16.52%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 28.76%（滚动12个月至 2026-09-30）；收入同比（滚动） 17.64%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cdns/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cdns/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-CDNS/financials-overview/>)
 
 #### ECL 艺康 Ecolab · 工业服务
 
@@ -317,9 +317,9 @@
 - 主要反证：客户压缩服务预算、技术替代和新增业务回报不足。
 - 分层理由：耗材与服务组合长期兑现，客户节能节水收益支持续约。
 - 关键研究问题：服务为客户节约的成本能否支撑长期收费与交叉销售？
-- 指标（标准化财务）：ROIC 13.38%（TTM / 最近财报）；FCF率 11.13%（TTM / 最近财报）；债务/EBITDA 3.18（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ecl/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/ecl/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 10.09%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 10.33%（滚动12个月至 2026-09-30）；收入同比（滚动） 9.33%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/ecl/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ecl/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-ECL/financials-overview/>)
 
 #### FAST 快扣 Fastenal · 工业分销
 
@@ -328,9 +328,9 @@
 - 主要反证：工业减产、客户自建采购系统或驻场投资效率下降。
 - 分层理由：多年高资本回报印证服务网络效率。
 - 关键研究问题：驻场密度提升后，库存和服务成本能否低于新增客户收入？
-- 指标（标准化财务）：ROIC 32.59%（TTM / 最近财报）；FCF率 12.96%（TTM / 最近财报）；债务/EBITDA 0.20（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/fast/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/fast/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 32.80%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 12.96%（滚动12个月至 2026-09-30）；收入同比（滚动） 13.53%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/fast/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/fast/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-FAST/financials-overview/>)
 
 #### GWW 固安捷 Grainger · 工业分销
 
@@ -339,9 +339,9 @@
 - 主要反证：数字平台价格透明、库存扩大和大客户议价。
 - 分层理由：可靠供货与长期资本回报支持渠道优势。
 - 关键研究问题：更多SKU和数字流量能否提高客户留存及每单位库存产出？
-- 指标（标准化财务）：ROIC 33.20%（TTM / 最近财报）；FCF率 8.01%（TTM / 最近财报）；债务/EBITDA 0.84（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/gww/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/gww/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 32.50%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 8.86%（滚动12个月至 2026-09-30）；收入同比（滚动） 9.12%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/gww/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/gww/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-GWW/financials-overview/>)
 
 #### HEI HEICO · 航空零部件
 
@@ -350,9 +350,9 @@
 - 主要反证：航空周期、原厂反制和高价收购。
 - 分层理由：认证产品与多年资本回报支持长期专业优势。
 - 关键研究问题：替代零件渗透能否继续增长，同时保持认证质量与收购纪律？
-- 指标（标准化财务）：ROIC 13.06%（TTM / 最近财报）；FCF率 19.90%（TTM / 最近财报）；债务/EBITDA 1.68（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/hei/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/hei/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 12.05%（滚动12个月至 2026-07-31）；经营现金减购建支出占收入 19.90%（滚动12个月至 2026-07-31）；收入同比（滚动） 20.69%（滚动12个月至 2026-07-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/hei/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/hei/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-HEI/financials-overview/>)
 
 #### INTU 财捷 Intuit · 财税与经营软件
 
@@ -361,9 +361,9 @@
 - 主要反证：免费报税渠道、AI代理和监管改变获客路径或收费能力。
 - 分层理由：长期嵌入财税流程，现金与资本回报支持客户关系价值。
 - 关键研究问题：监管与AI改变报税方式后，企业端工作流能保持多高留存？
-- 指标（标准化财务）：ROIC 22.89%（TTM / 最近财报）；FCF率 40.39%（TTM / 最近财报）；债务/EBITDA 1.20（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/intu/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/intu/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 18.99%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 41.09%（滚动12个月至 2026-10-31）；收入同比（滚动） 12.78%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/intu/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/intu/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-INTU/financials-overview/>)
 
 #### ITW 伊利诺伊工具 Illinois Tool Works · 专业工业制造
 
@@ -372,9 +372,9 @@
 - 主要反证：精简产品损害长期创新，终端周期与客户迁移。
 - 分层理由：长期高回报支持专业产品组合和运营纪律。
 - 关键研究问题：利润率改善是否仍伴随产品创新、客户留存和有机增长？
-- 指标（标准化财务）：ROIC 29.32%（TTM / 最近财报）；FCF率 17.74%（TTM / 最近财报）；债务/EBITDA 1.99（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/itw/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/itw/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 30.49%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 17.23%（滚动12个月至 2026-09-30）；收入同比（滚动） 4.80%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/itw/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/itw/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-ITW/financials-overview/>)
 
 #### KLAC 科磊 KLA · 半导体设备
 
@@ -383,9 +383,9 @@
 - 主要反证：工艺路线改变、竞争技术突破和出口管制缩小可服务市场。
 - 分层理由：多年资本回报与工艺嵌入支持优势，服务收入缓冲部分设备周期。
 - 关键研究问题：制程复杂化带来的检测需求能否保持每片晶圆的价值量？
-- 指标（标准化财务）：ROIC 66.75%（TTM / 最近财报）；FCF率 27.74%（TTM / 最近财报）；债务/EBITDA 1.01（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/klac/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/klac/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 44.77%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 27.85%（滚动12个月至 2026-09-30）；收入同比（滚动） 15.80%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/klac/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/klac/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-KLAC/financials-overview/>)
 
 #### LIN 林德 Linde · 工业气体与材料
 
@@ -394,9 +394,9 @@
 - 主要反证：能源成本传导、客户停产和大型项目执行失误。
 - 分层理由：长期合同和资产网络支持稳定现金，收购资本不能从回报考核中剔除。
 - 关键研究问题：新项目在能源与利用率压力下，能否取得可接受资本回报？
-- 指标（标准化财务）：ROIC 12.37%（TTM / 最近财报）；FCF率 14.03%（TTM / 最近财报）；债务/EBITDA 1.98（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/lin/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/lin/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 11.95%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 14.02%（滚动12个月至 2026-09-30）；收入同比（滚动） 8.16%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/lin/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/lin/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-LIN/financials-overview/>)
 
 #### ORLY 奥莱利 O'Reilly · 汽车后市场
 
@@ -405,9 +405,9 @@
 - 主要反证：电动车改变零件需求，渠道竞争及人工成本提高。
 - 分层理由：多年高回报体现网络效率，车辆保有量和车龄提供重复需求。
 - 关键研究问题：车辆技术变化后，配件供应与服务优势能否迁移？
-- 指标（标准化财务）：ROIC 36.48%（TTM / 最近财报）；FCF率 11.61%（TTM / 最近财报）；债务/EBITDA 2.01（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/orly/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/orly/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 36.58%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 11.07%（滚动12个月至 2026-09-30）；收入同比（滚动） 8.73%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/orly/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/orly/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-ORLY/financials-overview/>)
 
 #### PH 派克汉尼汾 Parker-Hannifin · 专业工业制造
 
@@ -416,9 +416,9 @@
 - 主要反证：工业周期、产品质量和收购整合。
 - 分层理由：多年的专业产品回报与现金支持核心资格。
 - 关键研究问题：航空与工业产品组合能否在周期下行时维持现金与客户黏性？
-- 指标（标准化财务）：ROIC 15.96%（TTM / 最近财报）；FCF率 18.16%（TTM / 最近财报）；债务/EBITDA 1.52（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ph/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/ph/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 14.91%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 17.20%（滚动12个月至 2026-09-30）；收入同比（滚动） 11.87%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/ph/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ph/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-PH/financials-overview/>)
 
 #### SHW 宣伟 Sherwin-Williams · 工业气体与材料
 
@@ -427,9 +427,9 @@
 - 主要反证：建筑需求走弱、原料通胀和专业客户转向低价产品。
 - 分层理由：多年稳定资本回报支持渠道与产品优势。
 - 关键研究问题：施工客户愿意为产品、配色与即时服务支付多少持续差价？
-- 指标（标准化财务）：ROIC 16.39%（TTM / 最近财报）；FCF率 13.16%（TTM / 最近财报）；债务/EBITDA 2.73（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/shw/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/shw/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 17.56%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 12.35%（滚动12个月至 2026-09-30）；收入同比（滚动） 7.03%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/shw/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/shw/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-SHW/financials-overview/>)
 
 ### 基础设施、金融与资源（16 家）
 
@@ -440,9 +440,9 @@
 - 主要反证：保险周期和大客户流失，整合影响服务质量。
 - 分层理由：多年的服务现金和资本回报支持关系优势。
 - 关键研究问题：数据与顾问服务是否持续改善客户结果，并保持收费能力？
-- 指标（标准化财务）：ROIC 16.09%（TTM / 最近财报）；FCF率 18.48%（TTM / 最近财报）；债务/EBITDA 2.55（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/aon/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/aon/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 12.94%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 18.47%（滚动12个月至 2026-09-30）；收入同比（滚动） 3.29%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/aon/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/aon/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-AON/financials-overview/>)
 
 #### BRK.B 伯克希尔 Berkshire Hathaway · 保险与多元经营
 
@@ -451,9 +451,9 @@
 - 主要反证：规模降低再投资机会，接班、灾害损失和公用事业责任影响配置。
 - 分层理由：长期资本纪律与多业务现金支持资格，须按分部拆解集团收益。
 - 关键研究问题：继任管理下，新增资本能否持续投向高质量业务并控制风险？
-- 指标（标准化财务）：报表ROE 12.12%（TTM / 最近财报）
-- 指标口径：保险与经营资产混合，报表ROE受证券公允价值影响；需按承保、铁路、能源及其他经营拆分。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/brk.b/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/brk.b/financials/ratios/>)
+- 指标（公开财报与标准化财务）：滚动普通权益回报参考（ROE） 10.56%（滚动12个月至 2026-09-30）；收入同比（滚动） 6.24%（滚动12个月至 2026-09-30）
+- 指标口径：保险与经营资产混合，报表ROE受证券公允价值影响；需按承保、铁路、能源及其他经营拆分。 滚动数据按所列期末计算。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/brk.b/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/brk.b/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-BRK-B/financials-overview/>)
 
 #### CB 安达 Chubb · 财产保险
 
@@ -462,9 +462,9 @@
 - 主要反证：社会通胀、巨灾和历史准备金不足。
 - 分层理由：多险种承保纪律与现金生成支持长期资格，仍需跨周期看损失发展。
 - 关键研究问题：剔除历史准备金释放后，承保优势是否仍然稳固？
-- 指标（公司披露）：财险综合成本率 85.7%（FY2025）；净保费 548亿美元（FY2025）
-- 指标口径：净保费为集团全年，综合成本率为财险；须核巨灾及历史准备金变化，不据单年低赔付外推。
-- 来源：[Chubb 2025年度业绩：承保与利润](<https://investors.chubb.com/News--Events/news/news-details/2026/Chubb-Reports-Fourth-Quarter/default.aspx>)
+- 指标（公开财报与标准化财务）：财险综合成本率 85.7%（FY2025）；净保费 548亿美元（FY2025）；滚动普通权益回报参考（ROE） 15.48%（滚动12个月至 2026-09-30）；收入同比（滚动） 5.89%（滚动12个月至 2026-09-30）
+- 指标口径：净保费为集团全年，综合成本率为财险；须核巨灾及历史准备金变化，不据单年低赔付外推。 滚动指标按所列期末和数据服务商口径计算。
+- 来源：[Chubb 2025年度业绩：承保与利润](<https://investors.chubb.com/News--Events/news/news-details/2026/Chubb-Reports-Fourth-Quarter/default.aspx>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-CB/financials-overview/>)
 
 #### CBOE Cboe · 交易与清算
 
@@ -473,9 +473,9 @@
 - 主要反证：监管、专属合约安排和交易量结构改变。
 - 分层理由：成熟衍生品网络与资本回报支持核心资格。
 - 关键研究问题：核心期权现金能否持续，同时限制低回报扩张？
-- 指标（标准化财务）：ROIC 26.92%（TTM / 最近财报）；FCF率 37.04%（TTM / 最近财报）；债务/EBITDA 0.80（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cboe/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cboe/financials/ratios/>)
+- 指标（公开财报与标准化财务）：滚动普通权益回报参考（ROE） 27.28%（滚动12个月至 2026-09-30）；收入同比（滚动） 14.31%（滚动12个月至 2026-09-30）
+- 指标口径：金融及权益投资类业务结合监管资本、权益法被投资企业分派和母公司可用资金；期间分别标注。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cboe/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cboe/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/CBOE-CBOE/financials-overview/>)
 
 #### CME 芝商所 CME · 交易与清算
 
@@ -484,9 +484,9 @@
 - 主要反证：主力合约流动性外迁、监管与低波动环境减少交易。
 - 分层理由：成熟合约网络难迁移，现金记录支持优势；不能外推波动高峰。
 - 关键研究问题：不同利率与波动环境下，核心合约份额和每合约收益能否维持？
-- 指标（标准化财务）：ROIC 12.69%（TTM / 最近财报）；FCF率 62.34%（TTM / 最近财报）；债务/EBITDA 0.69（TTM / 最近财报）
-- 指标口径：清算资金与股东自有资金必须分离；FCF为供应商口径代理，仍需计足技术和风险资本。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cme/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cme/financials/ratios/>)
+- 指标（公开财报与标准化财务）：滚动普通权益回报参考（ROE） 16.15%（滚动12个月至 2026-09-30）；收入同比（滚动） 8.99%（滚动12个月至 2026-09-30）
+- 指标口径：金融及权益投资类业务结合监管资本、权益法被投资企业分派和母公司可用资金；期间分别标注。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cme/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cme/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-CME/financials-overview/>)
 
 #### CNI 加拿大国家铁路 CN · 铁路与物流
 
@@ -495,9 +495,9 @@
 - 主要反证：商品运量、监管、天气和服务可靠性影响回报。
 - 分层理由：多年稳定资本回报支持资产网络价值。
 - 关键研究问题：运量低迷时，仍能否在充分维护后保持良好现金回报？
-- 指标（标准化财务）：ROIC 12.32%（TTM / 最近财报）；FCF率 19.98%（TTM / 最近财报）；债务/EBITDA 2.42（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cni/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cni/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 11.41%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 20.90%（滚动12个月至 2026-09-30）；收入同比（滚动） 4.46%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/cni/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cni/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-CNI/financials-overview/>)
 
 #### JPM 摩根大通 JPMorgan Chase · 银行
 
@@ -506,9 +506,9 @@
 - 主要反证：信用周期、复杂交易风险和监管资本要求上升。
 - 分层理由：资本缓冲与多元客户网络支持长期经营，仍需按信贷周期检验。
 - 关键研究问题：低利率或信用压力下，核心存款与服务收入能否维持资本生成？
-- 指标（公司披露）：ROE 17%（FY2025）；ROTCE 20%（FY2025）；CET1（标准法） 14.5%（FY2025）
-- 指标口径：ROE和ROTCE是全年回报；CET1为年末资本。银行不使用工业企业FCF率或债务/EBITDA筛选。
-- 来源：[JPMorgan 2025全年及第四季度业绩](<https://www.sec.gov/Archives/edgar/data/19617/000162828026001902/a4q25erfexhibit991narrative.htm>)
+- 指标（公开财报与标准化财务）：ROE 17%（FY2025）；ROTCE 20%（FY2025）；CET1（标准法） 14.5%（FY2025）；滚动普通权益回报参考（ROE） 17.93%（滚动12个月至 2026-09-30）；收入同比（滚动） 8.94%（滚动12个月至 2026-09-30）
+- 指标口径：ROE和ROTCE是全年回报；CET1为年末资本。银行不使用工业企业FCF率或债务/EBITDA筛选。 滚动指标按所列期末和数据服务商口径计算。
+- 来源：[JPMorgan 2025全年及第四季度业绩](<https://www.sec.gov/Archives/edgar/data/19617/000162828026001902/a4q25erfexhibit991narrative.htm>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-JPM/financials-overview/>)
 
 #### MA 万事达 Mastercard · 支付网络
 
@@ -517,9 +517,9 @@
 - 主要反证：费率监管、银行议价与替代支付压缩收费空间。
 - 分层理由：网络覆盖与多年高资本回报相符，增值服务增加客户黏性。
 - 关键研究问题：增值服务能否形成独立客户价值，而非只依附卡交易增长？
-- 指标（标准化财务）：ROIC 93.78%（TTM / 最近财报）；FCF率 47.61%（TTM / 最近财报）；债务/EBITDA 1.11（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ma/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/ma/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 60.75%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 41.95%（滚动12个月至 2026-09-30）；收入同比（滚动） 15.31%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/ma/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ma/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-MA/financials-overview/>)
 
 #### MCO 穆迪 Moody's · 金融信息与评级
 
@@ -528,9 +528,9 @@
 - 主要反证：评级信誉受损、债券发行低迷和监管开放竞争。
 - 分层理由：标准地位与多年资本回报支持核心资格，周期波动主要影响发行端。
 - 关键研究问题：分析订阅能否降低发行周期依赖，同时保持客户使用价值？
-- 指标（标准化财务）：ROIC 31.45%（TTM / 最近财报）；FCF率 36.41%（TTM / 最近财报）；债务/EBITDA 1.83（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/mco/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/mco/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 27.04%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 36.41%（滚动12个月至 2026-09-30）；收入同比（滚动） 9.00%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/mco/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/mco/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-MCO/financials-overview/>)
 
 #### MRSH 达信 Marsh · 保险经纪与专业服务
 
@@ -539,9 +539,9 @@
 - 主要反证：客户议价、人才流失和保险费率转弱。
 - 分层理由：关系网络和服务现金多年兑现，承保风险主要留在保险人。
 - 关键研究问题：保险费率回落时，有机客户增长与留存能否维持利润？
-- 指标（标准化财务）：ROIC 14.97%（TTM / 最近财报）；FCF率 14.60%（TTM / 最近财报）；债务/EBITDA 2.67（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/mmc/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/mmc/financials/ratios/>)；[Marsh证券代码自2026-01-14变更为MRSH](<https://www.marsh.com/en/corp/about/news/marsh-mclennan-to-change-nyse-symbol-to-mrsh.html>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 11.54%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 14.59%（滚动12个月至 2026-09-30）；收入同比（滚动） 7.64%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/mmc/financials/ratios/>)；[Marsh证券代码自2026-01-14变更为MRSH](<https://www.marsh.com/en/corp/about/news/marsh-mclennan-to-change-nyse-symbol-to-mrsh.html>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-MRSH/financials-overview/>)
 
 #### MSCI MSCI · 指数与投资数据
 
@@ -550,9 +550,9 @@
 - 主要反证：指数费率下降、客户集中与资产管理需求变化。
 - 分层理由：标准与工作流切换成本持续兑现，杠杆要求保持分配纪律。
 - 关键研究问题：被动投资规模增长之外，许可费与分析续约有多强韧性？
-- 指标（标准化财务）：ROIC 40.64%（TTM / 最近财报）；FCF率 45.89%（TTM / 最近财报）；债务/EBITDA 3.35（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/msci/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/msci/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 36.64%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 41.80%（滚动12个月至 2026-09-30）；收入同比（滚动） 12.33%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/msci/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/msci/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-MSCI/financials-overview/>)
 
 #### PGR 前进保险 Progressive · 财产保险
 
@@ -561,9 +561,9 @@
 - 主要反证：赔付通胀、定价滞后和灾害可能改变综合成本率。
 - 分层理由：承保与客户增长已有长期记录，须剔除准备金释放和费率周期顺风。
 - 关键研究问题：在赔付成本再次上升时，定价响应和客户留存能否兼顾？
-- 指标（公司披露）：综合成本率 87.4%（FY2025）
-- 指标口径：综合成本率包含历史准备金发展影响，需结合当事故年、赔付通胀和准备金充分性；保费流入不等于股东现金。
-- 来源：[Progressive 2025年度经营回顾](<https://www.sec.gov/Archives/edgar/data/80661/000008066126000086/pgr-20251231exhibit99.htm>)
+- 指标（公开财报与标准化财务）：综合成本率 87.4%（FY2025）；滚动普通权益回报参考（ROE） 33.24%（滚动12个月至 2026-09-30）；收入同比（滚动） 7.65%（滚动12个月至 2026-09-30）
+- 指标口径：综合成本率包含历史准备金发展影响，需结合当事故年、赔付通胀和准备金充分性；保费流入不等于股东现金。 滚动指标按所列期末和数据服务商口径计算。
+- 来源：[Progressive 2025年度经营回顾](<https://www.sec.gov/Archives/edgar/data/80661/000008066126000086/pgr-20251231exhibit99.htm>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-PGR/financials-overview/>)
 
 #### SPGI 标普全球 S&P Global · 金融信息与评级
 
@@ -572,9 +572,9 @@
 - 主要反证：债券发行周期、指数费率竞争和监管削弱收入。
 - 分层理由：标准资产与多业务现金有长期支持，低于历史的账面ROIC需结合并购解释。
 - 关键研究问题：合并后的数据与工作流协同能否产生高于收购成本的回报？
-- 指标（标准化财务）：ROIC 11.13%（TTM / 最近财报）；FCF率 34.57%（TTM / 最近财报）；债务/EBITDA 1.91（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/spgi/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/spgi/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 13.32%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 35.45%（滚动12个月至 2026-09-30）；收入同比（滚动） 5.99%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/spgi/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/spgi/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-SPGI/financials-overview/>)
 
 #### UNP 联合太平洋 Union Pacific · 铁路与物流
 
@@ -583,9 +583,9 @@
 - 主要反证：运量结构变化、劳资与监管要求、服务质量下降。
 - 分层理由：长期资产网络和资本回报支持核心资格，维护削减不能当永久效率。
 - 关键研究问题：维持安全和服务后，网络能产生多少跨周期剩余现金？
-- 指标（标准化财务）：ROIC 16.46%（TTM / 最近财报）；FCF率 25.39%（TTM / 最近财报）；债务/EBITDA 2.30（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/unp/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/unp/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 15.24%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 25.39%（滚动12个月至 2026-09-30）；收入同比（滚动） 7.40%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/unp/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/unp/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-UNP/financials-overview/>)
 
 #### V Visa · 支付网络
 
@@ -594,9 +594,9 @@
 - 主要反证：账户直连与即时支付分流，监管与大型客户重新分配利润。
 - 分层理由：多年资本回报和跨境服务支持网络优势，激励增速是关键反证。
 - 关键研究问题：扣除客户激励后，每笔支付的净经济利益能否维持？
-- 指标（标准化财务）：ROIC 54.82%（TTM / 最近财报）；FCF率 47.23%（TTM / 最近财报）；债务/EBITDA 0.76（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/v/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/v/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 40.99%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 48.05%（滚动12个月至 2026-09-30）；收入同比（滚动） 14.76%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/v/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/v/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-V/financials-overview/>)
 
 #### VRSN 威瑞信 VeriSign · 互联网基础设施
 
@@ -605,13 +605,13 @@
 - 主要反证：合同续期、监管定价限制和域名需求停滞。
 - 分层理由：服务基础设施长期收现，优势依赖明确的合同权利边界。
 - 关键研究问题：续约与收费条款能否长期维持，域名数量能否稳住？
-- 指标（标准化财务）：FCF率 59.12%（TTM / 最近财报）；债务/EBITDA 1.49（TTM / 最近财报）
-- 指标口径：负权益及较小净投入资本使ROE、ROIC不可比，优先核现金转换、债务与合同权利。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/vrsn/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/vrsn/financials/ratios/>)
+- 指标（公开财报与标准化财务）：经营现金减购建支出占收入 59.12%（滚动12个月至 2026-09-30）；收入同比（滚动） 6.46%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/vrsn/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/vrsn/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-VRSN/financials-overview/>)
 
-## B：质量研究池（48 家）
+## B：质量研究池（53 家）
 
-### 消费、品牌与网络（13 家）
+### 消费、品牌与网络（14 家）
 
 #### ADI 亚德诺 Analog Devices · 模拟与混合信号芯片
 
@@ -620,9 +620,9 @@
 - 主要反证：工业周期、客户整合采购及竞争性替代削弱毛利和周转。
 - 分层理由：现金质量较好，并购后的全部资本回报仍应单独核算。
 - 关键研究问题：纳入收购成本后，长期设计优势能创造多少增量资本回报？
-- 指标（标准化财务）：ROIC 10.96%（TTM / 最近财报）；FCF率 35.57%（TTM / 最近财报）；债务/EBITDA 1.31（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/adi/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 11.60%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 35.92%（滚动12个月至 2026-10-31）；收入同比（滚动） 37.74%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/adi/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-ADI/financials-overview/>)
 
 #### AMZN 亚马逊 Amazon · 电商与云平台
 
@@ -631,9 +631,20 @@
 - 主要反证：零售竞争、云资本强度与监管同时挤压回报，供应商信用可能反转。
 - 分层理由：两类已商业化网络值得研究，集团现金受高投入和分部差异影响。
 - 关键研究问题：成熟履约网络与AWS分别需要多少维持投入，剩余现金归谁？
-- 指标（标准化财务）：ROIC 11.94%（TTM / 最近财报）；FCF代理 负值（TTM）；债务/EBITDA 1.35（TTM / 最近财报）
-- 指标口径：标准化经营现金扣资本开支后为负，需优先核投入和周转的可持续性。TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/amzn/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 19.38%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 -5.88%（滚动12个月至 2026-09-30）；收入同比（滚动） 15.35%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/amzn/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-AMZN/financials-overview/>)
+
+#### BKNG Booking Holdings Inc. · 在线住宿预订
+
+- 竞争优势：跨国住宿供给、用户评价及支付能力降低预订摩擦，规模能改善匹配，但流量入口仍影响获客费用。
+- 普通股现金：商户模式扩张改变客户预收和付款时间；应按完整旅行周期扣除营销、支付、退款及客服成本。
+- 主要反证：搜索平台或AI入口截流、酒店直订、监管及退款风险。
+- 分层理由：平台已有现金兑现，须拆分自然流量增长与购买流量、提前收款带来的改善。
+- 关键研究问题：扣除获客和支付成本后，每间已履约客房的贡献是否提高？
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 71.87%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 32.84%（滚动12个月至 2026-09-30）；收入同比（滚动） 8.01%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[发行人正式财报或经营更新](<https://www.sec.gov/Archives/edgar/data/1075531/000107553126000045/bkng-20260930.htm>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-BKNG/financials-overview/>)；[SEC XBRL · 历年合并现金流](<https://data.sec.gov/api/xbrl/companyfacts/CIK0001075531.json>)
 
 #### CMG Chipotle · 连锁餐饮
 
@@ -642,9 +653,9 @@
 - 主要反证：食品安全、客流减弱、人工成本及新区域扩张效率下降。
 - 分层理由：已形成可重复单店模式，长期品牌和扩张资本回报仍需验证。
 - 关键研究问题：成熟门店客流和新店回收能否在较低提价环境下维持？
-- 指标（标准化财务）：ROIC 20.99%（TTM / 最近财报）；FCF率 12.63%（TTM / 最近财报）；债务/EBITDA 1.81（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cmg/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 17.61%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 11.88%（滚动12个月至 2026-09-30）；收入同比（滚动） 7.86%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cmg/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-CMG/financials-overview/>)
 
 #### GOOGL Alphabet 谷歌 · 搜索与数字广告
 
@@ -653,20 +664,9 @@
 - 主要反证：AI问答分流搜索、默认入口规则改变，单位查询成本上升。
 - 分层理由：既有广告网络已兑现，搜索商业模式正在经历技术与监管检验。
 - 关键研究问题：AI搜索的获客、推理成本和商业转化能否守住单位利润？
-- 指标（标准化财务）：ROIC 24.93%（TTM / 最近财报）；FCF率 11.95%（TTM / 最近财报）；债务/EBITDA 0.68（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/googl/statistics/>)
-
-#### KMB 金佰利 Kimberly-Clark · 家庭与个人护理
-
-- 竞争优势：纸品和护理品牌结合渠道及规模生产，服务长期日常消费。
-- 普通股现金：成熟业务收现，生产设备、原料与品牌支持需要持续资本。
-- 主要反证：自有品牌竞争、人口结构和原料成本影响收益。
-- 分层理由：成熟品牌与生产效率有记录，长期销量与产品创新需验证。
-- 关键研究问题：低增长环境下，产品改善能否保持销量和正常化资本回报？
-- 指标（标准化财务）：ROIC 25.35%（TTM / 最近财报）；FCF率 10.98%（TTM / 最近财报）；债务/EBITDA 1.74（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/kmb/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 37.87%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 4.19%（滚动12个月至 2026-09-30）；收入同比（滚动） 22.21%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/googl/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-GOOGL/financials-overview/>)
 
 #### LULU lululemon · 运动服饰
 
@@ -675,9 +675,9 @@
 - 主要反证：品牌热度、竞争设计及国际扩张回报下降。
 - 分层理由：已有品牌溢价和现金，跨品类与跨地区持续性仍需检验。
 - 关键研究问题：产品创新是否能保持复购，并避免扩品稀释品牌定位？
-- 指标（标准化财务）：ROIC 23.70%（TTM / 最近财报）；FCF率 12.21%（TTM / 最近财报）；债务/EBITDA 0.71（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/lulu/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 22.84%（滚动12个月至 2026-07-31）；经营现金减购建支出占收入 12.21%（滚动12个月至 2026-07-31）；收入同比（滚动） 1.74%（滚动12个月至 2026-07-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/lulu/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-LULU/financials-overview/>)
 
 #### META Meta · 社交与数字广告
 
@@ -686,9 +686,9 @@
 - 主要反证：用户时长向新平台迁移，隐私规则限制归因，管理层扩张缺乏资本约束。
 - 分层理由：广告效率优势明确，大额长期项目对现金的占用仍需约束。
 - 关键研究问题：新增算力改善广告转化产生的现金，能否覆盖全部增量投入？
-- 指标（标准化财务）：ROIC 29.62%（TTM / 最近财报）；FCF率 11.86%（TTM / 最近财报）；债务/EBITDA 0.95（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/meta/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 24.08%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 11.86%（滚动12个月至 2026-09-30）；收入同比（滚动） 27.53%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/meta/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-META/financials-overview/>)
 
 #### NKE 耐克 Nike · 运动服饰
 
@@ -697,9 +697,20 @@
 - 主要反证：新品创新不足、渠道关系失衡和新品牌分流。
 - 分层理由：品牌基础深，恢复产品吸引力与渠道经济性是决定性问题。
 - 关键研究问题：减少折扣并修复渠道后，消费者是否仍愿意持续选择核心产品？
-- 指标（标准化财务）：ROIC 18.86%（TTM / 最近财报）；FCF率 4.59%（TTM / 最近财报）；债务/EBITDA 1.84（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/nke/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 12.93%（滚动12个月至 2026-08-31）；经营现金减购建支出占收入 4.59%（滚动12个月至 2026-08-31）；收入同比（滚动） -1.36%（滚动12个月至 2026-08-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/nke/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-NKE/financials-overview/>)
+
+#### PAYX Paychex · 人力资源服务
+
+- 竞争优势：中小企业工资、税务和人事服务组合降低客户合规负担。
+- 普通股现金：经常收费和较低维护投入支持现金，客户资金及并购负担需分离。
+- 主要反证：中小企业倒闭、数字平台降价和并购整合拖累。
+- 分层理由：薪资系统切换仍有摩擦。并入Paycor后的客户留存、整合与收购融资费用，需用合并后实际现金验证。
+- 关键研究问题：扩大产品组合后，客户留存收益能否覆盖并购和服务成本？
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 21.37%（滚动12个月至 2026-08-31）；经营现金减购建支出占收入 30.02%（滚动12个月至 2026-08-31）；收入同比（滚动） 13.97%（滚动12个月至 2026-08-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/payx/financials/ratios/>)；[Paychex · 截至2026年8月31日季度报告](<https://investor.paychex.com/sec-filings/all-sec-filings/content/0000723531-26-000006/payx-20260831.htm>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-PAYX/financials-overview/>)
 
 #### PDD 拼多多 PDD · 电商平台
 
@@ -708,9 +719,9 @@
 - 主要反证：跨境合规、商户生态、治理与海外投入吞噬现金。
 - 分层理由：交易网络已商业化，普通股长期获得现金的路径仍需核清。
 - 关键研究问题：竞争与海外合规成本充分计入后，平台能产生多少可归属现金？
-- 指标（标准化财务）：ROIC 14.92%（TTM / 最近财报）；FCF率 24.57%（TTM / 最近财报）；债务/EBITDA 0.05（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/pdd/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 21.54%（滚动12个月至 2026-09-30）；收入同比（滚动） 12.68%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/pdd/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-PDD/financials-overview/>)
 
 #### SBUX 星巴克 Starbucks · 连锁餐饮
 
@@ -719,9 +730,9 @@
 - 主要反证：性价比竞争、运营复杂度与门店成本上升。
 - 分层理由：全球消费场景已有基础，单店体验和回报恢复仍需验证。
 - 关键研究问题：服务改善能否带来客流，而非依靠促销和不断增店？
-- 指标（标准化财务）：ROIC 13.67%（TTM / 最近财报）；FCF率 9.50%（TTM / 最近财报）；债务/EBITDA 2.53（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/sbux/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 18.47%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 9.83%（滚动12个月至 2026-09-30）；收入同比（滚动） 1.95%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/sbux/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-SBUX/financials-overview/>)
 
 #### TSM 台积电 TSMC · 晶圆代工
 
@@ -730,9 +741,9 @@
 - 主要反证：地缘中断、客户集中与制程转型失误；历史高回报不能消除尾部风险。
 - 分层理由：制造优势强且多年兑现，资本密度与地缘风险影响长期可拥有性。
 - 关键研究问题：海外产能和下一代制程能否维持正常化资本回报？
-- 指标（标准化财务）：ROIC 60.30%（TTM / 最近财报）；FCF率 29.95%（TTM / 最近财报）；债务/EBITDA 0.23（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/tsm/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 36.48%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 31.61%（滚动12个月至 2026-09-30）；收入同比（滚动） 35.21%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/tsm/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-TSM/financials-overview/>)
 
 #### TXN 德州仪器 Texas Instruments · 模拟与嵌入式芯片
 
@@ -741,9 +752,9 @@
 - 主要反证：产能利用不足、成熟模拟价格竞争及客户去库存拖慢资金回收。
 - 分层理由：长寿命产品有优势，新厂建设使近期现金和资本回报需要再验证。
 - 关键研究问题：新增产能在正常需求下能否获得高于资本成本的回报？
-- 指标（标准化财务）：ROIC 30.09%（TTM / 最近财报）；FCF率 35.24%（TTM / 最近财报）；债务/EBITDA 1.26（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/txn/statistics/>)；[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/txn/financials/ratios/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 22.72%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 35.24%（滚动12个月至 2026-09-30）；收入同比（滚动） 20.27%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。历年资本回报沿用原来源定义，与滚动数据供应商可能不同。
+- 来源：[年度资本回报历史 · 标准化口径](<https://stockanalysis.com/stocks/txn/financials/ratios/>)；[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/txn/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-TXN/financials-overview/>)
 
 #### YUM 百胜 Yum! Brands · 连锁餐饮
 
@@ -752,11 +763,11 @@
 - 主要反证：加盟商经济性下降，区域食品安全与债务成本上升。
 - 分层理由：品牌体系成熟，但杠杆和加盟质量限制确定性。
 - 关键研究问题：扣除加盟体系支持成本后，新增门店能否持续贡献现金？
-- 指标（标准化财务）：ROIC 59.73%（TTM / 最近财报）；FCF率 19.25%（TTM / 最近财报）；债务/EBITDA 4.21（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/yum/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 73.45%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 18.39%（滚动12个月至 2026-09-30）；收入同比（滚动） 9.12%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/yum/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-YUM/financials-overview/>)
 
-### 医疗平台、产品与牌照（9 家）
+### 医疗平台、产品与牌照（11 家）
 
 #### ABT 雅培 Abbott · 医疗器械与诊断
 
@@ -765,9 +776,9 @@
 - 主要反证：竞争降价、质量事件与历史特殊需求消退。
 - 分层理由：核心平台有黏性，整体资本效率需要按业务拆分验证。
 - 关键研究问题：持续监测等增长平台能否补足其他分部的回报与需求压力？
-- 指标（标准化财务）：ROIC 7.25%（TTM / 最近财报）；FCF率 16.80%（TTM / 最近财报）；债务/EBITDA 2.65（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/abt/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 6.61%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 14.01%（滚动12个月至 2026-09-30）；收入同比（滚动） 10.00%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/abt/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-ABT/financials-overview/>)
 
 #### DHR 丹纳赫 Danaher · 生命科学工具
 
@@ -776,9 +787,9 @@
 - 主要反证：生物医药融资低谷、客户去库存及收购资本过大。
 - 分层理由：工具平台有壁垒，低于历史的资本回报需在需求正常化后验证。
 - 关键研究问题：客户去库存结束后，耗材复购和投入资本回报能恢复到哪里？
-- 指标（标准化财务）：ROIC 6.60%（TTM / 最近财报）；FCF率 22.36%（TTM / 最近财报）；债务/EBITDA 3.24（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/dhr/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 5.88%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 22.36%（滚动12个月至 2026-09-30）；收入同比（滚动） 5.52%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/dhr/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-DHR/financials-overview/>)
 
 #### JNJ 强生 Johnson & Johnson · 医药与医疗器械
 
@@ -787,9 +798,9 @@
 - 主要反证：专利到期、管线失败和重大诉讼现金支出。
 - 分层理由：经营基础广，产品替代和法律责任影响普通股所得。
 - 关键研究问题：新产品现金能否覆盖专利缺口、研发与可合理预期的法律支出？
-- 指标（标准化财务）：ROIC 21.04%（TTM / 最近财报）；FCF率 22.71%（TTM / 最近财报）；债务/EBITDA 1.43（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/jnj/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 13.64%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 20.11%（滚动12个月至 2026-09-30）；收入同比（滚动） 7.81%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/jnj/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-JNJ/financials-overview/>)
 
 #### LLY 礼来 Eli Lilly · 创新药
 
@@ -798,9 +809,9 @@
 - 主要反证：竞品、医保定价、长期安全性和单一治疗领域集中。
 - 分层理由：产品效果已兑现，维持技术优势与新增资本回报仍需验证。
 - 关键研究问题：竞争加剧后，产品生命周期现金能否覆盖全部研发和产能投入？
-- 指标（标准化财务）：ROIC 42.24%（TTM / 最近财报）；FCF率 22.83%（TTM / 最近财报）；债务/EBITDA 1.31（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/lly/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 36.31%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 13.52%（滚动12个月至 2026-09-30）；收入同比（滚动） 45.51%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/lly/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-LLY/financials-overview/>)
 
 #### MDT 美敦力 Medtronic · 医疗器械
 
@@ -809,9 +820,31 @@
 - 主要反证：产品创新落后、医院压价和复杂产品组合拖累回报。
 - 分层理由：临床基础仍有价值，较低资本回报需要从产品和成本中解释。
 - 关键研究问题：新产品和经营改善能否提高全部投入资本的真实回报？
-- 指标（标准化财务）：ROIC 8.59%（TTM / 最近财报）；FCF率 16.33%（TTM / 最近财报）；债务/EBITDA 2.63（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/mdt/statistics/>)
+- 指标（公开财报与标准化财务）：经营现金减购建支出占收入 18.46%（滚动12个月至 2026-10-31）；收入同比（滚动） 9.17%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/mdt/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-MDT/financials-overview/>)
+
+#### MEDP Medpace Holdings, Inc. · 临床研发服务
+
+- 竞争优势：整合试验设计、中心执行和数据管理，可降低中小药企组织临床试验的协调成本。
+- 普通股现金：截至9月底订单余额约31.67亿美元；研究预收和客户垫付款会放大单季现金，订单可取消。
+- 主要反证：早期药企融资、试验失败、人员闲置及客户集中。
+- 分层理由：全服务模式有现金记录，尚须拆分取消、预收和获客对单位项目利润的影响。
+- 关键研究问题：药企融资降温时，订单转收入率和项目净收现能否维持？
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 90.55%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 23.52%（滚动12个月至 2026-09-30）；收入同比（滚动） 20.35%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[发行人正式财报或经营更新](<https://www.sec.gov/Archives/edgar/data/1668397/000166839726000036/medp-20260930.htm>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-MEDP/financials-overview/>)；[SEC XBRL · 历年合并现金流](<https://data.sec.gov/api/xbrl/companyfacts/CIK0001668397.json>)
+
+#### MTD Mettler-Toledo International Inc. · 精密仪器与校准
+
+- 竞争优势：实验室和过程称重要求精度、可追溯校准及合规记录，在用仪器带来持续服务需求。
+- 普通股现金：2023至2025年经营净流入各年均超过9亿美元；设备更新、校准人员和收购投入要与存量服务收入配对。
+- 主要反证：实验室设备周期、客户延迟更换、回购和杠杆使权益回报失真。
+- 分层理由：售后校准与新增设备的需求周期不同，须剥离一次性收益及融资影响。
+- 关键研究问题：装机服务的续约及增量现金能否覆盖新机销量波动？
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 47.44%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 20.74%（滚动12个月至 2026-09-30）；收入同比（滚动） 6.51%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[发行人正式财报或经营更新](<https://www.sec.gov/Archives/edgar/data/1037646/000103764626000074/mtd-20260930.htm>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-MTD/financials-overview/>)；[SEC XBRL · 历年合并现金流](<https://data.sec.gov/api/xbrl/companyfacts/CIK0001037646.json>)
 
 #### NVO 诺和诺德 Novo Nordisk · 创新药
 
@@ -820,9 +853,9 @@
 - 主要反证：竞争疗法、医保价格、临床差异和产能执行。
 - 分层理由：成熟疾病平台有长期记录，竞争后的产品现金需要重新约束。
 - 关键研究问题：在更强竞争与价格压力下，临床和制造优势还能保留多少收益？
-- 指标（标准化财务）：ROIC 39.22%（TTM / 最近财报）；FCF率 23.02%（TTM / 最近财报）；债务/EBITDA 0.80（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/nvo/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 38.44%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 13.45%（滚动12个月至 2026-09-30）；收入同比（滚动） 11.16%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/nvo/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-NVO/financials-overview/>)
 
 #### REGN 再生元 Regeneron · 创新药
 
@@ -831,9 +864,9 @@
 - 主要反证：核心药物竞争、合作关系及新管线失败。
 - 分层理由：研发有成功产品支撑，平台复制和收入集中仍需检验。
 - 关键研究问题：扣足失败项目研发后，平台能否持续创造第二批盈利药物？
-- 指标（标准化财务）：ROIC 13.50%（TTM / 最近财报）；FCF率 24.21%（TTM / 最近财报）；债务/EBITDA 0.57（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/regn/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 13.93%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 21.47%（滚动12个月至 2026-09-30）；收入同比（滚动） 18.59%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/regn/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-REGN/financials-overview/>)
 
 #### TMO 赛默飞 Thermo Fisher · 生命科学工具
 
@@ -842,9 +875,9 @@
 - 主要反证：制药研发预算收缩、并购整合和资本效率下滑。
 - 分层理由：一站式平台商业化成熟，集团回报受收购成本与需求周期影响。
 - 关键研究问题：客户整合采购带来的协同，是否足以覆盖收购资本？
-- 指标（标准化财务）：ROIC 9.07%（TTM / 最近财报）；FCF率 16.04%（TTM / 最近财报）；债务/EBITDA 3.26（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/tmo/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 8.00%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 16.04%（滚动12个月至 2026-09-30）；收入同比（滚动） 8.27%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/tmo/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-TMO/financials-overview/>)
 
 #### VRTX 福泰 Vertex · 创新药
 
@@ -853,11 +886,11 @@
 - 主要反证：核心适应症集中、专利周期和新疗法商业化不及预期。
 - 分层理由：核心专科优势清晰，多产品复制能力仍待验证。
 - 关键研究问题：第二条独立产品曲线能否在合理研发投入下形成持续现金？
-- 指标（标准化财务）：ROIC 28.80%（TTM / 最近财报）；FCF率 30.16%（TTM / 最近财报）；债务/EBITDA 0.37（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/vrtx/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 17.46%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 24.59%（滚动12个月至 2026-09-30）；收入同比（滚动） 10.97%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/vrtx/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-VRTX/financials-overview/>)
 
-### 科技与工业制造（18 家）
+### 科技与工业制造（20 家）
 
 #### ADBE Adobe · 创意与文档软件
 
@@ -866,9 +899,9 @@
 - 主要反证：生成式AI降低基础创作工具价值，低价产品侵蚀新用户入口。
 - 分层理由：现有现金充足，专业工作流能否抵御技术替代是决定性问题。
 - 关键研究问题：客户为何继续为完整工作流付费，AI增量能否抵消席位流失？
-- 指标（标准化财务）：ROIC 57.22%（TTM / 最近财报）；FCF率 40.79%（TTM / 最近财报）；债务/EBITDA 0.68（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/adbe/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 41.42%（滚动12个月至 2026-08-31）；经营现金减购建支出占收入 40.79%（滚动12个月至 2026-08-31）；收入同比（滚动） 12.03%（滚动12个月至 2026-08-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/adbe/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-ADBE/financials-overview/>)
 
 #### ADSK 欧特克 Autodesk · 工业设计软件
 
@@ -877,9 +910,9 @@
 - 主要反证：工程软件竞争、渠道改革和客户压缩席位；现金会计口径需谨慎。
 - 分层理由：专业流程有黏性，渠道与收费方式变化仍需检验客户经济性。
 - 关键研究问题：订阅调整后，真实客户留存与每客户净现金是否同步改善？
-- 指标（标准化财务）：ROIC 57.64%（TTM / 最近财报）；FCF率 36.44%（TTM / 最近财报）；债务/EBITDA 1.58（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/adsk/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 29.68%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 34.63%（滚动12个月至 2026-10-31）；收入同比（滚动） 18.20%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/adsk/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-ADSK/financials-overview/>)
 
 #### AMAT 应用材料 Applied Materials · 半导体设备
 
@@ -888,9 +921,9 @@
 - 主要反证：局部技术被替代、出口限制与扩产周期叠加。
 - 分层理由：工艺积累有商业价值，新增设施和产品组合回报需持续验证。
 - 关键研究问题：先进封装和新材料需求能否提高全部研发资本的回报？
-- 指标（标准化财务）：ROIC 35.64%（TTM / 最近财报）；FCF率 18.23%（TTM / 最近财报）；债务/EBITDA 0.72（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/amat/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 34.42%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 17.99%（滚动12个月至 2026-10-31）；收入同比（滚动） 21.43%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/amat/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-AMAT/financials-overview/>)
 
 #### AVGO 博通 Broadcom · 半导体与基础软件
 
@@ -899,9 +932,9 @@
 - 主要反证：大客户自研或议价、软件提费引发迁移、并购整合伤害产品投入。
 - 分层理由：关键技术与软件现金真实，集团回报取决于集中客户和并购纪律。
 - 关键研究问题：软件现金能否持续，同时避免牺牲客户留存和研发？
-- 指标（标准化财务）：ROIC 30.68%（TTM / 最近财报）；FCF率 44.22%（TTM / 最近财报）；债务/EBITDA 1.13（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/avgo/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 26.12%（滚动12个月至 2026-07-31）；经营现金减购建支出占收入 44.22%（滚动12个月至 2026-07-31）；收入同比（滚动） 48.69%（滚动12个月至 2026-07-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/avgo/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-AVGO/financials-overview/>)
 
 #### CAT 卡特彼勒 Caterpillar · 工程与工业装备
 
@@ -910,9 +943,9 @@
 - 主要反证：工程和矿业低谷、经销商库存和客户融资损失。
 - 分层理由：服务网络有长期价值，集团现金须按工业与金融分拆。
 - 关键研究问题：低景气时售后服务能否覆盖必要投入并稳定集团现金？
-- 指标（标准化财务）：ROIC 18.30%（TTM / 最近财报）；FCF率 12.04%（TTM / 最近财报）
-- 指标口径：工业与金融业务混合，合并负债包括客户融资；ROIC与现金率只作集团诊断，不据此评判制造杠杆。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cat/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 23.19%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 12.36%（滚动12个月至 2026-09-30）；收入同比（滚动） 20.26%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cat/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-CAT/financials-overview/>)
 
 #### CRM Salesforce · 企业软件与云
 
@@ -921,9 +954,9 @@
 - 主要反证：AI代理压缩席位收费，复杂产品叠加削弱客户体验。
 - 分层理由：客户关系平台已商业化，资本配置和稀释影响最终回报。
 - 关键研究问题：扣除股权激励后，有机增长和客户留存能否产生持续每股现金？
-- 指标（标准化财务）：ROIC 10.96%（TTM / 最近财报）；FCF率 34.49%（TTM / 最近财报）；债务/EBITDA 3.14（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/crm/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 12.67%（滚动12个月至 2026-07-31）；经营现金减购建支出占收入 34.49%（滚动12个月至 2026-07-31）；收入同比（滚动） 11.23%（滚动12个月至 2026-07-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/crm/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-CRM/financials-overview/>)
 
 #### CRWD CrowdStrike · 网络安全软件
 
@@ -932,9 +965,9 @@
 - 主要反证：重大故障破坏客户信任、平台捆绑竞争与稀释。
 - 分层理由：安全流程已有商业化价值，可靠性和扣除激励后的经济性仍需验证。
 - 关键研究问题：经历重大服务事故后，续约、客户信任和净现金能否持续恢复？
-- 指标（标准化财务）：ROIC -14.10%（TTM / 最近财报）；FCF率 29.81%（TTM / 最近财报）；债务/EBITDA 5.44（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/crwd/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 1.68%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 27.48%（滚动12个月至 2026-10-31）；收入同比（滚动） 25.85%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/crwd/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-CRWD/financials-overview/>)
 
 #### DE 迪尔 Deere · 工程与工业装备
 
@@ -943,9 +976,9 @@
 - 主要反证：农产品周期、客户融资、维修权监管与替代设备。
 - 分层理由：服务与农艺数据有优势，资本回报受农业和信用周期影响。
 - 关键研究问题：精准农业为农户创造的节省能否转化为可持续服务现金？
-- 指标（标准化财务）：ROIC 5.69%（TTM / 最近财报）；FCF率 6.74%（TTM / 最近财报）
-- 指标口径：金融子公司影响合并负债和投入资本；集团指标不能直接代表机械制造的资本效率。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/de/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 7.05%（滚动12个月至 2026-07-31）；经营现金减购建支出占收入 6.73%（滚动12个月至 2026-07-31）；收入同比（滚动） 7.98%（滚动12个月至 2026-07-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/de/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-DE/financials-overview/>)
 
 #### ETN 伊顿 Eaton · 电气与工业装备
 
@@ -954,9 +987,9 @@
 - 主要反证：电网投资节奏、供给扩张与新项目回报回落。
 - 分层理由：认证与渠道有基础，当前电气需求高景气需正常化看待。
 - 关键研究问题：新增电气产能在供需恢复平衡后能维持何种回报？
-- 指标（标准化财务）：ROIC 10.61%（TTM / 最近财报）；FCF率 13.10%（TTM / 最近财报）；债务/EBITDA 3.07（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/etn/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 11.51%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 11.87%（滚动12个月至 2026-09-30）；收入同比（滚动） 20.09%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/etn/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-ETN/financials-overview/>)
 
 #### FICO 费埃哲 FICO · 信用数据与决策软件
 
@@ -965,9 +998,9 @@
 - 主要反证：替代评分、监管干预与提费引发客户反弹。
 - 分层理由：标准资产有强经济性，监管和杠杆降低长期确定性。
 - 关键研究问题：信用评分的制度地位和收费权能维持多长时间？
-- 指标（标准化财务）：ROIC 65.03%（TTM / 最近财报）；FCF率 41.61%（TTM / 最近财报）；债务/EBITDA 4.39（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/fico/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 83.45%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 40.81%（滚动12个月至 2026-09-30）；收入同比（滚动） 27.32%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/fico/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-FICO/financials-overview/>)
 
 #### LRCX 泛林 Lam Research · 半导体设备
 
@@ -976,20 +1009,20 @@
 - 主要反证：存储客户集中、订单周期和出口限制令高利润难以直线外推。
 - 分层理由：关键工艺壁垒清晰，须按正常化设备投资检验现金。
 - 关键研究问题：存储资本开支退潮时，服务与先进工艺份额能支撑多少现金？
-- 指标（标准化财务）：ROIC 79.14%（TTM / 最近财报）；FCF率 25.02%（TTM / 最近财报）；债务/EBITDA 0.36（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/lrcx/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 53.54%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 25.02%（滚动12个月至 2026-09-30）；收入同比（滚动） 33.36%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/lrcx/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-LRCX/financials-overview/>)
 
 #### MSFT 微软 Microsoft · 企业软件与云
 
 - 竞争优势：办公流程、身份管理与开发工具共同提高企业迁移成本，分销体系可复用到新产品。
-- 普通股现金：订阅收款强，AI设备、融资租赁、采购承诺及股票薪酬需要共同扣实。
+- 普通股现金：2027财年首季公司口径资本开支452亿美元，含融资租赁；现金口径自由现金流186亿美元。需把租赁承诺与服务器更新周期纳入新增云业务回报。
 - 主要反证：算力投入长期快于现金增长；安全事件与AI入口变化削弱原有客户关系。
 - 分层理由：成熟软件优势深，新增算力的资本回报决定整体质量。
 - 关键研究问题：AI相关收入扣除完整算力成本后，能否提高每股现金？
-- 指标（标准化财务）：ROIC 26.18%（TTM / 最近财报）；FCF率 20.19%（TTM / 最近财报）；债务/EBITDA 0.64（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/msft/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 27.01%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 17.31%（滚动12个月至 2026-09-30）；收入同比（滚动） 17.91%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[微软 · 2027财年首季业绩说明会](<https://www.microsoft.com/en-us/Investor/events/fy-2027/earnings-fy-2027-q1>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-MSFT/financials-overview/>)
 
 #### NOW ServiceNow · 企业软件与云
 
@@ -998,9 +1031,9 @@
 - 主要反证：大平台捆绑竞争、客户控制预算和AI改变工作流入口。
 - 分层理由：流程优势有商业证据，普通股现金需穿透激励与扩张投入。
 - 关键研究问题：新工作流能否复用销售成本，并维持扩展后的客户回报？
-- 指标（标准化财务）：ROIC 10.28%（TTM / 最近财报）；FCF率 31.09%（TTM / 最近财报）；债务/EBITDA 2.77（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/now/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 8.78%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 30.78%（滚动12个月至 2026-09-30）；收入同比（滚动） 21.82%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/now/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-NOW/financials-overview/>)
 
 #### NVDA 英伟达 NVIDIA · 半导体设计
 
@@ -1009,9 +1042,20 @@
 - 主要反证：客户自研芯片、出口限制及算力供需变化可能压缩超额利润。
 - 分层理由：软件与系统生态已商业化，当前高回报仍须经过需求周期检验。
 - 关键研究问题：客户自研和推理架构变化后，生态能保留多少议价能力？
-- 指标（标准化财务）：ROIC 92.03%（TTM / 最近财报）；FCF率 41.92%（TTM / 最近财报）；债务/EBITDA 0.19（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/nvda/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 104.46%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 41.11%（滚动12个月至 2026-10-31）；收入同比（滚动） 93.33%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/nvda/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-NVDA/financials-overview/>)
+
+#### OTIS Otis Worldwide Corporation · 电梯维保
+
+- 竞争优势：在用电梯需要定期保养和更新，服务路线密度、备件和响应速度影响维保合同续签。
+- 普通股现金：全年经营现金具有持续性；需扣除维保人力、改造成本、利息及少数权益。
+- 主要反证：独立维保商抢单，新梯减少拖累未来服务基数，中国新梯市场承压。
+- 分层理由：新梯交付与在用梯服务具有不同经济性，值得验证装机转维保和本地路线密度。
+- 关键研究问题：服务续约和现代化改造的现金能否抵消新梯周期下行？
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 67.45%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 11.05%（滚动12个月至 2026-09-30）；收入同比（滚动） 5.77%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[发行人正式财报或经营更新](<https://www.otis.com/en/company/w/otis-reports-third-quarter-2026-results>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-OTIS/financials-overview/>)；[SEC XBRL · 历年合并现金流](<https://data.sec.gov/api/xbrl/companyfacts/CIK0001781335.json>)
 
 #### PANW Palo Alto Networks · 网络安全软件
 
@@ -1020,9 +1064,20 @@
 - 主要反证：平台整合复杂、免费迁移激励和竞争压缩真实收费。
 - 分层理由：客户部署基础有价值，平台化后的净收费及稀释需要核清。
 - 关键研究问题：平台整合能否在减少客户复杂度的同时提高净现金回报？
-- 指标（标准化财务）：ROIC 1.73%（TTM / 最近财报）；FCF率 35.83%（TTM / 最近财报）；债务/EBITDA 1.50（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/panw/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 2.37%（滚动12个月至 2026-10-31）；经营现金减购建支出占收入 34.28%（滚动12个月至 2026-10-31）；收入同比（滚动） 30.29%（滚动12个月至 2026-10-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/panw/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-PANW/financials-overview/>)
+
+#### RELX RELX PLC Sponsored ADR · 专业信息与分析
+
+- 竞争优势：风险核验、法律检索和科学出版把数据、编辑与专业工作流程连接起来，客户要验证替代工具的可靠性。
+- 普通股现金：订阅及嵌入业务流程的服务可持续收费；内容授权、软件开发和并购是必要资本用途，展览收入有不同周期。
+- 主要反证：生成式工具替代检索、开放获取重分学术收入、数据与版权成本上升。
+- 分层理由：前三季度经营更新显示基础业务仍增长，值得区分自有数据价值与可替代的检索界面。
+- 关键研究问题：新分析工具的续订及收费能否覆盖数据、开发和并购投入？
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 28.91%（滚动12个月至 2026-06-30）；经营现金减购建支出占收入 24.69%（滚动12个月至 2026-06-30）；收入同比（滚动） 5.77%（滚动12个月至 2026-06-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[发行人正式财报或经营更新](<https://www.relx.com/media/press-releases/year-2026/trading-update-oct>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-RELX/financials-overview/>)；[SEC XBRL · 历年合并现金流](<https://data.sec.gov/api/xbrl/companyfacts/CIK0000929869.json>)
 
 #### ROP 儒博 Roper · 垂直软件与专业工业
 
@@ -1031,9 +1086,9 @@
 - 主要反证：高价并购、软件技术替代和债务降低后续配置能力。
 - 分层理由：业务黏性有价值，账面资本回报较低要求拆解每笔收购经济性。
 - 关键研究问题：保持原有产品质量后，新增收购能否产生高于资本成本的现金？
-- 指标（标准化财务）：ROIC 6.90%（TTM / 最近财报）；FCF率 30.53%（TTM / 最近财报）；债务/EBITDA 2.90（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/rop/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 9.15%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 29.80%（滚动12个月至 2026-09-30）；收入同比（滚动） 9.24%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/rop/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-ROP/financials-overview/>)
 
 #### SNPS 新思科技 Synopsys · 电子设计软件
 
@@ -1042,9 +1097,9 @@
 - 主要反证：开源或新工具替代、客户自研、收购整合与出口限制。
 - 分层理由：工具链壁垒成立，当前全部资本回报和债务负担限制A层资格。
 - 关键研究问题：整合后客户协同能否覆盖新增收购资本，而非只增加收入？
-- 指标（标准化财务）：ROIC 2.23%（TTM / 最近财报）；FCF率 29.18%（TTM / 最近财报）；债务/EBITDA 4.78（TTM / 最近财报）
-- 指标口径：重大并购改变商誉、债务和利润口径，较低ROIC需按新增全部资本检验，不能仅采用并购前历史。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/snps/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 2.58%（滚动12个月至 2026-07-31）；经营现金减购建支出占收入 29.21%（滚动12个月至 2026-07-31）；收入同比（滚动） 46.33%（滚动12个月至 2026-07-31）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/snps/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-SNPS/financials-overview/>)
 
 #### TDG TransDigm · 航空零部件
 
@@ -1053,9 +1108,9 @@
 - 主要反证：债务成本、航空低谷与采购监管。
 - 分层理由：产品壁垒突出，资本结构使持有人现金韧性需要单独验证。
 - 关键研究问题：在航空低谷和较高融资成本下，债务后现金还能剩下多少？
-- 指标（标准化财务）：ROIC 15.42%（TTM / 最近财报）；FCF率 19.26%（TTM / 最近财报）；债务/EBITDA 6.57（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/tdg/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 9.44%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 18.11%（滚动12个月至 2026-09-30）；收入同比（滚动） 19.55%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/tdg/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-TDG/financials-overview/>)
 
 ### 基础设施、金融与资源（8 家）
 
@@ -1066,9 +1121,9 @@
 - 主要反证：并购依赖、人才流失和债务放大执行风险。
 - 分层理由：经纪业务优势成立，收购扩张后的全部资本回报需验证。
 - 关键研究问题：扣除持续收购投入后，内生现金增长和客户留存还有多少？
-- 指标（标准化财务）：ROIC 6.60%（TTM / 最近财报）；FCF率 15.12%（TTM / 最近财报）；债务/EBITDA 3.13（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ajg/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 4.71%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 17.65%（滚动12个月至 2026-09-30）；收入同比（滚动） 25.60%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ajg/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-AJG/financials-overview/>)
 
 #### AXP 美国运通 American Express · 消费金融
 
@@ -1077,9 +1132,9 @@
 - 主要反证：奖励补贴竞争、信用恶化和年轻客群留存不足。
 - 分层理由：品牌与客群有优势，信贷及获客成本决定穿越周期后的收益。
 - 关键研究问题：高端会员新增终身利润能否覆盖奖励、获客与完整信用成本？
-- 指标（公司披露）：净核销率 2.1%（2025Q4）；信用损失拨备 14亿美元（2025Q4）
-- 指标口径：单季指标不年化；闭环支付与贷款风险并存，信用成本、会员奖励和监管资本均影响股东收益。
-- 来源：[American Express 2025全年及第四季度业绩](<https://www.sec.gov/Archives/edgar/data/4962/000000496226000037/q425exhibit991.htm>)
+- 指标（公开财报与标准化财务）：净核销率 2.1%（2025Q4）；信用损失拨备 14亿美元（2025Q4）；投入资本回报（ROIC） 13.20%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 16.17%（滚动12个月至 2026-09-30）；收入同比（滚动） 9.97%（滚动12个月至 2026-09-30）
+- 指标口径：单季指标不年化；闭环支付与贷款风险并存，信用成本、会员奖励和监管资本均影响股东收益。 滚动指标按所列期末和数据服务商口径计算。
+- 来源：[American Express 2025全年及第四季度业绩](<https://www.sec.gov/Archives/edgar/data/4962/000000496226000037/q425exhibit991.htm>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-AXP/financials-overview/>)
 
 #### BRO Brown & Brown · 保险经纪与专业服务
 
@@ -1088,9 +1143,9 @@
 - 主要反证：高价并购、内部激励失衡及保险费率下行。
 - 分层理由：业务可理解且现金较好，新增收购回报仍需穿透。
 - 关键研究问题：有机增长与并购增长分别贡献了多少每股现金？
-- 指标（标准化财务）：ROIC 9.49%（TTM / 最近财报）；FCF率 21.70%（TTM / 最近财报）；债务/EBITDA 2.71（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/bro/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 5.94%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 21.52%（滚动12个月至 2026-09-30）；收入同比（滚动） 26.10%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/bro/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-BRO/financials-overview/>)
 
 #### CP 加拿大太平洋堪萨斯城 CPKC · 铁路与物流
 
@@ -1099,9 +1154,9 @@
 - 主要反证：跨境贸易、整合执行和新增资本回报不足。
 - 分层理由：通道稀缺且用途明确，收购后的整体回报仍待兑现。
 - 关键研究问题：跨境协同能否形成足够新增货流，覆盖收购和整合资本？
-- 指标（标准化财务）：ROIC 6.44%（TTM / 最近财报）；FCF率 15.55%（TTM / 最近财报）；债务/EBITDA 3.00（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cp/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 5.71%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 18.29%（滚动12个月至 2026-09-30）；收入同比（滚动） 4.18%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/cp/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-CP/financials-overview/>)
 
 #### EOG EOG Resources · 能源与资源
 
@@ -1110,9 +1165,9 @@
 - 主要反证：油气价格下行、资源质量下降和接续成本提高。
 - 分层理由：成本和资本纪律有辨识度，长期回报需穿透递减与接续。
 - 关键研究问题：维持产量与储量质量后，正常油价下还能分配多少现金？
-- 指标（标准化财务）：ROIC 19.75%（TTM / 最近财报）；FCF率 24.75%（TTM / 最近财报）；债务/EBITDA 0.54（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/eog/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 20.74%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 25.35%（滚动12个月至 2026-09-30）；收入同比（滚动） 28.88%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/eog/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-EOG/financials-overview/>)
 
 #### ICE 洲际交易所 ICE · 交易与金融数据
 
@@ -1121,9 +1176,9 @@
 - 主要反证：地产交易周期、整合不顺和竞争压低新业务回报。
 - 分层理由：核心网络优质，全部资本回报受收购和新平台拖累。
 - 关键研究问题：抵押贷款平台能否在正常房市下覆盖收购与整合资本？
-- 指标（标准化财务）：ROIC 8.61%（TTM / 最近财报）；FCF率 48.10%（TTM / 最近财报）；债务/EBITDA 3.02（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ice/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 8.54%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 35.84%（滚动12个月至 2026-09-30）；收入同比（滚动） 13.51%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/ice/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-ICE/financials-overview/>)
 
 #### ODFL Old Dominion · 铁路与物流
 
@@ -1132,9 +1187,9 @@
 - 主要反证：经济周期、运力竞争和新站点回收变慢。
 - 分层理由：运营质量及资本效率有优势，物流低谷下的网络利用仍需验证。
 - 关键研究问题：新站点成熟后，增量回报能否接近既有网络？
-- 指标（标准化财务）：ROIC 25.36%（TTM / 最近财报）；FCF率 19.90%（TTM / 最近财报）；债务/EBITDA 0.01（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/odfl/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 25.82%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 20.28%（滚动12个月至 2026-09-30）；收入同比（滚动） 3.80%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/odfl/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NASDAQ-ODFL/financials-overview/>)
 
 #### XOM 埃克森美孚 ExxonMobil · 能源与资源
 
@@ -1143,37 +1198,50 @@
 - 主要反证：商品低谷、项目超支和低回报扩张。
 - 分层理由：低成本资产与执行能力值得研究，商品顺风不能当永久优势。
 - 关键研究问题：中性油气环境下，新增储量接续能获得多少普通股现金回报？
-- 指标（标准化财务）：ROIC 10.02%（TTM / 最近财报）；FCF率 8.46%（TTM / 最近财报）；债务/EBITDA 0.59（TTM / 最近财报）
-- 指标口径：TTM为滚动12个月；ROIC由供应商定义，含商誉与净现金处理差异。FCF为经营现金减资本开支代理，仍需核租赁、稀释及必要留存。
-- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/xom/statistics/>)
+- 指标（公开财报与标准化财务）：投入资本回报（ROIC） 13.80%（滚动12个月至 2026-09-30）；经营现金减购建支出占收入 10.91%（滚动12个月至 2026-09-30）；收入同比（滚动） 21.22%（滚动12个月至 2026-09-30）
+- 指标口径：滚动指标按最近可得财务期末列示。经营现金减购建支出是合并口径，仍须核租赁、少数权益、必要留存和股权激励。
+- 来源：[Stock Analysis 财务统计 · 2026-10-23访问](<https://stockanalysis.com/stocks/xom/statistics/>)；[TradingView · 标准化经营与现金数据](<https://www.tradingview.com/symbols/NYSE-XOM/financials-overview/>)
 
 ## 范围内未纳入公司
 
-- US:AAL 美国航空 American Airlines：债务与机队资本需求较重，品牌和航线不足以证明长期普通股现金优势。
-- US:AMC AMC院线：影院资本、租赁、债务和观影渠道变化叠加，普通股剩余现金缺乏足够确定性。
-- US:APD 空气产品 Air Products：现场供气有优势，但大型能源项目资本承诺、现金缺口和执行风险过重；需要先看到项目回收与配置纪律改善。
-- US:BA 波音 Boeing：客户和认证基础仍在，但质量、交付和资产负债问题使经营修复优先于长期质量判断。
-- US:BABA 阿里巴巴 ADR：与HK:09988属于同一发行人，统一由港股条目承载商业判断，避免重复研究。
-- US:CCL 嘉年华 Carnival：需求恢复改善现金，但舰队更新、债务和旅游周期使正常化普通股经济性仍难稳定。
-- US:CVX 雪佛龙 Chevron：有优质资源和运营基础，但本池优先保留更具差异化成本或配置特征的能源样本；不据单期商品利润扩大范围。
-- US:DAL 达美航空 Delta：较强品牌和忠诚计划仍需与航空运力、机队及信用周期共同承担资本；暂未达到本池的可预见性要求。
-- US:DOV 多福 Dover：专业业务组合有利润，但与更清晰的细分工业样本相比，集团优势和新增资本去向尚不够集中；需先拆分关键业务。
-- US:DUK 杜克能源 Duke：本地供电需求稳定，较大资本开支及债务依赖监管回收；尚不足以形成优于已选公用资产的增量研究理由。
-- US:F 福特 Ford：规模与品牌不足以抵消重资本、价格竞争和金融业务信用风险，缺少稳定穿越周期的股东现金优势。
-- US:GM 通用汽车 GM：制造与金融现金必须分拆，产品周期和电动化投入使持续超额资本回报尚不够清晰。
-- US:GME 游戏驿站 GameStop：金融资产和特殊资本行动不能替代零售业务长期需求；核心竞争优势与现金持续性仍不足。
-- US:INTC 英特尔 Intel：代工转型、工艺追赶和高资本需求同时发生，当前现金不能证明转型后具有稳定超额回报。
-- US:LCID Lucid：持续资金需求和量产规模限制，尚缺可重复的盈利与资本回报证据。
-- US:NCLH 诺唯真 Norwegian Cruise：债务与造船承诺较重，强消费年份的利润不足以证明全周期股东回报。
-- US:NEE 新纪元能源 NextEra：受监管与可再生业务并存，增长资本与融资需求较重；负债、项目合约和长期股东现金存在过多同步假设。
-- US:PLTR Palantir：已有商业化和利润，但客户实施、政府采购及AI需求扩张下的可重复单位经济性仍需更长记录；异常高ROIC不能单独定性。
-- US:PYPL PayPal：现有现金为正，但品牌结账入口受平台与钱包竞争，持续差异化收费能力尚未看清。
-- US:RIVN Rivian：制造商业模式仍处于高投入与持续亏损阶段，长期成本优势尚未获得经营兑现。
-- US:SNAP Snap：用户使用价值未充分转化为稳定的普通股利润，平台竞争和激励稀释削弱现金质量。
-- US:SNOW Snowflake：数据平台有需求，但竞争云平台、消费计费和较重股权激励使长期普通股经济性尚不清晰。
-- US:SO 南方电力 Southern：稳定供电需求不足以单独证明优质普通股经济性，大型项目资本与债务后的剩余回报需要进一步厘清。
-- US:TSLA 特斯拉 Tesla：制造之外的长期收益高度依赖自动驾驶等新业务兑现；现有资本回报不足以单独支持成熟优势判断。
-- US:UAL 美联航 United Airlines：航线网络存在价值，但票价竞争、人工、租赁与机队更新使长期现金高度依赖行业供给纪律。
-- US:UPS 联合包裹 UPS：网络规模仍有价值，但大客户自建配送、劳动成本与网络利用变化，令历史密度优势的普通股现金回报更难预见。
-- US:WAT 沃特世 Waters：专业仪器有客户黏性，但当前资本回报与业务组合变化较大；需先厘清新组合、并购资本和持续现金。
-- US:WMB Williams：管线资产有网络价值，当前债务与新项目投入较重；合同现金、维护资本和母公司分配桥需先充分厘清。
+- US:AAL American Airlines Group Inc.：债务与机队资本需求较重，品牌和航线不足以证明长期普通股现金优势。
+- US:AMC AMC Entertainment Holdings, Inc. Class A：影院资本、租赁、债务和观影渠道变化叠加，普通股剩余现金缺乏足够确定性。
+- US:AME AMETEK, Inc.：仪表组合具有专业壁垒，但需穿透并购、商誉以及各业务自然增长后再评价新增资本。
+- US:APD Air Products and Chemicals, Inc.：现场供气有优势，但大型能源项目资本承诺、现金缺口和执行风险过重；需要先看到项目回收与配置纪律改善。
+- US:BA Boeing Company：客户和认证基础仍在，但质量、交付和资产负债问题使经营修复优先于长期质量判断。
+- US:BABA Alibaba Group Holding Limited Sponsored ADR：与HK:09988属于同一发行人，统一由港股条目承载商业判断，避免重复研究。
+- US:CCL Carnival Corporation Ltd.：需求恢复改善现金，但舰队更新、债务和旅游周期使正常化普通股经济性仍难稳定。
+- US:CHE Chemed Corporation：临终护理与管道服务的回报驱动不同，现有合并现金不足以对照医保费率和各分部留存。
+- US:CVX Chevron Corporation：有优质资源和运营基础，但本池优先保留更具差异化成本或配置特征的能源样本；不据单期商品利润扩大范围。
+- US:DAL Delta Air Lines, Inc.：较强品牌和忠诚计划仍需与航空运力、机队及信用周期共同承担资本；暂未达到本池的可预见性要求。
+- US:DOV Dover Corporation：分散工业组合缺少足够一致的分部资本与分部现金资料，优先研究回报机制能单独核验的同行。
+- US:DPZ Domino's Pizza, Inc.：加盟配送密度可辨认；回购杠杆和加盟商门店回收期影响整体现金，暂待加盟商单位经济证据。
+- US:DUK Duke Energy Corporation：本地供电需求稳定，较大资本开支及债务依赖监管回收；尚不足以形成优于已选公用资产的增量研究理由。
+- US:EXPO Exponent, Inc.：技术专家信誉有价值；利用率、人员流动及合伙人激励决定增量现金，缺同业一致口径证据。
+- US:F Ford Motor Company：规模与品牌不足以抵消重资本、价格竞争和金融业务信用风险，缺少稳定穿越周期的股东现金优势。
+- US:GM General Motors Company：制造与金融现金必须分拆，产品周期和电动化投入使持续超额资本回报尚不够清晰。
+- US:GME GameStop Corp. Class A：金融资产和特殊资本行动不能替代零售业务长期需求；核心竞争优势与现金持续性仍不足。
+- US:IHG InterContinental Hotels Group PLC Sponsored ADR：酒店管理及特许费轻资产，但业主实际回报、系统基金和维持客源的费用仍需分拆。
+- US:INTC Intel Corporation：代工转型、工艺追赶和高资本需求同时发生，当前现金不能证明转型后具有稳定超额回报。
+- US:KMB 金佰利 Kimberly-Clark：完成对Kenvue收购，原有纸品分部的现金记录已不能完整描述合并后的融资、股份及健康业务风险；待有可比的合并回款和偿债记录再复核。
+- US:LCID Lucid Group, Inc.：持续资金需求和量产规模限制，尚缺可重复的盈利与资本回报证据。
+- US:MANH Manhattan Associates, Inc.：仓储软件更换成本值得跟踪；云迁移期间合同负债、实施人力和股权薪酬仍需逐项配对。
+- US:NCLH Norwegian Cruise Line Holdings Ltd.：债务与造船承诺较重，强消费年份的利润不足以证明全周期股东回报。
+- US:NEE NextEra Energy, Inc.：受监管与可再生业务并存，增长资本与融资需求较重；负债、项目合约和长期股东现金存在过多同步假设。
+- US:NVR NVR, Inc.：期权锁定地块节省资本，但本轮收入回落时，尚缺分地区订单取消和地块承诺损失的配对证据。
+- US:PLTR Palantir Technologies Inc. Class A：滚动收入增幅约87%，软件已商业化。增长中的实施人力、客户集中及股权激励能否随规模摊薄，仍须分开验证。
+- US:POOL Pool Corporation：泳池维护有重复需求，施工扩张与经销库存则有周期；两种来源对新增资本的贡献尚未拆清。
+- US:PYPL PayPal Holdings, Inc.：现有现金为正，但品牌结账入口受平台与钱包竞争，持续差异化收费能力尚未看清。
+- US:RACE Ferrari NV：配额与定制支持稀缺性；电动化、产品组合及客户预收共同改变单车回报，当前未拆清新平台投入。
+- US:RIVN Rivian Automotive, Inc. Class A：制造商业模式仍处于高投入与持续亏损阶段，长期成本优势尚未获得经营兑现。
+- US:SNAP Snap, Inc. Class A：用户使用价值未充分转化为稳定的普通股利润，平台竞争和激励稀释削弱现金质量。
+- US:SNOW Snowflake, Inc.：数据平台有需求，但竞争云平台、消费计费和较重股权激励使长期普通股经济性尚不清晰。
+- US:SO Southern Company：稳定供电需求不足以单独证明优质普通股经济性，大型项目资本与债务后的剩余回报需要进一步厘清。
+- US:TPL Texas Pacific Land Corporation：矿权及土地具有稀缺性，现金仍由盆地开发强度和水业务投入主导，本轮证据不足以约束正常化回报。
+- US:TSLA Tesla, Inc.：汽车制造与储能均需计入工厂、保修及扩产资金。滚动投入资本回报约3.3%，自动驾驶等业务还要用独立收入和每股现金验证。
+- US:UAL United Airlines Holdings, Inc.：航线网络存在价值，但票价竞争、人工、租赁与机队更新使长期现金高度依赖行业供给纪律。
+- US:UPS United Parcel Service, Inc. Class B：网络规模仍有价值，但大客户自建配送、劳动成本与网络利用变化，令历史密度优势的普通股现金回报更难预见。
+- US:WAT Waters Corporation：分析仪器与耗材具备复购，业务合并改变资产及收入构成，须取得合并后的可比经营记录。
+- US:WDFC WD-40 Company：维修润滑品牌支持重复购买；需再核促销、经销库存与成熟地区实际销量，判断分销扩张的边际现金。
+- US:WINA Winmark Corporation：二手零售加盟可持续收费，加盟商门店样本及租赁业务的资本风险尚待复核。
+- US:WMB Williams Companies, Inc.：管线资产有网络价值，当前债务与新项目投入较重；合同现金、维护资本和母公司分配桥需先充分厘清。

@@ -244,6 +244,37 @@ def test_period_membership_survives_pool_changes_and_independent_study(tmp_path,
     assert [c.symbol for c in store.read().companies] == ["CN:600519"]
 
 
+@pytest.mark.parametrize("use_disclosures", [False, True])
+def test_rescreen_targets_new_members_in_same_financial_period(tmp_path, capsys, use_disclosures):
+    from test_screening_pool import _pool_payload, _prepare_methodology
+
+    from trading_os.screening_pool import QualityPoolStore
+
+    _prepare_methodology(tmp_path)
+    store = QualityPoolStore(tmp_path)
+    pool = _pool_payload()
+    store.replace(pool)
+    original = store.freeze_selection("2026-Q3")
+    pool["companies"].pop()
+    store.replace(pool)
+    label = "2026-Q3@2026-11-25"
+    _call(tmp_path, capsys, "quality-pool", "freeze-period", "--period", label)
+    args = ["research", "enqueue-period", "--period", "2026-Q3", "--selection-period", label]
+    if use_disclosures:
+        path = tmp_path / "disclosures.json"
+        path.write_text(json.dumps([{
+            "symbol": "CN:600519", "report_period": "2026-Q3",
+            "financial_basis": {"period_end": "2026-09-30", "published_on": "2026-10-30",
+                                "source_url": "https://example.com/quarterly"},
+        }]))
+        args.extend(["--disclosures", str(path)])
+    result = _call(tmp_path, capsys, *args, "--at", "2026-11-25T16:00:00+08:00")
+    assert [(t["symbol"], t["report_period"]) for t in result["enqueued"]] == [
+        ("CN:600519", "2026-Q3")
+    ]
+    assert store.read_selection("2026-Q3") == original
+
+
 @pytest.mark.parametrize("with_disclosures", [False, True])
 @pytest.mark.parametrize(
     ("tier", "expected"),

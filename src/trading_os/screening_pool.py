@@ -488,7 +488,11 @@ class QualityPoolStore:
         return pool
 
     def _selection_path(self, period: str) -> Path:
-        return self.pool_path.parent / "periods" / f"{_report_period(period)}.json"
+        slot, separator, reviewed_on = period.partition("@")
+        label = _report_period(slot)
+        if separator:
+            label += "@" + _date(reviewed_on, "轮次日期")
+        return self.pool_path.parent / "periods" / f"{label}.json"
 
     def read_selection(self, period: str) -> PeriodSelection:
         path = self._selection_path(period)

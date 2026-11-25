@@ -37,6 +37,8 @@ python -m trading_os research enqueue-period --period 2026-Q3
 
 名单保存在各市场的 `value-quality/periods/<轮次>.json`，记录筛选日期、证券代码、简称和层级。同轮重复排期沿用已存名单。首次直接执行周期排期也会保存完整名单。已有周期报告自动跳过。
 
+同一财报季另做完整筛选时，以实际复核日期区分两份名单。例如 `quality-pool freeze-period --period 2026-Q3@2026-11-25` 留存三季报披露后的重筛结果。派发时用 `enqueue-period --period 2026-Q3 --selection-period 2026-Q3@2026-11-25`，港美股的 `enqueue-latest` 同样支持指定名单，报告周期仍按发行人的财报确定。
+
 入选公司随财报披露分批交给独立研究者。可按质量层调整派发顺序，每轮以完整名单核对已完成、待披露、已披露待研究的公司。缺披露依据时先查公告。
 
 ```bash

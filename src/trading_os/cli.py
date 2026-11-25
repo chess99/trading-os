@@ -20,6 +20,7 @@ from .research_assets.research_flow import (
     ResearchResult,
     ReturnModel,
     ValueRange,
+    _report_period,
 )
 from .screening_pool import TIERS, QualityPoolStore
 
@@ -115,6 +116,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--disclosures", help="已披露财报清单JSON；按目标周期选择有资料的公司"
     )
     enqueue_period.add_argument("--period", required=True, help="YYYY-FY/Q1/H1/Q3")
+    enqueue_period.add_argument("--selection-period", help="指定本次派发采用的筛选名单")
     enqueue_period.add_argument("--tier", choices=TIERS, help="只安排指定质量层，省略时安排全池")
     _add_at(enqueue_period)
     enqueue_period.set_defaults(handler=_research_enqueue_period)
@@ -433,15 +435,16 @@ def _research_next(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
 
 
 def _research_enqueue_period(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
+    period = _report_period(args.period)
     if args.research_market != "cn-a" and not args.disclosures:
         raise ResearchFlowError(
             "港美股排期须提供 --disclosures；可使用 enqueue-latest 预览最新已披露周期"
         )
     if args.disclosures:
         return _schedule_disclosures(
-            args, args.disclosures, apply=True, period=args.period, stdin=stdin
+            args, args.disclosures, apply=True, period=period, stdin=stdin
         )
-    pool = _quality_pool(args).freeze_selection(args.period)
+    pool = _quality_pool(args).freeze_selection(args.selection_period or period)
     companies = [c for c in pool.companies if args.tier is None or c.tier == args.tier]
     flow = _flow(args)
     flow.register_universe(
@@ -453,11 +456,11 @@ def _research_enqueue_period(args: argparse.Namespace, stdin: TextIO) -> dict[st
             ResearchRequest(
                 symbol=company.symbol,
                 name=company.name,
-                reason=f"完成 {args.period} 财报周期完整研究",
+                reason=f"完成 {period} 财报周期完整研究",
             )
             for company in companies
         ],
-        report_period=args.period,
+        report_period=period,
         trigger_kind=PERIODIC_TRIGGER,
         at=args.at,
     )
@@ -469,7 +472,7 @@ def _research_enqueue_period(args: argparse.Namespace, stdin: TextIO) -> dict[st
 
 
 def _schedule_disclosures(args, source, *, apply=False, period=None, stdin=None):
-    from .research_assets.research_flow import _financial_basis, _report_period, _timestamp
+    from .research_assets.research_flow import _financial_basis, _timestamp
 
     payload, _ = _load(source, stdin or sys.stdin)
     records = _records(payload, "disclosures")
@@ -478,7 +481,7 @@ def _schedule_disclosures(args, source, *, apply=False, period=None, stdin=None)
     previous_quarter = (at.month - 1) // 3
     year = at.year if previous_quarter else at.year - 1
     label = ("FY", "Q1", "H1", "Q3")[previous_quarter]
-    selection_period = period or args.selection_period or f"{year}-{label}"
+    selection_period = args.selection_period or period or f"{year}-{label}"
     store = _quality_pool(args)
     pool = store.preview_selection(selection_period)
     members = {c.symbol: c for c in pool.companies}
