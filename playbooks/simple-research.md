@@ -20,28 +20,30 @@
 
 任务状态只使用 `queued / running`，触发类型只使用：
 
-- `periodic`：动态重点跟踪池的新财报周期；
+- `periodic`：当期名单研究或用户指定的独立个股研究；
 - `manual_rewrite`：用户显式要求的同周期完整重写。
 
 同一公司最多一个活动任务。
 
 ## 周期排期
 
-财报季由协调器读取当时的 `screening/{cn-a|hk|us}/value-quality/pool.json`：
+每轮从目标市场的在市证券清单开始，结合经营、资本回报与治理证据比较候选，复查上期成员和可能遗漏的同行。记录范围、资料缺口与取舍后，用 `quality-pool replace` 更新筛选结果，保存本轮完整名单。
 
 ```bash
+python -m trading_os quality-pool freeze-period --period 2026-Q3
+python -m trading_os quality-pool list --period 2026-Q3
 python -m trading_os research enqueue-period --period 2026-Q3
 ```
 
-命令只为缺少目标槽位的池内公司创建任务；已有槽位自动跳过。池成员退出不会删除报告，进入后可以从最新可用周期开始。
+名单保存在各市场的 `value-quality/periods/<轮次>.json`，记录筛选日期、证券代码、简称和层级。同轮重复排期沿用已存名单。首次直接执行周期排期也会保存完整名单。已有周期报告自动跳过。
 
-排期可按现有质量层选择范围。全年与半年资料适合更新全池，季度优先安排核心护城河层；质量研究层中有重要季度证据的公司，可通过实际披露清单纳入当轮。所有已安排任务均使用完整研究标准。每轮先横向阅读全池的商业判断与关键问题，再选择需要深入研究的对象，兼顾同业和跨市场近邻。
+入选公司随财报披露分批交给独立研究者。可按质量层调整派发顺序，每轮以完整名单核对已完成、待披露、已披露待研究的公司。缺披露依据时先查公告。
 
 ```bash
 python -m trading_os research enqueue-period --period 2026-Q3 --tier core_moat
 ```
 
-`--tier` 按执行时的动态池筛选，省略时覆盖全池，与 `--disclosures` 同用时取交集。研究频率随信息价值安排，池成员资格仍按竞争优势、现金和治理判断。
+`--tier` 按留存名单中的层级筛选，省略时覆盖全池，与 `--disclosures` 同用时取交集。
 
 周期名称只允许：
 
@@ -51,6 +53,16 @@ YYYY-Q1
 YYYY-H1
 YYYY-Q3
 ```
+
+## 独立个股
+
+用户指定公司时，沿用相同的单公司派发、验收和研报库。若证券尚未登记，先用 `universe register` 登记身份。以下命令的输入形如 `{"companies":[{"symbol":"CN:600519"}]}`，港美股每个条目另带已披露的 `financial_basis`。
+
+```bash
+python -m trading_os research enqueue-company --period 2026-Q3 --input company.json
+```
+
+独立任务只占用该证券的财报周期槽位，完成报告不会改变任何一期的筛选名单。同一周期已有报告时可直接查阅。
 
 ## 人工同周期重写
 

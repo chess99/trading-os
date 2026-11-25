@@ -4,6 +4,7 @@ import argparse
 import json
 import sys
 from dataclasses import asdict, is_dataclass
+from datetime import datetime
 from enum import Enum
 from pathlib import Path
 from typing import Any, Mapping, Sequence, TextIO
@@ -82,6 +83,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     quality_pool_rebuild.set_defaults(handler=_quality_pool_rebuild)
     quality_pool_list = quality_pool_commands.add_parser("list", help="列出当前池")
+    freeze = quality_pool_commands.add_parser("freeze-period", help="保存本轮完整筛选名单")
+    freeze.add_argument("--period", required=True)
+    freeze.set_defaults(handler=_quality_pool_freeze)
+    quality_pool_list.add_argument("--period", help="查看指定周期留存的入选名单")
     quality_pool_list.add_argument("--tier", choices=TIERS)
     quality_pool_list.set_defaults(handler=_quality_pool_list)
 
@@ -117,9 +122,15 @@ def build_parser() -> argparse.ArgumentParser:
         "enqueue-latest", help="按已披露财务期末选择最新槽位"
     )
     _add_input(enqueue_latest)
+    enqueue_latest.add_argument("--selection-period", help="筛选轮次，默认最近结束的自然季度")
     _add_at(enqueue_latest)
     enqueue_latest.add_argument("--apply", action="store_true", help="写入研究队列；默认只预览")
     enqueue_latest.set_defaults(handler=_research_enqueue_latest)
+    independent = research_commands.add_parser("enqueue-company", help="为指定证券独立安排研究")
+    independent.add_argument("--period", required=True)
+    _add_input(independent)
+    _add_at(independent)
+    independent.set_defaults(handler=_research_enqueue_company)
     enqueue_rewrite = research_commands.add_parser(
         "enqueue-rewrite", help="显式创建最新财报周期的人工重写任务"
     )
@@ -360,6 +371,10 @@ def _quality_pool_replace(args: argparse.Namespace, stdin: TextIO) -> dict[str, 
 def _quality_pool_list(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
     store = _quality_pool(args)
+    if args.period:
+        selection = store.read_selection(args.period)
+        members = [c for c in selection.companies if args.tier is None or c.tier == args.tier]
+        return {**asdict(selection), "companies": members, "count": len(members)}
     pool = store.read()
     companies = [
         company for company in pool.companies if args.tier is None or company.tier == args.tier
@@ -368,6 +383,16 @@ def _quality_pool_list(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
         "count": len(companies),
         "companies": companies,
         "projection_current": store.projection_current(pool),
+    }
+
+
+def _quality_pool_freeze(args, stdin):
+    selection = _quality_pool(args).freeze_selection(args.period)
+    return {
+        "market": selection.market,
+        "period": selection.period,
+        "pool_as_of": selection.pool_as_of,
+        "count": len(selection.companies),
     }
 
 
@@ -408,14 +433,15 @@ def _research_next(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
 
 
 def _research_enqueue_period(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
-    del stdin
     if args.research_market != "cn-a" and not args.disclosures:
         raise ResearchFlowError(
             "港美股排期须提供 --disclosures；可使用 enqueue-latest 预览最新已披露周期"
         )
     if args.disclosures:
-        return _schedule_disclosures(args, args.disclosures, apply=True, period=args.period)
-    pool = _quality_pool(args).read()
+        return _schedule_disclosures(
+            args, args.disclosures, apply=True, period=args.period, stdin=stdin
+        )
+    pool = _quality_pool(args).freeze_selection(args.period)
     companies = [c for c in pool.companies if args.tier is None or c.tier == args.tier]
     flow = _flow(args)
     flow.register_universe(
@@ -446,14 +472,20 @@ def _schedule_disclosures(args, source, *, apply=False, period=None, stdin=None)
     from .research_assets.research_flow import _financial_basis, _report_period, _timestamp
 
     payload, _ = _load(source, stdin or sys.stdin)
-    records = payload.get("disclosures", []) if isinstance(payload, dict) else payload
-    pool = _quality_pool(args).read()
+    records = _records(payload, "disclosures")
+    now = _timestamp(args.at)
+    at = datetime.fromisoformat(now)
+    previous_quarter = (at.month - 1) // 3
+    year = at.year if previous_quarter else at.year - 1
+    label = ("FY", "Q1", "H1", "Q3")[previous_quarter]
+    selection_period = period or args.selection_period or f"{year}-{label}"
+    store = _quality_pool(args)
+    pool = store.preview_selection(selection_period)
     members = {c.symbol: c for c in pool.companies}
     tier = getattr(args, "tier", None)
     selected = {
         symbol for symbol, company in members.items() if tier is None or company.tier == tier
     }
-    now = _timestamp(args.at)
     latest = {}
     for record in records:
         symbol = record["symbol"]
@@ -486,11 +518,13 @@ def _schedule_disclosures(args, source, *, apply=False, period=None, stdin=None)
     plan = sorted(latest.values(), key=lambda item: item["symbol"])
     result = {
         "market": args.research_market,
+        "selection_period": pool.period,
         "plan": plan,
         "missing_disclosures": sorted(selected - latest.keys()),
         "applied": apply,
     }
     if apply:
+        store.freeze_selection(selection_period, expected=pool)
         flow = _flow(args)
         # Existing slots and active tasks are explicit skips.
         tasks = flow._tasks()
@@ -525,6 +559,25 @@ def _schedule_disclosures(args, source, *, apply=False, period=None, stdin=None)
 
 def _research_enqueue_latest(args, stdin):
     return _schedule_disclosures(args, args.input, apply=args.apply, stdin=stdin)
+
+
+def _research_enqueue_company(args, stdin):
+    payload, _ = _load(args.input, stdin)
+    requests = [
+        ResearchRequest(
+            item["symbol"], item.get("reason") or "用户指定的独立个股研究",
+            item.get("name"), item.get("financial_basis"),
+        )
+        for item in _records(payload, "companies")
+    ]
+    update = _flow(args).enqueue_research(
+        requests, report_period=args.period, trigger_kind=PERIODIC_TRIGGER, at=args.at,
+    )
+    return {
+        "total": update.total,
+        "enqueued": update.enqueued_tasks,
+        "deduplicated": update.deduplicated,
+    }
 
 
 def _research_enqueue_rewrite(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:

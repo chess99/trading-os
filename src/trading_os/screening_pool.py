@@ -13,6 +13,8 @@ from pathlib import Path
 from typing import Any, Iterator
 from urllib.parse import urlsplit
 
+from .research_assets.research_flow import _report_period
+
 POOL_PATH = Path("screening/cn-a/value-quality/pool.json")
 CURRENT_PATH = POOL_PATH.with_name("current.md")
 DEFAULT_METHODOLOGY_PATH = "prompts/screening/cn-a-value-quality.md"
@@ -435,6 +437,21 @@ def _atomic_write_text(path: Path, text: str) -> None:
 
 
 @dataclass(frozen=True)
+class SelectionMember:
+    symbol: str
+    name: str
+    tier: str
+
+
+@dataclass(frozen=True)
+class PeriodSelection:
+    market: str
+    period: str
+    pool_as_of: str
+    companies: tuple[SelectionMember, ...]
+
+
+@dataclass(frozen=True)
 class PoolWriteResult:
     pool: QualityPool
     projection_current: bool
@@ -470,6 +487,52 @@ class QualityPoolStore:
         self._validate_methodology(pool)
         return pool
 
+    def _selection_path(self, period: str) -> Path:
+        return self.pool_path.parent / "periods" / f"{_report_period(period)}.json"
+
+    def read_selection(self, period: str) -> PeriodSelection:
+        path = self._selection_path(period)
+        data = _object(json.loads(path.read_text(encoding="utf-8")),
+                       {"market", "period", "pool_as_of", "companies"}, "周期名单")
+        if data["market"] != self.market or data["period"] != period:
+            raise QualityPoolError(f"周期名单与市场或周期不符：{path}")
+        members = []
+        seen = set()
+        for entry in _array(data["companies"], "companies"):
+            row = _object(entry, {"symbol", "name", "tier"}, "入选证券")
+            symbol = _symbol(row["symbol"])
+            if symbol in seen or not symbol.startswith(MARKET_PREFIXES[self.market]):
+                raise QualityPoolError(f"周期名单证券重复或市场不符：{symbol}")
+            if row["tier"] not in TIERS:
+                raise QualityPoolError(f"周期名单分层不合法：{symbol}")
+            members.append(SelectionMember(symbol, _text(row["name"], "name"), row["tier"]))
+            seen.add(symbol)
+        return PeriodSelection(
+            self.market, period, _date(data["pool_as_of"], "pool_as_of"), tuple(members)
+        )
+
+    def preview_selection(self, period: str) -> PeriodSelection:
+        if self._selection_path(period).exists():
+            return self.read_selection(period)
+        pool = self.read()
+        return PeriodSelection(
+            self.market, period, pool.as_of,
+            tuple(SelectionMember(c.symbol, c.name, c.tier) for c in pool.companies),
+        )
+
+    def freeze_selection(
+        self, period: str, *, expected: PeriodSelection | None = None
+    ) -> PeriodSelection:
+        path = self._selection_path(period)
+        with _exclusive_lock(self.lock_path):
+            selection = self.preview_selection(period)
+            if expected is not None and selection != expected:
+                raise QualityPoolError("本轮名单已变化，请重新预览排期")
+            if not path.exists():
+                content = json.dumps(asdict(selection), ensure_ascii=False, indent=2)
+                _atomic_write_text(path, content + "\n")
+            return selection
+
     def projection_current(self, pool: QualityPool) -> bool:
         try:
             return self.current_path.read_text(encoding="utf-8") == render_current_pool(pool)
@@ -504,4 +567,6 @@ class QualityPoolStore:
             raise QualityPoolError(
                 "current.md 不是 pool.json 的确定性投影；请运行 quality-pool rebuild"
             )
+        for path in (self.pool_path.parent / "periods").glob("*.json"):
+            self.read_selection(path.stem)
         return pool

@@ -19,10 +19,10 @@
 
 - 分市场研究状态和队列分别在 `coverage/{cn-a|hk|us}/research_state.jsonl` 和同目录的 `research_queue.jsonl`。证券是否活跃、最近研究结论、当前任务分别记录。
 - 质量筛选只更新本市场的 `screening/{cn-a|hk|us}/value-quality/pool.json`。用 `quality-pool` 维护成员及分层，`current.md` 由它生成。入池依据是竞争优势、普通股现金、反证与公开来源。池内不存估值、交易信息、任务或报告指针。
-- 财报季按当时的动态池及实际披露排期。用户明确要求重写时才重开已有周期。公司与同一发行人的 A/H 证券在同一时刻只领取一项任务。每家公司使用独立上下文，由一名研究者完成研究和必要返工。
+- 每轮先从各市场在市证券重新初筛，留存当期入选名单，再按实际披露派发深研。用户点名的独立研究直接排期，名单由筛选结果确定。明确要求重写时才重开已有周期。同一发行人的 A/H 证券在同一时刻只领取一项任务。每家公司使用独立上下文，由一名研究者完成研究和必要返工。
 - 协调器验收完整正文与结构化候选后，通过 `research complete` 一次写入报告、最新状态和当期标准。研究者不直接改共享 JSONL。双方遵循同一研究规范。
 - 公司报告保存在 `research/companies/{CN|HK|US}/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md`。同周期覆盖，跨周期新增。`basis_report_path` 和 `report_period` 同步绑定最新完成周期。港美股使用发行人财年，保留实际财务期末、披露日、来源及证券币种和单位。
-- 行业与宏观按主题和重要发布日期保存。发布入口是 `research/publications.json`，其中区分报告与方法参考。中国行业分类只维护 `research/industries/catalog.json`。日常观察遵循[执行规范](prompts/daily-market-observation.md)，结果在仓库外使用。
+- 中国基础行业及常设宏观主题逐季研究，按主题及实际发布日期保存。发布入口是 `research/publications.json`，其中区分报告与方法参考。中国行业分类只维护 `research/industries/catalog.json`。日常观察遵循[执行规范](prompts/daily-market-observation.md)，结果在仓库外使用。
 
 ## 研究与展示
 

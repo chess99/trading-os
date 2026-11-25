@@ -201,12 +201,47 @@ def test_latest_disclosure_preview_respects_fiscal_end_without_writing_tasks(tmp
     )
     preview = _call(tmp_path, capsys, *args)
     assert preview["plan"][0]["report_period"] == "2026-FY"
+    assert preview["selection_period"] == "2026-Q3"
+    assert not (tmp_path / "screening/us/value-quality/periods").exists()
     assert not (tmp_path / "coverage/us/research_queue.jsonl").exists()
     applied = _call(tmp_path, capsys, *args, "--apply")
     assert len(applied["enqueued"]) == 1
     assert applied["enqueued"][0]["financial_basis"]["period_end"] == "2026-06-30"
     repeated = _call(tmp_path, capsys, *args, "--apply")
     assert repeated["skipped"] == ["US:MSFT"]
+
+
+def test_period_membership_survives_pool_changes_and_independent_study(tmp_path, capsys):
+    from test_screening_pool import _pool_payload, _prepare_methodology
+
+    from trading_os.screening_pool import QualityPoolStore
+
+    _prepare_methodology(tmp_path)
+    _write_registry(tmp_path)
+    store = QualityPoolStore(tmp_path)
+    payload = _pool_payload()
+    store.replace(payload)
+    _call(tmp_path, capsys, "quality-pool", "freeze-period", "--period", "2026-H1")
+    payload["companies"].pop()
+    store.replace(payload)
+    batch = _call(tmp_path, capsys, "research", "enqueue-period", "--period", "2026-H1")
+    assert {task["symbol"] for task in batch["enqueued"]} == {"CN:600519", "CN:600900"}
+
+    flow = ResearchFlow(tmp_path)
+    flow.register_universe([CompanyRef("CN:000001", "示例公司")], at=AT)
+    source = tmp_path / "company.json"
+    source.write_text(json.dumps({"companies": [{"symbol": "CN:000001"}]}))
+    command = ("research", "enqueue-company", "--period", "2026-H1", "--input", str(source))
+    task = _call(tmp_path, capsys, *command)["enqueued"][0]
+    _call(tmp_path, capsys, "research", "start", task["task_id"])
+    result = tmp_path / "result.json"
+    result.write_text(json.dumps(_result("CN:000001", task["task_id"])))
+    completed = _call(tmp_path, capsys, "research", "complete", "--input", str(result))
+    assert (tmp_path / completed["basis_report_path"]).is_file()
+    assert _call(tmp_path, capsys, *command)["deduplicated"] == 1
+    historic = _call(tmp_path, capsys, "quality-pool", "list", "--period", "2026-H1")
+    assert {c["symbol"] for c in historic["companies"]} == {"CN:600519", "CN:600900"}
+    assert [c.symbol for c in store.read().companies] == ["CN:600519"]
 
 
 @pytest.mark.parametrize("with_disclosures", [False, True])

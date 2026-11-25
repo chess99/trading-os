@@ -26,11 +26,11 @@ A/H、ADR与股份类别可以复用经过核验的经营事实。股本、权�
 
 ## 排期
 
-披露输入为`{"disclosures":[{"symbol":"US:...","report_period":"2026-FY","financial_basis":{...}}]}`。先预览，再执行：
+披露输入为`{"disclosures":[{"symbol":"US:...","report_period":"2026-FY","financial_basis":{...}}]}`。筛选轮次与每家发行人的财报周期分别记录。`--selection-period` 指定筛选轮次，省略时取执行日最近结束的自然季度（第四季度记为 FY）。先预览，再执行：
 
 ```bash
-python -m trading_os research --market us enqueue-latest --input disclosures.json
-python -m trading_os research --market us enqueue-latest --input disclosures.json --apply
+python -m trading_os research --market us enqueue-latest --selection-period 2026-Q3 --input disclosures.json
+python -m trading_os research --market us enqueue-latest --selection-period 2026-Q3 --input disclosures.json --apply
 python -m trading_os --market us validate
 ```
 

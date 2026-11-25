@@ -6,8 +6,8 @@ Trading OS 是覆盖A股、港股与美股的价值投资研究工作台。个�
 
 ## 公司研究核心机制
 
-1. 价值质量筛选从全市场维护一个可增删、可调整 A/B 分层的重点跟踪池。
-2. 财报季使用 `research enqueue-period`，只为当时池内公司创建缺失的 `FY / Q1 / H1 / Q3` 周期槽位。
+1. 每轮从目标市场的在市证券重新初筛，根据竞争优势、普通股现金和反证选出值得深研的公司，留存当期名单。
+2. 财报季按名单及实际披露派发单公司研究。用户单独点名的公司用 `research enqueue-company` 排期，完成后可在研报库查询。
 3. 一家公司由一个研究者按统一规范端到端完成；正式结论只有 `covered / ignore`。
 4. 同周期重新研究时覆盖原文件并重新验收；只有进入下一财报周期才新增文件。
 5. 政策、新闻、订单、治理和资本事件不建立 update、不标记 stale，也不创建中途报告；下一周期研究统一吸收截止日前的重要事实。
@@ -28,7 +28,7 @@ Trading OS 是覆盖A股、港股与美股的价值投资研究工作台。个�
 | 行业研究 | 细分行业的历史、现状、竞争、前景与重要历史版本 | [行业研究规范](prompts/industry-research.md) |
 | 宏观与市场 | 主题报告、必要的环境综述、指标与方法 | [宏观研究规范](prompts/macro-research.md) |
 
-个股研究保留初筛和完整深研两个层次。行业与宏观采用主题及重要时点报告，季度复核不强制产出。日常市场观察仅保留[执行规范](prompts/daily-market-observation.md)，每日结果在仓库外使用。
+中国基础行业和常设宏观主题每季度完成一轮研究，按实际发布日期留存。日常市场观察仅保留[执行规范](prompts/daily-market-observation.md)，每日结果在仓库外使用。
 
 ## 唯一事实源
 
@@ -99,7 +99,9 @@ python -m trading_os quality-pool replace --input <完整池.json>
 python -m trading_os status
 python -m trading_os validate
 
-# 为当前动态重点跟踪池创建下一财报周期任务；已有槽位自动跳过
+# 全市场筛选完成后保存本轮名单，按实际披露派发
+python -m trading_os quality-pool freeze-period --period 2026-Q3
+python -m trading_os quality-pool list --period 2026-Q3
 python -m trading_os research enqueue-period --period 2026-Q3
 
 # 领取与完成
