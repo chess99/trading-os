@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:688380",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 8.27,
+    "high": 11.77,
+    "currency": "CNY"
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 3.21,
+    "cyclical_bear": 6.19,
+    "base_low": 8.27,
+    "base_high": 11.77,
+    "bull": 17.83,
+    "horizon_note": "未来五年的MCU销量、单价与研发负担决定终态盈利。各情景逐年支付分红、负担 IPM 与营运资本后再折现，第五年仅较乐观路径纳入自主闪存实质收入。"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.3,
+      0.3,
+      0.32,
+      0.34,
+      0.36
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 11.65,
+        "high": 17.41
+      }
+    }
+  },
+  "case_details": {
+    "structural_bear": {
+      "value": 3.21,
+      "year_5_terminal": 5.35,
+      "year_5_sales": 9.5,
+      "year_5_after_tax_operating_profit": 0.254,
+      "year_1_after_tax_operating_profit": 0.684,
+      "opening_financial_value_net": 19.663,
+      "end_retained_financial_value": 19.157,
+      "five_year_free_cash": 0.734,
+      "year_2_to_5_incremental_capital": 1.048,
+      "incremental_operating_return": -0.4101,
+      "terminal_pv_fraction": 0.9269,
+      "capitalized_free_cash_value": 3.17
+    },
+    "cyclical_bear": {
+      "value": 6.19,
+      "year_5_terminal": 9.52,
+      "year_5_sales": 13.5,
+      "year_5_after_tax_operating_profit": 1.382,
+      "year_1_after_tax_operating_profit": 0.999,
+      "opening_financial_value_net": 21.36,
+      "end_retained_financial_value": 21.549,
+      "five_year_free_cash": 3.952,
+      "year_2_to_5_incremental_capital": 1.411,
+      "incremental_operating_return": 0.2716,
+      "terminal_pv_fraction": 0.8924,
+      "capitalized_free_cash_value": 5.63
+    },
+    "base_low": {
+      "value": 8.27,
+      "year_5_terminal": 11.65,
+      "year_5_sales": 15.74,
+      "year_5_after_tax_operating_profit": 1.975,
+      "year_1_after_tax_operating_profit": 1.922,
+      "opening_financial_value_net": 22.074,
+      "end_retained_financial_value": 22.955,
+      "five_year_free_cash": 7.367,
+      "year_2_to_5_incremental_capital": 1.78,
+      "incremental_operating_return": 0.03,
+      "terminal_pv_fraction": 0.8549,
+      "capitalized_free_cash_value": 8.07
+    },
+    "base_high": {
+      "value": 11.77,
+      "year_5_terminal": 17.41,
+      "year_5_sales": 19.2,
+      "year_5_after_tax_operating_profit": 3.076,
+      "year_1_after_tax_operating_profit": 2.594,
+      "opening_financial_value_net": 22.491,
+      "end_retained_financial_value": 26.631,
+      "five_year_free_cash": 10.626,
+      "year_2_to_5_incremental_capital": 2.749,
+      "incremental_operating_return": 0.1754,
+      "terminal_pv_fraction": 0.8979,
+      "capitalized_free_cash_value": 10.93
+    },
+    "bull": {
+      "value": 17.83,
+      "year_5_terminal": 26.45,
+      "year_5_sales": 23.8,
+      "year_5_after_tax_operating_profit": 4.342,
+      "year_1_after_tax_operating_profit": 2.972,
+      "opening_financial_value_net": 22.907,
+      "end_retained_financial_value": 27.73,
+      "five_year_free_cash": 12.429,
+      "year_2_to_5_incremental_capital": 4.654,
+      "incremental_operating_return": 0.2945,
+      "terminal_pv_fraction": 0.9208,
+      "capitalized_free_cash_value": 15.26
+    }
+  }
+}

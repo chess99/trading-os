@@ -1,0 +1,44 @@
+{
+  "symbol": "HK:06618",
+  "report_period": "2026-Q3",
+  "as_of": "2026-11-27T19:00:00+08:00",
+  "units": "经营与现金为十亿元人民币，股本为十亿股。每股港元，HKD兑人民币为0.85580。",
+  "sources": {
+    "FY25（五年概要、收入和公司可分配储备）": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0424/2026042401364.pdf",
+    "H126（损益、资产负债及附注5、10、11、14、15、17、20）": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0904/2026090400644.pdf",
+    "Q326（第2页，2026与2025年第三季度收入和经营利润）": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1117/2026111700528.pdf",
+    "10月月报（第2至7页，普通股和可新发奖励股）": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1105/2026110500710.pdf",
+    "奖励信托11月18日购买现股": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1119/2026111900045.pdf",
+    "中国外汇交易中心11月27日中间价公告转载": "https://finance.sina.com.cn/jjxw/2026-11-27/doc-inkacvhq5553465.shtml"
+  },
+  "facts": {
+    "fy25_revenue": 73.441487,
+    "h1_revenue_2025": 35.290047,
+    "q3_revenue_2025": 17.119726,
+    "h1_revenue_2026": 40.887884,
+    "q3_revenue_2026": 20.017199,
+    "cash": 20.445564,
+    "deposits": 13.726137,
+    "wm_fair_value": 34.084693,
+    "wm_amortized": 3.233585,
+    "lease_liabilities": 0.87485,
+    "award_purchases_hkd": 0.349826,
+    "issued": 3.190481011,
+    "possible_new_award_shares": 0.013476111,
+    "cny_per_hkd": 0.8558
+  },
+  "assumptions": {
+    "operating_tax": 0.22,
+    "cash_yield_after_tax": 0.015,
+    "operating_liquidity_reserve": 13,
+    "construction": "现金与定存按面值，非保本理财按情景留出损失。五年内无普通股分红，税后经营利润扣净固定及周转资本投入后按1.5%积存，零净回购。第5年税后经营盈利不给金融本金计息，超额现金另计一次。第6—10年替代法用同一资本强度，收入增长线性减至永续增长；已含替换设备、人员和药仓履约日常成本。",
+    "growth_and_margin": "季度增收17%，同期经营利润率约6%，半年约8%。两条基准路径前高后低的收入增速源于渠道渗透向行业常态收敛；税后经营利润乘数15—17倍反映成熟阶段约6%经营盈利收益率及适度余下扩张。"
+  },
+  "cases": {
+    "structural_bear": {"growth":[0.00,-0.02,0.01,0.02,0.02],"margin":[0.045,0.035,0.035,0.038,0.04],"capital_per_growth":0.26,"wm_loss":0.12,"settlement_reserve_extra":6,"discount":0.13,"exit_multiple":10,"perpetual_growth":0.01},
+    "cyclical_bear": {"growth":[0.05,0.05,0.08,0.07,0.06],"margin":[0.048,0.05,0.056,0.06,0.063],"capital_per_growth":0.19,"wm_loss":0.06,"settlement_reserve_extra":2,"discount":0.115,"exit_multiple":13.5,"perpetual_growth":0.025},
+    "base_low": {"growth":[0.12,0.105,0.09,0.075,0.06],"margin":[0.065,0.066,0.068,0.069,0.07],"capital_per_growth":0.16,"wm_loss":0.03,"settlement_reserve_extra":0,"discount":0.105,"exit_multiple":15,"perpetual_growth":0.03},
+    "base_high": {"growth":[0.14,0.125,0.11,0.095,0.08],"margin":[0.069,0.071,0.073,0.076,0.078],"capital_per_growth":0.14,"wm_loss":0.03,"settlement_reserve_extra":0,"discount":0.095,"exit_multiple":17,"perpetual_growth":0.035},
+    "bull": {"growth":[0.16,0.15,0.14,0.12,0.10],"margin":[0.072,0.077,0.083,0.087,0.09],"capital_per_growth":0.13,"wm_loss":0.02,"settlement_reserve_extra":0,"discount":0.09,"exit_multiple":19,"perpetual_growth":0.04}
+  }
+}

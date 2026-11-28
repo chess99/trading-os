@@ -1,0 +1,40 @@
+{
+  "symbol": "CN:600312",
+  "report_period": "2026-Q3",
+  "as_of": "2026-11-27T21:00:00+08:00",
+  "units": "财务金额亿元、股数亿股、分配与价值元/股；Y1—Y5为截止日后连续五个年度。",
+  "facts": {
+    "shares": 13.56921309,
+    "cash_equivalents": 61.3691768678,
+    "bank_debt": 0.742,
+    "lease_and_current_debt": 0.035,
+    "interim_dividend_paid": 3.2837495678,
+    "parent_equity": 119.5555141637,
+    "minority_equity": 5.2745521028,
+    "ttm_revenue": 122.3388772829,
+    "order_H1": 64.6,
+    "factory_total": 13.996
+  },
+  "assumption_notes": {
+    "opening": "从9月现金等价物扣期后已付中期息、借款及租赁，按情景保留运营用现金，并以账面归母权益占比近似分配剩余现金。未预测未披露的10—11月经营现金净流入。",
+    "earnings": "净利率为归母经营净收益/收入，已扣税、少数股东、研发费用、维持产能的折旧摊销，含经常性联营收益但剔除净现金利息。留存现金不计利息。倍数计于经营利润，该部分与现金区分。",
+    "capital": "净固定和研发投入指新增固定/无形资产与资本化研发净额（维持性开支按折旧摊销替换）。另计库存、工程应收、预收、付款条件带来的净周转现金投入；均折为归母承担口径。基准前3年净固定/研发13.2亿元，以新厂总预算及建设期约束，属未来新增资本的整体预算，不重复扣在建余额。资本较少的情景放慢新项目、仍保留已承诺负担。",
+    "distribution": "计划分红率参考2025全年、2026H1均约40%。以每年可用现金为上限，未分配的净现金只在第5年计算一次。稳态现金流交叉法以盈利、增长和增量回报导出可分配现金。",
+    "endpoints": "基准两端共用经营与现金路径，改变资本化倍数。倍数区间接近稳态2%增长、10%至15%再投资回报、8%至9%资金成本的可分配现金倍数。风险情景改变履约规模、净利、周转支出、派息、流动性准备与资本成本。"
+  },
+  "paths": {
+    "structural_bear": {"revenue":[117,112,110,111,113],"margin":[0.085,0.07,0.065,0.065,0.065],"net_fixed_rd":[4.2,4.5,3.6,0.8,0.8],"working":[3.5,2.5,1,0.5,0.5],"payout":0.22,"rate":0.115,"cash_reserve":54,"multiples":[9]},
+    "cyclical_bear": {"revenue":[120,122,125,130,136],"margin":[0.092,0.09,0.092,0.097,0.10],"net_fixed_rd":[4.2,4.8,3.7,1.2,1.2],"working":[3,2,0.7,0.8,0.8],"payout":0.32,"rate":0.10,"cash_reserve":49,"multiples":[11]},
+    "base": {"revenue":[128,134,141,148,155],"margin":[0.108,0.11,0.112,0.113,0.113],"net_fixed_rd":[4.2,5,4,1.5,1.5],"working":[2,1.5,1.5,1.5,1.5],"payout":0.40,"rate":0.09,"cash_reserve":45,"multiples":[12,14]},
+    "bull": {"revenue":[134,145,157,170,183],"margin":[0.119,0.122,0.125,0.127,0.13],"net_fixed_rd":[4.8,5.6,5,2.6,2.6],"working":[2.5,2.3,2.2,2.2,2.2],"payout":0.42,"rate":0.085,"cash_reserve":42,"multiples":[16]}
+  },
+  "steady_checks": [{"growth":0.018,"incremental_return":0.10,"required_return":0.095},{"growth":0.025,"incremental_return":0.14,"required_return":0.0875}],
+  "sources": {
+    "2025FY 主要数据、季度分解及高压板块": "https://static.cninfo.com.cn/finalpage/2026-04-11/1225093676.PDF",
+    "2026H1 存款、应收、存货、单体分配与业务": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225483278.PDF",
+    "2026Q3 合并三表": "https://static.cninfo.com.cn/finalpage/2026-10-22/1225614399.PDF",
+    "智慧工厂投资方案": "https://static.cninfo.com.cn/finalpage/2026-05-20/1225317708.PDF",
+    "中期分配实施": "https://static.cninfo.com.cn/finalpage/2026-10-09/1225597190.PDF",
+    "投资计划调整": "https://static.cninfo.com.cn/finalpage/2026-11-17/1225672693.PDF"
+  }
+}

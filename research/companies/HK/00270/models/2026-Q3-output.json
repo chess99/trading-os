@@ -1,0 +1,100 @@
+{
+  "symbol": "HK:00270",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 4.9,
+    "high": 5.98,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T18:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.4834,
+      0.4907,
+      0.4981,
+      0.4068,
+      0.4571
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 4.73,
+        "high": 6.06
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": {
+      "value": 1.86,
+      "distributions": [
+        0.3188,
+        0.3188,
+        0.3188,
+        0.2609,
+        0.1119
+      ],
+      "terminal": 1.37,
+      "terminal_pv_share": 0.447
+    },
+    "cyclical_bear": {
+      "value": 4.4,
+      "distributions": [
+        0.3775,
+        0.4142,
+        0.4526,
+        0.3792,
+        0.4433
+      ],
+      "terminal": 4.41,
+      "terminal_pv_share": 0.64
+    },
+    "base_low": {
+      "value": 4.9,
+      "distributions": [
+        0.4834,
+        0.4907,
+        0.4981,
+        0.4068,
+        0.4571
+      ],
+      "terminal": 4.73,
+      "terminal_pv_share": 0.627
+    },
+    "base_high": {
+      "value": 5.98,
+      "distributions": [
+        0.4834,
+        0.4907,
+        0.4981,
+        0.4068,
+        0.4571
+      ],
+      "terminal": 6.06,
+      "terminal_pv_share": 0.687
+    },
+    "bull": {
+      "value": 7.48,
+      "distributions": [
+        0.5225,
+        0.5354,
+        0.5487,
+        0.5041,
+        0.5528
+      ],
+      "terminal": 7.78,
+      "terminal_pv_share": 0.714
+    }
+  },
+  "secondary_range": [
+    5.41,
+    7.13
+  ],
+  "no_renewal_other_inputs_constant": 3.34,
+  "normalised_earnings_bn": {
+    "dongshen": 2.997,
+    "other": 1.7,
+    "road": 0.165
+  }
+}

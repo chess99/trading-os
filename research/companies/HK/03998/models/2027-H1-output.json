@@ -1,0 +1,66 @@
+{
+  "symbol": "HK:03998",
+  "report_period": "2027-H1",
+  "value_range": {
+    "low": 4.46,
+    "high": 5.17,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T18:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.2786,
+      0.2806,
+      0.2909,
+      0.3025,
+      0.3168
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 5.58,
+        "high": 6.34
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "HKD",
+    "structural_bear": 1.54,
+    "cyclical_bear": 3.55,
+    "base_low": 4.46,
+    "base_high": 5.17,
+    "bull": 6.41,
+    "horizon_note": "未来五年的直营售罄、渠道库存及门店费用共同决定收入与现金利润率，各情景同步调整资本占用、实际派息和折现率；金额为资料截止日每股港元。"
+  },
+  "normalized_cash_power_cross_check": {
+    "annual_cny_bn": [
+      2.6133100000000002,
+      3.539825
+    ],
+    "value_hkd": [
+      3.46,
+      4.13
+    ]
+  },
+  "bridge": {
+    "ttm_revenue_cny_bn": 27.525776,
+    "opening_excess_cny_bn": 6.036038795631538,
+    "diluted_shares_bn": 11.929193472,
+    "cny_per_hkd": 0.8563001092115546
+  },
+  "base_diagnostics": {
+    "pv": 4.79,
+    "terminal": 5.9314,
+    "terminal_weight": 0.7689,
+    "year5_reserve": 9.1104,
+    "year1_profit": 3.7622,
+    "year5_profit": 4.4241,
+    "growth_capital_year2_to_5": 1.3362
+  },
+  "sensitivities_hkd": {
+    "terminal_growth_zero": 4.23,
+    "margin_minus_one_point": 4.43
+  }
+}

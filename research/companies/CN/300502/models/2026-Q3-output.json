@@ -1,0 +1,136 @@
+{
+  "symbol": "CN:300502",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 119.31,
+    "high": 139.82,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      1.0089,
+      1.0816,
+      1.1448,
+      1.1428,
+      1.1267
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 189.8,
+        "high": 223.6
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 14.63,
+    "cyclical_bear": 58.53,
+    "base_low": 119.31,
+    "base_high": 139.82,
+    "bull": 265.86,
+    "horizon_note": "按统一完全稀释股数，联动销量、产品组合、资本占用、减值及分配，折现五年分配和独立第五年末普通股价值。"
+  },
+  "path_details": {
+    "structural_bear": {
+      "present_value": 14.63,
+      "terminal_value": 27.2,
+      "distributions": [
+        0.2301,
+        0.1462,
+        0.1097,
+        0.1051,
+        0.0934
+      ],
+      "terminal_pv_fraction": 0.966,
+      "shares_bn": 1.399345403,
+      "opening_surplus_bn": 1.43,
+      "year_5_retained_cash_bn": 17.152,
+      "y1_y5_incremental_after_tax_operating_return": null
+    },
+    "cyclical_bear": {
+      "present_value": 58.53,
+      "terminal_value": 100.4,
+      "distributions": [
+        0.4628,
+        0.3617,
+        0.4068,
+        0.4674,
+        0.4776
+      ],
+      "terminal_pv_fraction": 0.973,
+      "shares_bn": 1.399345403,
+      "opening_surplus_bn": 1.43,
+      "year_5_retained_cash_bn": 35.478,
+      "y1_y5_incremental_after_tax_operating_return": 0.074
+    },
+    "bull": {
+      "present_value": 265.86,
+      "terminal_value": 406.59,
+      "distributions": [
+        1.5679,
+        1.8479,
+        2.0653,
+        2.2429,
+        2.3228
+      ],
+      "terminal_pv_fraction": 0.971,
+      "shares_bn": 1.399345403,
+      "opening_surplus_bn": 1.43,
+      "year_5_retained_cash_bn": 81.409,
+      "y1_y5_incremental_after_tax_operating_return": 0.482
+    },
+    "base_low": {
+      "present_value": 119.31,
+      "terminal_value": 189.8,
+      "distributions": [
+        1.0089,
+        1.0816,
+        1.1448,
+        1.1428,
+        1.1267
+      ],
+      "terminal_pv_fraction": 0.966,
+      "shares_bn": 1.399345403,
+      "opening_surplus_bn": 1.43,
+      "year_5_retained_cash_bn": 60.642,
+      "y1_y5_incremental_after_tax_operating_return": 0.206
+    },
+    "base_high": {
+      "present_value": 139.82,
+      "terminal_value": 223.6,
+      "distributions": [
+        1.0089,
+        1.0816,
+        1.1448,
+        1.1428,
+        1.1267
+      ],
+      "terminal_pv_fraction": 0.971,
+      "shares_bn": 1.399345403,
+      "opening_surplus_bn": 1.43,
+      "year_5_retained_cash_bn": 60.642,
+      "y1_y5_incremental_after_tax_operating_return": 0.206
+    }
+  },
+  "cashflow_crosscheck": {
+    "present_value": 103.73,
+    "terminal_value": 164.14,
+    "distributions": [
+      1.0089,
+      1.0816,
+      1.1448,
+      1.1428,
+      1.1267
+    ],
+    "terminal_pv_fraction": 0.96,
+    "shares_bn": 1.399345403,
+    "opening_surplus_bn": 1.43,
+    "year_5_retained_cash_bn": 60.642,
+    "y1_y5_incremental_after_tax_operating_return": 0.206
+  },
+  "margin_sensitivity": 117.33
+}

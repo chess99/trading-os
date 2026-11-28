@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:601179",
+  "report_period": "2026-Q3",
+  "as_of": "2026-11-27T21:00:00+08:00",
+  "units": "营业收入、权益、资本与利润为人民币亿元，股本为亿股，每股结果为人民币元",
+  "facts": {
+    "last_nine_month_revenue": 187.9119440534,
+    "previous_q4_revenue": 67.973559,
+    "last_nine_month_parent_profit": 11.5391592442,
+    "last_nine_month_consolidated_profit": 14.6853168369,
+    "parent_book": 235.8538702774,
+    "shares": 51.25882352,
+    "treasury_shares": 0,
+    "new_dilutive_shares": 0
+  },
+  "sources": {
+    "2026-Q3 合并报表6—12页、股本及普通股权益": "https://static.cninfo.com.cn/finalpage/2026-10-22/1225614154.PDF",
+    "2026-H1 母公司资产、利润分配与联营财务公司": "https://static.cninfo.com.cn/finalpage/2026-08-20/1225482387.PDF",
+    "2025-FY 第7—8、14、17页，分季度及分部结构": "https://static.cninfo.com.cn/finalpage/2026-04-11/1225094842.PDF",
+    "2026年中期现金派息每股0.055元": "https://static.cninfo.com.cn/finalpage/2026-09-17/1225567743.PDF",
+    "国网第三批、第五批变电设备中标": ["https://static.cninfo.com.cn/finalpage/2026-07-23/1225436709.PDF","https://static.cninfo.com.cn/finalpage/2026-11-04/1225655040.PDF"]
+  },
+  "case_parameters": {
+    "structural_bear": {
+      "growth": [-0.06,-0.04,0,0.01,0.015], "net_margin": [0.045,0.04,0.038,0.038,0.04],
+      "net_capex_ratio": 0.008, "working_capital_per_increment": 0.45, "supplier_and_receivable_buffer": [7,5,3,2,1],
+      "payout_ceiling": 0.25, "discount_rate": 0.115, "exit_pe": [7,7]
+    },
+    "cyclical_bear": {
+      "growth": [-0.02,0,0.035,0.045,0.04], "net_margin": [0.05,0.048,0.052,0.055,0.058],
+      "net_capex_ratio": 0.012, "working_capital_per_increment": 0.32, "supplier_and_receivable_buffer": [5,3,2,1,0],
+      "payout_ceiling": 0.32, "discount_rate": 0.105, "exit_pe": [9,9]
+    },
+    "base": {
+      "growth": [0.08,0.07,0.06,0.05,0.04], "net_margin": [0.06,0.062,0.0635,0.065,0.066],
+      "net_capex_ratio": 0.015, "working_capital_per_increment": 0.30, "supplier_and_receivable_buffer": [2.5,1.5,1,0.5,0],
+      "payout_ceiling": 0.40, "discount_rate": 0.095, "exit_pe": [10,12]
+    },
+    "bull": {
+      "growth": [0.12,0.105,0.09,0.075,0.055], "net_margin": [0.064,0.067,0.07,0.073,0.075],
+      "net_capex_ratio": 0.018, "working_capital_per_increment": 0.23, "supplier_and_receivable_buffer": [1,0.5,0.3,0,0],
+      "payout_ceiling": 0.42, "discount_rate": 0.09, "exit_pe": [14,14]
+    }
+  },
+  "book_check": {"normalized_roe": [0.07,0.082], "growth": 0.025, "discount_rate": 0.095},
+  "horizon_note": "各路径把投标、排产和收款条件转为五年营业收入、归母净利率和留资预算，第五年末以归母盈利计算终值，再把分配和终值折现。"
+}

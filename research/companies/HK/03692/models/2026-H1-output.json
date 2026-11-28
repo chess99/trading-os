@@ -1,0 +1,130 @@
+{
+  "symbol": "HK:03692",
+  "report_period": "2026-H1",
+  "value_range": {
+    "low": 16.51,
+    "high": 23.81,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.4,
+      0.424,
+      0.4494,
+      0.4764,
+      0.505
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 23.3,
+        "high": 33.96
+      }
+    }
+  },
+  "paths": {
+    "structural_bear": {
+      "value": 6.02,
+      "dcf": 5.87,
+      "terminal": 9.43,
+      "dps": [
+        0.1963,
+        0.1869,
+        0.1815,
+        0.1815,
+        0.1815
+      ],
+      "terminal_pv_fraction": 0.888,
+      "cash_bridge_before_bond": 31.365,
+      "year5_cash_before_bond": 35.143,
+      "year5_sales": 11.928,
+      "year5_profit": 1.99,
+      "year1_profit": 2.155,
+      "incremental_investment_y2_y5": 1.683
+    },
+    "cyclical_bear": {
+      "value": 11.45,
+      "dcf": 10.19,
+      "terminal": 16.94,
+      "dps": [
+        0.28,
+        0.2968,
+        0.3146,
+        0.3335,
+        0.3535
+      ],
+      "terminal_pv_fraction": 0.898,
+      "cash_bridge_before_bond": 31.365,
+      "year5_cash_before_bond": 40.171,
+      "year5_sales": 16.571,
+      "year5_profit": 3.992,
+      "year1_profit": 3.364,
+      "incremental_investment_y2_y5": 2.474
+    },
+    "base_low": {
+      "value": 16.51,
+      "dcf": 14.39,
+      "terminal": 23.3,
+      "dps": [
+        0.4,
+        0.424,
+        0.4494,
+        0.4764,
+        0.505
+      ],
+      "terminal_pv_fraction": 0.896,
+      "cash_bridge_before_bond": 31.365,
+      "year5_cash_before_bond": 41.552,
+      "year5_sales": 19.313,
+      "year5_profit": 5.225,
+      "year1_profit": 4.098,
+      "incremental_investment_y2_y5": 2.922
+    },
+    "base_high": {
+      "value": 23.81,
+      "dcf": 21.49,
+      "terminal": 33.96,
+      "dps": [
+        0.4,
+        0.424,
+        0.4494,
+        0.4764,
+        0.505
+      ],
+      "terminal_pv_fraction": 0.927,
+      "cash_bridge_before_bond": 31.365,
+      "year5_cash_before_bond": 48.229,
+      "year5_sales": 22.177,
+      "year5_profit": 6.966,
+      "year1_profit": 5.018,
+      "incremental_investment_y2_y5": 3.199
+    },
+    "bull": {
+      "value": 35.12,
+      "dcf": 33.72,
+      "terminal": 49.77,
+      "dps": [
+        0.46,
+        0.4876,
+        0.5169,
+        0.5479,
+        0.5807
+      ],
+      "terminal_pv_fraction": 0.942,
+      "cash_bridge_before_bond": 31.365,
+      "year5_cash_before_bond": 54.126,
+      "year5_sales": 26.274,
+      "year5_profit": 9.485,
+      "year1_profit": 6.291,
+      "incremental_investment_y2_y5": 4.926
+    }
+  },
+  "sensitivity": {
+    "产品税前利润率下降3个百分点": 15.3,
+    "罗氏和拜耳约定款完全落空": 16.24,
+    "退出倍数少两倍": 15.24
+  }
+}

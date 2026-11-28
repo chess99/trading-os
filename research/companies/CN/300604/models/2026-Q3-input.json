@@ -1,0 +1,29 @@
+{
+  "units": "金额为人民币亿元，股数为亿股，每股为元；第1至5年是资料截止后的完整预测年度。",
+  "as_of": "2026-11-27T21:00:00+08:00",
+  "basis": {
+    "sales_fy25": 52.9154209317, "sales_9m25": 37.7888766152, "sales_9m26": 59.4223196717,
+    "cash_equivalents": 52.0296848451, "short_debt": 7.6010541910, "debt_due": 5.1308033836, "long_debt": 15.8119695689, "lease_noncurrent": 0.2780042714,
+    "minority_claim": 5.1700416382, "operating_cash": 5, "post_dividend": 0.648935494, "first_repurchase": 0.1879965935,
+    "registered_shares": 6.48935494, "opening_awards_millions": 13.837804, "registered_awards_oct_millions": 3.3533,
+    "tax": 0.15
+  },
+  "assumption_fields": "y5_product_sales 分别为测试机、分选机、其他，第五年总额由产品加总。margin 是将当期经济研发全额计费后的运营利润率，固定净投资不重复扣研发，wc 是每元正增长需要的营运资本。fixed 是每年净生产投资占收入，覆盖持续升级及厂房。其他权益主张按期初净额扣除，全部路径使用相同摊薄股本。g6 和 g10 为替代模型中第6年与第10年的增长率，第11年进入 gt 的永续增速。roic 是过渡及永续新增资本回报。",
+  "scenarios": {
+    "structural_bear":{"y5_product_sales":[38,23,7],"first_growth":-0.18,"margin1":0.115,"margin5":0.135,"wc":1.02,"fixed":0.041,"multiple":10,"discount":0.125,"g6":0.025,"g10":0.015,"gt":0.012,"roic":0.10},
+    "cyclical_bear":{"y5_product_sales":[53,31,10],"first_growth":-0.08,"margin1":0.16,"margin5":0.205,"wc":0.82,"fixed":0.038,"multiple":14,"discount":0.112,"g6":0.065,"g10":0.03,"gt":0.023,"roic":0.15},
+    "base_low":{"y5_product_sales":[69,39,13],"first_growth":0.17,"margin1":0.246,"margin5":0.235,"wc":0.69,"fixed":0.040,"multiple":17,"discount":0.105,"g6":0.105,"g10":0.044,"gt":0.030,"roic":0.185},
+    "base_high":{"y5_product_sales":[86,46,17],"first_growth":0.22,"margin1":0.262,"margin5":0.272,"wc":0.56,"fixed":0.037,"multiple":20,"discount":0.10,"g6":0.14,"g10":0.055,"gt":0.035,"roic":0.22},
+    "bull":{"y5_product_sales":[105,54,23],"first_growth":0.29,"margin1":0.275,"margin5":0.29,"wc":0.51,"fixed":0.036,"multiple":23,"discount":0.096,"g6":0.15,"g10":0.065,"gt":0.037,"roic":0.235}
+  },
+  "sources": {
+    "募集说明书研发预算、投产与技术取舍": "https://static.cninfo.com.cn/finalpage/2026-03-10/1225003807.PDF",
+    "三季报第2、8至13页，九个月现金负债及收入": "https://static.cninfo.com.cn/finalpage/2026-10-27/1225627248.PDF",
+    "年报主营业务和销量": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225193261.PDF",
+    "半年报分产品、募投进度、研发及股份支付附注": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225523202.PDF",
+    "10月9日新增归属登记": "https://static.cninfo.com.cn/finalpage/2026-10-12/1225602033.PDF",
+    "10月30日除息": "https://static.cninfo.com.cn/finalpage/2026-10-26/1225626625.PDF",
+    "首次员工激励回购": "https://static.cninfo.com.cn/finalpage/2026-11-25/1225686829.PDF",
+    "募资净额与研发专户": "https://static.cninfo.com.cn/finalpage/2026-11-26/1225689069.PDF"
+  }
+}

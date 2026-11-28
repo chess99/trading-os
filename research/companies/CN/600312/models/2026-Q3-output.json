@@ -1,0 +1,139 @@
+{
+  "symbol": "CN:600312",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "currency": "CNY",
+    "low": 13.52,
+    "high": 15.19
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 3.82,
+    "cyclical_bear": 9.1,
+    "base_low": 13.52,
+    "base_high": 15.19,
+    "bull": 22.98,
+    "horizon_note": "五年末按各路径归母经营盈利资本化并加入尚存的超额现金；结构受损假定重复中标下滑、现金结算负担加重，周期偏弱假定验收推后，乐观情景要求新厂提高利用率与利润率。"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.4075,
+      0.4345,
+      0.4655,
+      0.493,
+      0.5163
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 18.0501,
+        "high": 20.6317
+      }
+    }
+  },
+  "post_distribution_net_cash_before_operating_reserve": 57.308,
+  "paths": {
+    "structural_bear": {
+      "opening_parent_excess": 3.169,
+      "y5_earnings": 7.345,
+      "y5_excess": 12.075,
+      "end_values_per_share": [
+        5.7616
+      ],
+      "dividends_per_share": [
+        0.1612,
+        0.1271,
+        0.1159,
+        0.117,
+        0.1191
+      ],
+      "value": [
+        3.82
+      ],
+      "terminal_pv_weight": [
+        0.8755
+      ],
+      "incremental_return_y1_to_y5": -0.1831
+    },
+    "cyclical_bear": {
+      "opening_parent_excess": 7.957,
+      "y5_earnings": 13.6,
+      "y5_excess": 26.174,
+      "end_values_per_share": [
+        12.9539
+      ],
+      "dividends_per_share": [
+        0.2604,
+        0.2589,
+        0.2712,
+        0.2974,
+        0.3207
+      ],
+      "value": [
+        9.1
+      ],
+      "terminal_pv_weight": [
+        0.8839
+      ],
+      "incremental_return_y1_to_y5": 0.1684
+    },
+    "base": {
+      "opening_parent_excess": 11.788,
+      "y5_earnings": 17.515,
+      "y5_excess": 34.745,
+      "end_values_per_share": [
+        18.0501,
+        20.6317
+      ],
+      "dividends_per_share": [
+        0.4075,
+        0.4345,
+        0.4655,
+        0.493,
+        0.5163
+      ],
+      "value": [
+        13.52,
+        15.19
+      ],
+      "terminal_pv_weight": [
+        0.868,
+        0.8826
+      ],
+      "incremental_return_y1_to_y5": 0.2051
+    },
+    "bull": {
+      "opening_parent_excess": 14.662,
+      "y5_earnings": 23.79,
+      "y5_excess": 39.873,
+      "end_values_per_share": [
+        30.9903
+      ],
+      "dividends_per_share": [
+        0.4936,
+        0.5475,
+        0.6074,
+        0.6683,
+        0.7364
+      ],
+      "value": [
+        22.98
+      ],
+      "terminal_pv_weight": [
+        0.897
+      ],
+      "incremental_return_y1_to_y5": 0.3176
+    }
+  },
+  "steady_fcfe_crosscheck": [
+    12.54,
+    14.75
+  ],
+  "sensitivity": {
+    "plus_1pt_margin": 15.68,
+    "minus_1pt_margin": 13.03
+  }
+}

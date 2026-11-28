@@ -1,0 +1,99 @@
+{
+  "symbol": "CN:688016",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 66.52,
+    "high": 90.72,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      1.6,
+      1.8,
+      2.0,
+      2.2,
+      2.4
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 95.16,
+        "high": 130.95
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 22.29,
+    "cyclical_bear": 47.76,
+    "base_low": 66.52,
+    "base_high": 90.72,
+    "bull": 135.07,
+    "horizon_note": "五年销量与价格组合决定税后经营利润，扣新增资本、回款缺口与分红后，将第五年业务和留存现金折现。"
+  },
+  "details": {
+    "structural_bear": {
+      "value": 22.29,
+      "year5_total_per_share": 33.5,
+      "year5_sales_mn": 1291.3,
+      "year5_earnings_mn": 232.4,
+      "retained_cash_year5_mn": 1804.3,
+      "opening_surplus_mn": 1015.5,
+      "terminal_share": 0.872,
+      "dcf_per_share": 20.94,
+      "capital_from_year1_end_to_year5_end_mn": 0.0,
+      "earnings_increase_from_year1_to_year5_mn": -122.6
+    },
+    "cyclical_bear": {
+      "value": 47.76,
+      "year5_total_per_share": 69.61,
+      "year5_sales_mn": 1731.5,
+      "year5_earnings_mn": 502.1,
+      "retained_cash_year5_mn": 2052.7,
+      "opening_surplus_mn": 1015.5,
+      "terminal_share": 0.885,
+      "dcf_per_share": 44.49,
+      "capital_from_year1_end_to_year5_end_mn": 162.4,
+      "earnings_increase_from_year1_to_year5_mn": 95.5
+    },
+    "base_low": {
+      "value": 66.52,
+      "year5_total_per_share": 95.16,
+      "year5_sales_mn": 1975.4,
+      "year5_earnings_mn": 632.1,
+      "retained_cash_year5_mn": 2247.4,
+      "opening_surplus_mn": 1015.5,
+      "terminal_share": 0.888,
+      "dcf_per_share": 62.65,
+      "capital_from_year1_end_to_year5_end_mn": 278.9,
+      "earnings_increase_from_year1_to_year5_mn": 121.8
+    },
+    "base_high": {
+      "value": 90.72,
+      "year5_total_per_share": 130.95,
+      "year5_sales_mn": 2272.4,
+      "year5_earnings_mn": 795.3,
+      "retained_cash_year5_mn": 2620.4,
+      "opening_surplus_mn": 1015.5,
+      "terminal_share": 0.917,
+      "dcf_per_share": 89.43,
+      "capital_from_year1_end_to_year5_end_mn": 409.2,
+      "earnings_increase_from_year1_to_year5_mn": 238.7
+    },
+    "bull": {
+      "value": 135.07,
+      "year5_total_per_share": 193.12,
+      "year5_sales_mn": 2775.3,
+      "year5_earnings_mn": 1054.6,
+      "retained_cash_year5_mn": 2712.9,
+      "opening_surplus_mn": 1015.5,
+      "terminal_share": 0.929,
+      "dcf_per_share": 141.3,
+      "capital_from_year1_end_to_year5_end_mn": 672.0,
+      "earnings_increase_from_year1_to_year5_mn": 458.7
+    }
+  }
+}

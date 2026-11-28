@@ -1,0 +1,78 @@
+{
+  "single_factor_base_low": {
+    "no_renewal": 12.17,
+    "growth_budget_overrun_25pct": 19.08,
+    "all_ebitda_down_10pct": 17.14
+  },
+  "symbol": "HK:00027",
+  "report_period": "2026-H1",
+  "value_range": {
+    "low": 19.66,
+    "high": 23.56,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T16:00:00+08:00",
+    "base_case_distributions_per_share": [
+      1.55,
+      1.55,
+      1.65,
+      1.75,
+      1.85
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 21.56,
+        "high": 26.33
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 7.33,
+    "cyclical_bear": 16.98,
+    "base_low": 19.66,
+    "base_high": 23.56,
+    "bull": 28.0
+  },
+  "sensitivity": {
+    "structural_bear": {
+      "price": 7.33,
+      "terminal": 8.14,
+      "terminal_pv_fraction": 0.63,
+      "year5_retained_billion": 27.276
+    },
+    "cyclical_bear": {
+      "price": 16.98,
+      "terminal": 20.29,
+      "terminal_pv_fraction": 0.725,
+      "year5_retained_billion": 29.512
+    },
+    "base_low": {
+      "price": 19.66,
+      "terminal": 21.56,
+      "terminal_pv_fraction": 0.681,
+      "year5_retained_billion": 26.105
+    },
+    "base_high": {
+      "price": 23.56,
+      "terminal": 26.33,
+      "terminal_pv_fraction": 0.727,
+      "year5_retained_billion": 30.905
+    },
+    "bull": {
+      "price": 28.0,
+      "terminal": 30.77,
+      "terminal_pv_fraction": 0.731,
+      "year5_retained_billion": 29.423
+    }
+  },
+  "secondary_range": [
+    22.47,
+    27.15
+  ],
+  "opening_common_liquidity_billion": 27.493,
+  "diluted_shares_billion": 4.39381573
+}

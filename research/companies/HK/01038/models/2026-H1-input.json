@@ -1,0 +1,36 @@
+{
+  "symbol": "HK:01038",
+  "report_period": "2026-H1",
+  "as_of": "2026-11-27T19:00:00+08:00",
+  "units": "除股数为百万股、比率和每股港元外，全部金额为百万港元。PAH指电能实业全公司。",
+  "facts": {
+    "shares": 2519.610945, "stake_pah": 0.3601, "group_total_equity": 157869, "group_ordinary_equity": 147929, "perpetual": 9885, "nci": 55,
+    "group_cash": 55279, "short_debt": 9038, "long_debt": 12346, "interim_dividend_paid": 1890, "commitments": 225,
+    "fy_parent_cfo": 2213, "fy_assoc_div": 2319, "fy_jv_div": 3983, "fy_pah_div_in_assoc": 2164,
+    "ukpn_distribution_all_owners": 3570, "ukpn_stake_each": 0.4, "fy_bank_interest_received": 240, "fy_finance_cost_paid": 871,
+    "fy_perpetual_coupon": 438, "fy_capex_intangible": 34, "fy_capex_ppe": 302, "fy_lease_payments": 51,
+    "pah_cash": 45268, "pah_debt": 2763, "pah_ordinary_equity": 103130, "pah_interim_paid": 1662, "pah_fy_ffo": 5314, "pah_fy_dividend": 6010
+  },
+  "normalisation": {
+    "rail_and_fx_reserve": 450, "pah_exit_and_funding_adjustment": 220, "days_since_june": 150,
+    "note": "铁路退出的逐项经常回款未单列。长建直接业务每年预减4.5亿港元，兼顾汇兑、营运资本及少数权益；电能实业预减2.2亿，含铁路、原存借款净息和经常性杂项。公司层借款先与现金相抵，直接现金流回加已付融资成本、扣除原存款利息；永续券息留在经营现金，永续本金不二扣。"
+  },
+  "book_factors": [0.75,0.95],
+  "scenarios_note": "factor按情景缩放两家持续现金；capital为长建直接及电能各自每年的净追加资本（存量资产的增长及维护）；growth为该净现金年增速。deposit为净储备税后收益，acquisition为长建第一年初现金购买额，acq_yield为新资产年净上划收益；g与r分别是终态增长和港元普通股回报要求。基准不预设大型收购。pah_dps_total为电能全体股东第一年起的年度派息总额，长建只收到36.01%。",
+  "scenarios": {
+    "structural_bear":{"factor":0.80,"capital":[900,450],"growth":0.0,"deposit":0.018,"acquisition":10000,"acq_yield":0.025,"g":0,"r":0.092,"dps":[2.45,2.25,2.1,2.05,2.05],"pah_dps_total":4750},
+    "cyclical_bear":{"factor":0.91,"capital":[750,360],"growth":0.026,"deposit":0.021,"acquisition":0,"acq_yield":0,"g":0.009,"r":0.081,"dps":[2.6,2.6,2.6,2.62,2.64],"pah_dps_total":5600},
+    "base_low":{"factor":1,"capital":[600,300],"growth":0.025,"deposit":0.025,"acquisition":0,"acq_yield":0,"g":0.016,"r":0.075,"dps":[2.64,2.67,2.7,2.73,2.76],"pah_dps_total":6010},
+    "base_high":{"factor":1,"capital":[600,300],"growth":0.025,"deposit":0.025,"acquisition":0,"acq_yield":0,"g":0.021,"r":0.07,"dps":[2.64,2.67,2.7,2.73,2.76],"pah_dps_total":6010},
+    "bull":{"factor":1.10,"capital":[700,350],"growth":0.035,"deposit":0.028,"acquisition":10000,"acq_yield":0.075,"g":0.023,"r":0.066,"dps":[2.68,2.74,2.8,2.86,2.93],"pah_dps_total":6100}
+  },
+  "sources": {
+    "cki_h1_notes_2_5_8_13_15": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0826/2026082600436.pdf",
+    "cki_fy25_cash_notes_17_18_32_37": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0416/2026041600953.pdf",
+    "ukpn_disposal_p22": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0408/2026040800057.pdf",
+    "pah_fy25_note_18": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0421/2026042100656.pdf",
+    "pah_h1_balance_and_cash": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0831/2026083100515.pdf",
+    "october_issued_shares": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1103/2026110301652.pdf",
+    "interim_dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0812/2026081200756.pdf"
+  }
+}

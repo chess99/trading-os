@@ -1,0 +1,131 @@
+{
+  "symbol": "CN:300548",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 25.98,
+    "high": 36.33,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.29,
+      0.34,
+      0.4,
+      0.45,
+      0.5
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 41.37,
+        "high": 56.81
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 5.28,
+    "cyclical_bear": 14.6,
+    "base_low": 25.98,
+    "base_high": 36.33,
+    "bull": 59.56,
+    "horizon_note": "五年交付和资本预算后，将第六至十年增长所需再投资从归属盈利扣除，再用长期增长及资本回报收敛；减去现金分配后留存的权益只进入第五年末一次。"
+  },
+  "diluted_100m_shares": 2.99,
+  "opening_common_cash_100m": 2.23,
+  "opening_trade_working_capital_100m": 8.48,
+  "secondary_per_share": [
+    24.47,
+    29.9
+  ],
+  "paths": {
+    "structural_bear": {
+      "value": 5.28,
+      "terminal": 9.24,
+      "distributions": [
+        0.058,
+        0.068,
+        0.08,
+        0.09,
+        0.1
+      ],
+      "terminal_pv_fraction": 0.949,
+      "retained_common_cash": 10.29,
+      "first_last_owner_free_cash": [
+        1.72,
+        1.68
+      ]
+    },
+    "cyclical_bear": {
+      "value": 14.6,
+      "terminal": 23.87,
+      "distributions": [
+        0.1885,
+        0.221,
+        0.26,
+        0.2925,
+        0.325
+      ],
+      "terminal_pv_fraction": 0.938,
+      "retained_common_cash": 16.64,
+      "first_last_owner_free_cash": [
+        3.16,
+        4.52
+      ]
+    },
+    "base_low": {
+      "value": 25.98,
+      "terminal": 41.37,
+      "distributions": [
+        0.29,
+        0.34,
+        0.4,
+        0.45,
+        0.5
+      ],
+      "terminal_pv_fraction": 0.945,
+      "retained_common_cash": 26.86,
+      "first_last_owner_free_cash": [
+        4.49,
+        6.81
+      ]
+    },
+    "base_high": {
+      "value": 36.33,
+      "terminal": 56.81,
+      "distributions": [
+        0.29,
+        0.34,
+        0.4,
+        0.45,
+        0.5
+      ],
+      "terminal_pv_fraction": 0.96,
+      "retained_common_cash": 30.39,
+      "first_last_owner_free_cash": [
+        4.94,
+        7.93
+      ]
+    },
+    "bull": {
+      "value": 59.56,
+      "terminal": 91.55,
+      "distributions": [
+        0.406,
+        0.476,
+        0.56,
+        0.63,
+        0.7
+      ],
+      "terminal_pv_fraction": 0.965,
+      "retained_common_cash": 36.59,
+      "first_last_owner_free_cash": [
+        5.53,
+        10.61
+      ]
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "symbol": "HK:01038",
+  "report_period": "2026-H1",
+  "value_range": {
+    "low": 49.71,
+    "high": 56.29,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "currency": "HKD",
+    "base_case_distributions_per_share": [
+      2.64,
+      2.67,
+      2.7,
+      2.73,
+      2.76
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 55.7,
+        "high": 63.45
+      }
+    }
+  },
+  "paths": {
+    "structural_bear": {
+      "pv": 27.33,
+      "terminal": 29.23,
+      "terminal_weight": 0.689,
+      "opening_cash": [
+        34239,
+        42663
+      ],
+      "ending_cash": [
+        21223,
+        34892
+      ]
+    },
+    "cyclical_bear": {
+      "pv": 39.79,
+      "terminal": 43.39,
+      "terminal_weight": 0.739,
+      "opening_cash": [
+        34239,
+        42663
+      ],
+      "ending_cash": [
+        31441,
+        34463
+      ]
+    },
+    "base_low": {
+      "pv": 49.71,
+      "terminal": 55.7,
+      "terminal_weight": 0.781,
+      "opening_cash": [
+        34239,
+        42663
+      ],
+      "ending_cash": [
+        34679,
+        35256
+      ]
+    },
+    "base_high": {
+      "pv": 56.29,
+      "terminal": 63.45,
+      "terminal_weight": 0.804,
+      "opening_cash": [
+        34239,
+        42663
+      ],
+      "ending_cash": [
+        34679,
+        35256
+      ]
+    },
+    "bull": {
+      "pv": 69.04,
+      "terminal": 79.09,
+      "terminal_weight": 0.832,
+      "opening_cash": [
+        34239,
+        42663
+      ],
+      "ending_cash": [
+        28803,
+        37569
+      ]
+    }
+  },
+  "book_check": [
+    49.07,
+    56.91
+  ],
+  "normalised_pre_topup": [
+    4279.0,
+    3666.0
+  ],
+  "base_low_rate_plus_100bp": 44.11
+}

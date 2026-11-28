@@ -1,0 +1,115 @@
+{
+  "symbol": "HK:00002",
+  "report_period": "2026-H1",
+  "value_range": {
+    "currency": "HKD",
+    "low": 59.44,
+    "high": 69.75
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      3.1431,
+      3.2548,
+      3.3665,
+      3.4782,
+      3.5899
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 66.2311,
+        "high": 78.5592
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 37.86,
+    "cyclical_bear": 52.59,
+    "base_low": 59.44,
+    "base_high": 69.75,
+    "bull": 80.0,
+    "currency": "HKD",
+    "horizon_note": "各情景均折现至资料截止。前七年扣除普通股承担的净投资和额外付款，2033年协议到期后按续期回报、再投资率和资金成本收敛。"
+  },
+  "sotp_per_share": [
+    57.96,
+    67.85
+  ],
+  "scenario_calculations": {
+    "structural_bear": {
+      "dividends": [
+        2.5629,
+        2.6443,
+        2.7257,
+        2.8072,
+        2.8886
+      ],
+      "terminal5": 41.0826,
+      "value": 37.86,
+      "terminal_share_of_value": 0.7184,
+      "common_net_investment": 3.445,
+      "annual_profit_added": 0.2057
+    },
+    "cyclical_bear": {
+      "dividends": [
+        2.6836,
+        2.856,
+        3.0918,
+        3.3078,
+        3.5079
+      ],
+      "terminal5": 59.3309,
+      "value": 52.59,
+      "terminal_share_of_value": 0.7679,
+      "common_net_investment": 3.39,
+      "annual_profit_added": 0.2656
+    },
+    "base_low": {
+      "dividends": [
+        3.1431,
+        3.2548,
+        3.3665,
+        3.4782,
+        3.5899
+      ],
+      "terminal5": 66.2311,
+      "value": 59.44,
+      "terminal_share_of_value": 0.7726,
+      "common_net_investment": 3.249,
+      "annual_profit_added": 0.2822
+    },
+    "base_high": {
+      "dividends": [
+        3.1431,
+        3.2548,
+        3.3665,
+        3.4782,
+        3.5899
+      ],
+      "terminal5": 78.5592,
+      "value": 69.75,
+      "terminal_share_of_value": 0.803,
+      "common_net_investment": 3.249,
+      "annual_profit_added": 0.2822
+    },
+    "bull": {
+      "dividends": [
+        3.1552,
+        3.3135,
+        3.4719,
+        3.6302,
+        3.7885
+      ],
+      "terminal5": 91.3959,
+      "value": 80.0,
+      "terminal_share_of_value": 0.8222,
+      "common_net_investment": 3.4185,
+      "annual_profit_added": 0.35
+    }
+  },
+  "common_equity_bn": 110.462,
+  "net_debt_bn": 62.209
+}

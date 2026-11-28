@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:601965",
+  "report_period": "2026-Q3",
+  "as_of": "2026-11-27T18:20:00+08:00",
+  "units": "人民币亿元、亿股、元/股；滚动基期为2025Q4至2026Q3。",
+  "sources": {
+    "q3": "https://static.cninfo.com.cn/finalpage/2026-10-27/1225623782.PDF",
+    "fy": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225147358.PDF",
+    "h1": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225501692.PDF",
+    "payout": "https://static.cninfo.com.cn/finalpage/2026-11-19/1225677934.PDF"
+  },
+  "facts": {
+    "q4_2025_revenue": 19.4228548779,
+    "nine_month_revenue": 32.9827130862,
+    "q4_2025_core_common_profit": 3.879349475,
+    "nine_month_core_common_profit": 6.5857152484,
+    "common_shares": 10.02648387,
+    "common_book": 83.3472002874,
+    "minority_book": 18.5250587123,
+    "group_book": 101.8722589997,
+    "group_net_income_9m": 7.3169967927,
+    "common_net_income_9m": 6.9471269635,
+    "minority_net_income_9m": 0.3698698292,
+    "parent_undistributed": 34.4095116886,
+    "announced_interim_dps": 0.10
+  },
+  "scenario_columns": {
+    "sales_growth": "未来五个年度销售额增速",
+    "end_margin": "第五年归母扣非利润率，从基期线性过渡；包括研发和利息支出",
+    "growth_equity_per_sales": "每一元新增合并收入需动用的归母净固定资本与营运资金；设备维护按折旧重置",
+    "additional_build": "按普通股权益口径测算的现有基地后续增量建设、升级及低效支出；不含已投金额",
+    "payout": "现金分配率上限，还须满足当年股东现金及累计可用余额",
+    "steady_g": "稳态归母利润增速",
+    "steady_roic": "成熟期新增自有资本的净回报率，配对稳态再投资",
+    "r": "股权资金成本"
+  },
+  "scenarios": {
+    "structural_bear":{"sales_growth":[-0.07,-0.04,0,0.01,0.01],"end_margin":0.139,"growth_equity_per_sales":1.55,"additional_build":[3.8,2.7,1.8,1.4,1.2],"payout":0.21,"steady_g":0.01,"steady_roic":0.074,"r":0.122},
+    "cyclical_bear":{"sales_growth":[-0.03,0,0.03,0.055,0.055],"end_margin":0.181,"growth_equity_per_sales":1.35,"additional_build":[3.7,2.6,1.7,1.1,0.7],"payout":0.27,"steady_g":0.02,"steady_roic":0.11,"r":0.108},
+    "base":{"sales_growth":[0.055,0.055,0.055,0.05,0.05],"end_margin":0.201,"growth_equity_per_sales":1.15,"additional_build":[3,2.5,1.5,0.75,0.25],"payout":0.32,"steady_g":0.025,"steady_roic":0.125,"r":0.10},
+    "bull":{"sales_growth":[0.09,0.09,0.085,0.08,0.07],"end_margin":0.219,"growth_equity_per_sales":1.05,"additional_build":[3.2,2.8,2,1.2,0.8],"payout":0.35,"steady_g":0.033,"steady_roic":0.147,"r":0.09}
+  },
+  "base_discount_low":0.095,
+  "base_discount_high":0.105,
+  "book_crosscheck":{"terminal_roe_low":0.106,"terminal_roe_high":0.12,"g":0.025},
+  "model_note":"贴现年末，五年内分红后未付现金以零利息积存，第五年按可释放余额计一次。起点合并现金与融资余额保留给经营；各期经常性净利已扣既有债务利息并排除少数股东。"
+}

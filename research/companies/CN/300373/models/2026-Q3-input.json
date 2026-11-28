@@ -1,0 +1,221 @@
+{
+  "symbol": "CN:300373",
+  "period": "2026-Q3",
+  "cutoff": "2026-11-27T21:00:00+08:00",
+  "units": "经营和资产负债金额为亿元人民币，股数为亿股，每股金额为元；五个年度为自截止日起的预测年度。",
+  "sources": {
+    "q3": "https://static.cninfo.com.cn/finalpage/2026-10-28/1225631689.PDF",
+    "h1": "https://static.cninfo.com.cn/finalpage/2026-08-22/1225491587.PDF",
+    "dividend": "https://static.cninfo.com.cn/finalpage/2026-11-17/1225676452.PDF",
+    "fund": "https://static.cninfo.com.cn/finalpage/2026-11-27/1225692144.PDF",
+    "building": "https://static.cninfo.com.cn/finalpage/2026-06-16/1225372765.PDF"
+  },
+  "facts": {
+    "cash_equivalents": 33.74675265,
+    "trading_assets": 6.233,
+    "other_financial_assets": 7.72801805,
+    "short_debt": 22.04699715,
+    "current_long_debt": 1.77530999,
+    "long_debt": 5.58772658,
+    "lease_debt": 0.22188039,
+    "other_payables": 4.46150467,
+    "h1_other_payables": 3.47138455,
+    "h1_private_debt": 2.70273778,
+    "minority_book": 4.27354306,
+    "shares": 5.43347787,
+    "dividend_paid_per_share": 0.5,
+    "fund_commitment": 0.6,
+    "parent_h1_retained": 35.85637063,
+    "nine_month_revenue": 71.82648109,
+    "q4_revenue_estimate": 22.2
+  },
+  "assumptions": {
+    "operating_cash_buffer": 8,
+    "fair_asset_recovery": 0.65,
+    "cash_yield": 0.018,
+    "private_debt_basis": "中报其他应付款中的拆借款，加三季报其他应付款比中报增加额；将增量全列融资偏保守。",
+    "fund_treatment": "实缴及未缴均预留，一并不计未上市基金投资回收。",
+    "earmarked_funds": "GDR募集资金对应未来项目付款，不额外分配。按经营安全金、资本开支和本年现金约束分红，未使用募集资金不在桥外重复计值。",
+    "cash_treatment": "模拟先清偿有息负债、按账面预留少数股权对价并保留周转现金。余额为负时用计息融资差额，余额为正仅计低息。有限流动性的长期权益投资在五年末按统一折价结算，不用于当期分红。",
+    "historical_calibration": "三季报第4、7至12页及半年报合并现金流补充资料。2026年前三季经营现金8.69亿元、购建8.62亿元。半年折旧摊销约3.84亿元，全年购建及未来营运资金按经营情景预算。",
+    "base_bridge": "以预计2026全年收入为滚动年度起点。母公司每年新增可派利润保守限定为合并税后经营利润60%，从中报母公司未分配利润扣除已实施的前三季派息起算。",
+    "terminal": "主模型对第五年税后营业利润取经营价值倍数，须包含后续资本支出与营运资金，另加五年末扣融资后的金融权益。复核用长期ROIC约束留存率和永续FCF。",
+    "parent_profit_share": 0.6
+  },
+  "cases": {
+    "structural_bear": {
+      "sales_growth": [
+        -0.12,
+        -0.05,
+        0,
+        0.01,
+        0.02
+      ],
+      "operating_after_tax_margin": [
+        0.105,
+        0.09,
+        0.085,
+        0.088,
+        0.09
+      ],
+      "capex_ratio": [
+        0.16,
+        0.135,
+        0.115,
+        0.105,
+        0.1
+      ],
+      "depreciation_ratio": 0.075,
+      "wc_ratio": 0.3,
+      "wc_drain": [
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      "payout": 0.1,
+      "cash_payout_limit": 0.5,
+      "financing_rate": 0.065,
+      "discount": 0.12,
+      "terminal_multiple": 8.5
+    },
+    "cyclical_bear": {
+      "sales_growth": [
+        -0.04,
+        0.01,
+        0.05,
+        0.06,
+        0.04
+      ],
+      "operating_after_tax_margin": [
+        0.125,
+        0.125,
+        0.135,
+        0.145,
+        0.15
+      ],
+      "capex_ratio": [
+        0.145,
+        0.135,
+        0.12,
+        0.11,
+        0.1
+      ],
+      "depreciation_ratio": 0.08,
+      "wc_ratio": 0.26,
+      "wc_drain": [
+        1,
+        0.5,
+        0,
+        0,
+        0
+      ],
+      "payout": 0.22,
+      "cash_payout_limit": 0.65,
+      "financing_rate": 0.048,
+      "discount": 0.105,
+      "terminal_multiple": 11.8
+    },
+    "base": {
+      "sales_growth": [
+        0.12,
+        0.1,
+        0.08,
+        0.06,
+        0.04
+      ],
+      "operating_after_tax_margin": [
+        0.16,
+        0.162,
+        0.164,
+        0.164,
+        0.163
+      ],
+      "capex_ratio": [
+        0.145,
+        0.14,
+        0.125,
+        0.115,
+        0.105
+      ],
+      "depreciation_ratio": 0.08,
+      "wc_ratio": 0.22,
+      "wc_drain": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "payout": 0.25,
+      "cash_payout_limit": 0.7,
+      "financing_rate": 0.04,
+      "discount": 0.095,
+      "terminal_multiples": [
+        12,
+        15
+      ],
+      "steady_growth": 0.027,
+      "steady_roic": 0.13,
+      "transition_growth": [
+        0.038,
+        0.035,
+        0.032,
+        0.03,
+        0.028
+      ],
+      "transition_margin": [
+        0.162,
+        0.16,
+        0.158,
+        0.156,
+        0.155
+      ],
+      "transition_roic": [
+        0.17,
+        0.16,
+        0.15,
+        0.14,
+        0.13
+      ]
+    },
+    "bull": {
+      "sales_growth": [
+        0.19,
+        0.16,
+        0.13,
+        0.1,
+        0.07
+      ],
+      "operating_after_tax_margin": [
+        0.17,
+        0.18,
+        0.187,
+        0.19,
+        0.188
+      ],
+      "capex_ratio": [
+        0.16,
+        0.15,
+        0.14,
+        0.13,
+        0.12
+      ],
+      "depreciation_ratio": 0.082,
+      "wc_ratio": 0.2,
+      "wc_drain": [
+        0.5,
+        0,
+        0,
+        0,
+        0
+      ],
+      "payout": 0.3,
+      "cash_payout_limit": 0.7,
+      "financing_rate": 0.035,
+      "discount": 0.088,
+      "terminal_multiple": 17
+    }
+  }
+}

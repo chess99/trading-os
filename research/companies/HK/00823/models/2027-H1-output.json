@@ -1,0 +1,139 @@
+{
+  "symbol": "HK:00823",
+  "report_period": "2027-H1",
+  "value_range": {
+    "low": 35.48,
+    "high": 39.97,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:19:27.105215+08:00",
+    "base_case_distributions_per_share": [
+      1.201,
+      2.381,
+      2.368,
+      2.389,
+      2.416
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 38.22,
+        "high": 42.93
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "HKD",
+    "structural_bear": 15.41,
+    "cyclical_bear": 26.7,
+    "base_low": 35.48,
+    "base_high": 39.97,
+    "bull": 49.11
+  },
+  "adjusted_nav_check": [
+    43.81,
+    48.47
+  ],
+  "paths": {
+    "structural_bear": {
+      "annual_cash": [
+        0.933,
+        1.783,
+        1.646,
+        1.555,
+        1.492
+      ],
+      "value": [
+        15.41,
+        15.41
+      ],
+      "terminal": [
+        14.48,
+        14.48
+      ],
+      "terminal_pv_share": [
+        0.625,
+        0.625
+      ],
+      "steady_dpu_growth": -0.01555,
+      "units_y5_million": 2809.17,
+      "net_income_y5_million": 4503.5
+    },
+    "cyclical_bear": {
+      "annual_cash": [
+        1.066,
+        2.09,
+        2.045,
+        2.055,
+        2.08
+      ],
+      "value": [
+        26.7,
+        26.7
+      ],
+      "terminal": [
+        28.13,
+        28.13
+      ],
+      "terminal_pv_share": [
+        0.7239,
+        0.7239
+      ],
+      "steady_dpu_growth": 0.00347,
+      "units_y5_million": 2738.56,
+      "net_income_y5_million": 5976.96
+    },
+    "base": {
+      "annual_cash": [
+        1.201,
+        2.381,
+        2.368,
+        2.389,
+        2.416
+      ],
+      "value": [
+        35.48,
+        39.97
+      ],
+      "terminal": [
+        38.22,
+        42.93
+      ],
+      "terminal_pv_share": [
+        0.7574,
+        0.7803
+      ],
+      "steady_dpu_growth": 0.00916,
+      "units_y5_million": 2741.43,
+      "net_income_y5_million": 6594.09
+    },
+    "bull": {
+      "annual_cash": [
+        1.255,
+        2.522,
+        2.566,
+        2.637,
+        2.71
+      ],
+      "value": [
+        49.11,
+        49.11
+      ],
+      "terminal": [
+        54.19,
+        54.19
+      ],
+      "terminal_pv_share": [
+        0.8054,
+        0.8054
+      ],
+      "steady_dpu_growth": 0.01404,
+      "units_y5_million": 2732.9,
+      "net_income_y5_million": 7428.3
+    }
+  },
+  "basis": "每基金单位、税前、除去11月26日登记的中期分派；永续部分扣计维护与改造的融资稀释。"
+}

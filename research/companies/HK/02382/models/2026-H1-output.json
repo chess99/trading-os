@@ -1,0 +1,179 @@
+{
+  "symbol": "HK:02382",
+  "report_period": "2026-H1",
+  "value_range": {
+    "low": 38.34,
+    "high": 46.65,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "currency": "HKD",
+    "base_case_distributions_per_share": [
+      0.8296,
+      0.8919,
+      0.9592,
+      1.032,
+      1.1107
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 58.69,
+        "high": 67.68
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 11.55,
+    "cyclical_bear": 26.59,
+    "base_low": 38.34,
+    "base_high": 46.65,
+    "bull": 68.93,
+    "currency": "HKD",
+    "horizon_note": "五年分部销售与毛利路径、设备和周转投入、联营权益回收及成熟期现金回报决定截止日每股港元价值。"
+  },
+  "paths": {
+    "structural": {
+      "value": 11.55,
+      "dps": [
+        0.2051,
+        0.2107,
+        0.2165,
+        0.2222,
+        0.2281
+      ],
+      "terminal": 19.66,
+      "terminal_pv_share": 0.9341,
+      "opening_surplus": 2.955,
+      "associates": 1.072,
+      "closing_surplus": 7.295,
+      "y5_sales": 38.24,
+      "y1_y5_profit": [
+        1.281,
+        1.424
+      ],
+      "y2_y5_added_capital": 0.685,
+      "y5_multiple": 7.06
+    },
+    "cyclical": {
+      "value": 26.59,
+      "dps": [
+        0.5063,
+        0.537,
+        0.5697,
+        0.6044,
+        0.6413
+      ],
+      "terminal": 41.78,
+      "terminal_pv_share": 0.922,
+      "opening_surplus": 3.996,
+      "associates": 1.93,
+      "closing_surplus": 11.222,
+      "y5_sales": 47.094,
+      "y1_y5_profit": [
+        2.372,
+        3.004
+      ],
+      "y2_y5_added_capital": 2.503,
+      "y5_multiple": 8.65
+    },
+    "base": {
+      "value": 42.11,
+      "dps": [
+        0.8296,
+        0.8919,
+        0.9592,
+        1.032,
+        1.1107
+      ],
+      "terminal": 62.75,
+      "terminal_pv_share": 0.9149,
+      "opening_surplus": 4.256,
+      "associates": 2.359,
+      "closing_surplus": 13.345,
+      "y5_sales": 52.846,
+      "y1_y5_profit": [
+        3.109,
+        4.163
+      ],
+      "y2_y5_added_capital": 2.962,
+      "y5_multiple": 10.35
+    },
+    "bull": {
+      "value": 68.93,
+      "dps": [
+        1.218,
+        1.3405,
+        1.4767,
+        1.6283,
+        1.797
+      ],
+      "terminal": 99.65,
+      "terminal_pv_share": 0.9183,
+      "opening_surplus": 4.647,
+      "associates": 3.003,
+      "closing_surplus": 15.892,
+      "y5_sales": 61.487,
+      "y1_y5_profit": [
+        4.076,
+        6.013
+      ],
+      "y2_y5_added_capital": 4.782,
+      "y5_multiple": 12.39
+    },
+    "base_low": {
+      "value": 38.34,
+      "dps": [
+        0.8296,
+        0.8919,
+        0.9592,
+        1.032,
+        1.1107
+      ],
+      "terminal": 58.69,
+      "terminal_pv_share": 0.9084,
+      "opening_surplus": 4.256,
+      "associates": 2.359,
+      "closing_surplus": 13.345,
+      "y5_sales": 52.846,
+      "y1_y5_profit": [
+        3.109,
+        4.163
+      ],
+      "y2_y5_added_capital": 2.962,
+      "y5_multiple": 9.44
+    },
+    "base_high": {
+      "value": 46.65,
+      "dps": [
+        0.8296,
+        0.8919,
+        0.9592,
+        1.032,
+        1.1107
+      ],
+      "terminal": 67.68,
+      "terminal_pv_share": 0.9216,
+      "opening_surplus": 4.256,
+      "associates": 2.359,
+      "closing_surplus": 13.345,
+      "y5_sales": 52.846,
+      "y1_y5_profit": [
+        3.109,
+        4.163
+      ],
+      "y2_y5_added_capital": 2.962,
+      "y5_multiple": 11.46
+    }
+  },
+  "alternative": [
+    24.72,
+    28.26
+  ],
+  "other_margin_sensitivity": [
+    40.07,
+    44.14
+  ]
+}

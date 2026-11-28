@@ -1,0 +1,93 @@
+{
+  "symbol": "HK:00700",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 288.06,
+    "high": 390.08,
+    "currency": "HKD"
+  },
+  "scenarios": {
+    "currency": "HKD",
+    "structural_bear": 84.92,
+    "cyclical_bear": 210.79,
+    "base_low": 288.06,
+    "base_high": 390.08,
+    "bull": 530.03,
+    "horizon_note": "截至2026年11月27日的税前每股价值。算力付款与广告经营回报决定五年现金，回购受现金约束，员工新增授予抵减注销。结构性压力下缩减未承诺采购并暂停回购。"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      2.559111,
+      5.5,
+      5.8,
+      6.2,
+      6.6
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 422.23,
+        "high": 555.82
+      }
+    }
+  },
+  "annual_net_buyback_per_share": 0.55,
+  "cross_check": [
+    351.37,
+    455.97
+  ],
+  "base_cash_bridge": [
+    {
+      "revenue": 859.16,
+      "owner_cash_before_awards": 36.98,
+      "dividend_cash": 20.25,
+      "buyback_cash": 0,
+      "repurchased_m_shares": 0.0,
+      "closing_net_cash_after_buffer": -74.6,
+      "diluted_bn": 9.24411
+    },
+    {
+      "revenue": 919.3,
+      "owner_cash_before_awards": 91.18,
+      "dividend_cash": 43.44,
+      "buyback_cash": 29.95,
+      "repurchased_m_shares": 75.63,
+      "closing_net_cash_after_buffer": -59.8,
+      "diluted_bn": 9.22848
+    },
+    {
+      "revenue": 979.05,
+      "owner_cash_before_awards": 135.54,
+      "dividend_cash": 45.69,
+      "buyback_cash": 34.23,
+      "repurchased_m_shares": 83.11,
+      "closing_net_cash_after_buffer": -6.58,
+      "diluted_bn": 9.20538
+    },
+    {
+      "revenue": 1037.79,
+      "owner_cash_before_awards": 174.89,
+      "dividend_cash": 48.68,
+      "buyback_cash": 38.51,
+      "repurchased_m_shares": 89.9,
+      "closing_net_cash_after_buffer": 80.86,
+      "diluted_bn": 9.17548
+    },
+    {
+      "revenue": 1094.87,
+      "owner_cash_before_awards": 199.23,
+      "dividend_cash": 51.62,
+      "buyback_cash": 42.79,
+      "repurchased_m_shares": 96.05,
+      "closing_net_cash_after_buffer": 187.3,
+      "diluted_bn": 9.13943
+    }
+  ],
+  "terminal_pv_fraction": [
+    0.9311,
+    0.9476
+  ]
+}

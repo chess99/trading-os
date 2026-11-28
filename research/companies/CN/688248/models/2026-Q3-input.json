@@ -1,0 +1,35 @@
+{
+  "symbol": "CN:688248",
+  "report_period": "2026-Q3",
+  "cutoff": "2026-11-27T21:00:00+08:00",
+  "units": "公司金额为亿元人民币，股数为亿股，每股为元。模型年度为距截止日的十二个月。",
+  "equity": {
+    "issued": 5.647,
+    "incentive_reserve": 0.03753,
+    "parent_cash_equivalent": 5.308482,
+    "parent_financial_assets": 9.11131,
+    "operating_reserve": 5.0
+  },
+  "operations": {
+    "testing_sales": 11.5,
+    "other_sales": 27.5,
+    "nonlease_depreciation_ratio": 0.024,
+    "horizon": 5
+  },
+  "paths": {
+    "structural_bear": {"testing_growth": -0.025, "other_growth": -0.02, "margin": 0.073, "maintenance": 0.035, "growth_capital": 0.18, "working_capital": 0.36, "collection_charge": 1.5, "payout": 0.20, "discount": 0.12, "multiple": 10},
+    "cyclical_bear": {"testing_growth": 0.035, "other_growth": 0.005, "margin": 0.092, "maintenance": 0.03, "growth_capital": 0.17, "working_capital": 0.32, "collection_charge": 0.6, "payout": 0.32, "discount": 0.106, "multiple": 13},
+    "base_low": {"testing_growth": 0.095, "other_growth": 0.038, "margin": 0.111, "maintenance": 0.027, "growth_capital": 0.14, "working_capital": 0.23, "collection_charge": 0, "payout": 0.39, "discount": 0.10, "multiple": 15},
+    "base_high": {"testing_growth": 0.095, "other_growth": 0.038, "margin": 0.111, "maintenance": 0.027, "growth_capital": 0.14, "working_capital": 0.23, "collection_charge": 0, "payout": 0.39, "discount": 0.095, "multiple": 18},
+    "bull": {"testing_growth": 0.15, "other_growth": 0.075, "margin": 0.129, "maintenance": 0.026, "growth_capital": 0.16, "working_capital": 0.20, "collection_charge": 0, "payout": 0.4, "discount": 0.09, "multiple": 21}
+  },
+  "cross_check": {"early_growth": 0.045, "steady_growth": 0.025, "discount": 0.10},
+  "sources": {
+    "financials": "2026年三季报第2、7–15、18页，https://static.cninfo.com.cn/finalpage/2026-10-31/1225648664.PDF",
+    "mix": "2025年报分产品数据及现金流量表补充资料，https://static.cninfo.com.cn/finalpage/2026-03-31/1225059243.PDF",
+    "maintenance_and_dilution": "2026半年报分产品、激励草案及现金流量表补充资料，https://static.cninfo.com.cn/finalpage/2026-08-29/1225531136.PDF",
+    "acquisition": "成交对价、标的收入及评估增速，https://static.cninfo.com.cn/finalpage/2026-08-01/1225451708.PDF",
+    "normalization": "起步年化收入为估计。年报收入36.85亿元，标的2.47亿元；扣除重合及验收差异后约39亿元。检测11.5亿元参照年报9.37亿元加标的，以弱于半年检测增速的9.5%外推，其他业务3.8%。",
+    "margin_and_capital": "归属普通股的经营净利率剔除现金理财收益，包含研发费用和租赁支付的经常成本。维护开支不含租赁。新增固定资本及周转资本均按增量销售配比，收入下滑不计释放，压力路径第一年另行承担未收款损失。"
+  }
+}

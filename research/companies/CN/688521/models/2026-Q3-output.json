@@ -1,0 +1,92 @@
+{
+  "symbol": "CN:688521",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "currency": "CNY",
+    "low": 12.42,
+    "high": 27.06
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 21.89,
+        "high": 45.6
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "horizon_note": "五年终态税后经营利润与届时净金融头寸共同定价。四条路径分别考虑大客户流失、晶圆排期延后、正常分期交付及多项目复购，资金占用、净投资与融资成本随之变化。",
+    "structural_bear": 0.0,
+    "cyclical_bear": 4.02,
+    "base_low": 12.42,
+    "base_high": 27.06,
+    "bull": 73.74
+  },
+  "opening_net_financial_position": -1.74,
+  "opening_working_capital": -4.51,
+  "diluted_shares_100m": 5.39,
+  "economic_paths": {
+    "structural_bear": {
+      "present": 0.0,
+      "year5": 0,
+      "dcf_check": 0.0,
+      "year5_nopat": 0.88,
+      "year5_net_financial_position": -50.15,
+      "peak_net_funding_need": 50.15,
+      "y1_to_y5_increase_in_nopat": 8.86,
+      "y1_to_y5_net_investment": 6.21
+    },
+    "cyclical_bear": {
+      "present": 4.02,
+      "year5": 7.56,
+      "dcf_check": 1.49,
+      "year5_nopat": 5.89,
+      "year5_net_financial_position": -29.92,
+      "peak_net_funding_need": 30.45,
+      "y1_to_y5_increase_in_nopat": 11.94,
+      "y1_to_y5_net_investment": 12.13
+    },
+    "base_low": {
+      "present": 12.42,
+      "year5": 21.89,
+      "dcf_check": 9.55,
+      "year5_nopat": 10.1,
+      "year5_net_financial_position": -13.28,
+      "peak_net_funding_need": 21.46,
+      "y1_to_y5_increase_in_nopat": 14.54,
+      "y1_to_y5_net_investment": 13.78
+    },
+    "base_high": {
+      "present": 27.06,
+      "year5": 45.6,
+      "dcf_check": 22.18,
+      "year5_nopat": 15.15,
+      "year5_net_financial_position": 3.38,
+      "peak_net_funding_need": 16.96,
+      "y1_to_y5_increase_in_nopat": 18.13,
+      "y1_to_y5_net_investment": 16.17
+    },
+    "bull": {
+      "present": 73.74,
+      "year5": 121.48,
+      "dcf_check": 49.27,
+      "year5_nopat": 27.2,
+      "year5_net_financial_position": 29.19,
+      "peak_net_funding_need": 13.97,
+      "y1_to_y5_increase_in_nopat": 28.19,
+      "y1_to_y5_net_investment": 24.69
+    }
+  }
+}

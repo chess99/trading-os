@@ -1,0 +1,92 @@
+{
+  "symbol": "CN:300757",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "currency": "CNY",
+    "low": 29.18,
+    "high": 46.54
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 49.18,
+        "high": 78.41
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 6.31,
+    "cyclical_bear": 14.05,
+    "base_low": 29.18,
+    "base_high": 46.54,
+    "bull": 87.61
+  },
+  "bridge": {
+    "shares": 180043011,
+    "debt_100m": 14.14,
+    "opening_cash_100m": 28.212
+  },
+  "cases": {
+    "structural_bear": {
+      "current": 6.31,
+      "terminal_equity": 12.14,
+      "terminal_sales": 11.5,
+      "terminal_nopat": 0.403,
+      "five_year_net_investment": 2.4,
+      "terminal_cash": 18.64,
+      "ending_business_weight": 0.147,
+      "steady_cashflow_crosscheck": 6.21
+    },
+    "cyclical_bear": {
+      "current": 14.05,
+      "terminal_equity": 24.75,
+      "terminal_sales": 19.4,
+      "terminal_nopat": 1.843,
+      "five_year_net_investment": 6.87,
+      "terminal_cash": 24.3,
+      "ending_business_weight": 0.455,
+      "steady_cashflow_crosscheck": 12.72
+    },
+    "base_low": {
+      "current": 29.18,
+      "terminal_equity": 49.18,
+      "terminal_sales": 29.2,
+      "terminal_nopat": 4.234,
+      "five_year_net_investment": 12.22,
+      "terminal_cash": 29.26,
+      "ending_business_weight": 0.67,
+      "steady_cashflow_crosscheck": 25.2
+    },
+    "base_high": {
+      "current": 46.54,
+      "terminal_equity": 78.41,
+      "terminal_sales": 38.5,
+      "terminal_nopat": 6.737,
+      "five_year_net_investment": 16.24,
+      "terminal_cash": 33.38,
+      "ending_business_weight": 0.764,
+      "steady_cashflow_crosscheck": 38.25
+    },
+    "bull": {
+      "current": 87.61,
+      "terminal_equity": 144.33,
+      "terminal_sales": 56.3,
+      "terminal_nopat": 11.541,
+      "five_year_net_investment": 23.27,
+      "terminal_cash": 40.57,
+      "ending_business_weight": 0.844,
+      "steady_cashflow_crosscheck": 71.08
+    }
+  }
+}

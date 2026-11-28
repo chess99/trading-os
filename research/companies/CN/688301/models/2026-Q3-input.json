@@ -1,0 +1,24 @@
+{
+  "symbol":"CN:688301","report_period":"2026-Q3","cutoff":"2026-11-27T21:00:00+08:00",
+  "units":"金额亿元人民币，股本亿股。收入以2026年化规模为起点，预测期为随后五个完整年度等长期间。",
+  "sources":{
+    "q3":"https://static.cninfo.com.cn/finalpage/2026-10-30/1225642762.PDF",
+    "h1":"https://static.cninfo.com.cn/finalpage/2026-08-14/1225472728.PDF",
+    "fy":"https://static.cninfo.com.cn/finalpage/2026-03-31/1225063674.PDF",
+    "repurchase":"https://static.cninfo.com.cn/finalpage/2026-11-21/1225682644.PDF",
+    "project":"https://static.cninfo.com.cn/finalpage/2025-05-24/1223648625.PDF",
+    "customer_h1":"https://static.cninfo.com.cn/finalpage/2026-08-21/1225487057.PDF"
+  },
+  "facts":{"cash":33.4461,"liquid_assets":2.4826,"short_debt":4.8352,"debt_due":0.2043,"long_debt":26.5261,"lease_debt":0.7942,"refundable_deposit_h1":5.3806,"post_period_buyback_cash":0.199933,"issued_shares":3.13409395,"backplane_ownership":0.8221},
+  "common":{"operating_cash_buffer":2.5,"potential_award_shares":0.02884,"legacy_sales_start":26.4,"backplane_sales_start":7.0,"normal_financing_spread_cost":0.4,"negative_cash_cost":0.035,"retained_cash_yield":0.012,"payout_base":[0.48,0.52,0.56,0.60,0.64]},
+  "scenario_legend":"legacy_margin为传统业务税后经营利润率，已扣研发、常规折旧和其他子公司少数权益；backplane_margin为合肥业务100%税后经营利润率。capital为每增加一元年收入的净固定资产和净营运资本，占用从年初至年末，后续资本维护抵折旧；ramp补当前运行规模对应的固定资产完工现金。financing_spread_cost计存贷款税后利差，净现金余额单独计息。",
+  "scenarios":{
+    "structural_bear":{"legacy_growth":0.0,"backplane_growth":-0.15,"legacy_margin":0.18,"backplane_margin":-0.05,"legacy_capital":1.0,"backplane_capital":2.0,"ramp":[2.8,2.0,1.3,0.8,0.5],"payout_scale":0,"multiple":11,"rate":0.12},
+    "cyclical_bear":{"legacy_growth":0.03,"backplane_growth":0.02,"legacy_margin":0.22,"backplane_margin":0.08,"legacy_capital":0.95,"backplane_capital":1.8,"ramp":[2.2,1.5,1,0.6,0.3],"payout_scale":0.55,"multiple":15,"rate":0.108},
+    "base_low":{"legacy_growth":0.065,"backplane_growth":0.08,"legacy_margin":0.245,"backplane_margin":0.13,"legacy_capital":0.82,"backplane_capital":1.5,"ramp":[1.8,1.1,0.6,0.3,0],"payout_scale":1,"multiple":17,"rate":0.10},
+    "base_high":{"legacy_growth":0.085,"backplane_growth":0.12,"legacy_margin":0.26,"backplane_margin":0.165,"legacy_capital":0.75,"backplane_capital":1.3,"ramp":[1.8,1.1,0.6,0.3,0],"payout_scale":1,"multiple":19,"rate":0.095},
+    "bull":{"legacy_growth":0.105,"backplane_growth":0.19,"legacy_margin":0.275,"backplane_margin":0.20,"legacy_capital":0.72,"backplane_capital":1.1,"ramp":[2.2,1.3,0.8,0.4,0],"payout_scale":1.05,"multiple":22,"rate":0.09}
+  },
+  "crosscheck":{"base_low":{"growth_after_y5":0.065,"mature_growth":0.03,"incremental_return":0.15},"base_high":{"growth_after_y5":0.085,"mature_growth":0.035,"incremental_return":0.18}},
+  "scenario_note":"按随后五年两类销售、利润率及资本占用预测现金分配与第五年末经营价值。结构不利路径计单一客户缩量和产线收尾支出，乐观路径计客户扩大采购和相应扩产。"
+}

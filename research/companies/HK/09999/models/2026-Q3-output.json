@@ -1,0 +1,142 @@
+{
+  "symbol": "HK:09999",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 189.78,
+    "high": 224.97,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T18:20:00+08:00",
+    "base_case_distributions_per_share": [
+      4.768,
+      4.9559,
+      5.1734,
+      5.3752,
+      5.5593
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 265.15,
+        "high": 301.91
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "HKD",
+    "structural_bear": 87.14,
+    "cyclical_bear": 137.9,
+    "base_low": 189.78,
+    "base_high": 224.97,
+    "bull": 296.72,
+    "horizon_note": "长线产品老化程度决定经营利润率，前五年的研发、非现金奖励、回购支出和期末股数逐年衔接，稳态增长另扣再投资。"
+  },
+  "historical_bridge": {
+    "group_net_cash_bn": 175.223,
+    "common_surplus_cash_bn": 144.363,
+    "recoverable_portfolio_bn": 10.668,
+    "diluted_shares_bn": 3.224725,
+    "h1_net_shrinkage_bn": -0.00914,
+    "declared_trailing_dps_usd": 0.589
+  },
+  "cases": {
+    "structural": {
+      "current": [
+        87.14
+      ],
+      "terminal": [
+        136.4
+      ],
+      "dividends": [
+        2.2485,
+        2.1549,
+        2.1625,
+        2.1702,
+        2.197
+      ],
+      "terminal_pv_weight": [
+        0.9083
+      ],
+      "end_cash_bn": 219.103,
+      "end_shares_bn": 3.32147,
+      "end_revenue_bn": 101.37,
+      "first_year_gross_repurchase_bn": 0.0
+    },
+    "cyclical": {
+      "current": [
+        137.9
+      ],
+      "terminal": [
+        199.88
+      ],
+      "dividends": [
+        3.4948,
+        3.5127,
+        3.6277,
+        3.762,
+        3.8834
+      ],
+      "terminal_pv_weight": [
+        0.9
+      ],
+      "end_cash_bn": 241.037,
+      "end_shares_bn": 3.28277,
+      "end_revenue_bn": 121.104,
+      "first_year_gross_repurchase_bn": 1.059
+    },
+    "base": {
+      "current": [
+        189.78,
+        224.97
+      ],
+      "terminal": [
+        265.15,
+        301.91
+      ],
+      "dividends": [
+        4.768,
+        4.9559,
+        5.1734,
+        5.3752,
+        5.5593
+      ],
+      "terminal_pv_weight": [
+        0.8957,
+        0.9091
+      ],
+      "end_cash_bn": 249.305,
+      "end_shares_bn": 3.24407,
+      "end_revenue_bn": 136.552,
+      "first_year_gross_repurchase_bn": 2.285
+    },
+    "bull": {
+      "current": [
+        296.72
+      ],
+      "terminal": [
+        394.56
+      ],
+      "dividends": [
+        5.5958,
+        6.0309,
+        6.4985,
+        6.9095,
+        7.281
+      ],
+      "terminal_pv_weight": [
+        0.9134
+      ],
+      "end_cash_bn": 251.519,
+      "end_shares_bn": 3.22472,
+      "end_revenue_bn": 158.285,
+      "first_year_gross_repurchase_bn": 2.954
+    }
+  },
+  "secondary_range_hkd": [
+    185.97,
+    229.23
+  ]
+}

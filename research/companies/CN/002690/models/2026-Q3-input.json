@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:002690",
+  "report_period": "2026-Q3",
+  "as_of": "2026-11-27T18:00:00+08:00",
+  "units": "金额百万元人民币，股数百万股，比率为小数，股东输出为元/人民币普通股。预测从资料截止时点起按整年近似，以最新披露资产负债表作为起点。",
+  "sources": {
+    "q3": "https://static.cninfo.com.cn/finalpage/2026-10-27/1225622353.PDF",
+    "h1": "https://static.cninfo.com.cn/finalpage/2026-08-26/1225501764.PDF",
+    "fy": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225055340.PDF",
+    "q1": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225180415.PDF",
+    "dividend": "https://static.cninfo.com.cn/finalpage/2026-05-07/1225278647.PDF",
+    "peer": "https://static.cninfo.com.cn/finalpage/2026-08-22/1225488906.PDF"
+  },
+  "disclosed": {
+    "FY25_revenue": 2406.863328,
+    "9m25_revenue": 1694.034533,
+    "9m26_revenue": 1794.567731,
+    "9m26_common_income": 553.908755,
+    "9m26_core_income": 527.885979,
+    "9m26_CFO": 545.756128,
+    "9m26_cash_capex": 49.957343,
+    "cash_equivalents": 1367.087249,
+    "cash_balance": 1368.406224,
+    "treasury_products": 616.501348,
+    "equity_investment": 148.917054,
+    "debt_and_minority_claims": 0,
+    "diluted_shares": 882.2289,
+    "parent_H1_retained": 623.847464,
+    "parent_H1_net_income": 284.802042,
+    "consolidated_H1_net_income": 314.952587
+  },
+  "starting_mix_sort_medical_other": [0.73,0.18,0.09],
+  "cash_reserve": 330,
+  "equity_investment_recovery": 0.85,
+  "cash_net_yield": 0.012,
+  "plant_payments": [75,35,0,0,0],
+  "parent_share_of_income": 0.9,
+  "assumptions": "滚动收入按2025全年加2026年前九月减2025年前九月。期初业务组合按半年报近似。经营现金利润率为扣除研发、正常汇兑及税负、剔除金融财产收益后的税后经营利润率，包含常规软件退税。维护支出与折旧对抵。增长另需周转资金、设备及服务工具，扩产工程余款单列。资产折价及现金缓冲为研究假设，折现率为人民币权益资金成本，长期ROIC约束稳态再投资。",
+  "paths": {
+    "structural_bear": {
+      "sort_growth": [-0.08,-0.05,-0.02,0,0.01], "medical_growth": [-0.12,-0.08,-0.04,-0.02,0], "other_growth": [-0.05,-0.03,0,0.01,0.01],
+      "margins": [0.23,0.205,0.19,0.185,0.18], "working_capital_intensity": 0.34, "net_fixed_intensity": 0.21, "additional_cash_costs": [40,30,15,0,0],
+      "payout": 0.65,"discount": 0.115,"terminal_growth": 0.005,"terminal_margin": 0.18,"terminal_roic": 0.105
+    },
+    "cyclical_bear": {
+      "sort_growth": [-0.03,0,0.03,0.04,0.04], "medical_growth": [-0.10,-0.04,0,0.02,0.025], "other_growth": [-0.02,0.01,0.035,0.04,0.04],
+      "margins": [0.24,0.245,0.25,0.255,0.26], "working_capital_intensity": 0.29, "net_fixed_intensity": 0.19, "additional_cash_costs": [25,10,0,0,0],
+      "payout": 0.76,"discount": 0.102,"terminal_growth": 0.015,"terminal_margin": 0.26,"terminal_roic": 0.16
+    },
+    "base": {
+      "sort_growth": [0.05,0.05,0.05,0.045,0.04], "medical_growth": [-0.03,0,0.02,0.025,0.025], "other_growth": [0.07,0.065,0.055,0.05,0.045],
+      "margins": [0.275,0.277,0.278,0.28,0.28], "working_capital_intensity": 0.22, "net_fixed_intensity": 0.16, "additional_cash_costs": [0,0,0,0,0],
+      "payout": 0.85
+    },
+    "bull": {
+      "sort_growth": [0.075,0.075,0.07,0.065,0.06], "medical_growth": [0.02,0.055,0.07,0.07,0.06], "other_growth": [0.10,0.09,0.08,0.07,0.06],
+      "margins": [0.284,0.288,0.293,0.296,0.30], "working_capital_intensity": 0.27, "net_fixed_intensity": 0.22, "additional_cash_costs": [0,0,0,0,0],
+      "payout": 0.82,"discount": 0.085,"terminal_growth": 0.03,"terminal_margin": 0.29,"terminal_roic": 0.23
+    }
+  },
+  "base_endpoints": {
+    "base_low": {"discount": 0.096,"terminal_growth": 0.015,"terminal_margin": 0.265,"terminal_roic": 0.18},
+    "base_high": {"discount": 0.086,"terminal_growth": 0.025,"terminal_margin": 0.28,"terminal_roic": 0.21}
+  },
+  "secondary_normalized_operating_earnings_multiple": [12,15]
+}

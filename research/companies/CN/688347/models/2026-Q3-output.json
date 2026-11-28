@@ -1,0 +1,146 @@
+{
+  "symbol": "CN:688347",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "currency": "CNY",
+    "low": 11.95,
+    "high": 17.35
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 19.69,
+        "high": 27.94
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 4.22,
+    "cyclical_bear": 7.64,
+    "base_low": 11.95,
+    "base_high": 17.35,
+    "bull": 25.03,
+    "horizon_note": "五年后成熟产线的产能、片均收入、折旧后毛利和无锡子公司利润共同决定终值，建设付款、融资成本与回售差额随路径变化。"
+  },
+  "paths": {
+    "structural_bear": {
+      "value": 4.22,
+      "terminal": 7.77,
+      "secondary": 3.43,
+      "year5_parent_profit_bn": -0.036,
+      "year5_revenue_bn": 21.265,
+      "year5_cash_bn": 34.562,
+      "year5_debt_bn": 31.243,
+      "year5_book_bn": 56.178,
+      "year5_parent_roe": -0.0006,
+      "terminal_pe": 7.692,
+      "group_incremental_operating_return": -0.152,
+      "year1_to_5_incremental_capital_bn": 7.38,
+      "group_fcf_years_bn": [
+        -7.58,
+        -5.09,
+        -1.97,
+        0.35,
+        0.63
+      ]
+    },
+    "cyclical_bear": {
+      "value": 7.64,
+      "terminal": 13.17,
+      "secondary": 6.38,
+      "year5_parent_profit_bn": 1.141,
+      "year5_revenue_bn": 26.778,
+      "year5_cash_bn": 33.797,
+      "year5_debt_bn": 31.243,
+      "year5_book_bn": 61.053,
+      "year5_parent_roe": 0.019,
+      "terminal_pe": 8.55,
+      "group_incremental_operating_return": -0.038,
+      "year1_to_5_incremental_capital_bn": 12.38,
+      "group_fcf_years_bn": [
+        -8.12,
+        -5.9,
+        -2.51,
+        0.56,
+        1.53
+      ]
+    },
+    "base_low": {
+      "value": 11.95,
+      "terminal": 19.69,
+      "secondary": 9.84,
+      "year5_parent_profit_bn": 2.223,
+      "year5_revenue_bn": 30.119,
+      "year5_cash_bn": 34.314,
+      "year5_debt_bn": 31.243,
+      "year5_book_bn": 64.84,
+      "year5_parent_roe": 0.0355,
+      "terminal_pe": 9.714,
+      "group_incremental_operating_return": 0.027,
+      "year1_to_5_incremental_capital_bn": 16.1,
+      "group_fcf_years_bn": [
+        -7.89,
+        -6.07,
+        -3.16,
+        0.45,
+        2.75
+      ]
+    },
+    "base_high": {
+      "value": 17.35,
+      "terminal": 27.94,
+      "secondary": 14.25,
+      "year5_parent_profit_bn": 3.384,
+      "year5_revenue_bn": 33.874,
+      "year5_cash_bn": 35.811,
+      "year5_debt_bn": 31.243,
+      "year5_book_bn": 68.7,
+      "year5_parent_roe": 0.0518,
+      "terminal_pe": 10.819,
+      "group_incremental_operating_return": 0.087,
+      "year1_to_5_incremental_capital_bn": 18.03,
+      "group_fcf_years_bn": [
+        -8.83,
+        -6.14,
+        -2.46,
+        1.14,
+        3.86
+      ]
+    },
+    "bull": {
+      "value": 25.03,
+      "terminal": 39.4,
+      "secondary": 25.26,
+      "year5_parent_profit_bn": 4.805,
+      "year5_revenue_bn": 39.546,
+      "year5_cash_bn": 34.855,
+      "year5_debt_bn": 31.243,
+      "year5_book_bn": 73.377,
+      "year5_parent_roe": 0.0701,
+      "terminal_pe": 12.451,
+      "group_incremental_operating_return": 0.131,
+      "year1_to_5_incremental_capital_bn": 23.88,
+      "group_fcf_years_bn": [
+        -9.63,
+        -6.87,
+        -3.21,
+        1.49,
+        4.85
+      ]
+    }
+  },
+  "diluted_shares": 1987567619,
+  "all_options_issued_upper_bound_shares": 2039689419
+}

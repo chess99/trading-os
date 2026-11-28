@@ -1,0 +1,42 @@
+{
+  "symbol": "CN:300548",
+  "period": "2026-Q3",
+  "as_of": "2026-11-27T21:00:00+08:00",
+  "units": "人民币亿元、亿股、每股人民币元；收入与税后经营利润均为合并口径",
+  "sources": {
+    "balances": "2026三季报合并资产负债表、利润表及现金流量表 https://static.cninfo.com.cn/finalpage/2026-10-27/1225624715.PDF",
+    "ownership": "2026半年报十、在其他主体中的权益；合并现金流量表补充资料及母公司报表 https://static.cninfo.com.cn/finalpage/2026-08-22/1225492397.PDF",
+    "q4_revenue": "2025年报分季度主要财务指标 https://static.cninfo.com.cn/finalpage/2026-03-28/1225045047.PDF",
+    "share_base": "2026-10-27回购股份报告书股份变动表 https://static.cninfo.com.cn/finalpage/2026-10-27/1225624701.PDF",
+    "dilution": "2026年限制性股票授予300万股，2024年预留第二期29万股，以及2021年预留第四期21.6375万份的数量上限。总股本和全部授予数向上取整，小额已行权重合部分留作余量。https://static.cninfo.com.cn/finalpage/2026-10-27/1225624706.PDF",
+    "repurchase": "实际回购0.4998亿元用于员工持股或激励，最低回购方案2亿元含此次支出 https://static.cninfo.com.cn/finalpage/2026-11-05/1225658728.PDF",
+    "second_method": "长芯盛交易协商估值89亿元、2025年净利润6.180154亿元 https://static.cninfo.com.cn/finalpage/2026-04-29/1225238226.PDF"
+  },
+  "facts": {
+    "revenue_9m": 30.390689, "revenue_prior_q4": 7.391178,
+    "cash": 12.527947, "liquid_investments": 4.302812,
+    "debt_due": 0.982845, "long_debt": 1.784955, "lease_debt": 0.101600,
+    "ownership": 0.6265, "registered_shares": 2.94951278,
+    "granted_shares": 0.0300, "prior_awards": 0.00290, "options_ceiling": 0.00216375,
+    "repurchase_budget": 2.0, "repurchase_paid": 0.499807,
+    "ar": 10.122899, "notes_receivable": 0.325839, "receivable_financing": 0.021506,
+    "prepayments": 0.372788, "stock": 8.260375, "ap": 9.338224,
+    "notes_payable": 1.093415, "deferred_revenue": 0.195518,
+    "sub_transaction_equity": 89, "sub_2025_income": 6.180154, "sub_h1_income": 5.162570,
+    "parent_h1_liquid": 2.205216, "parent_h1_dividend_payable": 0.854934
+  },
+  "strategy": {
+    "cash_floor": 5.5,
+    "base_dividends": [0.29, 0.34, 0.40, 0.45, 0.50],
+    "second_sub_income": [8.5, 10.3],
+    "common_note": "各情景按相同普通股权重与股数测算。预留集团经营现金后按长芯盛持股近似可归属比例，集团计息债务及激励回购款全部由母公司负担。未计行权缴款；回购股份以后用于员工，未按注销减股。"
+  },
+  "paths": {
+    "structural_bear": {"sales":[36,33,32,32,33],"margin":[0.18,0.13,0.115,0.11,0.11],"working_ratio":0.32,"net_capex_ratio":0.019,"cash_loss":1.6,"discount":0.13,"transition_growth":0.01,"return_on_capital":0.10,"mature_growth":0.005,"dividend_factor":0.2},
+    "cyclical_bear": {"sales":[39,37,40,44,47],"margin":[0.23,0.18,0.185,0.19,0.20],"working_ratio":0.29,"net_capex_ratio":0.028,"cash_loss":0.7,"discount":0.1175,"transition_growth":0.035,"return_on_capital":0.15,"mature_growth":0.02,"dividend_factor":0.65},
+    "base_low": {"sales":[45,50,54,58,61],"margin":[0.27,0.26,0.25,0.24,0.23],"working_ratio":0.26,"net_capex_ratio":0.039,"cash_loss":0,"discount":0.11,"transition_growth":0.05,"return_on_capital":0.18,"mature_growth":0.025,"dividend_factor":1},
+    "base_high": {"sales":[46,52,57,62,66],"margin":[0.28,0.275,0.265,0.255,0.25],"working_ratio":0.25,"net_capex_ratio":0.043,"cash_loss":0,"discount":0.1025,"transition_growth":0.065,"return_on_capital":0.21,"mature_growth":0.03,"dividend_factor":1},
+    "bull": {"sales":[50,58,68,77,84],"margin":[0.30,0.30,0.29,0.28,0.27],"working_ratio":0.245,"net_capex_ratio":0.048,"cash_loss":0,"discount":0.0975,"transition_growth":0.085,"return_on_capital":0.24,"mature_growth":0.035,"dividend_factor":1.4}
+  },
+  "horizon_note":"五年交付和资本预算后，将第六至十年增长所需再投资从归属盈利扣除，再用长期增长及资本回报收敛；减去现金分配后留存的权益只进入第五年末一次。"
+}

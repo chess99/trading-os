@@ -1,0 +1,98 @@
+{
+  "symbol": "HK:02359",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-11-27T19:00:00+08:00",
+  "value_range": {
+    "low": 102.07,
+    "high": 117.81,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      2.95531,
+      3.31432,
+      3.5996,
+      3.87326,
+      4.1288
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 146.4678,
+        "high": 164.1723
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 32.08,
+    "cyclical_bear": 83.56,
+    "base_low": 102.07,
+    "base_high": 117.81,
+    "bull": 147.09,
+    "currency": "HKD",
+    "horizon_note": "各情景为当期每股港元权益。两个压力情景采用各自经营路径的高资本成本端，较乐观情景采用扩产获单路径的低资本成本端。"
+  },
+  "scenario_ranges_hkd": {
+    "structural": [
+      32.08,
+      35.8
+    ],
+    "cyclical": [
+      83.56,
+      96.78
+    ],
+    "base": [
+      102.07,
+      117.81
+    ],
+    "upside": [
+      126.86,
+      147.09
+    ],
+    "capital_intensity": [
+      90.85,
+      105.25
+    ],
+    "upstream_delay_3": [
+      98.21,
+      114.13
+    ],
+    "old_losses_budget": [
+      80.81,
+      94.24
+    ]
+  },
+  "auxiliary_value_hkd": [
+    85.07,
+    100.81
+  ],
+  "issuer_shares": {
+    "issued": 3034904066,
+    "treasury": 29850131,
+    "ex_treasury": 3005053935
+  },
+  "gross_to_personal_cash_hkd_equivalent": [
+    2.3643,
+    2.6515,
+    2.8797,
+    3.0986,
+    3.303
+  ],
+  "fx_sensitivity": {
+    "0.81301": [
+      107.44,
+      124.01
+    ],
+    "0.89859": [
+      97.21,
+      112.2
+    ]
+  },
+  "terminal_pv_fraction": [
+    0.8711,
+    0.8852
+  ]
+}

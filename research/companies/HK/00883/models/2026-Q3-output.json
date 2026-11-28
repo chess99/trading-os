@@ -1,0 +1,113 @@
+{
+  "symbol": "HK:00883",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 12.12,
+    "high": 16.28,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      1.398219,
+      1.208641,
+      1.076104,
+      1.052457,
+      1.06174
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 12.349277,
+        "high": 17.520524
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 6.08,
+    "cyclical_bear": 10.99,
+    "base_low": 12.12,
+    "base_high": 16.28,
+    "bull": 18.39,
+    "currency": "HKD",
+    "horizon_note": "四组情景均为当前每股港元税前权益。结构承压采用长期低油价和较高资源成本，周期承压于第三年起恢复投入，较乐观情景按较高效率开发并逐步返还合格超额资金。"
+  },
+  "paths_hkd": {
+    "structural_bear": {
+      "current": 6.084180012316972,
+      "distributions": [
+        0.498953896346282,
+        0.44625866368029854,
+        0.5068767321491255,
+        0.46884473485116,
+        0.42274891891263033
+      ],
+      "year_5": 6.63646342334029,
+      "terminal_pv_share": 0.7008537830465019
+    },
+    "cyclical_bear": {
+      "current": 10.991416147471696,
+      "distributions": [
+        0.7532109713843587,
+        0.8522315604422293,
+        1.023805163400936,
+        1.0486982699219012,
+        1.0502223167484441
+      ],
+      "year_5": 12.022094568134532,
+      "terminal_pv_share": 0.679145868469866
+    },
+    "base_low": {
+      "current": 12.124506758737553,
+      "distributions": [
+        1.3982191647714324,
+        1.2086410384020907,
+        1.076103791042863,
+        1.0524573786669076,
+        1.0617397369067758
+      ],
+      "year_5": 12.349277038157144,
+      "terminal_pv_share": 0.6324322786847115
+    },
+    "base_high": {
+      "current": 16.27533394676778,
+      "distributions": [
+        1.3982191647714324,
+        1.2086410384020907,
+        1.076103791042863,
+        1.0524573786669076,
+        1.0617397369067758
+      ],
+      "year_5": 17.520524246510902,
+      "terminal_pv_share": 0.71592659799587
+    },
+    "bull": {
+      "current": 18.386158059336108,
+      "distributions": [
+        1.4350958251038683,
+        1.2902875379706533,
+        1.207445490351004,
+        1.2313968534451154,
+        1.2869119641636106
+      ],
+      "year_5": 19.965146729239414,
+      "terminal_pv_share": 0.7221589967144121
+    }
+  },
+  "auxiliary_hkd": {
+    "low": 15.89,
+    "high": 24.85
+  },
+  "ordinary_shares": 47529953984,
+  "southbound_dividend_tax_rate": 0.28,
+  "historical_dividend_hkd_after_withholding": 0.6768,
+  "projected_southbound_dividends_hkd": [
+    1.0067,
+    0.8702,
+    0.7748,
+    0.7578,
+    0.7645
+  ]
+}

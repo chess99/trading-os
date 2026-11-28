@@ -1,0 +1,55 @@
+{
+  "symbol": "HK:00388",
+  "as_of": "2026-11-27T18:00:00+08:00",
+  "units": "港元百万元、股数为百万股；香港及北向日均成交分别为十亿港元和十亿元人民币；费率及现金支出为研究预算",
+  "sources": {
+    "q3": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1106/2026110600217.pdf",
+    "h1": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0831/2026083100411.pdf",
+    "annual": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0316/2026031600319.pdf",
+    "shares": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1103/2026110301746.pdf",
+    "dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0819/2026081900213.pdf",
+    "october": "https://www.hkex.com.hk/Market-Data/Statistics/Consolidated-Reports/HKEX-Monthly-Market-Highlights?sc_lang=en&select=%7B42F1D2CF-355D-45C9-BACE-FBD72EAEA7AC%7D",
+    "sgx": "https://www.sgx.com/derivatives/products/chinaA50",
+    "tax": "https://www.csrc.gov.cn/csrc/c100028/c1002047/content.shtml"
+  },
+  "observed": {
+    "source_locations": "Q3 pp.3–5、8、18、20–25；半年报附注10、26及合并现金流量表；年报十年摘要、可分配储备及附注54；10月证券月报第2页。",
+    "shares": 1267.836895, "q3_equity": 55833, "q3_nci": 305, "q3_total_equity": 56138,
+    "ytd_profit": 15427, "prior_ytd_profit": 13419, "prior_fy_profit": 17754,
+    "unlisted_mark": 307, "ytd_revenue": 20807, "equity_trade": 4504, "equity_clear": 3073,
+    "north_trade": 914, "north_settle": 1751, "cash_adt": 272.9, "north_adt": 332.4,
+    "fund_average": 289700, "ytd_opex": 4755, "ytd_charity_expense": 83,
+    "ytd_transaction_expense": 204, "ytd_da": 1165, "ytd_interest": 65,
+    "ytd_nci": 39, "headquarters_due": 1149, "total_capital_commitments": 2879,
+    "fund_gain_ytd": 2104, "corporate_net_income_ytd": 1436
+  },
+  "tax": 0.16, "lease_principal": 260,
+  "base_discount_growth": [[0.085,0.0275],[0.0775,0.0325]],
+  "terminal_incremental_roe": 0.28,
+  "cross_check": {"years":8,"payout":0.89,"steady_roe":0.27,"discount":0.0825,"growth":0.03},
+  "cases": {
+    "base": {
+      "cash_adt":[235,245,258,271,285],"north_adt":[280,292,308,324,341],
+      "cash_fee_factor":1,"other_start":0.98,"other_growth":0.05,"fund_balance_factor":0.95,"fund_spread":0.009,"fund_growth":0.035,
+      "corporate_income":1300,"cost_factor":1.03,"cost_growth":0.04,"capex":2150,"capex_growth":0.045,"reserve_addition":450,"payout":0.89
+    },
+    "structural_bear": {
+      "cash_adt":[180,172,168,166,165],"north_adt":[205,192,184,182,180],
+      "cash_fee_factor":0.84,"other_start":0.85,"other_growth":0.015,"fund_balance_factor":0.82,"fund_spread":0.0055,"fund_growth":0.01,
+      "corporate_income":950,"cost_factor":1.06,"cost_growth":0.0275,"capex":2400,"capex_growth":0.025,"reserve_addition":850,"payout":0.78,
+      "discount":0.10,"growth":0.013
+    },
+    "cyclical_bear": {
+      "cash_adt":[180,185,202,222,245],"north_adt":[215,230,255,274,295],
+      "cash_fee_factor":1,"other_start":0.90,"other_growth":0.04,"fund_balance_factor":0.88,"fund_spread":0.007,"fund_growth":0.025,
+      "corporate_income":1050,"cost_factor":1.01,"cost_growth":0.035,"capex":1900,"capex_growth":0.04,"reserve_addition":540,"payout":0.86,
+      "discount":0.09,"growth":0.025
+    },
+    "bull": {
+      "cash_adt":[262,278,300,320,342],"north_adt":[310,336,362,391,423],
+      "cash_fee_factor":1,"other_start":1.03,"other_growth":0.065,"fund_balance_factor":1.01,"fund_spread":0.01,"fund_growth":0.05,
+      "corporate_income":1450,"cost_factor":1.06,"cost_growth":0.05,"capex":2600,"capex_growth":0.065,"reserve_addition":650,"payout":0.90,
+      "discount":0.076,"growth":0.035
+    }
+  }
+}

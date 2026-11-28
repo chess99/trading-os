@@ -1,0 +1,130 @@
+{
+  "symbol": "CN:688301",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 36.48,
+    "high": 49.58,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.48,
+      0.52,
+      0.56,
+      0.6,
+      0.64
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 55.3734,
+        "high": 74.7035
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 9.9,
+    "cyclical_bear": 22.83,
+    "base_low": 36.48,
+    "base_high": 49.58,
+    "bull": 70.6,
+    "horizon_note": "按随后五年两类销售、利润率及资本占用预测现金分配与第五年末经营价值。结构不利路径计单一客户缩量和产线收尾支出，乐观路径计客户扩大采购和相应扩产。"
+  },
+  "scenarios_detail": {
+    "structural_bear": {
+      "value": 9.9,
+      "terminal": 17.4406,
+      "distributions": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "earnings": 4.2243,
+      "xray_revenue": 26.4,
+      "display_revenue": 3.106,
+      "retained_net_cash": 8.696,
+      "net_capital_5y": 7.4,
+      "terminal_pv_share": 1.0
+    },
+    "cyclical_bear": {
+      "value": 22.83,
+      "terminal": 36.2499,
+      "distributions": [
+        0.264,
+        0.28600000000000003,
+        0.30800000000000005,
+        0.33,
+        0.35200000000000004
+      ],
+      "earnings": 6.8414,
+      "xray_revenue": 30.605,
+      "display_revenue": 7.729,
+      "retained_net_cash": 12.036,
+      "net_capital_5y": 10.673,
+      "terminal_pv_share": 0.9506
+    },
+    "base_low": {
+      "value": 36.48,
+      "terminal": 55.3734,
+      "distributions": [
+        0.48,
+        0.52,
+        0.56,
+        0.6,
+        0.64
+      ],
+      "earnings": 9.5609,
+      "xray_revenue": 36.17,
+      "display_revenue": 10.285,
+      "retained_net_cash": 12.606,
+      "net_capital_5y": 15.863,
+      "terminal_pv_share": 0.9426
+    },
+    "base_high": {
+      "value": 49.58,
+      "terminal": 74.7035,
+      "distributions": [
+        0.48,
+        0.52,
+        0.56,
+        0.6,
+        0.64
+      ],
+      "earnings": 11.5945,
+      "xray_revenue": 39.697,
+      "display_revenue": 12.336,
+      "retained_net_cash": 15.987,
+      "net_capital_5y": 19.476,
+      "terminal_pv_share": 0.9572
+    },
+    "bull": {
+      "value": 70.6,
+      "terminal": 105.1465,
+      "distributions": [
+        0.504,
+        0.546,
+        0.5880000000000001,
+        0.63,
+        0.672
+      ],
+      "earnings": 14.307,
+      "xray_revenue": 43.493,
+      "display_revenue": 16.704,
+      "retained_net_cash": 17.817,
+      "net_capital_5y": 25.783,
+      "terminal_pv_share": 0.968
+    }
+  },
+  "diluted_shares_100m": 3.16293395,
+  "net_cash_bridge_100m": -4.5116,
+  "transition_dcf": {
+    "base_low": 27.72,
+    "base_high": 40.43
+  }
+}

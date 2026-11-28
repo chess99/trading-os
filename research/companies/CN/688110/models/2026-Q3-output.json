@@ -1,0 +1,368 @@
+{
+  "symbol": "CN:688110",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "currency": "CNY",
+    "low": 12.75,
+    "high": 18.06
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.3,
+      0.2,
+      0.15,
+      0.15,
+      0.15
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 19.79,
+        "high": 27.88
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 2.17,
+    "cyclical_bear": 8.06,
+    "base_low": 12.75,
+    "base_high": 18.06,
+    "bull": 29.37
+  },
+  "cases": {
+    "structural_bear": {
+      "pv": 2.173752355699066,
+      "year5_terminal": 4.185374484189336,
+      "matrix": 2.2176456901915818,
+      "year6_owner_cash": 0.2982237236024879,
+      "opening_cash": 15.600223,
+      "opening_wc": 20.357494999999997,
+      "shares": 6.619070390000001,
+      "total_terminal_weight": 1.0,
+      "operating_terminal_weight": 0.0768922963132472,
+      "years": [
+        {
+          "sales": 32.6858880975,
+          "gross_margin": 0.5435763521095498,
+          "nopat": 8.98547632547185,
+          "owner_profit": 7.727509639905791,
+          "working_capital": 24.840286448886296,
+          "net_capex": 1.2,
+          "available": 1.3403089938635744,
+          "retained": 17.252536453863573
+        },
+        {
+          "sales": 21.707668036000005,
+          "gross_margin": 0.3941299451332739,
+          "nopat": 2.1750158016277643,
+          "owner_profit": 1.8705135893998772,
+          "working_capital": 20.535182975366578,
+          "net_capex": 0.7,
+          "available": 4.170902576626837,
+          "retained": 21.768489759567682
+        },
+        {
+          "sales": 18.565768715000004,
+          "gross_margin": 0.33805067397663124,
+          "nopat": 0.7291744913269048,
+          "owner_profit": 0.6270900625411381,
+          "working_capital": 18.80322207338246,
+          "net_capex": 0.3,
+          "available": 1.4585764382474777,
+          "retained": 23.66243599300651
+        },
+        {
+          "sales": 18.132721008,
+          "gross_margin": 0.3249268747586522,
+          "nopat": 0.5911361063772782,
+          "owner_profit": 0.5083770514844592,
+          "working_capital": 18.640303606663014,
+          "net_capex": 0.2,
+          "available": 0.4764869328631831,
+          "retained": 24.612171645729823
+        },
+        {
+          "sales": 18.24328638,
+          "gross_margin": 0.30805004662761865,
+          "nopat": 0.4467717716307999,
+          "owner_profit": 0.3842237236024879,
+          "working_capital": 19.08160585921096,
+          "net_capex": 0.1,
+          "available": -0.08129621358874622,
+          "retained": 25.023118865055675
+        }
+      ]
+    },
+    "cyclical_bear": {
+      "pv": 8.057097518480345,
+      "year5_terminal": 13.21957361665314,
+      "matrix": 8.695461719434368,
+      "year6_owner_cash": 5.1061100474769505,
+      "opening_cash": 15.600223,
+      "opening_wc": 20.357494999999997,
+      "shares": 6.619070390000001,
+      "total_terminal_weight": 0.9520603761733689,
+      "operating_terminal_weight": 0.5291160248789666,
+      "years": [
+        {
+          "sales": 37.31581305,
+          "gross_margin": 0.587346209625198,
+          "nopat": 12.451212942755003,
+          "owner_profit": 11.081579519051953,
+          "working_capital": 21.362102889766575,
+          "net_capex": 1.6,
+          "available": 7.963478497159698,
+          "retained": 22.551891879159697
+        },
+        {
+          "sales": 26.535689280000003,
+          "gross_margin": 0.4244234478766102,
+          "nopat": 4.427160733280003,
+          "owner_profit": 3.9401730526192025,
+          "working_capital": 19.467627247855344,
+          "net_capex": 0.8,
+          "available": 4.4142563739202,
+          "retained": 26.75527905166309
+        },
+        {
+          "sales": 25.227332378,
+          "gross_margin": 0.4032569198189045,
+          "nopat": 3.724778693251,
+          "owner_profit": 3.31505303699339,
+          "working_capital": 19.01176779907781,
+          "net_capex": 0.5,
+          "available": 2.975767946405396,
+          "retained": 29.93519905960175
+        },
+        {
+          "sales": 26.950309425000004,
+          "gross_margin": 0.43637531070758756,
+          "nopat": 4.991087368967501,
+          "owner_profit": 4.442067758381076,
+          "working_capital": 19.479076354298087,
+          "net_capex": 0.4,
+          "available": 3.670163144235028,
+          "retained": 33.873112665528815
+        },
+        {
+          "sales": 29.276789127500003,
+          "gross_margin": 0.4642968102923499,
+          "nopat": 6.282184065036249,
+          "owner_profit": 5.591143817882262,
+          "working_capital": 20.380360515071235,
+          "net_capex": 0.4,
+          "available": 4.433000914794159,
+          "retained": 38.32166879463355
+        }
+      ]
+    },
+    "base_low": {
+      "pv": 12.751440033263671,
+      "year5_terminal": 19.79129775369855,
+      "matrix": 13.332696650083326,
+      "year6_owner_cash": 6.286761315672588,
+      "opening_cash": 15.600223,
+      "opening_wc": 20.357494999999997,
+      "shares": 6.619070390000001,
+      "total_terminal_weight": 0.9421144168467492,
+      "operating_terminal_weight": 0.5023620686952593,
+      "years": [
+        {
+          "sales": 50.998277835,
+          "gross_margin": 0.6589175987416949,
+          "nopat": 21.391906067024802,
+          "owner_profit": 19.46663452099257,
+          "working_capital": 24.164633373795066,
+          "net_capex": 1.9,
+          "available": 13.773138600839058,
+          "retained": 27.699644943839058
+        },
+        {
+          "sales": 41.01975301200001,
+          "gross_margin": 0.5620419677625923,
+          "nopat": 13.11877545448257,
+          "owner_profit": 11.93808566357914,
+          "working_capital": 23.173279033418083,
+          "net_capex": 1.2,
+          "available": 11.448218113322193,
+          "retained": 38.37804187803803
+        },
+        {
+          "sales": 34.573791824400004,
+          "gross_margin": 0.5010283849333214,
+          "nopat": 8.748801735879875,
+          "owner_profit": 7.961409579650686,
+          "working_capital": 21.387244189636384,
+          "net_capex": 0.8,
+          "available": 8.658701287492034,
+          "retained": 46.81144344459083
+        },
+        {
+          "sales": 32.83791548400001,
+          "gross_margin": 0.4876139188250796,
+          "nopat": 7.861190766113922,
+          "owner_profit": 7.15368359716367,
+          "working_capital": 20.71481511773107,
+          "net_capex": 0.6,
+          "available": 7.219594052597506,
+          "retained": 53.974405807580155
+        },
+        {
+          "sales": 32.432509120000006,
+          "gross_margin": 0.481037534970714,
+          "nopat": 7.611513957145602,
+          "owner_profit": 6.926477701002498,
+          "working_capital": 20.64384987875069,
+          "net_capex": 0.5,
+          "available": 6.536056068474646,
+          "retained": 60.5970894337064
+        }
+      ]
+    },
+    "base_high": {
+      "pv": 18.05885909870861,
+      "year5_terminal": 27.88204316706121,
+      "matrix": 18.53280350904908,
+      "year6_owner_cash": 8.722091218771302,
+      "opening_cash": 15.600223,
+      "opening_wc": 20.357494999999997,
+      "shares": 6.619070390000001,
+      "total_terminal_weight": 0.9586738031596991,
+      "operating_terminal_weight": 0.566343476634725,
+      "years": [
+        {
+          "sales": 57.77040687000001,
+          "gross_margin": 0.6821665285945043,
+          "nopat": 25.95957854896581,
+          "owner_profit": 23.882812265048546,
+          "working_capital": 24.03475933810411,
+          "net_capex": 2.1,
+          "available": 18.16772907399276,
+          "retained": 32.09423541699276
+        },
+        {
+          "sales": 47.0566223232,
+          "gross_margin": 0.585504005203882,
+          "nopat": 16.51488589614669,
+          "owner_profit": 15.193695024454955,
+          "working_capital": 23.55401691724844,
+          "net_capex": 1.5,
+          "available": 14.005978051642172,
+          "retained": 45.418284098974794
+        },
+        {
+          "sales": 41.532039235599996,
+          "gross_margin": 0.525745867274522,
+          "nopat": 11.968212811580502,
+          "owner_profit": 11.010755786654062,
+          "working_capital": 22.79367529283945,
+          "net_capex": 1.0,
+          "available": 10.640270081110334,
+          "retained": 55.97405930356463
+        },
+        {
+          "sales": 39.62939345910001,
+          "gross_margin": 0.5095578142507005,
+          "nopat": 10.806193696827998,
+          "owner_profit": 9.941698201081758,
+          "working_capital": 22.280084130551785,
+          "net_capex": 0.8,
+          "available": 9.678202070386408,
+          "retained": 65.77888200152233
+        },
+        {
+          "sales": 39.15856925,
+          "gross_margin": 0.4982437771267652,
+          "nopat": 10.333190680795001,
+          "owner_profit": 9.506535426331402,
+          "working_capital": 22.36602804819178,
+          "net_capex": 0.6,
+          "available": 8.875467022102606,
+          "retained": 74.9770661051554
+        }
+      ]
+    },
+    "bull": {
+      "pv": 29.371933054779827,
+      "year5_terminal": 44.51786761574659,
+      "matrix": 30.346052307692972,
+      "year6_owner_cash": 13.808340212789792,
+      "opening_cash": 15.600223,
+      "opening_wc": 20.357494999999997,
+      "shares": 6.619070390000001,
+      "total_terminal_weight": 0.9627892401952662,
+      "operating_terminal_weight": 0.6445302626042517,
+      "years": [
+        {
+          "sales": 64.95715605000001,
+          "gross_margin": 0.6980582021647791,
+          "nopat": 30.417329287790007,
+          "owner_profit": 27.98394294476681,
+          "working_capital": 24.487591366969863,
+          "net_capex": 2.6,
+          "available": 21.29225428715453,
+          "retained": 34.887807110654535
+        },
+        {
+          "sales": 57.58613125,
+          "gross_margin": 0.6195533347276216,
+          "nopat": 22.387491036750003,
+          "owner_profit": 20.596491753810003,
+          "working_capital": 25.409217617753423,
+          "net_capex": 1.9,
+          "available": 17.55059560308913,
+          "retained": 51.15043773895676
+        },
+        {
+          "sales": 53.10823368400001,
+          "gross_margin": 0.5813988711829892,
+          "nopat": 18.323707517599207,
+          "owner_profit": 16.85781091619127,
+          "working_capital": 24.954552495328443,
+          "net_capex": 1.2,
+          "available": 15.922102828822254,
+          "retained": 66.44078172505816
+        },
+        {
+          "sales": 51.9426903875,
+          "gross_margin": 0.5654983884810235,
+          "nopat": 17.1003462589725,
+          "owner_profit": 15.7323185582547,
+          "working_capital": 25.019101013709587,
+          "net_capex": 1.0,
+          "available": 14.752933921344049,
+          "retained": 80.86776368340338
+        },
+        {
+          "sales": 50.942995149000005,
+          "gross_margin": 0.5525347068163607,
+          "nopat": 16.103441208758206,
+          "owner_profit": 14.81516591205755,
+          "working_capital": 25.02847161170411,
+          "net_capex": 0.85,
+          "available": 14.02454496190259,
+          "retained": 94.85489632147404
+        }
+      ]
+    }
+  },
+  "sensitivities": {
+    "base_low": {
+      "price_index_down_10pct": -3.749889732500069,
+      "volume_down_10pct": -1.6920487518371274,
+      "unit_cost_up_10pct": -2.0578409806629416,
+      "bad_debt_plus_1pct": -0.38758578426389967,
+      "extra_funding_1yi_y1": -0.09926412012410601
+    },
+    "base_high": {
+      "price_index_down_10pct": -5.055711961280343,
+      "volume_down_10pct": -2.397615644788095,
+      "unit_cost_up_10pct": -2.658096316492255,
+      "bad_debt_plus_1pct": -0.5198185452873538,
+      "extra_funding_1yi_y1": -0.1015407254052505
+    }
+  }
+}

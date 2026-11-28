@@ -1,0 +1,135 @@
+{
+  "symbol": "CN:300373",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 38.88,
+    "high": 46.76,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.7753,
+      0.8635,
+      0.944,
+      1.0007,
+      1.0344
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 55.69,
+        "high": 68.1
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 7.26,
+    "cyclical_bear": 25.23,
+    "base_low": 38.88,
+    "base_high": 46.76,
+    "bull": 76.03,
+    "horizon_note": "五年经营路径与第五年末经营价值按各情景现金、再投资和融资成本折现，均为除息后每股现值。"
+  },
+  "alternate_dcf_per_share": 38.9,
+  "alternate_operating_multiple": 11.97,
+  "initial_net_financial_claim": -8.935,
+  "terminal_other_assets": 5.023,
+  "margin_sensitivity": {
+    "-0.01": 39.85,
+    "0.01": 45.78
+  },
+  "scenarios_detail": {
+    "structural_bear": {
+      "terminal_per_share": 12.36,
+      "terminal_present_share": 0.9662,
+      "minimum_net_cash": -9.861,
+      "revenue_y5": 80.98,
+      "nopat_y5": 7.29
+    },
+    "cyclical_bear": {
+      "terminal_per_share": 38.33,
+      "terminal_present_share": 0.922,
+      "minimum_net_cash": -8.935,
+      "revenue_y5": 105.53,
+      "nopat_y5": 15.83
+    },
+    "base_low": {
+      "terminal_per_share": 55.69,
+      "terminal_present_share": 0.91,
+      "minimum_net_cash": -8.935,
+      "revenue_y5": 137.92,
+      "nopat_y5": 22.48
+    },
+    "base_high": {
+      "terminal_per_share": 68.1,
+      "terminal_present_share": 0.9251,
+      "minimum_net_cash": -8.935,
+      "revenue_y5": 137.92,
+      "nopat_y5": 22.48
+    },
+    "bull": {
+      "terminal_per_share": 107.75,
+      "terminal_present_share": 0.9297,
+      "minimum_net_cash": -8.935,
+      "revenue_y5": 172.63,
+      "nopat_y5": 32.45
+    }
+  },
+  "incremental_return_y1_to_y5": 0.2022,
+  "base_five_years": [
+    {
+      "revenue": 105.31,
+      "nopat": 16.85,
+      "gross_capex": 15.27,
+      "net_fixed": 6.845,
+      "working": 3.482,
+      "free": 6.522,
+      "dividend": 4.212,
+      "balance": -6.983
+    },
+    {
+      "revenue": 115.841,
+      "nopat": 18.766,
+      "gross_capex": 16.218,
+      "net_fixed": 6.95,
+      "working": 2.317,
+      "free": 9.499,
+      "dividend": 4.692,
+      "balance": -2.455
+    },
+    {
+      "revenue": 125.108,
+      "nopat": 20.518,
+      "gross_capex": 15.638,
+      "net_fixed": 5.63,
+      "working": 2.039,
+      "free": 12.849,
+      "dividend": 5.129,
+      "balance": 5.167
+    },
+    {
+      "revenue": 132.614,
+      "nopat": 21.749,
+      "gross_capex": 15.251,
+      "net_fixed": 4.642,
+      "working": 1.651,
+      "free": 15.456,
+      "dividend": 5.437,
+      "balance": 15.278
+    },
+    {
+      "revenue": 137.919,
+      "nopat": 22.481,
+      "gross_capex": 14.481,
+      "net_fixed": 3.448,
+      "working": 1.167,
+      "free": 17.866,
+      "dividend": 5.62,
+      "balance": 27.799
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "symbol": "CN:688608",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 30.6,
+    "high": 42.84,
+    "currency": "CNY"
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 11.69,
+    "cyclical_bear": 20.98,
+    "base_low": 30.6,
+    "base_high": 42.84,
+    "bull": 69.51,
+    "horizon_note": "同一稀释股本、现金及五年折现期，联动终端颗数、单价、研发、营运资本和终态经营倍数。"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.4,
+      0.45,
+      0.5,
+      0.6,
+      0.7
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 47.24,
+        "high": 65.84
+      }
+    }
+  },
+  "opening_surplus_cash_yi": 44.968,
+  "diluted_shares_yi": 2.43318,
+  "calculations": {
+    "structural_bear": {
+      "revenue_year5": 18.24,
+      "chip_earnings_year5": -0.12,
+      "cash_year5": 53.54,
+      "terminal_per_share": 22.01,
+      "today_per_share": 11.69,
+      "terminal_pv_pct": 97.75,
+      "operating_terminal_pv_pct": 0.0,
+      "second_method_pv": 11.69
+    },
+    "cyclical_bear": {
+      "revenue_year5": 31.47,
+      "chip_earnings_year5": 2.48,
+      "cash_year5": 53.09,
+      "terminal_per_share": 34.05,
+      "today_per_share": 20.98,
+      "terminal_pv_pct": 94.19,
+      "operating_terminal_pv_pct": 33.83,
+      "second_method_pv": 19.49
+    },
+    "base_low": {
+      "revenue_year5": 37.98,
+      "chip_earnings_year5": 4.09,
+      "cash_year5": 53.6,
+      "terminal_per_share": 47.24,
+      "today_per_share": 30.6,
+      "terminal_pv_pct": 93.7,
+      "operating_terminal_pv_pct": 50.01,
+      "second_method_pv": 28.6
+    },
+    "base_high": {
+      "revenue_year5": 43.6,
+      "chip_earnings_year5": 6.05,
+      "cash_year5": 57.31,
+      "terminal_per_share": 65.84,
+      "today_per_share": 42.84,
+      "terminal_pv_pct": 95.43,
+      "operating_terminal_pv_pct": 61.29,
+      "second_method_pv": 40.01
+    },
+    "bull": {
+      "revenue_year5": 57.4,
+      "chip_earnings_year5": 10.14,
+      "cash_year5": 59.57,
+      "terminal_per_share": 107.85,
+      "today_per_share": 69.51,
+      "terminal_pv_pct": 96.34,
+      "operating_terminal_pv_pct": 74.47,
+      "second_method_pv": 61.09
+    }
+  }
+}

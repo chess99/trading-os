@@ -1,0 +1,35 @@
+{
+  "symbol": "HK:01299", "report_period": "2026-H1", "as_of": "2026-11-27T16:00:00+08:00",
+  "unit": "金额为百万美元，股数为百万股，交易价格及每股输出为港元。建模时间从信息截止起按年计算。",
+  "facts": {
+    "issued": 10346.644870, "trust": 43.504698, "dilution": 18, "antidilutive": 5.323027,
+    "fx": 7.84, "net_surplus_fy25": 4451,
+    "ufsg_fy25": 6765, "ufsg_h125": 3569, "ufsg_h126": 3935,
+    "nb_capital_fy25": 1437, "nb_capital_h125": 699, "nb_capital_h126": 732,
+    "central_h126": 163, "finance_h126": 282, "net_fsg_h126": 2758, "net_fsg_h125": 2430,
+    "free_open": 10972, "investment_variances": 389, "paid_dividend": 1906,
+    "buyback_usd": 1743, "free_close": 10470, "buyback_hkd": 13657, "cancelled": 164.3382,
+    "ev": 80555, "vif": 49307, "adjusted_net_worth": 31248, "vnb_fy25": 5516, "vnb_9m26": 4627,
+    "vnb_9m25": 4314, "vnb_q326": 1415, "interim_div": 0.539,
+    "shareholders_equity": 40679, "nci": 349, "equity": 41028
+  },
+  "assumptions": {
+    "annual_new_grants_m": 6, "annual_trust_cash_usdm": 145,
+    "trust_funding_note": "从股东分配预算先扣受托计划年度购股现金，再在未通过库存交付的新增发行中估计每年600万股。买回并注销与受托购股分列。",
+    "central_finance_ratio": 0.125, "dividend_fraction_of_net_fsg": 0.55,
+    "secondary_vintage_years": 5, "secondary_ev_haircuts": [0.12,0.04], "secondary_vnb_realization":[0.65,0.85],
+    "fact_locations": {
+      "interim": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0907/2026090700521.pdf | 财务摘要、正文29–34页、附注3、11、22、29、EV附录2.1、3",
+      "annual": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0415/2026041500897.pdf | 资本管理、可供分配储备、财务表现、EV附录",
+      "q3": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1030/2026103000001.pdf | 单季及累计业务摘要",
+      "capital": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1105/2026110501132.pdf | 十月底股数第2页"
+    }
+  },
+  "paths": {
+    "structural_bear": {"growth":[-0.08,-0.05,0,0.01,0.01],"strain":0.25,"central":0.15,"payout":0.55,"dividend":0.50,"r":0.115,"g":0.01,"mature_payout":0.70},
+    "cyclical_bear": {"growth":[0,0.015,0.04,0.05,0.05],"strain":0.22,"central":0.135,"payout":0.66,"dividend":0.52,"r":0.099,"g":0.026,"mature_payout":0.82},
+    "base_low": {"growth":[0.07,0.07,0.07,0.065,0.06],"strain":0.205,"central":0.125,"payout":0.75,"dividend":0.55,"r":0.092,"g":0.032,"mature_payout":0.85},
+    "base_high": {"growth":[0.07,0.07,0.07,0.065,0.06],"strain":0.205,"central":0.125,"payout":0.75,"dividend":0.55,"r":0.085,"g":0.038,"mature_payout":0.88},
+    "bull": {"growth":[0.10,0.10,0.09,0.09,0.08],"strain":0.19,"central":0.114,"payout":0.77,"dividend":0.55,"r":0.082,"g":0.043,"mature_payout":0.90}
+  }
+}

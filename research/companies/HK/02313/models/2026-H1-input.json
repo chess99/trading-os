@@ -1,0 +1,35 @@
+{
+  "symbol": "HK:02313",
+  "report_period": "2026-H1",
+  "as_of": "2026-11-27T18:20:00+08:00",
+  "units": "经营与资本按十亿元人民币，股数按股，每股估值和股息按港元。预测年为截止日后连续十二个月。",
+  "facts": {
+    "sales_2025": 30.993732, "sales_2025_h1": 14.966384, "sales_2026_h1": 14.179177,
+    "equity": 37.339125, "deposit_assets": 28.095694, "borrowings": 14.762039,
+    "leases": 0.151440, "interim_dividend": 1.148720, "committed_capex": 0.837504,
+    "issued": 1503222397, "treasury": 386400, "potential_dilution": 0,
+    "parent_reserves_2025": 8.236258, "final_paid": 1.628794, "cny_per_hkd": 0.85580
+  },
+  "policy": {"operating_cash": 2.8, "tax": 0.15, "nominal_cash_yield_after_tax": 0.015, "annual_replacement": 1.45},
+  "paths": {
+    "structural": {"growth": [-0.13,-0.06,0,0.005,0.01], "ebit_margin": [0.105,0.095,0.095,0.10,0.105], "extra_fixed": [0.75,0.50,0.30,0.2,0.1], "fixed_per_sale": 0.70, "working_per_sale": 0.36, "wc_release": 0.10, "payout": 0.42, "upstream": 0.45},
+    "cyclical": {"growth": [-0.07,0,0.035,0.05,0.045], "ebit_margin": [0.12,0.125,0.145,0.155,0.16], "extra_fixed": [0.70,0.55,0.35,0.20,0.12], "fixed_per_sale": 0.58, "working_per_sale": 0.34, "wc_release": 0.30, "payout": 0.52, "upstream": 0.55},
+    "base": {"growth": [0.015,0.04,0.05,0.045,0.04], "ebit_margin": [0.147,0.156,0.165,0.17,0.174], "extra_fixed": [0.65,0.45,0.30,0.2,0.12], "fixed_per_sale": 0.55, "working_per_sale": 0.32, "wc_release": 0.60, "payout": 0.60, "upstream": 0.64},
+    "bull": {"growth": [0.055,0.07,0.07,0.06,0.05], "ebit_margin": [0.16,0.175,0.19,0.195,0.195], "extra_fixed": [0.85,0.65,0.45,0.3,0.20], "fixed_per_sale": 0.52, "working_per_sale": 0.30, "wc_release": 0.60, "payout": 0.60, "upstream": 0.65}
+  },
+  "cases": {
+    "structural_bear": {"path":"structural","discount":0.115,"growth":0.005,"incremental_return":0.09},
+    "cyclical_bear": {"path":"cyclical","discount":0.105,"growth":0.018,"incremental_return":0.13},
+    "base_low": {"path":"base","discount":0.102,"growth":0.02,"incremental_return":0.15},
+    "base_high": {"path":"base","discount":0.094,"growth":0.025,"incremental_return":0.17},
+    "bull": {"path":"bull","discount":0.09,"growth":0.03,"incremental_return":0.195}
+  },
+  "asset_check": {"normalized_operating_return":[0.15,0.175],"discount":[0.102,0.094],"steady_growth":[0.02,0.025]},
+  "sources": {
+    "H1": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0928/2026092800506.pdf",
+    "FY": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0423/2026042300646.pdf",
+    "share_count": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1103/2026110300217.pdf",
+    "interim_dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0825/2026082500370.pdf",
+    "fx": "https://finance.sina.com.cn/jjxw/2026-11-27/doc-inkacvhq5553465.shtml"
+  }
+}

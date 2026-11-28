@@ -1,0 +1,142 @@
+{
+  "units": "总额均为人民币亿元，股数为亿股。每股数为人民币元。",
+  "facts": {
+    "sales_9m": 42.26494727,
+    "sales_2025q4": 11.67804941,
+    "q4_growth_estimate": 0.08,
+    "issued_shares": 11.88889653,
+    "reserve_grants": 0.03,
+    "grant_price": 4.72,
+    "parent_retained_h1": 2.77276221,
+    "book_equity_q3": 47.98917031,
+    "cash_q3": 13.44630655,
+    "short_debt_q3": 11.41830474,
+    "current_maturities_q3": 0.13209452,
+    "lease_debt_q3": 0.13914555,
+    "restricted_cash_h1": 0.09278052
+  },
+  "sources": {
+    "Q3": "2026年三季度报告，第1–2、7–15页。https://static.cninfo.com.cn/finalpage/2026-10-28/1225628044.PDF",
+    "H1": "2026年半年度报告，第13–14、20–21页及母公司资产负债表、资产权利受限附注。https://static.cninfo.com.cn/finalpage/2026-08-27/1225511827.PDF",
+    "2025": "2025年年度报告，季度财务指标、现金分红。https://static.cninfo.com.cn/finalpage/2026-04-17/1225112913.PDF",
+    "grant": "预留限制性股票授予公告，授予数量与价格。https://static.cninfo.com.cn/finalpage/2026-10-10/1225599489.PDF",
+    "dividend": "2025年度权益分派实施公告。https://static.cninfo.com.cn/finalpage/2026-05-12/1225292268.PDF"
+  },
+  "assumptions": {
+    "project_spend_floor": [
+      0.9,
+      0.85,
+      0.55,
+      0,
+      0
+    ],
+    "depreciation_to_sales": 0.062,
+    "parent_reserve": 0.1,
+    "base_rate_bounds": [
+      0.0875,
+      0.1
+    ],
+    "terminal_roe_crosscheck_bounds": [
+      0.145,
+      0.165
+    ]
+  },
+  "paths": {
+    "structural_bear": {
+      "growth": [
+        -0.08,
+        -0.04,
+        0,
+        0.01,
+        0.01
+      ],
+      "margin": [
+        0.105,
+        0.095,
+        0.093,
+        0.092,
+        0.092
+      ],
+      "fixed_per_sales_increment": 0.8,
+      "working_per_sales_increment": 0.28,
+      "extra_upkeep_sales": 0.013,
+      "parent_profit_ratio": 0.48,
+      "target_payout": 0.48,
+      "mature_growth": 0.005,
+      "rate": 0.12,
+      "remittance_lag": 8
+    },
+    "cyclical_bear": {
+      "growth": [
+        -0.035,
+        0.01,
+        0.045,
+        0.05,
+        0.04
+      ],
+      "margin": [
+        0.119,
+        0.124,
+        0.134,
+        0.136,
+        0.137
+      ],
+      "fixed_per_sales_increment": 0.62,
+      "working_per_sales_increment": 0.21,
+      "extra_upkeep_sales": 0.004,
+      "parent_profit_ratio": 0.62,
+      "target_payout": 0.62,
+      "mature_growth": 0.018,
+      "rate": 0.106,
+      "remittance_lag": 4
+    },
+    "base": {
+      "growth": [
+        0.07,
+        0.07,
+        0.065,
+        0.06,
+        0.05
+      ],
+      "margin": [
+        0.138,
+        0.139,
+        0.14,
+        0.14,
+        0.14
+      ],
+      "fixed_per_sales_increment": 0.47,
+      "working_per_sales_increment": 0.18,
+      "extra_upkeep_sales": 0,
+      "parent_profit_ratio": 0.7,
+      "target_payout": 0.68,
+      "mature_growth": 0.0275,
+      "rate": 0.09375,
+      "remittance_lag": 2
+    },
+    "bull": {
+      "growth": [
+        0.105,
+        0.1,
+        0.085,
+        0.08,
+        0.07
+      ],
+      "margin": [
+        0.146,
+        0.151,
+        0.155,
+        0.156,
+        0.156
+      ],
+      "fixed_per_sales_increment": 0.41,
+      "working_per_sales_increment": 0.15,
+      "extra_upkeep_sales": 0,
+      "parent_profit_ratio": 0.82,
+      "target_payout": 0.74,
+      "mature_growth": 0.0325,
+      "rate": 0.086,
+      "remittance_lag": 1
+    }
+  }
+}

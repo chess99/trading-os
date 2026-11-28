@@ -1,0 +1,65 @@
+{
+  "symbol": "HK:03968",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 47.65,
+    "high": 59.92,
+    "currency": "HKD"
+  },
+  "scenarios": {
+    "currency": "HKD",
+    "structural_bear": 18.55,
+    "cyclical_bear": 44.15,
+    "bull": 66.53,
+    "base_low": 47.65,
+    "base_high": 59.92,
+    "horizon_note": "按同一股本、汇率和权益桥折现十五年分配及后续权益，弱情景采用保守端，上行采用兑现端。"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      2.4,
+      2.4436,
+      2.5447,
+      2.6273,
+      2.9304
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 62.68,
+        "high": 78.81
+      }
+    }
+  },
+  "pbr_range_hkd": [
+    44.68,
+    60.15
+  ],
+  "payout_policy_sensitivity_hkd": {
+    "unchanged_35": [
+      31.78,
+      38.71
+    ],
+    "moderate_50": [
+      39.55,
+      48.96
+    ]
+  },
+  "discount_rate_up_1pt_hkd": [
+    41.07,
+    50.43
+  ],
+  "tail_value_share": [
+    0.4417,
+    0.5105
+  ],
+  "group_common_equity_rmb_million": 1181997,
+  "stub_profit_rmb_million": 23517.81,
+  "initial_book_per_share_rmb": 47.8002,
+  "shares": 25219845601,
+  "rmb_per_hkd": 0.8558,
+  "southbound_individual_dividend_tax": 0.2
+}

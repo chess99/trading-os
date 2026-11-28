@@ -1,0 +1,95 @@
+{
+  "symbol": "HK:09618",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "currency": "HKD",
+    "low": 138.68,
+    "high": 159.1
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T18:00:00+08:00",
+    "base_case_distributions_per_share": [
+      3.3196,
+      3.5451,
+      3.6994,
+      3.8495,
+      3.9958
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 210.969,
+        "high": 233.9415
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 36.89,
+    "cyclical_bear": 92.26,
+    "base_low": 138.68,
+    "base_high": 159.1,
+    "bull": 255.87
+  },
+  "normalized_multiple_check": [
+    153.79,
+    179.95
+  ],
+  "net_buyback_y1_per_share": 0.6401,
+  "base": {
+    "value": 148.5549,
+    "terminal": 222.2375,
+    "dividends": [
+      3.3196,
+      3.5451,
+      3.6994,
+      3.8495,
+      3.9958
+    ],
+    "terminal_share": 0.9081,
+    "cash_open": 59.5703,
+    "cash_close": 124.5226,
+    "nonoperating_assets": 60.1862,
+    "shares_y5": 2.9648,
+    "cash_after_growth_capital": [
+      10.5937,
+      16.9219,
+      24.0453,
+      30.0126,
+      34.3788
+    ],
+    "normalized_profit": [
+      13.6363,
+      20.3531,
+      27.3623,
+      32.7125,
+      36.4587
+    ],
+    "net_cancellations": [
+      0.0143,
+      -0.0411,
+      -0.0409,
+      -0.0407,
+      -0.0405
+    ],
+    "repurchases": [
+      6,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "terminal_weight": {
+    "low": 0.9028,
+    "high": 0.913
+  },
+  "sensitivity": {
+    "margin_minus_one_point": 112.5,
+    "put_settlement": 150.52,
+    "no_buyback": 147.28,
+    "extra_annual_capital_4": 143.77,
+    "loss_persists_at_20": 130.6
+  }
+}

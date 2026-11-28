@@ -1,0 +1,75 @@
+{
+  "symbol": "HK:00006",
+  "report_period": "2026-H1",
+  "value_range": {
+    "low": 40.38,
+    "high": 45.96,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      2.82,
+      2.82,
+      2.82,
+      2.82,
+      2.82
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 42.06,
+        "high": 48.51
+      }
+    }
+  },
+  "paths": {
+    "structural_bear": {
+      "value": 23.97,
+      "terminal": 24.09,
+      "year5_net_cash": 21084,
+      "terminal_pv_fraction": 0.653
+    },
+    "cyclical_bear": {
+      "value": 33.86,
+      "terminal": 34.57,
+      "year5_net_cash": 29618,
+      "terminal_pv_fraction": 0.682
+    },
+    "base_low": {
+      "value": 40.38,
+      "terminal": 42.06,
+      "year5_net_cash": 31900,
+      "terminal_pv_fraction": 0.719
+    },
+    "base_high": {
+      "value": 45.96,
+      "terminal": 48.51,
+      "year5_net_cash": 31900,
+      "terminal_pv_fraction": 0.749
+    },
+    "bull": {
+      "value": 57.71,
+      "terminal": 63.59,
+      "year5_net_cash": 25429,
+      "terminal_pv_fraction": 0.793
+    }
+  },
+  "equity_bridge_hkd_m": {
+    "june_net_cash": 42505,
+    "other_net": -2800,
+    "stub_cash_est": 1793,
+    "opening_nonoperating_net_assets_est": 39836,
+    "annual_recurring_cash_est": 3670.0
+  },
+  "adjusted_book_value_per_share": [
+    43.99,
+    49.94
+  ],
+  "sensitivities_base_low": {
+    "cash_yield_minus_100bp": 39.76,
+    "recurring_cash_minus_10pct": 37.69
+  }
+}

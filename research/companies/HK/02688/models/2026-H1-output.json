@@ -1,0 +1,110 @@
+{
+  "symbol": "HK:02688",
+  "report_period": "2026-H1",
+  "value_range": {
+    "low": 38.58,
+    "high": 47.73,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      2.98,
+      3.02,
+      3.06,
+      3.12,
+      3.18
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 41.5,
+        "high": 53.03
+      }
+    }
+  },
+  "paths": {
+    "structural_bear": {
+      "value": 15.02,
+      "distributions": [
+        1.63,
+        1.42,
+        1.33,
+        1.27,
+        1.27
+      ],
+      "year5": 16.39,
+      "terminal_pv_share": 0.6533,
+      "year1_cash_rmb_m": 1971,
+      "year5_cash_rmb_m": 1534,
+      "retained_rmb_m": 1675
+    },
+    "cyclical_bear": {
+      "value": 26.93,
+      "distributions": [
+        1.75,
+        1.79,
+        1.99,
+        2.14,
+        2.26
+      ],
+      "year5": 30.72,
+      "terminal_pv_share": 0.7213,
+      "year1_cash_rmb_m": 1930,
+      "year5_cash_rmb_m": 2484,
+      "retained_rmb_m": 1311
+    },
+    "base_low": {
+      "value": 38.58,
+      "distributions": [
+        2.98,
+        3.02,
+        3.06,
+        3.12,
+        3.18
+      ],
+      "year5": 41.5,
+      "terminal_pv_share": 0.6928,
+      "year1_cash_rmb_m": 2943,
+      "year5_cash_rmb_m": 3154,
+      "retained_rmb_m": 316
+    },
+    "base_high": {
+      "value": 47.73,
+      "distributions": [
+        2.98,
+        3.02,
+        3.06,
+        3.12,
+        3.18
+      ],
+      "year5": 53.03,
+      "terminal_pv_share": 0.7458,
+      "year1_cash_rmb_m": 2943,
+      "year5_cash_rmb_m": 3154,
+      "retained_rmb_m": 316
+    },
+    "bull": {
+      "value": 61.68,
+      "distributions": [
+        3.13,
+        3.23,
+        3.34,
+        3.46,
+        3.58
+      ],
+      "year5": 71.07,
+      "terminal_pv_share": 0.7842,
+      "year1_cash_rmb_m": 3096,
+      "year5_cash_rmb_m": 3847,
+      "retained_rmb_m": 1064
+    }
+  },
+  "book_check": {
+    "low": 37.11,
+    "high": 55.16
+  },
+  "spread_minus_002_base_low": 35.0
+}

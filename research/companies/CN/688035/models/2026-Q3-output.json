@@ -1,0 +1,125 @@
+{
+  "symbol": "CN:688035",
+  "report_period": "2026-Q3",
+  "currency": "CNY",
+  "value_range": {
+    "low": 13.74,
+    "high": 19.86,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.15,
+      0.17,
+      0.2,
+      0.23,
+      0.26
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 20.93,
+        "high": 30.07
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 4.76,
+    "cyclical_bear": 8.51,
+    "base_low": 13.74,
+    "base_high": 19.86,
+    "bull": 30.84,
+    "horizon_note": "五年普通股分配与第五年经营价值、留存现金折现。结构性竞争和周期逆风下分别下调产品增速、利润率和派息，并增加应收、存货损耗及单位销售所需投入。"
+  },
+  "details": {
+    "structural_bear": {
+      "present_value": 4.76,
+      "year_5_per_share": 8.31,
+      "check_dcf_per_share": 4.9,
+      "terminal_weight": 0.969,
+      "year_5_sales": 1800.57,
+      "year_5_nopat": 77.42,
+      "opening_parent_available": 252.87,
+      "year_5_retained_cash": 574.64,
+      "annual_parent_operating_free_cash": [
+        68.89,
+        69.32,
+        69.98,
+        71.84,
+        75.88
+      ]
+    },
+    "cyclical_bear": {
+      "present_value": 8.51,
+      "year_5_per_share": 13.57,
+      "check_dcf_per_share": 8.03,
+      "terminal_weight": 0.9467,
+      "year_5_sales": 2188.25,
+      "year_5_nopat": 144.42,
+      "opening_parent_available": 252.87,
+      "year_5_retained_cash": 514.6,
+      "annual_parent_operating_free_cash": [
+        49.15,
+        60.95,
+        71.66,
+        82.24,
+        88.76
+      ]
+    },
+    "base_low": {
+      "present_value": 13.74,
+      "year_5_per_share": 20.93,
+      "check_dcf_per_share": 13.12,
+      "terminal_weight": 0.9457,
+      "year_5_sales": 2596.58,
+      "year_5_nopat": 215.52,
+      "opening_parent_available": 252.87,
+      "year_5_retained_cash": 442.66,
+      "annual_parent_operating_free_cash": [
+        38.41,
+        52.44,
+        66.06,
+        80.3,
+        96.24
+      ]
+    },
+    "base_high": {
+      "present_value": 19.86,
+      "year_5_per_share": 30.07,
+      "check_dcf_per_share": 19.8,
+      "terminal_weight": 0.9619,
+      "year_5_sales": 2877.06,
+      "year_5_nopat": 276.2,
+      "opening_parent_available": 252.87,
+      "year_5_retained_cash": 487.4,
+      "annual_parent_operating_free_cash": [
+        34.06,
+        53.59,
+        73.74,
+        95.78,
+        121.02
+      ]
+    },
+    "bull": {
+      "present_value": 30.84,
+      "year_5_per_share": 45.87,
+      "check_dcf_per_share": 34.87,
+      "terminal_weight": 0.9666,
+      "year_5_sales": 3335.17,
+      "year_5_nopat": 383.54,
+      "opening_parent_available": 252.87,
+      "year_5_retained_cash": 510.13,
+      "annual_parent_operating_free_cash": [
+        27.41,
+        54.99,
+        85.49,
+        120.86,
+        163.38
+      ]
+    }
+  }
+}

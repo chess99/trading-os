@@ -1,0 +1,34 @@
+{
+  "symbol": "CN:688380",
+  "report_period": "2026-Q3",
+  "cutoff": "2026-11-27T21:00:00+08:00",
+  "units": "金额人民币亿元、股数亿股、MCU数量亿颗、单价元/颗、分配及价值元/股。第1至5年为截止日起五个等长年度。",
+  "facts": {
+    "issued": 4.00365, "treasury": 0.01506639,
+    "cash_equivalents": 3.18499616, "trading_assets": 11.92549059,
+    "other_current_assets": 10.40289254, "h1_deposit": 10.44597586, "h1_other_current": 11.08673255,
+    "associate_book": 1.78091691, "short_debt": 1.99862777, "current_maturities": 0.02520868, "leases": 0.02776263, "deferred_tax_liabilities": 0.115028,
+    "revenue_2025": 11.22150054, "revenue_2025_9m": 7.73013041, "revenue_2026_9m": 10.99473109,
+    "h1_ipm_budget": 1, "h1_ipm_spent": 0.091819,
+    "source_notes": [
+      "2026Q3合并资产负债表、利润表、现金流量表（第6—12页）， https://static.cninfo.com.cn/finalpage/2026-10-28/1225632647.PDF",
+      "2026H1回购专户、募投专项表、母公司、其他流动资产及交易性金融资产附注， https://static.cninfo.com.cn/finalpage/2026-08-17/1225476087.PDF",
+      "2025年报营业收入、经营情况、产销量， https://static.cninfo.com.cn/finalpage/2026-03-20/1225018914.PDF",
+      "3月更新的港交所申请稿，p.121对2023—2025年MCU销量与平均价作同口径拆分，p.110用户留存、经销渠道章节载明退货及订货条款。 https://www1.hkexnews.hk/app/sehk/2026/108370/documents/sehk26033003883.pdf"
+    ]
+  },
+  "assumptions": {
+    "tax": 0.11,
+    "operating_cash_buffer": 1.5,
+    "base_payout": [0.30,0.30,0.32,0.34,0.36],
+    "annual_ipm_split": [0.50,0.35,0.15,0,0],
+    "note": "第1年销售/毛利按调整程度设置，第2—5年收入及毛利率取等差过渡，研发及其他经营费用率（含经营税费、正常减值）各年保持本情景假设。股数使用全部已发行股数，容纳可能重新授出的库存股份。金融资产无另计收益，留在终值，营运资金仅在收入增长时增投，不在下滑时预领释放。IPM假设为从9月末到建成的净新增长期资本，在日常净资本开支之外单列。"
+  },
+  "cases": {
+    "structural_bear": {"y1_sales":12.8,"mcu_units":33,"mcu_asp":0.20,"other_sales":2.9,"own_flash":0,"gm1":0.28,"gm5":0.25,"rd":0.13,"other_costs":0.09,"wc":0.40,"net_fixed":0.018,"ipm":0.55,"liquid_recovery":0.83,"associate_recovery":0.25,"multiple":9,"rate":0.125,"payout":[0.1,0.08,0.05,0.04,0.04],"perpetual_growth":0,"incremental_roc":0.10},
+    "cyclical_bear": {"y1_sales":13.2,"mcu_units":40,"mcu_asp":0.24,"other_sales":3.9,"own_flash":0,"gm1":0.29,"gm5":0.32,"rd":0.12,"other_costs":0.085,"wc":0.34,"net_fixed":0.018,"ipm":0.69,"liquid_recovery":0.92,"associate_recovery":0.60,"multiple":12,"rate":0.115,"payout":[0.15,0.15,0.18,0.22,0.24],"perpetual_growth":0.02,"incremental_roc":0.14},
+    "base_low": {"y1_sales":14.3,"mcu_units":44,"mcu_asp":0.26,"other_sales":4.3,"own_flash":0,"gm1":0.35,"gm5":0.34,"rd":0.12,"other_costs":0.079,"wc":0.30,"net_fixed":0.016,"ipm":0.75,"liquid_recovery":0.95,"associate_recovery":0.8,"multiple":12,"rate":0.105,"perpetual_growth":0.03,"incremental_roc":0.17},
+    "base_high": {"y1_sales":15.1,"mcu_units":50,"mcu_asp":0.28,"other_sales":5.2,"own_flash":0,"gm1":0.38,"gm5":0.367,"rd":0.115,"other_costs":0.072,"wc":0.28,"net_fixed":0.017,"ipm":0.80,"liquid_recovery":0.97,"associate_recovery":0.9,"multiple":14,"rate":0.105,"perpetual_growth":0.035,"incremental_roc":0.20},
+    "bull": {"y1_sales":15.9,"mcu_units":56,"mcu_asp":0.30,"other_sales":6,"own_flash":1.0,"gm1":0.40,"gm5":0.395,"rd":0.12,"other_costs":0.07,"wc":0.30,"net_fixed":0.022,"ipm":0.90,"liquid_recovery":0.99,"associate_recovery":1.0,"multiple":18,"rate":0.10,"payout":[0.30,0.34,0.38,0.42,0.46],"perpetual_growth":0.04,"incremental_roc":0.22}
+  }
+}

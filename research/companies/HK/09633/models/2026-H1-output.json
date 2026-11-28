@@ -1,0 +1,85 @@
+{
+  "symbol": "HK:09633",
+  "report_period": "2026-H1",
+  "value_range": {
+    "low": 34.49,
+    "high": 42.31,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T16:00:00+08:00",
+    "base_case_distributions_per_share": [
+      1.2966,
+      1.4119,
+      1.5207,
+      1.618,
+      1.699
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 43.0146,
+        "high": 52.0554
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 9.95,
+    "cyclical_bear": 21.93,
+    "base_low": 34.49,
+    "base_high": 42.31,
+    "bull": 60.66
+  },
+  "base_bridge_rmb_billions": {
+    "opening_excess_cash": 13.354,
+    "year5_excess_cash": 27.876,
+    "terminal_pv_fraction": [
+      0.829,
+      0.857
+    ],
+    "secondary_range_hkd": [
+      33.64,
+      40.19
+    ],
+    "incremental_return_y1_to_y5": 0.427,
+    "years": [
+      {
+        "revenue": 62.554,
+        "profit": 17.828,
+        "invested": 3.661,
+        "gross_capex": 7.178,
+        "dividend": 12.48
+      },
+      {
+        "revenue": 68.417,
+        "profit": 19.413,
+        "invested": 3.635,
+        "gross_capex": 7.505,
+        "dividend": 13.589
+      },
+      {
+        "revenue": 74.014,
+        "profit": 20.909,
+        "invested": 3.47,
+        "gross_capex": 7.687,
+        "dividend": 14.636
+      },
+      {
+        "revenue": 79.102,
+        "profit": 22.247,
+        "invested": 3.154,
+        "gross_capex": 7.697,
+        "dividend": 15.573
+      },
+      {
+        "revenue": 83.432,
+        "profit": 23.361,
+        "invested": 2.685,
+        "gross_capex": 7.518,
+        "dividend": 16.353
+      }
+    ]
+  }
+}

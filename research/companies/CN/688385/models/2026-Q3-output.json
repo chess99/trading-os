@@ -1,0 +1,105 @@
+{
+  "symbol": "CN:688385",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 12.39,
+    "high": 18.82,
+    "currency": "CNY"
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 2.52,
+    "cyclical_bear": 7.47,
+    "base_low": 12.39,
+    "base_high": 18.82,
+    "bull": 29.53,
+    "horizon_note": "同一稀释股数、留存现金与人民币口径。第五年持续经营估值和剩余现金随客户需求、利润率及资本占用联动。"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.06,
+      0.06,
+      0.06,
+      0.06,
+      0.06
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 20.04,
+        "high": 29.94
+      }
+    }
+  },
+  "initial_bridge": {
+    "revenue_ltm": 45.22,
+    "diluted_shares": 8.3759925,
+    "debt_and_leases": 13.07,
+    "opening_surplus": 0.18
+  },
+  "detail": {
+    "structural_bear": {
+      "present_per_share": 2.52,
+      "year5_per_share": 4.64,
+      "secondary_per_share": 2.59,
+      "year5_revenue": 40.29,
+      "year5_core_profit": 3.42,
+      "year5_excess_cash": 11.51,
+      "five_year_investment": 4.63,
+      "year1_to_5_incremental_profit": 0.3,
+      "year1_to_5_incremental_capital": 2.63,
+      "terminal_pv_fraction": 1.0
+    },
+    "cyclical_bear": {
+      "present_per_share": 7.47,
+      "year5_per_share": 12.62,
+      "secondary_per_share": 6.62,
+      "year5_revenue": 53.26,
+      "year5_core_profit": 7.72,
+      "year5_excess_cash": 16.87,
+      "five_year_investment": 12.28,
+      "year1_to_5_incremental_profit": 2.9,
+      "year1_to_5_incremental_capital": 11.28,
+      "terminal_pv_fraction": 0.9804
+    },
+    "base_low": {
+      "present_per_share": 12.39,
+      "year5_per_share": 20.04,
+      "secondary_per_share": 11.26,
+      "year5_revenue": 65.81,
+      "year5_core_profit": 11.19,
+      "year5_excess_cash": 22.38,
+      "five_year_investment": 23.06,
+      "year1_to_5_incremental_profit": 3.3,
+      "year1_to_5_incremental_capital": 18.5,
+      "terminal_pv_fraction": 0.9819
+    },
+    "base_high": {
+      "present_per_share": 18.82,
+      "year5_per_share": 29.94,
+      "secondary_per_share": 17.44,
+      "year5_revenue": 74.11,
+      "year5_core_profit": 14.82,
+      "year5_excess_cash": 28.44,
+      "five_year_investment": 29.18,
+      "year1_to_5_incremental_profit": 5.62,
+      "year1_to_5_incremental_capital": 23.24,
+      "terminal_pv_fraction": 0.9879
+    },
+    "bull": {
+      "present_per_share": 29.53,
+      "year5_per_share": 46.01,
+      "secondary_per_share": 29.04,
+      "year5_revenue": 90.05,
+      "year5_core_profit": 20.71,
+      "year5_excess_cash": 33.29,
+      "five_year_investment": 42.14,
+      "year1_to_5_incremental_profit": 9.77,
+      "year1_to_5_incremental_capital": 34.49,
+      "terminal_pv_fraction": 0.9896
+    }
+  }
+}

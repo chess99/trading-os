@@ -1,0 +1,206 @@
+{
+  "symbol": "HK:02688",
+  "report_period": "2026-H1",
+  "as_of": "2026-11-27T19:00:00+08:00",
+  "units": "财务金额为人民币百万元，销量为百万立方米，股数为百万股。汇率为人民币/港元。",
+  "sources": {
+    "fy25": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0428/2026042802499.pdf",
+    "h1": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0917/2026091700629.pdf",
+    "volume_9m": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1030/2026103000560.pdf",
+    "shares_oct": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1102/2026110201484.pdf",
+    "fx": "https://finance.sina.com.cn/jjxw/2026-11-27/doc-inkacvhq5553465.shtml",
+    "guidance": "https://www.ennenergy.com/en/investor-relations/financial-information/"
+  },
+  "facts": {
+    "fy25_core": 6741,
+    "h125_core": 3223,
+    "h126_core": 3175,
+    "h126_pbt": 4077,
+    "h126_income_tax": 968,
+    "h126_nci": 442,
+    "h126_owners": 2667,
+    "fy25_retail_vol": 26606,
+    "h125_retail_vol": 12953,
+    "h126_retail_vol": 13054,
+    "fy25_retail_gp": 6127,
+    "h125_retail_gp": 3092,
+    "h126_retail_gp": 3415,
+    "issued": 1131.839264,
+    "options": 0.224,
+    "treasury": 0,
+    "parent_equity": 48097,
+    "fy25_company_fcf": 2132,
+    "fy25_da": 3486,
+    "fy25_ppe_and_intangible": 7051,
+    "cny_per_hkd": 0.8558
+  },
+  "assumptions": {
+    "scope_share": 0.8,
+    "normal_core_charge": 350,
+    "da_year1": 3650,
+    "conversion_reserve": 1050,
+    "payout_target": 0.46,
+    "calibration_note": "管理层自由现金流与归母核心利润加折旧减有形及无形购买额的FY25差额为1044，留作合营未汇款、少数权益现金、营运资金和口径净额的预算。350为独立增提的经常性信用与资产损耗预算。每方价差变动只作用于假设的80%合并敏感销量，按中期税率与少数权益比例折算。",
+    "paths": {
+      "structural_bear": {
+        "volume": [
+          0.95,
+          0.93,
+          0.92,
+          0.91,
+          0.9
+        ],
+        "spread": [
+          -0.04,
+          -0.05,
+          -0.055,
+          -0.06,
+          -0.06
+        ],
+        "other": [
+          -520,
+          -550,
+          -550,
+          -500,
+          -460
+        ],
+        "capex": 5550,
+        "cash_growth": 0.005,
+        "reserve_extra": 160,
+        "distribution_share": 0.8,
+        "r": 0.108,
+        "g": 0.0
+      },
+      "cyclical_bear": {
+        "volume": [
+          0.97,
+          0.97,
+          0.985,
+          0.995,
+          1.0
+        ],
+        "spread": [
+          -0.03,
+          -0.03,
+          -0.02,
+          -0.015,
+          -0.01
+        ],
+        "other": [
+          -450,
+          -380,
+          -320,
+          -220,
+          -150
+        ],
+        "capex": 5900,
+        "cash_growth": 0.01,
+        "reserve_extra": 130,
+        "distribution_share": 0.88,
+        "r": 0.096,
+        "g": 0.008
+      },
+      "base_low": {
+        "volume": [
+          1.0,
+          1.01,
+          1.02,
+          1.03,
+          1.04
+        ],
+        "spread": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "other": [
+          0,
+          30,
+          70,
+          120,
+          180
+        ],
+        "capex": 6000,
+        "cash_growth": 0.01,
+        "reserve_extra": 0,
+        "distribution_share": 0.98,
+        "r": 0.092,
+        "g": 0.012
+      },
+      "base_high": {
+        "volume": [
+          1.0,
+          1.01,
+          1.02,
+          1.03,
+          1.04
+        ],
+        "spread": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "other": [
+          0,
+          30,
+          70,
+          120,
+          180
+        ],
+        "capex": 6000,
+        "cash_growth": 0.01,
+        "reserve_extra": 0,
+        "distribution_share": 0.98,
+        "r": 0.083,
+        "g": 0.02
+      },
+      "bull": {
+        "volume": [
+          1.01,
+          1.03,
+          1.05,
+          1.07,
+          1.09
+        ],
+        "spread": [
+          0.01,
+          0.012,
+          0.015,
+          0.018,
+          0.02
+        ],
+        "other": [
+          70,
+          170,
+          270,
+          390,
+          520
+        ],
+        "capex": 6150,
+        "cash_growth": 0.014,
+        "reserve_extra": -50,
+        "distribution_share": 0.98,
+        "r": 0.08,
+        "g": 0.022
+      }
+    },
+    "book_check": {
+      "low": {
+        "roe": 0.115,
+        "cash_payout": 0.52,
+        "r": 0.092,
+        "g": 0.012
+      },
+      "high": {
+        "roe": 0.125,
+        "cash_payout": 0.56,
+        "r": 0.083,
+        "g": 0.02
+      }
+    }
+  }
+}

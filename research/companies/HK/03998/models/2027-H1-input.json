@@ -1,0 +1,32 @@
+{
+  "单位": "金额为十亿元人民币，股数为十亿股，汇率为人民币/港元。增速为逐年名义收入增长；利润率为剔除闲置金融资产回报、计入租赁及所得税后的归母经营净利率。",
+  "sources": {
+    "interim": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1125/2026112501497.pdf",
+    "annual": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0727/2026072701329.pdf",
+    "october_buyback": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1007/2026100701458.pdf",
+    "october_equity": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1103/2026110301923.pdf",
+    "november_equity": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1103/2026110302021.pdf",
+    "dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1125/2026112501517.pdf"
+  },
+  "facts": {
+    "fy_revenue": 27.349980, "prior_h1_revenue": 8.927638, "h1_revenue": 9.103434,
+    "cash": 2.251845, "time_deposits": 4.042886, "short_financial_assets": 5.031084,
+    "financial_debt": 1.003970, "post_september_buyback_hkd": 0.040,
+    "issued_shares": 11.688982472, "october_options": 0.240771, "november_options_exercised": 0.000560,
+    "interim_dividend_rmb": 0.661759, "interim_dividend_hkd": 0.772812,
+    "annual_cash_before_working_capital": [6.537753,6.810823],
+    "annual_tax_paid": [1.719541,1.487411], "annual_interest_paid": [0.110119,0.086543],
+    "annual_capex": [1.331836,1.083326], "annual_lease_principal": [0.562530,0.514344],
+    "annual_share_compensation": [0.161587,0.046687], "annual_minority_profit": [0.038830,0.052687]
+  },
+  "assumptions": {
+    "liquidity_buffer": 4.0, "short_financial_realization": 0.95,
+    "base": {"growth":[0.02,0.035,0.04,0.04,0.035],"margin":[0.134,0.135,0.136,0.136,0.136],"net_maintenance":0.006,"capital_per_new_sale":0.30,"payout":0.83,"discount":0.10,"terminal_growth":0.02},
+    "base_discount_band":[0.094,0.106],
+    "structural_bear":{"growth":[-0.08,-0.06,-0.03,0.0,0.0],"margin":[0.109,0.091,0.084,0.081,0.08],"net_maintenance":0.012,"capital_per_new_sale":0.45,"payout":0.56,"discount":0.13,"terminal_growth":0.0},
+    "cyclical_bear":{"growth":[-0.05,0.0,0.035,0.045,0.04],"margin":[0.111,0.117,0.125,0.130,0.132],"net_maintenance":0.009,"capital_per_new_sale":0.38,"payout":0.72,"discount":0.108,"terminal_growth":0.015},
+    "bull":{"growth":[0.04,0.06,0.065,0.06,0.055],"margin":[0.137,0.142,0.145,0.146,0.146],"net_maintenance":0.006,"capital_per_new_sale":0.32,"payout":0.85,"discount":0.092,"terminal_growth":0.025},
+    "cash_power_discount_band":[0.085,0.105]
+  },
+  "notes": ["中期公告第2、4、5、11、15、17、48、53页，汇率采用11月25日公告股息总额的两币种比值。11月3日股本翌日表及10月月报约束完全摊薄分母，假设所有存量期权形成新增股且不计行权款。","九月底后至11月3日注销的回购中，10月2、5、6、7日共购回1,000万股约0.040十亿港元，据10月7日翌日表按加权均价计算，九月底前已付部分不再扣除；未抵押定存及短期理财中分别保留经营现金缓冲与变现折让。","近两年现金交叉检验按FY2025、FY2026依次列示，来源为年报合并现金流量表及五年摘要；FY2025资本开支含土地使用权。"]
+}

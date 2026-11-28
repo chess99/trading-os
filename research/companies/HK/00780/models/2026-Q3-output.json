@@ -1,0 +1,90 @@
+{
+  "symbol": "HK:00780",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 13.72,
+    "high": 18.82,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.25,
+      0.27,
+      0.29,
+      0.31,
+      0.33
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 20.35,
+        "high": 27.63
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "HKD",
+    "structural_bear": 3.78,
+    "cyclical_bear": 10.56,
+    "base_low": 13.72,
+    "base_high": 18.82,
+    "bull": 25.63
+  },
+  "opening_common_assets_cny_bn": 4.711,
+  "ltm_revenue_cny_bn": 20.633,
+  "diluted_shares_bn": 2.469578,
+  "cases": {
+    "structural_bear": {
+      "value": 3.78,
+      "terminal": 5.99,
+      "terminal_pv_weight": 0.8999,
+      "method_two": 3.92,
+      "sales_y5": 18.487,
+      "after_tax_op_y5": 1.331,
+      "retained_assets_y5": 7.737
+    },
+    "cyclical_bear": {
+      "value": 10.56,
+      "terminal": 16.03,
+      "terminal_pv_weight": 0.9217,
+      "method_two": 11.23,
+      "sales_y5": 22.496,
+      "after_tax_op_y5": 2.699,
+      "retained_assets_y5": 10.973
+    },
+    "base_low": {
+      "value": 13.72,
+      "terminal": 20.35,
+      "terminal_pv_weight": 0.9209,
+      "method_two": 14.61,
+      "sales_y5": 25.835,
+      "after_tax_op_y5": 3.204,
+      "retained_assets_y5": 11.928
+    },
+    "base_high": {
+      "value": 18.82,
+      "terminal": 27.63,
+      "terminal_pv_weight": 0.9413,
+      "method_two": 20.05,
+      "sales_y5": 27.35,
+      "after_tax_op_y5": 3.72,
+      "retained_assets_y5": 13.827
+    },
+    "bull": {
+      "value": 25.63,
+      "terminal": 37.4,
+      "terminal_pv_weight": 0.9484,
+      "method_two": 27.67,
+      "sales_y5": 30.033,
+      "after_tax_op_y5": 4.565,
+      "retained_assets_y5": 15.533
+    }
+  },
+  "base_low_sensitivity_hkd": {
+    "margin_down_1ppt": 12.75,
+    "rate_up_1ppt": 12.14
+  }
+}

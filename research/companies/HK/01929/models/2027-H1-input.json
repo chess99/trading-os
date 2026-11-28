@@ -1,0 +1,27 @@
+{
+  "symbol": "HK:01929", "report_period": "2027-H1", "cutoff": "2026-11-27T19:00:00+08:00",
+  "units": "十亿港元、十亿股、每普通股港元。预测年度从估值时点起算。",
+  "sources": {
+    "interim": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1124/2026112400276.pdf",
+    "annual": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0618/2026061800001.pdf",
+    "shares": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1103/2026110300427.pdf",
+    "bond": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1124/2026112400418.pdf",
+    "dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1124/2026112400390.pdf",
+    "peer": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1126/2026112601244.pdf"
+  },
+  "facts": {
+    "annual_sales": 94.398, "old_h1_sales": 38.9861, "h1_sales": 44.2631,
+    "issued_shares": 9.8663312, "unvested_awards": 0.0101036, "treasury_shares": 0,
+    "conversion_shares": 0.567010309, "convertible_face": 8.8, "put_at_par": 1.0152, "coupon": 0.00375,
+    "approved_interim": 0.35, "bank_debt": 13.909, "gold_loan": 14.363, "bond_carrying": 7.410,
+    "cash": 7.023, "minimum_cash": 5.5, "common_equity": 32.2056, "minority_equity": 1.0111, "group_equity": 33.2167
+  },
+  "scenario_notes": "margin为扣税、非控股权益、日常银行借款和黄金借贷成本后的普通股经营收益率（未扣本次转债融资、已扣门店经济租金和维护费用）。capital_per_new_sale为每新增一元收入所需的库存净占款和净固定资产，收入减少时不释放历史库存。extra_funding是支持现有业务所需额外周转；retention是通过现金分配约束保留的现金，计入期末权益一次。只在各情景各自转股或回售两条互斥路径内比较每股经济损失。",
+  "scenarios": {
+    "structural_bear": {"growth":[-0.09,-0.05,-0.01,0.0,0.01],"margin":[0.055,0.045,0.047,0.049,0.05],"capital_per_new_sale":0.65,"extra_funding":[1.4,0.8,0.5,0.1,0],"payout":0.52,"refinance":5.0,"interest":0.075,"discount":[0.12,0.12],"terminal_growth":[0.0,0.0]},
+    "cyclical_bear": {"growth":[-0.04,-0.01,0.035,0.04,0.035],"margin":[0.069,0.064,0.073,0.078,0.079],"capital_per_new_sale":0.53,"extra_funding":[1.1,0.7,0.3,0,0],"payout":0.61,"refinance":6.0,"interest":0.06,"discount":[0.108,0.108],"terminal_growth":[0.012,0.012]},
+    "base": {"growth":[0.005,0.025,0.035,0.035,0.03],"margin":[0.082,0.084,0.086,0.087,0.088],"capital_per_new_sale":0.43,"extra_funding":[1.0,0.35,0,0,0],"payout":0.70,"refinance":6.5,"interest":0.05,"discount":[0.105,0.09],"terminal_growth":[0.018,0.024]},
+    "bull": {"growth":[0.04,0.055,0.06,0.055,0.045],"margin":[0.09,0.095,0.10,0.102,0.103],"capital_per_new_sale":0.36,"extra_funding":[0.7,0.2,0,0,0],"payout":0.76,"refinance":7.0,"interest":0.045,"discount":[0.085,0.085],"terminal_growth":[0.029,0.029]}
+  },
+  "cross_check": {"normal_roe":[0.21,0.245],"growth":0.02,"cost_of_equity":[0.102,0.095],"note":"账面普通股扣除回售价高于可转债现有账面债务的差额；正常化ROE已包括替代借款成本，分析基准回售路径。"}
+}

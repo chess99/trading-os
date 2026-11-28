@@ -1,0 +1,29 @@
+{
+  "symbol": "HK:00006", "period": "2026-H1", "as_of": "2026-11-27T19:00:00+08:00",
+  "unit": "除每股数、股数、比例和日期外，金额为百万港元。估值为每一已发行普通股。",
+  "facts": {
+    "issued_shares": 2131105154, "treasury_shares": 0, "dilution": 0,
+    "cash": 45268, "debt": 2763, "equity": 103130, "jv": 35073, "associates": 27252, "other_investments": 1100,
+    "june_interim_dividend_paid_september": 1662, "fy2025_ffo": 5314,
+    "ukpn_whole_year_cash_to_all_owners": 3570, "ukpn_stake": 0.4, "fy2025_dps": 2.82,
+    "ffo_adjustment": -216, "interim_end": "2026-06-30"
+  },
+  "bridge_note": "六月净资产减去三项存续投资的账面额作为非经营净资产，包含现金、银行贷款及其他资产负债净额。扣除九月已付中期股息，并按基准持续现金流、短存净息和补资预算估计期末至截止日的现金变动。未披露的五个月实际变动属于估计。2025年营运资金流以原通函汇率扣除英国配电网全部股东分配及贷款利息的40%，再预留216百万作为铁路退出、原存贷利息及汇率口径的净调整，属于估计。",
+  "sources": {
+    "h1_notes_4_6_9_11_14_19": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0831/2026083100515.pdf",
+    "fy25_notes_14_18_31_32": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0421/2026042100656.pdf",
+    "ukpn_board_letter_p20": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0408/2026040800063.pdf",
+    "october_shares": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1102/2026110200291.pdf",
+    "cash_dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0812/2026081200444.pdf"
+  },
+  "base_bridge_deposit_rate": 0.025, "base_bridge_capital": 300,
+  "book_multiples": [0.85, 1.05],
+  "assumption_units": "cash_factor调整存续投资净现金；net_topup为每年第一年追加权益预算，与经营现金同期增长；cash_growth为运营现金与补资预算年增速；term_growth为永续净现金增速；r为港元名义普通股资本成本；cash_yield为期初净流动资产税后收益率；acquisition为第一年初另付收购价款，新资产净上划收益以年化固定比例计入，终值按零增长资本化。dps为截止日起未来五个年度各年现金分红。",
+  "scenarios": {
+    "structural_bear": {"cash_factor":0.80,"net_topup":550,"cash_growth":0,"term_growth":0,"r":0.09,"cash_yield":0.018,"acquisition":12000,"acquisition_yield":0.028,"dps":[2.4,2.2,2.0,2.0,2.0]},
+    "cyclical_bear": {"cash_factor":0.90,"net_topup":450,"cash_growth":0.035,"term_growth":0.009,"r":0.084,"cash_yield":0.02,"acquisition":0,"acquisition_yield":0,"dps":[2.7,2.7,2.7,2.75,2.8]},
+    "base_low": {"cash_factor":1,"net_topup":300,"cash_growth":0.02,"term_growth":0.013,"r":0.077,"cash_yield":0.025,"acquisition":0,"acquisition_yield":0,"dps":[2.82,2.82,2.82,2.82,2.82]},
+    "base_high": {"cash_factor":1,"net_topup":300,"cash_growth":0.02,"term_growth":0.019,"r":0.071,"cash_yield":0.025,"acquisition":0,"acquisition_yield":0,"dps":[2.82,2.82,2.82,2.82,2.82]},
+    "bull": {"cash_factor":1.12,"net_topup":350,"cash_growth":0.035,"term_growth":0.023,"r":0.068,"cash_yield":0.032,"acquisition":12000,"acquisition_yield":0.068,"dps":[2.82,2.85,2.9,2.95,3.00]}
+  }
+}

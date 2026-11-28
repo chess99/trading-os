@@ -1,0 +1,61 @@
+{
+  "symbol": "HK:00388",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "currency": "HKD",
+    "low": 230.09,
+    "high": 288.0
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T18:00:00+08:00",
+    "base_case_distributions_per_share": [
+      11.89,
+      12.87,
+      13.53,
+      14.21,
+      14.93
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 266.78,
+        "high": 340.21
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "HKD",
+    "structural_bear": 71.57,
+    "cyclical_bear": 159.92,
+    "bull": 371.74,
+    "base_low": 230.09,
+    "base_high": 288.0,
+    "horizon_note": "均为截至研究日的每股港元价值。成交、收费、资金净息差、技术投入与监管留存共同决定可派现金。"
+  },
+  "terminal_pv_shares": [
+    0.7711,
+    0.8133
+  ],
+  "base_common_profit_m": [
+    17536,
+    18330,
+    19274,
+    20240,
+    21268
+  ],
+  "base_cash_ceiling_m": [
+    15081,
+    16961,
+    17838,
+    18735,
+    19690
+  ],
+  "residual_income_per_share": 214.26,
+  "sensitivity_fraction": {
+    "cash_adt": -0.042,
+    "fund_spread": -0.0285,
+    "capex": -0.0015
+  }
+}

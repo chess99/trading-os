@@ -1,0 +1,107 @@
+{
+  "symbol": "CN:603019",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 32.01,
+    "high": 50.61,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.36,
+      0.38,
+      0.4,
+      0.43,
+      0.46
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 50.26,
+        "high": 77.25
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 5.84,
+    "cyclical_bear": 18.81,
+    "base_low": 32.01,
+    "base_high": 50.61,
+    "bull": 94.15
+  },
+  "paths": {
+    "structural_bear": {
+      "present_per_share": 5.84,
+      "year5_per_share": 10.22,
+      "dcf_check": 4.01,
+      "terminal_pv_fraction": 0.9287,
+      "opening_cash_bridge": 70.39,
+      "year5_cash_before_bond": 55.93,
+      "operating_profit_year5": 7.29,
+      "affiliate_attributable_year5": 7.83,
+      "net_growth_capital_y1_to_y5": 32.08,
+      "incremental_op_profit_y1_to_y5": -2.61,
+      "no_conversion_terminal": 10.22,
+      "full_conversion_terminal": 15.2
+    },
+    "cyclical_bear": {
+      "present_per_share": 18.81,
+      "year5_per_share": 30.73,
+      "dcf_check": 13.35,
+      "terminal_pv_fraction": 0.9479,
+      "opening_cash_bridge": 70.39,
+      "year5_cash_before_bond": 61.55,
+      "operating_profit_year5": 16.45,
+      "affiliate_attributable_year5": 15.66,
+      "net_growth_capital_y1_to_y5": 44.44,
+      "incremental_op_profit_y1_to_y5": 4.04,
+      "no_conversion_terminal": 30.73,
+      "full_conversion_terminal": 34.73
+    },
+    "base_low": {
+      "present_per_share": 32.01,
+      "year5_per_share": 50.26,
+      "dcf_check": 23.02,
+      "terminal_pv_fraction": 0.9531,
+      "opening_cash_bridge": 70.39,
+      "year5_cash_before_bond": 78.6,
+      "operating_profit_year5": 23.3,
+      "affiliate_attributable_year5": 21.25,
+      "net_growth_capital_y1_to_y5": 46.12,
+      "incremental_op_profit_y1_to_y5": 7.31,
+      "no_conversion_terminal": 50.26,
+      "full_conversion_terminal": 53.32
+    },
+    "base_high": {
+      "present_per_share": 50.61,
+      "year5_per_share": 77.25,
+      "dcf_check": 36.57,
+      "terminal_pv_fraction": 0.9695,
+      "opening_cash_bridge": 70.39,
+      "year5_cash_before_bond": 103.32,
+      "operating_profit_year5": 30.78,
+      "affiliate_attributable_year5": 27.4,
+      "net_growth_capital_y1_to_y5": 47.62,
+      "incremental_op_profit_y1_to_y5": 12.93,
+      "no_conversion_terminal": 77.25,
+      "full_conversion_terminal": 79.02
+    },
+    "bull": {
+      "present_per_share": 94.15,
+      "year5_per_share": 141.85,
+      "dcf_check": 56.02,
+      "terminal_pv_fraction": 0.9793,
+      "opening_cash_bridge": 70.39,
+      "year5_cash_before_bond": 117.6,
+      "operating_profit_year5": 42.64,
+      "affiliate_attributable_year5": 38.31,
+      "net_growth_capital_y1_to_y5": 60.4,
+      "incremental_op_profit_y1_to_y5": 22.86,
+      "no_conversion_terminal": 143.23,
+      "full_conversion_terminal": 141.85
+    }
+  }
+}

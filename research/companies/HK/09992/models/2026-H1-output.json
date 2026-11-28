@@ -1,0 +1,109 @@
+{
+  "symbol": "HK:09992",
+  "report_period": "2026-H1",
+  "value_range": {
+    "currency": "HKD",
+    "low": 51.21,
+    "high": 65.66
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      1.0129,
+      1.1854,
+      1.3536,
+      1.4741,
+      1.5995
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 79.35,
+        "high": 96.89
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "HKD",
+    "structural_bear": 9.35,
+    "cyclical_bear": 33.81,
+    "base_low": 51.21,
+    "base_high": 65.66,
+    "bull": 104.39
+  },
+  "bridge": {
+    "deposits_m": 14164.025,
+    "common_fraction": 0.9878583850785541,
+    "post_h1_repurchase_m": 1012.93104176,
+    "stub_cash_m": 1015.0000000000002,
+    "surplus_m": 10042.686280638049,
+    "parent_reserve_proxy_m": 4795.231958239999,
+    "shares_m": 1323.723101
+  },
+  "projection": {
+    "value": 58.57,
+    "dividends": [
+      1.0129,
+      1.1854,
+      1.3536,
+      1.4741,
+      1.5995
+    ],
+    "terminal": 88.08,
+    "terminal_pv_share": 0.917,
+    "crosscheck": [
+      60.55,
+      75.54
+    ],
+    "net_buy_hkd": 0.3816,
+    "retained_m": 26022.16,
+    "terminal_cash_m": 22676.59,
+    "y1_y5_incremental_capital_m": 3006.0,
+    "years": [
+      {
+        "sales": 25500,
+        "earnings": 4590.0,
+        "investment": 550.0,
+        "net_shares_m": 1318.4282
+      },
+      {
+        "sales": 26750,
+        "earnings": 5350.0,
+        "investment": 775.0,
+        "net_shares_m": 1313.1545
+      },
+      {
+        "sales": 28300,
+        "earnings": 6084.5,
+        "investment": 739.0,
+        "net_shares_m": 1307.9019
+      },
+      {
+        "sales": 30000,
+        "earnings": 6600.0,
+        "investment": 746.0,
+        "net_shares_m": 1302.6703
+      },
+      {
+        "sales": 31700,
+        "earnings": 7132.5,
+        "investment": 746.0,
+        "net_shares_m": 1297.4596
+      }
+    ]
+  },
+  "alternative": [
+    60.55,
+    75.54
+  ],
+  "terminal_share_range": [
+    0.9073,
+    0.9247
+  ],
+  "sensitivity": {
+    "margin_down_3pp": 51.02,
+    "suspend_buyback": 58.63
+  }
+}

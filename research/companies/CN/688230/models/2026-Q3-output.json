@@ -1,0 +1,153 @@
+{
+  "symbol": "CN:688230",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 20.22,
+    "high": 25.97,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.35,
+      0.38,
+      0.41,
+      0.44,
+      0.47
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 30.83,
+        "high": 38.44
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 11.48,
+    "cyclical_bear": 16.28,
+    "base_low": 20.22,
+    "base_high": 25.97,
+    "bull": 36.97,
+    "horizon_note": "各情景以五年经营税后利润、再投资、金融资产和债权结算折现至资料截止。结构不利对应器件降价与整合失效，周期偏弱对应去库存，较乐观对应跨客户复购。核心区间采用保护器件及已获客户认可的型号。"
+  },
+  "base_share_count_m": 117.6,
+  "diluted_at_current_terms_m": 124.1171,
+  "primary_paths": {
+    "structural_bear": {
+      "current": 11.48,
+      "terminal": 18.86,
+      "settlement": "偿还本金",
+      "shares_m": 117.6,
+      "year5_earnings_m": 55.2,
+      "year5_cash_m": 1726.81,
+      "additional_project_expense_m": 184.21,
+      "y1_to_y5_new_capital_m": 104.24,
+      "terminal_pv_share": 0.9319
+    },
+    "cyclical_bear": {
+      "current": 16.28,
+      "terminal": 25.4,
+      "settlement": "偿还本金",
+      "shares_m": 117.6,
+      "year5_earnings_m": 112.05,
+      "year5_cash_m": 1817.51,
+      "additional_project_expense_m": 180.25,
+      "y1_to_y5_new_capital_m": 129.22,
+      "terminal_pv_share": 0.9261
+    },
+    "base_low": {
+      "current": 20.22,
+      "terminal": 30.83,
+      "settlement": "偿还本金",
+      "shares_m": 117.6,
+      "year5_earnings_m": 138.75,
+      "year5_cash_m": 1910.97,
+      "additional_project_expense_m": 171.64,
+      "y1_to_y5_new_capital_m": 134.03,
+      "terminal_pv_share": 0.9252
+    },
+    "base_high": {
+      "current": 25.97,
+      "terminal": 38.44,
+      "settlement": "偿还本金",
+      "shares_m": 117.6,
+      "year5_earnings_m": 175.1,
+      "year5_cash_m": 2019.75,
+      "additional_project_expense_m": 165.51,
+      "y1_to_y5_new_capital_m": 146.57,
+      "terminal_pv_share": 0.9402
+    },
+    "bull": {
+      "current": 36.97,
+      "terminal": 53.79,
+      "settlement": "转股",
+      "shares_m": 124.4349,
+      "year5_earnings_m": 252.7,
+      "year5_cash_m": 2347.74,
+      "additional_project_expense_m": 151.32,
+      "y1_to_y5_new_capital_m": 243.47,
+      "terminal_pv_share": 0.9455
+    }
+  },
+  "perpetuity_check": {
+    "structural_bear": {
+      "current": 11.53,
+      "terminal": 18.93,
+      "settlement": "偿还本金",
+      "shares_m": 117.6,
+      "year5_earnings_m": 55.2,
+      "year5_cash_m": 1726.81,
+      "additional_project_expense_m": 184.21,
+      "y1_to_y5_new_capital_m": 104.24,
+      "terminal_pv_share": 0.9322
+    },
+    "cyclical_bear": {
+      "current": 15.97,
+      "terminal": 24.87,
+      "settlement": "偿还本金",
+      "shares_m": 117.6,
+      "year5_earnings_m": 112.05,
+      "year5_cash_m": 1817.51,
+      "additional_project_expense_m": 180.25,
+      "y1_to_y5_new_capital_m": 129.22,
+      "terminal_pv_share": 0.9246
+    },
+    "base_low": {
+      "current": 19.28,
+      "terminal": 29.27,
+      "settlement": "偿还本金",
+      "shares_m": 117.6,
+      "year5_earnings_m": 138.75,
+      "year5_cash_m": 1910.97,
+      "additional_project_expense_m": 171.64,
+      "y1_to_y5_new_capital_m": 134.03,
+      "terminal_pv_share": 0.9216
+    },
+    "base_high": {
+      "current": 25.22,
+      "terminal": 37.26,
+      "settlement": "偿还本金",
+      "shares_m": 117.6,
+      "year5_earnings_m": 175.1,
+      "year5_cash_m": 2019.75,
+      "additional_project_expense_m": 165.51,
+      "y1_to_y5_new_capital_m": 146.57,
+      "terminal_pv_share": 0.9384
+    },
+    "bull": {
+      "current": 35.03,
+      "terminal": 50.79,
+      "settlement": "转股",
+      "shares_m": 124.4349,
+      "year5_earnings_m": 252.7,
+      "year5_cash_m": 2347.74,
+      "additional_project_expense_m": 151.32,
+      "y1_to_y5_new_capital_m": 243.47,
+      "terminal_pv_share": 0.9425
+    }
+  }
+}

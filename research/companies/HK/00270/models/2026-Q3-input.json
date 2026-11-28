@@ -1,0 +1,116 @@
+{
+  "as_of": "2026-11-27T18:00:00+08:00",
+  "units": "除每股值外均为十亿港元，股数十亿股；每一预测年截至11月底。增长率、派息率、归属比例均为小数。",
+  "shares": 6.53782144,
+  "facts": {
+    "continuing_profit_2025": 4.673312,
+    "continuing_profit_9m26": 4.361746,
+    "continuing_profit_9m25": 4.083691,
+    "disposal_gain_pretax": 0.119461,
+    "dongshen_pretax_2025": 4.158,
+    "dongshen_pretax_9m26": 3.641,
+    "dongshen_pretax_9m25": 3.596,
+    "dongshen_indirect_holding": [
+      0.9604,
+      0.99
+    ],
+    "road_pretax_9m26": 0.230974,
+    "road_ownership": 0.7125
+  },
+  "assumptions": {
+    "tax_proxy": 0.25,
+    "road_years": 7,
+    "old_contract_fraction_year4": 0.72,
+    "renewal_scope": "年4在原约期满时按条件计入续期收益。续期年数按自2030年8月起计，末年按不足一年比例收尾。兴六计至约2033年；其余业务终值留存供资产更新和回款。",
+    "other_steady_growth": 0.01,
+    "secondary_earnings_multiples": {
+      "dongshen": [
+        6.5,
+        8.5
+      ],
+      "other": [
+        9,
+        12
+      ],
+      "road": [
+        3.5,
+        4.5
+      ]
+    },
+    "cyclical_recovery": "周期情景前3年逐年解除对首年利润的压降，第四年起恢复完整起点与65%分配率。"
+  },
+  "scenario_columns": [
+    "other_profit_factor",
+    "dongshen_factor",
+    "other_growth",
+    "dongshen_growth",
+    "renewed_net_profit_fraction",
+    "renewal_years",
+    "first_five_payout",
+    "mature_payout",
+    "required_return",
+    "renewal_cost_bn"
+  ],
+  "scenarios": {
+    "structural_bear": [
+      0.8,
+      0.94,
+      0,
+      0,
+      0,
+      0,
+      0.48,
+      0.6,
+      0.104,
+      0
+    ],
+    "cyclical_bear": [
+      0.85,
+      0.96,
+      0.01,
+      0.005,
+      0.83,
+      15,
+      0.55,
+      0.71,
+      0.094,
+      0.65
+    ],
+    "base_low": [
+      1,
+      1,
+      0.022,
+      0.012,
+      0.83,
+      15,
+      0.65,
+      0.71,
+      0.09,
+      0.55
+    ],
+    "base_high": [
+      1,
+      1,
+      0.022,
+      0.012,
+      0.83,
+      22,
+      0.65,
+      0.76,
+      0.081,
+      0.55
+    ],
+    "bull": [
+      1.06,
+      1.02,
+      0.035,
+      0.02,
+      0.95,
+      26,
+      0.68,
+      0.79,
+      0.078,
+      0.35
+    ]
+  }
+}

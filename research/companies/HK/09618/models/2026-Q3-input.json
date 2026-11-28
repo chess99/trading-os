@@ -1,0 +1,44 @@
+{
+  "symbol": "HK:09618",
+  "report_period": "2026-Q3",
+  "as_of": "2026-11-27T18:00:00+08:00",
+  "units": "金额与股数为十亿元人民币与十亿股；每股结果为港元。Y1从资料截止起算。利润率与折现率为小数。",
+  "sources": {
+    "quarter": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1117/2026111700791.pdf",
+    "half": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0813/2026081300917.pdf",
+    "annual": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0416/2026041601496.pdf",
+    "fy_results": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0305/2026030501420.pdf",
+    "ceconomy": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1112/2026111201308.pdf",
+    "dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0305/2026030501474.pdf",
+    "rates": "https://www2.xinhuanet.com/20261127/f4a45fbc19f749c78c7fddfc862f3420/c.html",
+    "peer": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1119/2026111900873.pdf",
+    "nbs": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965839.html",
+    "sse": "https://www.sse.com.cn/services/hkexsc/disclo/eligible/",
+    "szse": "https://www.szse.cn/szhk/hkbussiness/underlylist/"
+  },
+  "facts": {
+    "retail_sales_fy25": 1126.399, "retail_sales_9m25": 824.497, "retail_sales_9m26": 821.937,
+    "cash": 82.637, "short_investments": 121.860, "restricted_cash_excluded": 10.166,
+    "short_debt": 7.226, "senior_current": 13.422, "senior_long": 16.535, "other_long_debt": 36.484,
+    "convertible_usd": 2.0, "initial_ads_per_1000": 21.883, "usd_cny_at_quarter": 6.7045,
+    "long_investments": 37.110, "associates": 60.022,
+    "noncontrolling_equity": 64.448, "total_equity": 289.291,
+    "issued": 2.756, "outstanding": 2.691, "fully_diluted": 2.816,
+    "equity_awards_9m": 3.343, "acquisition_eur": 1.335, "eur_cny": 7.3319, "hkd_cny": 0.8558
+  },
+  "source_locations": "Q3第8–11、16–23页；2026 H1第3页的回购更新；FY25业绩第12页前后的分部表，年报附注15、34及可转票据条款；11月12日收购公告第1页；汇率为11月27日中间价。完全稀释股数取Q3加权平均代理。美元可转债按假设全转股，桥中加回本金，以免和分母重复扣减。",
+  "shared_assumptions": {
+    "operating_cash_reserve": 55, "tax": 0.22, "award_settlement_cny_start": 108,
+    "annual_award_price_growth": 0.03, "noncash_awards_growth": 0.025, "other_corporate_cash_cost": 1.3,
+    "initial_minority_operating_earnings": 4.1, "minority_growth": 0.035, "annual_ordinary_dividends": [8, 8.5, 9, 9.5, 10],
+    "terminal_multiple_check": [11, 14]
+  },
+  "assumption_locations": "零售增速对照社零、品类及京东分部滚动基数，利润率对照FY25、9M26。物流及新业务预测为分部经营利润；后者含已有海外、外卖及京喜，剔除收购标的。资本预算为折旧之外的追加仓储、技术及营运资金；新业务亏损已含费用化研发、补贴和租赁。股权奖励通过股数计，终态按现金替换。对不同情景的可调支付预算受可用现金约束；长投资产及收购的可收回比例为评估数。",
+  "paths": {
+    "structural_bear": {"retail_growth": [-0.035,-0.015,0,0,0.005], "retail_margin": [0.042,0.038,0.036,0.036,0.036], "logistics": [5.5,5.2,5,5,5], "new": [-38,-32,-26,-23,-21], "net_capital": [7,6,5,4,3.5], "owner_dividend_factor": 0.3, "repurchases": [0,0,0,0,0], "asset_recovery": 0.45, "ceconomy_recovery": 0.30, "terminal_growth": 0.005, "terminal_roic": 0.085, "discount": 0.125},
+    "cyclical_bear": {"retail_growth": [-0.02,0,0.015,0.025,0.025], "retail_margin": [0.043,0.044,0.046,0.047,0.047], "logistics": [5.8,6.2,6.5,7,7.2], "new": [-36,-30,-25,-21,-18], "net_capital": [7,6,6,6,6], "owner_dividend_factor": 0.70, "repurchases": [2,0,0,0,0], "asset_recovery": 0.60, "ceconomy_recovery": 0.55, "terminal_growth": 0.015, "terminal_roic": 0.12, "discount": 0.112},
+    "base": {"retail_growth": [0.015,0.025,0.03,0.03,0.03], "retail_margin": [0.048,0.049,0.05,0.05,0.05], "logistics": [7,7.4,7.8,8.2,8.5], "new": [-32,-26,-20,-15,-12], "net_capital": [7.5,8,8,7.5,7], "owner_dividend_factor": 1, "repurchases": [6,0,0,0,0], "asset_recovery": 0.70, "ceconomy_recovery": 0.75, "terminal_growth": 0.020, "terminal_roic": 0.15, "discount": 0.105},
+    "bull": {"retail_growth": [0.04,0.05,0.05,0.045,0.04], "retail_margin": [0.052,0.054,0.056,0.057,0.057], "logistics": [7.5,8.5,9.5,10.5,11.5], "new": [-27,-20,-14,-9,-6], "net_capital": [9,10,11,11,11], "owner_dividend_factor": 1.20, "repurchases": [6,0,0,0,0], "asset_recovery": 0.85, "ceconomy_recovery": 1.00, "terminal_growth": 0.025, "terminal_roic": 0.18, "discount": 0.095}
+  },
+  "base_edges": {"low": {"discount": 0.11, "terminal_growth": 0.015}, "high": {"discount": 0.10, "terminal_growth": 0.0225}}
+}

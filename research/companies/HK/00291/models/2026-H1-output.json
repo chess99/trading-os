@@ -1,0 +1,366 @@
+{
+  "symbol": "HK:00291",
+  "report_period": "2026-H1",
+  "value_range": {
+    "currency": "HKD",
+    "low": 25.41,
+    "high": 30.36
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      1.0973,
+      1.1385,
+      1.1815,
+      1.2242,
+      1.2667
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 32.57,
+        "high": 37.91
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 9.99,
+    "cyclical_bear": 19.62,
+    "base_low": 25.41,
+    "base_high": 30.36,
+    "bull": 39.75
+  },
+  "cash_crosscheck": [
+    29.44,
+    37.83
+  ],
+  "opening_cash": 3422,
+  "details": {
+    "structural_bear": {
+      "value": 9.99,
+      "dividends": [
+        0.6416,
+        0.5877,
+        0.5337,
+        0.4862,
+        0.445
+      ],
+      "terminal": 13.21,
+      "terminal_pv_share": 0.7954,
+      "years": [
+        {
+          "revenue": 35221.01,
+          "profits": 4453.18,
+          "reinvestment": 550.0,
+          "free_cash": 3903.18,
+          "dividend": 1781.27,
+          "remaining_cash": 5543.91
+        },
+        {
+          "revenue": 33997.08,
+          "profits": 4079.38,
+          "reinvestment": 550.0,
+          "free_cash": 3529.38,
+          "dividend": 1631.75,
+          "remaining_cash": 7441.53
+        },
+        {
+          "revenue": 32815.68,
+          "profits": 3704.02,
+          "reinvestment": 550.0,
+          "free_cash": 3154.02,
+          "dividend": 1481.61,
+          "remaining_cash": 9113.95
+        },
+        {
+          "revenue": 31675.33,
+          "profits": 3374.98,
+          "reinvestment": 550.0,
+          "free_cash": 2824.98,
+          "dividend": 1349.99,
+          "remaining_cash": 10588.94
+        },
+        {
+          "revenue": 30574.62,
+          "profits": 3088.69,
+          "reinvestment": 550.0,
+          "free_cash": 2538.69,
+          "dividend": 1235.48,
+          "remaining_cash": 11892.15
+        }
+      ]
+    },
+    "cyclical_bear": {
+      "value": 19.62,
+      "dividends": [
+        0.8672,
+        0.8536,
+        0.8875,
+        0.9215,
+        0.9547
+      ],
+      "terminal": 25.49,
+      "terminal_pv_share": 0.8253,
+      "years": [
+        {
+          "revenue": 36561.98,
+          "profits": 4913.45,
+          "reinvestment": 413.79,
+          "free_cash": 4499.67,
+          "dividend": 2407.59,
+          "remaining_cash": 5514.07
+        },
+        {
+          "revenue": 36635.1,
+          "profits": 4836.44,
+          "reinvestment": 413.87,
+          "free_cash": 4422.56,
+          "dividend": 2369.85,
+          "remaining_cash": 7566.78
+        },
+        {
+          "revenue": 36708.37,
+          "profits": 5028.69,
+          "reinvestment": 413.96,
+          "free_cash": 4614.73,
+          "dividend": 2464.06,
+          "remaining_cash": 9717.45
+        },
+        {
+          "revenue": 36781.79,
+          "profits": 5221.51,
+          "reinvestment": 414.05,
+          "free_cash": 4807.46,
+          "dividend": 2558.54,
+          "remaining_cash": 11966.37
+        },
+        {
+          "revenue": 36855.35,
+          "profits": 5409.38,
+          "reinvestment": 414.14,
+          "free_cash": 4995.25,
+          "dividend": 2650.6,
+          "remaining_cash": 14311.02
+        }
+      ]
+    },
+    "base": {
+      "value": 28.08,
+      "dividends": [
+        1.0973,
+        1.1385,
+        1.1815,
+        1.2242,
+        1.2667
+      ],
+      "terminal": 35.45,
+      "terminal_pv_share": 0.8356,
+      "years": [
+        {
+          "revenue": 37148.43,
+          "profits": 5539.31,
+          "reinvestment": 539.71,
+          "free_cash": 4999.59,
+          "dividend": 3046.62,
+          "remaining_cash": 5374.97
+        },
+        {
+          "revenue": 37819.78,
+          "profits": 5746.93,
+          "reinvestment": 545.67,
+          "free_cash": 5201.26,
+          "dividend": 3160.81,
+          "remaining_cash": 7415.42
+        },
+        {
+          "revenue": 38503.25,
+          "profits": 5964.06,
+          "reinvestment": 551.74,
+          "free_cash": 5412.32,
+          "dividend": 3280.23,
+          "remaining_cash": 9547.5
+        },
+        {
+          "revenue": 39199.09,
+          "profits": 6179.73,
+          "reinvestment": 557.92,
+          "free_cash": 5621.82,
+          "dividend": 3398.85,
+          "remaining_cash": 11770.47
+        },
+        {
+          "revenue": 39907.49,
+          "profits": 6394.05,
+          "reinvestment": 564.2,
+          "free_cash": 5829.85,
+          "dividend": 3516.73,
+          "remaining_cash": 14083.59
+        }
+      ]
+    },
+    "bull": {
+      "value": 39.75,
+      "dividends": [
+        1.2834,
+        1.3883,
+        1.4982,
+        1.6017,
+        1.7047
+      ],
+      "terminal": 49.48,
+      "terminal_pv_share": 0.851,
+      "years": [
+        {
+          "revenue": 37887.44,
+          "profits": 5938.5,
+          "reinvestment": 1091.1,
+          "free_cash": 4847.41,
+          "dividend": 3563.1,
+          "remaining_cash": 4706.31
+        },
+        {
+          "revenue": 39339.48,
+          "profits": 6423.86,
+          "reinvestment": 1122.18,
+          "free_cash": 5301.68,
+          "dividend": 3854.32,
+          "remaining_cash": 6153.67
+        },
+        {
+          "revenue": 40847.16,
+          "profits": 6932.71,
+          "reinvestment": 1154.46,
+          "free_cash": 5778.26,
+          "dividend": 4159.63,
+          "remaining_cash": 7772.3
+        },
+        {
+          "revenue": 42412.63,
+          "profits": 7411.48,
+          "reinvestment": 1187.97,
+          "free_cash": 6223.5,
+          "dividend": 4446.89,
+          "remaining_cash": 9548.92
+        },
+        {
+          "revenue": 44038.09,
+          "profits": 7887.94,
+          "reinvestment": 1222.77,
+          "free_cash": 6665.17,
+          "dividend": 4732.77,
+          "remaining_cash": 11481.33
+        }
+      ]
+    },
+    "base_low": {
+      "value": 25.41,
+      "dividends": [
+        1.0973,
+        1.1385,
+        1.1815,
+        1.2242,
+        1.2667
+      ],
+      "terminal": 32.57,
+      "terminal_pv_share": 0.8217,
+      "years": [
+        {
+          "revenue": 37148.43,
+          "profits": 5539.31,
+          "reinvestment": 539.71,
+          "free_cash": 4999.59,
+          "dividend": 3046.62,
+          "remaining_cash": 5374.97
+        },
+        {
+          "revenue": 37819.78,
+          "profits": 5746.93,
+          "reinvestment": 545.67,
+          "free_cash": 5201.26,
+          "dividend": 3160.81,
+          "remaining_cash": 7415.42
+        },
+        {
+          "revenue": 38503.25,
+          "profits": 5964.06,
+          "reinvestment": 551.74,
+          "free_cash": 5412.32,
+          "dividend": 3280.23,
+          "remaining_cash": 9547.5
+        },
+        {
+          "revenue": 39199.09,
+          "profits": 6179.73,
+          "reinvestment": 557.92,
+          "free_cash": 5621.82,
+          "dividend": 3398.85,
+          "remaining_cash": 11770.47
+        },
+        {
+          "revenue": 39907.49,
+          "profits": 6394.05,
+          "reinvestment": 564.2,
+          "free_cash": 5829.85,
+          "dividend": 3516.73,
+          "remaining_cash": 14083.59
+        }
+      ]
+    },
+    "base_high": {
+      "value": 30.36,
+      "dividends": [
+        1.0973,
+        1.1385,
+        1.1815,
+        1.2242,
+        1.2667
+      ],
+      "terminal": 37.91,
+      "terminal_pv_share": 0.8459,
+      "years": [
+        {
+          "revenue": 37148.43,
+          "profits": 5539.31,
+          "reinvestment": 539.71,
+          "free_cash": 4999.59,
+          "dividend": 3046.62,
+          "remaining_cash": 5374.97
+        },
+        {
+          "revenue": 37819.78,
+          "profits": 5746.93,
+          "reinvestment": 545.67,
+          "free_cash": 5201.26,
+          "dividend": 3160.81,
+          "remaining_cash": 7415.42
+        },
+        {
+          "revenue": 38503.25,
+          "profits": 5964.06,
+          "reinvestment": 551.74,
+          "free_cash": 5412.32,
+          "dividend": 3280.23,
+          "remaining_cash": 9547.5
+        },
+        {
+          "revenue": 39199.09,
+          "profits": 6179.73,
+          "reinvestment": 557.92,
+          "free_cash": 5621.82,
+          "dividend": 3398.85,
+          "remaining_cash": 11770.47
+        },
+        {
+          "revenue": 39907.49,
+          "profits": 6394.05,
+          "reinvestment": 564.2,
+          "free_cash": 5829.85,
+          "dividend": 3516.73,
+          "remaining_cash": 14083.59
+        }
+      ]
+    }
+  }
+}

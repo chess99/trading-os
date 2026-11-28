@@ -1,0 +1,144 @@
+{
+  "symbol": "CN:920018",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 6.18,
+    "high": 8.03,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.1415,
+      0.1483,
+      0.1572,
+      0.1661,
+      0.1761
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 9.66,
+        "high": 11.98
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 1.76,
+    "cyclical_bear": 4.16,
+    "bull": 10.58,
+    "base_low": 6.18,
+    "base_high": 8.03,
+    "horizon_note": "按未来五年销量、单位毛利、投资与资金占用分别预算，所有锚点折算到资料截止日。"
+  },
+  "common_equity_bridge": {
+    "shares_m": 165.528433,
+    "parent_book_m": 1044.530767,
+    "unpledged_cash_m": 563.84,
+    "bank_debt_m": 345.08,
+    "opening_excess_cash_credited": 0
+  },
+  "ltm": {
+    "revenue_m": 3470.52,
+    "gross_m": 274.98,
+    "net_m": 132.92
+  },
+  "historical_ctc_gross_per_t": [
+    5271,
+    6377,
+    6639
+  ],
+  "book_cross_check": [
+    7.8,
+    9.28
+  ],
+  "paths": {
+    "structural_bear": {
+      "year5_income_m": 63.13,
+      "years1to5_net_capex_m": 136,
+      "years1to5_incremental_working_m": 116.66,
+      "year5_incremental_cash_m": 67.6,
+      "year5_core_pe": [
+        7.41,
+        7.41
+      ],
+      "terminal_weight_pct": [
+        97.3,
+        97.3
+      ],
+      "dividends_per_share": [
+        0.0,
+        0.0,
+        0.0076,
+        0.0372,
+        0.0381
+      ]
+    },
+    "cyclical_bear": {
+      "year5_income_m": 120.29,
+      "years1to5_net_capex_m": 174,
+      "years1to5_incremental_working_m": 158.06,
+      "year5_incremental_cash_m": 129.28,
+      "year5_core_pe": [
+        8.29,
+        8.29
+      ],
+      "terminal_weight_pct": [
+        92.9,
+        92.9
+      ],
+      "dividends_per_share": [
+        0.0757,
+        0.0757,
+        0.0823,
+        0.0883,
+        0.0945
+      ]
+    },
+    "base": {
+      "year5_income_m": 161.91,
+      "years1to5_net_capex_m": 231,
+      "years1to5_incremental_working_m": 187.2,
+      "year5_incremental_cash_m": 176.9,
+      "year5_core_pe": [
+        8.78,
+        11.16
+      ],
+      "terminal_weight_pct": [
+        90.8,
+        92.6
+      ],
+      "dividends_per_share": [
+        0.1415,
+        0.1483,
+        0.1572,
+        0.1661,
+        0.1761
+      ]
+    },
+    "bull": {
+      "year5_income_m": 208.79,
+      "years1to5_net_capex_m": 264,
+      "years1to5_incremental_working_m": 284.08,
+      "year5_incremental_cash_m": 174.44,
+      "year5_core_pe": [
+        11.7,
+        11.7
+      ],
+      "terminal_weight_pct": [
+        92.8,
+        92.8
+      ],
+      "dividends_per_share": [
+        0.133,
+        0.1926,
+        0.2175,
+        0.2364,
+        0.2523
+      ]
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "symbol": "HK:01088",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-11-27T19:00:00+08:00",
+  "value_range": {
+    "low": 23.87,
+    "high": 28.14,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      2.128638,
+      1.705165,
+      1.720132,
+      1.944845,
+      1.934936
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 25.770574,
+        "high": 28.193776
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "HKD",
+    "structural_bear": 14.06,
+    "cyclical_bear": 23.36,
+    "base_low": 23.87,
+    "base_high": 28.14,
+    "bull": 29.38,
+    "horizon_note": "代表同一时点每股普通股税前价值。基准假设配售交割并保留新增煤制气建设资金，情景联动调整经营寿命、资本付款与资金成本。"
+  },
+  "base_mid_hkd": 25.88,
+  "year5_terminal_pv_fraction": 0.7084,
+  "project_incremental_reserve_cny_bn": 6.651,
+  "issued_shares_at_cutoff": 21689434304,
+  "conditional_shares_after_placing": 21866434304,
+  "auxiliary_annuity_hkd": {
+    "0.085": 23.86,
+    "0.08": 25.12,
+    "0.075": 26.48
+  },
+  "sensitivity_hkd": {
+    "without_placing": {
+      "base_low": 23.89,
+      "base": 25.91,
+      "base_high": 28.18
+    },
+    "without_incremental_project_reserve": {
+      "base_low": 24.07,
+      "base": 26.08,
+      "base_high": 28.35
+    }
+  }
+}

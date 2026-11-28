@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:601179",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 3.37,
+    "high": 3.93,
+    "currency": "CNY"
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 0.91,
+    "cyclical_bear": 2.06,
+    "base_low": 3.37,
+    "base_high": 3.93,
+    "bull": 5.96,
+    "horizon_note": "各路径把投标、排产和收款条件转为五年营业收入、归母净利率和留资预算，第五年末以归母盈利计算终值，再把分配和终值折现。"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.11703,
+      0.14307,
+      0.15532,
+      0.16694,
+      0.17629
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 4.40714,
+        "high": 5.28857
+      }
+    }
+  },
+  "terminal_pv_proportion": [
+    0.8302,
+    0.8544
+  ],
+  "book_crosscheck_per_share": [
+    2.96,
+    3.75
+  ],
+  "base": [
+    {
+      "sales": 276.3563,
+      "profit": 16.5814,
+      "net_investment": 8.0828,
+      "cash_capacity": 5.9986,
+      "payout": 0.117
+    },
+    {
+      "sales": 295.7013,
+      "profit": 18.3335,
+      "net_investment": 8.0454,
+      "cash_capacity": 8.7881,
+      "payout": 0.1431
+    },
+    {
+      "sales": 313.4434,
+      "profit": 19.9037,
+      "net_investment": 7.8767,
+      "cash_capacity": 11.027,
+      "payout": 0.1553
+    },
+    {
+      "sales": 329.1155,
+      "profit": 21.3925,
+      "net_investment": 7.5735,
+      "cash_capacity": 13.319,
+      "payout": 0.1669
+    },
+    {
+      "sales": 342.2802,
+      "profit": 22.5905,
+      "net_investment": 7.1375,
+      "cash_capacity": 15.453,
+      "payout": 0.1763
+    }
+  ],
+  "incremental_parent_profit_y1_to_y5": 6.0091,
+  "modeled_net_operating_capital_added_y2_to_y5": 30.6331,
+  "one_percentage_point_lower_final_margin_value_effect": [
+    -0.42,
+    -0.51
+  ]
+}

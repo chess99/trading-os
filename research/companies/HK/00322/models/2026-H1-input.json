@@ -1,0 +1,41 @@
+{
+  "symbol": "HK:00322",
+  "report_period": "2026-H1",
+  "as_of": "2026-11-27T19:00:00+08:00",
+  "units": "金额为人民币十亿元，股数为十亿股，估值为港元/普通股。年度为截止日起的连续十二个月。",
+  "sources": {
+    "first": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0811/2026081100317.pdf",
+    "interim": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0825/2026082500422.pdf",
+    "annual": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0427/2026042700361.pdf",
+    "monthly": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1104/2026110400566.pdf",
+    "ordinary_dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0608/2026060800466.pdf",
+    "special_dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0608/2026060800488.pdf",
+    "peer": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0817/2026081700402.pdf",
+    "fx": "https://finance.sina.com.cn/jjxw/2026-11-27/doc-inkacvhq5553465.shtml"
+  },
+  "cny_per_hkd": 0.85580,
+  "observed": {
+    "annual_revenue": 79.068022, "prior_h1_revenue": 40.092163, "h1_revenue": 40.544565,
+    "annual_common_profit": 4.500698, "prior_h1_common_profit": 2.271116, "h1_common_profit": 2.433042,
+    "h1_group_profit": 2.889756, "h1_minority_profit": 0.456714,
+    "issued_shares_oct": 5.63738636, "treasury_shares": 0, "outstanding_options": [0.00563,0.002478],
+    "cash_including_term_deposits": 23.669818, "borrowings": 17.393414, "lease_liabilities": 0.196567,
+    "declared_final_distributions_paid_in_july": 4.500831, "contracted_ppe": 0.812459, "contracted_investment_funds": 0.059841,
+    "parent_distributable_reserves_fy25": 3.243711, "parent_cash_fy25": 0.211859
+  },
+  "historic_cashflow": {
+    "reference": "年报现金流量表第233至234页；顺序为2024、2025，含股息的联营等回款计入，两年现金利息按较近一年水平归一化。",
+    "cfo": [8.263872,8.201664], "equipment": [3.536845,3.071183], "land": [0.071545,0.04044],
+    "leases": [0.199511,0.194466], "minority_dividends": [0.373414,0.583548],
+    "joint_dividends": [0.058705,0.142906], "associate_dividends": [0.017557,0.023614],
+    "normalized_interest": 0.297771, "capitalization_yields": [0.085,0.073]
+  },
+  "assumptions": {
+    "description": "sales_growth逐年作用于滚动收入。common_margin为税后、利息及少数权益后的净利率。每元增量收入需净资本1/turnover，含产线及周转资金。extra_capex为折旧及随收入扩张投资之外的经常性设备改造现金占收入比率。亏损路径不释放资本。第六年进入稳态，分红后不另加净现金。",
+    "structural_bear": {"sales_growth":[-0.025,-0.02,-0.015,0,0],"common_margin":[0.051,0.046,0.042,0.041,0.041],"turnover":2.0,"extra_capex":0.006,"discount":0.11,"terminal_growth":0},
+    "cyclical_bear": {"sales_growth":[-0.012,0,0.012,0.018,0.018],"common_margin":[0.049,0.049,0.051,0.053,0.054],"turnover":2.8,"extra_capex":0.004,"discount":0.099,"terminal_growth":0.012},
+    "base_low": {"sales_growth":[0.012,0.018,0.02,0.02,0.02],"common_margin":[0.0565,0.057,0.0575,0.058,0.058],"turnover":3.3,"extra_capex":0.002,"discount":0.094,"terminal_growth":0.015},
+    "base_high": {"sales_growth":[0.012,0.018,0.02,0.02,0.02],"common_margin":[0.0565,0.057,0.0575,0.058,0.058],"turnover":3.3,"extra_capex":0.002,"discount":0.086,"terminal_growth":0.023},
+    "bull": {"sales_growth":[0.027,0.033,0.034,0.032,0.028],"common_margin":[0.059,0.061,0.063,0.064,0.064],"turnover":3.7,"extra_capex":0.0015,"discount":0.082,"terminal_growth":0.028}
+  }
+}

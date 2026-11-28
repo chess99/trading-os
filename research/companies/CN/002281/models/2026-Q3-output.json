@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:002281",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 21.48,
+    "high": 37.81,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 35.26,
+        "high": 60.57
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 4.85,
+    "cyclical_bear": 16.22,
+    "base_low": 21.48,
+    "base_high": 37.81,
+    "bull": 76.61,
+    "horizon_note": "五年后各速率产品的留存份额、归母盈利与净投资共同决定终值，折回资料截止日。"
+  },
+  "details": {
+    "structural_bear": {
+      "value": 4.85,
+      "year5": 9.34,
+      "steady_value": 4.09,
+      "terminal_pv_share": 1.0,
+      "net_cash_at_year5": 33.61,
+      "pre_distribution_cashflows": [
+        -10.08,
+        -4.8,
+        -1.17,
+        3.6,
+        3.52
+      ]
+    },
+    "cyclical_bear": {
+      "value": 16.22,
+      "year5": 27.93,
+      "steady_value": 12.07,
+      "terminal_pv_share": 0.9773,
+      "net_cash_at_year5": 54.4,
+      "pre_distribution_cashflows": [
+        -5.05,
+        -0.64,
+        5.55,
+        8.0,
+        8.98
+      ]
+    },
+    "base_low": {
+      "value": 21.48,
+      "year5": 35.26,
+      "steady_value": 17.91,
+      "terminal_pv_share": 0.9527,
+      "net_cash_at_year5": 60.87,
+      "pre_distribution_cashflows": [
+        -1.55,
+        3.02,
+        7.67,
+        10.11,
+        11.5
+      ]
+    },
+    "base_high": {
+      "value": 37.81,
+      "year5": 60.57,
+      "steady_value": 31.15,
+      "terminal_pv_share": 0.9723,
+      "net_cash_at_year5": 75.34,
+      "pre_distribution_cashflows": [
+        0.8,
+        4.37,
+        9.32,
+        13.34,
+        17.4
+      ]
+    },
+    "bull": {
+      "value": 76.61,
+      "year5": 120.51,
+      "steady_value": 54.36,
+      "terminal_pv_share": 0.9767,
+      "net_cash_at_year5": 98.97,
+      "pre_distribution_cashflows": [
+        0.9,
+        7.8,
+        15.85,
+        23.08,
+        29.5
+      ]
+    }
+  }
+}

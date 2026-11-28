@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:688248",
+  "report_period": "2026-Q3",
+  "value_range": {
+    "low": 12.79,
+    "high": 14.98,
+    "currency": "CNY"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.3133,
+      0.3306,
+      0.3492,
+      0.369,
+      0.3902
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 18.4883,
+        "high": 21.4901
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 4.55,
+    "cyclical_bear": 8.12,
+    "base_low": 12.79,
+    "base_high": 14.98,
+    "bull": 23.56,
+    "horizon_note": "五年经营路径按测试服务增速、其他订单、验收损失、资本预算和终态盈利能力区别。锚点均为截止日每股现值。"
+  },
+  "company_bridge": {
+    "diluted_shares_100m": 5.6845300000000005,
+    "opening_excess_cash_100m": 9.42,
+    "year5_retained_cash_100m": 19.781,
+    "dcf_per_share": 12.17,
+    "one_point_margin_loss_pct": -8.7
+  },
+  "path_metrics": {
+    "structural_bear": {
+      "profit": 2.554,
+      "sales": 34.99,
+      "terminal_fraction": 0.925,
+      "y1_y5_profit_change": -0.232,
+      "y1_y5_reinvestment": 1.591
+    },
+    "cyclical_bear": {
+      "profit": 3.85,
+      "sales": 41.853,
+      "terminal_fraction": 0.903,
+      "y1_y5_profit_change": 0.213,
+      "y1_y5_reinvestment": 2.116
+    },
+    "base_low": {
+      "profit": 5.688,
+      "sales": 51.241,
+      "terminal_fraction": 0.897,
+      "y1_y5_profit_change": 1.122,
+      "y1_y5_reinvestment": 4.305
+    },
+    "base_high": {
+      "profit": 5.688,
+      "sales": 51.241,
+      "terminal_fraction": 0.911,
+      "y1_y5_profit_change": 1.122,
+      "y1_y5_reinvestment": 4.305
+    },
+    "bull": {
+      "profit": 8.077,
+      "sales": 62.61,
+      "terminal_fraction": 0.923,
+      "y1_y5_profit_change": 2.557,
+      "y1_y5_reinvestment": 7.572
+    }
+  }
+}

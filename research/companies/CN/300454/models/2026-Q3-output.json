@@ -1,0 +1,105 @@
+{
+  "symbol": "CN:300454",
+  "report_period": "2026-Q3",
+  "opening_excess_assets": 99.9,
+  "value_range": {
+    "low": 50.69,
+    "high": 66.83,
+    "currency": "CNY"
+  },
+  "scenarios": {
+    "currency": "CNY",
+    "structural_bear": 19.04,
+    "cyclical_bear": 32.38,
+    "base_low": 50.69,
+    "base_high": 66.83,
+    "bull": 106.33,
+    "horizon_note": "同一权益桥与授予池。情景同步调整需求、税后主营利润率、增量资本占用、终态倍数与折现率，五年末扣除已派现金后折回资料截止日。"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "CNY",
+    "model_as_of": "2026-11-27T21:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.11,
+      0.12,
+      0.14,
+      0.16,
+      0.18
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 81.15,
+        "high": 105.34
+      }
+    }
+  },
+  "case_details": {
+    "structural_bear": {
+      "value": 19.04,
+      "alternative": 18.74,
+      "terminal_per_share": 33.95,
+      "operating_terminal_pv_share": 0.1384,
+      "holder_terminal_pv_share": 0.9897,
+      "revenue_y5": 93.65,
+      "profit_y5": 2.43,
+      "cash_y5_pre_exercise": 123.69,
+      "net_investment_5y": 0.0,
+      "exercise_cash": 11.07,
+      "effective_shares_y5": 4.61494
+    },
+    "cyclical_bear": {
+      "value": 32.38,
+      "alternative": 29.92,
+      "terminal_per_share": 54.65,
+      "operating_terminal_pv_share": 0.4051,
+      "holder_terminal_pv_share": 0.9883,
+      "revenue_y5": 119.38,
+      "profit_y5": 8.0,
+      "cash_y5_pre_exercise": 137.44,
+      "net_investment_5y": 4.23,
+      "exercise_cash": 12.24,
+      "effective_shares_y5": 4.64176
+    },
+    "base_low": {
+      "value": 50.69,
+      "alternative": 48.51,
+      "terminal_per_share": 81.15,
+      "operating_terminal_pv_share": 0.5581,
+      "holder_terminal_pv_share": 0.9897,
+      "revenue_y5": 145.0,
+      "profit_y5": 14.21,
+      "cash_y5_pre_exercise": 151.68,
+      "net_investment_5y": 7.48,
+      "exercise_cash": 13.15,
+      "effective_shares_y5": 4.65751
+    },
+    "base_high": {
+      "value": 66.83,
+      "alternative": 63.47,
+      "terminal_per_share": 105.34,
+      "operating_terminal_pv_share": 0.6431,
+      "holder_terminal_pv_share": 0.9921,
+      "revenue_y5": 162.66,
+      "profit_y5": 18.71,
+      "cash_y5_pre_exercise": 159.45,
+      "net_investment_5y": 11.41,
+      "exercise_cash": 13.15,
+      "effective_shares_y5": 4.65751
+    },
+    "bull": {
+      "value": 106.33,
+      "alternative": 96.6,
+      "terminal_per_share": 165.54,
+      "operating_terminal_pv_share": 0.7517,
+      "holder_terminal_pv_share": 0.9935,
+      "revenue_y5": 194.47,
+      "profit_y5": 29.17,
+      "cash_y5_pre_exercise": 174.44,
+      "net_investment_5y": 21.5,
+      "exercise_cash": 13.15,
+      "effective_shares_y5": 4.65751
+    }
+  }
+}

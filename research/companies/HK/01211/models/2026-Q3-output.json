@@ -1,0 +1,52 @@
+{
+  "symbol": "HK:01211",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-11-27T19:00:00+08:00",
+  "value_range": {
+    "low": 41.68,
+    "high": 50.54,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0.461971,
+      0.508329,
+      0.562321,
+      0.621804,
+      0.691604
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 66.69,
+        "high": 74.63
+      }
+    }
+  },
+  "scenarios": {
+    "currency": "HKD",
+    "structural_bear": 25.42,
+    "cyclical_bear": 40.71,
+    "base_low": 41.68,
+    "base_high": 50.54,
+    "bull": 51.89,
+    "horizon_note": "税前每股港元现值。结构弱情景削减汽车利润率并永久降低子公司上划能力，周期弱情景压低前三年销量、利润率和周转速度。较乐观路径提高汽车利润率并沿用资本、税与母公司分配约束。"
+  },
+  "entitled_ordinary_shares": 9117197565,
+  "primary_central_hkd": 45.87,
+  "secondary_method_hkd": 45.48,
+  "terminal_pv_share": 0.9539,
+  "fx_sensitivity": {
+    "0.81301": {
+      "low": 43.87,
+      "high": 53.2
+    },
+    "0.89859": {
+      "low": 39.69,
+      "high": 48.13
+    }
+  }
+}

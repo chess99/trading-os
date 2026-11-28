@@ -1,0 +1,34 @@
+{
+  "issuer_engine": "research/companies/CN/601088/models/2026-Q3-engine.py",
+  "issuer_engine_sha256": "c15b30041d3d4259fb140a21588691eba57973934dad84a6b51af3b0028080cb",
+  "model_as_of": "2026-11-27T19:00:00+08:00",
+  "cny_per_hkd": 0.85580,
+  "a_shares": 18311952304,
+  "h_shares": 3377482000,
+  "placing_shares": 177000000,
+  "placing_net_hkd_bn": 6.72637,
+  "placing_debt_fraction": 0.9,
+  "acquisition_cash_cny_bn": 0.617674,
+  "project_budget_cny_bn": 15.077,
+  "project_spent_march_cny_bn": 1.775,
+  "incremental_project_share": 0.5,
+  "southbound_dividend_tax_rate": 0.2,
+  "assumptions": {
+    "base": {},
+    "base_low": {"r": 0.085, "capex_shift": 2},
+    "base_high": {"r": 0.075, "capex_shift": -2},
+    "structural_bear": {"scenario": "structural", "life": 30, "upstream": 0.6, "delay": 5, "interest_shift": 0.01},
+    "cyclical_bear": {"scenario": "cycle", "r": 0.085, "interest_shift": 0.005},
+    "bull": {"scenario": "upside", "r": 0.075},
+    "holder_low": {"r": 0.085},
+    "holder_high": {"r": 0.075}
+  },
+  "source_urls": {
+    "shares": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1102/2026110203647.pdf",
+    "placing": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1127/2026112700003.pdf",
+    "equity_transfer": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1116/2026111600528.pdf",
+    "project": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1023/2026102301513.pdf",
+    "cash_dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0924/2026092401086.pdf",
+    "foreign_exchange": "https://www.chinamoney.com.cn/chinese/bkccpr/index.html?tab=2"
+  }
+}

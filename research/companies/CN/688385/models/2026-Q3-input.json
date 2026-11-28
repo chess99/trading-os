@@ -1,0 +1,179 @@
+{
+  "symbol": "CN:688385",
+  "report_period": "2026-Q3",
+  "cutoff": "2026-11-27T21:00:00+08:00",
+  "units": "金额为人民币亿元，股数为亿股，每股为元。年份从截止日后算起，每步一年。",
+  "sources": {
+    "q3": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225636203.PDF",
+    "fy": "https://static.cninfo.com.cn/finalpage/2026-03-28/1225048638.PDF",
+    "h1": "https://static.cninfo.com.cn/finalpage/2026-08-18/1225478247.PDF",
+    "q1": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225257739.PDF",
+    "shares": "https://static.cninfo.com.cn/finalpage/2026-11-27/1225691343.PDF",
+    "grant": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225059419.PDF",
+    "buyback": "https://static.cninfo.com.cn/finalpage/2026-11-25/1225687097.PDF",
+    "loan": "https://static.cninfo.com.cn/finalpage/2026-11-25/1225687102.PDF",
+    "dividend": "https://static.cninfo.com.cn/finalpage/2026-06-30/1225397451.PDF",
+    "impairment": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225636140.PDF",
+    "peer": "https://static.cninfo.com.cn/finalpage/2026-10-30/1225643270.PDF",
+    "fund": "https://static.cninfo.com.cn/finalpage/2026-08-18/1225478266.PDF",
+    "transfer": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225636141.PDF",
+    "h_dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0611/2026061101627.pdf"
+  },
+  "financials": {
+    "fy2025_revenue": 39.822611,
+    "nine_months_2025_revenue": 30.244451,
+    "nine_months_2026_revenue": 35.639719,
+    "cash": 16.156766,
+    "trading_assets": 4.492524,
+    "short_debt": 5.657991,
+    "due_in_one_year": 5.068548,
+    "long_debt": 2.061463,
+    "long_leases": 0.283344,
+    "issued_shares": 8.2371925,
+    "first_grant": 0.1116,
+    "reserve": 0.0272
+  },
+  "bridge_assumptions": {
+    "treasury_asset_realization": 0.8,
+    "cash_risk_reserve": 6.5,
+    "description": "6.5亿元流动性准备包含日常经营及子公司上划限制2.5亿元、拟认购产业基金上限3亿元及激励回购上限1亿元。这是可用现金预算，不把拟议事项认作已付款，也不计基金处置回款。已抵减到期借款及租赁负债。全情景用激励计划上限股本，不提前确认员工行权款。"
+  },
+  "scenario_notes": "各行依次指定年收入增长、首末年核心归属净利率、第5年末盈利倍数、增量周转资本/新增收入、净固定及开发资本/新增收入、股权成本、永续增长及永续增量资本税后回报。运营净利率剔除投资收益和利息收益，含研发摊销、费用、税及少数归属；另在增量资本中扣净开发投入，存量维持投资与摊折相抵。弱情景收缩时谨慎不释放运营资本，另列损失年度的库存处置或重组现金支出（只含未由利润捕获的资金占用）。",
+  "scenarios": {
+    "structural_bear": {
+      "growth": [
+        -0.08,
+        -0.06,
+        0,
+        0.01,
+        0.02
+      ],
+      "margins": [
+        0.075,
+        0.085
+      ],
+      "multiple": 8,
+      "working_capital": 1.15,
+      "net_fixed_dev": 0.23,
+      "cash_stress": [
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      "cost_equity": 0.13,
+      "perpetual_g": 0.01,
+      "mature_roic": 0.09,
+      "dividend": 0
+    },
+    "cyclical_bear": {
+      "growth": [
+        -0.03,
+        0.01,
+        0.06,
+        0.07,
+        0.06
+      ],
+      "margins": [
+        0.11,
+        0.145
+      ],
+      "multiple": 11.5,
+      "working_capital": 1,
+      "net_fixed_dev": 0.2,
+      "cash_stress": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cost_equity": 0.115,
+      "perpetual_g": 0.025,
+      "mature_roic": 0.13,
+      "dividend": 0.04
+    },
+    "base_low": {
+      "growth": [
+        0.09,
+        0.09,
+        0.08,
+        0.07,
+        0.06
+      ],
+      "margins": [
+        0.16,
+        0.17
+      ],
+      "multiple": 13,
+      "working_capital": 0.92,
+      "net_fixed_dev": 0.2,
+      "cash_stress": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cost_equity": 0.105,
+      "perpetual_g": 0.03,
+      "mature_roic": 0.15,
+      "dividend": 0.06
+    },
+    "base_high": {
+      "growth": [
+        0.13,
+        0.12,
+        0.1,
+        0.09,
+        0.08
+      ],
+      "margins": [
+        0.18,
+        0.2
+      ],
+      "multiple": 15,
+      "working_capital": 0.82,
+      "net_fixed_dev": 0.19,
+      "cash_stress": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cost_equity": 0.1,
+      "perpetual_g": 0.035,
+      "mature_roic": 0.18,
+      "dividend": 0.06
+    },
+    "bull": {
+      "growth": [
+        0.18,
+        0.17,
+        0.15,
+        0.13,
+        0.11
+      ],
+      "margins": [
+        0.205,
+        0.23
+      ],
+      "multiple": 17,
+      "working_capital": 0.72,
+      "net_fixed_dev": 0.22,
+      "cash_stress": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cost_equity": 0.095,
+      "perpetual_g": 0.04,
+      "mature_roic": 0.2,
+      "dividend": 0.08
+    }
+  }
+}

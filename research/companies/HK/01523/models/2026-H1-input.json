@@ -1,0 +1,20 @@
+{
+  "symbol": "HK:01523", "period":"2026-H1", "as_of":"2026-11-27T19:05:00+08:00",
+  "amount_unit":"百万美元，股数为百万股，价值为每股港元",
+  "facts":{"fy25_revenue":130.144, "h125_revenue":62.943, "h126_revenue":74.596, "cash":49.982, "term_deposit":2.802, "borrowings":4.706, "tax_payable":6.433, "interim_hkd":0.1566, "dividend_record_shares":1106.805, "issued":1108.228,"options":11.301,"working_liquidity":15.0,"usd_hkd":7.8},
+  "sources":{
+    "interim":"https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0810/2026081000224.pdf",
+    "annual":"https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0318/2026031800514.pdf",
+    "dividend_record":"https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0826/2026082600716.pdf",
+    "share_return":"https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1103/2026110300319.pdf"
+  },
+  "assumptions":"各年收入增幅、含租赁成本和研发的税后经营利润率、每单位新增收入所需营运及净固定资本、特别备货或分拆成本（百万美元）、普通股派息率、折现率、永续增长。正常维护支出与折旧摊销相抵；净经营资产按正向增长投入，收缩时不给予资金释放。留存现金不计息，第五年与经营权一起估值。",
+  "paths":{
+    "structural_bear":{"growth":[-0.12,-0.06,0.00,0.01,0.02],"margins":[0.28,0.25,0.24,0.24,0.24],"capital_intensity":0.36,"exceptional_cash":[5,3,1,0,0],"payout":0.58,"discount":0.122,"steady_growth":0.01},
+    "cyclical_bear":{"growth":[-0.035,0.015,0.065,0.075,0.065],"margins":[0.30,0.31,0.32,0.325,0.33],"capital_intensity":0.33,"exceptional_cash":[4,2,0,0,0],"payout":0.68,"discount":0.108,"steady_growth":0.023},
+    "base_low":{"growth":[0.105,0.10,0.09,0.075,0.06],"margins":[0.345,0.35,0.35,0.35,0.35],"capital_intensity":0.27,"exceptional_cash":[2,1,0,0,0],"payout":0.80,"discount":0.098,"steady_growth":0.028},
+    "base_high":{"growth":[0.105,0.10,0.09,0.075,0.06],"margins":[0.345,0.35,0.35,0.35,0.35],"capital_intensity":0.27,"exceptional_cash":[2,1,0,0,0],"payout":0.80,"discount":0.089,"steady_growth":0.035},
+    "bull":{"growth":[0.165,0.15,0.13,0.11,0.08],"margins":[0.36,0.37,0.375,0.38,0.38],"capital_intensity":0.24,"exceptional_cash":[2,1,0,0,0],"payout":0.82,"discount":0.088,"steady_growth":0.038}
+  },
+  "normalized_profit_multiples":[15,19]
+}

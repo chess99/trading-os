@@ -1,0 +1,40 @@
+{
+  "symbol": "HK:02318",
+  "report_period": "2026-Q3",
+  "information_cutoff": "2026-11-27T19:00:00+08:00",
+  "issuer_engine": "research/companies/CN/601318/models/2026-Q3-engine.py",
+  "issuer_engine_sha256": "4599e0ed26c066f39fa1605f8b2ee77ff813619b1e80f3e95953a3efd848a25c",
+  "cny_per_hkd": 0.85580,
+  "issued_a": 10660065083,
+  "issued_h": 7447576912,
+  "treasury_a_and_h": 0,
+  "current_convertible_h": [709072392,229560975],
+  "interim_dividend_cny": 0.98,
+  "interim_hkd_per_cny": 1.15661,
+  "interim_default_hkd": 1.13347,
+  "interim_record": "2026-09-09",
+  "interim_paid": "2026-10-16",
+  "southbound_personal_dividend_tax": 0.20,
+  "assumptions_unit": "发行人引擎使用十亿元人民币、十亿股；比例为小数。周期情景从核心下端的投保与资本假设出发，前三年各业务遭遇暂时冲击，前两年部分股息延迟到账。",
+  "cases": {
+    "core_low": {"new_csm":42,"new_growth":0.02,"life_inv":18,"bank_roe":0.10,"pc_cor":0.965,"cost":0.11},
+    "core_high": {"new_csm":50,"new_growth":0.045,"life_inv":26,"bank_roe":0.11,"pc_cor":0.955,"cost":0.10},
+    "cyclical_overlay_on_low": {"shock":0.30,"haircut":35,"delay":0.20},
+    "structural": {"new_csm":32,"new_growth":-0.015,"life_inv":8,"life_other":14,"bank_roe":0.08,"pc_cor":0.985,"other_roe":0.025,"life_min_growth":0.035,"bank_rwa_growth":0.035,"cost":0.115,"g":0.01,"haircut":80,"structural":true,"strategic":[8,6,4,2,2]},
+    "bull": {"new_csm":58,"new_growth":0.06,"life_inv":30,"bank_roe":0.115,"pc_cor":0.95,"other_roe":0.07,"cost":0.10}
+  },
+  "sources": {
+    "quarter": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1028/2026102800402.pdf",
+    "interim": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0910/2026091000011.pdf",
+    "annual": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0428/2026042803045.pdf",
+    "october_shares": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1102/2026110203253.pdf",
+    "distribution_route": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0820/2026082000916.pdf",
+    "interim_dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0910/2026091000019.pdf",
+    "final_dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0610/2026061000007.pdf",
+    "fx": "https://www.chinamoney.com.cn/chinese/bkccpr/index.html?tab=2",
+    "fx_dated_release": "https://finance.sina.com.cn/jjxw/2026-11-27/doc-inkacvhq5553465.shtml",
+    "bank": "https://static.cninfo.com.cn/finalpage/2026-10-24/1225621667.PDF",
+    "group_parent": "https://static.cninfo.com.cn/finalpage/2026-10-29/1225637017.PDF",
+    "peer": "https://static.cninfo.com.cn/finalpage/2026-08-28/1225518250.PDF"
+  }
+}

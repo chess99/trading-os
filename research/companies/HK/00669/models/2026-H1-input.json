@@ -1,0 +1,179 @@
+{
+  "symbol": "HK:00669",
+  "period": "2026-H1",
+  "as_of": "2026-11-27T18:00:00+08:00",
+  "units": "百万美元、百万普通股；每股结果为港元",
+  "sources": {
+    "interim": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0831/2026083100890.pdf",
+    "results": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0804/2026080401404.pdf",
+    "annual": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0330/2026033000598.pdf",
+    "repurchases": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0601/2026060103099.pdf",
+    "latest": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1127/2026112700920.pdf",
+    "lot": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0911/2026091101087.pdf",
+    "dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0804/2026080401458.pdf",
+    "home_depot": "https://ir.homedepot.com/news-releases/2026/11-17-2026-110221331",
+    "tax": "https://www.csrc.gov.cn/csrc/c100028/c1002047/content.shtml"
+  },
+  "fx_hkd_per_usd": 7.8,
+  "facts": {
+    "fy_sales": 15259.533,
+    "h1_sales": 8291.607,
+    "prior_h1_sales": 7833.083,
+    "professional_share": 0.7104546802567946,
+    "professional_h1_margin": 0.105,
+    "consumer_h1_margin": 0.085,
+    "cash": 1889.242,
+    "current_borrowings": 374.43,
+    "long_borrowings": 448.343,
+    "h1_capital_commitments": 180.749,
+    "issued": 1823.127541,
+    "pending_cancellation": 1.505,
+    "options_increment": 5.447376,
+    "awards_increment": 3.781625,
+    "interim_dividend_hkd": 1.5
+  },
+  "bridge": {
+    "september_dividend_usd": 352.805,
+    "post_june_buyback_cash_estimate": 120,
+    "minimum_operating_cash": 500
+  },
+  "model": {
+    "lease_interest": 24,
+    "assumed_repurchase_hkd": 130,
+    "future_awards_million": 2,
+    "net_growth_capital_working_share": 0.166,
+    "reference_exit_multiple": [
+      15,
+      18
+    ]
+  },
+  "assumption_notes": [
+    "期初收入用FY25+26H1-25H1，专业占比用本期外销收入。",
+    "11月27日日报列出8笔待注销总计150.5万股。期权及奖励沿用最近稀释增量，部分信托股份已计入发行数，保守允许全部增量。",
+    "半年度结余扣下半年已派中期息及估计回购1.2亿美元，不确认未披露下半年经营盈余。保留5亿美元周转现金。",
+    "持续经营利润率已含租赁折旧、更新研发及股份报酬；基准未来新奖励按每年200万股等值现金费用中性化。首年预算中先抵销该部分，再从未分配现金扣净注销支出。",
+    "维护性资本投资（含资本化开发）及租赁续用预算与经常性折旧摊销匹配，增量投资按销售增量计，萎缩期仅释放四分之一周转资本。"
+  ],
+  "paths": {
+    "structural_bear": {
+      "professional_growth": [
+        -0.1,
+        -0.05,
+        0,
+        0.005,
+        0.01
+      ],
+      "consumer_growth": [
+        -0.12,
+        -0.06,
+        -0.02,
+        0,
+        0.005
+      ],
+      "professional_margin_y5": 0.075,
+      "consumer_margin_y5": 0.049,
+      "net_growth_fixed_capital_share": 0.35,
+      "tax": 0.16,
+      "payout": 0.3,
+      "discount": 0.11,
+      "perpetuity_growth": 0.01,
+      "first_year_gross_buybacks": 150
+    },
+    "cyclical_bear": {
+      "professional_growth": [
+        -0.045,
+        0.015,
+        0.06,
+        0.065,
+        0.055
+      ],
+      "consumer_growth": [
+        -0.08,
+        -0.025,
+        0.025,
+        0.03,
+        0.025
+      ],
+      "professional_margin_y5": 0.105,
+      "consumer_margin_y5": 0.074,
+      "net_growth_fixed_capital_share": 0.28,
+      "tax": 0.14,
+      "payout": 0.44,
+      "discount": 0.097,
+      "perpetuity_growth": 0.022,
+      "first_year_gross_buybacks": 230
+    },
+    "base_low": {
+      "professional_growth": [
+        0.075,
+        0.07,
+        0.065,
+        0.06,
+        0.055
+      ],
+      "consumer_growth": [
+        0.015,
+        0.02,
+        0.025,
+        0.025,
+        0.025
+      ],
+      "professional_margin_y5": 0.117,
+      "consumer_margin_y5": 0.084,
+      "net_growth_fixed_capital_share": 0.25,
+      "tax": 0.12,
+      "payout": 0.5,
+      "discount": 0.089,
+      "perpetuity_growth": 0.027,
+      "first_year_gross_buybacks": 300
+    },
+    "base_high": {
+      "professional_growth": [
+        0.075,
+        0.07,
+        0.065,
+        0.06,
+        0.055
+      ],
+      "consumer_growth": [
+        0.015,
+        0.02,
+        0.025,
+        0.025,
+        0.025
+      ],
+      "professional_margin_y5": 0.117,
+      "consumer_margin_y5": 0.084,
+      "net_growth_fixed_capital_share": 0.25,
+      "tax": 0.12,
+      "payout": 0.5,
+      "discount": 0.08,
+      "perpetuity_growth": 0.034,
+      "first_year_gross_buybacks": 300
+    },
+    "bull": {
+      "professional_growth": [
+        0.11,
+        0.105,
+        0.095,
+        0.085,
+        0.075
+      ],
+      "consumer_growth": [
+        0.035,
+        0.04,
+        0.045,
+        0.04,
+        0.035
+      ],
+      "professional_margin_y5": 0.131,
+      "consumer_margin_y5": 0.094,
+      "net_growth_fixed_capital_share": 0.22,
+      "tax": 0.11,
+      "payout": 0.52,
+      "discount": 0.078,
+      "perpetuity_growth": 0.036,
+      "first_year_gross_buybacks": 340
+    }
+  }
+}

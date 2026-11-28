@@ -1,0 +1,259 @@
+{
+  "symbol": "HK:01024",
+  "report_period": "2026-Q3",
+  "as_of": "2026-11-27T18:25:00+08:00",
+  "units": "金额十亿元人民币、股数十亿、每股现金或价值港元；执行成本人民币/股",
+  "fx_cny_per_hkd": 0.8558,
+  "tax": 0.18,
+  "working_capital_ratio": 0.05,
+  "starting_revenue_bn": 140.411,
+  "liquid_assets": {
+    "cash": 27.591,
+    "short_deposits": 17.438,
+    "long_deposits": 7.918,
+    "current_wealth_products": 46.93,
+    "noncurrent_wealth_products": 27.104
+  },
+  "capital_claims": {
+    "bank_debt_and_notes": 27.311,
+    "supplier_finance_estimate": 17.95,
+    "kling_earmarked_funding": 17.9,
+    "working_cash_reserve": 15,
+    "other_nci": 0.036,
+    "net_derivative_liability": 0.357
+  },
+  "post_period_repurchases": [
+    [
+      0.0108604,
+      20.3559
+    ],
+    [
+      0.00496,
+      20.1384
+    ],
+    [
+      0.00405,
+      19.6642
+    ]
+  ],
+  "shares_bn": {
+    "class_a": 0.658748154,
+    "class_b": 3.641777025,
+    "oct_options": 0.041110810000000005,
+    "oct_rsus": 0.147175821
+  },
+  "kling_completed_subscription_bn": 19.80184,
+  "kling_simple_annual_return": 0.08,
+  "assumptions": {
+    "share_base": "按10月底已授予未结算的全部上限计入，不加行权款或未授予额度；以后仅加入新授经济摊薄",
+    "wealth_products": "按账面计，无受限现金和股权投资；残余现金不计利息。",
+    "kling": "9月已收款全部留作第三方本金，10月新增实收同额预留。模型按可灵集团合并范围预算额外赎回利息；不单加融资估值。",
+    "profit": "费用含日常研发、创作者分成及租金；正常化税后经营现金盈利扣除第三方在盈利子公司的权益，未包含非现金股权薪酬。",
+    "terminal": "稳态净资本投入率 g / 增量资本回报；稳定股数仍需以现金抵消每年新授股份。",
+    "buyback": "执行单价是五年均价测算假设，与观察日交易价格无关。"
+  },
+  "scenarios": {
+    "structural_bear": {
+      "revenue_bn": [
+        118,
+        112,
+        110,
+        109,
+        109
+      ],
+      "cash_operating_margin": [
+        0.01,
+        0.025,
+        0.035,
+        0.04,
+        0.043
+      ],
+      "net_fixed_investment_bn": [
+        5,
+        2.5,
+        1.5,
+        1,
+        0.6
+      ],
+      "discount_rate": 0.135,
+      "terminal_growth": 0,
+      "terminal_incremental_roic": 0.1,
+      "check_nopat_multiple": 7,
+      "dividend_hkd": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "buyback_share_fraction": 0,
+      "award_share_fraction": 0.006,
+      "redemption_interest_fraction": 1,
+      "execution_cny": 25
+    },
+    "cyclical_bear": {
+      "revenue_bn": [
+        124,
+        124,
+        128,
+        133,
+        138
+      ],
+      "cash_operating_margin": [
+        0.02,
+        0.043,
+        0.06,
+        0.072,
+        0.079
+      ],
+      "net_fixed_investment_bn": [
+        5,
+        3,
+        2,
+        1.7,
+        1.6
+      ],
+      "discount_rate": 0.12,
+      "terminal_growth": 0.012,
+      "terminal_incremental_roic": 0.13,
+      "check_nopat_multiple": 9,
+      "dividend_hkd": [
+        0,
+        0.12,
+        0.2,
+        0.28,
+        0.35
+      ],
+      "buyback_share_fraction": 0.004,
+      "award_share_fraction": 0.006,
+      "redemption_interest_fraction": 0.75,
+      "execution_cny": 30
+    },
+    "base_low": {
+      "revenue_bn": [
+        130,
+        133,
+        138,
+        143,
+        148
+      ],
+      "cash_operating_margin": [
+        0.04,
+        0.061,
+        0.078,
+        0.089,
+        0.095
+      ],
+      "net_fixed_investment_bn": [
+        5,
+        3.8,
+        3,
+        2.6,
+        2.4
+      ],
+      "discount_rate": 0.11,
+      "terminal_growth": 0.02,
+      "terminal_incremental_roic": 0.15,
+      "check_nopat_multiple": 10.5,
+      "dividend_hkd": [
+        0.25,
+        0.35,
+        0.4,
+        0.5,
+        0.55
+      ],
+      "buyback_share_fraction": 0.012,
+      "award_share_fraction": 0.007,
+      "redemption_interest_fraction": 0.5,
+      "execution_cny": 33
+    },
+    "base_high": {
+      "revenue_bn": [
+        132,
+        137,
+        144,
+        151,
+        158
+      ],
+      "cash_operating_margin": [
+        0.045,
+        0.07,
+        0.088,
+        0.102,
+        0.111
+      ],
+      "net_fixed_investment_bn": [
+        5.5,
+        4.3,
+        3.7,
+        3.2,
+        3
+      ],
+      "discount_rate": 0.102,
+      "terminal_growth": 0.025,
+      "terminal_incremental_roic": 0.17,
+      "check_nopat_multiple": 12.5,
+      "dividend_hkd": [
+        0.25,
+        0.35,
+        0.4,
+        0.5,
+        0.55
+      ],
+      "buyback_share_fraction": 0.012,
+      "award_share_fraction": 0.007,
+      "redemption_interest_fraction": 0.5,
+      "execution_cny": 33
+    },
+    "bull": {
+      "revenue_bn": [
+        136,
+        145,
+        155,
+        168,
+        181
+      ],
+      "cash_operating_margin": [
+        0.052,
+        0.08,
+        0.104,
+        0.12,
+        0.135
+      ],
+      "net_fixed_investment_bn": [
+        6.2,
+        5.3,
+        4.9,
+        4.5,
+        4.2
+      ],
+      "discount_rate": 0.095,
+      "terminal_growth": 0.032,
+      "terminal_incremental_roic": 0.19,
+      "check_nopat_multiple": 14,
+      "dividend_hkd": [
+        0.32,
+        0.45,
+        0.6,
+        0.75,
+        0.9
+      ],
+      "buyback_share_fraction": 0.016,
+      "award_share_fraction": 0.006,
+      "redemption_interest_fraction": 0.0,
+      "execution_cny": 39
+    }
+  },
+  "sources": {
+    "q3": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1119/2026111900310.pdf",
+    "h1": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0903/2026090300642.pdf",
+    "fy": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0424/2026042401899.pdf",
+    "monthly": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1105/2026110500824.pdf",
+    "next_day": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1124/2026112400936.pdf",
+    "dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032500403.pdf",
+    "kling_terms": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0702/2026070204065.pdf",
+    "kling_closing": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1030/2026103002123.pdf",
+    "peer": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1118/2026111800448.pdf",
+    "fx": "https://finance.sina.com.cn/jjxw/2026-11-27/doc-inkacvhq5553465.shtml"
+  }
+}

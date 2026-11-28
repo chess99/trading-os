@@ -1,0 +1,116 @@
+{
+  "symbol": "HK:02269",
+  "report_period": "2026-H1",
+  "value_range": {
+    "low": 23.73,
+    "high": 34.48,
+    "currency": "HKD"
+  },
+  "return_model": {
+    "schema_version": 1,
+    "method": "annual_common_equity_irr_v1",
+    "currency": "HKD",
+    "model_as_of": "2026-11-27T19:00:00+08:00",
+    "base_case_distributions_per_share": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "base_case_terminal_equity_value_range_per_share": {
+      "year_5": {
+        "low": 38.22,
+        "high": 53.05
+      }
+    }
+  },
+  "scenarios": {
+    "structural_bear": 5.51,
+    "cyclical_bear": 15.41,
+    "base_low": 23.73,
+    "base_high": 34.48,
+    "bull": 47.37
+  },
+  "secondary_dcf": {
+    "base_low": 19.39,
+    "base_high": 31.85
+  },
+  "starting_common_assets_cny_bn": 8.958,
+  "xdc_minority_cash_cny_bn": 2.513,
+  "diluted_shares_bn": 4.228697,
+  "matched_operating_inputs": {
+    "structural_bear": {
+      "year_1_and_5_revenue": [
+        20.349,
+        20.113
+      ],
+      "year_1_and_5_nopat": [
+        3.663,
+        3.62
+      ],
+      "year_2_to_5_net_investment": 6.877,
+      "year_5_retained_assets": 12.57,
+      "year_5_operating_share": 0.65,
+      "minimum_cash": 7.23
+    },
+    "cyclical_bear": {
+      "year_1_and_5_revenue": [
+        23.355,
+        29.742
+      ],
+      "year_1_and_5_nopat": [
+        5.138,
+        7.138
+      ],
+      "year_2_to_5_net_investment": 11.701,
+      "year_5_retained_assets": 18.902,
+      "year_5_operating_share": 0.797,
+      "minimum_cash": 8.343
+    },
+    "base_low": {
+      "year_1_and_5_revenue": [
+        25.436,
+        35.244
+      ],
+      "year_1_and_5_nopat": [
+        6.232,
+        9.163
+      ],
+      "year_2_to_5_net_investment": 16.005,
+      "year_5_retained_assets": 21.834,
+      "year_5_operating_share": 0.842,
+      "minimum_cash": 8.684
+    },
+    "base_high": {
+      "year_1_and_5_revenue": [
+        26.361,
+        39.635
+      ],
+      "year_1_and_5_nopat": [
+        6.854,
+        11.098
+      ],
+      "year_2_to_5_net_investment": 18.894,
+      "year_5_retained_assets": 25.194,
+      "year_5_operating_share": 0.869,
+      "minimum_cash": 9.163
+    },
+    "bull": {
+      "year_1_and_5_revenue": [
+        27.055,
+        44.862
+      ],
+      "year_1_and_5_nopat": [
+        7.305,
+        13.459
+      ],
+      "year_2_to_5_net_investment": 21.696,
+      "year_5_retained_assets": 28.966,
+      "year_5_operating_share": 0.888,
+      "minimum_cash": 9.203
+    }
+  },
+  "lower_case_capex_plus_20pct": 22.85,
+  "lower_case_margin_minus_3pp": 20.78
+}

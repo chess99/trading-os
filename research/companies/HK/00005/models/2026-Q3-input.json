@@ -1,0 +1,26 @@
+{
+  "as_of": "2026-11-27T18:00:00+08:00",
+  "units": "金额为十亿美元，股数为十亿股。每股以美元建模，所有对外每股结果折算港元。",
+  "fx_hkd_per_usd": 7.8,
+  "sources": {
+    "equity_shares_capital": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1027/2026102700188.pdf 集团资产负债表第3至4页；三季业绩第4页完全稀释股数",
+    "results": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1027/2026102700174.pdf 第1至4、52至54页，9月已完成的购回已反映于当期权益",
+    "parent": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0821/2026082100049.pdf 中期财报Distributable reserves",
+    "november_buyback": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1127/2026112700093.pdf 附表，自10月计划启动至11月26日的累计买入及金额",
+    "dividend": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/1027/2026102700176.pdf 登记日11月6日，每股0.10美元",
+    "fx": "https://api.hkma.gov.hk/public/market-data-and-statistics/daily-monetary-statistics/daily-figures-interbank-liquidity?pagesize=2 11月26日双向兑换保证7.75至7.85，中点为长期折算假设"
+  },
+  "reported": {
+    "group_equity": 196.275, "minorities": 0.400, "at1": 22.407, "intangibles_net": 12.474,
+    "diluted_shares": 17.220, "buyback_post_quarter": 0.3083, "repurchased_shares": 0.017791864,
+    "detached_dividend": 1.71, "announced_buyback_limit": 1.0,
+    "cet1": 128.143, "rwa": 922.394
+  },
+  "assumptions": {
+    "structural": {"rote": [0.055,0.065,0.07,0.075,0.08], "rwa_growth": [0.06,0.045,0.03,0.025,0.02], "conversion": 0.80, "target_cet1": 0.15, "dividend_fraction": 0.35, "later_buyback": 0, "execution_ptbv": 1.0, "new_awards": 0.035, "ke": 0.125, "g": 0.015, "steady_rote": 0.08},
+    "cycle": {"rote": [0.10,0.105,0.12,0.13,0.13], "rwa_growth": [0.05,0.045,0.035,0.035,0.035], "conversion": 0.85, "target_cet1": 0.145, "dividend_fraction": 0.45, "later_buyback": 0.65, "execution_ptbv": 1.15, "new_awards": 0.025, "ke": 0.112, "g": 0.025, "steady_rote": 0.115},
+    "base": {"rote": [0.155,0.15,0.145,0.14,0.135], "rwa_growth": [0.04,0.04,0.04,0.04,0.04], "conversion": 0.90, "target_cet1": 0.1425, "dividend_fraction": 0.50, "later_buyback": 1.35, "execution_ptbv": 1.45, "new_awards": 0.025, "ke": 0.10, "g": 0.03, "steady_rote": [0.12,0.14]},
+    "bull": {"rote": [0.17,0.17,0.165,0.16,0.155], "rwa_growth": [0.05,0.05,0.05,0.045,0.045], "conversion": 0.94, "target_cet1": 0.1425, "dividend_fraction": 0.50, "later_buyback": 2.5, "execution_ptbv": 1.65, "new_awards": 0.025, "ke": 0.095, "g": 0.035, "steady_rote": 0.15}
+  },
+  "cross_check": {"rote":[0.13,0.14],"capital_conversion":0.90,"growth":0.03,"capital_requirement":0.1425,"cost":0.10}
+}
