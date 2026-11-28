@@ -1,3 +1,5 @@
+import type { IndustryState, MacroBenchmark, MacroFactor } from "./research";
+
 export interface PublishedDocument {
   id: string;
   kind: "industry" | "macro";
@@ -17,6 +19,8 @@ export interface PublishedDocument {
   status: "published" | "withdrawn";
   withdrawalReason: string | null;
   indicatorPath: string | null;
+  industryState?: IndustryState | null;
+  macroState?: { asOf: string; regimeSummary?: string; factors?: MacroFactor[]; benchmarks?: MacroBenchmark[] } | null;
 }
 
 export interface PublicationDirectory {

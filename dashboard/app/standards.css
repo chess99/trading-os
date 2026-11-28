@@ -122,3 +122,29 @@
 .research-console .research-company-link { color: inherit; text-decoration: none; }
 .research-console .research-company-link:hover { color: var(--emerald); text-decoration: underline; }
 .research-console .standards-table-scroll:focus-visible { outline: 2px solid #27867b; outline-offset: 2px; }
+
+.decision-context-bar { margin: 8px 0 0; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); font-size: 12px; max-width: 100%; }
+.decision-context-bar > summary { cursor: pointer; padding: 6px 10px; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; list-style-position: inside; }
+.decision-context-body { padding: 12px 14px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; }
+.decision-context-section h3 { margin: 0 0 8px; font-size: 12px; color: var(--muted); font-weight: 600; }
+.decision-context-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.decision-context-card { border: 1px solid var(--line); border-radius: 6px; padding: 9px 11px; background: var(--canvas); display: flex; flex-direction: column; gap: 4px; overflow-wrap: anywhere; }
+.decision-context-card strong { font-size: 12px; color: var(--ink); }
+.decision-context-card span { font-size: 11px; color: var(--ink-soft); }
+.decision-context-card small { font-size: 11px; color: var(--muted); line-height: 1.5; margin: 0; }
+.decision-qdii-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 6px 12px; }
+.decision-qdii-item { display: flex; align-items: center; gap: 8px; font-size: 11px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 5px; background: var(--canvas); }
+.decision-qdii-item code { color: var(--emerald); font-weight: 600; }
+.decision-qdii-item small { margin-left: auto; color: var(--muted); font-size: 10px; }
+.decision-context-links { display: flex; flex-wrap: wrap; gap: 12px 18px; font-size: 12px; padding-top: 4px; border-top: 1px solid var(--line); }
+
+.decision-pill { display: inline-block; margin-top: 4px; padding: 2px 6px; border-radius: 4px; font-size: 10px; background: #eef3f0; color: var(--ink-soft); opacity: 1 !important; white-space: nowrap; }
+.decision-pill.align-tailwind { background: #e4f1e9; color: #176343; }
+.decision-pill.align-headwind { background: #f8ecea; color: #8c3b32; }
+.decision-aftertax-note { color: var(--emerald); font-weight: 500; opacity: .95 !important; }
+.decision-live-meta, .decision-live-scenarios { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--ink-soft); }
+.decision-live-breakers { margin: 8px 0 0; padding-left: 18px; font-size: 12px; color: var(--muted); }
+@media (max-width: 760px) {
+  .decision-context-bar { margin-top: 6px; font-size: 11px; }
+  .decision-context-bar > summary { padding: 5px 8px; }
+}

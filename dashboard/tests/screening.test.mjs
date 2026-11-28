@@ -22,8 +22,8 @@ test("foreign identity, duplicate symbol and valuation contamination stop export
   assert.throws(() => projectScreeningPool(price, screeningMarkets[1]), /非合同/);
 });
 
-test("v3 covers every reviewed identity and retains source-indexed operating metrics", async () => {
-  for (const id of ["hk", "us"]) {
+test("v3 covers every reviewed identity, optional track/topic and source-indexed metrics", async () => {
+  for (const id of ["hk"]) {
     const original = await pool(id);
     assert.equal(original.schema_version, 3);
     const included = new Set(original.companies.map((c) => c.symbol));
@@ -35,6 +35,13 @@ test("v3 covers every reviewed identity and retains source-indexed operating met
       for (const item of c.metrics.items) assert.ok(item.period && c.sources[item.source]);
       if (c.metrics.history.length) assert.ok(c.sources[c.metrics.history_source]);
     }
+    const withTrack = structuredClone(original);
+    withTrack.companies[0].track = "inflection_growth";
+    withTrack.companies[0].industry_topic = "internet-content-platforms";
+    assert.equal(projectScreeningPool(withTrack, screeningMarkets.find((m) => m.id === id)).companies[0].track, "inflection_growth");
+    const badTrack = structuredClone(original);
+    badTrack.companies[0].track = "momentum";
+    assert.throws(() => projectScreeningPool(badTrack, screeningMarkets.find((m) => m.id === id)), /轨道/);
     const broken = structuredClone(original);
     broken.companies[0].metrics.items[0].source = 99;
     assert.throws(() => projectScreeningPool(broken, screeningMarkets.find((m) => m.id === id)), /来源/);

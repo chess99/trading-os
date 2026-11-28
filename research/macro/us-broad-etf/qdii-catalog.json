@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "updatedOn": "2026-11-27",
+  "trackedIndices": [
+    {
+      "id": "ndx100",
+      "name": "纳斯达克 100 指数",
+      "englishName": "Nasdaq-100 Index",
+      "currency": "USD",
+      "focusMetrics": [
+        "Forward PE / TTM PE",
+        "前十大权重合计占比与头部 AI Capex 占比",
+        "盈利收益率 (E/P) 与 10 年期美债收益率利差",
+        "美元兑人民币中间价与汇兑变动"
+      ]
+    },
+    {
+      "id": "sp500",
+      "name": "标普 500 指数",
+      "englishName": "S&P 500 Index",
+      "currency": "USD",
+      "focusMetrics": [
+        "Shiller CAPE 与 5 年/10 年历史分位",
+        "Forward PE / TTM PE",
+        "盈利收益率 (E/P) 与 10 年期美债收益率利差",
+        "非金融企业利润率与股票净回购收益率"
+      ]
+    }
+  ],
+  "etfs": [
+    {
+      "symbol": "CN:513100",
+      "name": "国泰纳斯达克100ETF（纳指ETF）",
+      "manager": "国泰基金管理有限公司",
+      "trackedIndex": "ndx100",
+      "currencyExposure": "USD（不锁汇）",
+      "checkItems": [
+        "场内现价相对 IOPV 实时溢价率",
+        "场外联接/一级市场申赎外汇额度限购状态",
+        "管理费 + 托管费合计费率及跟踪误差",
+        "美元兑人民币汇率位置"
+      ]
+    },
+    {
+      "symbol": "CN:159941",
+      "name": "广发纳斯达克100ETF（广发纳指100ETF）",
+      "manager": "广发基金管理有限公司",
+      "trackedIndex": "ndx100",
+      "currencyExposure": "USD（不锁汇）",
+      "checkItems": [
+        "场内现价相对 IOPV 实时溢价率",
+        "场外联接/一级市场申赎外汇额度限购状态",
+        "管理费 + 托管费合计费率及跟踪误差",
+        "美元兑人民币汇率位置"
+      ]
+    },
+    {
+      "symbol": "CN:513300",
+      "name": "华夏纳斯达克100ETF（纳斯达克ETF华夏）",
+      "manager": "华夏基金管理有限公司",
+      "trackedIndex": "ndx100",
+      "currencyExposure": "USD（不锁汇）",
+      "checkItems": [
+        "场内现价相对 IOPV 实时溢价率",
+        "场外联接/一级市场申赎外汇额度限购状态",
+        "管理费 + 托管费合计费率及跟踪误差",
+        "美元兑人民币汇率位置"
+      ]
+    },
+    {
+      "symbol": "CN:513500",
+      "name": "博时标普500ETF",
+      "manager": "博时基金管理有限公司",
+      "trackedIndex": "sp500",
+      "currencyExposure": "USD（不锁汇）",
+      "checkItems": [
+        "场内现价相对 IOPV 实时溢价率",
+        "场外联接/一级市场申赎外汇额度限购状态",
+        "管理费 + 托管费合计费率及跟踪误差",
+        "美元兑人民币汇率位置"
+      ]
+    },
+    {
+      "symbol": "CN:159655",
+      "name": "华夏标普500ETF（标普500ETF华夏）",
+      "manager": "华夏基金管理有限公司",
+      "trackedIndex": "sp500",
+      "currencyExposure": "USD（不锁汇）",
+      "checkItems": [
+        "场内现价相对 IOPV 实时溢价率",
+        "场外联接/一级市场申赎外汇额度限购状态",
+        "管理费 + 托管费合计费率及跟踪误差",
+        "美元兑人民币汇率位置"
+      ]
+    },
+    {
+      "symbol": "CN:513650",
+      "name": "南方标普500ETF（标普500ETF南方）",
+      "manager": "南方基金管理股份有限公司",
+      "trackedIndex": "sp500",
+      "currencyExposure": "USD（不锁汇）",
+      "checkItems": [
+        "场内现价相对 IOPV 实时溢价率",
+        "场外联接/一级市场申赎外汇额度限购状态",
+        "管理费 + 托管费合计费率及跟踪误差",
+        "美元兑人民币汇率位置"
+      ]
+    }
+  ]
+}

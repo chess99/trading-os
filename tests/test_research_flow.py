@@ -122,6 +122,17 @@ def test_periodic_research_creates_one_period_slot(tmp_path: Path):
     flow.validate()
 
 
+def test_acceptance_before_cutoff_keeps_the_period_open(tmp_path: Path):
+    flow = ResearchFlow(tmp_path)
+    task_id = _enqueue(flow, "CN:000001", "2026-H1")
+    result = _result("CN:000001", at=LATER)
+    with pytest.raises(ValidationError, match="predates information cutoff"):
+        flow.apply_result(result, task_id=task_id, at=AT)
+    assert flow.list_tasks()[0].task_id == task_id
+    assert not (tmp_path / "research/companies/CN/000001/reports/2026-H1.md").exists()
+    assert flow.apply_result(result, task_id=task_id, at=LATER)["accepted_at"] == LATER
+
+
 @pytest.mark.parametrize("formatted", ["**58—82**", "**58**—**82**", "__58—82__"])
 def test_emphasis_preserves_core_value_validation(tmp_path: Path, formatted: str):
     flow = ResearchFlow(tmp_path)
@@ -183,6 +194,22 @@ def test_customer_analysis_and_necessary_accounting_contrasts_are_allowed(tmp_pa
     )
     flow.apply_result(candidate, task_id=task_id, at=AT)
     flow.validate()
+
+
+@pytest.mark.parametrize("primary", [
+    "方法一以普通股可取得的现金分配折现为主。",
+    "方法一为税前每基金单位分派折现，是核心估值。",
+])
+def test_explicit_primary_method_in_report_prose(tmp_path, primary):
+    flow = ResearchFlow(tmp_path)
+    task_id = _enqueue(flow, "CN:000001", "2026-H1")
+    result = _result("CN:000001")
+    text = result.report_markdown.replace(
+        "方法一为正常化PE，方法二为现金流折现；以正常化PE为核心。",
+        primary + "方法二采用正常化盈利交叉核验。",
+    )
+    assert text != result.report_markdown
+    flow.apply_result(replace(result, report_markdown=text), task_id=task_id, at=AT)
 
 
 def test_completion_requires_a_released_active_standard(tmp_path: Path):
@@ -347,14 +374,15 @@ def _foreign_result(
 
 
 @pytest.mark.parametrize(
-    "market,symbol,period,end",
+    "market,symbol,period,end,unit",
     [
-        ("hk", "HK:00700", "2026-H1", "2026-06-30"),
-        ("us", "US:MSFT", "2026-FY", "2026-06-30"),
-        ("us", "US:TSM", "2026-Q3", "2026-09-30"),
+        ("hk", "HK:00700", "2026-H1", "2026-06-30", "ordinary_share"),
+        ("hk", "HK:00823", "2027-H1", "2026-09-30", "fund_unit"),
+        ("us", "US:MSFT", "2026-FY", "2026-06-30", "ordinary_share"),
+        ("us", "US:TSM", "2026-Q3", "2026-09-30", "ADS"),
     ],
 )
-def test_foreign_full_lifecycle_with_actual_fiscal_end(tmp_path, market, symbol, period, end):
+def test_foreign_full_lifecycle_with_actual_fiscal_end(tmp_path, market, symbol, period, end, unit):
     _write_registry(tmp_path)
     flow = ResearchFlow(tmp_path, market=market)
     at = "2026-10-24T09:00:00+08:00"
@@ -372,15 +400,14 @@ def test_foreign_full_lifecycle_with_actual_fiscal_end(tmp_path, market, symbol,
     ).enqueued_tasks[0]
     started = flow.dispatch_tasks(limit=1, at=at)[0]
     assert started.financial_basis == basis
-    result = _foreign_result(
-        symbol, period, basis, unit="ADS" if symbol.endswith("TSM") else "ordinary_share"
-    )
+    result = _foreign_result(symbol, period, basis, unit=unit)
     state = flow.apply_result(result, task_id=task.task_id, at=at)
     assert (
         state["basis_report_path"]
         == f"research/companies/{symbol[:2]}/{symbol[3:]}/reports/{period}.md"
     )
     assert state["financial_basis"] == basis
+    assert state["security_basis"]["unit"] == unit
     assert flow.validate().covered == 1
     assert not (tmp_path / "coverage/cn-a/research_state.jsonl").exists()
     rewrite = flow.enqueue_research(
@@ -467,3 +494,113 @@ def test_same_issuer_cannot_run_in_two_market_queues(tmp_path):
             trigger_kind=PERIODIC_TRIGGER,
             at=AT,
         )
+
+
+def test_decision_profile_scenarios_and_capital_return_roundtrip(tmp_path):
+    flow = ResearchFlow(tmp_path)
+    task_id = _enqueue(flow, "CN:000001", "2026-H1")
+    profile = {
+        "track": "inflection_growth",
+        "valuation_framework": "growth_terminal_matrix",
+        "industry_topic": "semiconductors",
+        "business_quality": "A",
+        "capital_allocation": "high",
+        "predictability": "medium",
+        "downside_risk": "low",
+        "exposure_tags": ["AI算力Capex", "国产半导体设备"],
+        "thesis_breakers": ["连续两季先进制程客户验收推迟", "在手订单净减少超过20%"],
+    }
+    scenarios = {
+        "currency": "CNY",
+        "structural_bear": 32.0,
+        "cyclical_bear": 46.0,
+        "base_low": 58.0,
+        "base_high": 82.0,
+        "bull": 120.0,
+        "horizon_note": "基准及乐观路径反映3-5年国产晶圆厂扩产终态盈利。",
+    }
+    cap_return = {
+        "annual_net_buyback_per_share": 0.4,
+        "southbound_dividend_tax_rate": None,
+        "note": "A股长期持股免红利税，假设维持适度注销回购。",
+    }
+    result = replace(
+        _result("CN:000001"),
+        decision_profile=profile,
+        scenarios=scenarios,
+        capital_return_profile=cap_return,
+    )
+    state = flow.apply_result(result, task_id=task_id, at=AT)
+    assert state["decision_profile"] == profile
+    assert state["scenarios"] == scenarios
+    assert state["capital_return_profile"] == cap_return
+    assert flow.validate().covered == 1
+
+
+def test_decision_profile_and_scenarios_reject_invalid_values(tmp_path):
+    base = _result("CN:000001")
+    valid_profile = {
+        "track": "compounder",
+        "valuation_framework": "dividend_dcf_v1",
+        "industry_topic": "baijiu",
+        "business_quality": "A",
+        "capital_allocation": "high",
+        "predictability": "high",
+        "downside_risk": "low",
+        "exposure_tags": ["国内消费"],
+        "thesis_breakers": ["核心单品批价连续两季低于出厂价"],
+    }
+    valid_scenarios = {
+        "currency": "CNY",
+        "structural_bear": 35.0,
+        "cyclical_bear": 48.0,
+        "base_low": 58.0,
+        "base_high": 82.0,
+        "bull": 100.0,
+        "horizon_note": "五年现金流折现路径。",
+    }
+    # Price trigger word inside thesis_breakers must fail
+    bad_breaker = replace(
+        base,
+        decision_profile={**valid_profile, "thesis_breakers": ["买入价跌破50元时重新评估"]},
+    )
+    with pytest.raises(ValidationError, match="security-price trigger"):
+        ResearchFlow._normalized_result(bad_breaker)
+
+    # Non-monotonic scenarios must fail
+    bad_mono = replace(
+        base,
+        scenarios={**valid_scenarios, "cyclical_bear": 65.0},
+    )
+    with pytest.raises(ValidationError, match="must not exceed"):
+        ResearchFlow._normalized_result(bad_mono)
+
+    # Mismatched base_low vs value_range.low must fail
+    bad_base = replace(
+        base,
+        scenarios={**valid_scenarios, "base_low": 55.0},
+    )
+    with pytest.raises(ValidationError, match="must match value_range.low"):
+        ResearchFlow._normalized_result(bad_base)
+
+    # Currency mismatch must fail
+    bad_currency = replace(
+        base,
+        scenarios={**valid_scenarios, "currency": "HKD"},
+    )
+    with pytest.raises(ValidationError, match="scenarios.currency"):
+        ResearchFlow._normalized_result(bad_currency)
+
+    # Corrupting persisted state fails validate()
+    flow = ResearchFlow(tmp_path)
+    task_id = _enqueue(flow, "CN:000001", "2026-H1")
+    flow.apply_result(
+        replace(base, decision_profile=valid_profile, scenarios=valid_scenarios),
+        task_id=task_id,
+        at=AT,
+    )
+    row = json.loads(flow.state_path.read_text(encoding="utf-8"))
+    row["decision_profile"]["track"] = "bad_track"
+    flow.state_path.write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")
+    with pytest.raises(StateCorruptionError, match="decision_profile.track"):
+        flow.validate()

@@ -1,39 +1,34 @@
-# 跨市场公司研究补充
+# 港股与 A/H 发行人合一研究补充（港股通口径）
 
-商业、估值和验证要求沿用统一深研提示词与核验附录。跨市场研究还需明确财报日历、证券权利和现金单位。
+商业判断、价值定义、四情景与慢变量结构化要求沿用[统一深研提示词](standard-deep-research.md)与[核验附录](research-verification.md)。本补充规范港股普通股研究及 A/H 双重上市发行人的统一处理规则。
 
-## 财报槽位
+> **交易权限边界**：投资者通过 **A 股全板块 + 港股通** 交易个股。**美股个股研究与覆盖队列已退役**（见 [archive/README.md](../../archive/README.md)），美股资产统一通过国内场内美股宽基 QDII ETF 配置，仅保留 [global-leaders.json](../../research/benchmarks/global-leaders.json) 作为全球产业参照。
 
-`YYYY-FY / Q1 / H1 / Q3`中的年份为发行人财年标签，第二季度累计资料使用H1。每个周期保留完整报告，同周期重研更新原文件，跨周期保留前期文件。
+## 一、A/H 同发行人合一研究原则
 
-按实际已披露的财务期末选择最新资料。已经披露第三季度结果的采用Q3；尚无季度结果的采用最新半年或年度资料。非自然年公司不能按自然月猜槽位，例如6月结束的财年可以在7月已有当年FY资料。年度结果比旧季度新时，不能退回旧半年。
+对于同时在 A 股和港股上市的发行人（清单维护在 [ah-southbound-bridge.json](../../research/markets/ah-southbound-bridge.json)）：
 
-港股主板的年度、中期与自愿季度披露须按公司实际情况核验；美股也包含采用不同申报制度的外国发行人。公告摘要、完整财务结果和单项经营数字分别辨认，只有足够支撑完整研究的周期财务资料才作为依据。
+1. **经营底稿合一，禁止重复造轮子**：同一发行人的商业模式、行业竞争、经营预测、母公司合并财务与长期现金流分析只维护一份核心发行人研究；**不分别为 A 股和 H 股重写两套内容雷同的 3 万字报告**。
+2. **每股单位与汇率换算**：当以主上市地或主披露口径完成发行人模型后，另一市场证券只需通过股本换算比（当前 A/H 均为 `1:1`）和当期央行/外汇局港币中间价换算每股 `value_range`、`scenarios` 与 `return_model`，并在报告与 `security_basis` 中标明换算汇率及汇率敏感性。
+3. **排期去重**：同一发行人同一时刻仅允许在一个市场队列中持有活动任务，A/H 同步入池时优先排期信息披露更完整、或代表主要上市口径的一侧并同步联动桥接映射。
 
-## 结构化依据
+## 二、港股通税务与股东权利边界
 
-港美股任务和结果必须含：
+港股与 A/H 比价绝不能忽略交易通道带来的真实税后现金差异：
 
-```json
-{"financial_basis":{"period_end":"2026-06-30","published_on":"2026-07-29","source_url":"https://example.com/financial-results"}}
-```
+1. **红利税率规则（内地个人投资者通过港股通）**：
+   - **H 股**（内地注册在港上市）：由 H 股公司按 **20%** 代扣个人所得税（`southbound_dividend_tax_rate = 0.20`）；
+   - **中资红筹股**（境外注册但认定为中国居民企业，如中国移动、中国海油等）：若发行人先向香港结算预提 **10%** 企业所得税、再由中国结算按余额代扣 **20%** 个税，实际综合红利税可达 **28%**（`10% + 90%×20%`）。研究须核对发行人最近一期派息公告的实际代扣条款，在 `capital_return_profile.southbound_dividend_tax_rate` 如实填写（默认参考 [ah-southbound-bridge.json](../../research/markets/ah-southbound-bridge.json)）；
+   - **其他港股通非 H 股**（如开曼/香港本地主体腾讯、网易、港交所、安踏等）：由中国结算代扣 **20%** 个人所得税（`0.20`）；
+   - **A 股对比基准**：内地个人投资者持有 A 股满一年股息红利暂免个税（`0.0`），持股 1 个月至 1 年为 `10%`，1 个月以内为 `20%`。
+2. **转让价差**：港股通个人投资者买卖港股取得的转让差价目前暂免个人所得税，因此**港股通税务折价只作用在现金股息（`base_case_distributions_per_share`），不扣减第 5 年终值资本利得部分**。
+3. **回购型港股**：对以注销式回购为主要资本返还方式的港股标的（如腾讯、汇丰、友邦等），采用 `buyback_total_yield` 框架，在模型中扣减回购资金并同步缩小股数，同时在 `capital_return_profile.annual_net_buyback_per_share` 记录净增厚口径，避免税后股息率掩盖真实股东回报。
 
-示例仅演示字段，不构成真实披露记录。正文同时写明`财务期末：YYYY-MM-DD`与`财报披露：YYYY-MM-DD`，并保留独立的信息截止。历史阅读因此能确认实际覆盖期间。
+## 三、港股财报槽位与结构化依据
 
-结果中的`security_basis`保存`currency`（CNY/HKD/USD）、`unit`（ordinary_share/ADS/share_class）、`ordinary_shares_per_unit`和公开`source_url`。每股估值、分配、未来终值和行情必须对应同一上市证券单位及币种。财务报告币种不同的，研究中说明换算依据和敏感性；展示层不默认为两种币种等价。
+- **槽位沿用发行人财年**：`YYYY-FY / Q1 / H1 / Q3` 按发行人实际财年确定；港股主板若不强制季报且未发自愿季报，则只按 `H1` 与 `FY` 推进周期，不空造季度槽位。
+- **必填字段**：任务与结果须完整提供 `financial_basis`（`period_end`、`published_on`、`source_url`）与 `security_basis`（`currency: "HKD"`、`unit`、`ordinary_shares_per_unit`、`source_url`），正文写明 `财务期末：YYYY-MM-DD` 与 `财报披露：YYYY-MM-DD`。
+- 房地产投资信托按每基金单位计算分派与剩余权益，`security_basis.unit` 使用 `fund_unit`。交易所可买名单之外的独立港股注明核对日期，股息按税前金额列示，`southbound_dividend_tax_rate` 留空。
+- **排期命令**：使用 `python -m trading_os research --market hk enqueue-latest --input disclosures.json [--apply]`，依据实际已披露财务期末预览和派发。
 
-A/H、ADR与股份类别可以复用经过核验的经营事实。股本、权利、税费、跨境分配及单位桥须逐证券明确，不机械复制另一证券的每股估值。ADS比例必须有原始披露依据。
-
-## 排期
-
-披露输入为`{"disclosures":[{"symbol":"US:...","report_period":"2026-FY","financial_basis":{...}}]}`。筛选轮次与每家发行人的财报周期分别记录。`--selection-period` 指定筛选轮次，省略时取执行日最近结束的自然季度（第四季度记为 FY）。先预览，再执行：
-
-```bash
-python -m trading_os research --market us enqueue-latest --selection-period 2026-Q3 --input disclosures.json
-python -m trading_os research --market us enqueue-latest --selection-period 2026-Q3 --input disclosures.json --apply
-python -m trading_os --market us validate
-```
-
-无披露依据的公司列入缺口，不按预计发布日期自动排队。已存在槽位与活动任务跳过；相近期末的冲突记录须先明确版本。下一周期报告使用“前次假设—本期实际—判断变化—估值影响”复盘，前期原文继续保留在原槽位。
-
-参考：[香港交易所财务披露要求](https://www.hkex.com.hk/Listing/Explore-By-Role/Listed-Issuers/Equity-Securities?sc_lang=en)、[SEC EDGAR披露](https://www.sec.gov/edgar/search/)。
+参考：[香港交易所上市规则与财务披露](https://www.hkex.com.hk/Listing/Explore-By-Role/Listed-Issuers/Equity-Securities?sc_lang=en)、[港股通桥接配置](../../research/markets/ah-southbound-bridge.json)。

@@ -66,7 +66,8 @@ _REPORT_CORE_VALUE_RANGE_RE = re.compile(
 )
 _REPORT_PRIMARY_VALUATION_METHOD_RE = re.compile(
     r"主方法|核心方法|(?:PE|P/B|PB|DCF|现金流|分部估值|资产价值).{0,20}为核心|"
-    r"以.{0,30}为核心"
+    r"以.{0,30}为核心|方法[一二]以[^。！？；\n]{1,64}为主(?:[。，；\n]|$)|"
+    r"方法[一二][^。！？；\n]{1,64}(?:作为|是)核心估值"
 )
 _REPORT_METHOD_ONE_RE = re.compile(r"方法一")
 _REPORT_METHOD_TWO_RE = re.compile(r"方法二")
@@ -81,6 +82,36 @@ _RETURN_MODEL_FIELDS = {
     "base_case_terminal_equity_value_range_per_share",
 }
 _RETURN_MODEL_TERMINAL_HORIZONS = {"year_3", "year_5"}
+_TRACKS = frozenset({"compounder", "inflection_growth"})
+_VALUATION_FRAMEWORKS = frozenset(
+    {
+        "dividend_dcf_v1",
+        "buyback_total_yield",
+        "growth_terminal_matrix",
+        "cyclical_cost_curve",
+    }
+)
+_QUALITY_GRADES = frozenset({"A", "B", "C"})
+_LEVELS = frozenset({"high", "medium", "low"})
+_TOPIC_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+_DECISION_PROFILE_FIELDS = frozenset(
+    {
+        "track",
+        "valuation_framework",
+        "industry_topic",
+        "business_quality",
+        "capital_allocation",
+        "predictability",
+        "downside_risk",
+        "exposure_tags",
+        "thesis_breakers",
+    }
+)
+_SCENARIO_ORDER = ("structural_bear", "cyclical_bear", "base_low", "base_high", "bull")
+_SCENARIO_FIELDS = frozenset({"currency", "horizon_note", *_SCENARIO_ORDER})
+_CAPITAL_RETURN_PROFILE_FIELDS = frozenset(
+    {"annual_net_buyback_per_share", "southbound_dividend_tax_rate", "note"}
+)
 _RETIRED_DYNAMIC_RETURN_FIELDS = frozenset(
     {
         "expected_annual_return",
@@ -203,6 +234,9 @@ class ResearchResult:
     return_model_note: str | None = None
     financial_basis: Mapping[str, str] | None = None
     security_basis: Mapping[str, Any] | None = None
+    decision_profile: Mapping[str, Any] | None = None
+    scenarios: Mapping[str, Any] | None = None
+    capital_return_profile: Mapping[str, Any] | None = None
 
 
 @dataclass(frozen=True)
@@ -527,7 +561,7 @@ def _security_basis(value: object, symbol: str) -> dict[str, Any] | None:
     currency = {"CN": "CNY", "HK": "HKD", "US": "USD"}[symbol[:2]]
     if value["currency"] != currency:
         raise ValidationError("security_basis currency must match the listed security")
-    if value["unit"] not in {"ordinary_share", "ADS", "share_class"}:
+    if value["unit"] not in {"ordinary_share", "ADS", "share_class", "fund_unit"}:
         raise ValidationError("unknown listed security unit")
     ratio = _return_model_number(value["ordinary_shares_per_unit"], "ordinary_shares_per_unit")
     if ratio <= 0:
@@ -720,6 +754,146 @@ def _stored_return_model(
         information_cutoff=information_cutoff,
         value_range=value_range,
     )
+
+
+def _check_clean_decision_text(value: str, label: str) -> str:
+    cleaned = _nonblank(value, label)
+    if _REPORT_PROCESS_LEAK_RE.search(cleaned):
+        raise ValidationError(
+            "reader-facing research must not include user conversation or workflow notes; "
+            "keep them in working papers"
+        )
+    if _REPORT_SECURITY_PRICE_LINE_RE.search(cleaned):
+        raise ValidationError(f"{label} must not define a security-price trigger or review line")
+    return cleaned
+
+
+def _decision_profile(value: object) -> dict[str, Any] | None:
+    if value is None:
+        return None
+    if not isinstance(value, Mapping) or set(value) != _DECISION_PROFILE_FIELDS:
+        raise ValidationError("decision_profile fields do not match contract")
+    track = _nonblank(str(value["track"]), "decision_profile.track") if isinstance(value["track"], str) else ""
+    if track not in _TRACKS:
+        raise ValidationError("decision_profile.track must be compounder or inflection_growth")
+    framework = (
+        _nonblank(str(value["valuation_framework"]), "decision_profile.valuation_framework")
+        if isinstance(value["valuation_framework"], str)
+        else ""
+    )
+    if framework not in _VALUATION_FRAMEWORKS:
+        raise ValidationError("decision_profile.valuation_framework is invalid")
+    topic = (
+        _nonblank(str(value["industry_topic"]), "decision_profile.industry_topic")
+        if isinstance(value["industry_topic"], str)
+        else ""
+    )
+    if not _TOPIC_ID_RE.fullmatch(topic):
+        raise ValidationError("decision_profile.industry_topic must be a valid topic identifier")
+    quality = value["business_quality"]
+    if not isinstance(quality, str) or quality not in _QUALITY_GRADES:
+        raise ValidationError("decision_profile.business_quality must be A, B or C")
+    levels: dict[str, str] = {}
+    for field in ("capital_allocation", "predictability", "downside_risk"):
+        item = value[field]
+        if not isinstance(item, str) or item not in _LEVELS:
+            raise ValidationError(f"decision_profile.{field} must be high, medium or low")
+        levels[field] = item
+    tags = _strings(value["exposure_tags"], "decision_profile.exposure_tags")
+    if not 1 <= len(tags) <= 8:
+        raise ValidationError("decision_profile.exposure_tags must contain 1 to 8 items")
+    tags = [_check_clean_decision_text(tag, "decision_profile.exposure_tags") for tag in tags]
+    breakers = _strings(value["thesis_breakers"], "decision_profile.thesis_breakers")
+    if not 1 <= len(breakers) <= 6:
+        raise ValidationError("decision_profile.thesis_breakers must contain 1 to 6 items")
+    breakers = [
+        _check_clean_decision_text(item, "decision_profile.thesis_breakers") for item in breakers
+    ]
+    return {
+        "track": track,
+        "valuation_framework": framework,
+        "industry_topic": topic,
+        "business_quality": quality,
+        **levels,
+        "exposure_tags": tags,
+        "thesis_breakers": breakers,
+    }
+
+
+def _scenarios(
+    value: object,
+    *,
+    expected_currency: str,
+    value_range: Mapping[str, Any] | None,
+) -> dict[str, Any] | None:
+    if value is None:
+        return None
+    if not isinstance(value, Mapping) or set(value) != _SCENARIO_FIELDS:
+        raise ValidationError("scenarios fields do not match contract")
+    currency = value["currency"]
+    if not isinstance(currency, str) or currency != expected_currency:
+        raise ValidationError("scenarios.currency must match listed security")
+    horizon_note = _check_clean_decision_text(
+        str(value["horizon_note"]) if isinstance(value["horizon_note"], str) else "",
+        "scenarios.horizon_note",
+    )
+    parsed: dict[str, float | None] = {}
+    non_null: list[tuple[str, float]] = []
+    for key in _SCENARIO_ORDER:
+        raw = value[key]
+        if raw is None:
+            parsed[key] = None
+        else:
+            num = _return_model_number(raw, f"scenarios.{key}")
+            parsed[key] = num
+            non_null.append((key, num))
+    if not non_null:
+        raise ValidationError("scenarios must include at least one numeric anchor")
+    for idx in range(len(non_null) - 1):
+        prev_key, prev_val = non_null[idx]
+        next_key, next_val = non_null[idx + 1]
+        if prev_val > next_val:
+            raise ValidationError(f"scenarios.{prev_key} must not exceed scenarios.{next_key}")
+    if value_range is not None:
+        if parsed["base_low"] is not None and not math.isclose(
+            parsed["base_low"], value_range["low"], rel_tol=1e-9, abs_tol=0.01
+        ):
+            raise ValidationError("scenarios.base_low must match value_range.low")
+        if parsed["base_high"] is not None and not math.isclose(
+            parsed["base_high"], value_range["high"], rel_tol=1e-9, abs_tol=0.01
+        ):
+            raise ValidationError("scenarios.base_high must match value_range.high")
+    return {"currency": currency, **parsed, "horizon_note": horizon_note}
+
+
+def _capital_return_profile(value: object) -> dict[str, Any] | None:
+    if value is None:
+        return None
+    if not isinstance(value, Mapping) or set(value) != _CAPITAL_RETURN_PROFILE_FIELDS:
+        raise ValidationError("capital_return_profile fields do not match contract")
+    buyback = value["annual_net_buyback_per_share"]
+    buyback_val = (
+        None
+        if buyback is None
+        else _return_model_number(buyback, "capital_return_profile.annual_net_buyback_per_share")
+    )
+    tax = value["southbound_dividend_tax_rate"]
+    tax_val = (
+        None
+        if tax is None
+        else _return_model_number(tax, "capital_return_profile.southbound_dividend_tax_rate")
+    )
+    if tax_val is not None and tax_val > 0.5:
+        raise ValidationError("capital_return_profile.southbound_dividend_tax_rate must be <= 0.5")
+    note = _check_clean_decision_text(
+        str(value["note"]) if isinstance(value["note"], str) else "",
+        "capital_return_profile.note",
+    )
+    return {
+        "annual_net_buyback_per_share": buyback_val,
+        "southbound_dividend_tax_rate": tax_val,
+        "note": note,
+    }
 
 
 def _task_id(symbol: str, trigger_key: str) -> str:
@@ -1394,6 +1568,13 @@ class ResearchFlow:
             raise ValidationError("research result requires value_range or valuation_note")
         if return_model_note is None:
             raise ValidationError("research result requires return_model_note")
+        decision_profile = _decision_profile(result.decision_profile)
+        scenarios = _scenarios(
+            result.scenarios,
+            expected_currency=expected_currency,
+            value_range=value_range,
+        )
+        capital_return_profile = _capital_return_profile(result.capital_return_profile)
         return {
             "symbol": symbol,
             "name": _optional_name(result.name),
@@ -1411,6 +1592,9 @@ class ResearchFlow:
             "valuation_note": valuation_note,
             "return_model": return_model,
             "return_model_note": return_model_note,
+            "decision_profile": decision_profile,
+            "scenarios": scenarios,
+            "capital_return_profile": capital_return_profile,
         }
 
     def _company_directory(self, symbol: str) -> Path:
@@ -1461,6 +1645,8 @@ class ResearchFlow:
         self._market_symbol(normalized["symbol"])
         wanted = _nonblank(task_id, "task_id")
         timestamp = _timestamp(at)
+        if datetime.fromisoformat(timestamp) < datetime.fromisoformat(normalized["information_cutoff"]):
+            raise ValidationError("research acceptance predates information cutoff")
         with _exclusive_lock(self.lock_path):
             active_standard, _ = _standards_registry(self.root)
             states = self._states()
@@ -1542,6 +1728,11 @@ class ResearchFlow:
                     "accepted_at": timestamp,
                 }
             )
+            for optional_field in ("decision_profile", "scenarios", "capital_return_profile"):
+                if normalized[optional_field] is not None:
+                    state[optional_field] = normalized[optional_field]
+                else:
+                    state.pop(optional_field, None)
             tasks = [item for item in tasks if item.task_id != task.task_id]
             self._write_states(states)
             self._write_tasks(tasks)
@@ -1704,10 +1895,31 @@ class ResearchFlow:
                                 information_cutoff=information_cutoff,
                                 value_range=raw_value_range,
                             )
+                        if state.get("decision_profile") is not None:
+                            _decision_profile(state["decision_profile"])
+                        if state.get("scenarios") is not None:
+                            expected_currency = {"CN": "CNY", "HK": "HKD", "US": "USD"}[symbol[:2]]
+                            _scenarios(
+                                state["scenarios"],
+                                expected_currency=expected_currency,
+                                value_range=state.get("value_range"),
+                            )
+                        if state.get("capital_return_profile") is not None:
+                            _capital_return_profile(state["capital_return_profile"])
                     elif report_period is not None:
                         raise StateCorruptionError(
                             f"report_period requires basis_report_path for {symbol}"
                         )
+                    else:
+                        for extra_field in (
+                            "decision_profile",
+                            "scenarios",
+                            "capital_return_profile",
+                        ):
+                            if state.get(extra_field) is not None:
+                                raise StateCorruptionError(
+                                    f"{extra_field} requires basis_report_path for {symbol}"
+                                )
 
                     if status == CompanyStatus.COVERED.value:
                         if report_path is None:

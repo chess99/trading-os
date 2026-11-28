@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { loadCatalog, loadQuotes, formatDate, formatPrice, STATUS_META,
-  MARKET_LABELS, currencyLabel, type Catalog, type Company, type Quote, type ReportVersion } from "../lib/research";
+import { loadCatalog, loadQuotes, formatDate, formatIrr, formatPrice, STATUS_META,
+  EQUITY_MARKET_LABELS, currencyLabel, type Catalog, type Company, type Quote, type ReportVersion } from "../lib/research";
+import { CYCLE_STAGE_LABELS, MACRO_ALIGN_LABELS, QUALITY_LABELS, TRACK_LABELS,
+  scenarioAsymmetry, southboundAfterTaxIrr } from "../lib/decision-metrics.mjs";
 import { readingContext } from "../lib/display-policy.mjs";
 import { loadPublicationDirectory, type PublicationDirectory } from "../lib/publications";
 import { researchHeadings } from "../lib/research-headings.mjs";
@@ -61,6 +63,8 @@ export function ReportWorkspace({ initialTicker }: { initialTicker?: string }) {
   }, [selected, context.live]);
   const markdown = content?.path === path ? content.body : "";
   const quote = context.live && quoteSnapshot?.ticker === selectedTicker ? quoteSnapshot.quote : undefined;
+  const asym = context.live && selected ? scenarioAsymmetry(selected, quote) : null;
+  const afterTax = context.live && selected ? southboundAfterTaxIrr(selected, quote, 5) : null;
   const headings = useMemo(() => researchHeadings(markdown), [markdown]);
   const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
   const rows = (catalog?.companies ?? []).filter((company) => company.reports.length
@@ -75,7 +79,7 @@ export function ReportWorkspace({ initialTicker }: { initialTicker?: string }) {
   if (error) return <main className="standards-workspace"><h1>研报库</h1><p role="alert">{error}</p></main>;
   return <main className="standards-workspace standards-reader">
     <aside className="standards-library"><h1>研报库</h1><p>每个财报周期保留一份完整研究，同周期重写直接更新原文件。</p>
-      <label>市场<select aria-label="研报市场" disabled={!catalog} value={market} onChange={(e) => { setMarket(e.target.value); setSelectedTicker(""); setVersion(null); setQuoteSnapshot(null); }}>{Object.entries(MARKET_LABELS).map(([id,label]) => <option key={id} value={id}>{label}</option>)}</select></label>
+      <label>市场<select aria-label="研报市场" disabled={!catalog} value={market} onChange={(e) => { setMarket(e.target.value); setSelectedTicker(""); setVersion(null); setQuoteSnapshot(null); }}>{Object.entries(EQUITY_MARKET_LABELS).map(([id,label]) => <option key={id} value={id}>{label}</option>)}</select></label>
       <label>公司范围<select aria-label="研报公司范围" value={scope} onChange={(event) => setScope(event.target.value as Scope)}><option value="quality_pool">重点跟踪池 · {catalog?.scope.count ?? "—"}家</option><option value="all_standard">全市场</option></select></label>
       <input aria-label="搜索研报" placeholder="公司、代码、行业" value={query} onChange={(event) => setQuery(event.target.value)} />
       <p>{rows.length} 家有研究报告</p>
@@ -86,7 +90,27 @@ export function ReportWorkspace({ initialTicker }: { initialTicker?: string }) {
       {selected ? <><header><span className="section-eyebrow">{context.live ? "CURRENT STANDARD" : "RESEARCH ARCHIVE"}</span><h2>{selected.name}</h2>
         {context.report ? <><p className="standards-meta">研究周期 {context.report.period}{context.report.periodEnd ? ` · 财务期末 ${context.report.periodEnd}` : ""} · 资料截止 {formatDate(context.report.informationCutoff)} · {context.report.standardLabel}</p>
           {context.report.sourcePath === selected.basisReportPath && <p className="standards-meta">报告更新 {formatDate(selected.reportUpdatedAt, true)} · 完成入库 {formatDate(context.report.acceptedAt, true)}</p>}</> : <p>{selected.reports.length ? "该研究周期不存在" : "尚无已完成研报"}</p>}
-        {context.live && <div className="standards-reader-price" data-testid="live-research-panel"><span>{STATUS_META[selected.status].label}</span><strong>现价 {currencyLabel(quote?.currency ?? selected.quoteCurrency)}{formatPrice(quote?.price)}</strong><span>行情 {formatDate(quote?.quoteAt, true)}</span><p>{selected.summary}</p></div>}
+        {context.live && <div className="standards-reader-price" data-testid="live-research-panel">
+          <span>{STATUS_META[selected.status].label}</span>
+          <strong>现价 {currencyLabel(quote?.currency ?? selected.quoteCurrency)}{formatPrice(quote?.price)}</strong>
+          <span>行情 {formatDate(quote?.quoteAt, true)}</span>
+          <p>{selected.summary}</p>
+          <div className="decision-live-meta">
+            <span>轨道：{TRACK_LABELS[selected.track ?? "compounder"]}</span>
+            {selected.industryState && <span>行业状态：{CYCLE_STAGE_LABELS[selected.industryState.cycleStage]} · {MACRO_ALIGN_LABELS[selected.industryState.macroAlignment]}</span>}
+            {selected.decisionProfile && <span>质量评级：{QUALITY_LABELS[selected.decisionProfile.business_quality]}</span>}
+            {selected.ahBridge?.southboundUnavailableOn && <span>港股独立研究 · 截至 {selected.ahBridge.southboundUnavailableOn} 无法通过港股通买入</span>}
+            {selected.ahBridge?.southboundDividendTaxRate != null && <span title={selected.ahBridge.taxNote}>港股通股息测算扣减 {Math.round(selected.ahBridge.southboundDividendTaxRate * 100)}%{selected.ahBridge.pairSymbol ? ` · 对应 ${selected.ahBridge.pairSymbol}` : ""}</span>}
+            {afterTax?.irr?.midpoint != null && <strong>港股通税后五年 IRR ≈ {formatIrr(afterTax.irr.midpoint)}</strong>}
+          </div>
+          {selected.scenarios && <div className="decision-live-scenarios">
+            <span>四情景锚点({currencyLabel(selected.scenarios.currency)})：结构不利 {formatPrice(selected.scenarios.structural_bear)} · 周期弱 {formatPrice(selected.scenarios.cyclical_bear)} · 基准 {formatPrice(selected.scenarios.base_low)}–{formatPrice(selected.scenarios.base_high)} · 乐观 {formatPrice(selected.scenarios.bull)}</span>
+            {asym && <strong>{asym.downsideCovered ? "现价低于周期底" : `赔率 ${asym.oddsRatio.toFixed(1)}×`}（乐观 {asym.bullUpside >= 0 ? "+" : ""}{(asym.bullUpside * 100).toFixed(0)}% / 周期底 {asym.cyclicalDownside >= 0 ? "+" : ""}{(asym.cyclicalDownside * 100).toFixed(0)}%）</strong>}
+          </div>}
+          {selected.decisionProfile?.thesis_breakers?.length ? <ul className="decision-live-breakers">
+            {selected.decisionProfile.thesis_breakers.map((item) => <li key={item}>改判条件：{item}</li>)}
+          </ul> : null}
+        </div>}
         {selected.reports.length > 0 && <label>研究周期<select aria-label="研究周期" value={context.report?.period ?? ""} onChange={(event) => { setVersion(event.target.value); setQuoteSnapshot(null); window.history.replaceState({}, "", `/reports/${selected.ticker}?version=${event.target.value}`); }}>
           {!context.report && <option value="" disabled>选择研究周期</option>}{selected.reports.map((report) => <option key={report.sourcePath} value={report.period}>{report.period} · {report.standardLabel}{report.sourcePath === selected.basisReportPath ? " · 状态依据" : ""}</option>)}</select></label>}
       </header>

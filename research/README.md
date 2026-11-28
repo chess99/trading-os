@@ -1,6 +1,6 @@
 # 研究成果与发布
 
-`companies/`保存公司财报周期研究；`industries/`保存行业成果及既有内部框架；`macro/`保存宏观与市场研究。网页只展示明确发布的内容。
+`companies/` 保存 A 股与港股公司财报周期研究；`industries/` 保存 34 个行业主题、映射及既有内部框架；`macro/` 保存宏观与国内美股宽基 QDII 研究；`benchmarks/` 保存 25 家全球产业龙头对标；`markets/` 保存 A/H 同发行人及港股通红利税桥；历史退役资产统一存放在根目录 `archive/`。网页只展示明确发布的内容。
 
 ## 正式报告
 
@@ -34,8 +34,10 @@ research/publications.json
 - `indicatorSourcePath`：可选，仅用于已发布行业报告，路径固定为 `research/industries/<topic>/indicators.json`。连接独立维护的当前指标，不改变报告资料截止；历史版本不自动添加该字段。
 - `status`：`published`或`withdrawn`；撤回时必须有`withdrawalReason`，并在阅读界面提示。
 - `regionId`：可选，`cn`标记按中国行业目录完成的中国范围报告；主题须存在于`industries/catalog.json`。未标记的既有跨市场报告继续按原始范围和截止阅读。
+- `industryState`：可选（仅限 `kind: "industry"`），记录结构化慢变量周期阶段（`cycleStage`）、利润池趋势（`profitPoolTrend`）、宏观顺逆风（`macroAlignment`）、拐点筛选触发标记（`inflectionCandidate`）、宏观传导路径（`macroTransmission`）与核心驱动（`keyDrivers`），供研究台、双轨筛选和决策索引读取。
+- `macroState`：可选（仅限 `kind: "macro"`），记录信息截止日 `asOf`、`regimeSummary`、宏观因素列表（`factors`）或主要指数估值基准（`benchmarks`）。
 
-登记表示人工确认可公开阅读，校验通过只说明结构完整。参考文章不能充当当期研究。未登记正文、旧行业框架、提示词、执行计划与日报均不自动发布。测试使用的历史版本只存在临时夹具中。
+登记表示人工确认可公开阅读，校验通过只说明结构完整。参考文章不能充当当期研究。未登记正文、旧行业框架、提示词、执行计划、`prompts/on-demand/` 高频即需提示词与日报产出均不自动发布或提交。测试使用的历史版本只存在临时夹具中。
 
 中国行业的分类与经济范围由`industries/catalog.json`维护，完整报告与历史版本由本发布目录维护。大类导航和主题入口由两者派生；尚无中国范围报告的主题如实显示空状态。宏观研究、跨行业专题及海外地区研究沿用各自选题，不计作中国基础行业的完成结果。
 

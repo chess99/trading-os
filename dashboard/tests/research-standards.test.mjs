@@ -123,7 +123,7 @@ async function fixture() {
   await save("coverage/cn-a/research_state.jsonl", `${JSON.stringify(row)}\n`);
   await save("coverage/cn-a/research_queue.jsonl", "");
   for (const [market, identities] of [["cn-a", { [row.symbol]: row.name, "CN:000003": "待研究公司" }],
-    ["hk", { "HK:00700": "港股样本" }], ["us", { "US:V": "美股样本" }]]) {
+    ["hk", { "HK:00700": "港股样本" }]]) {
     await save(`screening/${market}/value-quality/pool.json`, { schema_version: 2, as_of: "2026-09-18",
       universe: { securities: identities }, review: { reviewed_symbols: Object.keys(identities), scope_note: "测试样本" },
       companies: Object.entries(identities).map(([symbol, name]) => ({ symbol, name, tier: "core_moat",
@@ -139,24 +139,26 @@ test("catalog build redacts historical fields, retains reports, and includes poo
     const historical = state({ symbol: "CN:000002", name: "历史公司",
       basis_report_path: sourcePath.replace("000001", "000002"), standard_id: null,
       spec_revision: null, accepted_at: null, summary: "旧结论不应泄露",
+      decision_profile: { track: "compounder", valuation_framework: "dividend_dcf_v1", industry_topic: "banking", business_quality: "A", capital_allocation: "high", predictability: "high", downside_risk: "low", exposure_tags: ["不应泄露标签"], thesis_breakers: ["不应泄露条件"] },
+      scenarios: { currency: "CNY", structural_bear: 5, cyclical_bear: 8, base_low: 10, base_high: 20, bull: 25, horizon_note: "不应泄露情景" },
       value_range: { low: 991237, high: 991238, currency: "CNY" } });
     await save(historical.basis_report_path, body);
     await save("coverage/cn-a/research_state.jsonl", [row, historical].map(JSON.stringify).join("\n") + "\n");
     const catalog = await buildResearchData(root);
     const screening = JSON.parse(await readFile(join(root, "dashboard/public/data/screening-pools.json"), "utf8"));
-    assert.equal(screening.pools.length, 3);
+    assert.equal(screening.pools.length, 2);
     assert.ok(catalog.companies.some((company) => company.symbol === "HK:00700"));
-    assert.ok(catalog.companies.some((company) => company.symbol === "US:V"));
-    assert.equal(catalog.stats.current.completed, 1); assert.equal(catalog.stats.current.total, 4);
-    assert.equal(catalog.stats.researchStateRows, 2); assert.equal(catalog.companies.length, 5);
+    assert.equal(catalog.stats.current.completed, 1); assert.equal(catalog.stats.current.total, 3);
+    assert.equal(catalog.stats.researchStateRows, 2); assert.equal(catalog.companies.length, 4);
     assert.equal(catalog.companies.find((item) => item.symbol === "CN:000003").hasResearchState, false);
     assert.ok(!JSON.stringify(catalog).includes("991237")); assert.ok(!JSON.stringify(catalog).includes("旧结论不应泄露"));
+    assert.ok(!JSON.stringify(catalog).includes("不应泄露情景")); assert.ok(!JSON.stringify(catalog).includes("不应泄露标签"));
     assert.deepEqual(await readFile(join(root, "dashboard/public/data/reports/000002/2026-H1.md")), body);
     const exported = JSON.parse(await readFile(join(root, "dashboard/public/data/current-research.json"), "utf8"));
     assert.equal(exported.count, 1); assert.equal(exported.companies[0].symbol, row.symbol);
     assert.ok(!(await readFile(join(root, "dashboard/public/data/current-research.csv"), "utf8")).includes("历史公司"));
     const progress = JSON.parse(await readFile(join(root, "dashboard/public/data/research-progress.json"), "utf8"));
-    assert.equal(progress.companies.length, 4); assert.ok(progress.companies.every((item) => !("valueRange" in item)));
+    assert.equal(progress.companies.length, 3); assert.ok(progress.companies.every((item) => !("valueRange" in item)));
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
@@ -214,25 +216,28 @@ test("model exports preserve company, period and source bytes without publishing
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
-test("HK and non-calendar US reports join the same catalog with separate paths and currencies", async () => {
+test("HK reports including non-calendar fiscal years join the catalog with separate paths and currencies", async () => {
   const { root, save } = await fixture();
   try {
-    for (const [market,symbol,period,end,currency] of [["hk","HK:00700","2026-H1","2026-06-30","HKD"], ["us","US:V","2026-FY","2026-09-30","USD"]]) {
-      const path = `research/companies/${symbol.slice(0,2)}/${symbol.slice(3)}/reports/${period}.md`;
-      const row = state({ symbol, name: symbol, report_period: period, basis_report_path: path,
-        value_range:{low:10,high:20,currency}, return_model:null,
-        financial_basis:{period_end:end,published_on:"2026-10-20",source_url:"https://example.com/results"},
-        security_basis:{currency,unit:"ordinary_share",ordinary_shares_per_unit:1,source_url:"https://example.com/rights"} });
-      await save(path, body);
-      await save(`coverage/${market}/research_state.jsonl`, JSON.stringify(row)+"\n");
-      await save(`coverage/${market}/research_queue.jsonl`, "");
-    }
+    const hkStates = [
+      ["HK:00700", "2026-H1", "2026-06-30", "HKD"],
+      ["HK:09988", "2026-FY", "2026-03-31", "HKD"],
+    ].map(([symbol, period, end, currency]) => {
+      const path = `research/companies/HK/${symbol.slice(3)}/reports/${period}.md`;
+      return { path, row: state({ symbol, name: symbol, report_period: period, basis_report_path: path,
+        value_range: { low: 10, high: 20, currency }, return_model: null,
+        financial_basis: { period_end: end, published_on: "2026-10-20", source_url: "https://example.com/results" },
+        security_basis: { currency, unit: "ordinary_share", ordinary_shares_per_unit: 1, source_url: "https://example.com/rights" } }) };
+    });
+    for (const item of hkStates) await save(item.path, body);
+    await save("coverage/hk/research_state.jsonl", hkStates.map((item) => JSON.stringify(item.row)).join("\n") + "\n");
+    await save("coverage/hk/research_queue.jsonl", "");
     const catalog = await buildResearchData(root);
-    for (const [symbol,route,currency] of [["HK:00700","HK-00700","HKD"],["US:V","US-V","USD"]]) {
-      const c=catalog.companies.find((item)=>item.symbol===symbol);
-      assert.equal(c.ticker,route); assert.equal(c.quoteCurrency,currency); assert.equal(c.display.eligible,true);
+    for (const [symbol, route, currency, periodEnd] of [["HK:00700", "HK-00700", "HKD", "2026-06-30"], ["HK:09988", "HK-09988", "HKD", "2026-03-31"]]) {
+      const c = catalog.companies.find((item) => item.symbol === symbol);
+      assert.equal(c.ticker, route); assert.equal(c.quoteCurrency, currency); assert.equal(c.display.eligible, true);
       assert.ok(c.reports[0].path.includes(`/reports/${route}/`));
-      assert.equal(c.reports[0].periodEnd,c.financialBasis.period_end);
+      assert.equal(c.reports[0].periodEnd, periodEnd);
     }
-  } finally { await rm(root,{recursive:true,force:true}); }
+  } finally { await rm(root, { recursive: true, force: true }); }
 });

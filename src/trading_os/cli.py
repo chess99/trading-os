@@ -22,7 +22,7 @@ from .research_assets.research_flow import (
     ValueRange,
     _report_period,
 )
-from .screening_pool import TIERS, QualityPoolStore
+from .screening_pool import TIERS, TRACKS, QualityPoolStore
 
 
 def _add_input(parser: argparse.ArgumentParser) -> None:
@@ -89,6 +89,7 @@ def build_parser() -> argparse.ArgumentParser:
     freeze.set_defaults(handler=_quality_pool_freeze)
     quality_pool_list.add_argument("--period", help="查看指定周期留存的入选名单")
     quality_pool_list.add_argument("--tier", choices=TIERS)
+    quality_pool_list.add_argument("--track", choices=TRACKS, help="按筛选轨道筛选（compounder / inflection_growth）")
     quality_pool_list.set_defaults(handler=_quality_pool_list)
 
     universe = commands.add_parser("universe", help="维护全市场证券清单")
@@ -289,6 +290,9 @@ def _research_result(payload: Mapping[str, Any]) -> ResearchResult:
         valuation_note=payload.get("valuation_note"),
         return_model=return_model,
         return_model_note=payload.get("return_model_note"),
+        decision_profile=payload.get("decision_profile"),
+        scenarios=payload.get("scenarios"),
+        capital_return_profile=payload.get("capital_return_profile"),
     )
 
 
@@ -373,13 +377,24 @@ def _quality_pool_replace(args: argparse.Namespace, stdin: TextIO) -> dict[str, 
 def _quality_pool_list(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any]:
     del stdin
     store = _quality_pool(args)
+    wanted_track = getattr(args, "track", None)
     if args.period:
         selection = store.read_selection(args.period)
         members = [c for c in selection.companies if args.tier is None or c.tier == args.tier]
+        if wanted_track is not None:
+            track_by_symbol = {
+                c.symbol: (c.track or "compounder") for c in store.read().companies
+            }
+            members = [
+                c for c in members if track_by_symbol.get(c.symbol, "compounder") == wanted_track
+            ]
         return {**asdict(selection), "companies": members, "count": len(members)}
     pool = store.read()
     companies = [
-        company for company in pool.companies if args.tier is None or company.tier == args.tier
+        company
+        for company in pool.companies
+        if (args.tier is None or company.tier == args.tier)
+        and (wanted_track is None or (company.track or "compounder") == wanted_track)
     ]
     return {
         "count": len(companies),
@@ -650,6 +665,13 @@ def _research_complete(args: argparse.Namespace, stdin: TextIO) -> dict[str, Any
         "standard_id": state["standard_id"],
         "spec_revision": state["spec_revision"],
         "accepted_at": state["accepted_at"],
+        **({"decision_profile": state["decision_profile"]} if "decision_profile" in state else {}),
+        **({"scenarios": state["scenarios"]} if "scenarios" in state else {}),
+        **(
+            {"capital_return_profile": state["capital_return_profile"]}
+            if "capital_return_profile" in state
+            else {}
+        ),
     }
 
 

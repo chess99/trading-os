@@ -4,8 +4,8 @@ import { join } from "node:path";
 export const screeningMarkets = [
   { id: "cn-a", label: "A股", prefix: /^CN:[0-9]{6}$/u, scope: "A股" },
   { id: "hk", label: "港股", prefix: /^HK:[0-9]{5}$/u, scope: "港股" },
-  { id: "us", label: "美股", prefix: /^US:[A-Z]{1,5}(?:[.-][A-Z])?$/u, scope: "美股" },
 ];
+const optionalCompanyKeys = new Set(["track", "industry_topic", "research_question"]);
 export function projectScreeningPool(pool, market) {
   if (![2, 3].includes(pool.schema_version) || !Array.isArray(pool.companies) || !pool.universe?.securities
     || !Array.isArray(pool.review?.reviewed_symbols) || !pool.review.scope_note || !pool.as_of) {
@@ -15,11 +15,20 @@ export function projectScreeningPool(pool, market) {
   for (const symbol of Object.keys(identities)) if (!market.prefix.test(symbol)) throw new Error(`市场代码不匹配: ${symbol}`);
   const seen = new Set();
   const keys = ["symbol", "name", "industry", "tier", "group", "moat", "owner_cash", "risks", "tier_reason", "sources", ...(pool.schema_version === 3 ? ["issuer", "research_question", "metrics"] : [])];
+  const requiredKeySet = new Set(keys);
   for (const company of pool.companies) {
-    if (Object.keys(company).length !== keys.length || keys.some((key) => !(key in company))) throw new Error("筛选卡含非合同字段");
+    const companyKeys = Object.keys(company);
+    if (keys.some((key) => !(key in company)) || companyKeys.some((key) => !requiredKeySet.has(key) && !optionalCompanyKeys.has(key))) {
+      throw new Error("筛选卡含非合同字段");
+    }
     if (seen.has(company.symbol) || identities[company.symbol] !== company.name || !market.prefix.test(company.symbol)
       || !pool.review.reviewed_symbols.includes(company.symbol)) throw new Error(`无效筛选身份: ${company.symbol}`);
     if (!["core_moat", "quality_research"].includes(company.tier)) throw new Error("无效筛选分层");
+    if ("track" in company && !["compounder", "inflection_growth"].includes(company.track)) throw new Error("无效筛选轨道");
+    if ("research_question" in company && (typeof company.research_question !== "string" || !company.research_question.trim())) throw new Error("缺少关键研究问题");
+    if ("industry_topic" in company && (typeof company.industry_topic !== "string" || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(company.industry_topic))) {
+      throw new Error("无效行业主题");
+    }
     for (const field of keys.filter((key) => !["sources", "metrics"].includes(key))) if (typeof company[field] !== "string" || !company[field].trim()) throw new Error(`缺少筛选判断: ${field}`);
     if (!Array.isArray(company.sources) || !company.sources.length || company.sources.length > 3
       || company.sources.some((source) => !source.title || !/^https?:\/\//u.test(source.url))) throw new Error("无效筛选来源");

@@ -18,7 +18,7 @@ async function main() {
   assert(command === "validate" && positionals.length === 1,
     "用法: node dashboard/scripts/report-standards.mjs validate");
   const policy = await loadStandards(root);
-  const states = (await Promise.all(["cn-a", "hk", "us"].map(async (market) => {
+  const states = (await Promise.all(["cn-a", "hk"].map(async (market) => {
     try { return (await readFile(join(root, `coverage/${market}/research_state.jsonl`), "utf8")).split(/\r?\n/u).filter(Boolean).map(JSON.parse); }
     catch (error) { if (market !== "cn-a" && error.code === "ENOENT") return []; throw error; }
   }))).flat();

@@ -8,32 +8,32 @@
 
 | 工作 | 必读规范 |
 |---|---|
-| 价值质量筛选 | [A 股筛选](prompts/screening/cn-a-value-quality.md)，港美股另读[跨市场筛选](prompts/screening/international-value-quality.md) |
-| 单公司研究与验收 | 完整阅读[统一深研](prompts/company/standard-deep-research.md)、[核验附录](prompts/company/research-verification.md)和[报告写作](prompts/research-writing.md)。港美股另读[跨市场补充](prompts/company/cross-market.md) |
+| 价值质量筛选 | [双轨筛选](prompts/screening/dual-track-screening.md)、[A 股筛选](prompts/screening/cn-a-value-quality.md)，港股另读[跨市场筛选](prompts/screening/international-value-quality.md) |
+| 单公司研究与验收 | 完整阅读[统一深研](prompts/company/standard-deep-research.md)、[核验附录](prompts/company/research-verification.md)和[报告写作](prompts/research-writing.md)。港股及 A/H 另读[跨市场补充](prompts/company/cross-market.md) |
 | 公司研究派发 | [单公司任务简报](prompts/company/research-task-brief.md) |
 | 登记研究结果或修改网页 | [现行研究展示标准](research/standards/README.md) |
 | 模型、输入与复算 | [研究文件与模型交付](docs/research-artifacts.md) |
-| 行业、宏观与市场 | 按主题阅读[行业研究](prompts/industry-research.md)或[宏观研究](prompts/macro-research.md)，遵守[写作规范](prompts/research-writing.md)和[发布规则](research/README.md) |
+| 行业、宏观与即需分析 | 按主题阅读[行业研究](prompts/industry-research.md)或[宏观研究](prompts/macro-research.md)，遵守[写作规范](prompts/research-writing.md)和[发布规则](research/README.md)；日常与实时决策参考 [即需提示词工具箱](prompts/on-demand/README.md) |
 
 ## 数据与写入
 
-- 分市场研究状态和队列分别在 `coverage/{cn-a|hk|us}/research_state.jsonl` 和同目录的 `research_queue.jsonl`。证券是否活跃、最近研究结论、当前任务分别记录。
-- 质量筛选只更新本市场的 `screening/{cn-a|hk|us}/value-quality/pool.json`。用 `quality-pool` 维护成员及分层，`current.md` 由它生成。入池依据是竞争优势、普通股现金、反证与公开来源。池内不存估值、交易信息、任务或报告指针。
-- 每轮先从各市场在市证券重新初筛，留存当期入选名单，再按实际披露派发深研。用户点名的独立研究直接排期，名单由筛选结果确定。明确要求重写时才重开已有周期。同一发行人的 A/H 证券在同一时刻只领取一项任务。每家公司使用独立上下文，由一名研究者完成研究和必要返工。
-- 协调器验收完整正文与结构化候选后，通过 `research complete` 一次写入报告、最新状态和当期标准。研究者不直接改共享 JSONL。双方遵循同一研究规范。
-- 公司报告保存在 `research/companies/{CN|HK|US}/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md`。同周期覆盖，跨周期新增。`basis_report_path` 和 `report_period` 同步绑定最新完成周期。港美股使用发行人财年，保留实际财务期末、披露日、来源及证券币种和单位。
-- 中国基础行业及常设宏观主题逐季研究，按主题及实际发布日期保存。发布入口是 `research/publications.json`，其中区分报告与方法参考。中国行业分类只维护 `research/industries/catalog.json`。日常观察遵循[执行规范](prompts/daily-market-observation.md)，结果在仓库外使用。
+- 活跃研究状态和队列位于 `coverage/{cn-a|hk}/research_state.jsonl` 和同目录的 `research_queue.jsonl`（美股单股已退役并归档至 `archive/retired-us-single-stocks/`；2026-Q1 未引用旧稿已归档至 `archive/legacy-2026-q1/`）。
+- 质量筛选只更新活跃市场的 `screening/{cn-a|hk}/value-quality/pool.json`，支持 `track`（`compounder | inflection_growth`）与 `industry_topic`。用 `quality-pool` 维护成员及分层，`current.md` 由它确定性生成。池内严禁写入估值、现价、买点、任务或报告指针。
+- 每轮先结合行业 `inflectionCandidate` 与全市场质量筛选更新入选名单，再按实际披露派发深研。同一发行人的 A/H 证券在同一时刻只领取一项任务。每家公司使用独立上下文，由一名研究者完成研究和必要返工。
+- 协调器验收完整正文与结构化候选（含可选慢变量字段 `decision_profile`、`scenarios`、`capital_return_profile`）后，通过 `research complete` 一次写入报告、最新状态和当期标准。研究者不直接改共享 JSONL。
+- 公司报告保存在 `research/companies/{CN|HK}/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md`。所有四个报告期均保留完整自足报告；同周期覆盖，跨周期新增。`basis_report_path` 和 `report_period` 同步绑定最新完成周期。港股使用发行人财年，保留实际财务期末、披露日、来源、证券单位及港股通分红税率口径。
+- 34 个中国行业主题及常设宏观主题逐季研究，并在 `research/publications.json` 维护 `industryState` / `macroState` 结构化慢变量。25 家全球行业龙头参照维护在 `research/benchmarks/global-leaders.json`，国内美股宽基 QDII 名录维护在 `research/macro/us-broad-etf/qdii-catalog.json`。日常观察与实时即需决策使用 `prompts/on-demand/` 与 `prompts/daily-market-observation.md`，结果**不提交进入 Git**。
 
 ## 研究与展示
 
-公司研究先形成长期商业判断，再用财务、资本和普通股权益模型检验。事实有公开出处，预测交代依据、范围及模型后果。价值含义以主提示词的[价值定义](prompts/company/standard-deep-research.md#价值定义)为准。区分长期拥有价值、价格吸引力与可论证的错价。
+公司研究先形成长期商业判断，再用财务、资本和普通股权益模型检验，并在正文保留重要性门槛与 Q1/Q3 附注继承说明。事实有公开出处，预测交代依据、范围及模型后果。价值含义以主提示词的[价值定义](prompts/company/standard-deep-research.md#价值定义)为准。区分慢变量经济判断、四情景锚点与实时价格带来的动态赔率/买点。
 
-正式结论为 `covered` 或 `ignore`，均须有自足的完整报告。复盘前次关键假设，按本期资料重新形成判断。每次提交非空 `return_model_note`，可靠模型给出五年每股分配和独立终值，无法可靠建模时留空并说明原因。现价及派生 IRR 只在展示层计算。公司研究不输出仓位、买入线、价格触发或交易授权。
+正式结论为 `covered` 或 `ignore`，均须有自足的完整报告。每次提交非空 `return_model_note` 与可选的 `decision_profile` / `scenarios` / `capital_return_profile`；现价、四情景不对称度及港股通税后 IRR 仅在展示层与 AI 实时分析中合成。公司慢变量研究严禁输出目标买价、仓位或交易指令。
 
-网页默认展示动态重点池最新周期中符合兼容标准的结果。历史周期按各自资料截止阅读，不加载现价或最新摘要。行业报告解释需求、供给、库存、利润和现金的传导，宏观指标注明公式、方向、单位、样本、窗口及修订版本。报告和界面直接面向独立读者，呈现判断、证据和必要的口径说明。
+网页默认展示动态重点池最新周期中符合兼容标准的结果，并在构建时生成供下游决策 AI 调用的 `dashboard/public/data/decision-index.json`。历史周期按各自资料截止阅读，不加载现价或最新摘要。
 
 ## 验证
 
-- 修改共享状态后执行 `python -m trading_os --market <市场> validate`。修改质量池后执行对应市场的 `quality-pool validate`。
-- 模型复算使用当前源码和必要输入。报告、计算代码、必要数据及简明结果进入 Git。下载缓存、候选稿、全量轨迹和批次进度保存在忽略的工作目录。纯研究修改按实际影响验证。
-- 网页与导出修改须验证研究状态，执行 `node dashboard/scripts/report-standards.mjs validate`，并在 `dashboard/` 运行测试、类型检查和浏览器隔离测试。只报告实际执行的检查。
+- 修改共享状态后执行 `.venv/bin/python -m trading_os --market cn-a validate` 与 `--market hk validate`；修改质量池或行业映射后执行对应 `quality-pool validate` 与 `industry validate`。
+- 模型复算使用当前源码和必要输入。报告、计算代码、必要数据及简明结果进入 Git。下载缓存、候选稿、全量轨迹、构建产物（`dashboard/public/data/`、`dashboard/dist/`）和即需提示词产出不提交进 Git。
+- 网页与导出修改须验证研究状态，执行 `node dashboard/scripts/report-standards.mjs validate`，并在 `dashboard/` 运行 `npm run data`、`npm test`、`npx tsc --noEmit`、`npm run lint` 与 `node tests/standard-browser.mjs`。只报告实际执行的检查。

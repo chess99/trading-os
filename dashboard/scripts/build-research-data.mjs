@@ -102,17 +102,49 @@ async function collectReports(root, output, symbol, policy, state) {
       ...reportMetadata(sourcePath, body, policy, state) };
   }));
 }
-export function projectCompany(row, reports, member, policy, task = null) {
+async function readOptionalJson(root, relativePath) {
+  try { return JSON.parse(await readFile(join(root, relativePath), "utf8")); }
+  catch (error) { if (error.code === "ENOENT") return null; throw error; }
+}
+function resolveAhBridge(symbol, bridgeData) {
+  if (!bridgeData) return null;
+  const pair = (bridgeData.ahPairs ?? []).find((item) => item.aSymbol === symbol || item.hSymbol === symbol);
+  if (pair) {
+    const isA = pair.aSymbol === symbol;
+    return { role: isA ? "A" : "H", pairSymbol: isA ? pair.hSymbol : pair.aSymbol, pairName: pair.name, issuer: pair.issuer,
+      sharesRatio: pair.sharesRatio, hShareStructure: pair.hShareStructure,
+      aDividendTaxRateOver1Y: pair.aDividendTaxRateOver1Y, southboundDividendTaxRate: pair.southboundDividendTaxRate,
+      taxNote: pair.taxNote };
+  }
+  if (symbol.startsWith("HK:") && bridgeData.pureHkDefaults) {
+    const override = bridgeData.pureHkDefaults.overrides?.[symbol];
+    const researchOnly = bridgeData.researchOnly?.symbols.includes(symbol);
+    return { role: "HK_ONLY", pairSymbol: null, pairName: null, issuer: symbol, sharesRatio: null,
+      hShareStructure: override?.hShareStructure ?? "hk_general", aDividendTaxRateOver1Y: null,
+      ...(researchOnly && { southboundUnavailableOn: bridgeData.researchOnly.checkedOn }),
+      southboundDividendTaxRate: researchOnly ? null : override?.southboundDividendTaxRate ?? bridgeData.pureHkDefaults.defaultSouthboundDividendTaxRate,
+      taxNote: researchOnly ? "沪深港股通可买名单均未收录，股息按税前金额研究。" : override?.taxNote ?? bridgeData.pureHkDefaults.defaultNote };
+  }
+  return null;
+}
+export function projectCompany(row, reports, member, policy, task = null, context = {}) {
   const metadata = reports.find((report) => report.sourcePath === row.basis_report_path);
   const display = displayEligibility(row, metadata);
   const issue = row.last_revision?.display_issue;
+  const industry = row.industry || member?.industry || "未分类";
+  const track = member?.track ?? (display.eligible ? row.decision_profile?.track : null) ?? "compounder";
+  const industryTopic = (display.eligible ? row.decision_profile?.industry_topic : null)
+    ?? member?.industry_topic ?? context.topicRoutes?.industryToTopic?.[industry] ?? null;
+  const industryState = industryTopic ? (context.industryStates?.get(industryTopic) ?? null) : null;
+  const ahBridge = resolveAhBridge(row.symbol, context.ahBridge);
   return {
     symbol: row.symbol, ticker: row.symbol.startsWith("CN:") ? row.symbol.slice(3) : row.symbol.replace(":", "-"),
     code: row.symbol.slice(3), market: row.symbol.slice(0, 2),
-    quoteCurrency: ({ CN: "CNY", HK: "HKD", US: "USD" })[row.symbol.slice(0,2)],
+    quoteCurrency: ({ CN: "CNY", HK: "HKD" })[row.symbol.slice(0, 2)] ?? "CNY",
     issuer: member?.issuer ?? row.symbol, financialBasis: row.financial_basis ?? null,
     securityBasis: row.security_basis ?? null, name: row.name || reports[0]?.title || row.symbol,
-    exchange: row.exchange ?? "—", industry: row.industry || member?.industry || "未分类",
+    exchange: row.exchange ?? "—", industry,
+    track, industryTopic, industryState, ahBridge,
     status: row.status, universeStatus: row.universe_status ?? "unregistered",
     hasResearchState: row.hasResearchState !== false,
     inQualityPool: Boolean(member), qualityTier: member?.tier ?? null,
@@ -128,6 +160,9 @@ export function projectCompany(row, reports, member, policy, task = null) {
     returnModelNote: display.eligible ? row.return_model_note ?? null : null,
     returnModelDisplayIssue: display.eligible && issue?.base_report === row.basis_report_path
       && issue?.model_as_of === row.information_cutoff ? issue : null,
+    decisionProfile: display.eligible ? row.decision_profile ?? null : null,
+    scenarios: display.eligible ? row.scenarios ?? null : null,
+    capitalReturnProfile: display.eligible ? row.capital_return_profile ?? null : null,
     basisReportPath: row.basis_report_path ?? null,
     reportPeriod: row.report_period ?? null,
     reportUpdatedAt: row.last_research_at ?? null,
@@ -181,19 +216,21 @@ export async function buildResearchData(root = repositoryRoot) {
     try { return parseJsonLines(await readFile(join(root, `coverage/${market}/${filename}.jsonl`), "utf8"), filename); }
     catch (error) { if (error.code === "ENOENT" && market !== "cn-a") return []; throw error; }
   }
-  const states = (await Promise.all(["cn-a", "hk", "us"].map((m) => rowsFor(m, "research_state")))).flat();
-  const queue = (await Promise.all(["cn-a", "hk", "us"].map((m) => rowsFor(m, "research_queue")))).flat();
+  const activeStateMarkets = ["cn-a", "hk"];
+  const activeCompanyMarkets = ["CN", "HK"];
+  const states = (await Promise.all(activeStateMarkets.map((m) => rowsFor(m, "research_state")))).flat();
+  const queue = (await Promise.all(activeStateMarkets.map((m) => rowsFor(m, "research_queue")))).flat();
   const stateSymbols = new Set(states.map((row) => row.symbol));
   if (stateSymbols.size !== states.length) throw new Error("研究状态代码重复");
   const sourceStateCount = states.length;
   const archiveSymbols = [];
-  for (const market of ["CN", "HK", "US"]) {
+  for (const market of activeCompanyMarkets) {
     let directories;
     try { directories = await readdir(join(root, "research/companies", market), { withFileTypes: true }); }
     catch (error) { if (error.code === "ENOENT") continue; throw error; }
     for (const entry of directories) {
       const symbol = `${market}:${entry.name}`;
-      if (entry.isDirectory() && /^(?:CN:[0-9]{6}|HK:[0-9]{5}|US:[A-Z]{1,5}(?:[.-][A-Z])?)$/u.test(symbol)
+      if (entry.isDirectory() && /^(?:CN:[0-9]{6}|HK:[0-9]{5})$/u.test(symbol)
         && !stateSymbols.has(symbol) && !members.has(symbol)) archiveSymbols.push(symbol);
     }
   }
@@ -205,17 +242,48 @@ export async function buildResearchData(root = repositoryRoot) {
       basis_report_path: null })), ...archiveSymbols.map((symbol) => ({ symbol, name: null,
       industry: "历史档案", status: "unregistered", universe_status: "inactive",
       hasResearchState: false, report_period: null, basis_report_path: null }))];
-  const [publications, industryCatalog] = await Promise.all([loadPublications(root), loadIndustryCatalog(root)]);
+  const [publications, industryCatalog, topicRoutes, ahBridge, qdiiCatalog, globalLeaders] = await Promise.all([
+    loadPublications(root),
+    loadIndustryCatalog(root),
+    readOptionalJson(root, "research/industries/topic-routes.json"),
+    readOptionalJson(root, "research/markets/ah-southbound-bridge.json"),
+    readOptionalJson(root, "research/macro/us-broad-etf/qdii-catalog.json"),
+    readOptionalJson(root, "research/benchmarks/global-leaders.json"),
+  ]);
+  const industryTopicLabels = new Map((industryCatalog?.topics ?? []).map((item) => [item.id, item.label]));
+  const industryStates = new Map();
+  let macroRegime = null;
+  let marketBenchmarks = null;
+  for (const doc of publications) {
+    if (doc.status !== "published" || doc.type !== "report") continue;
+    if (doc.kind === "industry" && doc.regionId === "cn" && doc.industryState && !industryStates.has(doc.topic)) {
+      industryStates.set(doc.topic, {
+        ...doc.industryState,
+        topic: doc.topic,
+        label: industryTopicLabels.get(doc.topic) ?? doc.topic,
+        documentId: doc.id,
+        publishedOn: doc.publishedOn,
+        informationCutoff: doc.informationCutoff,
+      });
+    } else if (doc.kind === "macro" && doc.macroState) {
+      if (doc.topic === "cross-market-regime" && !macroRegime) {
+        macroRegime = { documentId: doc.id, publishedOn: doc.publishedOn, informationCutoff: doc.informationCutoff, ...doc.macroState };
+      } else if (doc.topic === "market-valuation" && !marketBenchmarks) {
+        marketBenchmarks = { documentId: doc.id, publishedOn: doc.publishedOn, informationCutoff: doc.informationCutoff, ...doc.macroState };
+      }
+    }
+  }
+  const projectContext = { topicRoutes, industryStates, ahBridge };
   await rm(output, { recursive: true, force: true });
   await mkdir(output, { recursive: true });
   await writeFile(join(output, "screening-pools.json"), JSON.stringify(screening, null, 2) + "\n", "utf8");
   const tasksBySymbol = new Map(queue.map((item) => [item.symbol, item]));
   const companies = [];
   for (const row of rows) {
-    if (!/^(?:CN:[0-9]{6}|HK:[0-9]{5}|US:[A-Z]{1,5}(?:[.-][A-Z])?)$/u.test(row.symbol)) throw new Error(`无效证券代码: ${row.symbol}`);
+    if (!/^(?:CN:[0-9]{6}|HK:[0-9]{5})$/u.test(row.symbol)) throw new Error(`无效证券代码: ${row.symbol}`);
     const reports = await collectReports(root, output, row.symbol, policy, row);
     companies.push(projectCompany(row, reports, members.get(row.symbol), policy,
-      tasksBySymbol.get(row.symbol) ?? null));
+      tasksBySymbol.get(row.symbol) ?? null, projectContext));
   }
   await collectResearchDocuments(output, publications, companies, industryCatalog);
   const status = Object.fromEntries(["unseen", "ignore", "covered", "unregistered"]
@@ -226,6 +294,7 @@ export async function buildResearchData(root = repositoryRoot) {
     schemaVersion: 2, generatedAt: new Date().toISOString(), standard: policy.active,
     standards: policy.registry.standards,
     scope: { id: "quality_pool", label: "重点跟踪池", asOf: screening.pools.map((p) => p.asOf).sort().at(-1), count: members.size },
+    environment: { macroRegime, marketBenchmarks, qdiiCatalog, globalBenchmarksCount: globalLeaders?.leaders?.length ?? 0 },
     stats: { total: companies.length, researchStateRows: sourceStateCount,
       active: states.filter((row) => row.universe_status === "active").length,
       reports: companies.filter((company) => company.reports.length).length,
@@ -234,9 +303,63 @@ export async function buildResearchData(root = repositoryRoot) {
     companies,
   };
   await writeFile(join(output, "research-catalog.json"), `${JSON.stringify(catalog)}\n`, "utf8");
+  await writeFile(join(output, "global-benchmarks.json"), JSON.stringify({
+    schemaVersion: 1,
+    asOf: globalLeaders?.asOf ?? null,
+    purpose: globalLeaders?.purpose ?? null,
+    leaders: globalLeaders?.leaders ?? [],
+  }, null, 2) + "\n", "utf8");
+  const decisionCompanies = currentResults(companies, "all_standard").map((company) => ({
+    symbol: company.symbol,
+    ticker: company.ticker,
+    name: company.name,
+    market: company.market,
+    issuer: company.issuer,
+    quoteCurrency: company.quoteCurrency,
+    industry: company.industry,
+    inQualityPool: company.inQualityPool,
+    qualityTier: company.qualityTier,
+    track: company.track,
+    industryTopic: company.industryTopic,
+    industryState: company.industryState,
+    status: company.status,
+    reportPeriod: company.reportPeriod,
+    informationCutoff: company.informationCutoff,
+    acceptedAt: company.acceptedAt,
+    basisReportPath: company.basisReportPath,
+    summary: company.summary,
+    valueRange: company.valueRange,
+    valuationNote: company.valuationNote,
+    returnModel: company.returnModel,
+    returnModelNote: company.returnModelNote,
+    decisionProfile: company.decisionProfile,
+    scenarios: company.scenarios,
+    capitalReturnProfile: company.capitalReturnProfile,
+    ahBridge: company.ahBridge,
+  }));
+  await writeFile(join(output, "decision-index.json"), JSON.stringify({
+    schemaVersion: 1,
+    generatedAt: catalog.generatedAt,
+    activeStandard: policy.active.id,
+    tradingProfile: {
+      activeMarkets: activeCompanyMarkets,
+      hkChannel: ahBridge?.channel ?? "southbound_stock_connect",
+      usChannel: "domestic_qdii_etf",
+      taxRules: ahBridge?.taxRules ?? null,
+    },
+    macro: {
+      regime: macroRegime,
+      marketBenchmarks,
+      qdiiCatalog,
+    },
+    industries: [...industryStates.values()].sort((a, b) => a.topic.localeCompare(b.topic)),
+    globalBenchmarks: globalLeaders?.leaders ?? [],
+    ahPairs: ahBridge?.ahPairs ?? [],
+    companies: decisionCompanies,
+  }, null, 2) + "\n", "utf8");
   await exportCurrent(output, catalog, "quality_pool", "current-research");
   await exportCurrent(output, catalog, "all_standard", "all-current-research");
-  for (const market of ["CN", "HK", "US"]) {
+  for (const market of activeCompanyMarkets) {
     const subset = { ...catalog, companies: companies.filter((c) => c.market === market) };
     await exportCurrent(output, subset, "quality_pool", `current-research-${market}`);
     await exportCurrent(output, subset, "all_standard", `all-current-research-${market}`);

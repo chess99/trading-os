@@ -6,6 +6,7 @@ type Source = { title: string; url: string };
 type Metrics = { as_of: string; basis: string; items: { label: string; value: string; period: string; source: number }[];
   history: { period: string; value: string }[]; history_metric: string | null; history_source: number | null; note: string };
 type Card = { symbol: string; name: string; industry: string; tier: string; group: string; issuer?: string;
+  track?: "compounder" | "inflection_growth"; industry_topic?: string;
   moat: string; owner_cash: string; risks: string; tier_reason: string; research_question?: string; metrics?: Metrics; sources: Source[] };
 type Exclusion = { symbol: string; name: string; reason: string };
 type Pool = { market: string; label: string; asOf: string; universeCount: number; companies: Card[]; exclusions: Exclusion[]; hasExclusions: boolean;
@@ -24,6 +25,7 @@ export function ScreeningClient({ embedded = false, initialMarket = "all", onMar
   const [error, setError] = useState("");
   const [market, setMarket] = useState(initialMarket);
   const [tier, setTier] = useState("all");
+  const [track, setTrack] = useState("all");
   const [group, setGroup] = useState("all");
   const [industry, setIndustry] = useState("all");
   const [query, setQuery] = useState("");
@@ -42,8 +44,9 @@ export function ScreeningClient({ embedded = false, initialMarket = "all", onMar
       if (result.schemaVersion !== 1 || !Array.isArray(result.pools)) throw new Error("公司资料格式不正确。");
       setData(result);
       const params = new URLSearchParams(window.location.search);
-      if (["cn-a", "hk", "us"].includes(params.get("market") ?? "")) setMarket(params.get("market")!);
+      if (["cn-a", "hk"].includes(params.get("market") ?? "")) setMarket(params.get("market")!);
       if (Object.keys(tiers).includes(params.get("tier") ?? "")) setTier(params.get("tier")!);
+      if (["compounder", "inflection_growth"].includes(params.get("track") ?? "")) setTrack(params.get("track")!);
       setQuery(params.get("q") ?? "");
       if (Object.keys(groupNames).includes(params.get("group") ?? "")) setGroup(params.get("group")!);
       if (params.get("industry")) setIndustry(params.get("industry")!);
@@ -62,13 +65,14 @@ export function ScreeningClient({ embedded = false, initialMarket = "all", onMar
     if (embedded) params.set("view", "pool");
     if (market !== "all") params.set("market", market);
     if (tier !== "all") params.set("tier", tier);
+    if (track !== "all") params.set("track", track);
     if (query) params.set("q", query);
     if (group !== "all") params.set("group", group);
     if (industry !== "all") params.set("industry", industry);
     if (mode === "excluded") params.set("view", mode);
     if (selected) params.set("company", selected);
     window.history.replaceState(null, "", `${embedded ? "/" : "/screening"}${params.size ? "?" + params.toString() : ""}`);
-  }, [data, market, tier, query, selected, group, industry, mode, embedded]);
+  }, [data, market, tier, track, query, selected, group, industry, mode, embedded]);
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
       if (event.key === "/" && !["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement?.tagName ?? "") && !dialog.current?.open) {
@@ -95,8 +99,10 @@ export function ScreeningClient({ embedded = false, initialMarket = "all", onMar
   }, [pools, market]);
   const matchingGroup = allRows.filter((row) => group === "all" || row.group === group);
   const industries = [...new Set(matchingGroup.map((row) => row.industry))].sort((a,b) => a.localeCompare(b,"zh-CN"));
-  const filtered = matchingGroup.filter((row) => (tier === "all" || row.tier === tier) && (industry === "all" || row.industry === industry)
-    && [row.symbol, row.name, row.industry, row.moat, row.risks, row.research_question, ...row.listings].join(" ").toLowerCase().includes(query.trim().toLowerCase()));
+  const filtered = matchingGroup.filter((row) => (tier === "all" || row.tier === tier)
+    && (track === "all" || (row.track ?? "compounder") === track)
+    && (industry === "all" || row.industry === industry)
+    && [row.symbol, row.name, row.industry, row.moat, row.risks, row.research_question, row.industry_topic, ...row.listings].join(" ").toLowerCase().includes(query.trim().toLowerCase()));
   const excluded = pools.flatMap((pool) => pool.exclusions.map((item) => ({ ...item, marketLabel: pool.label })))
     .filter((row) => [row.symbol,row.name,row.reason].join(" ").toLowerCase().includes(query.trim().toLowerCase()));
   const active = allRows.find((row) => row.symbol === selected || row.issuer === selected || row.listings.some((listing) => listing.endsWith(selected ?? "!")));
@@ -111,7 +117,7 @@ export function ScreeningClient({ embedded = false, initialMarket = "all", onMar
     dialog.current?.scrollTo({ top: 0, behavior: "instant" });
   }, [selected]);
   function resetResults() { setPage(0); setSelected(null); }
-  function clear() { setTier("all"); setGroup("all"); setIndustry("all"); setQuery(""); resetResults(); }
+  function clear() { setTier("all"); setTrack("all"); setGroup("all"); setIndustry("all"); setQuery(""); resetResults(); }
   function changeMarket(next: string) {
     setMarket(next); onMarketChange?.(next); setIndustry("all"); resetResults();
     if (next !== "all" && !data?.pools.find((pool) => pool.market === next)?.hasExclusions) setMode("selected");
@@ -127,8 +133,8 @@ export function ScreeningClient({ embedded = false, initialMarket = "all", onMar
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   const detail = active && mode === "selected" ? <>
-    <div className="pool-detail-heading"><span className={`pool-tier ${active.tier}`}>{tiers[active.tier]}</span><button type="button" onClick={() => setSelected(null)} aria-label="关闭公司详情">×</button></div>
-    <h2>{active.name}</h2><p className="pool-detail-meta">{active.industry} · {active.listings.join(" / ")}</p>
+    <div className="pool-detail-heading"><div><span className={`pool-tier ${active.tier}`}>{tiers[active.tier]}</span> <span className="pool-track-tag">{active.track === "inflection_growth" ? "轨道二 · 产业拐点" : "轨道一 · 复利质量"}</span></div><button type="button" onClick={() => setSelected(null)} aria-label="关闭公司详情">×</button></div>
+    <h2>{active.name}</h2><p className="pool-detail-meta">{active.industry}{active.industry_topic ? ` · 主题 ${active.industry_topic}` : ""} · {active.listings.join(" / ")}</p>
     <p className="pool-detail-thesis">{readerText(active.tier_reason)}</p>
     {active.research_question && <section className="pool-question"><h3>关键研究问题</h3><p>{active.research_question}</p></section>}
     {active.metrics && <section className="pool-metrics"><h3>经营与资本</h3><div className="pool-metric-grid">{active.metrics.items.map((item) => <div key={item.label}><span>{item.label}</span><strong>{item.value}</strong><small>{item.period}</small></div>)}</div>
@@ -145,11 +151,12 @@ export function ScreeningClient({ embedded = false, initialMarket = "all", onMar
   return <Container className={`company-pool${embedded ? " embedded-pool" : ""}`}>
     <header className="pool-heading"><div><p className="pool-eyebrow">COMPANY RESEARCH</p><h1>商业质量池</h1><p>寻找竞争优势能够持续转化为股东现金的企业。</p></div><div className="pool-heading-actions"><span><strong>{uniqueCount}</strong> 家公司 · 全市场</span><button type="button" onClick={download}>导出当前列表 ↓</button></div></header>
     <div className="pool-market-bar"><nav aria-label="市场筛选"><button type="button" aria-pressed={market === "all"} onClick={() => changeMarket("all")}>全部市场</button>{data.pools.map((pool) => <button type="button" key={pool.market} aria-pressed={market === pool.market} onClick={() => changeMarket(pool.market)}>{pool.label}<span>{pool.companies.length}</span></button>)}</nav>
-      <details className="pool-method"><summary>筛选方法与范围</summary><div><h2>长期商业质量</h2><p>A · 核心护城河：优势与普通股现金有多年兑现。B · 质量研究：优势已商业化，仍有决定性问题需要验证。</p><p>结合客户选择、资本效率、必要投入、现金归属和治理判断。价格吸引力在公司估值中另行讨论。</p>
+      <details className="pool-method"><summary>筛选方法与范围</summary><div><h2>双轨商业质量池</h2><p>轨道一（<code>compounder</code> 复利质量）：A · 核心护城河与 B · 质量研究，寻找多年兑现股东现金的企业。轨道二（<code>inflection_growth</code> 产业拐点）：由中国行业拐点雷达触发，允许处于重投或周期底部但具备单位经济性改善与供给约束的早期成长标的。</p><p>活跃覆盖 A 股全板块与港股，港股独立研究标的另行注明交易渠道；全部市场按发行人合并 A/H 多地上市记录，单一市场保留该市场证券。美股单股已退役，美股配置改经国内纳指/标普宽基 QDII ETF 与 <a href="/data/global-benchmarks.json" download>全球 25 家产业龙头参照 (JSON) ↓</a> 对标。</p>
         {pools.map((pool) => <section key={pool.market}><h3>{pool.label} · 更新 {pool.asOf}</h3><p>{pool.review.scope_note}</p><p>复核 {pool.review.reviewed_symbols.length} 个证券条目 · 入选 {pool.companies.length}</p></section>)}
-        <p>全部市场按发行人合并A/H等多地上市记录；单一市场保留该市场证券。财务期间见各项指标，访问日与财务期末分别阅读。</p></div></details></div>
+        </div></details></div>
     <div className="pool-toolbar"><label className="pool-search"><span className="sr-only">搜索公司或关键问题</span><input ref={searchRef} type="search" value={query} placeholder="搜索公司、代码或关键问题" onChange={(e) => { setQuery(e.target.value); resetResults(); }}/><kbd>/</kbd></label>
       <label><span className="sr-only">质量层级</span><select disabled={mode !== "selected"} value={tier} onChange={(e) => { setTier(e.target.value); resetResults(); }}><option value="all">全部层级</option>{Object.entries(tiers).map(([id,label]) => <option key={id} value={id}>{label}</option>)}</select></label>
+      <label><span className="sr-only">筛选轨道</span><select disabled={mode !== "selected"} value={track} onChange={(e) => { setTrack(e.target.value); resetResults(); }}><option value="all">全部轨道</option><option value="compounder">复利质量</option><option value="inflection_growth">产业拐点</option></select></label>
       <label><span className="sr-only">业务领域</span><select disabled={mode !== "selected"} value={group} onChange={(e) => { setGroup(e.target.value); setIndustry("all"); resetResults(); }}><option value="all">全部领域</option>{Object.entries(groupNames).map(([id,label]) => <option key={id} value={id}>{label}</option>)}</select></label>
       <label><span className="sr-only">行业</span><select disabled={mode !== "selected"} value={industry} onChange={(e) => { setIndustry(e.target.value); resetResults(); }}><option value="all">全部行业</option>{industries.map((name) => <option key={name}>{name}</option>)}</select></label>
       <button type="button" className="pool-reset" onClick={clear}>重置</button></div>

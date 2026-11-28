@@ -378,6 +378,9 @@ def test_v3_roundtrip_and_v2_payload_compatibility(tmp_path):
     _prepare_methodology(tmp_path)
     old = parse_quality_pool(_pool_payload()).payload()
     assert all("metrics" not in company for company in old["companies"])
+    assert all("research_question" not in company for company in old["companies"])
+    old["companies"][0]["research_question"] = "批量交付后，单位成本是否继续下降？"
+    assert parse_quality_pool(old).payload() == old
     payload = _v3_payload()
     store = QualityPoolStore(tmp_path)
     store.replace(payload)
@@ -410,3 +413,34 @@ def test_v3_exclusion_is_part_of_current_review():
     pool = parse_quality_pool(payload)
     assert len(pool.companies) == 1
     assert pool.review["exclusions"][0]["symbol"] == company["symbol"]
+
+
+def test_dual_track_and_industry_topic_support(tmp_path, capsys):
+    _prepare_methodology(tmp_path)
+    payload = _v3_payload()
+    payload["companies"][0]["track"] = "compounder"
+    payload["companies"][0]["industry_topic"] = "baijiu"
+    payload["companies"][1]["track"] = "inflection_growth"
+    payload["companies"][1]["industry_topic"] = "power-gas-utilities"
+    source = _write(tmp_path / "dual.json", payload)
+
+    replaced = _call(tmp_path, capsys, "quality-pool", "replace", "--input", str(source))
+    assert replaced["track_counts"] == {"compounder": 1, "inflection_growth": 1}
+
+    inflection = _call(tmp_path, capsys, "quality-pool", "list", "--track", "inflection_growth")
+    assert inflection["count"] == 1
+    assert inflection["companies"][0]["symbol"] == "CN:600900"
+
+    current_md = (tmp_path / "screening/cn-a/value-quality/current.md").read_text(encoding="utf-8")
+    assert "筛选轨道：产业拐点与成长" in current_md
+    assert "关联行业主题：power-gas-utilities" in current_md
+
+    bad_track = _v3_payload()
+    bad_track["companies"][0]["track"] = "speculative"
+    with pytest.raises(QualityPoolError, match="筛选轨道"):
+        parse_quality_pool(bad_track)
+
+    bad_topic = _v3_payload()
+    bad_topic["companies"][0]["industry_topic"] = "Bad Topic"
+    with pytest.raises(QualityPoolError, match="industry_topic"):
+        parse_quality_pool(bad_topic)

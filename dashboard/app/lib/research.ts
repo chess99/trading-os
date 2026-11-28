@@ -16,11 +16,104 @@ export interface ReturnModel {
   base_case_terminal_equity_value_range_per_share: { year_5: TerminalEquityValueRange; year_3?: TerminalEquityValueRange };
 }
 export interface IrrRange { low: number | null; midpoint: number | null; high: number | null }
+export type ResearchTrack = "compounder" | "inflection_growth";
+export type CycleStage = "upcycle_tight" | "inflection_bottom" | "mature_stable" | "downcycle_clearing" | "overcapacity";
+export type ProfitPoolTrend = "expanding" | "stable" | "contracting";
+export type MacroAlignment = "tailwind" | "neutral" | "headwind";
+export interface IndustryState {
+  cycleStage: CycleStage;
+  profitPoolTrend: ProfitPoolTrend;
+  macroAlignment: MacroAlignment;
+  macroTransmission: string;
+  inflectionCandidate: boolean;
+  keyDrivers: string[];
+  topic?: string;
+  label?: string;
+  documentId?: string;
+  publishedOn?: string;
+  informationCutoff?: string | null;
+}
+export interface DecisionProfile {
+  track: ResearchTrack;
+  valuation_framework: "dividend_dcf_v1" | "buyback_total_yield" | "growth_terminal_matrix" | "cyclical_cost_curve";
+  industry_topic: string;
+  business_quality: "A" | "B" | "C";
+  capital_allocation: "high" | "medium" | "low";
+  predictability: "high" | "medium" | "low";
+  downside_risk: "low" | "medium" | "high";
+  exposure_tags: string[];
+  thesis_breakers: string[];
+}
+export interface Scenarios {
+  currency: "CNY" | "HKD";
+  structural_bear: number;
+  cyclical_bear: number;
+  base_low: number;
+  base_high: number;
+  bull: number;
+  horizon_note: string;
+}
+export interface CapitalReturnProfile {
+  annual_net_buyback_per_share: number | null;
+  southbound_dividend_tax_rate: number | null;
+  note: string;
+}
+export interface AhBridge {
+  role: "A" | "H" | "HK_ONLY";
+  pairSymbol: string | null;
+  pairName: string | null;
+  issuer: string;
+  sharesRatio: number | null;
+  hShareStructure: string;
+  aDividendTaxRateOver1Y: number | null;
+  southboundDividendTaxRate: number | null;
+  southboundUnavailableOn?: string;
+  taxNote: string;
+}
+export interface MacroFactor {
+  id: string;
+  label: string;
+  direction: string;
+  reading: string;
+  implication: string;
+}
+export interface MacroBenchmark {
+  id: string;
+  name: string;
+  market: "CN" | "HK" | "US";
+  observedOn: string | null;
+  pe: number | null;
+  pb: number | null;
+  dividendYieldPct: number | null;
+  earningsYieldPct: number | null;
+  bondYield10yPct: number | null;
+  erpPct: number | null;
+  cape: number | null;
+  percentile5y: number | null;
+  percentile10y: number | null;
+  note: string;
+}
+export interface QdiiCatalog {
+  schemaVersion: number;
+  updatedOn: string;
+  trackedIndices: { id: string; name: string; englishName: string; currency: string; focusMetrics: string[] }[];
+  etfs: { symbol: string; name: string; manager: string; trackedIndex: string; currencyExposure: string; checkItems: string[] }[];
+}
+export interface MacroEnvironment {
+  macroRegime: { asOf: string; regimeSummary?: string; factors?: MacroFactor[]; documentId?: string; publishedOn?: string; informationCutoff?: string | null } | null;
+  marketBenchmarks: { asOf: string; benchmarks?: MacroBenchmark[]; documentId?: string; publishedOn?: string; informationCutoff?: string | null } | null;
+  qdiiCatalog: QdiiCatalog | null;
+  globalBenchmarksCount: number;
+}
 export interface Company {
-  symbol: string; ticker: string; code: string; market: "CN" | "HK" | "US"; issuer: string;
+  symbol: string; ticker: string; code: string; market: "CN" | "HK"; issuer: string;
   quoteCurrency: string; financialBasis: { period_end: string; published_on: string; source_url: string } | null;
   securityBasis: { currency: string; unit: string; ordinary_shares_per_unit: number; source_url: string } | null;
   name: string; exchange: string; industry: string;
+  track?: ResearchTrack;
+  industryTopic?: string | null;
+  industryState?: IndustryState | null;
+  ahBridge?: AhBridge | null;
   status: ResearchStatus; universeStatus: "active" | "inactive" | "unregistered";
   hasResearchState: boolean; inQualityPool: boolean; qualityTier: string | null;
   updatedAt: string | null; informationCutoff: string | null;
@@ -29,6 +122,9 @@ export interface Company {
   summary: string; valueRange: { currency: string; low: number; high: number } | null; valuationNote: string | null;
   returnModel: ReturnModel | null; returnModelNote: string | null;
   returnModelDisplayIssue?: { event_date: string; reason: string; source_url: string } | null;
+  decisionProfile?: DecisionProfile | null;
+  scenarios?: Scenarios | null;
+  capitalReturnProfile?: CapitalReturnProfile | null;
   reportPeriod: string | null; basisReportPath: string | null; reportUpdatedAt: string | null;
   latestReportPeriod: string | null; pendingReportPeriod: string | null;
   pendingTaskKind: "periodic" | "manual_rewrite" | null; reports: ReportVersion[];
@@ -45,6 +141,7 @@ export interface ProgressCounts {
 export interface Catalog {
   schemaVersion: 2; generatedAt: string; standard: ResearchStandard; standards: ResearchStandard[];
   scope: { id: string; label: string; asOf: string; count: number };
+  environment?: MacroEnvironment;
   stats: { total: number; researchStateRows: number; active: number; reports: number;
     status: Record<ResearchStatus, number>; queue: { queued: number; running: number; total: number };
     current: ProgressCounts; allStandard: ProgressCounts };
@@ -73,7 +170,10 @@ export async function loadCatalog(signal?: AbortSignal): Promise<Catalog> {
     return { ...company, summary: eligible ? company.summary : "",
       valueRange: eligible ? company.valueRange ?? null : null,
       returnModel: eligible ? company.returnModel ?? null : null,
-      returnModelNote: eligible ? company.returnModelNote ?? null : null };
+      returnModelNote: eligible ? company.returnModelNote ?? null : null,
+      decisionProfile: eligible ? company.decisionProfile ?? null : null,
+      scenarios: eligible ? company.scenarios ?? null : null,
+      capitalReturnProfile: eligible ? company.capitalReturnProfile ?? null : null };
   }) };
 }
 export async function loadQuotes(tickers: string[], signal?: AbortSignal): Promise<Quote[]> {
@@ -118,5 +218,6 @@ export function formatDate(value: string | null | undefined, withTime = false) {
 }
 export function cleanCompanyName(name: string) { return name.replace(/\s+/gu, " ").trim(); }
 
-export const MARKET_LABELS = { all: "全部市场", CN: "A股", HK: "港股", US: "美股" };
+export const EQUITY_MARKET_LABELS = { all: "全部市场", CN: "A股", HK: "港股" };
+export const MARKET_LABELS = { all: "全部市场", CN: "A股", HK: "港股", US: "美股/宽基" };
 export function currencyLabel(currency?: string) { return ({ CNY: "¥", HKD: "HK$", USD: "US$" } as Record<string,string>)[currency ?? "CNY"] ?? currency ?? ""; }

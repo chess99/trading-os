@@ -87,10 +87,10 @@ python -m trading_os research enqueue-rewrite \
 结果只有 `covered / ignore`。worker 返回结构化候选；协调器完成商业判断、事实、模型和表达验收后，才通过 `research complete` 写入：
 
 ```text
-research/companies/{CN|HK|US}/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md
+research/companies/{CN|HK}/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md
 ```
 
-同周期覆盖，跨周期新增。候选未通过验收时直接丢弃，不写文件、不推进 `basis_report_path`。
+同周期覆盖，跨周期新增。所有四个财报周期（FY / H1 / Q1 / Q3）均交付完整自足报告；一/三季报缺少完整附注时，在正文中显式声明承接上一份 H1/FY 已核实权益桥与资产结构。候选未通过验收时直接丢弃，不写文件、不推进 `basis_report_path`。
 
 有前次周期报告时，正文保留简洁的“前次假设—本期实际—判断变化—估值影响”复盘。不得用“详见前序报告”跳过商业、财务、估值或风险正文。
 
@@ -98,15 +98,15 @@ research/companies/{CN|HK|US}/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md
 
 协调器至少确认：
 
-- 累计、报告期单季、上年同期和上一季度口径清楚；
+- 累计、报告期单季、上年同期和上一季度口径清楚，季报附注继承声明与经济重要性门槛（<3%–5% 细项不做伪精确法医推演）落实；
 - 关键旧假设与本期事实完成比较，并解释偏差原因；
 - 全文只有一套信息截止和一致结论；
-- 关键原始数字、普通股归属、股本和估值重新核验；
-- 两种估值方法可复算并指定主次；
-- 五年分配、未来终值、现金/权益桥和完全稀释股数一致；
-- 正文核心价值区间与结构化 `value_range` 一致；
-- 当前价值没有被复制成第五年终值；
-- 已分配现金、金融资产、债务、少数权益和资本投入没有重复计价。
+- 关键原始数字、普通股归属、股本、港股通分红税率口径及回购稀释重新核验；
+- 按公司经济类型适配两种估值方法（`dividend_dcf_v1` / `buyback_total_yield` / `growth_terminal_matrix` / `cyclical_cost_curve`），可复算并指定主次；
+- 五年分配、未来终值、现金/权益桥与四情景锚点一致且单调自洽，完全稀释股数一致；
+- 正文核心价值区间与结构化 `value_range` / `scenarios.base_low..base_high` 一致；
+- 慢变量结构化字段（`decision_profile`、`scenarios`、`capital_return_profile`）不含写作当日现价、买点与过程话术；
+- 当前价值没有被复制成第五年终值，未将未承诺回购虚增为必然增厚。
 
 机械校验不替代商业判断。关键证据错误、普通股归属不清、重复计价或无法复算，不能靠流畅文字通过。
 
@@ -127,16 +127,18 @@ research/companies/{CN|HK|US}/{ticker}/reports/YYYY-{FY|Q1|H1|Q3}.md
 
 ## 唯一事实源
 
-- `coverage/cn-a/research_state.jsonl`：证券和最近完成周期的研究状态；
-- `coverage/cn-a/research_queue.jsonl`：当前周期及人工重写任务；
-- `research/companies/{CN|HK|US}/{ticker}/reports/`：财报周期完整报告；
-- `screening/{cn-a|hk|us}/value-quality/pool.json`：动态重点跟踪池。
+- `coverage/{cn-a|hk}/research_state.jsonl`：A 股与港股证券和最近完成周期的研究状态；
+- `coverage/{cn-a|hk}/research_queue.jsonl`：当前周期及人工重写任务；
+- `research/companies/{CN|HK}/{ticker}/reports/`：财报周期完整报告；
+- `screening/{cn-a|hk}/value-quality/pool.json`：双轨动态重点跟踪池（`compounder` + `inflection_growth`）。
 
 共享 JSONL 只由协调器原子写入。每轮写入后执行：
 
 ```bash
 python -m trading_os validate
+python -m trading_os --market hk validate
+python -m trading_os industry validate
 node dashboard/scripts/report-standards.mjs validate
 ```
 
-港美股使用 `research --market hk|us enqueue-latest --input disclosures.json` 按已披露财务期末预览排期。财年、证券单位与币种要求见[跨市场补充](../prompts/company/cross-market.md)。
+港股使用 `research --market hk enqueue-latest --input disclosures.json` 按已披露财务期末预览排期。财年、证券单位、A/H 同发行人统筹与港股通红利税率要求见[跨市场补充](../prompts/company/cross-market.md)（美股单股已退役归档至 `archive/retired-us-single-stocks/`）。

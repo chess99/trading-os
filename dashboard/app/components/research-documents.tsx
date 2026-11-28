@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { MARKET_LABELS } from "../lib/research";
+import { CYCLE_STAGE_LABELS, MACRO_ALIGN_LABELS } from "../lib/decision-metrics.mjs";
 import { loadPublicationDirectory, type PublishedDocument, type PublicationDirectory } from "../lib/publications";
 import { initialIndustryRegion, industryRegion, industryTopicChoices } from "../lib/industry-view.mjs";
 import { researchHeadings } from "../lib/research-headings.mjs";
@@ -144,6 +145,7 @@ export function ResearchDocuments({ kind }: { kind: PublishedDocument["kind"] })
             <header className="publication-meta"><details><summary>{current.type === "report" ? `资料截止 ${current.informationCutoff}` : `指标与方法 · ${current.publishedOn}`} · 范围</summary>
               <p>版本：{current.version} · 适用市场：{current.markets.map((m) => MARKET_LABELS[m as keyof typeof MARKET_LABELS]).join("、")} · 覆盖地域：{current.regions.join("、")}</p>{selectedCatalogTopic && <p>{selectedCatalogTopic.scope}</p>}</details>
               {kind === "industry" && <span className="publication-reading-area">{region === "cn" ? "中国行业研究" : "历史与海外研究"}</span>}
+              {kind === "industry" && current.industryState && <span className={`decision-pill align-${current.industryState.macroAlignment}`}>{CYCLE_STAGE_LABELS[current.industryState.cycleStage]} · {MACRO_ALIGN_LABELS[current.industryState.macroAlignment]}{current.industryState.inflectionCandidate ? " · 拐点雷达" : ""}</span>}
               {versions.length > 1 && <label>报告版本<select aria-label="报告版本" value={current.version} onChange={(e) => update(current.topic, e.target.value)}>{versions.map((d) => <option key={d.id} value={d.version}>{d.version}{d.status === "withdrawn" ? " · 已撤回" : ""}</option>)}</select></label>}
             </header>
             {current.status === "withdrawn" && <p role="alert" className="publication-withdrawn">本报告已撤回：{current.withdrawalReason}</p>}

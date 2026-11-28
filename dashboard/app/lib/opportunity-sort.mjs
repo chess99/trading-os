@@ -1,3 +1,5 @@
+import { CYCLE_ORDER } from "./decision-metrics.mjs";
+
 function finiteNumberOrNull(value) {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
@@ -29,6 +31,27 @@ export function compareOpportunityRanks(a, b) {
 // Numeric ordering is an explicit exploration choice, never the default shortlist.
 export function compareResearchMapRows(a, b, mode = "ticker") {
   if (mode === "irr") return compareOpportunityRanks(a, b);
+  if (mode === "odds") {
+    const aOdds = a.oddsRatio === Infinity ? Infinity : finiteNumberOrNull(a.oddsRatio);
+    const bOdds = b.oddsRatio === Infinity ? Infinity : finiteNumberOrNull(b.oddsRatio);
+    if (aOdds !== null && bOdds !== null) {
+      if (aOdds === bOdds) return compareOpportunityRanks(a, b);
+      if (aOdds === Infinity) return -1;
+      if (bOdds === Infinity) return 1;
+      return bOdds - aOdds || compareOpportunityRanks(a, b);
+    }
+    if (aOdds !== null) return -1;
+    if (bOdds !== null) return 1;
+    return compareOpportunityRanks(a, b);
+  }
+  if (mode === "cycle") {
+    const aOrder = a.cycleStage && a.cycleStage in CYCLE_ORDER ? CYCLE_ORDER[a.cycleStage] : null;
+    const bOrder = b.cycleStage && b.cycleStage in CYCLE_ORDER ? CYCLE_ORDER[b.cycleStage] : null;
+    if (aOrder !== null && bOrder !== null) return aOrder - bOrder || compareOpportunityRanks(a, b);
+    if (aOrder !== null) return -1;
+    if (bOrder !== null) return 1;
+    return compareOpportunityRanks(a, b);
+  }
   if (mode === "updated") return compareRecencyAndTicker(a, b);
   if (mode === "value") {
     const aValue = finiteNumberOrNull(a.lowRatio);

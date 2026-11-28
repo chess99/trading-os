@@ -71,9 +71,9 @@ test("industry and macro publish reports separately from methods and internal in
 });
 test("production projection matches qualified state rows and redacts all unqualified values", async () => {
   const catalog = JSON.parse(await readFile(new URL("../public/data/research-catalog.json", import.meta.url), "utf8"));
-  const rows = (await Promise.all(["cn-a", "hk", "us"].map(async (m) => (await readFile(new URL(`../../coverage/${m}/research_state.jsonl`, import.meta.url), "utf8")).split(/\r?\n/u).filter(Boolean).map(JSON.parse)))).flat();
+  const rows = (await Promise.all(["cn-a", "hk"].map(async (m) => (await readFile(new URL(`../../coverage/${m}/research_state.jsonl`, import.meta.url), "utf8")).split(/\r?\n/u).filter(Boolean).map(JSON.parse)))).flat();
   const sources = new Map(rows.map((row) => [row.symbol, row]));
-  const pools = await Promise.all(["cn-a", "hk", "us"].map(async (m) => JSON.parse(await readFile(new URL(`../../screening/${m}/value-quality/pool.json`, import.meta.url), "utf8"))));
+  const pools = await Promise.all(["cn-a", "hk"].map(async (m) => JSON.parse(await readFile(new URL(`../../screening/${m}/value-quality/pool.json`, import.meta.url), "utf8"))));
   assert.equal(catalog.stats.researchStateRows, rows.length);
   assert.equal(catalog.scope.count, pools.reduce((n,p) => n + p.companies.length, 0));
   for (const company of catalog.companies) {
@@ -85,10 +85,14 @@ test("production projection matches qualified state rows and redacts all unquali
       assert.deepEqual(company.valueRange, source.value_range ?? null);
       assert.deepEqual(company.returnModel, source.return_model ?? null);
       assert.equal(company.returnModelNote, source.return_model_note ?? null);
+      assert.deepEqual(company.decisionProfile, source.decision_profile ?? null);
+      assert.deepEqual(company.scenarios, source.scenarios ?? null);
+      assert.deepEqual(company.capitalReturnProfile, source.capital_return_profile ?? null);
       assert.equal(company.summary, source.summary);
       assert.ok(company.reports.some((report) => report.sourcePath === company.basisReportPath && report.compatible));
     } else {
       assert.equal(company.valueRange, null); assert.equal(company.returnModel, null); assert.equal(company.returnModelNote, null); assert.equal(company.summary, "");
+      assert.equal(company.decisionProfile, null); assert.equal(company.scenarios, null); assert.equal(company.capitalReturnProfile, null);
     }
     if (!source) assert.equal(company.hasResearchState, false);
   }

@@ -8,6 +8,44 @@ function validDate(value) {
     && Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
 }
 function nonblank(value) { return typeof value === "string" && value.trim().length > 0; }
+const CYCLE_STAGES = new Set(["upcycle_tight", "inflection_bottom", "mature_stable", "downcycle_clearing", "overcapacity"]);
+const PROFIT_TRENDS = new Set(["expanding", "stable", "contracting"]);
+const MACRO_ALIGNMENTS = new Set(["tailwind", "neutral", "headwind"]);
+function validateIndustryState(state) {
+  if (!state || typeof state !== "object" || Array.isArray(state)) throw new Error("行业状态格式错误");
+  if (!CYCLE_STAGES.has(state.cycleStage)) throw new Error("行业状态 cycleStage 无效");
+  if (!PROFIT_TRENDS.has(state.profitPoolTrend)) throw new Error("行业状态 profitPoolTrend 无效");
+  if (!MACRO_ALIGNMENTS.has(state.macroAlignment)) throw new Error("行业状态 macroAlignment 无效");
+  if (typeof state.inflectionCandidate !== "boolean") throw new Error("行业状态 inflectionCandidate 必须为布尔值");
+  if (!nonblank(state.macroTransmission)) throw new Error("行业状态 macroTransmission 不能为空");
+  if (!Array.isArray(state.keyDrivers) || !state.keyDrivers.length || !state.keyDrivers.every(nonblank)) {
+    throw new Error("行业状态 keyDrivers 必须为非空字符串数组");
+  }
+}
+function validateMacroState(state) {
+  if (!state || typeof state !== "object" || Array.isArray(state)) throw new Error("宏观状态格式错误");
+  if (!validDate(state.asOf)) throw new Error("宏观状态 asOf 日期无效");
+  if (state.regimeSummary !== undefined && !nonblank(state.regimeSummary)) throw new Error("宏观状态 regimeSummary 不能为空");
+  const hasFactors = Array.isArray(state.factors) && state.factors.length > 0;
+  const hasBenchmarks = Array.isArray(state.benchmarks) && state.benchmarks.length > 0;
+  if (!hasFactors && !hasBenchmarks) throw new Error("宏观状态至少需包含 factors 或 benchmarks");
+  if (state.factors !== undefined) {
+    if (!hasFactors) throw new Error("宏观状态 factors 必须为非空数组");
+    for (const f of state.factors) {
+      if (!f || typeof f !== "object" || !nonblank(f.id) || !nonblank(f.label) || !nonblank(f.direction) || !nonblank(f.reading) || !nonblank(f.implication)) {
+        throw new Error("宏观状态 factor 字段不完整");
+      }
+    }
+  }
+  if (state.benchmarks !== undefined) {
+    if (!hasBenchmarks) throw new Error("宏观状态 benchmarks 必须为非空数组");
+    for (const b of state.benchmarks) {
+      if (!b || typeof b !== "object" || !nonblank(b.id) || !nonblank(b.name) || !["CN", "HK", "US"].includes(b.market) || !nonblank(b.note)) {
+        throw new Error("宏观状态 benchmark 字段不完整");
+      }
+    }
+  }
+}
 
 // Only explicitly published reader-facing documents enter the website.
 export async function loadPublications(root) {
@@ -48,8 +86,17 @@ export async function loadPublications(root) {
     if (!title || !markdown.trim()) throw new Error("发布正文缺少标题");
     if (entry.indicatorSourcePath && (entry.kind !== "industry" || entry.type !== "report" || entry.status !== "published")) throw new Error("只有正式行业报告可连接运行指标");
     const indicatorData = entry.indicatorSourcePath ? await loadIndustryIndicators(root, entry.topic, entry.indicatorSourcePath) : null;
+    if (entry.industryState !== undefined) {
+      if (entry.kind !== "industry") throw new Error("只有行业文档可包含行业状态");
+      validateIndustryState(entry.industryState);
+    }
+    if (entry.macroState !== undefined) {
+      if (entry.kind !== "macro") throw new Error("只有宏观文档可包含宏观状态");
+      validateMacroState(entry.macroState);
+    }
     documents.push({ indicatorData, indicatorPath: indicatorData ? `/data/indicators/${entry.topic}.json` : null, id: entry.id, kind: entry.kind, type: entry.type, topic: entry.topic, publishedOn: entry.publishedOn, revision, version: versionKey,
       informationCutoff: entry.informationCutoff, markets: entry.markets, regions: entry.regions, regionId: entry.regionId ?? null, summary: entry.summary,
+      industryState: entry.industryState ?? null, macroState: entry.macroState ?? null,
       sourcePath: expected, status: entry.status, withdrawalReason: entry.withdrawalReason ?? null,
       title, path: `/data/documents/${entry.id}.md`, markdown });
   }

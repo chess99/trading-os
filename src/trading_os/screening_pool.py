@@ -20,6 +20,9 @@ CURRENT_PATH = POOL_PATH.with_name("current.md")
 DEFAULT_METHODOLOGY_PATH = "prompts/screening/cn-a-value-quality.md"
 TIERS = ("core_moat", "quality_research")
 TIER_TITLES = {"core_moat": "A：核心护城河池", "quality_research": "B：质量研究池"}
+TRACKS = ("compounder", "inflection_growth")
+TRACK_TITLES = {"compounder": "复利质量", "inflection_growth": "产业拐点与成长"}
+_TOPIC_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 GROUPS = (
     "consumer_brand_network",
     "healthcare_platform",
@@ -167,6 +170,8 @@ class QualityPoolCompany:
     issuer: str | None = None
     research_question: str | None = None
     metrics: dict[str, Any] | None = None
+    track: str | None = None
+    industry_topic: str | None = None
 
 
 @dataclass(frozen=True)
@@ -181,21 +186,29 @@ class QualityPool:
 
     def payload(self) -> dict[str, Any]:
         result = json.loads(json.dumps(asdict(self), ensure_ascii=False))
-        if self.schema_version == 2:
-            for company in result["companies"]:
-                for key in ("issuer", "research_question", "metrics"):
+        for company in result["companies"]:
+            if company.get("track") is None:
+                company.pop("track", None)
+            if company.get("industry_topic") is None:
+                company.pop("industry_topic", None)
+            if self.schema_version == 2:
+                for key in ("issuer", "metrics"):
                     company.pop(key, None)
+                if company["research_question"] is None:
+                    company.pop("research_question")
         return result
 
     def status(self) -> dict[str, Any]:
         tiers = Counter(c.tier for c in self.companies)
         groups = Counter(c.group for c in self.companies)
+        tracks = Counter((c.track or "compounder") for c in self.companies)
         return {
             "as_of": self.as_of,
             "universe_as_of": self.universe["as_of"],
             "universe_count": len(self.universe["securities"]),
             "pool_count": len(self.companies),
             "tier_counts": {t: tiers[t] for t in TIERS},
+            "track_counts": {t: tracks[t] for t in TRACKS},
             "group_counts": {g: groups[g] for g in GROUPS},
             "reviewed_count": len(self.review["reviewed_symbols"]),
             "missing_baseline_count": len(self.review["missing_baseline_symbols"]),
@@ -269,20 +282,28 @@ def parse_quality_pool(payload: object) -> QualityPool:
         review["exclusions"] = sorted(exclusions, key=lambda e: e["symbol"])
     companies = []
     seen = set()
+    required_company_fields = {
+        "symbol",
+        "name",
+        "industry",
+        "tier",
+        "group",
+        "sources",
+        *_CARD_FIELDS,
+    } | ({"issuer", "research_question", "metrics"} if extended else set())
+    optional_company_fields = {"track", "industry_topic", "research_question"}
     for raw in _array(p["companies"], "companies"):
-        c = _object(
-            raw,
-            {
-                "symbol",
-                "name",
-                "industry",
-                "tier",
-                "group",
-                "sources",
-                *_CARD_FIELDS,
-            } | ({"issuer", "research_question", "metrics"} if extended else set()),
-            "company（不得耦合单公司研究、行情或交易字段）",
-        )
+        if not isinstance(raw, dict):
+            raise QualityPoolError("company 必须是 JSON 对象")
+        raw_keys = set(raw)
+        if not required_company_fields <= raw_keys or not raw_keys <= (
+            required_company_fields | optional_company_fields
+        ):
+            raise QualityPoolError(
+                "company（不得耦合单公司研究、行情或交易字段）字段必须为："
+                + ", ".join(sorted(required_company_fields))
+            )
+        c = raw
         symbol = _symbol(c["symbol"])
         if symbol in seen:
             raise QualityPoolError(f"重复证券：{symbol}")
@@ -291,6 +312,19 @@ def parse_quality_pool(payload: object) -> QualityPool:
             raise QualityPoolError(f"{symbol} 代码或名称与独立证券清单不符")
         if c["tier"] not in TIERS or c["group"] not in GROUPS:
             raise QualityPoolError(f"{symbol} 分层或分组不合法")
+        raw_track = c.get("track")
+        track: str | None = None
+        if raw_track is not None:
+            if not isinstance(raw_track, str) or raw_track not in TRACKS:
+                raise QualityPoolError(f"{symbol} 筛选轨道必须为：{' / '.join(TRACKS)}")
+            track = raw_track
+        raw_topic = c.get("industry_topic")
+        industry_topic: str | None = None
+        if raw_topic is not None:
+            topic_text = _text(raw_topic, f"{symbol}.industry_topic")
+            if not _TOPIC_RE.fullmatch(topic_text):
+                raise QualityPoolError(f"{symbol} industry_topic 格式不合法")
+            industry_topic = topic_text
         companies.append(
             QualityPoolCompany(
                 symbol=symbol,
@@ -301,8 +335,10 @@ def parse_quality_pool(payload: object) -> QualityPool:
                 sources=_sources(c["sources"]),
                 issuer=_symbol(c["issuer"]) if extended else None,
                 research_question=_text(c["research_question"], "research_question")
-                if extended else None,
+                if "research_question" in c else None,
                 metrics=_metrics(c["metrics"], c["sources"], as_of) if extended else None,
+                track=track,
+                industry_topic=industry_topic,
                 **{f: _text(c[f], f"{symbol}.{f}") for f in _CARD_FIELDS},
             )
         )
@@ -372,6 +408,10 @@ def render_current_pool(pool: QualityPool) -> str:
                         "- 普通股现金：" + _markdown(c.owner_cash),
                         "- 主要反证：" + _markdown(c.risks),
                         "- 分层理由：" + _markdown(c.tier_reason),
+                        *(["- 筛选轨道：" + TRACK_TITLES[c.track]]
+                          if c.track == "inflection_growth" else []),
+                        *(["- 关联行业主题：" + c.industry_topic]
+                          if c.industry_topic else []),
                         *(["- 关键研究问题：" + _markdown(c.research_question)]
                           if c.research_question else []),
                         *(["- 指标（" + c.metrics["basis"] + "）：" + "；".join(

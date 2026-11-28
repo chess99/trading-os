@@ -49,7 +49,12 @@ try {
   }
   for (const request of quoteRequests) for (const ticker of request) assert.ok(qualified.some((company) => company.ticker === ticker));
   await page.screenshot({ path: fileURLToPath(new URL("current-desktop.png", output)), fullPage: true });
-  passed.push("默认核心池、当前列表、行情集合与资格一致");
+  const contextToggle = page.locator(".decision-context-bar > summary");
+  await contextToggle.waitFor();
+  await contextToggle.click();
+  await page.getByText(/国内可投美股宽基 QDII ETF 名录/).waitFor();
+  await contextToggle.click();
+  passed.push("默认核心池、当前列表、行情集合、宏观/QDII上下文条与资格一致");
   await page.getByRole("tab", { name: /^跟踪进度/ }).click();
   assert.equal(await page.getByRole("columnheader", { name: "合理价值", exact: true }).count(), 0);
   assert.equal(await page.locator("tbody tr[data-symbol]").count(), Math.min(80, catalog.scope.count));
@@ -121,12 +126,12 @@ try {
     assert.ok(hkCurrent.some((company) => company.symbol === symbol));
   }
   await page.goto(`${baseURL}/reports`);
-  await page.getByLabel("研报市场").selectOption("US");
-  const usReports = catalog.companies.filter((company) => company.market === "US" && company.inQualityPool && company.reports.length);
-  if (!usReports.length) await page.getByText("该范围尚无已完成研报。", { exact:true }).waitFor();
+  await page.getByLabel("研报市场").selectOption("HK");
+  const hkReports = catalog.companies.filter((company) => company.market === "HK" && company.inQualityPool && company.reports.length);
+  if (!hkReports.length) await page.getByText("该范围尚无已完成研报。", { exact:true }).waitFor();
   else {
     await page.locator(".standards-library-list button").first().waitFor();
-    assert.equal(await page.locator(".standards-library-list button").count(), usReports.length);
+    assert.equal(await page.locator(".standards-library-list button").count(), hkReports.length);
     await page.locator(".standards-library-list button").first().click();
     await page.locator(".markdown-document").waitFor();
   }
@@ -261,7 +266,7 @@ try {
   await page.getByRole("heading", { name: "商业质量池" }).waitFor();
   const screening = JSON.parse(await readFile(new URL("../public/data/screening-pools.json", import.meta.url), "utf8"));
   await page.locator(".pool-market-bar").waitFor();
-  for (const [market, label] of [["hk", "港股"], ["us", "美股"]]) {
+  for (const [market, label] of [["cn-a", "A股"], ["hk", "港股"]]) {
     await page.getByRole("button", { name: new RegExp(`^${label}`) }).click();
     const expected = screening.pools.find((pool) => pool.market === market).companies;
     assert.equal(await page.locator("tbody tr[data-symbol]").count(), Math.min(30, expected.length));
@@ -295,11 +300,11 @@ try {
   await page.getByLabel("搜索公司或关键问题").fill("not-a-company-xyz");
   await page.getByRole("heading", { name: "没有符合条件的公司" }).waitFor();
   await page.getByRole("button", { name: "清除筛选条件" }).click();
-  await page.getByRole("button", { name: /^美股/ }).click();
+  await page.getByRole("button", { name: /^港股/ }).click();
   await page.getByRole("tab", { name: "未纳入", exact: true }).click();
-  await page.getByLabel("搜索公司或关键问题").fill("TSLA");
+  await page.getByLabel("搜索公司或关键问题").fill("00001");
   assert.equal(await page.locator("tbody tr[data-symbol]").count(), 1);
-  assert.match(await page.locator(".pool-reason").innerText(), /自动驾驶/);
+  assert.match(await page.locator(".pool-reason").innerText(), /复杂集团/);
   await page.getByRole("tab", { name: "入选公司", exact: true }).click();
   await page.getByLabel("搜索公司或关键问题").fill("");
   await page.getByRole("button", { name: /^港股/ }).click();
