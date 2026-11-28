@@ -46,6 +46,25 @@
       "status": "published"
     },
     {
+      "id": "us-broad-etf-qdii",
+      "kind": "macro",
+      "type": "reference",
+      "topic": "us-broad-etf-qdii",
+      "publishedOn": "2026-11-27",
+      "informationCutoff": null,
+      "markets": [
+        "CN",
+        "US"
+      ],
+      "regions": [
+        "美国",
+        "中国"
+      ],
+      "summary": "定义标普500与纳指100估值分解口径，以及国内美股宽基QDII ETF的溢价率、限额、费率与汇率检查方法。",
+      "sourcePath": "research/macro/reference/us-broad-etf-qdii.md",
+      "status": "published"
+    },
+    {
       "id": "semiconductor-equipment-2026-10-28",
       "kind": "industry",
       "type": "report",
@@ -508,7 +527,158 @@
       ],
       "summary": "内需、生产与成本分化，美元资金条件仍约束现金和资本回报；港股需同时拆解经营地域与融资币种。",
       "sourcePath": "research/macro/cross-market-regime/reports/2026-10-28.md",
-      "status": "published"
+      "status": "published",
+      "macroState": {
+        "asOf": "2026-10-28",
+        "regimeSummary": "中国制造与出口韧性强但居民消费及地产投资仍弱；美国私人需求韧性与通胀回升将政策利率与10年期美债维持在4%–5%高位约束。",
+        "factors": [
+          {
+            "id": "cn-demand",
+            "label": "中国内需与消费",
+            "direction": "weak_divergent",
+            "reading": "前三季GDP +4.6%，社零名义 +1.1%，地产开发投资 -20.6%",
+            "implication": "不宜外推居民消费全面复苏，优先核对真实动销、渠道库存与回款。"
+          },
+          {
+            "id": "cn-manufacturing-export",
+            "label": "中国生产与外需",
+            "direction": "resilient",
+            "reading": "规上工业增加值 +5.3%，高技术制造 +14.3%，装备制造 +10.2%",
+            "implication": "出口和设备升级有支撑，需逐家核查关税、海外本地化与订单回款。"
+          },
+          {
+            "id": "cn-credit-rates",
+            "label": "中国信用与利率",
+            "direction": "loose_liquidity_weak_private_credit",
+            "reading": "9月社融 +7.1%，政府债 +13.7%，住户贷款净减少1.03万亿，10Y国债 ~1.68%",
+            "implication": "宽货币但私人加杠杆弱，政府/基建链看财政资金实收，高股息看真实自由现金。"
+          },
+          {
+            "id": "us-rates-usd",
+            "label": "美元利率与资金成本",
+            "direction": "tight_restrictive",
+            "reading": "美联储目标区间 3.75%–4.00%，10年期美债收益率 5.00%，香港基本利率 4.25%",
+            "implication": "长端高利率压制远期高估值及高美元债务企业，港股需同时承受内地需求与美元贴现率。"
+          },
+          {
+            "id": "cost-prices",
+            "label": "工业与消费价格",
+            "direction": "upstream_firm_downstream_soft",
+            "reading": "9月CPI +0.9%，PPI +5.0%（9月同比）",
+            "implication": "上游涨价易扩张资源品利润，同时考验缺少议价能力的下游加工与消费企业毛利。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "market-valuation-2026-11-27",
+      "kind": "macro",
+      "type": "report",
+      "topic": "market-valuation",
+      "publishedOn": "2026-11-27",
+      "informationCutoff": "2026-11-27",
+      "markets": [
+        "CN",
+        "HK",
+        "US"
+      ],
+      "regions": [
+        "中国",
+        "香港",
+        "美国",
+        "全球"
+      ],
+      "summary": "10月末沪深300和恒指滚动盈利相对本币十年债息的利差为6.28和3.83个百分点。11月10日纳指100与标普500预期PE为18.69和18.12倍，若盈利下修10%，两者预期盈利收益率均将低于同期美债。",
+      "sourcePath": "research/macro/market-valuation/reports/2026-11-27.md",
+      "status": "published",
+      "macroState": {
+        "asOf": "2026-11-27",
+        "benchmarks": [
+          {
+            "id": "csi300",
+            "name": "沪深300",
+            "market": "CN",
+            "observedOn": "2026-10-30",
+            "pe": 12.61,
+            "pb": 1.3,
+            "dividendYieldPct": 2.73,
+            "earningsYieldPct": 7.93,
+            "bondYield10yPct": 1.65,
+            "erpPct": 6.28,
+            "cape": null,
+            "percentile5y": null,
+            "percentile10y": null,
+            "note": "中证指数单张滚动PE，10年中债国债收益率。前十大权重来自同日收盘权重表。缺同口径长期估值样本。",
+            "forwardPe": null,
+            "top10WeightPct": 22.664
+          },
+          {
+            "id": "hsi",
+            "name": "恒生指数",
+            "market": "HK",
+            "observedOn": "2026-10-30",
+            "pe": 13.04,
+            "pb": null,
+            "dividendYieldPct": 3.14,
+            "earningsYieldPct": 7.669,
+            "bondYield10yPct": 3.84,
+            "erpPct": 3.829,
+            "cape": null,
+            "percentile5y": 68.3,
+            "percentile10y": 63.3,
+            "note": "恒指事实表PE配金管局十年期港币政府债收市参考收益率。此前60及120个月末的普通PE分位为68.3%和63.3%；指数公司与港交所年鉴交叉核对。前十大证券占49.89%。",
+            "forwardPe": null,
+            "top10WeightPct": 49.89
+          },
+          {
+            "id": "sp500",
+            "name": "标普500",
+            "market": "US",
+            "observedOn": "2026-09-30",
+            "pe": 25.952408668002686,
+            "pb": 5.54,
+            "dividendYieldPct": 1.069,
+            "earningsYieldPct": 3.853,
+            "bondYield10yPct": 4.99,
+            "erpPct": -1.137,
+            "cape": 40.2683,
+            "percentile5y": 50,
+            "percentile10y": 60.8,
+            "note": "普通PE及分位采用Shiller九月月均同源序列，CAPE五年和十年分位为96.7%及98.3%。11月10日预期PE为18.12倍。标普公布的PB为6月底5.54倍。",
+            "forwardPe": 18.12,
+            "forwardPeObservedOn": "2026-11-10",
+            "forwardEarningsYieldPct": 5.519,
+            "forwardSpreadPct": 0.539,
+            "forwardBondYield10yPct": 4.98,
+            "top10WeightPct": 37.3,
+            "top10WeightObservedOn": "2026-10-30",
+            "pbObservedOn": "2026-06-30"
+          },
+          {
+            "id": "ndx100",
+            "name": "纳斯达克100",
+            "market": "US",
+            "observedOn": "2026-09-30",
+            "pe": 31.69,
+            "pb": 9.2,
+            "dividendYieldPct": 0.53,
+            "earningsYieldPct": 3.156,
+            "bondYield10yPct": 5.29,
+            "erpPct": -2.134,
+            "cape": null,
+            "percentile5y": null,
+            "percentile10y": null,
+            "note": "9月30日，ProShares授权产品季报披露的纳指100指数PE为31.69倍、PB为9.20倍，同日美债5.29%。11月10日Nasdaq预期PE为18.69倍，十年日均23.11倍，预期盈利收益率高于同日十年美债0.37个百分点。",
+            "forwardPe": 18.69,
+            "forwardPeObservedOn": "2026-11-10",
+            "forwardEarningsYieldPct": 5.35,
+            "forwardSpreadPct": 0.37,
+            "forwardBondYield10yPct": 4.98,
+            "top10WeightPct": 46.87,
+            "top10WeightObservedOn": "2026-09-30"
+          }
+        ]
+      }
     },
     {
       "id": "market-valuation-2026-10-28",
@@ -530,7 +700,76 @@
       ],
       "summary": "建立三市场盈利收益率与利率基准；美国普通PE与CAPE历史位置分化，A/H长期分位保留口径缺项。",
       "sourcePath": "research/macro/market-valuation/reports/2026-10-28.md",
-      "status": "published"
+      "status": "published",
+      "macroState": {
+        "asOf": "2026-10-28",
+        "benchmarks": [
+          {
+            "id": "csi300",
+            "name": "沪深300",
+            "market": "CN",
+            "observedOn": "2026-09-30",
+            "pe": 13.15,
+            "pb": 1.36,
+            "dividendYieldPct": 2.49,
+            "earningsYieldPct": 7.605,
+            "bondYield10yPct": 1.683,
+            "erpPct": 5.922,
+            "cape": null,
+            "percentile5y": null,
+            "percentile10y": null,
+            "note": "中证事实表滚动PE 13.15倍，相对1.683%十年国债股债利差+5.922个百分点；缺同口径长窗口历史分位。"
+          },
+          {
+            "id": "hsi",
+            "name": "恒生指数",
+            "market": "HK",
+            "observedOn": "2026-09-30",
+            "pe": 13.79,
+            "pb": null,
+            "dividendYieldPct": 2.97,
+            "earningsYieldPct": 7.252,
+            "bondYield10yPct": 4.022,
+            "erpPct": 3.23,
+            "cape": null,
+            "percentile5y": null,
+            "percentile10y": null,
+            "note": "恒指披露PE 13.79倍，前三大权重(汇丰/腾讯/阿里)占24.12%，相对港币十年债4.022%利差+3.230个百分点。"
+          },
+          {
+            "id": "sp500",
+            "name": "标普500 (Shiller口径)",
+            "market": "US",
+            "observedOn": "2026-06-30",
+            "pe": 25.22,
+            "pb": null,
+            "dividendYieldPct": null,
+            "earningsYieldPct": 3.965,
+            "bondYield10yPct": 4.47,
+            "erpPct": -0.505,
+            "cape": 40.15,
+            "percentile5y": 48.3,
+            "percentile10y": 100.0,
+            "note": "Shiller完整数据截至2026-06：普通PE 25.22倍，CAPE 40.15倍处于5年/10年100%分位；美股QDII配置须严格检验高估值与长端利率约束。"
+          },
+          {
+            "id": "ndx100",
+            "name": "纳斯达克100 (QDII对标)",
+            "market": "US",
+            "observedOn": null,
+            "pe": null,
+            "pb": null,
+            "dividendYieldPct": null,
+            "earningsYieldPct": null,
+            "bondYield10yPct": null,
+            "erpPct": null,
+            "cape": null,
+            "percentile5y": null,
+            "percentile10y": null,
+            "note": "本期未收录纳指100完整序列；下期market-valuation报告补齐。实盘买QDII前用 prompts/on-demand/qdii-etf-check.md 核对实时Forward PE与场内溢价率。"
+          }
+        ]
+      }
     },
     {
       "id": "network-infrastructure-2026-10-28",
@@ -674,7 +913,18 @@
       "summary": "养殖产品售价与饲料成本调整不同步，生猪盈利恢复仍需供给与体重调整；粮油、猪禽牛奶分别判断。",
       "sourcePath": "research/industries/agriculture-livestock/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "downcycle_clearing",
+        "profitPoolTrend": "contracting",
+        "macroAlignment": "headwind",
+        "macroTransmission": "生猪出栏仍在增加压低售价，原料豆粕与粮食成本回落不同步，需等待母猪存栏与出栏体重去化。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "生猪存栏与出栏体重去化",
+          "豆粕玉米原料成本与饲料销量"
+        ]
+      }
     },
     {
       "id": "banking-2026-11-16",
@@ -692,7 +942,18 @@
       "summary": "企业与居民信用分化，负债降成本缓冲资产重定价；信用损失和核心资本决定收入修复能留下多少普通股现金。",
       "sourcePath": "research/industries/banking/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "企业贷款+8.0%而住房按揭-4.1%，存款降成本缓冲资产重定价，信用损失与核心资本决定普通股分配。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "净息差与负债重定价",
+          "对公及零售资产质量与拨备"
+        ]
+      }
     },
     {
       "id": "coal-2026-11-16",
@@ -710,7 +971,18 @@
       "summary": "供给收缩推动煤价和矿端利润修复，电煤与焦煤需求不同步，低成本资源现金及复产扩产响应决定持续性。",
       "sourcePath": "research/industries/coal/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "upcycle_tight",
+        "profitPoolTrend": "expanding",
+        "macroAlignment": "neutral",
+        "macroTransmission": "原煤产量收缩(-3.8%)推高煤炭PPI(+36.6%)与矿端利润(+57%)，但火电(-7.3%)与钢铁承压约束下游需求。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "有效产量收缩与长协兑现",
+          "火电及钢铁下游需求分化"
+        ]
+      }
     },
     {
       "id": "food-beverage-2026-11-16",
@@ -728,7 +1000,18 @@
       "summary": "终端需求仍增但提价能力有限，品牌利润取决于净售价、渠道效率、原料传导与营运资金。",
       "sourcePath": "research/industries/food-beverage/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "居民食品消费温和增长但整体缺乏普遍提价空间，渠道促销与性价比偏好压低利润弹性。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "终端净售价与动销周转",
+          "渠道费用率与大宗原料成本"
+        ]
+      }
     },
     {
       "id": "oil-gas-refining-2026-11-16",
@@ -746,7 +1029,18 @@
       "summary": "上游价格和利润强于国内实物需求，炼化价差、天然气消费及采购成本顺价决定各环节现金。",
       "sourcePath": "research/industries/oil-gas-refining/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "upcycle_tight",
+        "profitPoolTrend": "expanding",
+        "macroAlignment": "neutral",
+        "macroTransmission": "上游资源价格上涨(+35%)驱动开采利润(+21.3%)，但国内原油加工(-6.9%)与天然气消费(-2.5%)偏弱制约下游顺价。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "国际油价与国内资源产量",
+          "炼化价差与城燃顺价能力"
+        ]
+      }
     },
     {
       "id": "steel-2026-11-16",
@@ -764,7 +1058,18 @@
       "summary": "建筑需求收缩、供给调整和燃料成本共同挤压吨钢现金，制造用钢存在结构机会，减产需由库存与回款验证。",
       "sourcePath": "research/industries/steel/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "downcycle_clearing",
+        "profitPoolTrend": "contracting",
+        "macroAlignment": "headwind",
+        "macroTransmission": "地产新开工大幅收缩与煤焦涨价双向挤压吨钢利润(-73.3%)，减产尚未转成有效去库。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "粗钢减产执行与社会库存",
+          "煤焦炉料成本与制造用钢结构"
+        ]
+      }
     },
     {
       "id": "nonferrous-metals-2026-11-16",
@@ -782,7 +1087,18 @@
       "summary": "资源收益强与实物及加工分化并存，铜铝锂黄金各自的供给、需求和资本响应决定现金。",
       "sourcePath": "research/industries/nonferrous-metals/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "upcycle_tight",
+        "profitPoolTrend": "expanding",
+        "macroAlignment": "tailwind",
+        "macroTransmission": "海外定价与资源供给约束推动矿端和冶炼利润大幅扩张(+68%/+80%)，实物加工需求与品种间分化明显。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "矿山供给约束与加工费(TC/RC)",
+          "铜铝锂黄金价格与新增产能纪律"
+        ]
+      }
     },
     {
       "id": "chemicals-materials-2026-11-16",
@@ -800,7 +1116,18 @@
       "summary": "化工涨价和利润修复伴随低利用率，基础产品、新材料认证及气体合同各有供需与现金机制。",
       "sourcePath": "research/industries/chemicals-materials/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "inflection_bottom",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "能源成本与局部供给约束带来涨价修复，但整体产能利用率仅69.7%，新材料验证与在建转固是关键分化点。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "行业装置利用率与新增产能投放",
+          "半导体/电子新材料客户认证放量"
+        ]
+      }
     },
     {
       "id": "baijiu-2026-11-16",
@@ -818,7 +1145,18 @@
       "summary": "白酒恢复先看终端净价、渠道现金与自愿补货，低基数利润反弹和厂家发货需经实际动销检验。",
       "sourcePath": "research/industries/baijiu/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "downcycle_clearing",
+        "profitPoolTrend": "contracting",
+        "macroAlignment": "headwind",
+        "macroTransmission": "居民消费偏谨慎叠加商务场景收缩导致批零价格倒挂，渠道库存与回款压力正倒逼酒厂控货调整。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "核心单品真实批价与社会库存",
+          "经销商盈利修复与自愿补货"
+        ]
+      }
     },
     {
       "id": "consumer-brands-2026-11-16",
@@ -836,7 +1174,18 @@
       "summary": "服饰、美妆和日用品需求不同步，复购、净价、库存和获客费用决定品牌增长能否转成现金。",
       "sourcePath": "research/industries/consumer-brands/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "downcycle_clearing",
+        "profitPoolTrend": "contracting",
+        "macroAlignment": "headwind",
+        "macroTransmission": "居民日常消费趋于理性与价格带迁移，服饰零售偏弱、美妆竞争加剧，流量与营销费用吞噬部分毛利。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "原价售罄率与老货库存",
+          "获客投放ROI与复购留存"
+        ]
+      }
     },
     {
       "id": "home-appliances-2026-11-16",
@@ -854,7 +1203,18 @@
       "summary": "家电换新需求边际改善，家具和新房配套仍弱；补贴、存量装修、产品净价和渠道现金决定修复质量。",
       "sourcePath": "research/industries/home-appliances/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "以旧换新政策与海外出海对冲新房竣工大幅下滑(-27.9%)，内需家具与工程配套仍受地产周期拖累。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "换新补贴延续性与二手装修",
+          "全球份额与海外供应链回款"
+        ]
+      }
     },
     {
       "id": "semiconductors-2026-11-16",
@@ -872,7 +1232,18 @@
       "summary": "产出和产线利用率上行，设计、制造、封测、设备与材料的利润和资本开支分化，新增产能需验证现金回收。",
       "sourcePath": "research/industries/semiconductors/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "upcycle_tight",
+        "profitPoolTrend": "expanding",
+        "macroAlignment": "tailwind",
+        "macroTransmission": "AI算力需求、存储涨价与国产供应替代驱动晶圆产线接近满载(如中芯97.3%)，装备与材料受益本土扩产资本开支。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "晶圆厂稼动率与存储芯片报价",
+          "国产设备/材料工艺验证与订单转化"
+        ]
+      }
     },
     {
       "id": "construction-materials-2026-11-16",
@@ -890,7 +1261,18 @@
       "summary": "建设量和资金约束仍压低施工与建材回报，结构项目机会需由实物工作量、材料价差和工程回款验证。",
       "sourcePath": "research/industries/construction-materials/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "downcycle_clearing",
+        "profitPoolTrend": "contracting",
+        "macroAlignment": "headwind",
+        "macroTransmission": "固定资产与基建投资下滑(-8.1%/-5.1%)叠加新开工收缩(-24.4%)，地方资金与施工强度约束回款质量。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "地方财政资金到位与实物工作量",
+          "水泥玻璃错峰减产与应收账款回收"
+        ]
+      }
     },
     {
       "id": "real-estate-2026-11-16-r2",
@@ -909,7 +1291,18 @@
       "sourcePath": "research/industries/real-estate/reports/2026-11-16-r2.md",
       "status": "published",
       "regionId": "cn",
-      "revision": 2
+      "revision": 2,
+      "industryState": {
+        "cycleStage": "downcycle_clearing",
+        "profitPoolTrend": "contracting",
+        "macroAlignment": "headwind",
+        "macroTransmission": "二手网签(+11.4%)与一线二手价局部企稳，但开发资金(-21.9%)与新开工(-24.9%)仍深度收缩。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "核心城市二手量价与去化周期",
+          "房企信用现金流与物业收费率"
+        ]
+      }
     },
     {
       "id": "retail-ecommerce-2026-11-16",
@@ -927,7 +1320,18 @@
       "summary": "商品消费低增长、线上线下渠道重分配，采购周转和扣履约后的贡献决定规模能否形成现金。",
       "sourcePath": "research/industries/retail-ecommerce/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "contracting",
+        "macroAlignment": "headwind",
+        "macroTransmission": "社零低增长(+1.0%)下渠道份额向高性价比线上、便利店与仓储会员店转移，补贴与即时履约考验单位盈利。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "单均履约成本与补贴纪律",
+          "商品采购周转与同店客流"
+        ]
+      }
     },
     {
       "id": "chain-restaurants-2026-11-16",
@@ -945,7 +1349,18 @@
       "summary": "餐饮客流与客单分化，采购和运营效率决定降价后的单店贡献，扩店需由成熟店和加盟商现金支持。",
       "sourcePath": "research/industries/chain-restaurants/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "overcapacity",
+        "profitPoolTrend": "contracting",
+        "macroAlignment": "headwind",
+        "macroTransmission": "餐饮消费偏重性价比(限额以上当月-2.9%)而门店供给充裕，客单价下滑与平台抽佣考验单店回收期。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "同店客流与扣补贴净客单",
+          "新店投资回收期与加盟商存活率"
+        ]
+      }
     },
     {
       "id": "travel-hospitality-2026-11-16",
@@ -963,7 +1378,18 @@
       "summary": "出游人次快于总花费，酒店与景区回报取决于过夜、同档价格、新增供给及业主资本回收。",
       "sourcePath": "research/industries/travel-hospitality/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "居民出游人次增长(+6.2%)快于总花费(+2.2%)，性价比偏好与新增酒店供给压制同店RevPAR。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "同档酒店平均房价与入住率",
+          "新增客房供给与业主回报"
+        ]
+      }
     },
     {
       "id": "power-gas-utilities-2026-11-16",
@@ -981,7 +1407,18 @@
       "summary": "负荷增长与电源供给、燃料和实现电价分化，成熟低成本资产的现金仍需利用小时和交易结算支持。",
       "sourcePath": "research/industries/power-gas-utilities/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "overcapacity",
+        "profitPoolTrend": "contracting",
+        "macroAlignment": "neutral",
+        "macroTransmission": "全社会用电增速放缓(Q3 +1.6%)而电源装机(+11.2%)更快，利用小时下降叠加煤炭涨价压低电力利润(-17.9%)。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "电源平均利用小时与市场化电价",
+          "电煤价格传导与城燃顺价"
+        ]
+      }
     },
     {
       "id": "electronics-manufacturing-2026-11-16",
@@ -999,7 +1436,18 @@
       "summary": "手机换机偏弱，算力与高价值产品支撑制造增长；供应份额和工艺升级需由旺季后的现金与资本回报验证。",
       "sourcePath": "research/industries/electronics-manufacturing/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "inflection_bottom",
+        "profitPoolTrend": "expanding",
+        "macroAlignment": "tailwind",
+        "macroTransmission": "国内手机电脑产量虽降(-28.9%/-22.7%)，但AI算力硬件与海外高价值组件出口拉动电子制造业增加值高增(+19.4%)。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "AI服务器/终端高价值组件份额",
+          "北美大客户工艺升级与资本回报"
+        ]
+      }
     },
     {
       "id": "telecom-networks-2026-11-16",
@@ -1017,7 +1465,18 @@
       "summary": "连接和流量继续增长，基础服务变现、税制及算力投入影响利润；传统接入与高速互联订单分化。",
       "sourcePath": "research/industries/telecom-networks/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "流量高增(+17%)难抵基础连接降价与税率上调(6%升至9%)，算力网络与出口光互联成为结构性增量。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "基础电信ARPU与算力Capex效率",
+          "海外AI光模块/高速互联需求兑现"
+        ]
+      }
     },
     {
       "id": "grid-electrical-equipment-2026-11-16",
@@ -1035,7 +1494,18 @@
       "summary": "电网投资恢复和系统升级提供需求，中标价值仍由产品结构、原料、验收与回款决定。",
       "sourcePath": "research/industries/grid-electrical-equipment/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "upcycle_tight",
+        "profitPoolTrend": "expanding",
+        "macroAlignment": "tailwind",
+        "macroTransmission": "新能源跨区消纳与算力负荷推动电网投资加速(Q3 +6.8%、1000kV投资+2.6倍)，出海设备延续景气。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "特高压/主网招标交付节奏",
+          "海外电网设备出口与铜铝原料成本"
+        ]
+      }
     },
     {
       "id": "renewable-storage-equipment-2026-11-16",
@@ -1053,7 +1523,18 @@
       "summary": "风光与储能建设继续，制造供给和价格仍在调整，系统使用及履约现金决定装备企业回报。",
       "sourcePath": "research/industries/renewable-storage-equipment/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "overcapacity",
+        "profitPoolTrend": "contracting",
+        "macroAlignment": "neutral",
+        "macroTransmission": "国内风光并网与储能装机(+63%)保持高增，但制造业名义产能过剩、光伏产量(-12.6%)与价格战正强制出清。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "制造环节落后产能出清进度",
+          "储能系统海外高毛利市场与质保现金"
+        ]
+      }
     },
     {
       "id": "water-environment-2026-11-16",
@@ -1071,7 +1552,18 @@
       "summary": "设施覆盖提高后更应看有效处理、收费回款和提质效率，财政约束及必要资本使水务固废工程的现金分化。",
       "sourcePath": "research/industries/water-environment/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "contracting",
+        "macroAlignment": "headwind",
+        "macroTransmission": "市政覆盖已近饱和且环保财政支出下降(-12.5%)，行业从工程扩张转向存量运营收费与地方回款质量。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "地方政府付费与应收账款账龄",
+          "存量设施提质与自由现金流"
+        ]
+      }
     },
     {
       "id": "transport-logistics-2026-11-16",
@@ -1089,7 +1581,18 @@
       "summary": "客货流温和增长、运价与运力分化，线路位置、网络密度和维护更新后的现金决定交通物流回报。",
       "sourcePath": "research/industries/transport-logistics/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "外贸港口吞吐(+2.9%)与快递件量(+4.3%)温和增长，公路铁路客货流分化，收费权与网络密度决定盈利。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "外贸航运运价与吞吐结构",
+          "干线收费公路车流与快递单票净利"
+        ]
+      }
     },
     {
       "id": "defense-2026-11-16",
@@ -1107,7 +1610,18 @@
       "summary": "国防预算支持长期需求，交付、定价及资金占用使总装与配套企业兑现不同步，资本回收需实际经营支持。",
       "sourcePath": "research/industries/defense/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "inflection_bottom",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "tailwind",
+        "macroTransmission": "中央国防预算稳定增长(+7%)提供长期底座，前期采购节奏扰动后Q3部分配套收入改善，仍需验收回款确认。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "主机厂交付验收进度",
+          "军品定价机制与应收票据回款"
+        ]
+      }
     },
     {
       "id": "software-cloud-it-2026-11-16",
@@ -1125,7 +1639,18 @@
       "summary": "软件收入继续增长，利润和回款较弱；产品复用、交付成本与算力投入决定现金回报。",
       "sourcePath": "research/industries/software-cloud-it/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "inflection_bottom",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "软件与云收入(+8.4%/+10.2%)温和增长，但政企客户预算偏紧、定制交付及AI算力投入压制利润(+1.6%)。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "标准化订阅/AI产品商业变现",
+          "项目交付人效与客户回款"
+        ]
+      }
     },
     {
       "id": "capital-markets-2026-11-16",
@@ -1143,7 +1668,18 @@
       "summary": "上半年证券盈利较强，下半年交易和公募资产结构分化，持续收费与资本风险决定回报。",
       "sourcePath": "research/industries/capital-markets/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "市场成交与风险偏好直接主导短期券商自营和经纪利润(9月日均成交环比-18.9%)，公募降费考验长期资产留存。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "市场日均成交与权益资产规模",
+          "投行/财富管理收费率与自营风控"
+        ]
+      }
     },
     {
       "id": "internet-content-platforms-2026-11-16",
@@ -1161,7 +1697,18 @@
       "summary": "互联网盈利恢复，生活服务和传统内容仍弱；广告效率、产品周期与新增投入推动分化。",
       "sourcePath": "research/industries/internet-content-platforms/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "inflection_bottom",
+        "profitPoolTrend": "expanding",
+        "macroAlignment": "neutral",
+        "macroTransmission": "规上互联网利润增速(+17.6%)快于收入(+10.7%)，降本增效与AI广告/游戏产品驱动修复，AI算力投入再分配现金。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "AI提升广告ROI与游戏长青产品",
+          "算力Capex节奏与股东回购分红"
+        ]
+      }
     },
     {
       "id": "medicines-rd-manufacturing-2026-11-16",
@@ -1179,7 +1726,18 @@
       "summary": "医药制造总量平稳，创新产品与成熟药分化；支付准入、净价和研发回收决定现金。",
       "sourcePath": "research/industries/medicines-rd-manufacturing/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "inflection_bottom",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "国内医保控费压低成熟仿制药，但支付向真创新倾斜且医药制造利润转正(+4.4%)，出海授权与CXO订单逐步分化修复。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "创新药临床数据与海外授权/销售",
+          "CXO在手订单交付与产能利用率"
+        ]
+      }
     },
     {
       "id": "medical-devices-2026-11-16",
@@ -1197,7 +1755,18 @@
       "summary": "公开招采开始回升，设备、耗材和诊断恢复不均；实际使用、净价与资本回收决定盈利。",
       "sourcePath": "research/industries/medical-devices/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "inflection_bottom",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "公开医疗设备招采Q3同比转正(+7.83%)扭转上半年下滑(-12.78%)，设备更新与出海对冲集采耗材净价压力。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "院内设备招采落地与装机验收",
+          "耗材/IVD集采后净价与海外份额"
+        ]
+      }
     },
     {
       "id": "healthcare-services-2026-11-16",
@@ -1215,7 +1784,18 @@
       "summary": "服务量温和增长，支付与项目结构影响盈利；医院效率、药店单店贡献和流通周转决定回报。",
       "sourcePath": "research/industries/healthcare-services/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "老龄化支撑基础诊疗量，但DRG/DIP支付改革与居民自费支出谨慎限制提价，单院效率与药店周转分化。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "医保结算账期与自费消费占比",
+          "连锁医疗/药店单店成熟与现金流"
+        ]
+      }
     },
     {
       "id": "machinery-automation-services-2026-11-16",
@@ -1233,7 +1813,18 @@
       "summary": "设备更新与出口支撑生产，客户投资和供应商盈利仍弱；订单、售价及回款决定扩张质量。",
       "sourcePath": "research/industries/machinery-automation-services/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "inflection_bottom",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "设备工器具更新投资(+8.9%)、工业机器人(+32.3%)与出海支撑结构需求，但国内制造业投资(-2.9%)约束全面复苏。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "出海渗透与设备更新订单",
+          "自动化/检测后市场服务占比与回款"
+        ]
+      }
     },
     {
       "id": "insurance-2026-11-16",
@@ -1251,7 +1842,18 @@
       "summary": "保费低速增长，渠道降本和财险承保改善；寿险负债成本与投资波动仍约束股东回报。",
       "sourcePath": "research/industries/insurance/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "国内长端低利率(10Y国债~1.68%)仍考验寿险存量利差，渠道报行合一降本与财险承保改善支撑经营韧性。",
+        "inflectionCandidate": false,
+        "keyDrivers": [
+          "长端国债收益率与权益投资表现",
+          "寿险新业务负债成本与财险COR"
+        ]
+      }
     },
     {
       "id": "autos-batteries-2026-11-16",
@@ -1269,7 +1871,18 @@
       "summary": "国内购车偏弱，出口与电动化支撑制造；价格竞争、采购份额和扩产回收决定产业链利润。",
       "sourcePath": "research/industries/autos-batteries/reports/2026-11-16.md",
       "status": "published",
-      "regionId": "cn"
+      "regionId": "cn",
+      "industryState": {
+        "cycleStage": "mature_stable",
+        "profitPoolTrend": "stable",
+        "macroAlignment": "neutral",
+        "macroTransmission": "国内乘用车零售偏弱(-13.7%同比)但新能源渗透率达67.5%且出口高增(10月60.6万辆)，整车价格战挤压供应链利润。",
+        "inflectionCandidate": true,
+        "keyDrivers": [
+          "海外建厂与整车/电池出口回款",
+          "国内价格战缓和与锂电产能利用率"
+        ]
+      }
     }
   ]
 }
